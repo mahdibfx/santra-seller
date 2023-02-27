@@ -207,7 +207,7 @@ class SignUpScreen extends StatelessWidget {
 
                                 // Get.toNamed(Routes.homeRoutes);
                               },
-                              gradient: LinearGradient(
+                              gradient: const LinearGradient(
                                 colors: <Color>[
                                   Color(0xff006EB8),
                                   Color(0xff006EB8),
