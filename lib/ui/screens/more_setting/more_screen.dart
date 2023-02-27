@@ -27,12 +27,48 @@ class MoreSettingScreen extends StatelessWidget {
             : SafeArea(
                 child: SingleChildScrollView(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('More'),
+                      const Text(
+                        'More',
+                        textScaleFactor: 2,
+                      ),
                       ReusableIconSetting(
                         icon: const Icon(Icons.settings),
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(Routes.settings);
+                        },
                         btntxt: const Text('settings'),
+                      ),
+                      ReusableIconSetting(
+                        icon: const Icon(Icons.business),
+                        onPressed: () {},
+                        btntxt: const Text('About Us'),
+                      ),
+                      ReusableIconSetting(
+                        icon: const Icon(Icons.widgets),
+                        onPressed: () {},
+                        btntxt: const Text('Products'),
+                      ),
+                      ReusableIconSetting(
+                        icon: const Icon(Icons.group),
+                        onPressed: () {},
+                        btntxt: const Text('My Customers'),
+                      ),
+                      ReusableIconSetting(
+                        icon: const Icon(Icons.message),
+                        onPressed: () {},
+                        btntxt: const Text('Get Help'),
+                      ),
+                      ReusableIconSetting(
+                        icon: const Icon(Icons.wallet),
+                        onPressed: () {},
+                        btntxt: const Text('Wallet'),
+                      ),
+                      ReusableIconSetting(
+                        icon: const Icon(Icons.call),
+                        onPressed: () {},
+                        btntxt: const Text('Contact Us'),
                       )
                     ],
                   ),

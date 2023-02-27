@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:santra_seller/ui/screens/customer/add_customer.dart';
+import 'package:santra_seller/ui/screens/more_setting/settings.dart';
 import 'package:santra_seller/utils/routes/app_routes.dart';
 
 import '../../ui/screens/auth_screen/login_screen.dart';
@@ -12,6 +13,7 @@ import '../bindings/auth_binding/signup_binding.dart';
 import '../bindings/customer_binding/customer_binding.dart';
 import '../bindings/home_binding/home_screen_binding.dart';
 import '../bindings/more_screen_binding/more_screen_binding.dart';
+import '../bindings/more_screen_binding/settings_bindings.dart';
 import '../bindings/splash_binding.dart';
 
 class AppPages {
@@ -50,16 +52,20 @@ class AppPages {
         binding: LoginBinding()
         // middlewares: [AuthMiddleware()],
         ),
-        GetPage(
-        name: Routes.addCustomer,
-        page: () => CustomerScreen(),
-        binding: CustomerBindings(),
-        ),
-        GetPage(
-        name: Routes.moreScreen,
-        page: () => MoreSettingScreen(),
-        binding: MoreScreenBindings(),
-        ),
+    GetPage(
+      name: Routes.addCustomer,
+      page: () => CustomerScreen(),
+      binding: CustomerBindings(),
+    ),
+    GetPage(
+      name: Routes.moreScreen,
+      page: () => MoreSettingScreen(),
+      binding: MoreScreenBindings(),
+    ),
+    GetPage(
+      name: Routes.settings,
+      page: () => Settings(),
+      binding: SettingsBindings(),
+    ),
   ];
-
-}        
+}
