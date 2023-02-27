@@ -110,7 +110,7 @@ class CommonScaffold extends StatelessWidget {
         // )),
         clipBehavior: Clip.antiAlias,
         child: Container(
-          height: Get.height / 11 - 11,
+          height: Get.height / 11 - 10,
           // decoration: ShapeDecoration(
           //   shape: RoundedRectangleBorder(
           //     borderRadius:
@@ -123,47 +123,47 @@ class CommonScaffold extends StatelessWidget {
           //   ),
           // ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               ReusableIconButton(
                 icon: Icon(
-                  Icons.garage_rounded,
-                  color: Get.currentRoute == Routes.yourselectcardrotue
+                  Icons.home,
+                  color: Get.currentRoute == Routes.homeRoutes
                       ? UIDataColors.fbbtnColor
                       : Colors.grey,
                 ),
                 btntxt: Text(
-                  "Garage",
-                  style: Get.currentRoute == Routes.yourselectcardrotue
+                  "Home",
+                  style: Get.currentRoute == Routes.homeRoutes
                       ? UIDataTextStyles.bottomcolor
                       : UIDataTextStyles.btntext1,
                 ),
                 onPressed: () {
-                  // Get.offAllNamed(Routes.yourselectcardrotue);
-                  // if (Get.currentRoute != Routes.orderRoutes) {
-                  //   Get.toNamed(Routes.orderRoutes);
-                  // }
+                  Get.offAllNamed(Routes.homeRoutes);
+                  if (Get.currentRoute != Routes.homeRoutes) {
+                    Get.toNamed(Routes.homeRoutes);
+                  }
                 },
               ),
-              ReusableIconButton(
-                icon: Icon(
-                  Icons.cleaning_services,
-                  color: Get.currentRoute == Routes.createrequestroute
-                      ? UIDataColors.fbbtnColor
-                      : Colors.grey,
-                ),
-                btntxt: Text(
-                  "Services",
-                  style: Get.currentRoute == Routes.createrequestroute
-                      ? UIDataTextStyles.bottomcolor
-                      : UIDataTextStyles.btntext1,
-                ),
-                onPressed: () {
-                  // if (Get.currentRoute != Routes.createrequestroute) {
-                  //   Get.offAllNamed(Routes.createrequestroute);
-                  // }
-                },
-              ),
+              // ReusableIconButton(
+              //   icon: Icon(
+              //     Icons.cleaning_services,
+              //     color: Get.currentRoute == Routes.createrequestroute
+              //         ? UIDataColors.fbbtnColor
+              //         : Colors.grey,
+              //   ),
+              //   btntxt: Text(
+              //     "Services",
+              //     style: Get.currentRoute == Routes.createrequestroute
+              //         ? UIDataTextStyles.bottomcolor
+              //         : UIDataTextStyles.btntext1,
+              //   ),
+              //   onPressed: () {
+              //     // if (Get.currentRoute != Routes.createrequestroute) {
+              //     //   Get.offAllNamed(Routes.createrequestroute);
+              //     // }
+              //   },
+              // ),
               // ReusableHomeIconButton(
               //   icon: Icon(
               //     Icons.home,
@@ -185,42 +185,42 @@ class CommonScaffold extends StatelessWidget {
               //   },
               // ),
 
+              // ReusableIconButton(
+              //   icon: Icon(
+              //     Icons.history,
+              //     color: Get.currentRoute == Routes.historyrotues
+              //         ? UIDataColors.fbbtnColor
+              //         : Colors.grey,
+              //   ),
+              //   btntxt: Text(
+              //     "History",
+              //     style: Get.currentRoute == Routes.historyrotues
+              //         ? UIDataTextStyles.bottomcolor
+              //         : UIDataTextStyles.btntext1,
+              //   ),
+              //   onPressed: () {
+              //     // if (Get.currentRoute != Routes.historyrotues) {
+              //     //   Get.offAllNamed(Routes.historyrotues);
+              //     // }
+              //   },
+              // ),
               ReusableIconButton(
                 icon: Icon(
-                  Icons.history,
-                  color: Get.currentRoute == Routes.historyrotues
+                  Icons.list,
+                  color: Get.currentRoute == Routes.moreScreen
                       ? UIDataColors.fbbtnColor
                       : Colors.grey,
                 ),
                 btntxt: Text(
-                  "History",
-                  style: Get.currentRoute == Routes.historyrotues
+                  "More",
+                  style: Get.currentRoute == Routes.moreScreen
                       ? UIDataTextStyles.bottomcolor
                       : UIDataTextStyles.btntext1,
                 ),
                 onPressed: () {
-                  // if (Get.currentRoute != Routes.historyrotues) {
-                  //   Get.offAllNamed(Routes.historyrotues);
-                  // }
-                },
-              ),
-              ReusableIconButton(
-                icon: Icon(
-                  Icons.settings,
-                  color: Get.currentRoute == Routes.settingscreen
-                      ? UIDataColors.fbbtnColor
-                      : Colors.grey,
-                ),
-                btntxt: Text(
-                  "Setting",
-                  style: Get.currentRoute == Routes.settingscreen
-                      ? UIDataTextStyles.bottomcolor
-                      : UIDataTextStyles.btntext1,
-                ),
-                onPressed: () {
-                  // if (Get.currentRoute != Routes.settingscreen) {
-                  //   Get.offAllNamed(Routes.settingscreen);
-                  // }
+                  if (Get.currentRoute != Routes.moreScreen) {
+                    Get.offAllNamed(Routes.moreScreen);
+                  }
                 },
               ),
               // ReusableIconButton(

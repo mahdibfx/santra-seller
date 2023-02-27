@@ -42,15 +42,16 @@ class HomeScreen extends StatelessWidget {
       showDrawer: false,
       showFAB: true,
       centerDocked: true,
-      showAppBar: false,
+      showAppBar: true,
       scaffoldKey: _key,
       showBottomNav: true,
-      appbarcolor: UIDataColors.commonColor,
+      appbarcolor: UIDataColors.white,
+      appTitle: 'Logo',
       backarrow: UIDataColors.black,
       qrCallback: () {
-        Get.offAllNamed(Routes.homeRoutes);
+        Get.offAllNamed(Routes.addCustomer);
       },
-      floatingIcon: Icons.home,
+      floatingIcon: Icons.add,
       elevation: 0.0,
     );
   }

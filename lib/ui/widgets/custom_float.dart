@@ -28,7 +28,7 @@ class CustomFloat extends StatelessWidget {
           children: <Widget>[
             Icon(
               icon,
-                  color: Get.currentRoute == Routes.homeRoutes
+                  color: Get.currentRoute == Routes.addCustomer
                       ? UIDataColors.fbbtnColor
                       : Colors.grey,
               size: 30,

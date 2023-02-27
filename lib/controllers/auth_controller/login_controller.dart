@@ -93,7 +93,7 @@ class LoginController extends GetxController {
         print("check error ${e}");
         isLoading = false.obs;
         update();
-        Get.offAllNamed(Routes.homeRoutes);
+        // Get.offAllNamed(Routes.homeRoutes);
         CommonSnackbar.getSnackbar(
             "Server Error",
             "Server Error or Please Check your internet connection",
@@ -103,7 +103,7 @@ class LoginController extends GetxController {
   }
 
   saveSharedPrefData(LoginData data, SharedPreferences prefs) {
-    prefs.setString("email", data.userEmail);
+    prefs.setString("email", email.text);
     prefs.setString("firstname", data.firstName);
     prefs.setString("lastname", data.lastName);
     prefs.setString("phonenumber", data.phoneNumber);
