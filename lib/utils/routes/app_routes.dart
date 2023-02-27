@@ -9,7 +9,8 @@ abstract class Routes {
   static const otpverifcation = '/otpverifcation';
   static const newpasswordroutes = '/newpassword';
   static const emailverifyroutes = '/emailverifyroutes';
-  static const addvehiclerotues = "/addvehiclerotues";
+  static const addCustomer = "/addcustomer";
+  static const moreScreen = "/morescreen";
   static const settingscreen = "/settingscree";
   static const editprofileroute = "/editprofile";
   static const createrequestroute = "/createrequest";
