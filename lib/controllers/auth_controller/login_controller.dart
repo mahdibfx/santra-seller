@@ -1,0 +1,117 @@
+import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../models/login_model.dart';
+import '../../ui/widgets/snackbar/common_snackbar.dart';
+import '../../utils/api_data.dart';
+import '../../utils/routes/app_routes.dart';
+import '../../utils/uidata.dart';
+
+class LoginController extends GetxController {
+  // bool isLoading = true;
+  RxBool isLoading = false.obs;
+  bool securetext = true;
+  bool remember = false;
+  bool isvisible = true;
+  var roleset;
+  final form = GlobalKey<FormState>();
+  String emailstore = "";
+  String passwordstore = "";
+
+  List locale = [];
+  List userprofilelist = [];
+
+  //     Services
+
+  var userToken;
+  var eaToken;
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController rememberselect = TextEditingController();
+
+  RegExp emailRegex = RegExp(
+    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$',
+  );
+  String? firebaseMessagingToken;
+
+  @override
+  void onInit() async {
+    getFcmToken();
+    setLoginValues();
+    super.onInit();
+    update();
+  }
+
+  setLoginValues() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var checkemail = prefs.getString("email");
+    var checkpassword = prefs.getString("password");
+    if (checkemail != null || checkpassword != null) {
+      email.text = checkemail!;
+      password.text = checkpassword!;
+    }
+    update();
+  }
+
+  void updatelang(Locale locale) {
+    Get.back();
+    Get.updateLocale(locale);
+  }
+
+  Future getFcmToken() async {
+    firebaseMessagingToken = await FirebaseMessaging.instance.getToken();
+    print("token: $firebaseMessagingToken");
+  }
+
+  void loginfunction() async {
+    if (form.currentState!.validate()) {
+      isLoading = true.obs;
+      update();
+      try {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        var body = <String, String>{};
+        body['user_name'] = email.text;
+        body['user_password'] = password.text;
+        body["gcms_code"] = firebaseMessagingToken.toString();
+        var res =
+            await http.post(Uri.parse("${ApiData.mainurl}login"), body: body);
+        if (res.statusCode == 200) {
+          var data = jsonDecode(res.body);
+          var newdata = LoginModel.fromJson(data);
+          saveSharedPrefData(newdata.data[0], prefs);
+          isLoading = false.obs;
+          update();
+          Get.offAllNamed(Routes.homeRoutes);
+        } else {
+          CommonSnackbar.getSnackbar(
+              "Error", "Error in login", UIDataColors.red);
+        }
+      } catch (e) {
+        print("check error ${e}");
+        isLoading = false.obs;
+        update();
+        Get.offAllNamed(Routes.homeRoutes);
+        CommonSnackbar.getSnackbar(
+            "Server Error",
+            "Server Error or Please Check your internet connection",
+            UIDataColors.red);
+      }
+    }
+  }
+
+  saveSharedPrefData(LoginData data, SharedPreferences prefs) {
+    prefs.setString("email", data.userEmail);
+    prefs.setString("firstname", data.firstName);
+    prefs.setString("lastname", data.lastName);
+    prefs.setString("phonenumber", data.phoneNumber);
+    prefs.setString("gender", data.userGender);
+    prefs.setString("logo", data.sellerLogo);
+    prefs.setString("sellercode", data.sellerCode);
+    prefs.setString("status", data.userStatus);
+    prefs.setString("dob", data.dateOfBirth.toIso8601String());
+    prefs.setString("password", password.text);
+  }
+}

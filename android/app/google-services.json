@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "735066844046",
+    "project_id": "seller-home",
+    "storage_bucket": "seller-home.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735066844046:android:85685b4501463e3614d2df",
+        "android_client_info": {
+          "package_name": "com.hihome.seller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735066844046-5gvc1g18fl8lsgkpr05d6rdf8reo1duv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqaw4PshI0b6CuVRlZudG61ac17vOyapg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735066844046-5gvc1g18fl8lsgkpr05d6rdf8reo1duv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "735066844046-melsohf5fn2lpcfc926m4m15p28l7710.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hihome.seller"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
