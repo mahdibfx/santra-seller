@@ -4,6 +4,7 @@ import 'package:santra_seller/controllers/more_screen_controller.dart/more_contr
 
 import '../../../controllers/home_controller/home_controller.dart';
 import '../../../utils/routes/app_routes.dart';
+import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 
 import 'package:flutter/material.dart';
@@ -25,10 +26,15 @@ class MoreSettingScreen extends StatelessWidget {
               ))
             : SafeArea(
                 child: SingleChildScrollView(
-                  child: Center(
-                    child: Container(
-                      child: Text('More screen'),
-                    ),
+                  child: Column(
+                    children: [
+                      Text('More'),
+                      ReusableIconSetting(
+                        icon: const Icon(Icons.settings),
+                        onPressed: () {},
+                        btntxt: const Text('settings'),
+                      )
+                    ],
                   ),
                 ),
               );
