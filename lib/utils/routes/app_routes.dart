@@ -14,6 +14,9 @@ abstract class Routes {
   static const addCustomer = "/addcustomer";
   static const moreScreen = "/morescreen";
   static const settingscreen = "/settingscree";
+  static const aboutscreen = "/aboutscreen";
+  static const walletscreen = "/walletscreen";
+  static const contactscreen = "/contactscreen";
   static const editprofileroute = "/editprofile";
   static const createrequestroute = "/createrequest";
   static const addvehicle = "/addvehicle";

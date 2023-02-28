@@ -1,5 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'dart:convert';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:santra_seller/controllers/settings_controller/delete_account_controller.dart';
+import 'package:santra_seller/controllers/settings_controller/logout_controller.dart';
 import 'package:santra_seller/controllers/more_screen_controller.dart/more_controller.dart';
 import 'package:santra_seller/ui/screens/settings/account_info.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
@@ -17,83 +20,87 @@ class Settings extends StatelessWidget {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
   Settings({super.key});
-
+  final logoutController = Get.put(LogoutController());
+  final deleteAccountController = Get.put(DeleteAccountController());
   Widget bodyData(context) {
-    return GetBuilder<MoreScreenController>(
-      builder: (_) {
-        return _.isLoading
-            ? const SizedBox(
-                child: Center(
-                child: CircularProgressIndicator(),
-              ))
-            : SafeArea(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Settings',
-                        textScaleFactor: 2,
-                      ),
-                      ReusableIconSetting(
-                        icon: const Icon(Icons.info),
-                        onPressed: () {
-                          Get.toNamed(Routes.accountInfoRoute);
-                        },
-                        btntxt: const Text('Account info'),
-                      ),
-                      ReusableIconSetting(
-                        icon: const Icon(Icons.alternate_email),
-                        onPressed: () {
-                          Get.toNamed(Routes.changeEmail);
-                        },
-                        btntxt: const Text('Change Email'),
-                      ),
-                      ReusableIconSetting(
-                        icon: const Icon(Icons.lock),
-                        onPressed: () {
-                          Get.toNamed(Routes.changePassword);
-                        },
-                        btntxt: const Text('Change Password'),
-                      ),
-                      ReusableIconSetting(
-                        icon: const Icon(Icons.language),
-                        onPressed: () {},
-                        btntxt: const Text('Language'),
-                      ),
-                      ReusableIconSetting(
-                        icon: const Icon(Icons.logout),
-                        onPressed: () {
-                          customOntapDialogTwoButtons(
-                              context,
-                              "Logout",
-                              "Are You Sure You Want To Logout?",
-                              "Cancel",
-                              "Logout", () {
-                            Get.back();
-                          }, () {});
-                        },
-                        btntxt: const Text('Logout'),
-                      ),
-                      ReusableIconSetting(
-                        icon: const Icon(Icons.delete),
-                        onPressed: () {
-                          customOntapDialogTwoButtons(
-                              context,
-                              "Delete Account",
-                              "Are You Sure You Want To Permanantly Delete Your Account?",
-                              "Cancel",
-                              "Delete", () {
-                            Get.back();
-                          }, () {});
-                        },
-                        btntxt: const Text('Delete Account'),
-                      )
-                    ],
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Settings',
+              textScaleFactor: 2,
+            ),
+            ReusableIconSetting(
+              icon: const Icon(Icons.info),
+              onPressed: () {
+                Get.toNamed(Routes.accountInfoRoute);
+              },
+              btntxt: const Text('Account info'),
+            ),
+            ReusableIconSetting(
+              icon: const Icon(Icons.alternate_email),
+              onPressed: () {
+                Get.toNamed(Routes.changeEmail);
+              },
+              btntxt: const Text('Change Email'),
+            ),
+            ReusableIconSetting(
+              icon: const Icon(Icons.lock),
+              onPressed: () {
+                Get.toNamed(Routes.changePassword);
+              },
+              btntxt: const Text('Change Password'),
+            ),
+            ReusableIconSetting(
+              icon: const Icon(Icons.language),
+              onPressed: () {},
+              btntxt: const Text('Language'),
+            ),
+            // GetBuilder<LogoutController>(builder: (logoutController) {
+            //   return
+            logoutController.isLogoutLoading.isTrue
+                ? CircularProgressIndicator()
+                : ReusableIconSetting(
+                    icon: const Icon(Icons.logout),
+                    onPressed: () {
+                      customOntapDialogTwoButtons(
+                          context,
+                          "Logout",
+                          "Are You Sure You Want To Logout?",
+                          "Cancel",
+                          "Logout", () {
+                        Get.back();
+                      }, () {
+                        Get.back();
+                        logoutController.logout();
+                      });
+                    },
+                    btntxt: const Text('Logout'),
                   ),
-                ),
-              );
-      },
+            //   ;
+            // }),
+            ReusableIconSetting(
+              icon: const Icon(Icons.delete),
+              onPressed: () {
+                customOntapDialogTwoButtons(
+                    context,
+                    "Delete Account",
+                    "Are You Sure You Want To Permanantly Delete Your Account?",
+                    "Cancel",
+                    "Delete", () {
+                  Get.back();
+                }, () {
+                  Get.back();
+                  deleteAccountController.deleteAccount();
+                });
+              },
+              btntxt: const Text('Delete Account'),
+            )
+          ],
+        ),
+      ),
     );
   }
 

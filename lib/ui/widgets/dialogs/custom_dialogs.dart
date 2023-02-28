@@ -3,6 +3,32 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
 
+generalException() {
+  Get.dialog(CupertinoAlertDialog(
+      title: const Text(
+        "Oops",
+        style: UIDataTextStyles.dialogTitle,
+      ),
+      content: Column(
+        children: const [
+          Text(
+            "An Unknown Error Occured. Please Try Again In a While",
+            style: UIDataTextStyles.dialogMsg,
+          )
+        ],
+      ),
+      actions: [
+        TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text(
+              "Okay",
+              style: UIDataTextStyles.dialogButton,
+            )),
+      ]));
+}
+
 exceptionDialog(String title, String msg) {
   return Get.defaultDialog(
       titlePadding: const EdgeInsets.only(top: 20),

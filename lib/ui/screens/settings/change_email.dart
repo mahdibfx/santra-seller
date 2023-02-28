@@ -1,4 +1,5 @@
 import 'package:santra_seller/controllers/settings_controller/change_email_controller.dart';
+import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
@@ -29,26 +30,59 @@ class ChangeEmail extends StatelessWidget {
                       textScaleFactor: 2,
                     ),
                     SpacingHeight.heightlistspacing15,
-                    AccountInfoTextFields(
-                        infoController: _,
-                        hint: "Email",
-                        title: "Email",
-                        controller: _.emailController,
-                        validatorText: "Please Enter Email"),
+                    CommonTextField(
+                      controller: _.emailController,
+                      fieldHeading: "New Email",
+                      hintText: "New Email",
+                      isTextHidden: false,
+                      fillcolor: UIDataColors.white,
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (val) {
+                        bool email = _.emailRegex.hasMatch(val);
+                        if (val.isEmpty) {
+                          return "please enter your email";
+                        } else if (email == null) {
+                          return "please enter valid email address";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
                     SpacingHeight.heightlistspacing10,
-                    AccountInfoTextFields(
-                        infoController: _,
-                        hint: "Confirm Email",
-                        title: "Confirm Email",
-                        controller: _.confirmeEmailController,
-                        validatorText: "Please Enter Email Again To Confirm"),
+                    CommonTextField(
+                      controller: _.confirmeEmailController,
+                      fieldHeading: "Confirm Email",
+                      hintText: "Confirm Email",
+                      isTextHidden: false,
+                      fillcolor: UIDataColors.white,
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (val) {
+                        bool email = _.emailRegex.hasMatch(val);
+                        if (val.isEmpty) {
+                          return "please enter your email";
+                        } else if (email == null) {
+                          return "please enter valid email address";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
                     SpacingHeight.heightlistspacing10,
-                    AccountInfoTextFields(
-                        infoController: _,
-                        hint: "Password",
-                        title: "Password",
-                        controller: _.passwordController,
-                        validatorText: "Please Enter Password"),
+                    CommonTextField(
+                      controller: _.passwordController,
+                      fieldHeading: "Password",
+                      hintText: "Password",
+                      isTextHidden: true,
+                      fillcolor: UIDataColors.white,
+                      keyboardType: TextInputType.text,
+                      validator: (val) {
+                        if (val.isEmpty) {
+                          return "please enter your email";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
                     SpacingHeight.heightlistspacing10,
                     RaisedGradientButton(
                       gradient: const LinearGradient(

@@ -34,33 +34,69 @@ class AccountInfo extends StatelessWidget {
                       textScaleFactor: 2,
                     ),
                     SpacingHeight.heightlistspacing15,
-                    AccountInfoTextFields(
-                        infoController: _,
-                        hint: "Email",
-                        title: "Email",
-                        controller: _.emailController,
-                        validatorText: "Please Enter Email"),
+                    CommonTextField(
+                      controller: _.emailController,
+                      fieldHeading: "Email",
+                      hintText: "Email",
+                      isTextHidden: false,
+                      fillcolor: UIDataColors.white,
+                      keyboardType: TextInputType.text,
+                      validator: (val) {
+                        if (val.isEmpty) {
+                          return "please enter your email";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
                     SpacingHeight.heightlistspacing10,
-                    AccountInfoTextFields(
-                        infoController: _,
-                        hint: "First Name",
-                        title: "First Name",
-                        controller: _.fNameController,
-                        validatorText: "Please Enter First Name"),
+                    CommonTextField(
+                      controller: _.fNameController,
+                      fieldHeading: "First Name",
+                      hintText: "First Name",
+                      isTextHidden: false,
+                      fillcolor: UIDataColors.white,
+                      keyboardType: TextInputType.text,
+                      validator: (val) {
+                        if (val.isEmpty) {
+                          return "please enter your first name";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
                     SpacingHeight.heightlistspacing10,
-                    AccountInfoTextFields(
-                        infoController: _,
-                        hint: "Last Name",
-                        title: "Last Name",
-                        controller: _.lNameController,
-                        validatorText: "Please Enter Last Name"),
+                    CommonTextField(
+                      controller: _.lNameController,
+                      fieldHeading: "Last Name",
+                      hintText: "Last Name",
+                      isTextHidden: false,
+                      fillcolor: UIDataColors.white,
+                      keyboardType: TextInputType.text,
+                      validator: (val) {
+                        if (val.isEmpty) {
+                          return "please enter your last name";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
                     SpacingHeight.heightlistspacing10,
-                    AccountInfoTextFields(
-                        infoController: _,
-                        hint: "Date Of Birth",
-                        title: "Date Of Birth",
-                        controller: _.dobController,
-                        validatorText: "Please Enter Date Of Birth"),
+                    CommonTextField(
+                      controller: _.dobController,
+                      fieldHeading: "Date Of Birth",
+                      hintText: "Date Of Birth",
+                      isTextHidden: false,
+                      fillcolor: UIDataColors.white,
+                      keyboardType: TextInputType.text,
+                      validator: (val) {
+                        if (val.isEmpty) {
+                          return "please enter your Date Of Birth";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
                     SpacingHeight.heightlistspacing10,
                     RaisedGradientButton(
                       gradient: const LinearGradient(

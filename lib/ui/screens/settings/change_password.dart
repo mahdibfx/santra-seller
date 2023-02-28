@@ -5,6 +5,7 @@ import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import '../../widgets/textfields/account_info_text_fields.dart';
 import 'package:flutter/material.dart';
+import '../../widgets/textfields/common_textfield.dart';
 import '/utils/uidata.dart';
 import 'package:get/get.dart';
 
@@ -30,26 +31,53 @@ class ChangePassword extends StatelessWidget {
                       textScaleFactor: 2,
                     ),
                     SpacingHeight.heightlistspacing15,
-                    AccountInfoTextFields(
-                        infoController: _,
-                        hint: "Curent Password",
-                        title: "Curent Password",
-                        controller: _.currentPasswordController,
-                        validatorText: "Please Enter Curent Password"),
+                    CommonTextField(
+                      controller: _.currentPasswordController,
+                      fieldHeading: "Current Password",
+                      hintText: "Current Password",
+                      isTextHidden: true,
+                      fillcolor: UIDataColors.white,
+                      keyboardType: TextInputType.text,
+                      validator: (val) {
+                        if (val.isEmpty) {
+                          return "please enter your current password";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
                     SpacingHeight.heightlistspacing10,
-                    AccountInfoTextFields(
-                        infoController: _,
-                        hint: "New Password",
-                        title: "New Password",
-                        controller: _.newPasswordController,
-                        validatorText: "Please Enter New Password"),
+                    CommonTextField(
+                      controller: _.newPasswordController,
+                      fieldHeading: "New Password",
+                      hintText: "New Password",
+                      isTextHidden: true,
+                      fillcolor: UIDataColors.white,
+                      keyboardType: TextInputType.text,
+                      validator: (val) {
+                        if (val.isEmpty) {
+                          return "please enter your new password";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
                     SpacingHeight.heightlistspacing10,
-                    AccountInfoTextFields(
-                        infoController: _,
-                        hint: "Confirm New Password",
-                        title: "Confirm New Password",
-                        controller: _.confirmNewPasswordController,
-                        validatorText: "Please Enter New Password Again"),
+                    CommonTextField(
+                      controller: _.confirmNewPasswordController,
+                      fieldHeading: "Confirm New Password",
+                      hintText: "Confirm New Password",
+                      isTextHidden: true,
+                      fillcolor: UIDataColors.white,
+                      keyboardType: TextInputType.text,
+                      validator: (val) {
+                        if (val.isEmpty) {
+                          return "please enter new password again";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
                     SpacingHeight.heightlistspacing10,
                     RaisedGradientButton(
                       gradient: const LinearGradient(
