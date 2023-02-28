@@ -61,7 +61,9 @@ class MoreSettingScreen extends StatelessWidget {
                       ),
                       ReusableIconSetting(
                         icon: const Icon(Icons.group),
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(Routes.mycustomerscreen);
+                        },
                         btntxt: const Text('My Customers'),
                       ),
                       ReusableIconSetting(
