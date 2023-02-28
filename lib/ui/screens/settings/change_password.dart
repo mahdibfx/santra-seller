@@ -1,9 +1,7 @@
-import 'package:santra_seller/controllers/settings_controller/change_email_controller.dart';
 import 'package:santra_seller/controllers/settings_controller/change_password_controller.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
-import '../../widgets/textfields/account_info_text_fields.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/textfields/common_textfield.dart';
 import '/utils/uidata.dart';

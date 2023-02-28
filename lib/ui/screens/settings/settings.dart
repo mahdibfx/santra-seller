@@ -60,25 +60,19 @@ class Settings extends StatelessWidget {
             ),
             // GetBuilder<LogoutController>(builder: (logoutController) {
             //   return
-            logoutController.isLogoutLoading.isTrue
-                ? CircularProgressIndicator()
-                : ReusableIconSetting(
-                    icon: const Icon(Icons.logout),
-                    onPressed: () {
-                      customOntapDialogTwoButtons(
-                          context,
-                          "Logout",
-                          "Are You Sure You Want To Logout?",
-                          "Cancel",
-                          "Logout", () {
-                        Get.back();
-                      }, () {
-                        Get.back();
-                        logoutController.logout();
-                      });
-                    },
-                    btntxt: const Text('Logout'),
-                  ),
+            ReusableIconSetting(
+              icon: const Icon(Icons.logout),
+              onPressed: () {
+                customOntapDialogTwoButtons(context, "Logout",
+                    "Are You Sure You Want To Logout?", "Cancel", "Logout", () {
+                  Get.back();
+                }, () {
+                  Get.back();
+                  logoutController.logout();
+                });
+              },
+              btntxt: const Text('Logout'),
+            ),
             //   ;
             // }),
             ReusableIconSetting(

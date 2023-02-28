@@ -3,7 +3,6 @@ import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
-import '../../widgets/textfields/account_info_text_fields.dart';
 import 'package:flutter/material.dart';
 import '/utils/uidata.dart';
 import 'package:get/get.dart';
