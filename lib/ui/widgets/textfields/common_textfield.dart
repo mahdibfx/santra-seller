@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:santra_seller/utils/uidata.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
+import 'package:get/get.dart';
 
 
 class CommonTextField extends StatelessWidget {
@@ -137,6 +138,6 @@ class CommonTextField extends StatelessWidget {
 
         ),
       ],
-    );
+    ).marginOnly(bottom: 10);
   }
 }

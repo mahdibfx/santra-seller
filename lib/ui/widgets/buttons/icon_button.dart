@@ -4,7 +4,7 @@ class ReusableIconButton extends StatelessWidget {
   final Icon? icon;
   final onPressed;
   final Text? btntxt;
-  ReusableIconButton({@required this.icon, @required this.onPressed , @required this.btntxt});
+  const ReusableIconButton({required this.icon, required this.onPressed , this.btntxt});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class ReusableIconButton extends StatelessWidget {
       child: Column( // Replace with a Row for horizontal icon + text
         children: <Widget>[
           icon!,
-          btntxt!,
+          btntxt??SizedBox(),
         ],
       ),
     );
