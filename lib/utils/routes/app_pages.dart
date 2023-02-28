@@ -1,8 +1,12 @@
 import 'package:get/get.dart';
 import 'package:santra_seller/ui/screens/customer/add_customer.dart';
 import 'package:santra_seller/ui/screens/more_setting/contact_us/contact_us_screen.dart';
+import 'package:santra_seller/ui/screens/more_setting/my_customer/add_customer.dart';
+import 'package:santra_seller/ui/screens/more_setting/my_customer/my_customer_screen.dart';
 import 'package:santra_seller/ui/screens/more_setting/settings.dart';
 import 'package:santra_seller/ui/screens/more_setting/wallet_screen.dart';
+import 'package:santra_seller/utils/bindings/more_screen_binding/my_customer_binding/add_new_customer_binding.dart';
+import 'package:santra_seller/utils/bindings/more_screen_binding/my_customer_binding/my_customer_binding.dart';
 import 'package:santra_seller/utils/bindings/more_screen_binding/wallet_binding.dart';
 import 'package:santra_seller/utils/routes/app_routes.dart';
 
@@ -87,6 +91,16 @@ class AppPages {
       name: Routes.contactscreen,
       page: () => ContactUsScreen(),
       binding: ContactUsBinding(),
+    ),
+    GetPage(
+      name: Routes.mycustomerscreen,
+      page: () => MyCustomerScreen(),
+      binding: MyCustomerBindings(),
+    ),
+    GetPage(
+      name: Routes.addNewcustomer,
+      page: () => AddCustomerScreen(),
+      binding: AddNewCustomerBindings(),
     ),
   ];
 }
