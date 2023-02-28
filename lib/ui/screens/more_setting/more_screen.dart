@@ -29,10 +29,17 @@ class MoreSettingScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'More',
-                        textScaleFactor: 2,
+                      Row(
+                        children: const [
+                          Icon(Icons.menu),
+                          SpacingWidth.widthlistspacing,
+                           Text(
+                            'More',
+                            textScaleFactor: 2,
+                          ),
+                        ],
                       ),
+                      SpacingHeight.heightlistspacing20,
                       ReusableIconSetting(
                         icon: const Icon(Icons.settings),
                         onPressed: () {
@@ -42,7 +49,9 @@ class MoreSettingScreen extends StatelessWidget {
                       ),
                       ReusableIconSetting(
                         icon: const Icon(Icons.business),
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(Routes.aboutscreen);
+                        },
                         btntxt: const Text('About Us'),
                       ),
                       ReusableIconSetting(
@@ -62,16 +71,20 @@ class MoreSettingScreen extends StatelessWidget {
                       ),
                       ReusableIconSetting(
                         icon: const Icon(Icons.wallet),
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(Routes.walletscreen);
+                        },
                         btntxt: const Text('Wallet'),
                       ),
                       ReusableIconSetting(
                         icon: const Icon(Icons.call),
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(Routes.contactscreen);
+                        },
                         btntxt: const Text('Contact Us'),
                       )
                     ],
-                  ),
+                  ).marginAll(10),
                 ),
               );
       },
