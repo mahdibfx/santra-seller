@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:santra_seller/controllers/more_screen_controller.dart/settings_controller.dart';
-import '../../../controllers/more_screen_controller.dart/more_controller.dart';
+import 'package:santra_seller/controllers/settings_controller/settings_controller.dart';
+import '../../../../controllers/more_screen_controller.dart/more_controller.dart';
 
 class SettingsBindings extends Bindings {
   @override

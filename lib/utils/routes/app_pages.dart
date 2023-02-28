@@ -1,6 +1,12 @@
 import 'package:get/get.dart';
 import 'package:santra_seller/ui/screens/customer/add_customer.dart';
-import 'package:santra_seller/ui/screens/more_setting/settings.dart';
+import 'package:santra_seller/ui/screens/settings/account_info.dart';
+import 'package:santra_seller/ui/screens/settings/change_email.dart';
+import 'package:santra_seller/ui/screens/settings/change_password.dart';
+import 'package:santra_seller/ui/screens/settings/settings.dart';
+import 'package:santra_seller/utils/bindings/more_screen_binding/settings/account_info_binding.dart';
+import 'package:santra_seller/utils/bindings/more_screen_binding/settings/change_email_binding.dart';
+import 'package:santra_seller/utils/bindings/more_screen_binding/settings/change_password_binding.dart';
 import 'package:santra_seller/utils/routes/app_routes.dart';
 
 import '../../ui/screens/auth_screen/login_screen.dart';
@@ -13,7 +19,7 @@ import '../bindings/auth_binding/signup_binding.dart';
 import '../bindings/customer_binding/customer_binding.dart';
 import '../bindings/home_binding/home_screen_binding.dart';
 import '../bindings/more_screen_binding/more_screen_binding.dart';
-import '../bindings/more_screen_binding/settings_bindings.dart';
+import '../bindings/more_screen_binding/settings/settings_bindings.dart';
 import '../bindings/splash_binding.dart';
 
 class AppPages {
@@ -66,6 +72,21 @@ class AppPages {
       name: Routes.settings,
       page: () => Settings(),
       binding: SettingsBindings(),
+    ),
+    GetPage(
+      name: Routes.accountInfoRoute,
+      page: () => AccountInfo(),
+      binding: AccountInfoBinding(),
+    ),
+    GetPage(
+      name: Routes.changeEmail,
+      page: () => ChangeEmail(),
+      binding: ChangeEmailBinding(),
+    ),
+    GetPage(
+      name: Routes.changePassword,
+      page: () => ChangePassword(),
+      binding: ChangePasswordBinding(),
     ),
   ];
 }
