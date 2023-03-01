@@ -15,7 +15,7 @@ class DeleteAccountController extends GetxController {
     isdelAccLoading(true);
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      var url = Uri.parse(ApiData.deleteAccount);
+      var url = Uri.parse(ApiData.deleteAccountApi);
       Map<String, dynamic> body = {};
       body['seller_code'] = prefs.getString('sellercode');
       var response = await http.post(url, body: body);

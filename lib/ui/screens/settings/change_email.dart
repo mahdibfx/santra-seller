@@ -40,7 +40,7 @@ class ChangeEmail extends StatelessWidget {
                         bool email = _.emailRegex.hasMatch(val);
                         if (val.isEmpty) {
                           return "please enter your email";
-                        } else if (email == null) {
+                        } else if (!email) {
                           return "please enter valid email address";
                         } else {
                           return null;
@@ -59,7 +59,7 @@ class ChangeEmail extends StatelessWidget {
                         bool email = _.emailRegex.hasMatch(val);
                         if (val.isEmpty) {
                           return "please enter your email";
-                        } else if (email == null) {
+                        } else if (!email) {
                           return "please enter valid email address";
                         } else {
                           return null;
@@ -71,30 +71,44 @@ class ChangeEmail extends StatelessWidget {
                       controller: _.passwordController,
                       fieldHeading: "Password",
                       hintText: "Password",
-                      isTextHidden: true,
+                      isTextHidden: _.securetext,
                       fillcolor: UIDataColors.white,
                       keyboardType: TextInputType.text,
+                      togglePassword: true,
+                      toggleIcon: _.securetext == true
+                          ? Icons.visibility_off
+                          : Icons.remove_red_eye,
+                      toggleFunction: () {
+                        _.securetext = !_.securetext;
+                        _.update();
+                      },
                       validator: (val) {
                         if (val.isEmpty) {
-                          return "please enter your email";
+                          return "please enter your password";
                         } else {
                           return null;
                         }
                       },
                     ),
                     SpacingHeight.heightlistspacing10,
-                    RaisedGradientButton(
-                      gradient: const LinearGradient(
-                        colors: <Color>[
-                          Color(0xff006EB8),
-                          Color(0xff006EB8),
-                        ],
-                      ),
-                      btntxt: "Submit".tr,
-                      buttontxtColor: UIDataColors.white,
-                      onPressed: () {
-                        // _.loginfunction();
-                      },
+                    Obx(
+                      () => _.isUpdateEmailLoading.isTrue
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : RaisedGradientButton(
+                              gradient: const LinearGradient(
+                                colors: <Color>[
+                                  Color(0xff006EB8),
+                                  Color(0xff006EB8),
+                                ],
+                              ),
+                              btntxt: "Submit".tr,
+                              buttontxtColor: UIDataColors.white,
+                              onPressed: () {
+                                _.updateEmail();
+                              },
+                            ),
                     ),
                   ],
                 ).marginOnly(left: 20.0, right: 20.0),

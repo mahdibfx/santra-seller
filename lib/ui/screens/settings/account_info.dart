@@ -77,34 +77,31 @@ class AccountInfo extends StatelessWidget {
                       },
                     ),
                     SpacingHeight.heightlistspacing10,
-                    CommonTextField(
-                      controller: _.dobController,
-                      fieldHeading: "Date Of Birth",
-                      hintText: "Date Of Birth",
-                      isTextHidden: false,
-                      fillcolor: UIDataColors.white,
-                      keyboardType: TextInputType.text,
-                      validator: (val) {
-                        if (val.isEmpty) {
-                          return "please enter your Date Of Birth";
-                        } else {
-                          return null;
-                        }
+                    TappableTextField(
+                      ontap: () {
+                        _.pickUserDob(context);
                       },
+                      fieldHeight: 50,
+                      heading: "Date Of Birth",
+                      value: _.formatteUserDob.toString(),
                     ),
                     SpacingHeight.heightlistspacing10,
-                    RaisedGradientButton(
-                      gradient: const LinearGradient(
-                        colors: <Color>[
-                          Color(0xff006EB8),
-                          Color(0xff006EB8),
-                        ],
-                      ),
-                      btntxt: "Save".tr,
-                      buttontxtColor: UIDataColors.white,
-                      onPressed: () {
-                        // _.loginfunction();
-                      },
+                    Obx(
+                      () => _.isUpdateAccInfoLoading.isTrue
+                          ? const Center(child: CircularProgressIndicator())
+                          : RaisedGradientButton(
+                              gradient: const LinearGradient(
+                                colors: <Color>[
+                                  Color(0xff006EB8),
+                                  Color(0xff006EB8),
+                                ],
+                              ),
+                              btntxt: "Save".tr,
+                              buttontxtColor: UIDataColors.white,
+                              onPressed: () {
+                                _.updateAccountInfo();
+                              },
+                            ),
                     ),
                   ],
                 ).marginOnly(left: 20.0, right: 20.0),
@@ -135,6 +132,59 @@ class AccountInfo extends StatelessWidget {
       },
       floatingIcon: Icons.add,
       elevation: 0.0,
+    );
+  }
+}
+
+class TappableTextField extends StatelessWidget {
+  String? heading;
+  double? fieldHeight;
+  String? value;
+  var ontap;
+  TappableTextField(
+      {Key? key,
+      this.heading,
+      this.fieldHeight,
+      required this.value,
+      required this.ontap})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: ontap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(heading!),
+          const SizedBox(
+            height: 7,
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            width: double.infinity,
+            height: fieldHeight,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                    color: const Color(0xff757575).withOpacity(0.7))),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 18, right: 14),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    value!,
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                  const Icon(Icons.calendar_month)
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -33,9 +33,18 @@ class ChangePassword extends StatelessWidget {
                       controller: _.currentPasswordController,
                       fieldHeading: "Current Password",
                       hintText: "Current Password",
-                      isTextHidden: true,
                       fillcolor: UIDataColors.white,
                       keyboardType: TextInputType.text,
+                      togglePassword: true,
+                      toggleIcon: _.currentPasswordSecuretext == true
+                          ? Icons.visibility_off
+                          : Icons.remove_red_eye,
+                      toggleFunction: () {
+                        _.currentPasswordSecuretext =
+                            !_.currentPasswordSecuretext;
+                        _.update();
+                      },
+                      isTextHidden: _.currentPasswordSecuretext,
                       validator: (val) {
                         if (val.isEmpty) {
                           return "please enter your current password";
@@ -49,9 +58,17 @@ class ChangePassword extends StatelessWidget {
                       controller: _.newPasswordController,
                       fieldHeading: "New Password",
                       hintText: "New Password",
-                      isTextHidden: true,
+                      isTextHidden: _.newPasswordSecuretext,
                       fillcolor: UIDataColors.white,
                       keyboardType: TextInputType.text,
+                      togglePassword: true,
+                      toggleIcon: _.newPasswordSecuretext == true
+                          ? Icons.visibility_off
+                          : Icons.remove_red_eye,
+                      toggleFunction: () {
+                        _.newPasswordSecuretext = !_.newPasswordSecuretext;
+                        _.update();
+                      },
                       validator: (val) {
                         if (val.isEmpty) {
                           return "please enter your new password";
@@ -65,9 +82,18 @@ class ChangePassword extends StatelessWidget {
                       controller: _.confirmNewPasswordController,
                       fieldHeading: "Confirm New Password",
                       hintText: "Confirm New Password",
-                      isTextHidden: true,
+                      isTextHidden: _.confirmPasswordSecuretext,
                       fillcolor: UIDataColors.white,
                       keyboardType: TextInputType.text,
+                      togglePassword: true,
+                      toggleIcon: _.confirmPasswordSecuretext == true
+                          ? Icons.visibility_off
+                          : Icons.remove_red_eye,
+                      toggleFunction: () {
+                        _.confirmPasswordSecuretext =
+                            !_.confirmPasswordSecuretext;
+                        _.update();
+                      },
                       validator: (val) {
                         if (val.isEmpty) {
                           return "please enter new password again";
@@ -77,18 +103,22 @@ class ChangePassword extends StatelessWidget {
                       },
                     ),
                     SpacingHeight.heightlistspacing10,
-                    RaisedGradientButton(
-                      gradient: const LinearGradient(
-                        colors: <Color>[
-                          Color(0xff006EB8),
-                          Color(0xff006EB8),
-                        ],
-                      ),
-                      btntxt: "Submit".tr,
-                      buttontxtColor: UIDataColors.white,
-                      onPressed: () {
-                        // _.loginfunction();
-                      },
+                    Obx(
+                      () => _.isUpdatePassLoading.isTrue
+                          ? const Center(child: CircularProgressIndicator())
+                          : RaisedGradientButton(
+                              gradient: const LinearGradient(
+                                colors: <Color>[
+                                  Color(0xff006EB8),
+                                  Color(0xff006EB8),
+                                ],
+                              ),
+                              btntxt: "Submit".tr,
+                              buttontxtColor: UIDataColors.white,
+                              onPressed: () {
+                                _.updatePassword();
+                              },
+                            ),
                     ),
                   ],
                 ).marginOnly(left: 20.0, right: 20.0),
