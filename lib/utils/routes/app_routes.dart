@@ -4,6 +4,9 @@ abstract class Routes {
   static const forgotpasswordRoutes = '/forgotpassword';
   static const splashRoutes = '/splash';
   static const signuproutes = '/signuproutes';
+  static const accountInfoRoute = '/accountinfo';
+  static const changeEmail = '/changeemail';
+  static const changePassword = '/changePassword';
   static const settings = '/settings';
   static const otpverifcation = '/otpverifcation';
   static const newpasswordroutes = '/newpassword';

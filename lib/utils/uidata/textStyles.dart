@@ -1,6 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:santra_seller/utils/uidata.dart';
 
 class UIDataTextStyles {
+  static const dialogTitle = TextStyle(
+      color: Colors.black,
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+      fontFamily: 'Markpro',
+      letterSpacing: 0.0);
+  static const dialogMsg = TextStyle(
+      color: Colors.black,
+      fontSize: 14,
+      fontWeight: FontWeight.normal,
+      fontFamily: 'Markpro',
+      letterSpacing: 0.0);
+  static const dialogButton = TextStyle(
+      color: Colors.black,
+      fontSize: 15,
+      fontWeight: FontWeight.bold,
+      fontFamily: 'Markpro',
+      letterSpacing: 0.0);
+  static const heading15Medium = TextStyle(
+      color: Colors.black,
+      fontSize: 15,
+      fontWeight: FontWeight.w500,
+      fontFamily: 'Markpro',
+      letterSpacing: 0.0);
   static const logout = TextStyle(
     fontSize: 12,
     color: Color(0xff818181),
@@ -25,8 +50,7 @@ class UIDataTextStyles {
     fontFamily: 'Poppins-SemiBold',
     fontWeight: FontWeight.w700,
   );
-  static const profilesetting =
-  TextStyle(
+  static const profilesetting = TextStyle(
     fontSize: 15,
     color: Color(0xff000000),
     fontFamily: 'Poppins',
@@ -52,16 +76,15 @@ class UIDataTextStyles {
     fontFamily: 'Poppins-Light',
   );
   static const alertmsg = TextStyle(
-    fontSize: 18,
+      fontSize: 18,
       color: Color(0xff006EB8),
-    fontFamily: 'Poppins-Light',
-    fontWeight: FontWeight.bold
-  ); static const bottomcolor = TextStyle(
-    fontSize: 12,
+      fontFamily: 'Poppins-Light',
+      fontWeight: FontWeight.bold);
+  static const bottomcolor = TextStyle(
+      fontSize: 12,
       color: Color(0xff006EB8),
-    fontFamily: 'Poppins-Light',
-    fontWeight: FontWeight.bold
-  );
+      fontFamily: 'Poppins-Light',
+      fontWeight: FontWeight.bold);
 
   static const btntext1 = TextStyle(
     fontSize: 12,
@@ -113,11 +136,6 @@ class UIDataTextStyles {
     fontFamily: 'Poppins-Medium',
     fontWeight: FontWeight.w900,
   );
-
-
-
-
-
 
   static const drawertext = TextStyle(
     fontSize: 17,
@@ -180,7 +198,6 @@ class UIDataTextStyles {
     fontFamily: 'Gilroy',
   );
 
-
   static const heightstyle = TextStyle(
     fontSize: 12,
     color: Colors.black,
@@ -203,7 +220,7 @@ class UIDataTextStyles {
     fontSize: 17,
     color: Colors.white,
     fontFamily: 'Gilroy',
-     fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.bold,
   );
 
   static const watchvideostyle = TextStyle(
@@ -211,19 +228,18 @@ class UIDataTextStyles {
     color: Colors.white,
     fontFamily: 'Gilroy',
   );
-   static const titles = TextStyle(
+  static const titles = TextStyle(
     fontSize: 16,
     color: Colors.black,
     fontFamily: 'Poppins-Medium',
     fontWeight: FontWeight.bold,
   );
-    static const makedata = TextStyle(
+  static const makedata = TextStyle(
     fontSize: 16,
     color: Colors.white,
     fontFamily: 'Poppins-Medium',
     fontWeight: FontWeight.bold,
   );
-
 
   static const appbarstyle = TextStyle(
     fontSize: 23,
@@ -359,7 +375,6 @@ class UIDataTextStyles {
     fontFamily: 'Gilroy',
   );
 
-
   // < ------------------------------------- Define Text Styling Here ----------------------->
 
   // ______-----------Logo Styling--------______________
@@ -402,13 +417,11 @@ class UIDataTextStyles {
     fontFamily: 'Gilroy',
   );
 
-
   static const kWelcomeHeading = TextStyle(
     color: Colors.white,
     fontSize: 20.0,
     fontWeight: FontWeight.bold,
     fontFamily: 'Gilroy',
-
   );
   static const kLoginTextStyle = TextStyle(
     color: Color.fromRGBO(1, 153, 202, 1),
@@ -438,14 +451,12 @@ class UIDataTextStyles {
   static const kErrorStyle =
       TextStyle(color: Color(0xff6d6d6d), letterSpacing: 1.2);
 
-
   //Constants
   static const kSurveyStyle = TextStyle(
     color: Color(0xff6d6d6d),
     fontFamily: 'Gilroy',
     fontWeight: FontWeight.w900,
     fontSize: 14,
-
   );
 
   static const kForgotPassword = TextStyle(
@@ -459,8 +470,6 @@ class UIDataTextStyles {
     fontSize: 22.0,
     color: Colors.black45,
     fontWeight: FontWeight.bold,
-
-
   );
 
   static const kHintStyle = TextStyle(
@@ -478,8 +487,6 @@ class UIDataTextStyles {
     color: Color(0xff3E3E3E),
     fontWeight: FontWeight.w900,
   );
-
-
 
   static const kHomeScreenConatinerStyle = TextStyle(
     fontSize: 14.0,
@@ -559,7 +566,8 @@ class UIDataTextStyles {
     fontFamily: 'Poppins-Medium',
     fontWeight: FontWeight.w600,
     color: Color(0xff221E30),
-  ); static const Majortext = TextStyle(
+  );
+  static const Majortext = TextStyle(
     fontSize: 15.0,
     fontFamily: 'Poppins-SemiBold',
     fontWeight: FontWeight.bold,
@@ -578,7 +586,7 @@ class UIDataTextStyles {
     color: Color(0xff006EB8),
   );
 
-   static const viewquotes = TextStyle(
+  static const viewquotes = TextStyle(
     fontSize: 16,
     color: Color(0xff006EB8),
     fontFamily: 'Poppins-normal',
@@ -590,9 +598,4 @@ class UIDataTextStyles {
     fontWeight: FontWeight.w500,
     color: Color(0xff0D75BB),
   );
-
-
-
-
-
 }

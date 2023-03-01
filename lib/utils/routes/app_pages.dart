@@ -1,10 +1,16 @@
 import 'package:get/get.dart';
 import 'package:santra_seller/ui/screens/customer/add_customer.dart';
+import 'package:santra_seller/ui/screens/settings/account_info.dart';
+import 'package:santra_seller/ui/screens/settings/change_email.dart';
+import 'package:santra_seller/ui/screens/settings/change_password.dart';
+import 'package:santra_seller/ui/screens/settings/settings.dart';
+import 'package:santra_seller/utils/bindings/more_screen_binding/settings/account_info_binding.dart';
+import 'package:santra_seller/utils/bindings/more_screen_binding/settings/change_email_binding.dart';
+import 'package:santra_seller/utils/bindings/more_screen_binding/settings/change_password_binding.dart';
 import 'package:santra_seller/ui/screens/more_setting/contact_us/contact_us_screen.dart';
 import 'package:santra_seller/ui/screens/more_setting/my_customer/add_customer.dart';
 import 'package:santra_seller/ui/screens/more_setting/my_customer/edit_customer_details.dart';
 import 'package:santra_seller/ui/screens/more_setting/my_customer/my_customer_screen.dart';
-import 'package:santra_seller/ui/screens/more_setting/settings.dart';
 import 'package:santra_seller/ui/screens/more_setting/wallet_screen.dart';
 import 'package:santra_seller/utils/bindings/more_screen_binding/my_customer_binding/add_new_customer_binding.dart';
 import 'package:santra_seller/utils/bindings/more_screen_binding/my_customer_binding/edit_customer_binding.dart';
@@ -25,7 +31,7 @@ import '../bindings/home_binding/home_screen_binding.dart';
 import '../bindings/more_screen_binding/about_us_binding.dart';
 import '../bindings/more_screen_binding/contact_binding/contact_us_binding.dart';
 import '../bindings/more_screen_binding/more_screen_binding.dart';
-import '../bindings/more_screen_binding/settings_bindings.dart';
+import '../bindings/more_screen_binding/settings/settings_bindings.dart';
 import '../bindings/splash_binding.dart';
 
 class AppPages {
@@ -78,6 +84,21 @@ class AppPages {
       name: Routes.settings,
       page: () => Settings(),
       binding: SettingsBindings(),
+    ),
+    GetPage(
+      name: Routes.accountInfoRoute,
+      page: () => AccountInfo(),
+      binding: AccountInfoBinding(),
+    ),
+    GetPage(
+      name: Routes.changeEmail,
+      page: () => ChangeEmail(),
+      binding: ChangeEmailBinding(),
+    ),
+    GetPage(
+      name: Routes.changePassword,
+      page: () => ChangePassword(),
+      binding: ChangePasswordBinding(),
     ),
     GetPage(
       name: Routes.aboutscreen,
