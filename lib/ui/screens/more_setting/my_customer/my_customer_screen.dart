@@ -78,6 +78,9 @@ class MyCustomerScreen extends StatelessWidget {
                           return MyCustomerCard(
                             name: 'Abdul Basit Ansari',
                             number: '971321654987',
+                            onTap: (){
+                               Get.toNamed(Routes.editcustomer);
+                            },
                           ).marginOnly(bottom: 10);
                         }),
                   ],

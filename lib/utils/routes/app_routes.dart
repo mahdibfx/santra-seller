@@ -36,4 +36,5 @@ abstract class Routes {
   static const inspectiondetialsroute = "/inspectiondetialsroute";
   static const congratulationsroute = "/congratulationsroute";
   static const addNewcustomer = "/addnewcustomer";
+  static const editcustomer = "/editcustomer";
 }

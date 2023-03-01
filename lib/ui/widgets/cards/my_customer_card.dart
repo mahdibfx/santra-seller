@@ -7,8 +7,9 @@ import '../buttons/icon_button.dart';
 class MyCustomerCard extends StatelessWidget {
   final String name;
   final String number;
+  final dynamic onTap;
 
-  const MyCustomerCard({super.key, required this.name, required this.number});
+  const MyCustomerCard({super.key, required this.name, required this.number, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class MyCustomerCard extends StatelessWidget {
                     Spacer(),
                     ReusableIconButton(
                       icon: Icon(Icons.edit),
-                      onPressed: () {},
+                      onPressed: onTap,
                     )
                   ],
                 ).marginAll(15)
