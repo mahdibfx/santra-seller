@@ -26,6 +26,7 @@ class UIDataTextStyles {
       fontWeight: FontWeight.w500,
       fontFamily: 'Markpro',
       letterSpacing: 0.0);
+
   static const logout = TextStyle(
     fontSize: 12,
     color: Color(0xff818181),
@@ -466,9 +467,9 @@ class UIDataTextStyles {
   );
 
   static const kHead = TextStyle(
-    fontFamily: 'Gilroy',
+    fontFamily: 'MarkPro',
     fontSize: 22.0,
-    color: Colors.black45,
+    color: Colors.black,
     fontWeight: FontWeight.bold,
   );
 

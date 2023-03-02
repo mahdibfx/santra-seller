@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:santra_seller/utils/api_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'logout_controller.dart';
 
 class DeleteAccountController extends GetxController {
