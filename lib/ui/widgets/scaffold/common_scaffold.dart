@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // package imports
 import 'package:get/get.dart';
 
-
 // lib imports
 import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata.dart';
@@ -13,8 +12,8 @@ import '../buttons/icon_button.dart';
 import '../custom_float.dart';
 import '../drawer/clip_drawer.dart';
 
-
 class CommonScaffold extends StatelessWidget {
+  final resizeToAvoid;
   final appTitle;
   final automaticallyImplyLeading;
   final brightness;
@@ -53,6 +52,7 @@ class CommonScaffold extends StatelessWidget {
   final appBarAction;
 
   CommonScaffold({
+    this.resizeToAvoid,
     this.backgroundcolor,
     this.appTitle,
     this.leading,
@@ -75,7 +75,7 @@ class CommonScaffold extends StatelessWidget {
     this.scaffoldKey,
     this.showBottomNav = false,
     this.centerDocked = false,
-    this.floatingIcon ,
+    this.floatingIcon,
     this.elevation = 4.0,
     this.enableHeader = false,
     this.headerName = false,
@@ -92,12 +92,9 @@ class CommonScaffold extends StatelessWidget {
   });
 
   Widget myBottomBar() => BottomAppBar(
-    shape: CircularNotchedRectangle(
-
-
-    ),
-    // color: UIDataColors.blue,//shape of notch
-    notchMargin: 5, //
+        shape: CircularNotchedRectangle(),
+        // color: UIDataColors.blue,//shape of notch
+        notchMargin: 5, //
         // shape:
         // AutomaticNotchedShape(RoundedRectangleBorder(
         //     borderRadius:
@@ -265,7 +262,7 @@ class CommonScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: resizeToAvoid,
       key: scaffoldKey != null ? scaffoldKey : null,
       backgroundColor: backgroundcolor,
       appBar: showAppBar
@@ -327,8 +324,7 @@ class CommonScaffold extends StatelessWidget {
         );
       }),
       floatingActionButton: showFAB
-          ?
-      CustomFloat(
+          ? CustomFloat(
               builder: centerDocked
                   ? const Text(
                       "5",

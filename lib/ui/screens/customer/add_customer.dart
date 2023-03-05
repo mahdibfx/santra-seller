@@ -1,7 +1,15 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'dart:convert';
+import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
+import 'package:santra_seller/utils/uidata/textStyles.dart';
 import '../../../controllers/home_controller/home_controller.dart';
 import '../../../utils/routes/app_routes.dart';
+import '../../widgets/add_manual_order_widgets/any_special_request.dart';
+import '../../widgets/add_manual_order_widgets/checkbox_modifier_list.dart';
+import '../../widgets/add_manual_order_widgets/rounded_close_button.dart';
+import '../../widgets/add_manual_order_widgets/pd_card_add_manual_order.dart';
+import '../../widgets/add_manual_order_widgets/price_on_selection.dart';
+import '../../widgets/add_manual_order_widgets/product_name_and_price_on_sheet.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 
 import 'package:flutter/material.dart';
@@ -23,12 +31,110 @@ class CustomerScreen extends StatelessWidget {
               ))
             : SafeArea(
                 child: SingleChildScrollView(
-                  child: Center(
-                    child: Container(
-                      child: Text('Customer screen'),
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: const [
+                        Icon(
+                          Icons.add,
+                          size: 40,
+                        ),
+                        Text(
+                          'Add Manual Order',
+                          style: UIDataTextStyles.kHead,
+                        ),
+                      ],
                     ),
-                  ),
-                ),
+                    CommonTextField(
+                      isTextHidden: false,
+                      fillcolor: Colors.white,
+                      labelText: "Search",
+                    ),
+                    SpacingHeight.heightlistspacing10,
+                    const Text(
+                      "Category Name",
+                      style: UIDataTextStyles.kHead,
+                    ),
+                    SpacingHeight.heightlistspacing10,
+                    ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: 20,
+                        itemBuilder: (context, index) {
+                          return PDCardAddManualOrder(
+                            onTap: () {
+                              showBottomSheet(
+                                  context: context,
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(20))),
+                                  builder: (context) {
+                                    return SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height -
+                                              300,
+                                      width: double.infinity,
+                                      child: Column(
+                                        children: [
+                                          Stack(
+                                            clipBehavior: Clip.none,
+                                            children: [
+                                              SizedBox(
+                                                height: 250,
+                                                width: double.infinity,
+                                                child: Image.asset(
+                                                  UIDataImage.dummyImage,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 12,
+                                                top: 12,
+                                                child: RoundedCloseButton(
+                                                  onTap: () {
+                                                    Get.back();
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Column(
+                                            children: [
+                                              const ProductNameAndPriceOnSheet(),
+                                              SpacingHeight.heightlistspacing5,
+                                              PriceOnSelection(onMinus: () {
+                                                print("Minus");
+                                              }, onPlus: () {
+                                                print("Plus");
+                                              }),
+                                              ListView.builder(
+                                                padding: EdgeInsets.zero,
+                                                shrinkWrap: true,
+                                                itemCount: 3,
+                                                itemBuilder: (context, index) {
+                                                  return CheckBoxModifier(
+                                                    modName: "Small",
+                                                    price: "230",
+                                                    isChecked: false,
+                                                  );
+                                                },
+                                              ),
+                                              SpacingHeight.heightlistspacing10,
+                                              AnySpecialRequests(ontap: () {})
+                                            ],
+                                          ).paddingOnly(
+                                              left: 12, right: 12, top: 18),
+                                        ],
+                                      ),
+                                    );
+                                  });
+                            },
+                          );
+                        })
+                  ],
+                ).marginOnly(left: 10, right: 10)),
               );
       },
     );
@@ -37,6 +143,7 @@ class CustomerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(
+      resizeToAvoid: false,
       bodyData: bodyData(),
       backgroundcolor: UIDataColors.commonColor,
       showDrawer: false,
