@@ -324,16 +324,19 @@ class CommonScaffold extends StatelessWidget {
         );
       }),
       floatingActionButton: showFAB
-          ? CustomFloat(
-              builder: centerDocked
-                  ? const Text(
-                      "5",
-                      style: TextStyle(color: Colors.white, fontSize: 10.0),
-                    )
-                  : null,
-              icon: floatingIcon,
-              qrCallback: qrCallback,
-            )
+          ? Visibility(
+      visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
+            child: CustomFloat(
+                builder: centerDocked
+                    ? const Text(
+                        "5",
+                        style: TextStyle(color: Colors.white, fontSize: 10.0),
+                      )
+                    : null,
+                icon: floatingIcon,
+                qrCallback: qrCallback,
+              ),
+          )
           : null,
       floatingActionButtonLocation: centerDocked
           ? FloatingActionButtonLocation.centerDocked

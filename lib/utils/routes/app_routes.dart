@@ -40,4 +40,6 @@ abstract class Routes {
   static const congratulationsroute = "/congratulationsroute";
   static const addNewcustomer = "/addnewcustomer";
   static const editcustomer = "/editcustomer";
+  static const cartroute = "/cartroute";
+
 }

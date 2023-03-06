@@ -68,7 +68,9 @@ class MoreSettingScreen extends StatelessWidget {
                       ),
                       ReusableIconSetting(
                         icon: const Icon(Icons.message),
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(Routes.cartroute);
+                        },
                         btntxt: const Text('Get Help'),
                       ),
                       ReusableIconSetting(

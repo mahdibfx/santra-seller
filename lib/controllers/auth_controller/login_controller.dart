@@ -62,7 +62,10 @@ class LoginController extends GetxController {
   }
 
   Future getFcmToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     firebaseMessagingToken = await FirebaseMessaging.instance.getToken();
+    update();
+    prefs.setString('fcmtoken',firebaseMessagingToken.toString());
     print("token: $firebaseMessagingToken");
   }
 
