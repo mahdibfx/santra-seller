@@ -13,39 +13,43 @@ class CheckBoxModifier extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Row(
-          children: [
-            Text(
-              modName!,
-              style: UIDataTextStyles.heading15Medium,
-            ),
-            const Spacer(),
-            Text(
-              "(AED $price )",
-              style: UIDataTextStyles.heading15Medium,
-            ),
-            SpacingWidth.widthlistspacing,
-            Theme(
-              data: ThemeData(unselectedWidgetColor: UIDataColors.grey),
-              child: SizedBox(
-                width: 15,
-                child: Checkbox(
-                  activeColor: UIDataColors.black,
-                  checkColor: UIDataColors.black,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    side: BorderSide(
-                      color: UIDataColors.pink, //your desire colour here
-                      width: 1.5,
+        Container(
+          height: 30,
+          child: Row(
+            children: [
+              Text(
+                modName!,
+                style: UIDataTextStyles.heading15Medium,
+              ),
+              const Spacer(),
+              Text(
+                "(AED $price )",
+                style: UIDataTextStyles.heading15Medium,
+              ),
+              SpacingWidth.widthlistspacing,
+              Theme(
+                data: ThemeData(unselectedWidgetColor: UIDataColors.grey),
+                child: SizedBox(
+                  width: 15,
+                  child: Checkbox(
+                    activeColor: UIDataColors.black,
+                    checkColor: UIDataColors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(
+                        color: UIDataColors.pink, //your desire colour here
+                        width: 1.5,
+                      ),
                     ),
+                    onChanged: (bool? value) {},
+                    value: isChecked,
                   ),
-                  onChanged: (bool? value) {},
-                  value: isChecked,
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         Divider(
           thickness: 1,

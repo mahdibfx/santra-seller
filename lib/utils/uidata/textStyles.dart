@@ -34,7 +34,7 @@ class UIDataTextStyles {
   );
   static const headingbtn = TextStyle(
       color: Colors.white,
-      fontSize: 13,
+      fontSize: 15,
       fontWeight: FontWeight.bold,
       fontFamily: 'Poppins',
       letterSpacing: 0.0);
