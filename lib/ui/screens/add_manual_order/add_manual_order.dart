@@ -58,7 +58,7 @@ class AddManulOrder extends StatelessWidget {
                     ),
                     SpacingHeight.heightlistspacing10,
                     ListView.builder(
-                        physics: BouncingScrollPhysics(),
+                        physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: 20,
                         itemBuilder: (context, index) {
@@ -73,36 +73,37 @@ class AddManulOrder extends StatelessWidget {
                                           borderRadius:
                                               BorderRadius.circular(10)),
                                       width: double.infinity,
-                                      child: Column(
-                                        children: [
-                                          Stack(
-                                            clipBehavior: Clip.none,
-                                            children: [
-                                              SizedBox(
-                                                height: size.height * 0.3,
-                                                width: double.infinity,
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  child: Image.asset(
-                                                    UIDataImage.dummyImage,
-                                                    fit: BoxFit.cover,
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          children: [
+                                            Stack(
+                                              clipBehavior: Clip.none,
+                                              children: [
+                                                SizedBox(
+                                                  height: size.height * 0.3,
+                                                  width: double.infinity,
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    child: Image.asset(
+                                                      UIDataImage.dummyImage,
+                                                      fit: BoxFit.cover,
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              Positioned(
-                                                left: 12,
-                                                top: 12,
-                                                child: RoundedCloseButton(
-                                                  onTap: () {
-                                                    Get.back();
-                                                  },
+                                                Positioned(
+                                                  left: 12,
+                                                  top: 12,
+                                                  child: RoundedCloseButton(
+                                                    onTap: () {
+                                                      Get.back();
+                                                    },
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          SingleChildScrollView(
-                                            child: Column(
+                                              ],
+                                            ),
+                                            Column(
                                               children: [
                                                 const ProductNameAndPriceOnSheet(),
                                                 SpacingHeight
@@ -113,6 +114,8 @@ class AddManulOrder extends StatelessWidget {
                                                   print("Plus");
                                                 }),
                                                 ListView.builder(
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
                                                   padding: EdgeInsets.zero,
                                                   shrinkWrap: true,
                                                   itemCount: 3,
@@ -135,18 +138,18 @@ class AddManulOrder extends StatelessWidget {
                                                           .height *
                                                       0.03,
                                                 ),
-                                                const AddToBasketButton()
+                                                const AddToBasketButton(),
                                               ],
                                             ).paddingOnly(
                                                 left: 12, right: 12, top: 18),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     );
                                   });
                             },
                           );
-                        })
+                        }),
                   ],
                 ).marginOnly(left: 10, right: 10)),
               );
