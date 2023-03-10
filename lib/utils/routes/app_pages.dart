@@ -1,10 +1,13 @@
 import 'package:get/get.dart';
+
+import 'package:santra_seller/ui/screens/cart/cart_screen.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/ui/screens/customer/add_customer.dart';
 import 'package:santra_seller/ui/screens/settings/account_info.dart';
 import 'package:santra_seller/ui/screens/settings/change_email.dart';
 import 'package:santra_seller/ui/screens/settings/change_password.dart';
 import 'package:santra_seller/ui/screens/settings/settings.dart';
+import 'package:santra_seller/utils/bindings/cart_binding/cart_binding.dart';
 import 'package:santra_seller/utils/bindings/add_manual_order_binding/add_manual_order_binding.dart';
 import 'package:santra_seller/utils/bindings/more_screen_binding/settings/account_info_binding.dart';
 import 'package:santra_seller/utils/bindings/more_screen_binding/settings/change_email_binding.dart';
@@ -136,6 +139,11 @@ class AppPages {
       name: Routes.editcustomer,
       page: () => EditCustomerDetails(),
       binding: EditCustomerBindings(),
+    ),
+    GetPage(
+      name: Routes.cartroute,
+      page: () => CartScreen(),
+      binding: CartBindings(),
     ),
   ];
 }
