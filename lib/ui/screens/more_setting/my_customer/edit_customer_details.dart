@@ -68,7 +68,7 @@ class EditCustomerDetails extends StatelessWidget {
                       validator: (val) {
                         if (val.isEmpty) {
                           return "please enter your Phone Number";
-                        } 
+                        }
                       },
                     ),
                     CommonTextField(
@@ -81,7 +81,7 @@ class EditCustomerDetails extends StatelessWidget {
                       validator: (val) {
                         if (val.isEmpty) {
                           return "please enter your City";
-                        } 
+                        }
                       },
                     ),
                     CommonTextField(
@@ -94,7 +94,7 @@ class EditCustomerDetails extends StatelessWidget {
                       validator: (val) {
                         if (val.isEmpty) {
                           return "please enter your Phone Number";
-                        } 
+                        }
                       },
                     ),
                     CommonTextField(
@@ -107,7 +107,7 @@ class EditCustomerDetails extends StatelessWidget {
                       validator: (val) {
                         if (val.isEmpty) {
                           return "please enter your Phone Number";
-                        } 
+                        }
                       },
                     ),
                     CommonTextField(
@@ -120,7 +120,7 @@ class EditCustomerDetails extends StatelessWidget {
                       validator: (val) {
                         if (val.isEmpty) {
                           return "please enter your Phone Number";
-                        } 
+                        }
                       },
                     ),
                     SpacingHeight.heightlistspacing20,
@@ -135,7 +135,6 @@ class EditCustomerDetails extends StatelessWidget {
                       buttontxtColor: UIDataColors.white,
                       onPressed: () {},
                     ),
-                    
                   ],
                 ).marginAll(10)),
               );
@@ -158,7 +157,7 @@ class EditCustomerDetails extends StatelessWidget {
       appTitle: 'Edit Customer Details',
       backarrow: UIDataColors.black,
       qrCallback: () {
-        Get.offAllNamed(Routes.addCustomer);
+        Get.offAllNamed(Routes.addManualOrder);
       },
       floatingIcon: Icons.add,
       elevation: 1.0,
