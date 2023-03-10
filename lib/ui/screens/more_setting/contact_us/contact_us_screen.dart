@@ -138,7 +138,7 @@ class ContactUsScreen extends StatelessWidget {
       appTitle: 'Contact Us',
       backarrow: UIDataColors.black,
       qrCallback: () {
-        Get.offAllNamed(Routes.addCustomer);
+        Get.offAllNamed(Routes.addManualOrder);
       },
       floatingIcon: Icons.add,
       elevation: 1.0,

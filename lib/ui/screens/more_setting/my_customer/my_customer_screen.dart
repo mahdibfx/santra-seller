@@ -78,8 +78,8 @@ class MyCustomerScreen extends StatelessWidget {
                           return MyCustomerCard(
                             name: 'Abdul Basit Ansari',
                             number: '971321654987',
-                            onTap: (){
-                               Get.toNamed(Routes.editcustomer);
+                            onTap: () {
+                              Get.toNamed(Routes.editcustomer);
                             },
                           ).marginOnly(bottom: 10);
                         }),
@@ -105,7 +105,7 @@ class MyCustomerScreen extends StatelessWidget {
       appTitle: 'My Customer',
       backarrow: UIDataColors.black,
       qrCallback: () {
-        Get.offAllNamed(Routes.addCustomer);
+        Get.offAllNamed(Routes.addManualOrder);
       },
       floatingIcon: Icons.add,
       elevation: 1.0,

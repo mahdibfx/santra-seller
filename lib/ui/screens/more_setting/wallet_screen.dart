@@ -22,15 +22,17 @@ class WalletScreen extends StatelessWidget {
               ))
             : SafeArea(
                 child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      SpacingHeight.heightlistspacing20,
-                    Text('Wallet', style: UIDataTextStyles.homecontainertxt,),
-                      SpacingHeight.heightlistspacing20,
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    SpacingHeight.heightlistspacing20,
+                    Text(
+                      'Wallet',
+                      style: UIDataTextStyles.homecontainertxt,
+                    ),
+                    SpacingHeight.heightlistspacing20,
                   ],
-                  ).marginAll(10)
-                ),
+                ).marginAll(10)),
               );
       },
     );
@@ -51,7 +53,7 @@ class WalletScreen extends StatelessWidget {
       appTitle: 'Wallet',
       backarrow: UIDataColors.black,
       qrCallback: () {
-        Get.offAllNamed(Routes.addCustomer);
+        Get.offAllNamed(Routes.addManualOrder);
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

@@ -1,5 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'dart:convert';
+import 'package:santra_seller/controllers/add_manual_order_controller.dart/add_manual_order_controller.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
 import '../../../controllers/home_controller/home_controller.dart';
@@ -10,8 +11,8 @@ import '../../widgets/add_manual_order_widgets/rounded_close_button.dart';
 import '../../widgets/add_manual_order_widgets/pd_card_add_manual_order.dart';
 import '../../widgets/add_manual_order_widgets/price_on_selection.dart';
 import '../../widgets/add_manual_order_widgets/product_name_and_price_on_sheet.dart';
+import '../../widgets/buttons/add_to_basket_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../utils/uidata.dart';
@@ -22,7 +23,7 @@ class CustomerScreen extends StatelessWidget {
   CustomerScreen({super.key});
 
   Widget bodyData() {
-    return GetBuilder<HomeController>(
+    return GetBuilder<AddManualOrderController>(
       builder: (_) {
         return _.isLoading
             ? const SizedBox(
@@ -72,9 +73,11 @@ class CustomerScreen extends StatelessWidget {
                                           topRight: Radius.circular(20))),
                                   builder: (context) {
                                     return SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height -
-                                              300,
+                                      height: MediaQuery.of(context)
+                                              .size
+                                              .height -
+                                          MediaQuery.of(context).size.height *
+                                              0.25,
                                       width: double.infinity,
                                       child: Column(
                                         children: [
@@ -100,32 +103,45 @@ class CustomerScreen extends StatelessWidget {
                                               ),
                                             ],
                                           ),
-                                          Column(
-                                            children: [
-                                              const ProductNameAndPriceOnSheet(),
-                                              SpacingHeight.heightlistspacing5,
-                                              PriceOnSelection(onMinus: () {
-                                                print("Minus");
-                                              }, onPlus: () {
-                                                print("Plus");
-                                              }),
-                                              ListView.builder(
-                                                padding: EdgeInsets.zero,
-                                                shrinkWrap: true,
-                                                itemCount: 3,
-                                                itemBuilder: (context, index) {
-                                                  return CheckBoxModifier(
-                                                    modName: "Small",
-                                                    price: "230",
-                                                    isChecked: false,
-                                                  );
-                                                },
-                                              ),
-                                              SpacingHeight.heightlistspacing10,
-                                              AnySpecialRequests(ontap: () {})
-                                            ],
-                                          ).paddingOnly(
-                                              left: 12, right: 12, top: 18),
+                                          SingleChildScrollView(
+                                            child: Column(
+                                              children: [
+                                                const ProductNameAndPriceOnSheet(),
+                                                SpacingHeight
+                                                    .heightlistspacing5,
+                                                PriceOnSelection(onMinus: () {
+                                                  print("Minus");
+                                                }, onPlus: () {
+                                                  print("Plus");
+                                                }),
+                                                ListView.builder(
+                                                  padding: EdgeInsets.zero,
+                                                  shrinkWrap: true,
+                                                  itemCount: 3,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return CheckBoxModifier(
+                                                      modName: "Small",
+                                                      price: "230",
+                                                      isChecked: false,
+                                                    );
+                                                  },
+                                                ),
+                                                SpacingHeight
+                                                    .heightlistspacing10,
+                                                AnySpecialRequests(
+                                                    ontap: () {}),
+                                                SizedBox(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.03,
+                                                ),
+                                                const AddToBasketButton()
+                                              ],
+                                            ).paddingOnly(
+                                                left: 12, right: 12, top: 18),
+                                          ),
                                         ],
                                       ),
                                     );
@@ -156,7 +172,7 @@ class CustomerScreen extends StatelessWidget {
       appTitle: 'Add customer',
       backarrow: UIDataColors.black,
       qrCallback: () {
-        Get.offAllNamed(Routes.addCustomer);
+        // Get.offAllNamed(Routes.add);
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

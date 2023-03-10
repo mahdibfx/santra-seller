@@ -12,6 +12,7 @@ abstract class Routes {
   static const newpasswordroutes = '/newpassword';
   static const emailverifyroutes = '/emailverifyroutes';
   static const addCustomer = "/addcustomer";
+  static const addManualOrder = "/addmanualorder";
   static const moreScreen = "/morescreen";
   static const settingscreen = "/settingscree";
   static const aboutscreen = "/aboutscreen";

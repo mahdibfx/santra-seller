@@ -37,7 +37,6 @@ class HomeScreen extends StatelessWidget {
                       ),
                       SpacingHeight.heightlistspacing20,
                       Row(
-                        
                         children: [
                           Expanded(
                             child: Container(
@@ -63,7 +62,7 @@ class HomeScreen extends StatelessWidget {
                               color: Colors.white,
                               height: 100,
                               child: Column(
-                                 mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text('Revenue'),
                                   Row(
@@ -153,7 +152,7 @@ class HomeScreen extends StatelessWidget {
       appTitle: 'Logo',
       backarrow: UIDataColors.black,
       qrCallback: () {
-        Get.offAllNamed(Routes.addCustomer);
+        Get.offAllNamed(Routes.addManualOrder);
       },
       floatingIcon: Icons.add,
       elevation: 0.0,
