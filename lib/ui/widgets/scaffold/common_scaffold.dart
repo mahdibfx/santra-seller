@@ -1,5 +1,6 @@
 // flutter imports
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 // package imports
 import 'package:get/get.dart';
@@ -21,6 +22,7 @@ class CommonScaffold extends StatelessWidget {
   final tabar;
   final appbarcolor;
   final bool appbarImage;
+  final bool appbarSvg;
   final extendBodyBehindAppBar;
   final TextStyle? appbarstyle;
   final Color? backarrow;
@@ -60,6 +62,7 @@ class CommonScaffold extends StatelessWidget {
     this.brightness,
     this.appbarstyle,
     this.appbarImage = false,
+    this.appbarSvg = false,
     this.tabar = false,
     this.appbarcolor,
     this.extendBodyBehindAppBar = false,
@@ -284,12 +287,19 @@ class CommonScaffold extends StatelessWidget {
                       width: 100.0,
                       height: 50.0,
                     )
-                  : Text(
-                      appTitle,
-                      style: appbarstyle != null
-                          ? appbarstyle
-                          : UIDataTextStyles.kSignInHeading,
-                    ),
+                  : appbarSvg == true
+                      ? SvgPicture.asset(
+                          UIDataImage.sellerLogoIconSVG,
+                          height: 35,
+                          width: 35,
+                          fit: BoxFit.fitWidth,
+                        )
+                      : Text(
+                          appTitle,
+                          style: appbarstyle != null
+                              ? appbarstyle
+                              : UIDataTextStyles.kSignInHeading,
+                        ),
               actions: appBarAction,
               centerTitle: true,
             )
@@ -325,8 +335,8 @@ class CommonScaffold extends StatelessWidget {
       }),
       floatingActionButton: showFAB
           ? Visibility(
-      visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
-            child: CustomFloat(
+              visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
+              child: CustomFloat(
                 builder: centerDocked
                     ? const Text(
                         "5",
@@ -336,7 +346,7 @@ class CommonScaffold extends StatelessWidget {
                 icon: floatingIcon,
                 qrCallback: qrCallback,
               ),
-          )
+            )
           : null,
       floatingActionButtonLocation: centerDocked
           ? FloatingActionButtonLocation.centerDocked

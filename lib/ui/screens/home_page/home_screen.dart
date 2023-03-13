@@ -1,8 +1,11 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'dart:convert';
+import 'package:flutter_svg/svg.dart';
+
 import '../../../controllers/home_controller/home_controller.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata/textStyles.dart';
+import '../../widgets/cards/home_card.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 
 import 'package:flutter/material.dart';
@@ -26,108 +29,94 @@ class HomeScreen extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
+                      SpacingHeight.heightlistspacing10,
                       Row(
                         children: [
-                          Icon(Icons.money),
-                          Text(
-                            "Monthly Total Earning",
-                            style: UIDataTextStyles.homeheadingstyle,
+                          Expanded(
+                            child: Container(
+                              height: 95,
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: <Color>[
+                                    Color.fromARGB(255, 4, 67, 112),
+                                    Color.fromARGB(255, 70, 172, 240),
+                                    
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.all(Radius.circular(15)),
+                              ),
+                              child: Row(
+                                children: [
+                                   Container(
+              // height: 40,
+              child: SvgPicture.asset(
+                UIDataImage.dollarIconSVG,
+                fit: BoxFit.fitWidth,
+              ),
+            ).marginOnly(left: 20, right: 10, top: 10),
+                                  Column(
+                                    children: [
+                                      Text('Orders Monthly',style: UIDataTextStyles.logintitlt2.copyWith(color: Colors.white,fontSize: 14, fontWeight: FontWeight.w500)),
+                                      SpacingHeight.heightlistspacing15,
+                                      Text(
+                                        '270',
+                                        style: UIDataTextStyles.logintitlt2.copyWith(color: Colors.white)
+                                            .copyWith(fontSize: 20),
+                                      ),
+                                    ],
+                                  ).marginOnly(top: 15,right: 10),
+                                  VerticalDivider(
+                                    width: 2,
+                                    color: UIDataColors.white,
+                                  ).marginOnly(top: 20, bottom: 20),
+                                  Column(
+                                    children: [
+                                      Text('Profit Monthly',style: UIDataTextStyles.logintitlt2.copyWith(color: Colors.white,fontSize: 14, fontWeight: FontWeight.w500)),
+                                      SpacingHeight.heightlistspacing15,
+                                      Text(
+                                        '42.65',
+                                        style: UIDataTextStyles.logintitlt2.copyWith(color: Colors.white)
+                                            .copyWith(fontSize: 20),
+                                      ),
+                                    ],
+                                  ).marginOnly(top: 15, left: 10),
+                                ],
+                              ),
+                            ),
                           ),
                         ],
                       ),
                       SpacingHeight.heightlistspacing20,
                       Row(
                         children: [
-                          Expanded(
-                            child: Container(
-                              color: Colors.white,
-                              height: 100,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('Order'),
-                                  Text(
-                                    '270',
-                                    style: UIDataTextStyles.homeheadingstyle
-                                        .copyWith(fontSize: 20),
-                                  ),
-                                  Text('Monthly')
-                                ],
-                              ),
-                            ),
+                          HomeCardWidget(
+                            heading: 'Santra Orders',
+                            count: '153',
+                            imageAsset: UIDataImage.santraOrderSVG,
                           ),
                           SpacingWidth.widthlistspacing,
-                          Expanded(
-                            child: Container(
-                              color: Colors.white,
-                              height: 100,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('Revenue'),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        '40,500',
-                                        style: UIDataTextStyles.homeheadingstyle
-                                            .copyWith(fontSize: 20),
-                                      ),
-                                      Text('AED')
-                                    ],
-                                  ),
-                                  Text('Monthly')
-                                ],
-                              ),
-                            ),
+                          HomeCardWidget(
+                            heading: 'Manual Orders',
+                            count: '153',
+                            imageAsset: UIDataImage.manualOrderSVG,
                           ),
                         ],
                       ),
-                      SpacingHeight.heightlistspacing20,
+                      SpacingHeight.heightlistspacing10,
                       Row(
                         children: [
-                          Icon(Icons.menu),
-                          Text(
-                            "Order Management",
-                            style: UIDataTextStyles.homeheadingstyle,
+                          HomeCardWidget(
+                            heading: 'Pending Orders',
+                            count: '153',
+                            imageAsset: UIDataImage.pendingOrderSVG,
+                          ),
+                          SpacingWidth.widthlistspacing,
+                          HomeCardWidget(
+                            heading: 'All Orders',
+                            count: '153',
+                            imageAsset: UIDataImage.allOrderSVG,
                           ),
                         ],
-                      ),
-                      SpacingHeight.heightlistspacing20,
-                      GridView.builder(
-                        shrinkWrap: true,
-                        itemCount: 4,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2),
-                        itemBuilder: (BuildContext context, int index) {
-                          return Card(
-                            child: GridTile(
-                              footer: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Icon(Icons.card_travel),
-                                  SpacingWidth.widthlistspacing,
-                                  Text('Monthly'),
-                                ],
-                              ).marginAll(10),
-                              child: Center(
-                                child: Container(
-                                  color: Colors.white,
-                                  height: 70,
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        '40,500',
-                                        style: UIDataTextStyles.homeheadingstyle
-                                            .copyWith(fontSize: 20),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ), //just for testing, will fill with image later
-                            ),
-                          );
-                        },
                       ),
                     ],
                   ).marginAll(10),
@@ -149,7 +138,7 @@ class HomeScreen extends StatelessWidget {
       scaffoldKey: _key,
       showBottomNav: true,
       appbarcolor: UIDataColors.white,
-      appTitle: 'Logo',
+      appbarSvg: true,
       backarrow: UIDataColors.black,
       qrCallback: () {
         Get.offAllNamed(Routes.addManualOrder);
