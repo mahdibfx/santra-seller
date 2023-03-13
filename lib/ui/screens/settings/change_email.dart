@@ -33,6 +33,7 @@ class ChangeEmail extends StatelessWidget {
                       controller: _.emailController,
                       fieldHeading: "New Email",
                       hintText: "New Email",
+                      prefixIcon: UIDATAIcons.emailIcon,
                       isTextHidden: false,
                       fillcolor: UIDataColors.white,
                       keyboardType: TextInputType.emailAddress,
@@ -54,6 +55,7 @@ class ChangeEmail extends StatelessWidget {
                       hintText: "Confirm Email",
                       isTextHidden: false,
                       fillcolor: UIDataColors.white,
+                      prefixIcon: UIDATAIcons.emailIcon,
                       keyboardType: TextInputType.emailAddress,
                       validator: (val) {
                         bool email = _.emailRegex.hasMatch(val);
@@ -75,9 +77,10 @@ class ChangeEmail extends StatelessWidget {
                       fillcolor: UIDataColors.white,
                       keyboardType: TextInputType.text,
                       togglePassword: true,
+                      prefixIcon: UIDATAIcons.unlockIcon,
                       toggleIcon: _.securetext == true
-                          ? Icons.visibility_off
-                          : Icons.remove_red_eye,
+                          ? UIDATAIcons.viewOffIcon
+                          : UIDATAIcons.viewOffIcon,
                       toggleFunction: () {
                         _.securetext = !_.securetext;
                         _.update();

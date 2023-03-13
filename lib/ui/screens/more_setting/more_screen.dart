@@ -33,7 +33,7 @@ class MoreSettingScreen extends StatelessWidget {
                         children: const [
                           Icon(Icons.menu),
                           SpacingWidth.widthlistspacing,
-                           Text(
+                          Text(
                             'More',
                             textScaleFactor: 2,
                           ),
@@ -41,51 +41,51 @@ class MoreSettingScreen extends StatelessWidget {
                       ),
                       SpacingHeight.heightlistspacing20,
                       ReusableIconSetting(
-                        icon: const Icon(Icons.settings),
+                        icon: UIDATAIcons.settingsIcon,
                         onPressed: () {
                           Get.toNamed(Routes.settings);
                         },
                         btntxt: const Text('settings'),
                       ),
                       ReusableIconSetting(
-                        icon: const Icon(Icons.business),
-                        onPressed: () {
-                          Get.toNamed(Routes.aboutscreen);
-                        },
-                        btntxt: const Text('About Us'),
-                      ),
-                      ReusableIconSetting(
-                        icon: const Icon(Icons.widgets),
+                        icon: UIDATAIcons.dashboardIcon,
                         onPressed: () {},
                         btntxt: const Text('Products'),
                       ),
                       ReusableIconSetting(
-                        icon: const Icon(Icons.group),
+                        icon: UIDATAIcons.customersIcon,
                         onPressed: () {
                           Get.toNamed(Routes.mycustomerscreen);
                         },
-                        btntxt: const Text('My Customers'),
+                        btntxt: const Text('Customers List'),
                       ),
                       ReusableIconSetting(
-                        icon: const Icon(Icons.message),
-                        onPressed: () {
-                          Get.toNamed(Routes.cartroute);
-                        },
-                        btntxt: const Text('Get Help'),
-                      ),
-                      ReusableIconSetting(
-                        icon: const Icon(Icons.wallet),
+                        icon: UIDATAIcons.walletIcon,
                         onPressed: () {
                           Get.toNamed(Routes.walletscreen);
                         },
                         btntxt: const Text('Wallet'),
                       ),
                       ReusableIconSetting(
-                        icon: const Icon(Icons.call),
+                        icon: UIDATAIcons.whatsappIcon,
                         onPressed: () {
-                          Get.toNamed(Routes.contactscreen);
+                          // Get.toNamed(Routes.walletscreen);
                         },
-                        btntxt: const Text('Contact Us'),
+                        btntxt: const Text('Contact Customer Service'),
+                      ),
+                      ReusableIconSetting(
+                        icon: UIDATAIcons.santraVectorIcon,
+                        onPressed: () {
+                          Get.toNamed(Routes.aboutscreen);
+                        },
+                        btntxt: const Text('About Us'),
+                      ),
+                      ReusableIconSetting(
+                        icon: UIDATAIcons.securityIcon,
+                        onPressed: () {
+                          // Get.toNamed(Routes.contactscreen);
+                        },
+                        btntxt: const Text('Privacy Policy'),
                       )
                     ],
                   ).marginAll(10),

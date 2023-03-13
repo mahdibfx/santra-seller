@@ -67,7 +67,7 @@ class LoginScreen extends StatelessWidget {
                       fieldHeading: 'enter_mail'.tr,
                       controller: _.email,
                       hintText: 'Email',
-                      prefixIcon: Icons.email_outlined,
+                      prefixIcon: UIDATAIcons.emailIcon,
                       isTextHidden: false,
                       fillcolor: UIDataColors.white,
                       keyboardType: TextInputType.emailAddress,
@@ -84,13 +84,14 @@ class LoginScreen extends StatelessWidget {
                     CommonTextField(
                       controller: _.password,
                       hintText: 'Password',
-                      prefixIcon: Icons.lock_outline,
+                      //prefixIcon: Icons.lock_outline,
                       keyboardType: TextInputType.text,
                       fillcolor: UIDataColors.white,
                       togglePassword: true,
+                      prefixIcon: UIDATAIcons.lockIcon,
                       toggleIcon: _.securetext == true
-                          ? Icons.visibility_off
-                          : Icons.remove_red_eye,
+                          ? UIDATAIcons.viewOffIcon
+                          : UIDATAIcons.viewOffIcon,
                       toggleFunction: () {
                         _.securetext = !_.securetext;
                         _.update();

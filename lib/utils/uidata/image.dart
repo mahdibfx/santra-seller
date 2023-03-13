@@ -19,8 +19,6 @@ class UIDataImage {
   static String pendingOrderSVG = "$imageDir/pending_order_image.svg";
   static String dollarIconSVG = "$imageDir/dollar_icon.svg";
   static String sellerLogoIconSVG = "$imageDir/seller_logo.svg";
-  
-
   static String bg = "$imageDir/camera_icon.png";
   static String dummyImage = "$imageDir/dummy_image.jpg";
 }

@@ -4,6 +4,7 @@ import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import '../../widgets/textfields/common_textfield.dart';
 import 'package:flutter/material.dart';
+import '../../widgets/textfields/tappable_text_field.dart';
 import '/utils/uidata.dart';
 import 'package:get/get.dart';
 
@@ -35,6 +36,7 @@ class AccountInfo extends StatelessWidget {
                       hintText: "Email",
                       isTextHidden: false,
                       fillcolor: UIDataColors.white,
+                      prefixIcon: UIDATAIcons.emailIcon,
                       keyboardType: TextInputType.text,
                       validator: (val) {
                         if (val.isEmpty) {
@@ -50,6 +52,7 @@ class AccountInfo extends StatelessWidget {
                       fieldHeading: "First Name",
                       hintText: "First Name",
                       isTextHidden: false,
+                      prefixIcon: UIDATAIcons.userIcon,
                       fillcolor: UIDataColors.white,
                       keyboardType: TextInputType.text,
                       validator: (val) {
@@ -67,6 +70,7 @@ class AccountInfo extends StatelessWidget {
                       hintText: "Last Name",
                       isTextHidden: false,
                       fillcolor: UIDataColors.white,
+                      prefixIcon: UIDATAIcons.userIcon,
                       keyboardType: TextInputType.text,
                       validator: (val) {
                         if (val.isEmpty) {
@@ -81,6 +85,7 @@ class AccountInfo extends StatelessWidget {
                       ontap: () {
                         _.pickUserDob(context);
                       },
+                      prefixIcon: UIDATAIcons.calendarIcon,
                       fieldHeight: 50,
                       heading: "Date Of Birth",
                       value: _.formatteUserDob.toString(),
@@ -132,59 +137,6 @@ class AccountInfo extends StatelessWidget {
       },
       floatingIcon: Icons.add,
       elevation: 0.0,
-    );
-  }
-}
-
-class TappableTextField extends StatelessWidget {
-  String? heading;
-  double? fieldHeight;
-  String? value;
-  var ontap;
-  TappableTextField(
-      {Key? key,
-      this.heading,
-      this.fieldHeight,
-      required this.value,
-      required this.ontap})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: ontap,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(heading!),
-          const SizedBox(
-            height: 7,
-          ),
-          Container(
-            alignment: Alignment.centerLeft,
-            width: double.infinity,
-            height: fieldHeight,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                    color: const Color(0xff757575).withOpacity(0.7))),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 18, right: 14),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    value!,
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  const Icon(Icons.calendar_month)
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
