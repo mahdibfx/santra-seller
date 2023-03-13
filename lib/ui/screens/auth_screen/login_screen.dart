@@ -51,21 +51,22 @@ class LoginScreen extends StatelessWidget {
                     // Row(
                     //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     //   children: [
-                    //     Text("Welcome".tr,
+                    //     Text("Welcome",
                     //         style: UIDataTextStyles.loginscreenStyle),
                     //   ],
                     // ),
                     // Row(
                     //   children: [
-                    //     Text("Sign In To Continue".tr,
+                    //     Text("Sign In To Continue",
                     //         style:
                     //             UIDataTextStyles.loginscreentitleStyle),
                     //   ],
                     // ),
                     SpacingHeight.heightlistspacing15,
                     CommonTextField(
+                      fieldHeading: 'enter_mail'.tr,
                       controller: _.email,
-                      hintText: 'Email'.tr,
+                      hintText: 'Email',
                       prefixIcon: Icons.email_outlined,
                       isTextHidden: false,
                       fillcolor: UIDataColors.white,
@@ -82,7 +83,7 @@ class LoginScreen extends StatelessWidget {
                     SpacingHeight.heightlistspacing10,
                     CommonTextField(
                       controller: _.password,
-                      hintText: 'Password'.tr,
+                      hintText: 'Password',
                       prefixIcon: Icons.lock_outline,
                       keyboardType: TextInputType.text,
                       fillcolor: UIDataColors.white,
@@ -119,7 +120,7 @@ class LoginScreen extends StatelessWidget {
                         //   },
                         // ),
                         // Text(
-                        //   "Remeber Me".tr,
+                        //   "Remeber Me",
                         //   style: UIDataTextStyles.forgotpassStyle,
                         // ),
 
@@ -129,7 +130,7 @@ class LoginScreen extends StatelessWidget {
                           onTap: () {
                             Get.toNamed(Routes.forgotpasswordRoutes);
                           },
-                          child: Text("Forgot Password?".tr,
+                          child: Text("Forgot Password?",
                               style: UIDataTextStyles.forgetregular),
                         ),
                         SizedBox(height: 20),
@@ -152,7 +153,7 @@ class LoginScreen extends StatelessWidget {
                                       Color(0xff006EB8),
                                     ],
                                   ),
-                                  btntxt: "SIGN IN".tr,
+                                  btntxt: "SIGN IN",
                                   buttontxtColor: UIDataColors.white,
                                   onPressed: () {
                                     _.loginfunction();
@@ -161,6 +162,12 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    // TextButton(
+                    //   onPressed: () {
+                    //     Get.updateLocale(const Locale('ar', 'AE'));
+                    //   },
+                    //   child: const Icon(Icons.add),
+                    // ),
 
                     SpacingHeight.heightlistspacing15,
                     SpacingHeight.heightlistspacing15,

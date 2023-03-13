@@ -1,6 +1,7 @@
 //Flutter Packages
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import 'package:santra_seller/utils/routes/app_pages.dart';
 
 //Lib Imports
@@ -25,8 +26,10 @@ class MyApp extends StatelessWidget {
         // const TranslationsDelegate(),
       ],
       enableLog: true,
+      translations: AppTranslations(),
       // logWriterCallback: Logger.write,
       // supportedLocales: [const Locale("en", "US")],
+       locale: const Locale('en', 'us'),
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
     );
