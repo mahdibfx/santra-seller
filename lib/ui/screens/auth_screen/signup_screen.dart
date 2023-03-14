@@ -134,8 +134,8 @@ class SignUpScreen extends StatelessWidget {
                           fillcolor: UIDataColors.white,
                           togglePassword: true,
                           toggleIcon: _.securetext == true
-                              ? Icons.visibility_off
-                              : Icons.remove_red_eye,
+                              ? UIDATAIcons.viewOffIcon
+                              : UIDATAIcons.viewOffIcon,
                           toggleFunction: () {
                             _.securetext = !_.securetext;
                             _.update();
@@ -157,8 +157,8 @@ class SignUpScreen extends StatelessWidget {
                           fillcolor: UIDataColors.white,
                           togglePassword: true,
                           toggleIcon: _.securetext == true
-                              ? Icons.visibility_off
-                              : Icons.remove_red_eye,
+                              ? UIDATAIcons.viewOffIcon
+                              : UIDATAIcons.viewOffIcon,
                           toggleFunction: () {
                             _.securetext = !_.securetext;
                             _.update();
@@ -195,9 +195,9 @@ class SignUpScreen extends StatelessWidget {
                     Obx(
                       () => _.isLoading.value
                           ? SizedBox(
-                          child:   Center(child: CircularProgressIndicator(),)
-
-                      )
+                              child: Center(
+                              child: CircularProgressIndicator(),
+                            ))
                           : RaisedGradientButton(
                               onPressed: () async {
                                 // _.signupMethod();

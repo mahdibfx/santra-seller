@@ -36,9 +36,10 @@ class ChangePassword extends StatelessWidget {
                       fillcolor: UIDataColors.white,
                       keyboardType: TextInputType.text,
                       togglePassword: true,
+                      prefixIcon: UIDATAIcons.unlockIcon,
                       toggleIcon: _.currentPasswordSecuretext == true
-                          ? Icons.visibility_off
-                          : Icons.remove_red_eye,
+                          ? UIDATAIcons.viewOffIcon
+                          : UIDATAIcons.viewOffIcon,
                       toggleFunction: () {
                         _.currentPasswordSecuretext =
                             !_.currentPasswordSecuretext;
@@ -62,9 +63,10 @@ class ChangePassword extends StatelessWidget {
                       fillcolor: UIDataColors.white,
                       keyboardType: TextInputType.text,
                       togglePassword: true,
+                      prefixIcon: UIDATAIcons.unlockIcon,
                       toggleIcon: _.newPasswordSecuretext == true
-                          ? Icons.visibility_off
-                          : Icons.remove_red_eye,
+                          ? UIDATAIcons.viewOffIcon
+                          : UIDATAIcons.viewOffIcon,
                       toggleFunction: () {
                         _.newPasswordSecuretext = !_.newPasswordSecuretext;
                         _.update();
@@ -86,9 +88,10 @@ class ChangePassword extends StatelessWidget {
                       fillcolor: UIDataColors.white,
                       keyboardType: TextInputType.text,
                       togglePassword: true,
+                      prefixIcon: UIDATAIcons.unlockIcon,
                       toggleIcon: _.confirmPasswordSecuretext == true
-                          ? Icons.visibility_off
-                          : Icons.remove_red_eye,
+                          ? UIDATAIcons.viewOffIcon
+                          : UIDATAIcons.viewOffIcon,
                       toggleFunction: () {
                         _.confirmPasswordSecuretext =
                             !_.confirmPasswordSecuretext;

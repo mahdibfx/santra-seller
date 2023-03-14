@@ -33,35 +33,36 @@ class Settings extends StatelessWidget {
               textScaleFactor: 2,
             ),
             ReusableIconSetting(
-              icon: const Icon(Icons.info),
+              icon: UIDATAIcons.infoIcon,
               onPressed: () {
                 Get.toNamed(Routes.accountInfoRoute);
               },
               btntxt: const Text('Account info'),
             ),
             ReusableIconSetting(
-              icon: const Icon(Icons.alternate_email),
+              icon: UIDATAIcons.emailIcon,
+              iconColor: UIDataColors.primaryColor,
               onPressed: () {
                 Get.toNamed(Routes.changeEmail);
               },
               btntxt: const Text('Change Email'),
             ),
             ReusableIconSetting(
-              icon: const Icon(Icons.lock),
+              icon: UIDATAIcons.lockIcon,
               onPressed: () {
                 Get.toNamed(Routes.changePassword);
               },
               btntxt: const Text('Change Password'),
             ),
             ReusableIconSetting(
-              icon: const Icon(Icons.language),
+              icon: UIDATAIcons.languageIcon,
               onPressed: () {},
               btntxt: const Text('Language'),
             ),
             // GetBuilder<LogoutController>(builder: (logoutController) {
             //   return
             ReusableIconSetting(
-              icon: const Icon(Icons.logout),
+              icon: UIDATAIcons.logoutIcon,
               onPressed: () {
                 customOntapDialogTwoButtons(context, "Logout",
                     "Are You Sure You Want To Logout?", "Cancel", "Logout", () {
@@ -76,7 +77,7 @@ class Settings extends StatelessWidget {
             //   ;
             // }),
             ReusableIconSetting(
-              icon: const Icon(Icons.delete),
+              icon: UIDATAIcons.deleteIcon,
               onPressed: () {
                 customOntapDialogTwoButtons(
                     context,

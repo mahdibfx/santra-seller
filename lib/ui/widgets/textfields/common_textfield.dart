@@ -1,6 +1,7 @@
 // import 'package:ihprpm/utils/uidata.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:santra_seller/utils/uidata.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
 import 'package:get/get.dart';
@@ -17,12 +18,12 @@ class CommonTextField extends StatelessWidget {
   final bool? isTextHidden;
   final String? hintText;
   final IconData? buttonIcon;
-  final IconData? prefixIcon;
+  final String? prefixIcon;
   final bool? togglePassword;
   final int? maxLength;
   final int? maxlines;
   final toggleFunction;
-  final IconData? toggleIcon;
+  final String? toggleIcon;
   final TextInputType? keyboardType;
   final bool? readOnly;
 
@@ -81,21 +82,26 @@ class CommonTextField extends StatelessWidget {
             counterText: "",
             prefixIcon: prefixIcon != null
                 ? GestureDetector(
-                    child: Icon(
-                      prefixIcon,
-                      color: Colors.black,
-                      size: 25.0,
-                    ),
                     onTap: prefixIconTap,
-                  )
+                    child: SvgPicture.asset(
+                      prefixIcon!,
+                      color: UIDataColors.blackText,
+                    ).paddingSymmetric(vertical: 11))
                 : null,
             suffixIcon: togglePassword!
                 ? GestureDetector(
-                    child: Icon(
-                      toggleIcon,
-                      color: Colors.black,
-                    ),
-                    onTap: toggleFunction)
+                    onTap: toggleFunction,
+                    child: SvgPicture.asset(
+                      toggleIcon ?? "",
+                      color: UIDataColors.blackText,
+                    ).paddingSymmetric(vertical: 11, horizontal: 11))
+
+                // GestureDetector(
+                //     child: Icon(
+                //       toggleIcon,
+                //       color: Colors.black,
+                //     ),
+                //     onTap: toggleFunction)
                 : null,
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(

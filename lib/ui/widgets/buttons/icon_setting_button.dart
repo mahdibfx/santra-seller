@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:santra_seller/utils/uidata.dart';
 
 class ReusableIconSetting extends StatelessWidget {
-  final Icon? icon;
+  String icon;
   final void Function()? onPressed;
   final Text? btntxt;
-  const ReusableIconSetting({super.key, required this.icon, required this.onPressed , required this.btntxt});
+  Color? iconColor;
+  ReusableIconSetting(
+      {super.key,
+      required this.icon,
+      required this.onPressed,
+      required this.btntxt,
+      this.iconColor});
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +20,13 @@ class ReusableIconSetting extends StatelessWidget {
       children: [
         InkWell(
           onTap: onPressed,
-          child: Row( // Replace with a Row for horizontal icon + text
+          child: Row(
+            // Replace with a Row for horizontal icon + text
             children: <Widget>[
-              icon!,
+              SvgPicture.asset(
+                icon,
+                color: iconColor,
+              ),
               SpacingWidth.widthlistspacing,
               btntxt!,
             ],
@@ -26,6 +37,3 @@ class ReusableIconSetting extends StatelessWidget {
     );
   }
 }
-
-
-
