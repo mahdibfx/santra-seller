@@ -39,7 +39,7 @@ class ChangePassword extends StatelessWidget {
                       prefixIcon: UIDATAIcons.unlockIcon,
                       toggleIcon: _.currentPasswordSecuretext == true
                           ? UIDATAIcons.viewOffIcon
-                          : UIDATAIcons.viewOffIcon,
+                          : UIDATAIcons.viewIcon,
                       toggleFunction: () {
                         _.currentPasswordSecuretext =
                             !_.currentPasswordSecuretext;
@@ -66,7 +66,7 @@ class ChangePassword extends StatelessWidget {
                       prefixIcon: UIDATAIcons.unlockIcon,
                       toggleIcon: _.newPasswordSecuretext == true
                           ? UIDATAIcons.viewOffIcon
-                          : UIDATAIcons.viewOffIcon,
+                          : UIDATAIcons.viewIcon,
                       toggleFunction: () {
                         _.newPasswordSecuretext = !_.newPasswordSecuretext;
                         _.update();
@@ -91,7 +91,7 @@ class ChangePassword extends StatelessWidget {
                       prefixIcon: UIDATAIcons.unlockIcon,
                       toggleIcon: _.confirmPasswordSecuretext == true
                           ? UIDATAIcons.viewOffIcon
-                          : UIDATAIcons.viewOffIcon,
+                          : UIDATAIcons.viewIcon,
                       toggleFunction: () {
                         _.confirmPasswordSecuretext =
                             !_.confirmPasswordSecuretext;

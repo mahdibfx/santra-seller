@@ -119,7 +119,7 @@ class SignUpScreen extends StatelessWidget {
                           togglePassword: true,
                           toggleIcon: _.securetext == true
                               ? UIDATAIcons.viewOffIcon
-                              : UIDATAIcons.viewOffIcon,
+                              : UIDATAIcons.viewIcon,
                           toggleFunction: () {
                             _.securetext = !_.securetext;
                             _.update();
@@ -142,7 +142,7 @@ class SignUpScreen extends StatelessWidget {
                           togglePassword: true,
                           toggleIcon: _.securetext == true
                               ? UIDATAIcons.viewOffIcon
-                              : UIDATAIcons.viewOffIcon,
+                              : UIDATAIcons.viewIcon,
                           toggleFunction: () {
                             _.securetext = !_.securetext;
                             _.update();

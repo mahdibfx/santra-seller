@@ -75,7 +75,7 @@ class LoginScreen extends StatelessWidget {
                       prefixIcon: UIDATAIcons.lockIcon,
                       toggleIcon: _.securetext == true
                           ? UIDATAIcons.viewOffIcon
-                          : UIDATAIcons.viewOffIcon,
+                          : UIDATAIcons.viewIcon,
                       toggleFunction: () {
                         _.securetext = !_.securetext;
                         _.update();

@@ -80,7 +80,7 @@ class ChangeEmail extends StatelessWidget {
                       prefixIcon: UIDATAIcons.unlockIcon,
                       toggleIcon: _.securetext == true
                           ? UIDATAIcons.viewOffIcon
-                          : UIDATAIcons.viewOffIcon,
+                          : UIDATAIcons.viewIcon,
                       toggleFunction: () {
                         _.securetext = !_.securetext;
                         _.update();
