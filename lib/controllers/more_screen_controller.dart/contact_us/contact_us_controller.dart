@@ -100,12 +100,14 @@ class ContactUsController extends GetxController {
           if ((data["success"] == true &&
               data["message"] == "User has been Successfully created!")) {
             Get.offAllNamed(Routes.loginRoutes);
-            CommonSnackbar.getSnackbar("Message",
-                "User has been Successfully created!", UIDataColors.blue);
+            CommonSnackbar.getSnackbar(
+                "Message",
+                "User has been Successfully created!",
+                UIDataColors.primaryColor);
           } else if (data["success"] == false &&
               data["message"] == "Error in register!") {
             CommonSnackbar.getSnackbar(
-                "Message", "Error in register!", UIDataColors.red);
+                "Message", "Error in register!", UIDataColors.redColor);
 
             isLoading = false.obs;
             update();
@@ -113,7 +115,7 @@ class ContactUsController extends GetxController {
           } else if (data["success"] == false &&
               data["message"] == "Passwords do NOT match!") {
             CommonSnackbar.getSnackbar(
-                "Message", "Passwords do NOT match!", UIDataColors.red);
+                "Message", "Passwords do NOT match!", UIDataColors.redColor);
 
             isLoading = false.obs;
             update();
@@ -128,7 +130,8 @@ class ContactUsController extends GetxController {
           print(useremail);
 
           if (username == false || useremail == false) {
-            CommonSnackbar.getSnackbar("Message", "$data", UIDataColors.red);
+            CommonSnackbar.getSnackbar(
+                "Message", "$data", UIDataColors.redColor);
             isLoading = false.obs;
             update();
             return;
@@ -138,7 +141,7 @@ class ContactUsController extends GetxController {
         print("check error ${e}");
 
         CommonSnackbar.getSnackbar(
-            "Server Error", e.toString(), UIDataColors.red);
+            "Server Error", e.toString(), UIDataColors.redColor);
 
         isLoading = false.obs;
         update();

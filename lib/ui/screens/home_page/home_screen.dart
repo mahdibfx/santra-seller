@@ -40,43 +40,51 @@ class HomeScreen extends StatelessWidget {
                                   colors: <Color>[
                                     Color.fromARGB(255, 4, 67, 112),
                                     Color.fromARGB(255, 70, 172, 240),
-                                    
                                   ],
                                 ),
-                                borderRadius: BorderRadius.all(Radius.circular(15)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
                               ),
                               child: Row(
                                 children: [
-                                   Container(
-              // height: 40,
-              child: SvgPicture.asset(
-                UIDataImage.dollarIconSVG,
-                fit: BoxFit.fitWidth,
-              ),
-            ).marginOnly(left: 20, right: 10, top: 10),
+                                  Container(
+                                    // height: 40,
+                                    child: SvgPicture.asset(
+                                      UIDataImage.dollarIconSVG,
+                                      fit: BoxFit.fitWidth,
+                                    ),
+                                  ).marginOnly(left: 20, right: 10, top: 10),
                                   Column(
                                     children: [
-                                      Text('Orders Monthly',style: UIDataTextStyles.logintitlt2.copyWith(color: Colors.white,fontSize: 14, fontWeight: FontWeight.w500)),
+                                      Text('Orders Monthly',
+                                          style: UIDataTextStyles.h2.copyWith(
+                                              color: Colors.white,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500)),
                                       SpacingHeight.heightlistspacing15,
                                       Text(
-                                        '270',
-                                        style: UIDataTextStyles.logintitlt2.copyWith(color: Colors.white)
-                                            .copyWith(fontSize: 20),
+                                        '279',
+                                        style: UIDataTextStyles.counth1
+                                            .copyWith(color: Colors.white),
                                       ),
                                     ],
-                                  ).marginOnly(top: 15,right: 10),
+                                  ).marginOnly(top: 15, right: 10),
                                   VerticalDivider(
                                     width: 2,
-                                    color: UIDataColors.white,
+                                    color: UIDataColors.whiteColor,
                                   ).marginOnly(top: 20, bottom: 20),
                                   Column(
                                     children: [
-                                      Text('Profit Monthly',style: UIDataTextStyles.logintitlt2.copyWith(color: Colors.white,fontSize: 14, fontWeight: FontWeight.w500)),
+                                      Text('Profit Monthly',
+                                          style: UIDataTextStyles.h2.copyWith(
+                                              color: Colors.white,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500)),
                                       SpacingHeight.heightlistspacing15,
                                       Text(
                                         '42.65',
-                                        style: UIDataTextStyles.logintitlt2.copyWith(color: Colors.white)
-                                            .copyWith(fontSize: 20),
+                                        style: UIDataTextStyles.counth1
+                                            .copyWith(color: Colors.white),
                                       ),
                                     ],
                                   ).marginOnly(top: 15, left: 10),
@@ -130,16 +138,16 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonScaffold(
       bodyData: bodyData(),
-      backgroundcolor: UIDataColors.commonColor,
+      backgroundcolor: UIDataColors.whiteColor,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,
       showAppBar: true,
       scaffoldKey: _key,
       showBottomNav: true,
-      appbarcolor: UIDataColors.white,
+      appbarcolor: UIDataColors.whiteColor,
       appbarSvg: true,
-      backarrow: UIDataColors.black,
+      backarrow: UIDataColors.blackColor,
       qrCallback: () {
         Get.offAllNamed(Routes.addManualOrder);
       },

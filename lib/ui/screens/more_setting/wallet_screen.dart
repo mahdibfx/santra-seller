@@ -28,7 +28,7 @@ class WalletScreen extends StatelessWidget {
                     SpacingHeight.heightlistspacing20,
                     Text(
                       'Wallet',
-                      style: UIDataTextStyles.homecontainertxt,
+                      style: UIDataTextStyles.h1,
                     ),
                     SpacingHeight.heightlistspacing20,
                   ],
@@ -42,16 +42,16 @@ class WalletScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonScaffold(
       bodyData: bodyData(),
-      backgroundcolor: UIDataColors.commonColor,
+      backgroundcolor: UIDataColors.whiteColor,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,
       showAppBar: true,
       scaffoldKey: _key,
       showBottomNav: true,
-      appbarcolor: UIDataColors.white,
+      appbarcolor: UIDataColors.whiteColor,
       appTitle: 'Wallet',
-      backarrow: UIDataColors.black,
+      backarrow: UIDataColors.blackColor,
       qrCallback: () {
         Get.offAllNamed(Routes.addManualOrder);
       },

@@ -27,7 +27,7 @@ class PriceOnSelection extends StatelessWidget {
         ),
         const Text(
           "2",
-          style: UIDataTextStyles.kHead,
+          style: UIDataTextStyles.h1Heavy,
         ),
         GestureDetector(
           onTap: onPlus,

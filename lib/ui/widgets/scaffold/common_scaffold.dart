@@ -129,14 +129,14 @@ class CommonScaffold extends StatelessWidget {
                 icon: Icon(
                   Icons.home,
                   color: Get.currentRoute == Routes.homeRoutes
-                      ? UIDataColors.fbbtnColor
+                      ? UIDataColors.primaryColor
                       : Colors.grey,
                 ),
                 btntxt: Text(
                   "Home",
                   style: Get.currentRoute == Routes.homeRoutes
-                      ? UIDataTextStyles.bottomcolor
-                      : UIDataTextStyles.btntext1,
+                      ? UIDataTextStyles.title
+                      : UIDataTextStyles.subTitle,
                 ),
                 onPressed: () {
                   Get.offAllNamed(Routes.homeRoutes);
@@ -208,14 +208,14 @@ class CommonScaffold extends StatelessWidget {
                 icon: Icon(
                   Icons.list,
                   color: Get.currentRoute == Routes.moreScreen
-                      ? UIDataColors.fbbtnColor
+                      ? UIDataColors.primaryColor
                       : Colors.grey,
                 ),
                 btntxt: Text(
                   "More",
                   style: Get.currentRoute == Routes.moreScreen
-                      ? UIDataTextStyles.bottomcolor
-                      : UIDataTextStyles.btntext1,
+                      ? UIDataTextStyles.title
+                      : UIDataTextStyles.subTitle,
                 ),
                 onPressed: () {
                   if (Get.currentRoute != Routes.moreScreen) {
@@ -298,7 +298,7 @@ class CommonScaffold extends StatelessWidget {
                           appTitle,
                           style: appbarstyle != null
                               ? appbarstyle
-                              : UIDataTextStyles.kSignInHeading,
+                              : UIDataTextStyles.h2,
                         ),
               actions: appBarAction,
               centerTitle: true,

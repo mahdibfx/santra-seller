@@ -42,7 +42,7 @@ class AddManulOrder extends StatelessWidget {
                         ),
                         Text(
                           'Add Manual Order',
-                          style: UIDataTextStyles.kHead,
+                          style: UIDataTextStyles.title,
                         ),
                       ],
                     ),
@@ -54,7 +54,7 @@ class AddManulOrder extends StatelessWidget {
                     SpacingHeight.heightlistspacing10,
                     const Text(
                       "Category Name",
-                      style: UIDataTextStyles.kHead,
+                      style: UIDataTextStyles.h1,
                     ),
                     SpacingHeight.heightlistspacing10,
                     ListView.builder(
@@ -162,16 +162,16 @@ class AddManulOrder extends StatelessWidget {
     return CommonScaffold(
       resizeToAvoid: false,
       bodyData: bodyData(context),
-      backgroundcolor: UIDataColors.commonColor,
+      backgroundcolor: UIDataColors.whiteColor,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,
       showAppBar: true,
       scaffoldKey: _key,
       showBottomNav: true,
-      appbarcolor: UIDataColors.white,
+      appbarcolor: UIDataColors.whiteColor,
       appTitle: 'Add customer',
-      backarrow: UIDataColors.black,
+      backarrow: UIDataColors.blackColor,
       qrCallback: () {
         // Get.offAllNamed(Routes.add);
       },

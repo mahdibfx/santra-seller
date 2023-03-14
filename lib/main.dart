@@ -17,8 +17,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
       );
   print('Handling a background message ${message.messageId}');
 }
-void main() async {
 
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   // RemoteMessage? initialMessage =
@@ -40,7 +40,7 @@ void main() async {
       print('Got a message whilst in the foreground!');
     }
     CommonSnackbar.getSnackbar("${message.notification!.title.toString()}",
-        "${message.notification!.body.toString()}",UIDataColors.red);
+        "${message.notification!.body.toString()}", UIDataColors.redColor);
     // Get.snackbar("${message.notification!.title.toString()}",
     //     "${message.notification!.body.toString()}");
 
@@ -52,10 +52,10 @@ void main() async {
   });
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: UIDataColors.commonColor, // status bar color
+    statusBarColor: UIDataColors.whiteColor, // status bar color
   ));
-  
-   SystemChrome.setPreferredOrientations([
+
+  SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);

@@ -60,3 +60,9 @@ flutter:
         - asset: assets/fonts/markpro.ttf
         - asset: assets/fonts/markprobold.ttf
           weight: 700
+    - family: Activ
+      fonts:
+        - asset: assets/fonts/AktivGrotesk-Bold.ttf
+        - asset: assets/fonts/AktivGrotesk-Medium.ttf
+        - asset: assets/fonts/AktivGrotesk-Regular.ttf
+          weight: 700

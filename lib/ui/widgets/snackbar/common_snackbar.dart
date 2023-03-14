@@ -3,13 +3,12 @@ import 'dart:ui';
 import '/utils/uidata.dart';
 import 'package:get/get.dart';
 
-class CommonSnackbar
-{
+class CommonSnackbar {
   static void getSnackbar(String title, String message, Color snackbarColor) {
     Get.snackbar(
       title,
       message,
-      colorText: UIDataColors.white,
+      colorText: UIDataColors.whiteColor,
       backgroundColor: snackbarColor,
     );
   }

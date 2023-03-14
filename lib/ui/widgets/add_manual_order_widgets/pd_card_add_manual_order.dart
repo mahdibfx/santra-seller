@@ -37,11 +37,11 @@ class PDCardAddManualOrder extends StatelessWidget {
                   children: const [
                     Text(
                       "Product Name",
-                      style: UIDataTextStyles.titles,
+                      style: UIDataTextStyles.h2,
                     ),
                     Text(
                       "AED 15",
-                      style: UIDataTextStyles.heading15Medium,
+                      style: UIDataTextStyles.h2,
                     ),
                   ],
                 ).marginOnly(top: 5, bottom: 5, left: 8, right: 8)),
@@ -53,10 +53,9 @@ class PDCardAddManualOrder extends StatelessWidget {
                   height: 80,
                   width: 80,
                   child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(8)),
-                        color: UIDataColors.btnColor),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        color: UIDataColors.primaryColor),
                     child: const Icon(
                       Icons.add,
                       size: 40,

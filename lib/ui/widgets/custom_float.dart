@@ -29,7 +29,7 @@ class CustomFloat extends StatelessWidget {
             Icon(
               icon,
               color: Get.currentRoute == Routes.addManualOrder
-                  ? UIDataColors.fbbtnColor
+                  ? UIDataColors.primaryColor
                   : Colors.grey,
               size: 30,
             ),

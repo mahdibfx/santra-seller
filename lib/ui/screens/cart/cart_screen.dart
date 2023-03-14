@@ -28,54 +28,48 @@ class CartScreen extends StatelessWidget {
                     SpacingHeight.heightlistspacing20,
                     Text(
                       'Cart Screen',
-                      style: UIDataTextStyles.homecontainertxt,
+                      style: UIDataTextStyles.h1,
                     ),
                     SpacingHeight.heightlistspacing20,
                     Container(
                       height: 60,
-                            color: Colors.white,
+                      color: Colors.white,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                           Container(
-                             child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text('heee'),
-                                          Text('heee'),
-                                          Text('heee'),
-                                        ],
-                                      ),
-                           ),
-                                  
                           Container(
-                              
-                              child: 
-                                   Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          child: Row(
-                                            children: [
-                                              Text('+'),
-                                              Text('2'),
-                                              Text('-'),
-                                            ],
-                                          ),
-                                        ),
-                                        SpacingWidth.widthlistspacing15,
-                                        Container(
-                                          height: 20,
-                                          width: 20,
-                                          color: Colors.red,
-                                        )
-                                      ],
-                                    ),
-                               
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('heee'),
+                                Text('heee'),
+                                Text('heee'),
+                              ],
                             ),
-                        
+                          ),
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  child: Row(
+                                    children: [
+                                      Text('+'),
+                                      Text('2'),
+                                      Text('-'),
+                                    ],
+                                  ),
+                                ),
+                                SpacingWidth.widthlistspacing15,
+                                Container(
+                                  height: 20,
+                                  width: 20,
+                                  color: Colors.red,
+                                )
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     )
@@ -90,16 +84,16 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonScaffold(
       bodyData: bodyData(),
-      backgroundcolor: UIDataColors.commonColor,
+      backgroundcolor: UIDataColors.whiteColor,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,
       showAppBar: true,
       scaffoldKey: _key,
       showBottomNav: true,
-      appbarcolor: UIDataColors.white,
+      appbarcolor: UIDataColors.whiteColor,
       appTitle: 'Cart Screen',
-      backarrow: UIDataColors.black,
+      backarrow: UIDataColors.blackColor,
       qrCallback: () {
         Get.offAllNamed(Routes.addCustomer);
       },

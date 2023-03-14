@@ -35,7 +35,7 @@ class AccountInfo extends StatelessWidget {
                       fieldHeading: "Email",
                       hintText: "Email",
                       isTextHidden: false,
-                      fillcolor: UIDataColors.white,
+                      fillcolor: UIDataColors.whiteColor,
                       prefixIcon: UIDATAIcons.emailIcon,
                       keyboardType: TextInputType.text,
                       validator: (val) {
@@ -53,7 +53,7 @@ class AccountInfo extends StatelessWidget {
                       hintText: "First Name",
                       isTextHidden: false,
                       prefixIcon: UIDATAIcons.userIcon,
-                      fillcolor: UIDataColors.white,
+                      fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
                       validator: (val) {
                         if (val.isEmpty) {
@@ -69,7 +69,7 @@ class AccountInfo extends StatelessWidget {
                       fieldHeading: "Last Name",
                       hintText: "Last Name",
                       isTextHidden: false,
-                      fillcolor: UIDataColors.white,
+                      fillcolor: UIDataColors.whiteColor,
                       prefixIcon: UIDATAIcons.userIcon,
                       keyboardType: TextInputType.text,
                       validator: (val) {
@@ -102,7 +102,7 @@ class AccountInfo extends StatelessWidget {
                                 ],
                               ),
                               btntxt: "Save".tr,
-                              buttontxtColor: UIDataColors.white,
+                              buttontxtColor: UIDataColors.whiteColor,
                               onPressed: () {
                                 _.updateAccountInfo();
                               },
@@ -122,16 +122,16 @@ class AccountInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonScaffold(
       bodyData: bodyData(context),
-      backgroundcolor: UIDataColors.commonColor,
+      backgroundcolor: UIDataColors.whiteColor,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,
       showAppBar: true,
       scaffoldKey: _key,
       showBottomNav: true,
-      appbarcolor: UIDataColors.white,
+      appbarcolor: UIDataColors.whiteColor,
       appTitle: '',
-      backarrow: UIDataColors.black,
+      backarrow: UIDataColors.blackColor,
       qrCallback: () {
         Get.offAllNamed(Routes.signuproutes);
       },
