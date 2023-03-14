@@ -76,10 +76,10 @@ class UIDataTextStyles {
       fontFamily: 'Markpro',
       letterSpacing: 0.0);
 
-  static const kHead = TextStyle(
-    fontFamily: 'MarkPro',
-    fontSize: 22.0,
-    color: Colors.black,
-    fontWeight: FontWeight.bold,
-  );
+  // static const kHead = TextStyle(
+  //   fontFamily: 'MarkPro',
+  //   fontSize: 22.0,
+  //   color: Colors.black,
+  //   fontWeight: FontWeight.bold,
+  // );
 }

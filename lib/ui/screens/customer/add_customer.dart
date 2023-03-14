@@ -44,7 +44,7 @@ class CustomerScreen extends StatelessWidget {
                         ),
                         Text(
                           'Add Manual Order',
-                          style: UIDataTextStyles.kHead,
+                          style: UIDataTextStyles.h1,
                         ),
                       ],
                     ),
@@ -56,7 +56,7 @@ class CustomerScreen extends StatelessWidget {
                     SpacingHeight.heightlistspacing10,
                     const Text(
                       "Category Name",
-                      style: UIDataTextStyles.kHead,
+                      style: UIDataTextStyles.h1,
                     ),
                     SpacingHeight.heightlistspacing10,
                     ListView.builder(
