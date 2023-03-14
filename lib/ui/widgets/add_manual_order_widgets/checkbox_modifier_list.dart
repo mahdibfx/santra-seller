@@ -30,16 +30,17 @@ class CheckBoxModifier extends StatelessWidget {
               ),
               SpacingWidth.widthlistspacing,
               Theme(
-                data: ThemeData(unselectedWidgetColor: UIDataColors.grey),
+                data: ThemeData(unselectedWidgetColor: UIDataColors.grayColor),
                 child: SizedBox(
                   width: 15,
                   child: Checkbox(
-                    activeColor: UIDataColors.black,
-                    checkColor: UIDataColors.black,
+                    activeColor: UIDataColors.blackColor,
+                    checkColor: UIDataColors.blackColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                       side: BorderSide(
-                        color: UIDataColors.pink, //your desire colour here
+                        color:
+                            UIDataColors.greenColor, //your desire colour here
                         width: 1.5,
                       ),
                     ),
@@ -54,7 +55,7 @@ class CheckBoxModifier extends StatelessWidget {
         Divider(
           thickness: 1,
           height: 3,
-          color: UIDataColors.black,
+          color: UIDataColors.blackColor,
         ),
       ],
     );

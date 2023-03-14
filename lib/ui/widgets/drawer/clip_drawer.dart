@@ -1,4 +1,3 @@
-
 import '../../../utils/uidata/textStyles.dart';
 import '/utils/uidata.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +13,7 @@ class ClipDrawer extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.only(left: 16.0, right: 40),
           decoration: BoxDecoration(
-            color: UIDataColors.white,
+            color: UIDataColors.whiteColor,
           ),
           child: SafeArea(
             child: SingleChildScrollView(
@@ -25,9 +24,9 @@ class ClipDrawer extends StatelessWidget {
                     child: IconButton(
                       icon: Icon(
                         Icons.power_settings_new,
-                        color: UIDataColors.grey800,
+                        color: UIDataColors.grayColor2,
                       ),
-                      onPressed: () async{
+                      onPressed: () async {
                         // await homecont.signOut();
                       },
                     ),
@@ -43,47 +42,48 @@ class ClipDrawer extends StatelessWidget {
                       //     image: CachedNetworkImageProvider(
                       //         'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTD8u1Nmrk78DSX0v2i_wTgS6tW5yvHSD7o6g&usqp=CAU')),
                     ),
-
                   ),
                   SizedBox(height: 5.0),
                   Text(
                     "Hello",
-                    style: UIDataTextStyles.drawertext,
+                    style: UIDataTextStyles.title,
                   ),
                   Text(
                     "Berkay Mohamed",
-                    style: UIDataTextStyles.drawertext,
+                    style: UIDataTextStyles.title,
                   ),
                   SpacingHeight.heightlistspacingdrawer,
                   itemList(
-                      Icon(Icons.perm_identity, color: UIDataColors.grey800),
+                      Icon(Icons.perm_identity, color: UIDataColors.grayColor2),
                       "My Account"),
                   Divider(),
                   SpacingHeight.heightlistspacing15,
                   itemList(
                       Icon(Icons.notifications_outlined,
-                          color: UIDataColors.grey800),
+                          color: UIDataColors.grayColor2),
                       "Notification"),
                   Divider(),
                   SpacingHeight.heightlistspacing15,
                   itemList(
                       Icon(Icons.settings_outlined,
-                          color: UIDataColors.grey800),
+                          color: UIDataColors.grayColor2),
                       "Settings"),
                   Divider(),
                   SpacingHeight.heightlistspacing15,
                   itemList(
                       Icon(Icons.stacked_line_chart,
-                          color: UIDataColors.grey800),
+                          color: UIDataColors.grayColor2),
                       "Statistics"),
                   Divider(),
                   SpacingHeight.heightlistspacing15,
-                  itemList(Icon(Icons.star_border, color: UIDataColors.grey800),
+                  itemList(
+                      Icon(Icons.star_border, color: UIDataColors.grayColor2),
                       "Subscriptions"),
                   Divider(),
                   SpacingHeight.heightlistspacing15,
                   itemList(
-                      Icon(Icons.bookmark_border, color: UIDataColors.grey800),
+                      Icon(Icons.bookmark_border,
+                          color: UIDataColors.grayColor2),
                       "Saved"),
                 ],
               ),
@@ -99,7 +99,7 @@ class ClipDrawer extends StatelessWidget {
       children: [
         icon,
         SpacingWidth.widthlistspacing,
-        Text(title, style: UIDataTextStyles.drawertext),
+        Text(title, style: UIDataTextStyles.title),
       ],
     );
   }

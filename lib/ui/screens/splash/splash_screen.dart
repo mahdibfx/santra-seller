@@ -32,7 +32,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonScaffold(
       bodyData: bodyData(),
-      backgroundcolor: UIDataColors.commonColor,
+      backgroundcolor: UIDataColors.whiteColor,
     );
   }
 }

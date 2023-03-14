@@ -65,7 +65,7 @@ class LoginController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     firebaseMessagingToken = await FirebaseMessaging.instance.getToken();
     update();
-    prefs.setString('fcmtoken',firebaseMessagingToken.toString());
+    prefs.setString('fcmtoken', firebaseMessagingToken.toString());
     print("token: $firebaseMessagingToken");
   }
 
@@ -90,7 +90,7 @@ class LoginController extends GetxController {
           Get.offAllNamed(Routes.homeRoutes);
         } else {
           CommonSnackbar.getSnackbar(
-              "Error", "Error in login", UIDataColors.red);
+              "Error", "Error in login", UIDataColors.redColor);
         }
       } catch (e) {
         print("check error ${e}");
@@ -100,7 +100,7 @@ class LoginController extends GetxController {
         CommonSnackbar.getSnackbar(
             "Server Error",
             "Server Error or Please Check your internet connection",
-            UIDataColors.red);
+            UIDataColors.redColor);
       }
     }
   }

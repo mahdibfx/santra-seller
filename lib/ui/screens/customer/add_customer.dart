@@ -161,16 +161,16 @@ class CustomerScreen extends StatelessWidget {
     return CommonScaffold(
       resizeToAvoid: false,
       bodyData: bodyData(),
-      backgroundcolor: UIDataColors.commonColor,
+      backgroundcolor: UIDataColors.whiteColor,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,
       showAppBar: true,
       scaffoldKey: _key,
       showBottomNav: true,
-      appbarcolor: UIDataColors.white,
+      appbarcolor: UIDataColors.whiteColor,
       appTitle: 'Add customer',
-      backarrow: UIDataColors.black,
+      backarrow: UIDataColors.blackColor,
       qrCallback: () {
         // Get.offAllNamed(Routes.add);
       },

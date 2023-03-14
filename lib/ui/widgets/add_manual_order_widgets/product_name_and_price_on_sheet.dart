@@ -11,19 +11,14 @@ class ProductNameAndPriceOnSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const Text(
+      children: const [
+        Text(
           "Product Name",
-          style: UIDataTextStyles.kHead,
+          style: UIDataTextStyles.h1,
         ),
-        RichText(
-          text: const TextSpan(
-            text: 'AED',
-            style: UIDataTextStyles.heading15Medium,
-            children: <TextSpan>[
-              TextSpan(text: "450", style: UIDataTextStyles.kHead),
-            ],
-          ),
+        Text(
+          "60 AED",
+          style: UIDataTextStyles.h1Heavy,
         )
       ],
     );

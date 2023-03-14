@@ -18,14 +18,14 @@ class HomeCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        height: 190,
+        height: 200,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
             color: Colors.white,
             border: Border.all(color: Colors.blue)),
         child: Column(
           children: [
-            Container(
+            SizedBox(
               height: 140,
               child: SvgPicture.asset(
                 imageAsset,
@@ -36,9 +36,17 @@ class HomeCardWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(heading),
+                Text(
+                  heading,
+                  style: UIDataTextStyles.caption
+                      .copyWith(color: UIDataColors.primaryColor),
+                ),
                 SpacingWidth.widthlistspacing,
-                Text(count),
+                const Spacer(),
+                Text(
+                  count,
+                  style: UIDataTextStyles.counth2,
+                ),
               ],
             ).marginOnly(left: 10, right: 10, bottom: 10),
           ],

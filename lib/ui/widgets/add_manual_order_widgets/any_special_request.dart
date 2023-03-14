@@ -17,7 +17,7 @@ class AnySpecialRequests extends StatelessWidget {
           child: Text(
             "Add Note",
             style: TextStyle(
-                color: UIDataColors.black,
+                color: UIDataColors.blackColor,
                 decoration: TextDecoration.underline),
           ),
         )

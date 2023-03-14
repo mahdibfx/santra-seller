@@ -13,18 +13,17 @@ class AddToBasketButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8), color: UIDataColors.black),
+          borderRadius: BorderRadius.circular(8),
+          color: UIDataColors.blackColor),
       child: Row(
-        children: const [
-          Text(
-            "Add To Basket",
-            style: UIDataTextStyles.headingbtn,
-          ),
+        children: [
+          Text("Add To Basket",
+              style:
+                  UIDataTextStyles.h2.copyWith(color: UIDataColors.whiteColor)),
           Spacer(),
-          Text(
-            "AED 30",
-            style: UIDataTextStyles.headingbtn,
-          )
+          Text("AED 30",
+              style:
+                  UIDataTextStyles.h2.copyWith(color: UIDataColors.whiteColor))
         ],
       ).paddingSymmetric(horizontal: 12, vertical: 12),
     );

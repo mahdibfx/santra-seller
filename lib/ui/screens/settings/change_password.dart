@@ -33,7 +33,7 @@ class ChangePassword extends StatelessWidget {
                       controller: _.currentPasswordController,
                       fieldHeading: "Current Password",
                       hintText: "Current Password",
-                      fillcolor: UIDataColors.white,
+                      fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
                       togglePassword: true,
                       prefixIcon: UIDATAIcons.unlockIcon,
@@ -60,7 +60,7 @@ class ChangePassword extends StatelessWidget {
                       fieldHeading: "New Password",
                       hintText: "New Password",
                       isTextHidden: _.newPasswordSecuretext,
-                      fillcolor: UIDataColors.white,
+                      fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
                       togglePassword: true,
                       prefixIcon: UIDATAIcons.unlockIcon,
@@ -85,7 +85,7 @@ class ChangePassword extends StatelessWidget {
                       fieldHeading: "Confirm New Password",
                       hintText: "Confirm New Password",
                       isTextHidden: _.confirmPasswordSecuretext,
-                      fillcolor: UIDataColors.white,
+                      fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
                       togglePassword: true,
                       prefixIcon: UIDATAIcons.unlockIcon,
@@ -117,7 +117,7 @@ class ChangePassword extends StatelessWidget {
                                 ],
                               ),
                               btntxt: "Submit".tr,
-                              buttontxtColor: UIDataColors.white,
+                              buttontxtColor: UIDataColors.whiteColor,
                               onPressed: () {
                                 _.updatePassword();
                               },
@@ -137,16 +137,16 @@ class ChangePassword extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonScaffold(
       bodyData: bodyData(context),
-      backgroundcolor: UIDataColors.commonColor,
+      backgroundcolor: UIDataColors.whiteColor,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,
       showAppBar: true,
       scaffoldKey: _key,
       showBottomNav: true,
-      appbarcolor: UIDataColors.white,
+      appbarcolor: UIDataColors.whiteColor,
       appTitle: '',
-      backarrow: UIDataColors.black,
+      backarrow: UIDataColors.blackColor,
       qrCallback: () {
         Get.offAllNamed(Routes.signuproutes);
       },

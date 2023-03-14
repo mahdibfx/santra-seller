@@ -31,22 +31,6 @@ class LoginScreen extends StatelessWidget {
                     SpacingHeight.heightlistspacing10,
 
                     SpacingHeight.heightlistspacing10,
-                    Container(
-                      height: 60,
-                      width: 354,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: UIDataColors.containerlogin,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("SIGN IN ", style: UIDataTextStyles.logintitlt2),
-                          Text("YOUR ACCOUNT",
-                              style: UIDataTextStyles.logintitle)
-                        ],
-                      ),
-                    ),
 
                     // Row(
                     //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,7 +53,7 @@ class LoginScreen extends StatelessWidget {
                       hintText: 'Email',
                       prefixIcon: UIDATAIcons.emailIcon,
                       isTextHidden: false,
-                      fillcolor: UIDataColors.white,
+                      fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.emailAddress,
                       validator: (val) {
                         bool email = _.emailRegex.hasMatch(val);
@@ -86,7 +70,7 @@ class LoginScreen extends StatelessWidget {
                       hintText: 'Password',
                       //prefixIcon: Icons.lock_outline,
                       keyboardType: TextInputType.text,
-                      fillcolor: UIDataColors.white,
+                      fillcolor: UIDataColors.whiteColor,
                       togglePassword: true,
                       prefixIcon: UIDATAIcons.lockIcon,
                       toggleIcon: _.securetext == true
@@ -132,7 +116,7 @@ class LoginScreen extends StatelessWidget {
                             Get.toNamed(Routes.forgotpasswordRoutes);
                           },
                           child: Text("Forgot Password?",
-                              style: UIDataTextStyles.forgetregular),
+                              style: UIDataTextStyles.subTitle),
                         ),
                         SizedBox(height: 20),
                       ],
@@ -155,7 +139,7 @@ class LoginScreen extends StatelessWidget {
                                     ],
                                   ),
                                   btntxt: "SIGN IN",
-                                  buttontxtColor: UIDataColors.white,
+                                  buttontxtColor: UIDataColors.whiteColor,
                                   onPressed: () {
                                     _.loginfunction();
                                   },
@@ -174,7 +158,7 @@ class LoginScreen extends StatelessWidget {
                     SpacingHeight.heightlistspacing15,
                     Divider(
                       height: 1,
-                      color: UIDataColors.dividercolor,
+                      color: UIDataColors.primaryColor,
                       thickness: 1.5,
                     ),
                     SpacingHeight.heightlistspacing15,
@@ -182,19 +166,19 @@ class LoginScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text("Don't have an account ? ",
-                            style: UIDataTextStyles.donthaveaccount),
+                            style: UIDataTextStyles.subTitle),
                         GestureDetector(
                             onTap: () {
                               Get.toNamed(Routes.signuproutes);
                             },
                             child: Text("SIGN UP",
-                                style: UIDataTextStyles.logintitle))
+                                style: UIDataTextStyles.subTitle))
                       ],
                     ),
                     SpacingHeight.heightlistspacing15,
                     Divider(
                       height: 1,
-                      color: UIDataColors.dividercolor,
+                      color: UIDataColors.primaryColor,
                       thickness: 1.5,
                     ),
                   ],
@@ -211,7 +195,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonScaffold(
       bodyData: bodyData(context),
-      backgroundcolor: UIDataColors.commonColor,
+      backgroundcolor: UIDataColors.whiteColor,
     );
   }
 }

@@ -35,7 +35,7 @@ class ChangeEmail extends StatelessWidget {
                       hintText: "New Email",
                       prefixIcon: UIDATAIcons.emailIcon,
                       isTextHidden: false,
-                      fillcolor: UIDataColors.white,
+                      fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.emailAddress,
                       validator: (val) {
                         bool email = _.emailRegex.hasMatch(val);
@@ -54,7 +54,7 @@ class ChangeEmail extends StatelessWidget {
                       fieldHeading: "Confirm Email",
                       hintText: "Confirm Email",
                       isTextHidden: false,
-                      fillcolor: UIDataColors.white,
+                      fillcolor: UIDataColors.whiteColor,
                       prefixIcon: UIDATAIcons.emailIcon,
                       keyboardType: TextInputType.emailAddress,
                       validator: (val) {
@@ -74,7 +74,7 @@ class ChangeEmail extends StatelessWidget {
                       fieldHeading: "Password",
                       hintText: "Password",
                       isTextHidden: _.securetext,
-                      fillcolor: UIDataColors.white,
+                      fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
                       togglePassword: true,
                       prefixIcon: UIDATAIcons.unlockIcon,
@@ -107,7 +107,7 @@ class ChangeEmail extends StatelessWidget {
                                 ],
                               ),
                               btntxt: "Submit".tr,
-                              buttontxtColor: UIDataColors.white,
+                              buttontxtColor: UIDataColors.whiteColor,
                               onPressed: () {
                                 _.updateEmail();
                               },
@@ -127,16 +127,16 @@ class ChangeEmail extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonScaffold(
       bodyData: bodyData(context),
-      backgroundcolor: UIDataColors.commonColor,
+      backgroundcolor: UIDataColors.whiteColor,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,
       showAppBar: true,
       scaffoldKey: _key,
       showBottomNav: true,
-      appbarcolor: UIDataColors.white,
+      appbarcolor: UIDataColors.whiteColor,
       appTitle: '',
-      backarrow: UIDataColors.black,
+      backarrow: UIDataColors.blackColor,
       qrCallback: () {
         Get.offAllNamed(Routes.signuproutes);
       },

@@ -36,7 +36,7 @@ class MyCustomerScreen extends StatelessWidget {
                         Icon(Icons.contact_page),
                         Text(
                           'My Customers',
-                          style: UIDataTextStyles.homecontainertxt,
+                          style: UIDataTextStyles.h1,
                         ),
                       ],
                     ),
@@ -45,7 +45,7 @@ class MyCustomerScreen extends StatelessWidget {
                       // controller: _.email,
                       hintText: 'Search by customer name'.tr,
                       isTextHidden: false,
-                      fillcolor: UIDataColors.white,
+                      fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
                       validator: (val) {
                         if (val.isEmpty) {
@@ -64,7 +64,7 @@ class MyCustomerScreen extends StatelessWidget {
                         ],
                       ),
                       btntxt: "Add New Customer".tr,
-                      buttontxtColor: UIDataColors.white,
+                      buttontxtColor: UIDataColors.whiteColor,
                       onPressed: () {
                         Get.toNamed(Routes.addNewcustomer);
                       },
@@ -94,16 +94,16 @@ class MyCustomerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonScaffold(
       bodyData: bodyData(),
-      backgroundcolor: UIDataColors.commonColor,
+      backgroundcolor: UIDataColors.whiteColor,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,
       showAppBar: true,
       scaffoldKey: _key,
       showBottomNav: true,
-      appbarcolor: UIDataColors.white,
+      appbarcolor: UIDataColors.whiteColor,
       appTitle: 'My Customer',
-      backarrow: UIDataColors.black,
+      backarrow: UIDataColors.blackColor,
       qrCallback: () {
         Get.offAllNamed(Routes.addManualOrder);
       },

@@ -32,7 +32,7 @@ class ContactUsScreen extends StatelessWidget {
                           controller: _.username,
                           hintText: "User Name".tr,
                           isTextHidden: false,
-                          fillcolor: UIDataColors.white,
+                          fillcolor: UIDataColors.whiteColor,
                           keyboardType: TextInputType.emailAddress,
                           validator: (val) {
                             if (val.isEmpty) {
@@ -46,7 +46,7 @@ class ContactUsScreen extends StatelessWidget {
                           controller: _.email,
                           hintText: 'Email'.tr,
                           isTextHidden: false,
-                          fillcolor: UIDataColors.white,
+                          fillcolor: UIDataColors.whiteColor,
                           keyboardType: TextInputType.emailAddress,
                           validator: (val) {
                             bool email = _.emailRegex.hasMatch(val);
@@ -63,7 +63,7 @@ class ContactUsScreen extends StatelessWidget {
                           controller: _.phonenumber,
                           hintText: 'Phone Number'.tr,
                           isTextHidden: false,
-                          fillcolor: UIDataColors.white,
+                          fillcolor: UIDataColors.whiteColor,
                           keyboardType: TextInputType.number,
                           validator: (val) {
                             if (val.isEmpty) {
@@ -77,7 +77,7 @@ class ContactUsScreen extends StatelessWidget {
                           controller: _.address,
                           hintText: 'Address'.tr,
                           isTextHidden: false,
-                          fillcolor: UIDataColors.white,
+                          fillcolor: UIDataColors.whiteColor,
                           keyboardType: TextInputType.emailAddress,
                           validator: (val) {
                             if (val.isEmpty) {
@@ -104,7 +104,7 @@ class ContactUsScreen extends StatelessWidget {
                                 ],
                               ),
                               btntxt: "Submit".tr,
-                              buttontxtColor: UIDataColors.white,
+                              buttontxtColor: UIDataColors.whiteColor,
                             ),
                     ),
                     SpacingHeight.heightlistspacing15,
@@ -127,16 +127,16 @@ class ContactUsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonScaffold(
       bodyData: bodyData(),
-      backgroundcolor: UIDataColors.commonColor,
+      backgroundcolor: UIDataColors.whiteColor,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,
       showAppBar: true,
       scaffoldKey: _key,
       showBottomNav: true,
-      appbarcolor: UIDataColors.white,
+      appbarcolor: UIDataColors.whiteColor,
       appTitle: 'Contact Us',
-      backarrow: UIDataColors.black,
+      backarrow: UIDataColors.blackColor,
       qrCallback: () {
         Get.offAllNamed(Routes.addManualOrder);
       },

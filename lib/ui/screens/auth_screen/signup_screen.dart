@@ -27,22 +27,6 @@ class SignUpScreen extends StatelessWidget {
                     // ),
                     SizedBox(height: 10),
 
-                    Container(
-                      height: 60,
-                      width: 354,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: UIDataColors.containerlogin,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("SIGN UP ", style: UIDataTextStyles.logintitlt2),
-                          Text("YOUR ACCOUNT",
-                              style: UIDataTextStyles.logintitle)
-                        ],
-                      ),
-                    ),
                     SizedBox(height: 10),
                     Container(
                       child: Column(children: [
@@ -50,7 +34,7 @@ class SignUpScreen extends StatelessWidget {
                           controller: _.username,
                           hintText: "User Name".tr,
                           isTextHidden: false,
-                          fillcolor: UIDataColors.white,
+                          fillcolor: UIDataColors.whiteColor,
                           keyboardType: TextInputType.emailAddress,
                           validator: (val) {
                             if (val.isEmpty) {
@@ -63,7 +47,7 @@ class SignUpScreen extends StatelessWidget {
                           controller: _.firstname,
                           hintText: 'First Name'.tr,
                           isTextHidden: false,
-                          fillcolor: UIDataColors.white,
+                          fillcolor: UIDataColors.whiteColor,
                           keyboardType: TextInputType.emailAddress,
                           validator: (val) {
                             if (val.isEmpty) {
@@ -76,7 +60,7 @@ class SignUpScreen extends StatelessWidget {
                           controller: _.lastname,
                           hintText: 'Last Name'.tr,
                           isTextHidden: false,
-                          fillcolor: UIDataColors.white,
+                          fillcolor: UIDataColors.whiteColor,
                           keyboardType: TextInputType.emailAddress,
                           validator: (val) {
                             if (val.isEmpty) {
@@ -89,7 +73,7 @@ class SignUpScreen extends StatelessWidget {
                           controller: _.email,
                           hintText: 'Email'.tr,
                           isTextHidden: false,
-                          fillcolor: UIDataColors.white,
+                          fillcolor: UIDataColors.whiteColor,
                           keyboardType: TextInputType.emailAddress,
                           validator: (val) {
                             bool email = _.emailRegex.hasMatch(val);
@@ -105,7 +89,7 @@ class SignUpScreen extends StatelessWidget {
                           controller: _.phonenumber,
                           hintText: 'Phone Number'.tr,
                           isTextHidden: false,
-                          fillcolor: UIDataColors.white,
+                          fillcolor: UIDataColors.whiteColor,
                           keyboardType: TextInputType.number,
                           validator: (val) {
                             if (val.isEmpty) {
@@ -118,7 +102,7 @@ class SignUpScreen extends StatelessWidget {
                           controller: _.address,
                           hintText: 'Address'.tr,
                           isTextHidden: false,
-                          fillcolor: UIDataColors.white,
+                          fillcolor: UIDataColors.whiteColor,
                           keyboardType: TextInputType.emailAddress,
                           validator: (val) {
                             if (val.isEmpty) {
@@ -131,7 +115,7 @@ class SignUpScreen extends StatelessWidget {
                           controller: _.password,
                           hintText: 'Password'.tr,
                           keyboardType: TextInputType.text,
-                          fillcolor: UIDataColors.white,
+                          fillcolor: UIDataColors.whiteColor,
                           togglePassword: true,
                           toggleIcon: _.securetext == true
                               ? UIDATAIcons.viewOffIcon
@@ -154,7 +138,7 @@ class SignUpScreen extends StatelessWidget {
                           controller: _.conformpassword,
                           hintText: 'Confirm Password'.tr,
                           keyboardType: TextInputType.text,
-                          fillcolor: UIDataColors.white,
+                          fillcolor: UIDataColors.whiteColor,
                           togglePassword: true,
                           toggleIcon: _.securetext == true
                               ? UIDATAIcons.viewOffIcon
@@ -214,7 +198,7 @@ class SignUpScreen extends StatelessWidget {
                                 ],
                               ),
                               btntxt: "SIGN UP".tr,
-                              buttontxtColor: UIDataColors.white,
+                              buttontxtColor: UIDataColors.whiteColor,
                             ),
                     ),
 
@@ -286,7 +270,7 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     Divider(
                       height: 1,
-                      color: UIDataColors.dividercolor,
+                      color: UIDataColors.primaryColor,
                       thickness: 1.5,
                     ),
                     SpacingHeight.heightlistspacing15,
@@ -294,19 +278,19 @@ class SignUpScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text("Already have the account? ",
-                            style: UIDataTextStyles.donthaveaccount),
+                            style: UIDataTextStyles.subTitle),
                         GestureDetector(
                             onTap: () {
                               Get.offAllNamed(Routes.loginRoutes);
                             },
                             child: const Text("SIGN IN",
-                                style: UIDataTextStyles.logintitle))
+                                style: UIDataTextStyles.subTitle))
                       ],
                     ),
                     SpacingHeight.heightlistspacing15,
                     Divider(
                       height: 1,
-                      color: UIDataColors.dividercolor,
+                      color: UIDataColors.primaryColor,
                       thickness: 1.5,
                     ),
                   ],
@@ -328,7 +312,7 @@ class SignUpScreen extends StatelessWidget {
         ),
         title: Text(
           "NOTIFCATION",
-          style: UIDataTextStyles.alertmsg,
+          style: UIDataTextStyles.subTitle,
         ),
         content: Container(
           height: Get.height / 8,
@@ -353,7 +337,7 @@ class SignUpScreen extends StatelessWidget {
                   children: [
                     Text(
                       "VERIFY",
-                      style: UIDataTextStyles.alertmsg,
+                      style: UIDataTextStyles.subTitle,
                     )
                   ],
                 ),
@@ -522,10 +506,10 @@ class SignUpScreen extends StatelessWidget {
       bodyData: bodyData(context),
       showAppBar: true,
       appTitle: "SIGN UP",
-      appbarcolor: UIDataColors.commonColor,
+      appbarcolor: UIDataColors.whiteColor,
       elevation: 0.0,
-      backarrow: UIDataColors.black,
-      backgroundcolor: UIDataColors.commonColor,
+      backarrow: UIDataColors.blackColor,
+      backgroundcolor: UIDataColors.whiteColor,
     );
   }
 }

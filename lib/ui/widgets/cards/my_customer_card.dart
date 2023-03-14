@@ -9,7 +9,11 @@ class MyCustomerCard extends StatelessWidget {
   final String number;
   final dynamic onTap;
 
-  const MyCustomerCard({super.key, required this.name, required this.number, required this.onTap});
+  const MyCustomerCard(
+      {super.key,
+      required this.name,
+      required this.number,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +22,7 @@ class MyCustomerCard extends StatelessWidget {
         Expanded(
           child: Container(
             height: 80,
-            color: UIDataColors.white,
+            color: UIDataColors.whiteColor,
             child: Column(
               children: [
                 Row(
