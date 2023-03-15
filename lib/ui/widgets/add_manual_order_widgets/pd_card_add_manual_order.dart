@@ -22,7 +22,7 @@ class PDCardAddManualOrder extends StatelessWidget {
                 height: 80,
                 width: 80,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(15),
                   child: Image.asset(
                     UIDataImage.dummyImage,
                     fit: BoxFit.cover,
@@ -41,7 +41,7 @@ class PDCardAddManualOrder extends StatelessWidget {
                     ),
                     Text(
                       "AED 15",
-                      style: UIDataTextStyles.h2,
+                      style: UIDataTextStyles.title,
                     ),
                   ],
                 ).marginOnly(top: 5, bottom: 5, left: 8, right: 8)),
@@ -50,15 +50,18 @@ class PDCardAddManualOrder extends StatelessWidget {
               onTap: onTap,
               child: Container(
                   padding: const EdgeInsets.all(5),
-                  height: 80,
-                  width: 80,
+                  height: 60,
+                  width: 60,
                   child: Container(
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        color: UIDataColors.primaryColor),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: UIDataColors.primaryColor),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(15)),
+                        color: Colors.transparent),
                     child: const Icon(
                       Icons.add,
-                      size: 40,
+                      size: 30,
+                      color: UIDataColors.primaryColor,
                     ),
                   )),
             ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:santra_seller/utils/uidata.dart';
 
 import '../../../utils/uidata/textStyles.dart';
 
@@ -21,18 +23,24 @@ class PriceOnSelection extends StatelessWidget {
         GestureDetector(
           onTap: onMinus,
           child: Container(
-              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: UIDataColors.primaryColor)),
+              padding: const EdgeInsets.all(2),
               alignment: Alignment.center,
               child: const Icon(Icons.remove)),
         ),
         const Text(
           "2",
           style: UIDataTextStyles.h1Heavy,
-        ),
+        ).paddingSymmetric(horizontal: 10),
         GestureDetector(
           onTap: onPlus,
           child: Container(
-              padding: const EdgeInsets.only(left: 5),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: UIDataColors.primaryColor)),
+              padding: const EdgeInsets.all(2),
               alignment: Alignment.centerRight,
               child: const Icon(Icons.add)),
         )

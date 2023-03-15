@@ -3,9 +3,6 @@ import 'dart:convert';
 import 'package:santra_seller/controllers/add_manual_order_controller.dart/add_manual_order_controller.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
-import '../../../controllers/home_controller/home_controller.dart';
-import '../../../utils/routes/app_routes.dart';
-import '../../widgets/add_manual_order_widgets/any_special_request.dart';
 import '../../widgets/add_manual_order_widgets/checkbox_modifier_list.dart';
 import '../../widgets/add_manual_order_widgets/rounded_close_button.dart';
 import '../../widgets/add_manual_order_widgets/pd_card_add_manual_order.dart';
@@ -129,8 +126,6 @@ class CustomerScreen extends StatelessWidget {
                                                 ),
                                                 SpacingHeight
                                                     .heightlistspacing10,
-                                                AnySpecialRequests(
-                                                    ontap: () {}),
                                                 SizedBox(
                                                   height: MediaQuery.of(context)
                                                           .size
