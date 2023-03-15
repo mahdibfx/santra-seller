@@ -2,7 +2,6 @@
 import 'package:santra_seller/controllers/add_manual_order_controller.dart/add_manual_order_controller.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
-import '../../widgets/add_manual_order_widgets/any_special_request.dart';
 import '../../widgets/add_manual_order_widgets/checkbox_modifier_list.dart';
 import '../../widgets/add_manual_order_widgets/rounded_close_button.dart';
 import '../../widgets/add_manual_order_widgets/pd_card_add_manual_order.dart';
@@ -107,12 +106,14 @@ class AddManulOrder extends StatelessWidget {
                                               children: [
                                                 const ProductNameAndPriceOnSheet(),
                                                 SpacingHeight
-                                                    .heightlistspacing5,
+                                                    .heightlistspacing10,
                                                 PriceOnSelection(onMinus: () {
                                                   print("Minus");
                                                 }, onPlus: () {
                                                   print("Plus");
                                                 }),
+                                                SpacingHeight
+                                                    .heightlistspacing20,
                                                 ListView.builder(
                                                   physics:
                                                       const NeverScrollableScrollPhysics(),
@@ -130,8 +131,6 @@ class AddManulOrder extends StatelessWidget {
                                                 ),
                                                 SpacingHeight
                                                     .heightlistspacing10,
-                                                AnySpecialRequests(
-                                                    ontap: () {}),
                                                 SizedBox(
                                                   height: MediaQuery.of(context)
                                                           .size

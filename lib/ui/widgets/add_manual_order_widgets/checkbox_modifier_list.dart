@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';
 
@@ -15,47 +14,44 @@ class CheckBoxModifier extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          height: 30,
-          child: Row(
-            children: [
-              Text(
-                modName!,
-                style: UIDataTextStyles.heading15Medium,
+        Row(
+          children: [
+            Text(
+              modName!,
+              style: UIDataTextStyles.h2,
+            ),
+            const Spacer(),
+            // Text(
+            //   "(AED $price )",
+            //   style: UIDataTextStyles.heading15Medium,
+            // ),
+            SpacingWidth.widthlistspacing,
+            Theme(
+              data: ThemeData(
+                unselectedWidgetColor: UIDataColors.blackColor,
               ),
-              const Spacer(),
-              Text(
-                "(AED $price )",
-                style: UIDataTextStyles.heading15Medium,
-              ),
-              SpacingWidth.widthlistspacing,
-              Theme(
-                data: ThemeData(unselectedWidgetColor: UIDataColors.grayColor),
-                child: SizedBox(
-                  width: 15,
-                  child: Checkbox(
-                    activeColor: UIDataColors.blackColor,
-                    checkColor: UIDataColors.blackColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      side: BorderSide(
-                        color:
-                            UIDataColors.greenColor, //your desire colour here
-                        width: 1.5,
-                      ),
-                    ),
-                    onChanged: (bool? value) {},
-                    value: isChecked,
+              child: SizedBox(
+                width: 20,
+                child: Checkbox(
+                  activeColor: UIDataColors.blackColor,
+                  checkColor: UIDataColors.blackColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
+                  side: const BorderSide(
+                    width: 1,
+                  ),
+                  onChanged: (bool? value) {},
+                  value: isChecked,
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        Divider(
-          thickness: 1,
+        const Divider(
+          thickness: 0.2,
           height: 3,
-          color: UIDataColors.blackColor,
+          color: UIDataColors.primaryColor,
         ),
       ],
     );

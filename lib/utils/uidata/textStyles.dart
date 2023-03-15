@@ -28,7 +28,7 @@ class UIDataTextStyles {
       letterSpacing: 0.0);
   static const h2 = TextStyle(
       fontSize: 16,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.bold,
       fontFamily: 'Markpro',
       letterSpacing: 0.0);
   static const title = TextStyle(
