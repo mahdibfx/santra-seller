@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:santra_seller/utils/uidata.dart';
 
 class RaisedGradientButton extends StatelessWidget {
   final String? btntxt;
+  final Widget? iconImage;
   final Color? buttontxtColor;
   final Gradient? gradient;
   final double width;
@@ -11,6 +13,7 @@ class RaisedGradientButton extends StatelessWidget {
 
   RaisedGradientButton({
     required this.btntxt,
+    this.iconImage,
     this.buttontxtColor,
     this.gradient,
     this.width = double.infinity,
@@ -37,14 +40,21 @@ class RaisedGradientButton extends StatelessWidget {
         child: InkWell(
             onTap: onPressed,
             child: Center(
-              child: Text(
-                btntxt ?? "",
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.bold,
-                  color: buttontxtColor != null ? buttontxtColor : Colors.white,
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    btntxt ?? "",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.bold,
+                      color: buttontxtColor != null ? buttontxtColor : Colors.white,
+                    ),
+                  ),
+                  SpacingWidth.widthlistspacing,
+                  iconImage??SizedBox(),
+                ],
               ),
             )),
       ),
