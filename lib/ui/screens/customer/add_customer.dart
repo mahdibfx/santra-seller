@@ -103,7 +103,7 @@ class CustomerScreen extends StatelessWidget {
                                           SingleChildScrollView(
                                             child: Column(
                                               children: [
-                                                const ProductNameAndPriceOnSheet(),
+                                                //const ProductNameAndPriceOnSheet(),
                                                 SpacingHeight
                                                     .heightlistspacing5,
                                                 PriceOnSelection(onMinus: () {

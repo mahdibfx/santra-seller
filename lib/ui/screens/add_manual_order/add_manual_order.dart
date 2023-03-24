@@ -1,5 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:santra_seller/controllers/add_manual_order_controller.dart/add_manual_order_controller.dart';
+import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
+import 'package:santra_seller/ui/widgets/buttons/material_buttons/raised_gradient_button.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
 import '../../widgets/add_manual_order_widgets/checkbox_modifier_list.dart';
@@ -21,137 +24,189 @@ class AddManulOrder extends StatelessWidget {
   Widget bodyData(context) {
     Size size = MediaQuery.of(context).size;
     return GetBuilder<AddManualOrderController>(
-      builder: (_) {
-        return _.isLoading
-            ? const SizedBox(
-                child: Center(
-                child: CircularProgressIndicator(),
-              ))
-            : SafeArea(
-                child: SingleChildScrollView(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: const [
-                        Icon(
-                          Icons.add,
-                          size: 40,
-                        ),
-                        Text(
-                          'Add Manual Order',
-                          style: UIDataTextStyles.title,
-                        ),
-                      ],
-                    ),
-                    CommonTextField(
-                      isTextHidden: false,
-                      fillcolor: Colors.white,
-                      labelText: "Search",
-                    ),
-                    SpacingHeight.heightlistspacing10,
-                    const Text(
-                      "Category Name",
-                      style: UIDataTextStyles.h1,
-                    ),
-                    SpacingHeight.heightlistspacing10,
-                    ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: 20,
-                        itemBuilder: (context, index) {
-                          return PDCardAddManualOrder(
-                            onTap: () {
-                              showBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return Container(
-                                      height: size.height - size.height * 0.3,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      width: double.infinity,
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          children: [
-                                            Stack(
-                                              clipBehavior: Clip.none,
-                                              children: [
-                                                SizedBox(
-                                                  height: size.height * 0.3,
-                                                  width: double.infinity,
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    child: Image.asset(
-                                                      UIDataImage.dummyImage,
-                                                      fit: BoxFit.cover,
+      builder: (manualOrderController) {
+        return SafeArea(
+          child: SingleChildScrollView(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: const [
+                  Icon(Icons.add, size: 40, color: UIDataColors.primaryColor),
+                  Text(
+                    'Add Order',
+                    style: UIDataTextStyles.title,
+                  ),
+                ],
+              ),
+              CommonTextField(
+                isTextHidden: false,
+                prefixIcon: UIDATAIcons.searchIcon,
+                fillcolor: Colors.white,
+                labelText: "Search For a Product",
+              ),
+              SpacingHeight.heightlistspacing10,
+              manualOrderController.isLoading
+                  ? const SizedBox(
+                      child: Center(
+                      child: CircularProgressIndicator(),
+                    ))
+                  : manualOrderController.hasError
+                      ? const Center(child: Text("No Products To Show"))
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Category Name",
+                              style: UIDataTextStyles.h1,
+                            ).paddingOnly(left: 10),
+                            SpacingHeight.heightlistspacing10,
+                            ListView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount:
+                                    manualOrderController.allProducts?.length,
+                                itemBuilder: (context, index) {
+                                  return PDCardAddManualOrder(
+                                    manualOrderController:
+                                        manualOrderController,
+                                    index: index,
+                                    onTap: () {
+                                      showBottomSheet(
+                                          context: context,
+                                          builder: (context) {
+                                            return Container(
+                                              height: size.height -
+                                                  size.height * 0.3,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              width: double.infinity,
+                                              child: SingleChildScrollView(
+                                                child: Column(
+                                                  children: [
+                                                    Stack(
+                                                      clipBehavior: Clip.none,
+                                                      children: [
+                                                        SizedBox(
+                                                          height:
+                                                              size.height * 0.3,
+                                                          width:
+                                                              double.infinity,
+                                                          child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
+                                                              child:
+                                                                  CachedNetworkImage(
+                                                                imageUrl:
+                                                                    "https://api.santra.ae/${manualOrderController.allProducts?[index].productImages}",
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                                memCacheHeight:
+                                                                    300,
+                                                                memCacheWidth:
+                                                                    400,
+                                                                placeholder: (context,
+                                                                        url) =>
+                                                                    const Padding(
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .all(
+                                                                              12.0),
+                                                                  child:
+                                                                      CircularProgressIndicator(),
+                                                                ),
+                                                              )),
+                                                        ),
+                                                        Positioned(
+                                                          left: 12,
+                                                          top: 12,
+                                                          child:
+                                                              RoundedCloseButton(
+                                                            onTap: () {
+                                                              Get.back();
+                                                            },
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
-                                                  ),
+                                                    Column(
+                                                      children: [
+                                                        ProductNameAndPriceOnSheet(
+                                                          productName:
+                                                              manualOrderController
+                                                                  .allProducts?[
+                                                                      index]
+                                                                  .productName,
+                                                          productPrice:
+                                                              manualOrderController
+                                                                  .allProducts?[
+                                                                      index]
+                                                                  .productPrice,
+                                                        ),
+                                                        SpacingHeight
+                                                            .heightlistspacing10,
+                                                        PriceOnSelection(
+                                                            onMinus: () {
+                                                          print("Minus");
+                                                        }, onPlus: () {
+                                                          print("Plus");
+                                                        }),
+                                                        SpacingHeight
+                                                            .heightlistspacing20,
+                                                        ListView.builder(
+                                                          physics:
+                                                              const NeverScrollableScrollPhysics(),
+                                                          padding:
+                                                              EdgeInsets.zero,
+                                                          shrinkWrap: true,
+                                                          itemCount: 3,
+                                                          itemBuilder:
+                                                              (context, index) {
+                                                            return CheckBoxModifier(
+                                                              modName: "Small",
+                                                              price: "230",
+                                                              isChecked: false,
+                                                            );
+                                                          },
+                                                        ),
+                                                        SpacingHeight
+                                                            .heightlistspacing10,
+                                                        SizedBox(
+                                                          height: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .height *
+                                                              0.03,
+                                                        ),
+                                                        PrimaryButtonWithIcon(
+                                                          onPressed: () {},
+                                                          btntxt: "Add To Cart",
+                                                          iconImage: UIDATAIcons
+                                                              .cartIcon,
+                                                        )
+                                                      ],
+                                                    ).paddingOnly(
+                                                        left: 12,
+                                                        right: 12,
+                                                        top: 18),
+                                                  ],
                                                 ),
-                                                Positioned(
-                                                  left: 12,
-                                                  top: 12,
-                                                  child: RoundedCloseButton(
-                                                    onTap: () {
-                                                      Get.back();
-                                                    },
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Column(
-                                              children: [
-                                                const ProductNameAndPriceOnSheet(),
-                                                SpacingHeight
-                                                    .heightlistspacing10,
-                                                PriceOnSelection(onMinus: () {
-                                                  print("Minus");
-                                                }, onPlus: () {
-                                                  print("Plus");
-                                                }),
-                                                SpacingHeight
-                                                    .heightlistspacing20,
-                                                ListView.builder(
-                                                  physics:
-                                                      const NeverScrollableScrollPhysics(),
-                                                  padding: EdgeInsets.zero,
-                                                  shrinkWrap: true,
-                                                  itemCount: 3,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return CheckBoxModifier(
-                                                      modName: "Small",
-                                                      price: "230",
-                                                      isChecked: false,
-                                                    );
-                                                  },
-                                                ),
-                                                SpacingHeight
-                                                    .heightlistspacing10,
-                                                SizedBox(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.03,
-                                                ),
-                                                const AddToBasketButton(),
-                                              ],
-                                            ).paddingOnly(
-                                                left: 12, right: 12, top: 18),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  });
-                            },
-                          );
-                        }),
-                  ],
-                ).marginOnly(left: 10, right: 10)),
-              );
+                                              ),
+                                            );
+                                          });
+                                    },
+                                  );
+                                }),
+                          ],
+                        ),
+            ],
+          ).marginOnly(left: 10, right: 10)),
+        );
       },
     );
   }

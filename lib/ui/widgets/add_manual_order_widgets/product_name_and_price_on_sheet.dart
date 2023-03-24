@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import '../../../utils/uidata/textStyles.dart';
 
 class ProductNameAndPriceOnSheet extends StatelessWidget {
-  const ProductNameAndPriceOnSheet({
-    Key? key,
-  }) : super(key: key);
+  String? productName;
+  String? productPrice;
+  ProductNameAndPriceOnSheet(
+      {Key? key, required this.productName, required this.productPrice})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +15,11 @@ class ProductNameAndPriceOnSheet extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          "Product Name",
+          productName ?? "",
           style: UIDataTextStyles.h2.copyWith(fontWeight: FontWeight.w600),
         ),
         Text(
-          "60 AED",
+          "AED ${productPrice ?? ""}",
           style: UIDataTextStyles.h1Heavy,
         )
       ],
