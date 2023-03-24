@@ -26,20 +26,22 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     SpacingHeight.heightlistspacing10,
                     SvgPicture.asset(
-                          UIDataImage.sellerLogoIconSVG,
-                          height: 90,
-                          width: 90,
-                          fit: BoxFit.fitWidth,
-                        ),
+                      UIDataImage.sellerLogoIconSVG,
+                      height: 90,
+                      width: 90,
+                      fit: BoxFit.fitWidth,
+                    ),
                     SpacingHeight.heightlistspacing10,
 
+                    Text("Santra",
+                        style: UIDataTextStyles.h1
+                            .copyWith(fontSize: 28, letterSpacing: 2)),
+                    Text("Seller",
+                        style: UIDataTextStyles.h1.copyWith(
+                            fontSize: 18,
+                            letterSpacing: 2,
+                            color: UIDataColors.secondaryColor)),
 
-                    
-                        Text("Santra",
-                            style: UIDataTextStyles.h1.copyWith(fontSize: 28,letterSpacing: 2)),
-                            Text("Seller",
-                            style: UIDataTextStyles.h1.copyWith(fontSize: 18,letterSpacing: 2,color: UIDataColors.secondaryColor)),
-                     
                     // Row(
                     //   children: [
                     //     Text("Sign In To Continue",
@@ -140,12 +142,12 @@ class LoginScreen extends StatelessWidget {
                                     ],
                                   ),
                                   btntxt: "Login",
-                                  iconImage:SvgPicture.asset(
-                          UIDATAIcons.sendIcon,
-                          height: 25,
-                          width: 25,
-                          fit: BoxFit.fitWidth,
-                        ),
+                                  iconImage: SvgPicture.asset(
+                                    UIDATAIcons.sendIcon,
+                                    height: 25,
+                                    width: 25,
+                                    fit: BoxFit.fitWidth,
+                                  ),
                                   buttontxtColor: UIDataColors.whiteColor,
                                   onPressed: () {
                                     _.loginfunction();
@@ -163,7 +165,7 @@ class LoginScreen extends StatelessWidget {
 
                     SpacingHeight.heightlistspacing15,
                     SpacingHeight.heightlistspacing15,
-                   
+
                     SpacingHeight.heightlistspacing15,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -175,11 +177,11 @@ class LoginScreen extends StatelessWidget {
                               Get.toNamed(Routes.signuproutes);
                             },
                             child: Text("Sign Up",
-                                style: UIDataTextStyles.subTitle.copyWith(color: UIDataColors.primaryColor)))
+                                style: UIDataTextStyles.subTitle.copyWith(
+                                    color: UIDataColors.primaryColor)))
                       ],
                     ),
                     SpacingHeight.heightlistspacing15,
-                   
                   ],
                 ).marginOnly(left: 20.0, right: 20.0),
               ),

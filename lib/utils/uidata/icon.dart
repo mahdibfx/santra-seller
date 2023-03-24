@@ -22,5 +22,6 @@ class UIDATAIcons {
   static const deleteIcon = "$iconsDir/delete.svg";
   static const viewIcon = "$iconsDir/view.svg";
   static const sendIcon = "$iconsDir/login_button_icon.svg";
-
+  static const searchIcon = "$iconsDir/search.svg";
+  static const cartIcon = "$iconsDir/cart.svg";
 }

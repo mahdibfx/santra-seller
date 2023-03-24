@@ -1,12 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
+import 'package:santra_seller/controllers/add_manual_order_controller.dart/add_manual_order_controller.dart';
 
 import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';
 
 class PDCardAddManualOrder extends StatelessWidget {
+  AddManualOrderController? manualOrderController;
+  int? index;
   var onTap;
-  PDCardAddManualOrder({Key? key, required this.onTap}) : super(key: key);
+  PDCardAddManualOrder(
+      {Key? key, required this.onTap, this.manualOrderController, this.index})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,25 +28,32 @@ class PDCardAddManualOrder extends StatelessWidget {
                 height: 80,
                 width: 80,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Image.asset(
-                    UIDataImage.dummyImage,
-                    fit: BoxFit.cover,
-                  ),
-                )),
+                    borderRadius: BorderRadius.circular(15),
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          "https://api.santra.ae/${manualOrderController?.allProducts?[index!].productImages}",
+                      fit: BoxFit.cover,
+                      memCacheHeight: 300,
+                      memCacheWidth: 400,
+                      placeholder: (context, url) => const Padding(
+                        padding: EdgeInsets.all(12.0),
+                        child: CircularProgressIndicator(),
+                      ),
+                    ))),
             SizedBox(
                 height: 80,
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
-                      "Product Name",
+                      manualOrderController?.allProducts?[index!].productName ??
+                          "",
                       style: UIDataTextStyles.h2,
                     ),
                     Text(
-                      "AED 15",
+                      "AED ${manualOrderController?.allProducts?[index!].productPrice ?? ""}",
                       style: UIDataTextStyles.title,
                     ),
                   ],

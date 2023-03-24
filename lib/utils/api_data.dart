@@ -5,4 +5,5 @@ class ApiData {
   static const updatePasswordApi = "${mainurl}update_account_password";
   static const updateaAccountInfoApi = "${mainurl}update_account";
   static const updateaEmail = "${mainurl}update_account_email";
+  static const sellerAllProducts = "${mainurl}products_new_seller";
 }

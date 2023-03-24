@@ -47,13 +47,15 @@ class RaisedGradientButton extends StatelessWidget {
                     btntxt ?? "",
                     style: TextStyle(
                       fontSize: 16.0,
-                      fontFamily: 'Roboto',
+                      fontFamily: 'Markpro',
                       fontWeight: FontWeight.bold,
-                      color: buttontxtColor != null ? buttontxtColor : Colors.white,
+                      color: buttontxtColor != null
+                          ? buttontxtColor
+                          : Colors.white,
                     ),
                   ),
                   SpacingWidth.widthlistspacing,
-                  iconImage??SizedBox(),
+                  iconImage ?? SizedBox(),
                 ],
               ),
             )),
