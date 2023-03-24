@@ -98,14 +98,16 @@ class HomeScreen extends StatelessWidget {
                       Row(
                         children: [
                           HomeCardWidget(
+                            onTap: (){},
                             heading: 'Santra Orders',
-                            count: '153',
+                            count: _.homeData!.santraOrders[0].orderCount.toString(),
                             imageAsset: UIDataImage.santraOrderSVG,
                           ),
                           SpacingWidth.widthlistspacing,
                           HomeCardWidget(
+                            onTap: (){},
                             heading: 'Manual Orders',
-                            count: '153',
+                            count: _.homeData!.manualOrders[0].orderCount.toString(),
                             imageAsset: UIDataImage.manualOrderSVG,
                           ),
                         ],
@@ -114,12 +116,14 @@ class HomeScreen extends StatelessWidget {
                       Row(
                         children: [
                           HomeCardWidget(
+                            onTap: (){},
                             heading: 'Pending Orders',
-                            count: '153',
+                            count: _.homeData!.pendingOrders[0].orderCount.toString(),
                             imageAsset: UIDataImage.pendingOrderSVG,
                           ),
                           SpacingWidth.widthlistspacing,
                           HomeCardWidget(
+                            onTap: (){},
                             heading: 'All Orders',
                             count: '153',
                             imageAsset: UIDataImage.allOrderSVG,

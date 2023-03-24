@@ -1,3 +1,5 @@
+import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../../controllers/auth_controller/login_controller.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata/textStyles.dart';
@@ -23,22 +25,21 @@ class LoginScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     SpacingHeight.heightlistspacing10,
-                    // Image.asset(
-                    //   UIDataImage.logo,
-                    //   height: Get.height / 5,
-                    //   width: Get.width / 2.5,
-                    // ),
+                    SvgPicture.asset(
+                          UIDataImage.sellerLogoIconSVG,
+                          height: 90,
+                          width: 90,
+                          fit: BoxFit.fitWidth,
+                        ),
                     SpacingHeight.heightlistspacing10,
 
-                    SpacingHeight.heightlistspacing10,
 
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     Text("Welcome",
-                    //         style: UIDataTextStyles.loginscreenStyle),
-                    //   ],
-                    // ),
+                    
+                        Text("Santra",
+                            style: UIDataTextStyles.h1.copyWith(fontSize: 28,letterSpacing: 2)),
+                            Text("Seller",
+                            style: UIDataTextStyles.h1.copyWith(fontSize: 18,letterSpacing: 2,color: UIDataColors.secondaryColor)),
+                     
                     // Row(
                     //   children: [
                     //     Text("Sign In To Continue",
@@ -109,13 +110,13 @@ class LoginScreen extends StatelessWidget {
                         //   style: UIDataTextStyles.forgotpassStyle,
                         // ),
 
-                        Spacer(),
+                        // Spacer(),
 
                         GestureDetector(
                           onTap: () {
                             Get.toNamed(Routes.forgotpasswordRoutes);
                           },
-                          child: Text("Forgot Password?",
+                          child: Text("Forgot your password?",
                               style: UIDataTextStyles.subTitle),
                         ),
                         SizedBox(height: 20),
@@ -134,11 +135,17 @@ class LoginScreen extends StatelessWidget {
                               : RaisedGradientButton(
                                   gradient: LinearGradient(
                                     colors: <Color>[
-                                      Color(0xff006EB8),
-                                      Color(0xff006EB8),
+                                      UIDataColors.secondaryColor,
+                                      UIDataColors.secondaryColor,
                                     ],
                                   ),
-                                  btntxt: "SIGN IN",
+                                  btntxt: "Login",
+                                  iconImage:SvgPicture.asset(
+                          UIDATAIcons.sendIcon,
+                          height: 25,
+                          width: 25,
+                          fit: BoxFit.fitWidth,
+                        ),
                                   buttontxtColor: UIDataColors.whiteColor,
                                   onPressed: () {
                                     _.loginfunction();
@@ -156,11 +163,7 @@ class LoginScreen extends StatelessWidget {
 
                     SpacingHeight.heightlistspacing15,
                     SpacingHeight.heightlistspacing15,
-                    Divider(
-                      height: 1,
-                      color: UIDataColors.primaryColor,
-                      thickness: 1.5,
-                    ),
+                   
                     SpacingHeight.heightlistspacing15,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -171,16 +174,12 @@ class LoginScreen extends StatelessWidget {
                             onTap: () {
                               Get.toNamed(Routes.signuproutes);
                             },
-                            child: Text("SIGN UP",
-                                style: UIDataTextStyles.subTitle))
+                            child: Text("Sign Up",
+                                style: UIDataTextStyles.subTitle.copyWith(color: UIDataColors.primaryColor)))
                       ],
                     ),
                     SpacingHeight.heightlistspacing15,
-                    Divider(
-                      height: 1,
-                      color: UIDataColors.primaryColor,
-                      thickness: 1.5,
-                    ),
+                   
                   ],
                 ).marginOnly(left: 20.0, right: 20.0),
               ),
@@ -196,6 +195,7 @@ class LoginScreen extends StatelessWidget {
     return CommonScaffold(
       bodyData: bodyData(context),
       backgroundcolor: UIDataColors.whiteColor,
+      backGroundImage: UIDataImage.backgroundImage,
     );
   }
 }

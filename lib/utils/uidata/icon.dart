@@ -21,4 +21,6 @@ class UIDATAIcons {
   static const logoutIcon = "$iconsDir/logout.svg";
   static const deleteIcon = "$iconsDir/delete.svg";
   static const viewIcon = "$iconsDir/view.svg";
+  static const sendIcon = "$iconsDir/login_button_icon.svg";
+
 }
