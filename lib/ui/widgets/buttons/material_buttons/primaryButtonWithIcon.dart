@@ -1,0 +1,75 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:santra_seller/utils/uidata.dart';
+
+class PrimaryButtonWithIcon extends StatelessWidget {
+  final String? btntxt;
+  final String? iconImage;
+  final Color? buttontxtColor;
+  final Gradient? gradient;
+  final double width;
+  final double height;
+  final onPressed;
+
+  PrimaryButtonWithIcon({
+    required this.btntxt,
+    this.iconImage,
+    this.buttontxtColor,
+    this.gradient,
+    this.width = double.infinity,
+    this.height = 50.0,
+    this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      height: 50.0,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: <Color>[
+            UIDataColors.primaryColor,
+            UIDataColors.primaryColor.withOpacity(0.9),
+            UIDataColors.primaryColor,
+          ],
+        ),
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(15.0),
+          bottomRight: Radius.circular(15.0),
+          topLeft: Radius.circular(15.0),
+          bottomLeft: Radius.circular(15.0),
+        ),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+            onTap: onPressed,
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    btntxt ?? "",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontFamily: 'Markpro',
+                      fontWeight: FontWeight.bold,
+                      color: buttontxtColor != null
+                          ? buttontxtColor
+                          : Colors.white,
+                    ),
+                  ),
+                  SpacingWidth.widthlistspacing,
+                  SvgPicture.asset(
+                    iconImage!,
+                    color: Colors.white,
+                  )
+                ],
+              ),
+            )),
+      ),
+    );
+  }
+}

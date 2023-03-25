@@ -108,7 +108,7 @@ class CommonTextField extends StatelessWidget {
                 color: bordercolor ?? Color(0xff757575).withOpacity(0.7),
               ),
               borderRadius: BorderRadius.all(
-                Radius.circular(6),
+                Radius.circular(15),
               ),
             ),
             focusedBorder: OutlineInputBorder(
@@ -116,7 +116,7 @@ class CommonTextField extends StatelessWidget {
                 color: bordercolor ?? Color(0xff757575).withOpacity(0.7),
               ),
               borderRadius: BorderRadius.all(
-                Radius.circular(6),
+                Radius.circular(15),
               ),
             ),
             hintText: hintText,
@@ -134,7 +134,7 @@ class CommonTextField extends StatelessWidget {
             labelStyle: TextStyle(color: Colors.black, fontSize: 15.0),
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
-                Radius.circular(10.0),
+                Radius.circular(15.0),
               ),
             ),
           ),

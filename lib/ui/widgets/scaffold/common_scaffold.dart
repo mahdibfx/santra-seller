@@ -110,7 +110,7 @@ class CommonScaffold extends StatelessWidget {
         // )),
         clipBehavior: Clip.antiAlias,
         child: Container(
-          height: Get.height / 11 - 10,
+          height: Get.height / 11 ,
           // decoration: ShapeDecoration(
           //   shape: RoundedRectangleBorder(
           //     borderRadius:
@@ -135,8 +135,8 @@ class CommonScaffold extends StatelessWidget {
                 btntxt: Text(
                   "Home",
                   style: Get.currentRoute == Routes.homeRoutes
-                      ? UIDataTextStyles.title
-                      : UIDataTextStyles.subTitle,
+                      ? UIDataTextStyles.title.copyWith(fontSize: 14, fontWeight: FontWeight.w800)
+                      : UIDataTextStyles.subTitle.copyWith(fontSize: 12, fontWeight: FontWeight.normal),
                 ),
                 onPressed: () {
                   Get.offAllNamed(Routes.homeRoutes);
@@ -308,9 +308,10 @@ class CommonScaffold extends StatelessWidget {
       extendBodyBehindAppBar: extendBodyBehindAppBar,
       body: OrientationBuilder(builder: (context, orientation) {
         return Container(
-          decoration: BoxDecoration(
+          decoration: backGroundImage == null ?BoxDecoration(
             color:
                 backgroundcolor != null ? backgroundcolor : Color(0xffffffff),
+                
             // gradient: new LinearGradient(
             //   colors: [
             //     const Color(0xFFd7e1ec),
@@ -318,16 +319,18 @@ class CommonScaffold extends StatelessWidget {
             //   ],
             //   begin: Alignment(1.0, 1.0),
             // ),
+          ) :
+           BoxDecoration(
+            color:
+                backgroundcolor != null ? backgroundcolor : Color(0xffffffff),
+            image: DecorationImage(
+                colorFilter: new ColorFilter.mode(
+                    Colors.black.withOpacity(0.6), BlendMode.dstATop),
+                image: backGroundImage != null
+                    ? AssetImage(backGroundImage!)
+                    : AssetImage(UIDataImage.splash),
+                fit: BoxFit.cover),
           ),
-          // decoration: BoxDecoration(
-          //   image: DecorationImage(
-          //       colorFilter: new ColorFilter.mode(
-          //           Colors.black.withOpacity(0.6), BlendMode.dstATop),
-          //       image: backGroundImage != null
-          //           ? AssetImage(backGroundImage!)
-          //           : AssetImage(UIDataImage.splash),
-          //       fit: BoxFit.cover),
-          // ),
           width: (MediaQuery.of(context).size.width.ceil()).toDouble(),
           height: (MediaQuery.of(context).size.height.ceil()).toDouble(),
           child: bodyData,
