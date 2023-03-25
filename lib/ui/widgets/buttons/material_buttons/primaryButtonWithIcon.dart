@@ -10,6 +10,7 @@ class PrimaryButtonWithIcon extends StatelessWidget {
   final Gradient? gradient;
   final double width;
   final double height;
+  final Color? backEndColor;
   final onPressed;
 
   PrimaryButtonWithIcon({
@@ -19,6 +20,7 @@ class PrimaryButtonWithIcon extends StatelessWidget {
     this.gradient,
     this.width = double.infinity,
     this.height = 50.0,
+    this.backEndColor = UIDataColors.primaryColor,
     this.onPressed,
   });
 
@@ -28,13 +30,19 @@ class PrimaryButtonWithIcon extends StatelessWidget {
       width: width,
       height: 50.0,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: <Color>[
-            UIDataColors.primaryColor,
-            UIDataColors.primaryColor.withOpacity(0.9),
-            UIDataColors.primaryColor,
-          ],
+        color: backEndColor,
+        // gradient: LinearGradient(
+        //   colors: <Color>[
+        //     UIDataColors.primaryColor,
+        //     UIDataColors.primaryColor.withOpacity(0.9),
+        //     UIDataColors.primaryColor,
+        //   ],
+        // ),
+        border: Border.all(
+          color: UIDataColors.primaryColor, //                   <--- border color
+          width: 1.0,
         ),
+
         borderRadius: const BorderRadius.only(
           topRight: Radius.circular(15.0),
           bottomRight: Radius.circular(15.0),
@@ -62,10 +70,11 @@ class PrimaryButtonWithIcon extends StatelessWidget {
                     ),
                   ),
                   SpacingWidth.widthlistspacing,
+                  iconImage != null ?
                   SvgPicture.asset(
                     iconImage!,
                     color: Colors.white,
-                  )
+                  ) : Container()
                 ],
               ),
             )),

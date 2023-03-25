@@ -5,6 +5,7 @@ import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonW
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/raised_gradient_button.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
+import '../../../utils/routes/app_routes.dart';
 import '../../widgets/add_manual_order_widgets/checkbox_modifier_list.dart';
 import '../../widgets/add_manual_order_widgets/rounded_close_button.dart';
 import '../../widgets/add_manual_order_widgets/pd_card_add_manual_order.dart';
@@ -184,7 +185,12 @@ class AddManulOrder extends StatelessWidget {
                                                               0.03,
                                                         ),
                                                         PrimaryButtonWithIcon(
-                                                          onPressed: () {},
+                                                          onPressed: () {
+                                                            manualOrderController.addIntoCart(manualOrderController
+                                                                  .allProducts![
+                                                                      index]);
+                                                            Get.offAllNamed(Routes.cartroute);
+                                                          },
                                                           btntxt: "Add To Cart",
                                                           iconImage: UIDATAIcons
                                                               .cartIcon,
