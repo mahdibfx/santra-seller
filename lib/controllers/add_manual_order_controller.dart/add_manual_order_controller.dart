@@ -6,9 +6,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/seller_all_products_model.dart';
 import '../../ui/widgets/dialogs/custom_dialogs.dart';
 import '../../utils/api_data.dart';
+import '../cart_controller/cart_controller.dart';
 
 class AddManualOrderController extends GetxController {
   late SelllerAllProductsModel selllerAllProductsModel;
+  var cartController = Get.put(CartController());
+
   bool isLoading = true;
   bool hasError = false;
 
@@ -16,6 +19,10 @@ class AddManualOrderController extends GetxController {
   changeLoadingStatus(bool value) {
     isLoading = value;
     update();
+  }
+
+  addIntoCart(CategoryProduct product) {
+    cartController.addItemToCart(product);
   }
 
   Future viewSellerAllProducts() async {
