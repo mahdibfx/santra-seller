@@ -16,7 +16,6 @@ class AccountInfoController extends GetxController {
   String? email;
   String? firstName;
   String? lastName;
-  String? dob;
   RegExp emailRegex = RegExp(
     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$',
   );
@@ -27,10 +26,9 @@ class AccountInfoController extends GetxController {
   Future pickUserDob(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
-        initialDate: DateTime(1950),
+        initialDate: DateTime(2023),
         firstDate: DateTime(1950),
-        lastDate: DateTime(2023));
-
+        lastDate: DateTime.now());
     if (picked != null) {
       userDob = picked;
       formatteUserDob = DateFormat('yyyy-MM-dd').format(userDob!);
@@ -38,7 +36,6 @@ class AccountInfoController extends GetxController {
         print(formatteUserDob.toString());
       }
     }
-
     update();
   }
 
@@ -48,6 +45,7 @@ class AccountInfoController extends GetxController {
     firstName = preferences.getString("firstname");
     lastName = preferences.getString("lastname");
     var date = DateTime.parse(preferences.getString("dob").toString());
+
     userDob = date;
     if (email != null &&
         firstName != null &&
@@ -56,8 +54,17 @@ class AccountInfoController extends GetxController {
       emailController.text = email!;
       fNameController.text = firstName!;
       lNameController.text = lastName!;
-      formatteUserDob = userDob!;
+      formatteUserDob = userDob;
     }
+    update();
+  }
+
+  setValuesAfterUpdating() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("email", emailController.text);
+    prefs.setString("firstname", fNameController.text);
+    prefs.setString("lastname", lNameController.text);
+    prefs.setString("dob", formatteUserDob.toString());
     update();
   }
 
@@ -74,11 +81,12 @@ class AccountInfoController extends GetxController {
         body['first_name'] = fNameController.text;
         body['last_name'] = lNameController.text;
         body['user_email'] = emailController.text;
-        body['date_of_birth'] = formatteUserDob;
+        body['date_of_birth'] = formatteUserDob.toString();
         request.fields.addAll(body);
         var streamedResponse = await request.send();
         var response = await http.Response.fromStream(streamedResponse);
         if (response.statusCode == 200) {
+          setValuesAfterUpdating();
           customOntapDialog("Success",
               "You Account Info Has Been Successfully Updated!", "Okay", () {
             Get.back();

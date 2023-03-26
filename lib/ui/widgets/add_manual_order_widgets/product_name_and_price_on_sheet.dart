@@ -19,7 +19,7 @@ class ProductNameAndPriceOnSheet extends StatelessWidget {
           style: UIDataTextStyles.h2.copyWith(fontWeight: FontWeight.w600),
         ),
         Text(
-          "AED ${productPrice ?? ""}",
+          "${productPrice ?? ""} AED",
           style: UIDataTextStyles.h1Heavy,
         )
       ],

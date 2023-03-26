@@ -17,27 +17,23 @@ import '../../utils/api_data.dart';
 import '../cart_controller/cart_controller.dart';
 
 class CartController extends GetxController {
-  
   late SelllerAllProductsModel selllerAllProductsModel;
   bool isLoading = false;
   bool hasError = false;
 
-  List<CategoryProduct>? allProducts = [];
-
+  List<Product>? allProducts = [];
 
   changeLoadingStatus(bool value) {
     isLoading = value;
     update();
   }
 
-  addItemToCart(CategoryProduct product) {
+  addItemToCart(Product product) {
     allProducts!.add(product);
-
-      update();
+    update();
   }
 
-
-    Future viewSellerAllProducts() async {
+  Future viewSellerAllProducts() async {
     try {
       changeLoadingStatus(true);
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -50,12 +46,11 @@ class CartController extends GetxController {
         var decodedJson = jsonDecode(response.body);
         var data = SelllerAllProductsModel.fromJson(decodedJson);
         if (data.data![0].products!.isNotEmpty) {
-          allProducts = data.data?[0].products?[0].categoryProducts;
+          allProducts = data.data?[0].products;
         }
-
         selllerAllProductsModel =
             selllerAllProductsModelFromJson(response.body);
-            update();
+        update();
       } else {
         hasError = true;
       }
@@ -70,8 +65,7 @@ class CartController extends GetxController {
   void onInit() async {
     isLoading = false;
     super.onInit();
-       viewSellerAllProducts();
+    viewSellerAllProducts();
     update();
-    
   }
 }

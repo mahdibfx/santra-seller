@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:santra_seller/controllers/add_manual_order_controller.dart/add_manual_order_controller.dart';
+import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/raised_gradient_button.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
@@ -31,16 +32,7 @@ class AddManulOrder extends StatelessWidget {
               child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: const [
-                  Icon(Icons.add, size: 40, color: UIDataColors.primaryColor),
-                  Text(
-                    'Add Order',
-                    style: UIDataTextStyles.title,
-                  ),
-                ],
-              ),
+              HeadingWithIcon(icon: UIDATAIcons.addIcon, btntxt: "Add Order"),
               CommonTextField(
                 isTextHidden: false,
                 prefixIcon: UIDATAIcons.searchIcon,
@@ -79,7 +71,7 @@ class AddManulOrder extends StatelessWidget {
                                           builder: (context) {
                                             return Container(
                                               height: size.height -
-                                                  size.height * 0.3,
+                                                  size.height * 0.27,
                                               decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -92,15 +84,19 @@ class AddManulOrder extends StatelessWidget {
                                                       clipBehavior: Clip.none,
                                                       children: [
                                                         SizedBox(
-                                                          height:
-                                                              size.height * 0.3,
+                                                          height: size.height *
+                                                              0.33,
                                                           width:
                                                               double.infinity,
                                                           child: ClipRRect(
-                                                              borderRadius:
-                                                                  BorderRadius
+                                                              borderRadius: const BorderRadius
+                                                                      .only(
+                                                                  topLeft: Radius
                                                                       .circular(
-                                                                          10),
+                                                                          16),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          16)),
                                                               child:
                                                                   CachedNetworkImage(
                                                                 imageUrl:
@@ -215,7 +211,7 @@ class AddManulOrder extends StatelessWidget {
                           ],
                         ),
             ],
-          ).marginOnly(left: 10, right: 10)),
+          ).paddingOnly(left: 15, right: 15)),
         );
       },
     );
@@ -235,7 +231,7 @@ class AddManulOrder extends StatelessWidget {
       scaffoldKey: _key,
       showBottomNav: true,
       appbarcolor: UIDataColors.whiteColor,
-      appTitle: 'Add customer',
+      appTitle: 'Add Order',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
         // Get.offAllNamed(Routes.add);

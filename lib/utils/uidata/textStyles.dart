@@ -36,6 +36,11 @@ class UIDataTextStyles {
       fontWeight: FontWeight.normal,
       fontFamily: 'Markpro',
       letterSpacing: 0.0);
+  static const title13Normal = TextStyle(
+      fontSize: 13,
+      fontWeight: FontWeight.w400,
+      fontFamily: 'Markpro',
+      letterSpacing: 0.0);
   static const caption = TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w500,
@@ -82,14 +87,14 @@ class UIDataTextStyles {
     color: Colors.black,
     fontWeight: FontWeight.bold,
   );
-    static const textMedium = TextStyle(
+  static const textMedium = TextStyle(
       color: Colors.black,
       fontSize: 15,
       fontWeight: FontWeight.w600,
       fontFamily: 'Markpro',
       letterSpacing: 0.0);
 
-       static const textMediumColoredBlue = TextStyle(
+  static const textMediumColoredBlue = TextStyle(
       color: Color.fromRGBO(38, 81, 152, 1),
       fontSize: 15,
       fontWeight: FontWeight.w600,

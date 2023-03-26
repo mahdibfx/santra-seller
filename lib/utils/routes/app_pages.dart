@@ -8,6 +8,8 @@ import 'package:santra_seller/ui/screens/order_detail/manual_order_screen.dart';
 import 'package:santra_seller/ui/screens/settings/account_info.dart';
 import 'package:santra_seller/ui/screens/settings/change_email.dart';
 import 'package:santra_seller/ui/screens/settings/change_password.dart';
+import 'package:santra_seller/ui/screens/settings/delete_account.dart';
+import 'package:santra_seller/ui/screens/settings/delete_account_confirmation.dart';
 import 'package:santra_seller/ui/screens/settings/language_screen.dart';
 import 'package:santra_seller/ui/screens/settings/settings.dart';
 import 'package:santra_seller/utils/bindings/cart_binding/cart_binding.dart';
@@ -23,6 +25,8 @@ import 'package:santra_seller/ui/screens/more_setting/wallet_screen.dart';
 import 'package:santra_seller/utils/bindings/more_screen_binding/my_customer_binding/add_new_customer_binding.dart';
 import 'package:santra_seller/utils/bindings/more_screen_binding/my_customer_binding/edit_customer_binding.dart';
 import 'package:santra_seller/utils/bindings/more_screen_binding/my_customer_binding/my_customer_binding.dart';
+import 'package:santra_seller/utils/bindings/more_screen_binding/settings/delete_account_bindings.dart';
+import 'package:santra_seller/utils/bindings/more_screen_binding/settings/delete_account_confirmation_binding.dart';
 import 'package:santra_seller/utils/bindings/more_screen_binding/settings/language_settings_binding.dart';
 import 'package:santra_seller/utils/bindings/more_screen_binding/wallet_binding.dart';
 import 'package:santra_seller/utils/routes/app_routes.dart';
@@ -166,6 +170,16 @@ class AppPages {
       name: Routes.languageSettings,
       page: () => LanguageSettings(),
       binding: LanguageSettingsBinding(),
+    ),
+    GetPage(
+      name: Routes.deleteAccount,
+      page: () => DeleteAccount(),
+      binding: DeleteAccountBinding(),
+    ),
+    GetPage(
+      name: Routes.deleteAccountConfirmation,
+      page: () => DeleteAccountConfirmation(),
+      binding: DeleteAccountConfirmationBinding(),
     ),
   ];
 }

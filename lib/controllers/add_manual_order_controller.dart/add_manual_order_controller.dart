@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import "package:collection/collection.dart";
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,18 +15,29 @@ class AddManualOrderController extends GetxController {
   bool isLoading = true;
   bool hasError = false;
 
-  List<CategoryProduct>? allProducts = [];
+  List<Product>? allProducts = [];
   changeLoadingStatus(bool value) {
     isLoading = value;
     update();
   }
 
-  addIntoCart(CategoryProduct product) {
+  addIntoCart(Product product) {
     cartController.addItemToCart(product);
   }
 
+  var productsByCategory;
   Future viewSellerAllProducts() async {
     try {
+      var data = [
+        {"title": 'Avengers', "release_date": '10/01/2019'},
+        {"title": 'Creed', "release_date": '10/01/2019'},
+        {"title": 'Jumanji', "release_date": '30/10/2019'},
+      ];
+
+      var newMap = groupBy(data, (Map oj) => oj['release_date']);
+
+      print(newMap);
+
       changeLoadingStatus(true);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? sellerCode = prefs.getString('sellercode').toString();
@@ -38,7 +49,7 @@ class AddManualOrderController extends GetxController {
         var decodedJson = jsonDecode(response.body);
         var data = SelllerAllProductsModel.fromJson(decodedJson);
         if (data.data![0].products!.isNotEmpty) {
-          allProducts = data.data?[0].products?[0].categoryProducts;
+          allProducts = data.data?[0].products;
         }
 
         selllerAllProductsModel =
