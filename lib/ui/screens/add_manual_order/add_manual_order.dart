@@ -186,10 +186,14 @@ class AddManulOrder extends StatelessWidget {
                                                         ),
                                                         PrimaryButtonWithIcon(
                                                           onPressed: () {
-                                                            manualOrderController.addIntoCart(manualOrderController
-                                                                  .allProducts![
-                                                                      index]);
-                                                            Get.offAllNamed(Routes.cartroute);
+                                                            manualOrderController
+                                                                .addIntoCart(
+                                                                    manualOrderController
+                                                                            .allProducts![
+                                                                        index]);
+                                                            Get.offAllNamed(
+                                                                Routes
+                                                                    .cartroute);
                                                           },
                                                           btntxt: "Add To Cart",
                                                           iconImage: UIDATAIcons
@@ -223,6 +227,7 @@ class AddManulOrder extends StatelessWidget {
       resizeToAvoid: false,
       bodyData: bodyData(context),
       backgroundcolor: UIDataColors.whiteColor,
+      backGroundImage: UIDataImage.backgroundImage,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,

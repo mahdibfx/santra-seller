@@ -29,66 +29,58 @@ class MoreSettingScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: const [
-                          Icon(Icons.menu),
-                          SpacingWidth.widthlistspacing,
-                          Text(
-                            'More',
-                            textScaleFactor: 2,
-                          ),
-                        ],
-                      ),
-                      SpacingHeight.heightlistspacing20,
+                      HeadingWithIcon(
+                          icon: UIDATAIcons.moreHorizontal, btntxt: "More"),
+                      SpacingHeight.heightlistspacing15,
                       ReusableIconSetting(
                         icon: UIDATAIcons.settingsIcon,
                         onPressed: () {
                           Get.toNamed(Routes.settings);
                         },
-                        btntxt: const Text('settings'),
+                        btntxt: 'settings',
                       ),
                       ReusableIconSetting(
                         icon: UIDATAIcons.dashboardIcon,
                         onPressed: () {},
-                        btntxt: const Text('Products'),
+                        btntxt: 'Products',
                       ),
                       ReusableIconSetting(
                         icon: UIDATAIcons.customersIcon,
                         onPressed: () {
                           Get.toNamed(Routes.mycustomerscreen);
                         },
-                        btntxt: const Text('Customers List'),
+                        btntxt: 'Customers List',
                       ),
                       ReusableIconSetting(
                         icon: UIDATAIcons.walletIcon,
                         onPressed: () {
                           Get.toNamed(Routes.walletscreen);
                         },
-                        btntxt: const Text('Wallet'),
+                        btntxt: 'Wallet',
                       ),
                       ReusableIconSetting(
                         icon: UIDATAIcons.whatsappIcon,
                         onPressed: () {
                           // Get.toNamed(Routes.walletscreen);
                         },
-                        btntxt: const Text('Contact Customer Service'),
+                        btntxt: 'Contact Customer Service',
                       ),
                       ReusableIconSetting(
                         icon: UIDATAIcons.santraVectorIcon,
                         onPressed: () {
                           Get.toNamed(Routes.aboutscreen);
                         },
-                        btntxt: const Text('About Us'),
+                        btntxt: 'About Us',
                       ),
                       ReusableIconSetting(
                         icon: UIDATAIcons.securityIcon,
                         onPressed: () {
                           // Get.toNamed(Routes.contactscreen);
                         },
-                        btntxt: const Text('Privacy Policy'),
+                        btntxt: 'Privacy Policy',
                       )
                     ],
-                  ).marginAll(10),
+                  ).paddingSymmetric(horizontal: 20),
                 ),
               );
       },
@@ -100,6 +92,7 @@ class MoreSettingScreen extends StatelessWidget {
     return CommonScaffold(
       bodyData: bodyData(),
       backgroundcolor: UIDataColors.whiteColor,
+      backGroundImage: UIDataImage.backgroundImage,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,

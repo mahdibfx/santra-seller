@@ -63,7 +63,7 @@ class CommonTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        fieldHeading == null ? SizedBox() : Text(fieldHeading ?? ''),
+        fieldHeading == null ? const SizedBox() : Text(fieldHeading ?? ''),
         SpacingHeight.heightlistspacing5,
         TextFormField(
           style: textStyle ?? null,
@@ -105,33 +105,33 @@ class CommonTextField extends StatelessWidget {
                 : null,
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
-                color: bordercolor ?? Color(0xff757575).withOpacity(0.7),
+                color: bordercolor ?? const Color(0xff757575).withOpacity(0.7),
               ),
-              borderRadius: BorderRadius.all(
+              borderRadius: const BorderRadius.all(
                 Radius.circular(15),
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(
-                color: bordercolor ?? Color(0xff757575).withOpacity(0.7),
+                color: bordercolor ?? const Color(0xff757575).withOpacity(0.7),
               ),
-              borderRadius: BorderRadius.all(
+              borderRadius: const BorderRadius.all(
                 Radius.circular(15),
               ),
             ),
             hintText: hintText,
-            fillColor: fillcolor ?? Color(0xff757575).withOpacity(0.7),
+            fillColor: fillcolor ?? const Color(0xff757575).withOpacity(0.7),
             filled: true,
-            hintStyle: TextStyle(
-                color: Color(0xff9EA0A4),
+            hintStyle: const TextStyle(
+                color: Color.fromARGB(255, 0, 0, 0),
                 fontSize: 15,
                 fontWeight: FontWeight.w400,
-                fontFamily: 'Poppins-Regular',
+                fontFamily: 'Markpro',
                 letterSpacing: 0.0),
             contentPadding:
-                EdgeInsets.symmetric(vertical: 11.0, horizontal: 18.0),
+                const EdgeInsets.symmetric(vertical: 11.0, horizontal: 18.0),
             labelText: labelText,
-            labelStyle: TextStyle(color: Colors.black, fontSize: 15.0),
+            labelStyle: const TextStyle(color: Colors.black, fontSize: 15.0),
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(15.0),

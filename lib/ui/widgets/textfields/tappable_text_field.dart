@@ -24,7 +24,6 @@ class TappableTextField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(heading!),
           const SizedBox(
             height: 7,
           ),
@@ -34,7 +33,7 @@ class TappableTextField extends StatelessWidget {
             height: fieldHeight,
             decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(15),
                 border: Border.all(
                     color: const Color(0xff757575).withOpacity(0.7))),
             child: Row(

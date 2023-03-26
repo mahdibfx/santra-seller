@@ -1,5 +1,7 @@
 import 'package:santra_seller/controllers/settings_controller/change_password_controller.dart';
 import '../../../utils/routes/app_routes.dart';
+import '../../widgets/buttons/icon_setting_button.dart';
+import '../../widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -24,14 +26,11 @@ class ChangePassword extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Password',
-                      textScaleFactor: 2,
-                    ),
+                    HeadingWithIcon(
+                        icon: UIDATAIcons.lockIcon, btntxt: "Change Password"),
                     SpacingHeight.heightlistspacing15,
                     CommonTextField(
                       controller: _.currentPasswordController,
-                      fieldHeading: "Current Password",
                       hintText: "Current Password",
                       fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
@@ -54,10 +53,9 @@ class ChangePassword extends StatelessWidget {
                         }
                       },
                     ),
-                    SpacingHeight.heightlistspacing10,
+                    SpacingHeight.heightlistspacing5,
                     CommonTextField(
                       controller: _.newPasswordController,
-                      fieldHeading: "New Password",
                       hintText: "New Password",
                       isTextHidden: _.newPasswordSecuretext,
                       fillcolor: UIDataColors.whiteColor,
@@ -79,10 +77,9 @@ class ChangePassword extends StatelessWidget {
                         }
                       },
                     ),
-                    SpacingHeight.heightlistspacing10,
+                    SpacingHeight.heightlistspacing5,
                     CommonTextField(
                       controller: _.confirmNewPasswordController,
-                      fieldHeading: "Confirm New Password",
                       hintText: "Confirm New Password",
                       isTextHidden: _.confirmPasswordSecuretext,
                       fillcolor: UIDataColors.whiteColor,
@@ -106,23 +103,29 @@ class ChangePassword extends StatelessWidget {
                       },
                     ),
                     SpacingHeight.heightlistspacing10,
-                    Obx(
-                      () => _.isUpdatePassLoading.isTrue
-                          ? const Center(child: CircularProgressIndicator())
-                          : RaisedGradientButton(
-                              gradient: const LinearGradient(
-                                colors: <Color>[
-                                  Color(0xff006EB8),
-                                  Color(0xff006EB8),
-                                ],
-                              ),
-                              btntxt: "Submit".tr,
-                              buttontxtColor: UIDataColors.whiteColor,
-                              onPressed: () {
-                                _.updatePassword();
-                              },
-                            ),
-                    ),
+                    Obx(() => _.isUpdatePassLoading.isTrue
+                            ? const Center(child: CircularProgressIndicator())
+                            : PrimaryButtonWithIcon(
+                                btntxt: "Submit",
+                                iconImage: UIDATAIcons.sendIcon,
+                                onPressed: () {
+                                  _.updatePassword();
+                                },
+                              )
+                        // RaisedGradientButton(
+                        //     gradient: const LinearGradient(
+                        //       colors: <Color>[
+                        //         Color(0xff006EB8),
+                        //         Color(0xff006EB8),
+                        //       ],
+                        //     ),
+                        //     btntxt: "Submit".tr,
+                        //     buttontxtColor: UIDataColors.whiteColor,
+                        //     onPressed: () {
+                        //       _.updatePassword();
+                        //     },
+                        //   ),
+                        ),
                   ],
                 ).marginOnly(left: 20.0, right: 20.0),
               ),
@@ -138,6 +141,7 @@ class ChangePassword extends StatelessWidget {
     return CommonScaffold(
       bodyData: bodyData(context),
       backgroundcolor: UIDataColors.whiteColor,
+      backGroundImage: UIDataImage.backgroundImage,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,

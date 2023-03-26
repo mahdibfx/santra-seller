@@ -6,6 +6,7 @@ import 'package:santra_seller/ui/screens/customer/add_customer.dart';
 import 'package:santra_seller/ui/screens/settings/account_info.dart';
 import 'package:santra_seller/ui/screens/settings/change_email.dart';
 import 'package:santra_seller/ui/screens/settings/change_password.dart';
+import 'package:santra_seller/ui/screens/settings/language_screen.dart';
 import 'package:santra_seller/ui/screens/settings/settings.dart';
 import 'package:santra_seller/utils/bindings/cart_binding/cart_binding.dart';
 import 'package:santra_seller/utils/bindings/add_manual_order_binding/add_manual_order_binding.dart';
@@ -20,6 +21,7 @@ import 'package:santra_seller/ui/screens/more_setting/wallet_screen.dart';
 import 'package:santra_seller/utils/bindings/more_screen_binding/my_customer_binding/add_new_customer_binding.dart';
 import 'package:santra_seller/utils/bindings/more_screen_binding/my_customer_binding/edit_customer_binding.dart';
 import 'package:santra_seller/utils/bindings/more_screen_binding/my_customer_binding/my_customer_binding.dart';
+import 'package:santra_seller/utils/bindings/more_screen_binding/settings/language_settings_binding.dart';
 import 'package:santra_seller/utils/bindings/more_screen_binding/wallet_binding.dart';
 import 'package:santra_seller/utils/routes/app_routes.dart';
 
@@ -144,6 +146,11 @@ class AppPages {
       name: Routes.cartroute,
       page: () => CartScreen(),
       binding: CartBindings(),
+    ),
+    GetPage(
+      name: Routes.languageSettings,
+      page: () => LanguageSettings(),
+      binding: LanguageSettingsBinding(),
     ),
   ];
 }
