@@ -39,7 +39,8 @@ class PrimaryButtonWithIcon extends StatelessWidget {
         //   ],
         // ),
         border: Border.all(
-          color: UIDataColors.primaryColor, //                   <--- border color
+          color:
+              UIDataColors.primaryColor, //                   <--- border color
           width: 1.0,
         ),
 
@@ -64,17 +65,16 @@ class PrimaryButtonWithIcon extends StatelessWidget {
                       fontSize: 16.0,
                       fontFamily: 'Markpro',
                       fontWeight: FontWeight.bold,
-                      color: buttontxtColor != null
-                          ? buttontxtColor
-                          : Colors.white,
+                      color: buttontxtColor ?? Colors.white,
                     ),
                   ),
                   SpacingWidth.widthlistspacing,
-                  iconImage != null ?
-                  SvgPicture.asset(
-                    iconImage!,
-                    color: Colors.white,
-                  ) : Container()
+                  iconImage != null
+                      ? SvgPicture.asset(
+                          iconImage!,
+                          color: Colors.white,
+                        )
+                      : Container()
                 ],
               ),
             )),

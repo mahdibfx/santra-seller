@@ -21,7 +21,7 @@ abstract class Routes {
   static const mycustomerscreen = "/mycustomerscreen";
   static const editprofileroute = "/editprofile";
   static const createrequestroute = "/createrequest";
-  static const addvehicle = "/addvehicle";
+  static const languageSettings = "/languagesettings";
   static const historyrotues = "/historyrotues";
   static const ServicesDetials = "/ServicesDetials";
   static const ServicesDetials1 = "/ServicesDetials1";
@@ -42,5 +42,4 @@ abstract class Routes {
   static const addNewcustomer = "/addnewcustomer";
   static const editcustomer = "/editcustomer";
   static const cartroute = "/cartroute";
-
 }

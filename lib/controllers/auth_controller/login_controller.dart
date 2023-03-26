@@ -114,7 +114,7 @@ class LoginController extends GetxController {
     prefs.setString("logo", data.sellerLogo);
     prefs.setString("sellercode", data.sellerCode);
     prefs.setString("status", data.userStatus);
-    prefs.setString("dob", data.dateOfBirth.toIso8601String());
+    prefs.setString("dob", data.dateOfBirth.toString());
     prefs.setString("password", password.text);
   }
 }

@@ -1,6 +1,8 @@
 import 'package:santra_seller/controllers/settings_controller/change_email_controller.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import '../../../utils/routes/app_routes.dart';
+import '../../widgets/buttons/icon_setting_button.dart';
+import '../../widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -24,14 +26,11 @@ class ChangeEmail extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Change Email',
-                      textScaleFactor: 2,
-                    ),
+                    HeadingWithIcon(
+                        icon: UIDATAIcons.infoIcon, btntxt: "Change Email"),
                     SpacingHeight.heightlistspacing15,
                     CommonTextField(
                       controller: _.emailController,
-                      fieldHeading: "New Email",
                       hintText: "New Email",
                       prefixIcon: UIDATAIcons.emailIcon,
                       isTextHidden: false,
@@ -48,10 +47,9 @@ class ChangeEmail extends StatelessWidget {
                         }
                       },
                     ),
-                    SpacingHeight.heightlistspacing10,
+                    SpacingHeight.heightlistspacing5,
                     CommonTextField(
                       controller: _.confirmeEmailController,
-                      fieldHeading: "Confirm Email",
                       hintText: "Confirm Email",
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
@@ -68,10 +66,9 @@ class ChangeEmail extends StatelessWidget {
                         }
                       },
                     ),
-                    SpacingHeight.heightlistspacing10,
+                    SpacingHeight.heightlistspacing5,
                     CommonTextField(
                       controller: _.passwordController,
-                      fieldHeading: "Password",
                       hintText: "Password",
                       isTextHidden: _.securetext,
                       fillcolor: UIDataColors.whiteColor,
@@ -94,25 +91,31 @@ class ChangeEmail extends StatelessWidget {
                       },
                     ),
                     SpacingHeight.heightlistspacing10,
-                    Obx(
-                      () => _.isUpdateEmailLoading.isTrue
-                          ? const Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          : RaisedGradientButton(
-                              gradient: const LinearGradient(
-                                colors: <Color>[
-                                  Color(0xff006EB8),
-                                  Color(0xff006EB8),
-                                ],
-                              ),
-                              btntxt: "Submit".tr,
-                              buttontxtColor: UIDataColors.whiteColor,
-                              onPressed: () {
-                                _.updateEmail();
-                              },
-                            ),
-                    ),
+                    Obx(() => _.isUpdateEmailLoading.isTrue
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : PrimaryButtonWithIcon(
+                                btntxt: "Submit",
+                                iconImage: UIDATAIcons.sendIcon,
+                                onPressed: () {
+                                  _.updateEmail();
+                                },
+                              )
+                        // RaisedGradientButton(
+                        //     gradient: const LinearGradient(
+                        //       colors: <Color>[
+                        //         Color(0xff006EB8),
+                        //         Color(0xff006EB8),
+                        //       ],
+                        //     ),
+                        //     btntxt: "Submit".tr,
+                        //     buttontxtColor: UIDataColors.whiteColor,
+                        //     onPressed: () {
+                        //       _.updateEmail();
+                        //     },
+                        //   ),
+                        ),
                   ],
                 ).marginOnly(left: 20.0, right: 20.0),
               ),
@@ -128,6 +131,7 @@ class ChangeEmail extends StatelessWidget {
     return CommonScaffold(
       bodyData: bodyData(context),
       backgroundcolor: UIDataColors.whiteColor,
+      backGroundImage: UIDataImage.backgroundImage,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,

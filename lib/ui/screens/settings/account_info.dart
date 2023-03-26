@@ -1,4 +1,6 @@
 import 'package:santra_seller/controllers/settings_controller/account_info_controller.dart';
+import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
+import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
@@ -25,14 +27,11 @@ class AccountInfo extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Account Info',
-                      textScaleFactor: 2,
-                    ),
+                    HeadingWithIcon(
+                        icon: UIDATAIcons.infoIcon, btntxt: "Account Info"),
                     SpacingHeight.heightlistspacing15,
                     CommonTextField(
                       controller: _.emailController,
-                      fieldHeading: "Email",
                       hintText: "Email",
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
@@ -46,10 +45,9 @@ class AccountInfo extends StatelessWidget {
                         }
                       },
                     ),
-                    SpacingHeight.heightlistspacing10,
+                    SpacingHeight.heightlistspacing5,
                     CommonTextField(
                       controller: _.fNameController,
-                      fieldHeading: "First Name",
                       hintText: "First Name",
                       isTextHidden: false,
                       prefixIcon: UIDATAIcons.userIcon,
@@ -63,10 +61,9 @@ class AccountInfo extends StatelessWidget {
                         }
                       },
                     ),
-                    SpacingHeight.heightlistspacing10,
+                    SpacingHeight.heightlistspacing5,
                     CommonTextField(
                       controller: _.lNameController,
-                      fieldHeading: "Last Name",
                       hintText: "Last Name",
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
@@ -80,36 +77,42 @@ class AccountInfo extends StatelessWidget {
                         }
                       },
                     ),
-                    SpacingHeight.heightlistspacing10,
+                    SpacingHeight.heightlistspacing5,
                     TappableTextField(
                       ontap: () {
                         _.pickUserDob(context);
                       },
                       prefixIcon: UIDATAIcons.calendarIcon,
                       fieldHeight: 50,
-                      heading: "Date Of Birth",
                       value: _.formatteUserDob.toString(),
                     ),
-                    SpacingHeight.heightlistspacing10,
-                    Obx(
-                      () => _.isUpdateAccInfoLoading.isTrue
-                          ? const Center(child: CircularProgressIndicator())
-                          : RaisedGradientButton(
-                              gradient: const LinearGradient(
-                                colors: <Color>[
-                                  Color(0xff006EB8),
-                                  Color(0xff006EB8),
-                                ],
-                              ),
-                              btntxt: "Save".tr,
-                              buttontxtColor: UIDataColors.whiteColor,
-                              onPressed: () {
-                                _.updateAccountInfo();
-                              },
-                            ),
-                    ),
+                    SpacingHeight.heightlistspacing20,
+                    Obx(() => _.isUpdateAccInfoLoading.isTrue
+                            ? const Center(child: CircularProgressIndicator())
+                            : PrimaryButtonWithIcon(
+                                btntxt: "Save",
+                                iconImage: UIDATAIcons.saveIcon,
+                                onPressed: () {
+                                  _.updateAccountInfo();
+                                },
+                              )
+
+                        // RaisedGradientButton(
+                        //     gradient: const LinearGradient(
+                        //       colors: <Color>[
+                        //         Color(0xff006EB8),
+                        //         Color(0xff006EB8),
+                        //       ],
+                        //     ),
+                        //     btntxt: "Save".tr,
+                        //     buttontxtColor: UIDataColors.whiteColor,
+                        //     onPressed: () {
+                        //       _.updateAccountInfo();
+                        //     },
+                        //   ),
+                        ),
                   ],
-                ).marginOnly(left: 20.0, right: 20.0),
+                ).paddingSymmetric(horizontal: 20),
               ),
             ),
           ),
@@ -123,6 +126,7 @@ class AccountInfo extends StatelessWidget {
     return CommonScaffold(
       bodyData: bodyData(context),
       backgroundcolor: UIDataColors.whiteColor,
+      backGroundImage: UIDataImage.backgroundImage,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,
