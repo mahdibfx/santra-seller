@@ -63,7 +63,7 @@ class HomeScreen extends StatelessWidget {
                                               fontWeight: FontWeight.w500)),
                                       SpacingHeight.heightlistspacing15,
                                       Text(
-                                        '279',
+                                        _.homeData!.ordersMonthly.toString(),
                                         style: UIDataTextStyles.counth1
                                             .copyWith(color: Colors.white),
                                       ),
@@ -82,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                                               fontWeight: FontWeight.w500)),
                                       SpacingHeight.heightlistspacing15,
                                       Text(
-                                        '42.65',
+                                        _.homeData!.profitMonthly.toString(),
                                         style: UIDataTextStyles.counth1
                                             .copyWith(color: Colors.white),
                                       ),
@@ -98,14 +98,18 @@ class HomeScreen extends StatelessWidget {
                       Row(
                         children: [
                           HomeCardWidget(
-                            onTap: (){},
+                            onTap: (){
+                              Get.toNamed(Routes.santraorders);
+                            },
                             heading: 'Santra Orders',
                             count: _.homeData!.santraOrders[0].orderCount.toString(),
                             imageAsset: UIDataImage.santraOrderSVG,
                           ),
                           SpacingWidth.widthlistspacing,
                           HomeCardWidget(
-                            onTap: (){},
+                            onTap: (){
+                               Get.toNamed(Routes.manualOrderScreen);
+                            },
                             heading: 'Manual Orders',
                             count: _.homeData!.manualOrders[0].orderCount.toString(),
                             imageAsset: UIDataImage.manualOrderSVG,

@@ -5,6 +5,14 @@ class UIDATAIcons {
   static const String iconsDir = "assets/icons";
   static const emailIcon = "$iconsDir/email_icon.svg";
   static const userIcon = "$iconsDir/user.svg";
+  static const paymentMethod = "$iconsDir/payment_method.svg";
+  static const orderTime = "$iconsDir/order_time.svg";
+  static const deliveryIcon = "$iconsDir/delivery_icon.svg";
+  static const cardOpen = "$iconsDir/card_open.svg";
+  static const cardClose = "$iconsDir/card_close.svg";
+
+  static const ordeBascketFull = "$iconsDir/order_bascket_colored.svg";
+  static const orderBascketBorder = "$iconsDir/order_bascket_border.svg";
   static const calendarIcon = "$iconsDir/calendar.svg";
   static const unlockIcon = "$iconsDir/unlock.svg";
   static const languageIcon = "$iconsDir/language.svg";

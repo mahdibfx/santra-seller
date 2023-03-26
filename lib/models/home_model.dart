@@ -31,18 +31,24 @@ class HomeModel {
 class HomeData {
     HomeData({
         required this.totalNotifications,
+        required this.ordersMonthly,
+        required this.profitMonthly,
         required this.santraOrders,
         required this.manualOrders,
         required this.pendingOrders,
     });
 
     String totalNotifications;
+    int ordersMonthly;
+    int profitMonthly;
     List<SantraOrder> santraOrders;
     List<ManualOrder> manualOrders;
     List<PendingOrder> pendingOrders;
 
     factory HomeData.fromJson(Map<String, dynamic> json) => HomeData(
         totalNotifications: json["total_notifications"],
+        ordersMonthly: json["orders_monthly"],
+        profitMonthly: json["profit_monthly"],
         santraOrders: List<SantraOrder>.from(json["santra_orders"].map((x) => SantraOrder.fromJson(x))),
         manualOrders: List<ManualOrder>.from(json["manual_orders"].map((x) => ManualOrder.fromJson(x))),
         pendingOrders: List<PendingOrder>.from(json["pending_orders"].map((x) => PendingOrder.fromJson(x))),

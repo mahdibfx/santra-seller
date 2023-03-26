@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
+import 'package:santra_seller/models/home_model.dart';
 
 import 'package:santra_seller/ui/screens/cart/cart_screen.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/ui/screens/customer/add_customer.dart';
+import 'package:santra_seller/ui/screens/order_detail/manual_order_screen.dart';
 import 'package:santra_seller/ui/screens/settings/account_info.dart';
 import 'package:santra_seller/ui/screens/settings/change_email.dart';
 import 'package:santra_seller/ui/screens/settings/change_password.dart';
@@ -30,6 +32,7 @@ import '../../ui/screens/auth_screen/signup_screen.dart';
 import '../../ui/screens/home_page/home_screen.dart';
 import '../../ui/screens/more_setting/about_us_screen.dart';
 import '../../ui/screens/more_setting/more_screen.dart';
+import '../../ui/screens/order_detail/santra_order_screen.dart';
 import '../../ui/screens/splash/splash_screen.dart';
 import '../bindings/auth_binding/login_binding.dart';
 import '../bindings/auth_binding/signup_binding.dart';
@@ -62,6 +65,18 @@ class AppPages {
     GetPage(
       name: Routes.homeRoutes,
       page: () => HomeScreen(),
+      binding: HomeBindings(),
+      // middlewares: [AuthMiddleware()],
+    ),
+    GetPage(
+      name: Routes.santraorders,
+      page: () => SantraOrderScreen(),
+      binding: HomeBindings(),
+      // middlewares: [AuthMiddleware()],
+    ),
+    GetPage(
+      name: Routes.manualOrderScreen,
+      page: () => ManualOrderScreen(),
       binding: HomeBindings(),
       // middlewares: [AuthMiddleware()],
     ),

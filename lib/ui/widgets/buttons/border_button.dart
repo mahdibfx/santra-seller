@@ -29,7 +29,7 @@ class BorderButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: width,
-      height: 50.0,
+      height: height,
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -39,7 +39,7 @@ class BorderButton extends StatelessWidget {
             offset: const Offset(0, 0), // changes position of shadow
           ),
         ],
-        color: Colors.white,
+        color: backEndColor ?? Colors.white,
         border: Border.all(
           color: borderColor ??
               Colors.transparent, //                   <--- border color
