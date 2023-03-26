@@ -74,17 +74,19 @@ class Settings extends StatelessWidget {
           ReusableIconSetting(
             icon: UIDATAIcons.deleteIcon,
             onPressed: () {
-              customOntapDialogTwoButtons(
-                  context,
-                  "Delete Account",
-                  "Are You Sure You Want To Permanantly Delete Your Account?",
-                  "Cancel",
-                  "Delete", () {
-                Get.back();
-              }, () {
-                Get.back();
-                deleteAccountController.deleteAccount();
-              });
+              Get.toNamed(Routes.deleteAccount);
+
+              // customOntapDialogTwoButtons(
+              //     context,
+              //     "Delete Account",
+              //     "Are You Sure You Want To Permanantly Delete Your Account?",
+              //     "Cancel",
+              //     "Delete", () {
+              //   Get.back();
+              // }, () {
+              //   Get.back();
+              //   deleteAccountController.deleteAccount();
+              // });
             },
             btntxt: 'Delete Account',
           )

@@ -27,4 +27,5 @@ class UIDATAIcons {
   static const cartHallowIcon = "$iconsDir/cartHallow.svg";
   static const moreHorizontal = "$iconsDir/more_horizontal.svg";
   static const saveIcon = "$iconsDir/save.svg";
+  static const addIcon = "$iconsDir/add.svg";
 }

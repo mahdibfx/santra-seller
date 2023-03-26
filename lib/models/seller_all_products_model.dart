@@ -17,15 +17,14 @@ class SelllerAllProductsModel {
   });
 
   bool? status;
-  List<SellerAllProductsDatum>? data;
+  List<Datum>? data;
 
   factory SelllerAllProductsModel.fromJson(Map<String, dynamic> json) =>
       SelllerAllProductsModel(
         status: json["status"],
         data: json["data"] == null
             ? []
-            : List<SellerAllProductsDatum>.from(
-                json["data"]!.map((x) => SellerAllProductsDatum.fromJson(x))),
+            : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -36,15 +35,14 @@ class SelllerAllProductsModel {
       };
 }
 
-class SellerAllProductsDatum {
-  SellerAllProductsDatum({
+class Datum {
+  Datum({
     this.products,
   });
 
   List<Product>? products;
 
-  factory SellerAllProductsDatum.fromJson(Map<String, dynamic> json) =>
-      SellerAllProductsDatum(
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         products: json["products"] == null
             ? []
             : List<Product>.from(
@@ -60,31 +58,6 @@ class SellerAllProductsDatum {
 
 class Product {
   Product({
-    this.category,
-    this.categoryProducts,
-  });
-
-  String? category;
-  List<CategoryProduct>? categoryProducts;
-
-  factory Product.fromJson(Map<String, dynamic> json) => Product(
-        category: json["category"],
-        categoryProducts: json["category_products"] == null
-            ? []
-            : List<CategoryProduct>.from(json["category_products"]!
-                .map((x) => CategoryProduct.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "category": category,
-        "category_products": categoryProducts == null
-            ? []
-            : List<dynamic>.from(categoryProducts!.map((x) => x.toJson())),
-      };
-}
-
-class CategoryProduct {
-  CategoryProduct({
     this.productCode,
     this.productName,
     this.productPrice,
@@ -104,8 +77,7 @@ class CategoryProduct {
   String? productImages;
   List<dynamic>? modifiers;
 
-  factory CategoryProduct.fromJson(Map<String, dynamic> json) =>
-      CategoryProduct(
+  factory Product.fromJson(Map<String, dynamic> json) => Product(
         productCode: json["product_code"],
         productName: json["product_name"],
         productPrice: json["product_price"],

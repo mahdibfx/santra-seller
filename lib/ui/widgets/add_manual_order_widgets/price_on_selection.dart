@@ -16,15 +16,15 @@ class PriceOnSelection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         // const Text(
-        //   "Price On Selection",
+        //   "Price Upon Selection",
         //   style: UIDataTextStyles.heading15Medium,
         // ),
-        Spacer(),
+        const Spacer(),
         GestureDetector(
           onTap: onMinus,
           child: Container(
-            height: 35,
-            width: 40,
+              height: 32,
+              width: 32,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: UIDataColors.primaryColor)),
@@ -32,15 +32,15 @@ class PriceOnSelection extends StatelessWidget {
               alignment: Alignment.center,
               child: const Icon(Icons.remove)),
         ),
-        Text(
+        const Text(
           "2",
-          style: UIDataTextStyles.kHead,
+          style: UIDataTextStyles.h1Heavy,
         ).paddingSymmetric(horizontal: 10),
         GestureDetector(
           onTap: onPlus,
           child: Container(
-               height: 35,
-            width: 40,
+              height: 32,
+              width: 32,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: UIDataColors.primaryColor)),

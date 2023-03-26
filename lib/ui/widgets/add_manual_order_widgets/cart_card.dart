@@ -6,7 +6,7 @@ import '../../../models/seller_all_products_model.dart';
 import '../../../utils/uidata/textStyles.dart';
 
 class CartCardOrder extends StatelessWidget {
-  List<CategoryProduct>? allProducts;
+  List<Product>? allProducts;
   int? index;
   var onTap;
   CartCardOrder({Key? key, required this.onTap, this.allProducts, this.index})
