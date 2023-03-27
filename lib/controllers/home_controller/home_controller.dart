@@ -13,6 +13,7 @@ class HomeController extends GetxController {
   bool isLoading = true;
   String? sellerCode;
   HomeData? homeData;
+  List<Order> allOrders = [];
   @override
   void onInit() async {
      SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -29,7 +30,7 @@ class HomeController extends GetxController {
 
   homeDataCall() async{
     if (sellerCode !=null) {
-      print(sellerCode);
+      print('seller code:'+ sellerCode.toString());
       isLoading = true;
       update();
       try {
@@ -41,6 +42,9 @@ class HomeController extends GetxController {
           var data = jsonDecode(res.body);
           var newdata = HomeModel.fromJson(data);
           homeData = newdata.data[0];
+          allOrders.addAll(homeData!.santraOrders[0].santraOrders);
+          allOrders.addAll(homeData!.manualOrders[0].manualOrders);
+          allOrders.addAll(homeData!.pendingOrders[0].pendingOrders);
           isLoading = false;
           update();
          

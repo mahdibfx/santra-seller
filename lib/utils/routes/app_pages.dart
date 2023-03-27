@@ -4,7 +4,9 @@ import 'package:santra_seller/models/home_model.dart';
 import 'package:santra_seller/ui/screens/cart/cart_screen.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/ui/screens/customer/add_customer.dart';
+import 'package:santra_seller/ui/screens/order_detail/all_order_screen.dart';
 import 'package:santra_seller/ui/screens/order_detail/manual_order_screen.dart';
+import 'package:santra_seller/ui/screens/order_detail/pending_order_screen.dart';
 import 'package:santra_seller/ui/screens/settings/account_info.dart';
 import 'package:santra_seller/ui/screens/settings/change_email.dart';
 import 'package:santra_seller/ui/screens/settings/change_password.dart';
@@ -81,6 +83,18 @@ class AppPages {
     GetPage(
       name: Routes.manualOrderScreen,
       page: () => ManualOrderScreen(),
+      binding: HomeBindings(),
+      // middlewares: [AuthMiddleware()],
+    ),
+    GetPage(
+      name: Routes.allOrderScreen,
+      page: () => AllOrderScreen(),
+      binding: HomeBindings(),
+      // middlewares: [AuthMiddleware()],
+    ),
+    GetPage(
+      name: Routes.pendingOrderScreen,
+      page: () => PendingOrderScreen(),
       binding: HomeBindings(),
       // middlewares: [AuthMiddleware()],
     ),

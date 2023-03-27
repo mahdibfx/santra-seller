@@ -2,53 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:santra_seller/utils/uidata.dart';
 
 import '../../../models/home_model.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../buttons/border_button.dart';
-
-// class CustomCard extends StatefulWidget {
-//   final String title;
-//   final String content;
-
-//   CustomCard({required this.title, required this.content});
-
-//   @override
-//   _CustomCardState createState() => _CustomCardState();
-// }
-
-// class _CustomCardState extends State<CustomCard> {
-//   bool _isOpen = false;
-
-//   void _toggleCard() {
-//     setState(() {
-//       _isOpen = !_isOpen;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Card(
-//       child: Column(
-//         children: [
-//           ListTile(
-//             title: Text(widget.title),
-//             trailing: IconButton(
-//               icon: Icon(_isOpen ? Icons.expand_less : Icons.expand_more),
-//               onPressed: _toggleCard,
-//             ),
-//           ),
-//           if (_isOpen)
-//             Padding(
-//               padding: const EdgeInsets.all(16.0),
-//               child: Text(widget.content),
-//             ),
-//         ],
-//       ),
-//     );
-//   }
-// }
 
 class ManualOrderCard extends StatefulWidget {
   final String orderStatus;
@@ -64,7 +23,6 @@ class ManualOrderCard extends StatefulWidget {
 
   ManualOrderCard({
     required this.orderStatus,
-
     required this.orderTime,
     required this.deliveryTime,
     required this.customerName,
@@ -72,7 +30,6 @@ class ManualOrderCard extends StatefulWidget {
     required this.orderNumber,
     required this.orderItemList,
     required this.totalPrice,
-
   });
 
   @override
@@ -113,6 +70,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        color: Colors.red,
         borderRadius: BorderRadius.circular(15.0),
         boxShadow: [
           BoxShadow(
@@ -123,10 +81,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
           ),
         ],
       ),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-        ),
+   
         child: Column(
           children: [
             Container(
@@ -169,8 +124,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                         ),
                       ),
                     ],
-                  ).marginOnly(left: 10, right: 10,top: 10,bottom: 10),
-               
+                  ).marginOnly(left: 10, right: 10, top: 10, bottom: 10),
                   Container(
                     color: Colors.grey.shade200,
                     child: Column(
@@ -185,7 +139,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                   color: UIDataColors.primaryColor,
                                 ),
                                 SpacingWidth.widthlistspacing,
-                                Text('${widget.orderTime}'),
+                                Text(dateFormat(widget.orderTime)),
                               ],
                             )),
                             Spacer(),
@@ -201,7 +155,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                               ],
                             )),
                           ],
-                        ).marginOnly(left: 10, right: 10,top: 10,bottom: 5),
+                        ).marginOnly(left: 10, right: 10, top: 10, bottom: 5),
                         Row(
                           children: [
                             Container(
@@ -229,7 +183,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                               ],
                             )),
                           ],
-                        ).marginOnly(left: 10, right: 10,top: 5,bottom: 10),
+                        ).marginOnly(left: 10, right: 10, top: 5, bottom: 10),
                       ],
                     ),
                   ),
@@ -237,15 +191,15 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                       ? SizedBox()
                       : Container(
                           height: 40,
-                          decoration: const BoxDecoration(
-                            color: Colors.blue,
+                          decoration:  BoxDecoration(
+                            color: widget.orderStatus == ''? Color(0xff01957A) : Color(0xff01957A),
                             borderRadius: BorderRadius.only(
                                 // topRight: Radius.circular(15.0),
                                 bottomRight: Radius.circular(15.0),
                                 // topLeft: Radius.circular(15.0),
                                 bottomLeft: Radius.circular(15.0)),
                           ),
-                          child:  Center(
+                          child: Center(
                             child: Text(
                               widget.orderStatus,
                               style: TextStyle(color: Colors.white),
@@ -255,10 +209,9 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                 ],
               ),
             ),
-
             Container(
               height: (_heightFactorAnimation.value *
-                  (95 + _calculateContainerHeight())),
+                  (84 + _calculateContainerHeight())),
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -291,44 +244,47 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                             color: UIDataColors.blackColor,
                           )),
                       SpacingWidth.widthlistspacing,
-                      Text(widget.totalPrice +' AED',
+                      Text(widget.totalPrice + ' AED',
                           style:
                               UIDataTextStyles.textMediumColoredBlue.copyWith(
                             color: UIDataColors.primaryColor,
                           )),
                     ],
                   ).marginOnly(left: 10, right: 10),
-                  
-                 
                   SpacingHeight.heightlistspacing10,
                   Container(
-                          height: 40,
-                          decoration: const BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.only(
-                                // topRight: Radius.circular(15.0),
-                                bottomRight: Radius.circular(15.0),
-                                // topLeft: Radius.circular(15.0),
-                                bottomLeft: Radius.circular(15.0)),
-                          ),
-                          child:  Center(
-                            child: Text(
-                              widget.orderStatus,
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
+                    height: 40,
+                    decoration: const BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.only(
+                          // topRight: Radius.circular(15.0),
+                          bottomRight: Radius.circular(15.0),
+                          // topLeft: Radius.circular(15.0),
+                          bottomLeft: Radius.circular(15.0)),
+                    ),
+                    child: Center(
+                      child: Text(
+                        widget.orderStatus,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
           ],
         ),
-      ),
-    );
+      
+    ).paddingOnly(bottom: 10);
   }
-
+String dateFormat(String date){
+var inputFormat = DateTime.parse(date);
+var outputFormat = DateFormat('hh:mm a yyyy/MM/dd');
+var outputDate = outputFormat.format(inputFormat);
+return outputDate;
+}
   double _calculateContainerHeight() {
-    return (widget.orderItemList.length * 50)
+    return (widget.orderItemList.length * 66)
         .toDouble(); // 70 is the height of each ListTile
   }
 
@@ -359,7 +315,7 @@ class OrderItemWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
-          height: 35,
+          height: 50,
           child: Row(
             children: [
               SizedBox(
@@ -367,8 +323,8 @@ class OrderItemWidget extends StatelessWidget {
                   children: [
                     Container(
                         // padding: const EdgeInsets.all(5),
-                        height: 40,
-                        width: 40,
+                        height: 50,
+                        width: 50,
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: CachedNetworkImage(
@@ -393,7 +349,7 @@ class OrderItemWidget extends StatelessWidget {
                         ),
                         Text('x' + productQuantity),
                       ],
-                    ),
+                    ).marginOnly(top: 5),
                   ],
                 ),
               ),
@@ -412,6 +368,6 @@ class OrderItemWidget extends StatelessWidget {
         ),
         Divider(),
       ],
-    ).marginOnly(left: 10, right: 10);
+    ).marginOnly(right: 10);
   }
 }
