@@ -39,7 +39,7 @@ class ManualOrderScreen extends StatelessWidget {
                       color: UIDataColors.primaryColor,
                     ),
                     SpacingWidth.widthlistspacing,
-                          Text('Santra Orders'),
+                          Text('Manual Orders'),
                         ],
                       ),
                       SpacingHeight.heightlistspacing10,

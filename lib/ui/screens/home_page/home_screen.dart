@@ -120,16 +120,20 @@ class HomeScreen extends StatelessWidget {
                       Row(
                         children: [
                           HomeCardWidget(
-                            onTap: (){},
+                            onTap: (){
+                                Get.toNamed(Routes.pendingOrderScreen);
+                            },
                             heading: 'Pending Orders',
                             count: _.homeData!.pendingOrders[0].orderCount.toString(),
                             imageAsset: UIDataImage.pendingOrderSVG,
                           ),
                           SpacingWidth.widthlistspacing,
                           HomeCardWidget(
-                            onTap: (){},
+                            onTap: (){
+                                 Get.toNamed(Routes.allOrderScreen);
+                            },
                             heading: 'All Orders',
-                            count: '153',
+                            count: _.allOrders.length.toString(),
                             imageAsset: UIDataImage.allOrderSVG,
                           ),
                         ],
