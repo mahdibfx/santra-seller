@@ -32,14 +32,14 @@ class LanguageSettings extends StatelessWidget {
                     SpacingHeight.heightlistspacing10,
                     BorderButton(
                       btntxt: "عربي",
-                      backEndColor: Colors.transparent,
+                      backEndColor: Colors.white,
                       borderColor: Colors.transparent,
                       buttontxtColor: UIDataColors.blackColor,
                     ),
                     SpacingHeight.heightlistspacing15,
                     BorderButton(
                       btntxt: "English",
-                      backEndColor: Colors.transparent,
+                      backEndColor: Colors.white,
                       borderColor: UIDataColors.primaryColor,
                       buttontxtColor: UIDataColors.primaryColor,
                     ),
