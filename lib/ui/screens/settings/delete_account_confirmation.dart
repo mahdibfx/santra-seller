@@ -36,26 +36,45 @@ class DeleteAccountConfirmation extends StatelessWidget {
                     const Text("An 6 digit code has been sent to",
                         style: TextStyle(color: Colors.black, fontSize: 16)),
                     SpacingHeight.heightlistspacing5,
-                    const Text("+97190707690",
-                        style: TextStyle(
+                    Text(_.phoneNumber ?? "",
+                        style: const TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 16)),
 
                     SpacingHeight.heightlistspacing15,
+                    Form(
+                      key: _.form,
+                      child: CommonTextField(
+                        isTextHidden: false,
+                        fillcolor: Colors.white,
+                        keyboardType: TextInputType.phone,
+                        hintText: "OTP",
+                        maxLength: 6,
+                        controller: _.otpController,
+                        validator: (val) {
+                          if (val.isEmpty) {
+                            return "Please Enter 6 Digits OTP Code";
+                          } else if (_.otpController.text.toString() !=
+                              _.otpCode.toString()) {
+                            return "Incorrect OTP Code";
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                    ),
 
-                    CommonTextField(
-                      isTextHidden: false,
-                      fillcolor: Colors.white,
-                      keyboardType: TextInputType.phone,
-                      hintText: "OTP",
-                    ),
                     SpacingHeight.heightlistspacing5,
-                    BorderButton(
-                      btntxt: "Continue",
-                      backEndColor: Colors.transparent,
-                      borderColor: UIDataColors.redColor,
-                      buttontxtColor: UIDataColors.redColor,
-                      onPressed: () {},
-                    ),
+                    _.isdelAccLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : BorderButton(
+                            btntxt: "Delete Account",
+                            backEndColor: Colors.white,
+                            borderColor: UIDataColors.redColor,
+                            buttontxtColor: UIDataColors.redColor,
+                            onPressed: () {
+                              _.deleteAccount();
+                            },
+                          ),
 
                     SpacingHeight.heightlistspacing15,
                     // Obx(() => _.isLoading

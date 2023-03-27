@@ -26,7 +26,7 @@ class CommonTextField extends StatelessWidget {
   final String? toggleIcon;
   final TextInputType? keyboardType;
   final bool? readOnly;
-
+  final String? initVal;
   final onTap;
   final prefixIconTap;
   final onChanged;
@@ -38,6 +38,7 @@ class CommonTextField extends StatelessWidget {
       this.textStyle,
       this.maxlines: 1,
       this.validator,
+      this.initVal,
       this.bordercolor,
       this.labelText,
       this.fillcolor,
@@ -78,6 +79,7 @@ class CommonTextField extends StatelessWidget {
               keyboardType == null ? TextInputType.text : keyboardType,
           textInputAction: TextInputAction.done,
           maxLines: maxlines,
+          initialValue: initVal,
           decoration: InputDecoration(
             counterText: "",
             prefixIcon: prefixIcon != null

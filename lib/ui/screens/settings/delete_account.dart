@@ -37,7 +37,6 @@ class DeleteAccount extends StatelessWidget {
                       style: UIDataTextStyles.title,
                     ),
                     SpacingHeight.heightlistspacing15,
-
                     CommonTextField(
                       maxlines: 5,
                       isTextHidden: false,
@@ -45,31 +44,44 @@ class DeleteAccount extends StatelessWidget {
                       keyboardType: TextInputType.phone,
                       hintText: "Your explanation is entirely optional",
                     ),
-                    CommonTextField(
-                      isTextHidden: false,
-                      fillcolor: Colors.white,
-                      keyboardType: TextInputType.phone,
-                      hintText: "Your Mobile Number",
-                    ),
+                    Form(
+                        key: _.formDeleteAccScreen1,
+                        child: CommonTextField(
+                          controller: _.phoneController,
+                          isTextHidden: false,
+                          fillcolor: Colors.white,
+                          keyboardType: TextInputType.phone,
+                          hintText: "Your Mobile Number",
+                          maxLength: 12,
+                          validator: (val) {
+                            String? name;
+                            if (val.isEmpty || val.length < 12) {
+                              return "Please Enter Valid Phone Number";
+                            } else if (val.isNotEmpty && val.length > 3) {
+                              name = val.substring(0, 3);
+                              print("nameee$name");
+                              if (name != "971") {
+                                return "Phone Number Must Start With 971";
+                              }
+                            } else {
+                              return null;
+                            }
+                          },
+                        )),
                     SpacingHeight.heightlistspacing5,
-                    BorderButton(
-                      btntxt: "Continue",
-                      backEndColor: Colors.transparent,
-                      borderColor: UIDataColors.secondaryColor,
-                      buttontxtColor: UIDataColors.secondaryColor,
-                      onPressed: () {
-                        Get.toNamed(Routes.deleteAccountConfirmation);
-                      },
-                    ),
-
+                    _.isOtpLoading
+                        ? Center(child: CircularProgressIndicator())
+                        : BorderButton(
+                            btntxt: "Continue",
+                            backEndColor: Colors.white,
+                            borderColor: UIDataColors.secondaryColor,
+                            buttontxtColor: UIDataColors.secondaryColor,
+                            onPressed: () {
+                              _.getOtp();
+                              // Get.toNamed(Routes.deleteAccountConfirmation);
+                            },
+                          ),
                     SpacingHeight.heightlistspacing15,
-                    // Obx(() => _.isLoading
-                    //         ? const Center(
-                    //             child: CircularProgressIndicator(),
-                    //           )
-                    //         :
-
-                    //),
                   ],
                 ).marginOnly(left: 20.0, right: 20.0),
               ),

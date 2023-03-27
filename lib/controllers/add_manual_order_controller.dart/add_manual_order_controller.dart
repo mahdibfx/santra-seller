@@ -28,16 +28,6 @@ class AddManualOrderController extends GetxController {
   var productsByCategory;
   Future viewSellerAllProducts() async {
     try {
-      var data = [
-        {"title": 'Avengers', "release_date": '10/01/2019'},
-        {"title": 'Creed', "release_date": '10/01/2019'},
-        {"title": 'Jumanji', "release_date": '30/10/2019'},
-      ];
-
-      var newMap = groupBy(data, (Map oj) => oj['release_date']);
-
-      print(newMap);
-
       changeLoadingStatus(true);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? sellerCode = prefs.getString('sellercode').toString();
