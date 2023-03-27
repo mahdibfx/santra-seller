@@ -12,8 +12,11 @@ class RoundedCloseButton extends StatelessWidget {
         height: 30,
         width: 30,
         decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.6), shape: BoxShape.circle),
-        child: const Icon(Icons.close),
+            color: Colors.white.withOpacity(0.4), shape: BoxShape.circle),
+        child: const Icon(
+          Icons.close,
+          color: Colors.white,
+        ),
       ),
     );
   }

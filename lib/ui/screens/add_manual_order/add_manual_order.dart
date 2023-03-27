@@ -70,8 +70,8 @@ class AddManulOrder extends StatelessWidget {
                                           context: context,
                                           builder: (context) {
                                             return Container(
-                                              height: size.height -
-                                                  size.height * 0.27,
+                                              // height: size.height -
+                                              //     size.height * 0.27,
                                               decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -153,24 +153,31 @@ class AddManulOrder extends StatelessWidget {
                                                         }, onPlus: () {
                                                           print("Plus");
                                                         }),
-                                                        SpacingHeight
-                                                            .heightlistspacing20,
-                                                        ListView.builder(
-                                                          physics:
-                                                              const NeverScrollableScrollPhysics(),
-                                                          padding:
-                                                              EdgeInsets.zero,
-                                                          shrinkWrap: true,
-                                                          itemCount: 3,
-                                                          itemBuilder:
-                                                              (context, index) {
-                                                            return CheckBoxModifier(
-                                                              modName: "Small",
-                                                              price: "230",
-                                                              isChecked: false,
-                                                            );
-                                                          },
-                                                        ),
+                                                        // SpacingHeight
+                                                        //     .heightlistspacing10,
+                                                        if (manualOrderController
+                                                            .allProducts![index]
+                                                            .modifiers!
+                                                            .isNotEmpty)
+                                                          ListView.builder(
+                                                            physics:
+                                                                const NeverScrollableScrollPhysics(),
+                                                            padding:
+                                                                EdgeInsets.zero,
+                                                            shrinkWrap: true,
+                                                            itemCount: 3,
+                                                            itemBuilder:
+                                                                (context,
+                                                                    index) {
+                                                              return CheckBoxModifier(
+                                                                modName:
+                                                                    "Small",
+                                                                price: "230",
+                                                                isChecked:
+                                                                    false,
+                                                              );
+                                                            },
+                                                          ),
                                                         SpacingHeight
                                                             .heightlistspacing10,
                                                         SizedBox(

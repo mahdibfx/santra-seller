@@ -36,6 +36,7 @@ class UIDataTextStyles {
       fontWeight: FontWeight.normal,
       fontFamily: 'Markpro',
       letterSpacing: 0.0);
+
   static const title13Normal = TextStyle(
       fontSize: 13,
       fontWeight: FontWeight.w400,

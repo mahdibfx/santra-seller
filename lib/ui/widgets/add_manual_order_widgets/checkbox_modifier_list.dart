@@ -17,8 +17,8 @@ class CheckBoxModifier extends StatelessWidget {
         Row(
           children: [
             Text(
-              modName!,
-              style: UIDataTextStyles.h2,
+              modName ?? "",
+              style: UIDataTextStyles.h2.copyWith(fontWeight: FontWeight.w500),
             ),
             const Spacer(),
             // Text(
@@ -32,17 +32,20 @@ class CheckBoxModifier extends StatelessWidget {
               ),
               child: SizedBox(
                 width: 20,
-                child: Checkbox(
-                  activeColor: UIDataColors.blackColor,
-                  checkColor: UIDataColors.blackColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                child: Transform.scale(
+                  scale: 1.15,
+                  child: Checkbox(
+                    activeColor: UIDataColors.blackColor,
+                    checkColor: UIDataColors.blackColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    side: const BorderSide(
+                      width: 0.8,
+                    ),
+                    onChanged: (bool? value) {},
+                    value: isChecked,
                   ),
-                  side: const BorderSide(
-                    width: 1,
-                  ),
-                  onChanged: (bool? value) {},
-                  value: isChecked,
                 ),
               ),
             ),
