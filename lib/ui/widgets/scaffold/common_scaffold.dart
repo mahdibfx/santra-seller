@@ -271,7 +271,7 @@ class CommonScaffold extends StatelessWidget {
       appBar: showAppBar
           ? AppBar(
               iconTheme: IconThemeData(
-                color: backarrow != null ? backarrow : Color(0xffF9F9F9),
+                color: backarrow ?? const Color(0xffF9F9F9),
               ),
               elevation: elevation,
               automaticallyImplyLeading: automaticallyImplyLeading,

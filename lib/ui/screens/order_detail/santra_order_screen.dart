@@ -78,16 +78,30 @@ class SantraOrderScreen extends StatelessWidget {
       showFAB: true,
       centerDocked: true,
       showAppBar: true,
-      // scaffoldKey: _key,
+      // leading: Row(
+      //   children: [
+      //     GestureDetector(
+      //       child: Icon(
+      //         Icons.arrow_back,
+      //         color: Colors.black,
+      //       ),
+      //       onTap: () => Navigator.of(context).pop(),
+      //     ),
+      //     Text(
+      //       'Back',
+      //       style: TextStyle(color: Colors.black, fontSize: 10),
+      //     )
+      //   ],
+      // ),
       showBottomNav: true,
       appbarcolor: UIDataColors.whiteColor,
       appbarSvg: true,
-      backarrow: UIDataColors.blackColor,
+      backarrow: UIDataColors.primaryColor,
       qrCallback: () {
         Get.offAllNamed(Routes.addManualOrder);
       },
       floatingIcon: Icons.add,
-      elevation: 0.0,
+      elevation: 1.0,
     );
   }
 }

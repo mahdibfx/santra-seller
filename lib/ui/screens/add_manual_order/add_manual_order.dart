@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:santra_seller/controllers/add_manual_order_controller.dart/add_manual_order_controller.dart';
+import 'package:santra_seller/controllers/cart_controller/cart_controller.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/raised_gradient_button.dart';
@@ -189,11 +190,25 @@ class AddManulOrder extends StatelessWidget {
                                                         ),
                                                         PrimaryButtonWithIcon(
                                                           onPressed: () {
+                                                            var data = CartItem(
+                                                                name: manualOrderController
+                                                                    .allProducts![
+                                                                        index]
+                                                                    .productName
+                                                                    .toString(),
+                                                                price: double.parse(manualOrderController
+                                                                    .allProducts![
+                                                                        index]
+                                                                    .productPrice
+                                                                    .toString()),
+                                                                code: manualOrderController
+                                                                    .allProducts![
+                                                                        index]
+                                                                    .productCode
+                                                                    .toString());
                                                             manualOrderController
                                                                 .addIntoCart(
-                                                                    manualOrderController
-                                                                            .allProducts![
-                                                                        index]);
+                                                                    data);
                                                             Get.offAllNamed(
                                                                 Routes
                                                                     .cartroute);
@@ -227,21 +242,33 @@ class AddManulOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(
-      resizeToAvoid: false,
-      bodyData: bodyData(context),
+       bodyData: bodyData(context),
       backgroundcolor: UIDataColors.whiteColor,
-      backGroundImage: UIDataImage.backgroundImage,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,
       showAppBar: true,
-      scaffoldKey: _key,
+      // leading: Row(
+      //   children: [
+      //     GestureDetector(
+      //       child: Icon(
+      //         Icons.arrow_back,
+      //         color: Colors.black,
+      //       ),
+      //       onTap: () => Navigator.of(context).pop(),
+      //     ),
+      //     Text(
+      //       'Back',
+      //       style: TextStyle(color: Colors.black, fontSize: 10),
+      //     )
+      //   ],
+      // ),
       showBottomNav: true,
       appbarcolor: UIDataColors.whiteColor,
-      appTitle: 'Add Order',
-      backarrow: UIDataColors.blackColor,
+      appbarSvg: true,
+      backarrow: UIDataColors.primaryColor,
       qrCallback: () {
-        // Get.offAllNamed(Routes.add);
+        // Get.offAllNamed(Routes.addManualOrder);
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

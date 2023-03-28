@@ -21,8 +21,8 @@ class AddManualOrderController extends GetxController {
     update();
   }
 
-  addIntoCart(Product product) {
-    cartController.addItemToCart(product);
+  addIntoCart(CartItem product) {
+    cartController.addToCart(product);
   }
 
   var productsByCategory;
@@ -30,10 +30,10 @@ class AddManualOrderController extends GetxController {
     try {
       changeLoadingStatus(true);
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? sellerCode = prefs.getString('sellercode').toString();
+      var sellercode = prefs.getString("sellercode");
       var url = Uri.parse(ApiData.sellerAllProducts);
       Map<String, dynamic> body = {};
-      body['seller_code'] = "190";
+      body['seller_code'] = '190';  //sellercode.toString();
       var response = await http.post(url, body: body);
       if (response.statusCode == 200) {
         var decodedJson = jsonDecode(response.body);
