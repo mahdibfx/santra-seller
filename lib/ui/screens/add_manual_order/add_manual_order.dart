@@ -148,12 +148,12 @@ class AddManulOrder extends StatelessWidget {
                                                         ),
                                                         SpacingHeight
                                                             .heightlistspacing10,
-                                                        PriceOnSelection(
-                                                            onMinus: () {
-                                                          print("Minus");
-                                                        }, onPlus: () {
-                                                          print("Plus");
-                                                        }),
+                                                        // PriceOnSelection(
+                                                        //     onMinus: () {
+                                                        //   print("Minus");
+                                                        // }, onPlus: () {
+                                                        //   print("Plus");
+                                                        // }),
                                                         // SpacingHeight
                                                         //     .heightlistspacing10,
                                                         if (manualOrderController
@@ -191,6 +191,11 @@ class AddManulOrder extends StatelessWidget {
                                                         PrimaryButtonWithIcon(
                                                           onPressed: () {
                                                             var data = CartItem(
+                                                              imageString:manualOrderController
+                                                                    .allProducts![
+                                                                        index]
+                                                                    .productImages
+                                                                    .toString(),
                                                                 name: manualOrderController
                                                                     .allProducts![
                                                                         index]
@@ -209,9 +214,10 @@ class AddManulOrder extends StatelessWidget {
                                                             manualOrderController
                                                                 .addIntoCart(
                                                                     data);
-                                                            Get.offAllNamed(
-                                                                Routes
-                                                                    .cartroute);
+
+                                                            // Get.offAllNamed(
+                                                            //     Routes
+                                                            //         .cartroute);
                                                           },
                                                           btntxt: "Add To Cart",
                                                           iconImage: UIDATAIcons
@@ -263,6 +269,10 @@ class AddManulOrder extends StatelessWidget {
       //     )
       //   ],
       // ),
+      appBarAction: [IconButton(icon:Icon(Icons.sports_basketball) ,
+      onPressed: (){
+        Get.toNamed(Routes.cartroute);
+      },)],
       showBottomNav: true,
       appbarcolor: UIDataColors.whiteColor,
       appbarSvg: true,

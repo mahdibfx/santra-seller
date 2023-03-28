@@ -1,5 +1,6 @@
 import 'dart:convert';
 import "package:collection/collection.dart";
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,6 +15,7 @@ class AddManualOrderController extends GetxController {
 
   bool isLoading = true;
   bool hasError = false;
+  var arguments;
 
   List<Product>? allProducts = [];
   changeLoadingStatus(bool value) {
@@ -23,7 +25,20 @@ class AddManualOrderController extends GetxController {
 
   addIntoCart(CartItem product) {
     cartController.addToCart(product);
+    showToast();
+
   }
+  void showToast() {
+  Get.snackbar(
+    'Added',
+    'Add in the cart',
+    duration: Duration(seconds: 2),
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: Colors.grey[900],
+    colorText: Colors.white,
+    icon: Icon(Icons.check_circle_outline, color: Colors.green),
+  );
+}
 
   var productsByCategory;
   Future viewSellerAllProducts() async {
@@ -40,6 +55,7 @@ class AddManualOrderController extends GetxController {
         var data = SelllerAllProductsModel.fromJson(decodedJson);
         if (data.data![0].products!.isNotEmpty) {
           allProducts = data.data?[0].products;
+        debugPrint(allProducts.toString());
         }
 
         selllerAllProductsModel =
@@ -56,8 +72,16 @@ class AddManualOrderController extends GetxController {
 
   @override
   void onInit() async {
-    selllerAllProductsModel = SelllerAllProductsModel();
+    if (Get.arguments != null) {
+        arguments = (Get.arguments);
+        print("arguments:" +arguments);
+        update();
+        // await gettingdata(name!);
+      }else{
+         selllerAllProductsModel = SelllerAllProductsModel();
     viewSellerAllProducts();
+      }
+   
     super.onInit();
   }
 }

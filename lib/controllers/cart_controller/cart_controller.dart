@@ -70,28 +70,36 @@
 //   }
 // }
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CartController extends GetxController {
    bool isLoading = false;
+   int deliveryCharges = 10;
   final List<CartItem> cartItems = [];
 
   void addToCart(CartItem item) {
-    final index = cartItems.indexWhere((cartItem) => cartItem.name == item.name);
+    final index = cartItems.indexWhere((cartItem) => cartItem.code == item.code);
     if (index != -1) {
       cartItems[index].quantity += 1;
+      update();
+      showToast('increased by one');
     } else {
       cartItems.add(item);
+       update();
     }
   }
 
   void removeFromCart(CartItem item) {
-    final index = cartItems.indexWhere((cartItem) => cartItem.name == item.name);
+    final index = cartItems.indexWhere((cartItem) => cartItem.code == item.code);
     if (index != -1) {
       if (cartItems[index].quantity > 1) {
         cartItems[index].quantity -= 1;
+         update();
+        showToast('decreased by one');
       } else {
         cartItems.removeAt(index);
+         update();
       }
     }
   }
@@ -100,13 +108,30 @@ class CartController extends GetxController {
         0,
         (previousValue, cartItem) => previousValue + cartItem.price * cartItem.quantity,
       );
+       double get grandTotal => cartItems.fold(
+        0,
+        (previousValue, cartItem) => (previousValue + cartItem.price * cartItem.quantity) + deliveryCharges,
+      );
+
+       void showToast(String msg) {
+  Get.snackbar(
+    'Added',
+    '$msg',
+    duration: Duration(seconds: 2),
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: Colors.grey[900],
+    colorText: Colors.white,
+    icon: Icon(Icons.check_circle_outline, color: Colors.green),
+  );
+}
 }
 
 class CartItem {
   final String name;
   final String code;
   final double price;
+  final String imageString;
   int quantity;
 
-  CartItem({required this.name, required this.price, required this.code, this.quantity = 1});
+  CartItem({required this.name, required this.price, required this.code, required this.imageString, this.quantity = 1});
 }

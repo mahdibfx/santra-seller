@@ -10,8 +10,16 @@ import '../../../utils/uidata/textStyles.dart';
 import '../buttons/material_buttons/primaryButtonWithIcon.dart';
 
 class CartPayemntDescriptionCard extends StatelessWidget {
+  final String subtotal;
+  final String deliveryCharges;
+  final String total;
+
   CartPayemntDescriptionCard({
     Key? key,
+    required this.subtotal,
+    required this.total,
+    required this.deliveryCharges,
+
   }) : super(key: key);
 
   @override
@@ -50,7 +58,7 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                       children: [
                         const Text("Subtotal"),
                         const Spacer(),
-                        const Text("120 AED"),
+                         Text("$subtotal AED"),
                       ],
                     ),
                   ),
@@ -65,7 +73,7 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                       children: [
                         const Text("Delivery Charge"),
                         const Spacer(),
-                        const Text("120 AED"),
+                         Text("$deliveryCharges AED"),
                       ],
                     ),
                   ),
@@ -81,7 +89,7 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                         const Text("Total",
                             style: UIDataTextStyles.textMediumColoredBlue),
                         const Spacer(),
-                        const Text("150 AED",
+                         Text("$total AED",
                             style: UIDataTextStyles.textMediumColoredBlue),
                       ],
                     ),
@@ -98,7 +106,9 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                       Container(width: 20),
                       Expanded(
                         child: PrimaryButtonWithIcon(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.toNamed(Routes.addManualOrder,arguments: 'cartScreen_to_add_manual');
+                          },
                           btntxt: "Add Order",
                           buttontxtColor: UIDataColors.primaryColor,
                           backEndColor: Colors.white,
