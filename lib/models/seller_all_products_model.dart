@@ -17,14 +17,15 @@ class SelllerAllProductsModel {
   });
 
   bool? status;
-  List<Datum>? data;
+  List<SellerAllProductsDatum>? data;
 
   factory SelllerAllProductsModel.fromJson(Map<String, dynamic> json) =>
       SelllerAllProductsModel(
         status: json["status"],
         data: json["data"] == null
             ? []
-            : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+            : List<SellerAllProductsDatum>.from(
+                json["data"]!.map((x) => SellerAllProductsDatum.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -35,14 +36,15 @@ class SelllerAllProductsModel {
       };
 }
 
-class Datum {
-  Datum({
+class SellerAllProductsDatum {
+  SellerAllProductsDatum({
     this.products,
   });
 
   List<Product>? products;
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory SellerAllProductsDatum.fromJson(Map<String, dynamic> json) =>
+      SellerAllProductsDatum(
         products: json["products"] == null
             ? []
             : List<Product>.from(
@@ -65,6 +67,7 @@ class Product {
     this.categoryCode,
     this.categoryName,
     this.productImages,
+    this.productStatus,
     this.modifiers,
   });
 
@@ -75,6 +78,7 @@ class Product {
   String? categoryCode;
   String? categoryName;
   String? productImages;
+  String? productStatus;
   List<dynamic>? modifiers;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
@@ -85,6 +89,7 @@ class Product {
         categoryCode: json["category_code"],
         categoryName: json["category_name"],
         productImages: json["product_images"],
+        productStatus: json["product_status"],
         modifiers: json["modifiers"] == null
             ? []
             : List<dynamic>.from(json["modifiers"]!.map((x) => x)),
@@ -98,6 +103,7 @@ class Product {
         "category_code": categoryCode,
         "category_name": categoryName,
         "product_images": productImages,
+        "product_status": productStatus,
         "modifiers": modifiers == null
             ? []
             : List<dynamic>.from(modifiers!.map((x) => x)),
