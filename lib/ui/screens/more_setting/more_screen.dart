@@ -41,7 +41,9 @@ class MoreSettingScreen extends StatelessWidget {
                       ),
                       ReusableIconSetting(
                         icon: UIDATAIcons.dashboardIcon,
-                        onPressed: () {},
+                        onPressed: () {
+                           Get.toNamed(Routes.productSetting);
+                        },
                         btntxt: 'Products',
                       ),
                       ReusableIconSetting(

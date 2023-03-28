@@ -48,6 +48,7 @@ abstract class Routes {
   static const manualOrderScreen = "/manualOrderscreen";
   static const pendingOrderScreen = "/pendingOrderscreen";
   static const allOrderScreen = "/allOrderscreen";
+  static const productSetting = "/productSetting";
 
 
 }

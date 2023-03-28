@@ -106,7 +106,9 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                       Container(width: 20),
                       Expanded(
                         child: PrimaryButtonWithIcon(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.toNamed(Routes.addManualOrder,arguments: 'cartScreen_to_add_manual');
+                          },
                           btntxt: "Add Order",
                           buttontxtColor: UIDataColors.primaryColor,
                           backEndColor: Colors.white,

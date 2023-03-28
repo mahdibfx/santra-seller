@@ -39,6 +39,7 @@ import '../../ui/screens/home_page/home_screen.dart';
 import '../../ui/screens/more_setting/about_us_screen.dart';
 import '../../ui/screens/more_setting/more_screen.dart';
 import '../../ui/screens/order_detail/santra_order_screen.dart';
+import '../../ui/screens/product_setting/product_setting_screen.dart';
 import '../../ui/screens/splash/splash_screen.dart';
 import '../bindings/auth_binding/login_binding.dart';
 import '../bindings/auth_binding/signup_binding.dart';
@@ -118,6 +119,11 @@ class AppPages {
     GetPage(
       name: Routes.addManualOrder,
       page: () => AddManulOrder(),
+      binding: AddManualOrderBinding(),
+    ),
+    GetPage(
+      name: Routes.productSetting,
+      page: () => ProductSettingScreen(),
       binding: AddManualOrderBinding(),
     ),
     GetPage(

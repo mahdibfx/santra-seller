@@ -31,84 +31,44 @@ class CartScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                 
-                  // Icon(UIDATAIcons.cartIcon, size: 40, color: UIDataColors.primaryColor),
-                   SvgPicture.asset(
-                    UIDATAIcons.cartHallowIcon,
-                    color: UIDataColors.primaryColor,
-                  ),
-                  Text(
-                    ' Cart',
-                    style: UIDataTextStyles.title,
-                  ),
-                ],
-              ),
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        // Icon(UIDATAIcons.cartIcon, size: 40, color: UIDataColors.primaryColor),
+                        SvgPicture.asset(
+                          UIDATAIcons.cartHallowIcon,
+                          color: UIDataColors.primaryColor,
+                        ),
+                        Text(
+                          ' Cart',
+                          style: UIDataTextStyles.title,
+                        ),
+                      ],
+                    ),
                     SpacingHeight.heightlistspacing20,
                     // SpacingHeight.heightlistspacing10,
-                ListView.builder(
-                  
-                    physics: const BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount:
-                        _.cartItems.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CartCardOrder(
-                          allProducts:
-                              _.cartItems,
-                          index: index,
-                          onDecrese:() => _.removeFromCart( _.cartItems[index]),
-                          onIncrese:  () => _.addToCart( _.cartItems[index]),
-                          quantity: _.cartItems[index].quantity.toString(),
-                        ),
-                      );
-                    }),
-        //          ListView.builder(
-        //           shrinkWrap: true,
-        //   itemCount: _.cartItems.length,
-        //   itemBuilder: (context, index) {
-        //     final cartItem = _.cartItems[index];
-        //     return ListTile(
-        //       title: Text(cartItem.name),
-        //       subtitle: Text('\$${cartItem.price.toStringAsFixed(2)}'),
-        //       trailing: Row(
-        //         mainAxisSize: MainAxisSize.min,
-        //         children: [
-        //           IconButton(
-        //             onPressed: () => _.removeFromCart(cartItem),
-        //             icon: Icon(Icons.remove),
-        //           ),
-        //           Text(cartItem.quantity.toString()),
-        //           IconButton(
-        //             onPressed: () => _.addToCart(cartItem),
-        //             icon: Icon(Icons.add),
-        //           ),
-        //         ],
-        //       ),
-        //     );
-        //   },
-        // ),
-      
-      Container(
-            height: 50,
-            child: Center(
-              child: Text(
-                'Total: \$${_.totalPrice.toStringAsFixed(2)}',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
+                    ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: _.cartItems.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CartCardOrder(
+                              allProducts: _.cartItems,
+                              index: index,
+                              onDecrese: () =>
+                                  _.removeFromCart(_.cartItems[index]),
+                              onIncrese: () => _.addToCart(_.cartItems[index]),
+                              quantity: _.cartItems[index].quantity.toString(),
+                            ),
+                          );
+                        }),
 
-                    CartPayemntDescriptionCard(subtotal: '${_.totalPrice.toStringAsFixed(2)}',total: '${_.totalPrice.toStringAsFixed(2)}',deliveryCharges: '0',),
-
-
-                   
+                    CartPayemntDescriptionCard(
+                      subtotal: '${_.totalPrice.toStringAsFixed(2)}',
+                      total: '${_.grandTotal.toStringAsFixed(2)}',
+                      deliveryCharges: _.deliveryCharges.toString(),
+                    ),
                   ],
                 ).marginAll(10)),
               );
@@ -118,9 +78,8 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return CommonScaffold(
-       bodyData: bodyData(),
+      bodyData: bodyData(),
       backgroundcolor: UIDataColors.whiteColor,
       showDrawer: false,
       showFAB: true,

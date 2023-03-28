@@ -15,6 +15,7 @@ class AddManualOrderController extends GetxController {
 
   bool isLoading = true;
   bool hasError = false;
+  var arguments;
 
   List<Product>? allProducts = [];
   changeLoadingStatus(bool value) {
@@ -54,6 +55,7 @@ class AddManualOrderController extends GetxController {
         var data = SelllerAllProductsModel.fromJson(decodedJson);
         if (data.data![0].products!.isNotEmpty) {
           allProducts = data.data?[0].products;
+        debugPrint(allProducts.toString());
         }
 
         selllerAllProductsModel =
@@ -70,8 +72,16 @@ class AddManualOrderController extends GetxController {
 
   @override
   void onInit() async {
-    selllerAllProductsModel = SelllerAllProductsModel();
+    if (Get.arguments != null) {
+        arguments = (Get.arguments);
+        print("arguments:" +arguments);
+        update();
+        // await gettingdata(name!);
+      }else{
+         selllerAllProductsModel = SelllerAllProductsModel();
     viewSellerAllProducts();
+      }
+   
     super.onInit();
   }
 }

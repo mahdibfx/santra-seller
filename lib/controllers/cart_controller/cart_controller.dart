@@ -75,6 +75,7 @@ import 'package:get/get.dart';
 
 class CartController extends GetxController {
    bool isLoading = false;
+   int deliveryCharges = 10;
   final List<CartItem> cartItems = [];
 
   void addToCart(CartItem item) {
@@ -106,6 +107,10 @@ class CartController extends GetxController {
   double get totalPrice => cartItems.fold(
         0,
         (previousValue, cartItem) => previousValue + cartItem.price * cartItem.quantity,
+      );
+       double get grandTotal => cartItems.fold(
+        0,
+        (previousValue, cartItem) => (previousValue + cartItem.price * cartItem.quantity) + deliveryCharges,
       );
 
        void showToast(String msg) {
