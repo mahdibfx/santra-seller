@@ -47,51 +47,51 @@ class CartScreen extends StatelessWidget {
               ),
                     SpacingHeight.heightlistspacing20,
                     // SpacingHeight.heightlistspacing10,
-                // ListView.builder(
+                ListView.builder(
                   
-                //     physics: const BouncingScrollPhysics(),
-                //     shrinkWrap: true,
-                //     itemCount:
-                //         _.allProducts!.length,
-                //     itemBuilder: (context, index) {
-                //       return Padding(
-                //         padding: const EdgeInsets.all(8.0),
-                //         child: CartCardOrder(
-                //           allProducts:
-                //               _.allProducts,
-                //           index: index,
-                //           onTap: () {
-                          
-                //           },
-                //         ),
-                //       );
-                //     }),
-                Obx(
-        () => ListView.builder(
-          itemCount: _.cartItems.length,
-          itemBuilder: (context, index) {
-            final cartItem = _.cartItems[index];
-            return ListTile(
-              title: Text(cartItem.name),
-              subtitle: Text('\$${cartItem.price.toStringAsFixed(2)}'),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    onPressed: () => _.removeFromCart(cartItem),
-                    icon: Icon(Icons.remove),
-                  ),
-                  Text(cartItem.quantity.toString()),
-                  IconButton(
-                    onPressed: () => _.addToCart(cartItem),
-                    icon: Icon(Icons.add),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-      ),
+                    physics: const BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount:
+                        _.cartItems.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CartCardOrder(
+                          allProducts:
+                              _.cartItems,
+                          index: index,
+                          onDecrese:() => _.removeFromCart( _.cartItems[index]),
+                          onIncrese:  () => _.addToCart( _.cartItems[index]),
+                          quantity: _.cartItems[index].quantity.toString(),
+                        ),
+                      );
+                    }),
+        //          ListView.builder(
+        //           shrinkWrap: true,
+        //   itemCount: _.cartItems.length,
+        //   itemBuilder: (context, index) {
+        //     final cartItem = _.cartItems[index];
+        //     return ListTile(
+        //       title: Text(cartItem.name),
+        //       subtitle: Text('\$${cartItem.price.toStringAsFixed(2)}'),
+        //       trailing: Row(
+        //         mainAxisSize: MainAxisSize.min,
+        //         children: [
+        //           IconButton(
+        //             onPressed: () => _.removeFromCart(cartItem),
+        //             icon: Icon(Icons.remove),
+        //           ),
+        //           Text(cartItem.quantity.toString()),
+        //           IconButton(
+        //             onPressed: () => _.addToCart(cartItem),
+        //             icon: Icon(Icons.add),
+        //           ),
+        //         ],
+        //       ),
+        //     );
+        //   },
+        // ),
+      
       Container(
             height: 50,
             child: Center(
@@ -105,7 +105,7 @@ class CartScreen extends StatelessWidget {
             ),
           ),
 
-                    CartPayemntDescriptionCard(),
+                    CartPayemntDescriptionCard(subtotal: '${_.totalPrice.toStringAsFixed(2)}',total: '${_.totalPrice.toStringAsFixed(2)}',deliveryCharges: '0',),
 
 
                    

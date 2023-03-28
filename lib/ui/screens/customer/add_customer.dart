@@ -106,11 +106,11 @@ class CustomerScreen extends StatelessWidget {
                                                 //const ProductNameAndPriceOnSheet(),
                                                 SpacingHeight
                                                     .heightlistspacing5,
-                                                PriceOnSelection(onMinus: () {
-                                                  print("Minus");
-                                                }, onPlus: () {
-                                                  print("Plus");
-                                                }),
+                                                // PriceOnSelection(onMinus: () {
+                                                //   print("Minus");
+                                                // }, onPlus: () {
+                                                //   print("Plus");
+                                                // }),
                                                 ListView.builder(
                                                   padding: EdgeInsets.zero,
                                                   shrinkWrap: true,

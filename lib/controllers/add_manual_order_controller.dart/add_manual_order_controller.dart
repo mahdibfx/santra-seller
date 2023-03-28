@@ -1,5 +1,6 @@
 import 'dart:convert';
 import "package:collection/collection.dart";
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,7 +24,20 @@ class AddManualOrderController extends GetxController {
 
   addIntoCart(CartItem product) {
     cartController.addToCart(product);
+    showToast();
+
   }
+  void showToast() {
+  Get.snackbar(
+    'Added',
+    'Add in the cart',
+    duration: Duration(seconds: 2),
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: Colors.grey[900],
+    colorText: Colors.white,
+    icon: Icon(Icons.check_circle_outline, color: Colors.green),
+  );
+}
 
   var productsByCategory;
   Future viewSellerAllProducts() async {

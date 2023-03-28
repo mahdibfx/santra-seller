@@ -7,7 +7,8 @@ import '../../../utils/uidata/textStyles.dart';
 class PriceOnSelection extends StatelessWidget {
   var onPlus;
   var onMinus;
-  PriceOnSelection({Key? key, required this.onMinus, required this.onPlus})
+  var quantity;
+  PriceOnSelection({Key? key, required this.onMinus, required this.onPlus, required this.quantity})
       : super(key: key);
 
   @override
@@ -32,8 +33,8 @@ class PriceOnSelection extends StatelessWidget {
               alignment: Alignment.center,
               child: const Icon(Icons.remove)),
         ),
-        const Text(
-          "2",
+         Text(
+         quantity,
           style: UIDataTextStyles.h1Heavy,
         ).paddingSymmetric(horizontal: 10),
         GestureDetector(
