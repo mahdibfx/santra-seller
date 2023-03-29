@@ -1,14 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages
-import 'dart:convert';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:santra_seller/controllers/more_screen_controller.dart/customer_reviews_controller.dart';
-import 'package:santra_seller/controllers/more_screen_controller.dart/more_controller.dart';
-import 'package:santra_seller/ui/widgets/cards/customer_review_card.dart';
-import 'package:santra_seller/utils/uidata/textStyles.dart';
 
-import '../../../controllers/home_controller/home_controller.dart';
+import 'package:santra_seller/controllers/more_screen_controller.dart/customer_reviews_controller.dart';
+import 'package:santra_seller/ui/widgets/cards/customer_review_card.dart';
+
 import '../../../utils/routes/app_routes.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/customer_reviews_widgets.dart/rating_overView.dart';
