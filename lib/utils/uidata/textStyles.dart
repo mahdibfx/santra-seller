@@ -88,6 +88,12 @@ class UIDataTextStyles {
     color: Colors.black,
     fontWeight: FontWeight.bold,
   );
+  static const rating = TextStyle(
+    fontFamily: 'MarkPro',
+    fontSize: 32.0,
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+  );
   static const textMedium = TextStyle(
       color: Colors.black,
       fontSize: 15,

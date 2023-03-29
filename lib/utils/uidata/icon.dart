@@ -10,7 +10,7 @@ class UIDATAIcons {
   static const deliveryIcon = "$iconsDir/delivery_icon.svg";
   static const cardOpen = "$iconsDir/card_open.svg";
   static const cardClose = "$iconsDir/card_close.svg";
-   static const orderRemarks = "$iconsDir/order_remarks.svg";
+  static const orderRemarks = "$iconsDir/order_remarks.svg";
 
   static const ordeBascketFull = "$iconsDir/order_bascket_colored.svg";
   static const orderBascketBorder = "$iconsDir/order_bascket_border.svg";
@@ -37,4 +37,6 @@ class UIDATAIcons {
   static const moreHorizontal = "$iconsDir/more_horizontal.svg";
   static const saveIcon = "$iconsDir/save.svg";
   static const addIcon = "$iconsDir/add.svg";
+  static const starIcon = "$iconsDir/star.svg";
+  static const starIconFilled = "$iconsDir/star_fill.svg";
 }

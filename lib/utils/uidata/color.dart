@@ -12,4 +12,9 @@ class UIDataColors {
   static const grayColor2 = Color(0xffADADAD);
   static const redColor = Color(0xffC23C4C);
   static const blackText = Color(0xff2A353D);
+  static const amber = Color(0xffF4C622);
+  static const green = Color(0xff019522);
+  static const greenLite = Color(0xff54BA03);
+  static const pink = Color(0xffFCA37D);
+  static const orange = Color(0xffFF6928);
 }
