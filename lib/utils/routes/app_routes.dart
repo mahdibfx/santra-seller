@@ -23,6 +23,7 @@ abstract class Routes {
   static const createrequestroute = "/createrequest";
   static const languageSettings = "/languagesettings";
   static const deleteAccount = "/deleteAccount";
+  static const customerReviews = "/customerreviews";
   static const deleteAccountConfirmation = "/deleteAccountConfirmation";
   static const historyrotues = "/historyrotues";
   static const ServicesDetials = "/ServicesDetials";
@@ -49,6 +50,4 @@ abstract class Routes {
   static const pendingOrderScreen = "/pendingOrderscreen";
   static const allOrderScreen = "/allOrderscreen";
   static const productSetting = "/productSetting";
-
-
 }
