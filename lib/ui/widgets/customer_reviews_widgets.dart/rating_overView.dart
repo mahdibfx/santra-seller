@@ -6,21 +6,22 @@ import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';
 
 class RatingOverview extends StatelessWidget {
-  const RatingOverview({
-    Key? key,
-  }) : super(key: key);
+  String? avgStars;
+  String? totalReviews;
+  RatingOverview({Key? key, required this.avgStars, required this.totalReviews})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text(
-          "4.7",
+        Text(
+          double.parse(avgStars ?? "0.0").toString(),
           style: UIDataTextStyles.rating,
         ),
         RatingBar(
-          initialRating: 4,
+          initialRating: double.parse(avgStars ?? "0.0"),
           direction: Axis.horizontal,
           itemCount: 5,
           unratedColor: Colors.grey,
@@ -41,8 +42,8 @@ class RatingOverview extends StatelessWidget {
           },
         ),
         // Spacer(),
-        const Text(
-          "1315 Reviews",
+        Text(
+          "${totalReviews} reviews",
           style: UIDataTextStyles.h2,
         ),
       ],

@@ -47,7 +47,7 @@ class DeleteAccountConfirmation extends StatelessWidget {
                         isTextHidden: false,
                         fillcolor: Colors.white,
                         keyboardType: TextInputType.phone,
-                        hintText: "OTP",
+                        labelText: "OTP",
                         maxLength: 6,
                         controller: _.otpController,
                         validator: (val) {

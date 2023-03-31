@@ -39,4 +39,11 @@ class UIDATAIcons {
   static const addIcon = "$iconsDir/add.svg";
   static const starIcon = "$iconsDir/star.svg";
   static const starIconFilled = "$iconsDir/star_fill.svg";
+  static const editCustomer = "$iconsDir/edit_customer.svg";
+  static const homeIcon = "$iconsDir/home.svg";
+  static const callIcon = "$iconsDir/Call.svg";
+  static const location = "$iconsDir/location.svg";
+  static const locationPin = "$iconsDir/location_pin.svg";
+  static const building = "$iconsDir/building.svg";
+  static const close = "$iconsDir/close.svg";
 }

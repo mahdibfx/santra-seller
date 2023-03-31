@@ -51,7 +51,7 @@ class DeleteAccount extends StatelessWidget {
                           isTextHidden: false,
                           fillcolor: Colors.white,
                           keyboardType: TextInputType.phone,
-                          hintText: "Your Mobile Number",
+                          labelText: "Your Mobile Number",
                           maxLength: 12,
                           validator: (val) {
                             String? name;
@@ -59,7 +59,7 @@ class DeleteAccount extends StatelessWidget {
                               return "Please Enter Valid Phone Number";
                             } else if (val.isNotEmpty && val.length > 3) {
                               name = val.substring(0, 3);
-                              print("nameee$name");
+
                               if (name != "971") {
                                 return "Phone Number Must Start With 971";
                               }

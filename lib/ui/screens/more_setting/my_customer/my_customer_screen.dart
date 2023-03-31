@@ -2,6 +2,8 @@ import 'package:santra_seller/controllers/more_screen_controller.dart/about_us_c
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:santra_seller/controllers/more_screen_controller.dart/my_customer/my_customer_controller.dart';
+import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
+import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 
 import '../../../../utils/routes/app_routes.dart';
 import '../../../../utils/uidata.dart';
@@ -20,7 +22,7 @@ class MyCustomerScreen extends StatelessWidget {
   Widget bodyData() {
     return GetBuilder<MyCustomerController>(
       builder: (_) {
-        return _.isLoading
+        return _.isViewCustomerLoading
             ? const SizedBox(
                 child: Center(
                 child: CircularProgressIndicator(),
@@ -30,61 +32,45 @@ class MyCustomerScreen extends StatelessWidget {
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SpacingHeight.heightlistspacing20,
-                    Row(
-                      children: [
-                        Icon(Icons.contact_page),
-                        Text(
-                          'My Customers',
-                          style: UIDataTextStyles.h1,
-                        ),
-                      ],
-                    ),
-                    SpacingHeight.heightlistspacing20,
+                    HeadingWithIcon(
+                        icon: UIDATAIcons.customersIcon,
+                        btntxt: "Customer List".tr),
                     CommonTextField(
-                      // controller: _.email,
-                      hintText: 'Search by customer name'.tr,
                       isTextHidden: false,
-                      fillcolor: UIDataColors.whiteColor,
-                      keyboardType: TextInputType.text,
-                      validator: (val) {
-                        if (val.isEmpty) {
-                          return "please enter your email";
-                        } else if (val == null) {
-                          return "please enter valid email address";
-                        }
-                      },
+                      prefixIcon: UIDATAIcons.searchIcon,
+                      fillcolor: Colors.white,
+                      labelText: 'Search by customer name'.tr,
                     ),
-                    SpacingHeight.heightlistspacing20,
-                    RaisedGradientButton(
-                      gradient: LinearGradient(
-                        colors: <Color>[
-                          Color(0xff006EB8),
-                          Color(0xff006EB8),
-                        ],
-                      ),
+                    SpacingHeight.heightlistspacing10,
+                    PrimaryButtonWithIcon(
+                      iconImage: UIDATAIcons.userIcon,
                       btntxt: "Add New Customer".tr,
-                      buttontxtColor: UIDataColors.whiteColor,
                       onPressed: () {
                         Get.toNamed(Routes.addNewcustomer);
                       },
                     ),
                     SpacingHeight.heightlistspacing20,
-                    ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: 10,
-                        itemBuilder: (BuildContext context, int index) {
-                          return MyCustomerCard(
-                            name: 'Abdul Basit Ansari',
-                            number: '971321654987',
-                            onTap: () {
-                              Get.toNamed(Routes.editcustomer);
-                            },
-                          ).marginOnly(bottom: 10);
-                        }),
+                    _.hasViewCustomerError
+                        ? const Text("No Customers Found")
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: _.viewAllCustomers.data?.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return MyCustomerCard(
+                                name: _.viewAllCustomers.data?[index]
+                                        .customerName ??
+                                    "No Name",
+                                number: _.viewAllCustomers.data?[index]
+                                        .customerMobile ??
+                                    "No Contact Number",
+                                onTap: () {
+                                  Get.toNamed(Routes.editcustomer);
+                                },
+                              ).marginOnly(bottom: 17);
+                            }),
                   ],
-                ).marginAll(10)),
+                ).paddingSymmetric(horizontal: 20)),
               );
       },
     );
@@ -95,6 +81,7 @@ class MyCustomerScreen extends StatelessWidget {
     return CommonScaffold(
       bodyData: bodyData(),
       backgroundcolor: UIDataColors.whiteColor,
+      backGroundImage: UIDataImage.backgroundImage,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,

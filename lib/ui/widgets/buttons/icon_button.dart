@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ReusableIconButton extends StatelessWidget {
-  final Icon? icon;
+  final String? icon;
   final onPressed;
+  Color? iconClr;
   final Text? btntxt;
-  const ReusableIconButton({required this.icon, required this.onPressed , this.btntxt});
+  ReusableIconButton(
+      {required this.icon, required this.onPressed, this.iconClr, this.btntxt});
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onPressed,
-      child: Column( // Replace with a Row for horizontal icon + text
+      child: Column(
+        // Replace with a Row for horizontal icon + text
         children: <Widget>[
-          icon!,
-          btntxt??SizedBox(),
+          SvgPicture.asset(
+            icon!,
+            color: iconClr,
+            height: 22,
+            //height: 20,
+          ),
+          btntxt ?? SizedBox(),
         ],
       ),
     );
   }
 }
-
-
-
