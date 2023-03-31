@@ -10,4 +10,7 @@ class ApiData {
   static const customerListApi = "${mainurl}view_seller_customer";
   static const customerReviewsApi = "${mainurl}customer_reviews";
   static const addCustomer = "${mainurl}add_seller_customer";
+  static const updateCustomer = "${mainurl}update_seller_customer";
+  static const aboutUsApi = "${mainurl}new_about";
+  static const contactUsApi = "${mainurl}contact_us";
 }

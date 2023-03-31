@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'dart:convert';
 import 'package:santra_seller/controllers/more_screen_controller.dart/about_us_controller.dart';
+import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 
 import '../../../controllers/home_controller/home_controller.dart';
 import '../../../utils/routes/app_routes.dart';
@@ -28,17 +29,13 @@ class AboutUsScreen extends StatelessWidget {
                 child: SingleChildScrollView(
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    SpacingHeight.heightlistspacing20,
-                    Text(
-                      'About Us',
-                      style: UIDataTextStyles.h1,
-                    ),
-                    SpacingHeight.heightlistspacing20,
+                  children: [
+                    HeadingWithIcon(
+                        icon: UIDATAIcons.santraVectorIcon, btntxt: "About Us"),
                     Text(
                         'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.'),
                   ],
-                ).marginAll(10)),
+                ).marginOnly(left: 20, right: 20)),
               );
       },
     );
@@ -49,6 +46,7 @@ class AboutUsScreen extends StatelessWidget {
     return CommonScaffold(
       bodyData: bodyData(),
       backgroundcolor: UIDataColors.whiteColor,
+      backGroundImage: UIDataImage.backgroundImage,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,

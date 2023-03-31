@@ -17,14 +17,15 @@ class ViewAllCustomers {
   });
 
   bool? status;
-  List<Datum>? data;
+  List<CustomerDatum>? data;
 
   factory ViewAllCustomers.fromJson(Map<String, dynamic> json) =>
       ViewAllCustomers(
         status: json["status"],
         data: json["data"] == null
             ? []
-            : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+            : List<CustomerDatum>.from(
+                json["data"]!.map((x) => CustomerDatum.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -35,8 +36,36 @@ class ViewAllCustomers {
       };
 }
 
-class Datum {
-  Datum({
+class CustomerDatum {
+  CustomerDatum({
+    this.customers,
+    this.cities,
+  });
+
+  List<Customer>? customers;
+  List<String>? cities;
+
+  factory CustomerDatum.fromJson(Map<String, dynamic> json) => CustomerDatum(
+        customers: json["customers"] == null
+            ? []
+            : List<Customer>.from(
+                json["customers"]!.map((x) => Customer.fromJson(x))),
+        cities: json["cities"] == null
+            ? []
+            : List<String>.from(json["cities"]!.map((x) => x)),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "customers": customers == null
+            ? []
+            : List<dynamic>.from(customers!.map((x) => x.toJson())),
+        "cities":
+            cities == null ? [] : List<dynamic>.from(cities!.map((x) => x)),
+      };
+}
+
+class Customer {
+  Customer({
     this.id,
     this.customerName,
     this.customerMobile,
@@ -56,7 +85,7 @@ class Datum {
   String? buildingType;
   String? addressLink;
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory Customer.fromJson(Map<String, dynamic> json) => Customer(
         id: json["id"],
         customerName: json["customer_name"],
         customerMobile: json["customer_mobile"],
