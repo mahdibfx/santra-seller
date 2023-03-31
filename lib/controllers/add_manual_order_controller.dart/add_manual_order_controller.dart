@@ -15,15 +15,20 @@ class AddManualOrderController extends GetxController {
 
   bool isLoading = true;
   bool hasError = false;
+ bool isShowViewButton = false;
   var arguments;
 
   List<Product>? allProducts = [];
+  List<Product> filteredProducts = [];
+
   changeLoadingStatus(bool value) {
     isLoading = value;
     update();
   }
 
   addIntoCart(CartItem product) {
+    isShowViewButton = true;
+    update();
     cartController.addToCart(product);
     showToast();
 
@@ -40,7 +45,7 @@ class AddManualOrderController extends GetxController {
   );
 }
 
-  var productsByCategory;
+
   Future viewSellerAllProducts() async {
     try {
       changeLoadingStatus(true);
@@ -55,11 +60,13 @@ class AddManualOrderController extends GetxController {
         var data = SelllerAllProductsModel.fromJson(decodedJson);
         if (data.data![0].products!.isNotEmpty) {
           allProducts = data.data?[0].products;
+          filteredProducts = allProducts??[];
         debugPrint(allProducts.toString());
         }
 
         selllerAllProductsModel =
             selllerAllProductsModelFromJson(response.body);
+            update();
       } else {
         hasError = true;
       }
@@ -70,6 +77,25 @@ class AddManualOrderController extends GetxController {
     changeLoadingStatus(false);
   }
 
+  bool _doesActionSatisfy(Product e, String query) {
+
+    bool found = e.productName.toString()
+            .toLowerCase().contains(query) ||
+            e.categoryName.toString().toLowerCase().contains(query);
+    //  bool found =        allProducts!.any((s) => query
+    //         .toLowerCase()
+    //         .contains(s.productName.toString().toLowerCase()));
+            
+
+    return found;
+  }
+void filterList(String value){
+ var valueList = allProducts!
+        .where((e) => _doesActionSatisfy(e, value.trim().toLowerCase()))
+        .toList();
+       filteredProducts =   valueList;
+        update();
+}
   @override
   void onInit() async {
     if (Get.arguments != null) {

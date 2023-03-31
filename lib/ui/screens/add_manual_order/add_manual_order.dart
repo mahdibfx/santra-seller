@@ -45,6 +45,11 @@ class AddManulOrder extends StatelessWidget {
                     prefixIcon: UIDATAIcons.searchIcon,
                     fillcolor: Colors.white,
                     labelText: "Search For a Product",
+                    onChanged: (value){
+                      print(value);
+                      manualOrderController.filterList(value);
+
+                    },
                   ),
                   SpacingHeight.heightlistspacing10,
                   manualOrderController.isLoading
@@ -66,7 +71,7 @@ class AddManulOrder extends StatelessWidget {
                                     physics: const BouncingScrollPhysics(),
                                     shrinkWrap: true,
                                     itemCount: manualOrderController
-                                        .allProducts?.length,
+                                        .filteredProducts.length,
                                     itemBuilder: (context, index) {
                                       return PDCardAddManualOrder(
                                         manualOrderController:
@@ -154,25 +159,20 @@ class AddManulOrder extends StatelessWidget {
                                                             PrimaryButtonWithIcon(
                                                               onPressed: () {
                                                                 Get.back();
+                                                                var itemValue = manualOrderController.allProducts![index];
+                                                                        
                                                                 var data = CartItem(
-                                                                    imageString: manualOrderController
-                                                                        .allProducts![
-                                                                            index]
-                                                                        .productImages
-                                                                        .toString(),
-                                                                    name: manualOrderController
-                                                                        .allProducts![
-                                                                            index]
+                                                                    imageString:
+                                                                        itemValue
+                                                                            .productImages
+                                                                            .toString(),
+                                                                    name: itemValue
                                                                         .productName
                                                                         .toString(),
-                                                                    price: double.parse(manualOrderController
-                                                                        .allProducts![
-                                                                            index]
+                                                                    price: double.parse(itemValue
                                                                         .productPrice
                                                                         .toString()),
-                                                                    code: manualOrderController
-                                                                        .allProducts![
-                                                                            index]
+                                                                    code: itemValue
                                                                         .productCode
                                                                         .toString());
                                                                 manualOrderController
@@ -210,7 +210,7 @@ class AddManulOrder extends StatelessWidget {
                 ],
               ).paddingOnly(left: 15, right: 15)),
             ),
-            if (cartController.cartItems.isNotEmpty)
+            cartController.isShowCartButton || manualOrderController.isShowViewButton ?
               Positioned(
                   bottom: 30,
                   child: Center(
@@ -226,7 +226,8 @@ class AddManulOrder extends StatelessWidget {
                       borderColor: UIDataColors.primaryColor,
                       iconColor: UIDataColors.primaryColor,
                     ),
-                  ))
+                  ),
+                  ) : SizedBox(),
           ],
         );
       },

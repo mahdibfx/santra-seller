@@ -76,9 +76,12 @@ import 'package:get/get.dart';
 class CartController extends GetxController {
    bool isLoading = false;
    int deliveryCharges = 10;
+   bool isShowCartButton = false;
   final List<CartItem> cartItems = [];
 
   void addToCart(CartItem item) {
+    isShowCartButton = true;
+    update();
     final index = cartItems.indexWhere((cartItem) => cartItem.code == item.code);
     if (index != -1) {
       cartItems[index].quantity += 1;
@@ -101,6 +104,10 @@ class CartController extends GetxController {
         cartItems.removeAt(index);
          update();
       }
+    }
+    if(cartItems.isEmpty){
+      isShowCartButton = false;
+      update();
     }
   }
 
