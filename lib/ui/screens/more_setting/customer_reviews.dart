@@ -21,7 +21,7 @@ class CustomerReviews extends StatelessWidget {
   Widget bodyData() {
     return GetBuilder<CustomerReviewsController>(
       builder: (_) {
-        return _.isLoading
+        return _.isReviewsLoading
             ? const SizedBox(
                 child: Center(
                 child: CircularProgressIndicator(),
@@ -52,7 +52,14 @@ class CustomerReviews extends StatelessWidget {
                           ),
                           child: Column(
                             children: [
-                              const RatingOverview(),
+                              RatingOverview(
+                                avgStars: _
+                                    .customerReviews.data![0].averageStars
+                                    .toString(),
+                                totalReviews: _
+                                    .customerReviews.data![0].averageStars
+                                    .toString(),
+                              ),
                               SpacingHeight.heightlistspacing10,
                               ListView.builder(
                                 shrinkWrap: true,
@@ -60,9 +67,18 @@ class CustomerReviews extends StatelessWidget {
                                 itemBuilder: (context, index) {
                                   return RatingBarWithDetails(
                                     barColor: _.barColors[index],
-                                    barPercentage: 80,
-                                    percenatageToShow: "80",
-                                    totalReviews: "783",
+                                    barPercentage: _.customerReviews.data?[0]
+                                        .starsPercent?[index]
+                                        .toDouble(),
+                                    // _.customerReviews.data[0]
+                                    //     .starsPercent[index]
+
+                                    percenatageToShow: (_.customerReviews
+                                                .data![0].starsPercent![index] *
+                                            100)
+                                        .toString(),
+                                    totalReviews: _
+                                        .customerReviews.data?[0].stars?[index],
                                     noOfStars: _.noOfStars[index].toString(),
                                   );
                                 },
@@ -73,14 +89,17 @@ class CustomerReviews extends StatelessWidget {
                       ListView.builder(
                           physics: const BouncingScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: 5,
+                          itemCount: _.customerReviews.data?[0].customerFeedback
+                              ?.length,
                           itemBuilder: (contex, index) {
                             return CustomerReviewCard(
-                              review:
-                                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500",
-                              orderNumber: "899",
+                              review: _.customerReviews.data?[0]
+                                  .customerFeedback?[index].feedbackMessage,
+                              orderNumber: _.customerReviews.data?[0]
+                                  .customerFeedback?[index].orderNumber,
                               stars: 4,
-                              rating: "4",
+                              rating: _.customerReviews.data?[0]
+                                  .customerFeedback?[index].feedbackStars,
                             );
                           })
                     ],

@@ -7,4 +7,7 @@ class ApiData {
   static const updateaEmail = "${mainurl}update_account_email";
   static const sellerAllProducts = "${mainurl}products_new_seller";
   static const getOtp = "${mainurl}verify";
+  static const customerListApi = "${mainurl}view_seller_customer";
+  static const customerReviewsApi = "${mainurl}customer_reviews";
+  static const addCustomer = "${mainurl}add_seller_customer";
 }

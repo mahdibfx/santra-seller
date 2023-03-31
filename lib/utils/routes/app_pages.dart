@@ -26,8 +26,6 @@ import 'package:santra_seller/ui/screens/more_setting/my_customer/add_customer.d
 import 'package:santra_seller/ui/screens/more_setting/my_customer/edit_customer_details.dart';
 import 'package:santra_seller/ui/screens/more_setting/my_customer/my_customer_screen.dart';
 import 'package:santra_seller/ui/screens/more_setting/wallet_screen.dart';
-import 'package:santra_seller/utils/bindings/more_screen_binding/my_customer_binding/add_new_customer_binding.dart';
-import 'package:santra_seller/utils/bindings/more_screen_binding/my_customer_binding/edit_customer_binding.dart';
 import 'package:santra_seller/utils/bindings/more_screen_binding/my_customer_binding/my_customer_binding.dart';
 import 'package:santra_seller/utils/bindings/more_screen_binding/settings/delete_account_bindings.dart';
 import 'package:santra_seller/utils/bindings/more_screen_binding/settings/delete_account_confirmation_binding.dart';
@@ -176,12 +174,12 @@ class AppPages {
     GetPage(
       name: Routes.addNewcustomer,
       page: () => AddCustomerScreen(),
-      binding: AddNewCustomerBindings(),
+      binding: MyCustomerBindings(),
     ),
     GetPage(
       name: Routes.editcustomer,
       page: () => EditCustomerDetails(),
-      binding: EditCustomerBindings(),
+      binding: MyCustomerBindings(),
     ),
     GetPage(
       name: Routes.cartroute,

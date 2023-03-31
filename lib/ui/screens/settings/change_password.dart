@@ -31,7 +31,7 @@ class ChangePassword extends StatelessWidget {
                     SpacingHeight.heightlistspacing15,
                     CommonTextField(
                       controller: _.currentPasswordController,
-                      hintText: "Current Password",
+                      labelText: "Current Password",
                       fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
                       togglePassword: true,
@@ -56,7 +56,7 @@ class ChangePassword extends StatelessWidget {
                     SpacingHeight.heightlistspacing5,
                     CommonTextField(
                       controller: _.newPasswordController,
-                      hintText: "New Password",
+                      labelText: "New Password",
                       isTextHidden: _.newPasswordSecuretext,
                       fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
@@ -80,7 +80,7 @@ class ChangePassword extends StatelessWidget {
                     SpacingHeight.heightlistspacing5,
                     CommonTextField(
                       controller: _.confirmNewPasswordController,
-                      hintText: "Confirm New Password",
+                      labelText: "Confirm New Password",
                       isTextHidden: _.confirmPasswordSecuretext,
                       fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,

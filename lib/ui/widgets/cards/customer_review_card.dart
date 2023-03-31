@@ -43,17 +43,18 @@ class CustomerReviewCard extends StatelessWidget {
                   children: [
                     Text(
                       "Order No. $orderNumber",
-                      style: UIDataTextStyles.h2,
+                      style: UIDataTextStyles.h2.copyWith(fontSize: 13),
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    Spacer(),
+                    const Spacer(),
                     RatingBar(
                       initialRating: stars ?? 0,
                       direction: Axis.horizontal,
                       itemCount: 5,
                       unratedColor: Colors.grey,
                       glowColor: Colors.amber,
-                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                      itemSize: 18,
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      itemSize: 15,
                       ratingWidget: RatingWidget(
                           full: SvgPicture.asset(UIDATAIcons.starIconFilled,
                               color: Colors.amber),

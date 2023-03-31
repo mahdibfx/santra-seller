@@ -31,7 +31,7 @@ class ChangeEmail extends StatelessWidget {
                     SpacingHeight.heightlistspacing15,
                     CommonTextField(
                       controller: _.emailController,
-                      hintText: "New Email",
+                      labelText: "New Email",
                       prefixIcon: UIDATAIcons.emailIcon,
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
@@ -50,7 +50,7 @@ class ChangeEmail extends StatelessWidget {
                     SpacingHeight.heightlistspacing5,
                     CommonTextField(
                       controller: _.confirmeEmailController,
-                      hintText: "Confirm Email",
+                      labelText: "Confirm Email",
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
                       prefixIcon: UIDATAIcons.emailIcon,
@@ -69,7 +69,7 @@ class ChangeEmail extends StatelessWidget {
                     SpacingHeight.heightlistspacing5,
                     CommonTextField(
                       controller: _.passwordController,
-                      hintText: "Password",
+                      labelText: "Password",
                       isTextHidden: _.securetext,
                       fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
