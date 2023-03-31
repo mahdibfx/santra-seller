@@ -73,9 +73,7 @@ class MyCustomerCard extends StatelessWidget {
                       ),
 
                       InkWell(
-                        onTap: () {
-                          Get.toNamed(Routes.editcustomer);
-                        },
+                        onTap: onTap,
                         child: SvgPicture.asset(
                           UIDATAIcons.editCustomer,
                           color: UIDataColors.primaryColor,

@@ -67,7 +67,12 @@ class CommonTextField extends StatelessWidget {
         fieldHeading == null ? const SizedBox() : Text(fieldHeading ?? ''),
         SpacingHeight.heightlistspacing5,
         TextFormField(
-          style: textStyle ?? null,
+          style: const TextStyle(
+              color: Color.fromARGB(255, 0, 0, 0),
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
+              fontFamily: 'Markpro',
+              letterSpacing: 0.0),
           onChanged: onChanged,
           inputFormatters: inputFormatters,
           obscureText: isTextHidden!,
