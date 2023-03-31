@@ -12,6 +12,7 @@ class BorderButton extends StatelessWidget {
   final double height;
   final Color? backEndColor;
   final Color? borderColor;
+  final Color? iconColor;
   final onPressed;
 
   BorderButton({
@@ -22,6 +23,7 @@ class BorderButton extends StatelessWidget {
     this.height = 50.0,
     this.backEndColor = UIDataColors.primaryColor,
     this.borderColor,
+    this.iconColor,
     this.onPressed,
   });
 
@@ -73,7 +75,7 @@ class BorderButton extends StatelessWidget {
                   iconImage != null
                       ? SvgPicture.asset(
                           iconImage!,
-                          color: Colors.white,
+                          color: iconColor ?? Colors.white,
                         )
                       : Container()
                 ],

@@ -42,7 +42,7 @@ class MoreSettingScreen extends StatelessWidget {
                       ReusableIconSetting(
                         icon: UIDATAIcons.dashboardIcon,
                         onPressed: () {
-                           Get.toNamed(Routes.productSetting);
+                          Get.toNamed(Routes.productSetting);
                         },
                         btntxt: 'Products',
                       ),
@@ -52,6 +52,13 @@ class MoreSettingScreen extends StatelessWidget {
                           Get.toNamed(Routes.mycustomerscreen);
                         },
                         btntxt: 'Customers List',
+                      ),
+                      ReusableIconSetting(
+                        icon: UIDATAIcons.customersIcon,
+                        onPressed: () {
+                          Get.toNamed(Routes.customerReviews);
+                        },
+                        btntxt: 'Customers Reviews',
                       ),
                       ReusableIconSetting(
                         icon: UIDATAIcons.walletIcon,

@@ -32,7 +32,7 @@ class AccountInfo extends StatelessWidget {
                     SpacingHeight.heightlistspacing15,
                     CommonTextField(
                       controller: _.emailController,
-                      hintText: "Email",
+                      labelText: "Email",
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
                       prefixIcon: UIDATAIcons.emailIcon,
@@ -48,7 +48,7 @@ class AccountInfo extends StatelessWidget {
                     SpacingHeight.heightlistspacing5,
                     CommonTextField(
                       controller: _.fNameController,
-                      hintText: "First Name",
+                      labelText: "First Name",
                       isTextHidden: false,
                       prefixIcon: UIDATAIcons.userIcon,
                       fillcolor: UIDataColors.whiteColor,
@@ -64,7 +64,7 @@ class AccountInfo extends StatelessWidget {
                     SpacingHeight.heightlistspacing5,
                     CommonTextField(
                       controller: _.lNameController,
-                      hintText: "Last Name",
+                      labelText: "Last Name",
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
                       prefixIcon: UIDATAIcons.userIcon,
