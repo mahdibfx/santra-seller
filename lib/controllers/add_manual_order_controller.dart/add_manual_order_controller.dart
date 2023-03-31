@@ -15,7 +15,7 @@ class AddManualOrderController extends GetxController {
 
   bool isLoading = true;
   bool hasError = false;
- bool isShowViewButton = false;
+  bool isShowViewButton = false;
   var arguments;
 
   List<Product>? allProducts = [];
@@ -31,20 +31,19 @@ class AddManualOrderController extends GetxController {
     update();
     cartController.addToCart(product);
     showToast();
-
   }
-  void showToast() {
-  Get.snackbar(
-    'Added',
-    'Add in the cart',
-    duration: Duration(seconds: 2),
-    snackPosition: SnackPosition.BOTTOM,
-    backgroundColor: Colors.grey[900],
-    colorText: Colors.white,
-    icon: Icon(Icons.check_circle_outline, color: Colors.green),
-  );
-}
 
+  void showToast() {
+    Get.snackbar(
+      'Added',
+      'Add in the cart',
+      duration: Duration(seconds: 2),
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.grey[900],
+      colorText: Colors.white,
+      icon: Icon(Icons.check_circle_outline, color: Colors.green),
+    );
+  }
 
   Future viewSellerAllProducts() async {
     try {
@@ -53,20 +52,20 @@ class AddManualOrderController extends GetxController {
       var sellercode = prefs.getString("sellercode");
       var url = Uri.parse(ApiData.sellerAllProducts);
       Map<String, dynamic> body = {};
-      body['seller_code'] = '190';  //sellercode.toString();
+      body['seller_code'] = sellercode.toString();
       var response = await http.post(url, body: body);
       if (response.statusCode == 200) {
         var decodedJson = jsonDecode(response.body);
         var data = SelllerAllProductsModel.fromJson(decodedJson);
         if (data.data![0].products!.isNotEmpty) {
           allProducts = data.data?[0].products;
-          filteredProducts = allProducts??[];
-        debugPrint(allProducts.toString());
+          filteredProducts = allProducts ?? [];
+          debugPrint(allProducts.toString());
         }
 
         selllerAllProductsModel =
             selllerAllProductsModelFromJson(response.body);
-            update();
+        update();
       } else {
         hasError = true;
       }
@@ -78,36 +77,35 @@ class AddManualOrderController extends GetxController {
   }
 
   bool _doesActionSatisfy(Product e, String query) {
-
-    bool found = e.productName.toString()
-            .toLowerCase().contains(query) ||
-            e.categoryName.toString().toLowerCase().contains(query);
+    bool found = e.productName.toString().toLowerCase().contains(query) ||
+        e.categoryName.toString().toLowerCase().contains(query);
     //  bool found =        allProducts!.any((s) => query
     //         .toLowerCase()
     //         .contains(s.productName.toString().toLowerCase()));
-            
 
     return found;
   }
-void filterList(String value){
- var valueList = allProducts!
+
+  void filterList(String value) {
+    var valueList = allProducts!
         .where((e) => _doesActionSatisfy(e, value.trim().toLowerCase()))
         .toList();
-       filteredProducts =   valueList;
-        update();
-}
+    filteredProducts = valueList;
+    update();
+  }
+
   @override
   void onInit() async {
     if (Get.arguments != null) {
-        arguments = (Get.arguments);
-        print("arguments:" +arguments);
-        update();
-        // await gettingdata(name!);
-      }else{
-         selllerAllProductsModel = SelllerAllProductsModel();
-    viewSellerAllProducts();
-      }
-   
+      arguments = (Get.arguments);
+      print("arguments:" + arguments);
+      update();
+      // await gettingdata(name!);
+    } else {
+      selllerAllProductsModel = SelllerAllProductsModel();
+      viewSellerAllProducts();
+    }
+
     super.onInit();
   }
 }

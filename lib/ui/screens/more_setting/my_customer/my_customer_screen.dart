@@ -48,7 +48,7 @@ class MyCustomerScreen extends StatelessWidget {
                       },
                     ),
                     SpacingHeight.heightlistspacing20,
-                    _.hasViewCustomerError
+                    _.hasViewCustomerError || _.allCustomers!.isEmpty
                         ? const Text("No Customers Found")
                         : ListView.builder(
                             shrinkWrap: true,
@@ -61,8 +61,6 @@ class MyCustomerScreen extends StatelessWidget {
                                 number: _.allCustomers?[index].customerMobile ??
                                     "No Contact Number",
                                 onTap: () {
-                                  print(_.allCustomers?[index].customerName
-                                      .toString());
                                   Get.to(() => EditCustomerDetails(
                                         index: index,
                                       ));
