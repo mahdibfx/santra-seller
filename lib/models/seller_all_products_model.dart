@@ -17,15 +17,14 @@ class SelllerAllProductsModel {
   });
 
   bool? status;
-  List<SellerAllProductsDatum>? data;
+  List<Datum>? data;
 
   factory SelllerAllProductsModel.fromJson(Map<String, dynamic> json) =>
       SelllerAllProductsModel(
         status: json["status"],
         data: json["data"] == null
             ? []
-            : List<SellerAllProductsDatum>.from(
-                json["data"]!.map((x) => SellerAllProductsDatum.fromJson(x))),
+            : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -36,15 +35,14 @@ class SelllerAllProductsModel {
       };
 }
 
-class SellerAllProductsDatum {
-  SellerAllProductsDatum({
+class Datum {
+  Datum({
     this.products,
   });
 
   List<Product>? products;
 
-  factory SellerAllProductsDatum.fromJson(Map<String, dynamic> json) =>
-      SellerAllProductsDatum(
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         products: json["products"] == null
             ? []
             : List<Product>.from(
@@ -79,7 +77,7 @@ class Product {
   String? categoryName;
   String? productImages;
   String? productStatus;
-  List<dynamic>? modifiers;
+  List<Modifier>? modifiers;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         productCode: json["product_code"],
@@ -92,7 +90,8 @@ class Product {
         productStatus: json["product_status"],
         modifiers: json["modifiers"] == null
             ? []
-            : List<dynamic>.from(json["modifiers"]!.map((x) => x)),
+            : List<Modifier>.from(
+                json["modifiers"]!.map((x) => Modifier.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -106,6 +105,79 @@ class Product {
         "product_status": productStatus,
         "modifiers": modifiers == null
             ? []
-            : List<dynamic>.from(modifiers!.map((x) => x)),
+            : List<dynamic>.from(modifiers!.map((x) => x.toJson())),
+      };
+}
+
+class Modifier {
+  Modifier({
+    this.groupCode,
+    this.name,
+    this.limitModifiers,
+    this.numberModifiers,
+    this.selectionType,
+    this.modifierMessage,
+    this.subModifiers,
+  });
+
+  String? groupCode;
+  String? name;
+  String? limitModifiers;
+  String? numberModifiers;
+  String? selectionType;
+  String? modifierMessage;
+  List<SubModifier>? subModifiers;
+
+  factory Modifier.fromJson(Map<String, dynamic> json) => Modifier(
+        groupCode: json["group_code"],
+        name: json["name"],
+        limitModifiers: json["limit_modifiers"],
+        numberModifiers: json["number_modifiers"],
+        selectionType: json["selection_type"],
+        modifierMessage: json["modifier_message"],
+        subModifiers: json["sub_modifiers"] == null
+            ? []
+            : List<SubModifier>.from(
+                json["sub_modifiers"]!.map((x) => SubModifier.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "group_code": groupCode,
+        "name": name,
+        "limit_modifiers": limitModifiers,
+        "number_modifiers": numberModifiers,
+        "selection_type": selectionType,
+        "modifier_message": modifierMessage,
+        "sub_modifiers": subModifiers == null
+            ? []
+            : List<dynamic>.from(subModifiers!.map((x) => x.toJson())),
+      };
+}
+
+class SubModifier {
+  SubModifier({
+    this.modifierCode,
+    this.nameModifier,
+    this.priceModifier,
+    this.byDefault,
+  });
+
+  String? modifierCode;
+  String? nameModifier;
+  String? priceModifier;
+  String? byDefault;
+
+  factory SubModifier.fromJson(Map<String, dynamic> json) => SubModifier(
+        modifierCode: json["modifier_code"],
+        nameModifier: json["name_modifier"],
+        priceModifier: json["price_modifier"],
+        byDefault: json["by_default"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "modifier_code": modifierCode,
+        "name_modifier": nameModifier,
+        "price_modifier": priceModifier,
+        "by_default": byDefault,
       };
 }

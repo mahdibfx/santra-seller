@@ -1,4 +1,3 @@
-
 import 'package:santra_seller/controllers/add_manual_order_controller.dart/add_manual_order_controller.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
@@ -24,7 +23,8 @@ class ProductSettingScreen extends StatelessWidget {
               child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              HeadingWithIcon(icon: UIDATAIcons.addIcon, btntxt: "Products"),
+              HeadingWithIcon(
+                  icon: UIDATAIcons.dashboardIcon, btntxt: "Products"),
               CommonTextField(
                 isTextHidden: false,
                 prefixIcon: UIDATAIcons.searchIcon,
@@ -54,9 +54,14 @@ class ProductSettingScreen extends StatelessWidget {
                                     manualOrderController.allProducts?.length,
                                 itemBuilder: (context, index) {
                                   return ProductEditCard(
-                                    title: manualOrderController.allProducts![index].productStatus.toString(),
+                                    manualOrderController:
+                                        manualOrderController,
+                                    index: index,
+                                    title: manualOrderController
+                                        .allProducts![index].productStatus
+                                        .toString(),
                                     outOfStock: false,
-                                    onChanged: (value){},
+                                    onChanged: (value) {},
                                   );
                                 }),
                           ],
@@ -71,7 +76,7 @@ class ProductSettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(
-       bodyData: bodyData(context),
+      bodyData: bodyData(context),
       backgroundcolor: UIDataColors.whiteColor,
       showDrawer: false,
       showFAB: true,
