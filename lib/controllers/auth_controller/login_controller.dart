@@ -12,7 +12,7 @@ import '../../utils/uidata.dart';
 
 class LoginController extends GetxController {
   // bool isLoading = true;
-  RxBool isLoading = false.obs;
+  bool isLoading = false;
   bool securetext = true;
   bool remember = false;
   bool isvisible = true;
@@ -25,6 +25,10 @@ class LoginController extends GetxController {
   List userprofilelist = [];
 
   //     Services
+  updateLoginLoadingStatus(bool value) {
+    isLoading = value;
+    update();
+  }
 
   var userToken;
   var eaToken;
@@ -71,7 +75,7 @@ class LoginController extends GetxController {
 
   void loginfunction() async {
     if (form.currentState!.validate()) {
-      isLoading = true.obs;
+      updateLoginLoadingStatus(true);
       update();
       try {
         SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -85,26 +89,25 @@ class LoginController extends GetxController {
           var data = jsonDecode(res.body);
           var newdata = LoginModel.fromJson(data);
           saveSharedPrefData(newdata.data[0], prefs);
-          isLoading = false.obs;
+
           update();
           Get.offAllNamed(Routes.homeRoutes);
         } else {
-          isLoading = false.obs;
-        update();
+          update();
           CommonSnackbar.getSnackbar(
               "Error", "Error in login", UIDataColors.redColor);
         }
       } catch (e) {
-        print("check error ${e}");
-        isLoading = false.obs;
+        isLoading = false;
         update();
-        // Get.offAllNamed(Routes.homeRoutes);
+
         CommonSnackbar.getSnackbar(
             "Server Error",
             "Server Error or Please Check your internet connection",
             UIDataColors.redColor);
       }
     }
+    updateLoginLoadingStatus(false);
   }
 
   saveSharedPrefData(LoginData data, SharedPreferences prefs) {
