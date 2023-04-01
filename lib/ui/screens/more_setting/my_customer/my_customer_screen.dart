@@ -1,8 +1,8 @@
-import 'package:santra_seller/controllers/more_screen_controller.dart/about_us_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:santra_seller/controllers/more_screen_controller.dart/my_customer/my_customer_controller.dart';
 import 'package:santra_seller/ui/screens/more_setting/my_customer/edit_customer_details.dart';
+import 'package:santra_seller/ui/screens/more_setting/my_customer/view_customer_details.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 
@@ -14,10 +14,14 @@ import '../../../widgets/textfields/common_textfield.dart';
 
 class MyCustomerScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
-
-  MyCustomerScreen({super.key});
+  bool comingFromCart;
+  MyCustomerScreen({super.key, this.comingFromCart = false});
+  var data = Get.arguments;
 
   Widget bodyData() {
+      if (data != null) {
+        comingFromCart = true;
+       }
     return GetBuilder<MyCustomerController>(
       builder: (_) {
         return _.isViewCustomerLoading
@@ -61,9 +65,14 @@ class MyCustomerScreen extends StatelessWidget {
                                 number: _.allCustomers?[index].customerMobile ??
                                     "No Contact Number",
                                 onTap: () {
+                                  if (!comingFromCart) {
                                   Get.to(() => EditCustomerDetails(
                                         index: index,
                                       ));
+                                  } else {
+                                      Get.to(() => ViewCustomerDetails(
+                                      ));
+                                  }
                                 },
                               ).marginOnly(bottom: 17);
                             }),

@@ -11,16 +11,18 @@ class PrimaryButtonWithIcon extends StatelessWidget {
   final double width;
   final double height;
   final Color? backEndColor;
+   final Color? iconImageColor;
   final onPressed;
 
   PrimaryButtonWithIcon({
     required this.btntxt,
     this.iconImage,
-    this.buttontxtColor,
+    this.buttontxtColor = Colors.white,
     this.gradient,
     this.width = double.infinity,
     this.height = 50.0,
     this.backEndColor = UIDataColors.primaryColor,
+    this.iconImageColor = Colors.white,
     this.onPressed,
   });
 
@@ -65,14 +67,14 @@ class PrimaryButtonWithIcon extends StatelessWidget {
                       fontSize: 16.0,
                       fontFamily: 'Markpro',
                       fontWeight: FontWeight.bold,
-                      color: buttontxtColor ?? Colors.white,
+                      color: buttontxtColor,
                     ),
                   ),
-                  SpacingWidth.widthlistspacing,
+                 iconImage != null ? SpacingWidth.widthlistspacing : Container(),
                   iconImage != null
                       ? SvgPicture.asset(
                           iconImage!,
-                          color: Colors.white,
+                          color: iconImageColor,
                         )
                       : Container()
                 ],
