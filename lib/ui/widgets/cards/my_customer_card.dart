@@ -10,14 +10,14 @@ import '../buttons/icon_button.dart';
 class MyCustomerCard extends StatelessWidget {
   final String name;
   final String number;
-  final bool forEdit;
+  final bool forView;
   final dynamic onTap;
 
   const MyCustomerCard(
       {super.key,
       required this.name,
       required this.number,
-      this.forEdit = true,
+      required this.forView,
       required this.onTap});
 
   @override
@@ -63,13 +63,13 @@ class MyCustomerCard extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 1,
+            flex: 2,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
                   child: Container(
-                    width: size.width * 0.65,
+                    // width: size.width * 0.65,
                     height: 0.25,
                     color: UIDataColors.primaryColor,
                   ),
@@ -81,7 +81,7 @@ class MyCustomerCard extends StatelessWidget {
                 InkWell(
                   onTap: onTap,
                   child: SvgPicture.asset(
-                   forEdit ? UIDATAIcons.editCustomer : UIDATAIcons.viewIcon,
+                   forView ? UIDATAIcons.viewIcon : UIDATAIcons.editCustomer ,
                     color: UIDataColors.primaryColor,
                     height: 22,
                     //height: 20,
@@ -104,9 +104,11 @@ class MyCustomerCard extends StatelessWidget {
                   color: UIDataColors.primaryColor,
                 ),
                 SpacingWidth.widthlistspacing,
-                Text(
-                  number,
-                  style: UIDataTextStyles.title,
+                Expanded(
+                  child: Text(
+                    number,
+                    style: UIDataTextStyles.title,
+                  ),
                 ),
               ],
             ),

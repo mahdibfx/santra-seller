@@ -11,6 +11,7 @@ import '../../../../controllers/more_screen_controller.dart/my_customer/my_custo
 import '../../../widgets/buttons/icon_setting_button.dart';
 import '../../../widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import '../../../widgets/textfields/common_textfield.dart';
+import 'card_customer_detail.dart';
 
 class ViewCustomerDetails extends StatelessWidget {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
@@ -31,13 +32,16 @@ class ViewCustomerDetails extends StatelessWidget {
                   children: [
                     HeadingWithIcon(
                         icon: UIDATAIcons.userIcon,
+                        iconColor: UIDataColors.primaryColor,
                         btntxt: "Customer Info".tr),
 
                     SpacingHeight.heightlistspacing10,
 
+                    CardCustomerDetail(),
+
                     SpacingHeight.heightlistspacing20,
                   ],
-                ).paddingSymmetric(horizontal: 20)),
+                ).paddingSymmetric(horizontal: 15)),
               );
       },
     );
