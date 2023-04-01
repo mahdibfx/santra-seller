@@ -73,7 +73,7 @@ class CardCustomerDetail extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Syed Asad Ali", style: UIDataTextStyles.dayStyle)
+            const Text("Syed Asad Ali", style: UIDataTextStyles.dateStyle)
                 .paddingAll(10),
             Container(
               padding: const EdgeInsets.only(top: 10.0, left: 10, right: 10),
