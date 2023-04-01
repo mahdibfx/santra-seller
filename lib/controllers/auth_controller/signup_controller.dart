@@ -95,15 +95,15 @@ class SignUpController extends GetxController {
         var streamedResponse = await request.send();
         var response = await http.Response.fromStream(streamedResponse);
         if (response.statusCode == 200) {
-          print("My Body $body");
-          print("Response Body ${response.body}");
           CommonSnackbar.getSnackbar("Success", "Account has been registered",
               UIDataColors.primaryColor);
           Get.offAllNamed(Routes.loginRoutes);
         } else {
           update();
           CommonSnackbar.getSnackbar(
-              "Error", "Error in login", UIDataColors.redColor);
+              "Error",
+              "Error while signing up, Please try again",
+              UIDataColors.redColor);
         }
       } catch (e) {
         isLoading = false;

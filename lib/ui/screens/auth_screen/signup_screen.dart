@@ -120,8 +120,6 @@ class SignUpScreen extends StatelessWidget {
                         validator: (val) {
                           if (val.isEmpty) {
                             return "Password should not be blank";
-                          } else if (val.length < 6) {
-                            return "Password should contains 6 chractors";
                           }
                         },
                       ),
@@ -144,8 +142,6 @@ class SignUpScreen extends StatelessWidget {
                         validator: (val) {
                           if (val.isEmpty) {
                             return "Password should not be blank";
-                          } else if (val.length < 6) {
-                            return "Password should contains 6 chractors";
                           } else if (val != _.passwordController.text) {
                             return "Both passwords should be same";
                           }

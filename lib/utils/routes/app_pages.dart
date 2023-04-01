@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
+import 'package:santra_seller/controllers/auth_controller/reset_password_confirmation.dart';
 import 'package:santra_seller/models/home_model.dart';
 import 'package:santra_seller/ui/screens/auth_screen/fogot_password.dart';
+import 'package:santra_seller/ui/screens/auth_screen/reset_password.dart';
 
 import 'package:santra_seller/ui/screens/cart/cart_screen.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
@@ -70,7 +72,14 @@ class AppPages {
         name: Routes.forgotpasswordRoutes,
         page: () => forgotPassowrd(),
         binding: FogotPassowordBinding()),
-
+    GetPage(
+        name: Routes.forgotPasswordConfirmation,
+        page: () => ForgotPasswordConfirmation(),
+        binding: FogotPassowordBinding()),
+    GetPage(
+        name: Routes.resetPasswordAfterConfirmation,
+        page: () => ResetPasswordAfterConfirmation(),
+        binding: FogotPassowordBinding()),
     GetPage(
       name: Routes.homeRoutes,
       page: () => HomeScreen(),

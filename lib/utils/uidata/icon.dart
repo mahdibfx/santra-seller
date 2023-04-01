@@ -48,4 +48,6 @@ class UIDATAIcons {
   static const close = "$iconsDir/close.svg";
   static const arrowDown = "$iconsDir/arrow_down.svg";
   static const signupIcon = "$iconsDir/signup.svg";
+  static const filterIcon = "$iconsDir/filter.svg";
+  static const dollarCircle = "$iconsDir/dollar-circle.svg";
 }
