@@ -251,7 +251,8 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                                                   },
                                                                                                 ),
                                                                                           Text(newData[sebIndex].nameModifier.toString()),
-                                                                                          Text("${newData[sebIndex].priceModifier}AED"),
+                                                                                          SpacingWidth.widthlistspacing15,
+                                                                                          Text("${newData[sebIndex].priceModifier}AED", style: UIDataTextStyles.h1,),
                                                                                         ],
                                                                                       ),
                                                                                     );
@@ -303,8 +304,22 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                             UIDataColors.redColor);
                                                                       }
                                                                     }
+                                                                    manualOrderController.clearAddonPro();
 
-                                                                  
+                                                                    for(var f in manualOrderController
+                                                                        .allProducts![
+                                                                            index]
+                                                                        .modifiers!){
+                                                                         for(var c in f.subModifiers!){
+                                                                          if(c.byDefault == "1"){
+                                                                            manualOrderController.addOnProducts.add(c);
+                                                                          }
+                                                                          print("add on length:"+ manualOrderController.addOnProducts.length.toString());
+                                                                         }
+
+                                                                            }
+
+                                                                  Get.back();
                                                                     var itemValue =
                                                                         manualOrderController
                                                                             .allProducts![index];
@@ -322,7 +337,7 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                         code: itemValue
                                                                             .productCode
                                                                             .toString(),
-                                                                            subModifiers: []);
+                                                                            subModifiers: manualOrderController.addOnProducts);
                                                                     manualOrderController
                                                                         .addIntoCart(
                                                                             data);

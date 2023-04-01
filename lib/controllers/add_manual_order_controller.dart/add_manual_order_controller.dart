@@ -20,7 +20,12 @@ class AddManualOrderController extends GetxController {
 
   List<Product>? allProducts = [];
   List<Product> filteredProducts = [];
-    List<CheckProduct> addOnProducts = [];
+    List<SubModifier> addOnProducts = [];
+
+    clearAddonPro(){
+      addOnProducts =[];
+      update();
+    }
 
   changeLoadingStatus(bool value) {
     isLoading = value;
