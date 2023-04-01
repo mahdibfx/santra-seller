@@ -61,9 +61,7 @@ class CustomDetailBottomSheet extends StatelessWidget {
                         iconImage: UIDATAIcons.customersIcon,
                         onPressed: () {
                              Get.toNamed(Routes.mycustomerscreen, arguments: "commingFromCart");
-                            // Get.to(() => MyCustomerScreen(
-                            //        comingFromCart: true,
-                            //           ));
+                   
                           
                         
                         },
