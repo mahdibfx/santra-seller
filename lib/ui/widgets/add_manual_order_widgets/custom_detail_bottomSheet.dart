@@ -60,10 +60,9 @@ class CustomDetailBottomSheet extends StatelessWidget {
                         btntxt: "My Client List",
                         iconImage: UIDATAIcons.customersIcon,
                         onPressed: () {
+                          Get.back();
                              Get.toNamed(Routes.mycustomerscreen, arguments: "commingFromCart");
-                            // Get.to(() => MyCustomerScreen(
-                            //        comingFromCart: true,
-                            //           ));
+                   
                           
                         
                         },
@@ -78,7 +77,10 @@ class CustomDetailBottomSheet extends StatelessWidget {
                         buttontxtColor: UIDataColors.primaryColor,
                         iconImageColor: UIDataColors.primaryColor,
                         iconImage: UIDATAIcons.userIcon,
-                        onPressed: () {},
+                        onPressed: () {
+                              Get.back();
+                                   Get.toNamed(Routes.addNewcustomer);
+                        },
                       ),
                  )
 

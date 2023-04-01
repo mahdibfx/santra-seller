@@ -69,6 +69,28 @@ class CartScreen extends StatelessWidget {
                       total: '${_.grandTotal.toStringAsFixed(2)}',
                       deliveryCharges: _.deliveryCharges.toString(),
                     ),
+
+
+
+                  Padding(
+                   padding: const EdgeInsets.only(top: 20.0),
+                   child: PrimaryButtonWithIcon(
+                        btntxt: "Submit",
+                        backEndColor: _.finalSubmitData != null ? UIDataColors.primaryColor : UIDataColors.whiteColor,
+                        buttontxtColor: _.finalSubmitData != null ? UIDataColors.whiteColor : UIDataColors.primaryColor,
+                        iconImageColor: _.finalSubmitData != null ? UIDataColors.whiteColor : UIDataColors.primaryColor,
+                        iconImage: UIDATAIcons.sendIcon,
+                        onPressed: () {
+                          if (_.finalSubmitData != null) {
+                          _.orderSubmit();
+                        }
+                      
+                        },
+                      ),
+                 )
+
+
+
                   ],
                 ).marginAll(10)),
               );

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:santra_seller/ui/widgets/add_manual_order_widgets/Order_Date.dart';
 import 'package:santra_seller/utils/uidata.dart';
+import '../../../../models/customers/view_all_customers.dart';
 import '../../../../utils/routes/app_routes.dart';
 import '../../../../utils/uidata/textStyles.dart';
 import '../../../widgets/add_manual_order_widgets/custom_detail_bottomSheet.dart';
@@ -9,13 +11,50 @@ import '../../../widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 
 class CardCustomerDetail extends StatelessWidget {
 
+ final Customer ?customerDetail;
+
 
   CardCustomerDetail({
-    Key? key,
+    Key? key,  this.customerDetail,
   }) : super(key: key);
+
+
+  Widget iconText(double width, String svg, String tilte) {
+    
+    return 
+    Column(
+      children: [
+        Container(
+                        padding: const EdgeInsets.only(top: 5.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                               SvgPicture.asset(
+                                svg,
+                                 
+                                  height: 12,
+                                  color: UIDataColors.primaryColor,
+                                ),
+                                 SizedBox(
+                                  width: width,
+                                ),
+
+                             Expanded(child: Text(tilte)),
+                          ],
+                        ),
+                      ),
+                       Divider(
+                    height: 1,
+                    color: Colors.green.withOpacity(0.2),
+                  ).paddingOnly(top: 8)
+      ],
+    );
+                 
+  }
 
   @override
   Widget build(BuildContext context) {
+        Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Container(
@@ -32,110 +71,22 @@ class CardCustomerDetail extends StatelessWidget {
           ],
         ),
         padding: const EdgeInsets.all(8.0),
-        height: 300,
+        // height: 300,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Syed Asad Ali", style: UIDataTextStyles.dayStyle)
+            Text(customerDetail?.customerName ?? "", style: UIDataTextStyles.dateStyle)
                 .paddingAll(10),
             Container(
-              padding: const EdgeInsets.only(top: 0.0, left: 10, right: 10),
+              padding: const EdgeInsets.only(top: 10.0, left: 10, right: 10),
               child: Column(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.only(top: 5.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Text("Subtotal"),
-                        const Spacer(),
-                         Text(" AED"),
-                      ],
-                    ),
-                  ),
-                  Divider(
-                    height: 1,
-                    color: Colors.green.withOpacity(0.2),
-                  ).paddingOnly(top: 5),
-                  Container(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Text("Delivery Charge"),
-                        const Spacer(),
-                         Text(" AED"),
-                      ],
-                    ),
-                  ),
-                  Divider(
-                    height: 1,
-                    color: Colors.green.withOpacity(0.2),
-                  ).paddingOnly(top: 5),
-                  Container(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Text("Total",
-                            style: UIDataTextStyles.textMediumColoredBlue),
-                        const Spacer(),
-                         Text(" AED",
-                            style: UIDataTextStyles.textMediumColoredBlue),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: PrimaryButtonWithIcon(
-                          onPressed: () {
-                            showModalBottomSheet(
-                                context: context,
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only( // <-- SEE HERE
-                                    topLeft: Radius.circular(15.0),
-                                  ),
-                                ),
-                                builder: (context) {
-                                  return OrderDate();
-                                });
-                          },
-                          btntxt: "Delivery Time",
-                        ),
-                      ),
-                      Container(width: 20),
-                      Expanded(
-                        child: PrimaryButtonWithIcon(
-                          onPressed: () {
-                            Get.toNamed(Routes.addManualOrder,arguments: 'cartScreen_to_add_manual');
-                          },
-                          btntxt: "Add Order",
-                          buttontxtColor: UIDataColors.primaryColor,
-                          backEndColor: Colors.white,
-                        ),
-                      )
-                    ],
-                  ).paddingOnly(top: 20),
-                  PrimaryButtonWithIcon(
-                    onPressed: () {
-                      showModalBottomSheet(
-                                context: context,
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only( // <-- SEE HERE
-                                    topLeft: Radius.circular(15.0),
-                                  ),
-                                ),
-                                builder: (context) {
-                                  return CustomDetailBottomSheet();
-                                });
-                    },
-                    btntxt: "Add Customer Details",
-                  ).paddingOnly(
-                    top: 20,
-                  ),
+                    iconText(size.width * 0.05, UIDATAIcons.callIcon,  customerDetail?.customerMobile ?? ""),
+                       iconText(size.width * 0.05, UIDATAIcons.locationPin,  customerDetail?.customerCity ?? ""),
+                         iconText(size.width * 0.05, UIDATAIcons.building,  customerDetail?.buildingType ?? ""),
+                            iconText(size.width * 0.05, UIDATAIcons.homeIcon,  customerDetail?.buildingNumber ?? ""),
+                              iconText(size.width * 0.05, UIDATAIcons.lockIcon,  customerDetail?.addressLink ?? ""),
                 ],
               ),
             )

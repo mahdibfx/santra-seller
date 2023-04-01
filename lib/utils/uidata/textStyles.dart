@@ -130,5 +130,11 @@ class UIDataTextStyles {
       // fontFamily: 'Markpro',
       letterSpacing: 0.0);
 
+        static const h3 = TextStyle(
+      fontSize: 13,
+      fontWeight: FontWeight.bold,
+      fontFamily: 'Markpro',
+      letterSpacing: 0.0);
+
       
 }
