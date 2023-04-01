@@ -9,6 +9,7 @@ import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../buttons/material_buttons/primaryButtonWithIcon.dart';
+import 'custom_detail_bottomSheet.dart';
 
 class CartPayemntDescriptionCard extends StatelessWidget {
   final String subtotal;
@@ -112,7 +113,7 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                                   return OrderDate();
                                 });
                           },
-                          btntxt: "Delivary Time",
+                          btntxt: "Delivery Time",
                         ),
                       ),
                       Container(width: 20),
@@ -129,7 +130,18 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                     ],
                   ).paddingOnly(top: 20),
                   PrimaryButtonWithIcon(
-                    onPressed: () {},
+                    onPressed: () {
+                      showModalBottomSheet(
+                                context: context,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only( // <-- SEE HERE
+                                    topLeft: Radius.circular(15.0),
+                                  ),
+                                ),
+                                builder: (context) {
+                                  return CustomDetailBottomSheet();
+                                });
+                    },
                     btntxt: "Add Customer Details",
                   ).paddingOnly(
                     top: 20,

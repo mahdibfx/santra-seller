@@ -93,7 +93,6 @@ class CartCardOrder extends StatelessWidget {
               ),
             ),
             Container(
-             
               height: 50,
               width: 130,
               child: PriceOnSelection(
