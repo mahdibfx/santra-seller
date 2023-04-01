@@ -10,7 +10,9 @@ import 'package:santra_seller/utils/routes/app_routes.dart';
 import 'package:santra_seller/utils/uidata.dart';
 
 import '../../../../controllers/more_screen_controller.dart/my_customer/my_customer_controller.dart';
+import '../../../../models/customers/view_all_customers.dart';
 import '../../../../utils/uidata/textStyles.dart';
+import '../../../widgets/add_manual_order_widgets/payment_link.dart';
 import '../../../widgets/buttons/icon_setting_button.dart';
 import '../../../widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import '../../../widgets/textfields/common_textfield.dart';
@@ -18,7 +20,23 @@ import 'card_customer_detail.dart';
 
 class ViewCustomerDetails extends StatelessWidget {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
-  ViewCustomerDetails({super.key});
+  final Customer? customerDetail;
+
+  ViewCustomerDetails({super.key, this.customerDetail});
+ 
+    void popupPaymentlink(BuildContext context) {
+       showModalBottomSheet(
+                                context: context,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only( // <-- SEE HERE
+                                    topLeft: Radius.circular(15.0),
+                                    topRight: Radius.circular(15.0),
+                                  ),
+                                ),
+                                builder: (context) {
+                                  return PaymentLinkBottomSheet();
+                                });
+    }
 
   Widget bodyData(BuildContext context) {
      Size size = MediaQuery.of(context).size;
@@ -41,13 +59,13 @@ class ViewCustomerDetails extends StatelessWidget {
 
                     SpacingHeight.heightlistspacing10,
 
-                    CardCustomerDetail(),
+                    CardCustomerDetail(customerDetail: customerDetail),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
       
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
- Text("Choose the payment methord", style: UIDataTextStyles.dialogMsg).paddingOnly(top: 40, bottom: 20),
+                Text("Choose the payment methord", style: UIDataTextStyles.dialogMsg).paddingOnly(top: 40, bottom: 20),
 
 
                 Row(
@@ -61,13 +79,9 @@ class ViewCustomerDetails extends StatelessWidget {
                   toggleColor: UIDataColors.whiteColor,
                   padding: 2,
                   height: size.height * 0.03,
-                  value: true,
-                  // value: widget.productSettingsController
-                  //             .allProducts?[widget.index!].productStatus ==
-                  //         "approved"
-                  //     ? true
-                  //     : false,
+                  value: _.receiptPaymentMethord,
                   onToggle: (val) {
+                    _.updatePaymentMethord(!_.receiptPaymentMethord);
                     // setState(() {
                     //   widget.currentStatus = val;
                     //   widget.productSettingsController
@@ -95,7 +109,19 @@ class ViewCustomerDetails extends StatelessWidget {
                         buttontxtColor: UIDataColors.primaryColor,
                         iconImageColor: UIDataColors.primaryColor,
                         iconImage: UIDATAIcons.sendIcon,
-                        onPressed: () {},
+                        onPressed: () {
+                          if (customerDetail != null) {
+                         
+                              _.customerInfoSubmitedRequest(customerDetail!).then((value) {
+                                if (value) {
+                                  popupPaymentlink(context);
+                                }
+                              });
+
+                            
+                        }
+                      
+                        },
                       ),
                  )
 
@@ -109,7 +135,7 @@ class ViewCustomerDetails extends StatelessWidget {
                   ],
                 ).paddingSymmetric(horizontal: 15)),
               );
-      },
+      }
     );
   }
 

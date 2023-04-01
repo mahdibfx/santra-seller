@@ -19,6 +19,7 @@ abstract class Routes {
   static const walletscreen = "/walletscreen";
   static const contactscreen = "/contactscreen";
   static const mycustomerscreen = "/mycustomerscreen";
+  static const mycustomerscreenview = "/mycustomerscreenview";
   static const editprofileroute = "/editprofile";
   static const createrequestroute = "/createrequest";
   static const languageSettings = "/languagesettings";

@@ -38,6 +38,7 @@ import '../../ui/screens/auth_screen/signup_screen.dart';
 import '../../ui/screens/home_page/home_screen.dart';
 import '../../ui/screens/more_setting/about_us_screen.dart';
 import '../../ui/screens/more_setting/more_screen.dart';
+import '../../ui/screens/more_setting/my_customer/view_customer_details.dart';
 import '../../ui/screens/order_detail/santra_order_screen.dart';
 import '../../ui/screens/product_setting/product_setting_screen.dart';
 import '../../ui/screens/splash/splash_screen.dart';
@@ -170,6 +171,11 @@ class AppPages {
     GetPage(
       name: Routes.mycustomerscreen,
       page: () => MyCustomerScreen(),
+      binding: MyCustomerBindings(),
+    ),
+    GetPage(
+      name: Routes.mycustomerscreenview,
+      page: () => ViewCustomerDetails(),
       binding: MyCustomerBindings(),
     ),
     GetPage(

@@ -16,6 +16,7 @@ class MyCustomerScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   bool comingFromCart;
   MyCustomerScreen({super.key, this.comingFromCart = false});
+
   var data = Get.arguments;
 
   Widget bodyData() {
@@ -71,8 +72,10 @@ class MyCustomerScreen extends StatelessWidget {
                                         index: index,
                                       ));
                                   } else {
-                                      Get.to(() => ViewCustomerDetails(
+                                    if (_.allCustomers?[index] != null ) {
+                                      Get.to(() => ViewCustomerDetails(customerDetail: _.allCustomers![index],
                                       ));
+                                  }
                                   }
                                 },
                               ).marginOnly(bottom: 17);

@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:santra_seller/ui/widgets/add_manual_order_widgets/Order_Date.dart';
 import 'package:santra_seller/utils/uidata.dart';
+import '../../../../models/customers/view_all_customers.dart';
 import '../../../../utils/routes/app_routes.dart';
 import '../../../../utils/uidata/textStyles.dart';
 import '../../../widgets/add_manual_order_widgets/custom_detail_bottomSheet.dart';
@@ -10,9 +11,11 @@ import '../../../widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 
 class CardCustomerDetail extends StatelessWidget {
 
+ final Customer ?customerDetail;
+
 
   CardCustomerDetail({
-    Key? key,
+    Key? key,  this.customerDetail,
   }) : super(key: key);
 
 
@@ -73,17 +76,17 @@ class CardCustomerDetail extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Syed Asad Ali", style: UIDataTextStyles.dateStyle)
+            Text(customerDetail?.customerName ?? "", style: UIDataTextStyles.dateStyle)
                 .paddingAll(10),
             Container(
               padding: const EdgeInsets.only(top: 10.0, left: 10, right: 10),
               child: Column(
                 children: [
-                    iconText(size.width * 0.05, UIDATAIcons.callIcon,  "0545760849"),
-                       iconText(size.width * 0.05, UIDATAIcons.locationPin,  "Dubai"),
-                         iconText(size.width * 0.05, UIDATAIcons.building,  "Villa"),
-                            iconText(size.width * 0.05, UIDATAIcons.homeIcon,  "35"),
-                              iconText(size.width * 0.05, UIDATAIcons.lockIcon,  "https://www.google.com"),
+                    iconText(size.width * 0.05, UIDATAIcons.callIcon,  customerDetail?.customerMobile ?? ""),
+                       iconText(size.width * 0.05, UIDATAIcons.locationPin,  customerDetail?.customerCity ?? ""),
+                         iconText(size.width * 0.05, UIDATAIcons.building,  customerDetail?.buildingType ?? ""),
+                            iconText(size.width * 0.05, UIDATAIcons.homeIcon,  customerDetail?.buildingNumber ?? ""),
+                              iconText(size.width * 0.05, UIDATAIcons.lockIcon,  customerDetail?.addressLink ?? ""),
                 ],
               ),
             )
