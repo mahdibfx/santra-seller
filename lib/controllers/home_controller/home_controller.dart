@@ -15,6 +15,8 @@ class HomeController extends GetxController {
   bool isLoading = true;
   bool acceptOrder = false;
   bool rejectOrder = false;
+  bool cancelOrder = false;
+
 
   String? sellerCode;
   HomeData? homeData;
@@ -67,6 +69,38 @@ class HomeController extends GetxController {
       //       "Server Error or Please Check your internet connection",
       //       UIDataColors.redColor);
       // }
+    }
+  }
+
+  Future cancelOrdermethod(String orderNumber) async {
+    try {
+      cancelOrder = true;
+      update();
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      var url = Uri.parse("${ApiData.mainurl}cancel_order");
+      Map<String, dynamic> body = {};
+      body['seller_code'] = prefs.getString("sellercode");
+      body['order_number'] = orderNumber.toString();
+      var response = await http.post(url, body: body);
+      if (response.statusCode == 200) {
+        cancelOrder = false;
+      update();
+        // Get.snackbar("Accepted", "Order has been accepted");
+           CommonSnackbar.getSnackbar(
+              "Accepted", "Order has been cancelled", UIDataColors.primaryColor);
+       Get.offAllNamed(Routes.homeRoutes);
+        print("Order has been cancelled");
+      } else {
+        cancelOrder = false;
+      update();
+        print(response.statusCode.toString());
+        print("Unable to cancel order");
+      }
+    } catch (e) {
+       cancelOrder = false;
+      update();
+      CommonSnackbar.getSnackbar(
+              "Oops", "Something went wrong", UIDataColors.redColor);
     }
   }
 

@@ -283,11 +283,13 @@ class _CustomCardState extends State<CustomCard>
                     BorderButton(
                       height: 35,
                       width: 140,
-                      btntxt: 'Cancelling',
+                      btntxt: 'Cancel',
                       borderColor: Colors.red,
                       buttontxtColor: Colors.red,
                       backEndColor: Colors.white,
-                      onPressed: () {},
+                      onPressed: () {
+                         Get.find<HomeController>().cancelOrdermethod(widget.orderNumber);
+                      },
                     ),
                     Spacer(),
                     BorderButton(
@@ -310,7 +312,9 @@ class _CustomCardState extends State<CustomCard>
                       borderColor: Colors.red,
                       buttontxtColor: Colors.red,
                       backEndColor: Colors.white,
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.find<HomeController>().cancelOrdermethod(widget.orderNumber);
+                      },
                     ),
                     Spacer(),
                     BorderButton(
