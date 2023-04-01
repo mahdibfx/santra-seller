@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../uidata.dart';
+
 class UIDataTextStyles {
   static const counth1 = TextStyle(
     fontSize: 32,
@@ -106,5 +108,25 @@ class UIDataTextStyles {
       fontSize: 15,
       fontWeight: FontWeight.w600,
       fontFamily: 'Markpro',
+      letterSpacing: 0.0);
+  static const dateStyle = TextStyle(
+      color: UIDataColors.primaryColor,
+      fontSize: 15,
+      fontWeight: FontWeight.bold,
+      // fontFamily: 'Markpro',
+      letterSpacing: 0.0);
+
+       static const monthStyle = TextStyle(
+      color: UIDataColors.primaryColor,
+      fontSize: 12,
+      // fontWeight: FontWeight.bold,
+      // fontFamily: 'Markpro',
+      letterSpacing: 0.0);
+
+           static const dayStyle = TextStyle(
+      color: UIDataColors.primaryColor,
+      fontSize: 15,
+      // fontWeight: FontWeight.bold,
+      // fontFamily: 'Markpro',
       letterSpacing: 0.0);
 }

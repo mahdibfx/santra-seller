@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:santra_seller/ui/widgets/add_manual_order_widgets/Order_Date.dart';
 import 'package:santra_seller/ui/widgets/add_manual_order_widgets/price_on_selection.dart';
 import '../../../controllers/cart_controller/cart_controller.dart';
 import '../../../models/seller_all_products_model.dart';
@@ -99,7 +100,18 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: PrimaryButtonWithIcon(
-                          onPressed: () {},
+                          onPressed: () {
+                            showModalBottomSheet(
+                                context: context,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only( // <-- SEE HERE
+                                    topLeft: Radius.circular(15.0),
+                                  ),
+                                ),
+                                builder: (context) {
+                                  return OrderDate();
+                                });
+                          },
                           btntxt: "Delivary Time",
                         ),
                       ),
