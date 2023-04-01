@@ -24,9 +24,12 @@ class AboutUsController extends GetxController {
 
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
-      var data = jsonDecode(response.body);
+
       if (response.statusCode == 200) {
-        print(response.body);
+        var data = await jsonDecode(response.body);
+        print(data);
+        aboutUsText = data['data'][0]['page_content'].toString();
+        print(aboutUsText);
       } else {
         generalException();
       }

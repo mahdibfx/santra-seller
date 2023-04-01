@@ -47,4 +47,5 @@ class UIDATAIcons {
   static const building = "$iconsDir/building.svg";
   static const close = "$iconsDir/close.svg";
   static const arrowDown = "$iconsDir/arrow_down.svg";
+  static const signupIcon = "$iconsDir/signup.svg";
 }

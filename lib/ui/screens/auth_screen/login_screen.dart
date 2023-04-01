@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
                 key: _.form,
                 child: Column(
                   children: [
-                    SpacingHeight.heightlistspacing10,
+                    SpacingHeight.heightlistspacing35,
                     SvgPicture.asset(
                       UIDataImage.sellerLogoIconSVG,
                       height: 90,
@@ -33,14 +33,19 @@ class LoginScreen extends StatelessWidget {
                     ),
                     SpacingHeight.heightlistspacing10,
 
-                    Text("Santra",
-                        style: UIDataTextStyles.h1
-                            .copyWith(fontSize: 28, letterSpacing: 2)),
-                    Text("Seller",
-                        style: UIDataTextStyles.h1.copyWith(
-                            fontSize: 18,
-                            letterSpacing: 2,
-                            color: UIDataColors.secondaryColor)),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Santra",
+                            style: UIDataTextStyles.h1
+                                .copyWith(fontSize: 30, letterSpacing: 2)),
+                        Text("Seller",
+                            style: UIDataTextStyles.h1.copyWith(
+                                fontSize: 20,
+                                letterSpacing: 2,
+                                color: UIDataColors.secondaryColor)),
+                      ],
+                    ),
 
                     // Row(
                     //   children: [
@@ -49,22 +54,24 @@ class LoginScreen extends StatelessWidget {
                     //             UIDataTextStyles.loginscreentitleStyle),
                     //   ],
                     // ),
-                    SpacingHeight.heightlistspacing15,
+                    SpacingHeight.heightlistspacing35,
                     CommonTextField(
-                      fieldHeading: 'enter_mail'.tr,
+                      //
                       controller: _.email,
-                      hintText: 'Email',
-                      prefixIcon: UIDATAIcons.emailIcon,
+                      hintText: 'Your Email or Mobile Number',
+                      labelText: "Email",
+                      prefixIcon: UIDATAIcons.userIcon,
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.emailAddress,
                       validator: (val) {
-                        bool email = _.emailRegex.hasMatch(val);
+                        // bool email = _.emailRegex.hasMatch(val);
                         if (val.isEmpty) {
-                          return "please enter your email";
-                        } else if (email == null) {
-                          return "please enter valid email address";
+                          return "Please enter your email or phone";
                         }
+                        // else if (!email) {
+                        //   return "Please enter valid email address";
+                        // }
                       },
                     ),
                     SpacingHeight.heightlistspacing10,
@@ -75,6 +82,7 @@ class LoginScreen extends StatelessWidget {
                       keyboardType: TextInputType.text,
                       fillcolor: UIDataColors.whiteColor,
                       togglePassword: true,
+                      labelText: "Password",
                       prefixIcon: UIDATAIcons.lockIcon,
                       toggleIcon: _.securetext == true
                           ? UIDATAIcons.viewOffIcon
@@ -96,64 +104,43 @@ class LoginScreen extends StatelessWidget {
                     SpacingHeight.heightlistspacing10,
                     Row(
                       children: [
-                        // Checkbox(
-                        //   value: _.remember,
-                        //   onChanged: (val) {
-                        //     val == true
-                        //         ? _.rememberselect.text = "1"
-                        //         : _.rememberselect.text = "0";
-                        //     _.remember = val!;
-                        //     print(_.rememberselect.text);
-                        //     _.update();
-                        //   },
-                        // ),
-                        // Text(
-                        //   "Remeber Me",
-                        //   style: UIDataTextStyles.forgotpassStyle,
-                        // ),
-
-                        // Spacer(),
-
                         GestureDetector(
                           onTap: () {
                             Get.toNamed(Routes.forgotpasswordRoutes);
                           },
-                          child: Text("Forgot your password?",
-                              style: UIDataTextStyles.subTitle),
+                          child: const Text("Forgot your password?",
+                              style: UIDataTextStyles.title),
                         ),
-                        SizedBox(height: 20),
                       ],
                     ),
-
-                    Container(
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 10.0),
-                        child: Obx(
-                          () => _.isLoading.value
-                              ? SizedBox(
-                                  child: Center(
-                                  child: CircularProgressIndicator(),
-                                ))
-                              : RaisedGradientButton(
-                                  gradient: LinearGradient(
-                                    colors: <Color>[
-                                      UIDataColors.secondaryColor,
-                                      UIDataColors.secondaryColor,
-                                    ],
-                                  ),
-                                  btntxt: "Login",
-                                  iconImage: SvgPicture.asset(
-                                    UIDATAIcons.sendIcon,
-                                    height: 25,
-                                    width: 25,
-                                    fit: BoxFit.fitWidth,
-                                  ),
-                                  buttontxtColor: UIDataColors.whiteColor,
-                                  onPressed: () {
-                                    _.loginfunction();
-                                  },
+                    SpacingHeight.heightlistspacing10,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Obx(
+                        () => _.isLoading.value
+                            ? const SizedBox(
+                                child: Center(
+                                child: CircularProgressIndicator(),
+                              ))
+                            : RaisedGradientButton(
+                                gradient: const LinearGradient(
+                                  colors: <Color>[
+                                    UIDataColors.secondaryColor,
+                                    UIDataColors.secondaryColor,
+                                  ],
                                 ),
-                        ),
+                                btntxt: "Login",
+                                iconImage: SvgPicture.asset(
+                                  UIDATAIcons.sendIcon,
+                                  height: 25,
+                                  width: 25,
+                                  fit: BoxFit.fitWidth,
+                                ),
+                                buttontxtColor: UIDataColors.whiteColor,
+                                onPressed: () {
+                                  _.loginfunction();
+                                },
+                              ),
                       ),
                     ),
                     // TextButton(
@@ -163,21 +150,19 @@ class LoginScreen extends StatelessWidget {
                     //   child: const Icon(Icons.add),
                     // ),
 
-                    SpacingHeight.heightlistspacing15,
-                    SpacingHeight.heightlistspacing15,
+                    SpacingHeight.heightlistspacing25,
 
-                    SpacingHeight.heightlistspacing15,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Don't have an account ? ",
-                            style: UIDataTextStyles.subTitle),
+                        const Text("Don't have an account ? ",
+                            style: UIDataTextStyles.title),
                         GestureDetector(
                             onTap: () {
                               Get.toNamed(Routes.signuproutes);
                             },
                             child: Text("Sign Up",
-                                style: UIDataTextStyles.subTitle.copyWith(
+                                style: UIDataTextStyles.title.copyWith(
                                     color: UIDataColors.primaryColor)))
                       ],
                     ),
