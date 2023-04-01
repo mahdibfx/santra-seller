@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
+import 'package:santra_seller/controllers/auth_controller/reset_password_confirmation.dart';
 import 'package:santra_seller/models/home_model.dart';
+import 'package:santra_seller/ui/screens/auth_screen/fogot_password.dart';
+import 'package:santra_seller/ui/screens/auth_screen/reset_password.dart';
 
 import 'package:santra_seller/ui/screens/cart/cart_screen.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
@@ -42,6 +45,7 @@ import '../../ui/screens/more_setting/my_customer/view_customer_details.dart';
 import '../../ui/screens/order_detail/santra_order_screen.dart';
 import '../../ui/screens/product_setting/product_setting_screen.dart';
 import '../../ui/screens/splash/splash_screen.dart';
+import '../bindings/auth_binding/forgot_password_bindings.dart';
 import '../bindings/auth_binding/login_binding.dart';
 import '../bindings/auth_binding/signup_binding.dart';
 import '../bindings/customer_binding/customer_binding.dart';
@@ -65,12 +69,18 @@ class AppPages {
     ),
 
     //<-------------- Forgotpassword Page Define ------------------>
-    // GetPage(
-    //   name: Routes.forgotpasswordRoutes,
-    //   page: () => ForgetPasswordScreen(),
-    //   binding: ForgotpasswordBinding(),
-    // ),
-
+    GetPage(
+        name: Routes.forgotpasswordRoutes,
+        page: () => forgotPassowrd(),
+        binding: FogotPassowordBinding()),
+    GetPage(
+        name: Routes.forgotPasswordConfirmation,
+        page: () => ForgotPasswordConfirmation(),
+        binding: FogotPassowordBinding()),
+    GetPage(
+        name: Routes.resetPasswordAfterConfirmation,
+        page: () => ResetPasswordAfterConfirmation(),
+        binding: FogotPassowordBinding()),
     GetPage(
       name: Routes.homeRoutes,
       page: () => HomeScreen(),

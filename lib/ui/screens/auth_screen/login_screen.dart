@@ -11,6 +11,7 @@ import '/utils/uidata.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
+  final form = GlobalKey<FormState>();
   Widget bodyData(context) {
     return GetBuilder<LoginController>(
       builder: (_) {
@@ -21,7 +22,7 @@ class LoginScreen extends StatelessWidget {
                 maxHeight: Get.height / 1.1,
               ),
               child: Form(
-                key: _.form,
+                key: form,
                 child: Column(
                   children: [
                     SpacingHeight.heightlistspacing35,
@@ -116,32 +117,32 @@ class LoginScreen extends StatelessWidget {
                     SpacingHeight.heightlistspacing10,
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0),
-                      child: Obx(
-                        () => _.isLoading.value
-                            ? const SizedBox(
-                                child: Center(
-                                child: CircularProgressIndicator(),
-                              ))
-                            : RaisedGradientButton(
-                                gradient: const LinearGradient(
-                                  colors: <Color>[
-                                    UIDataColors.secondaryColor,
-                                    UIDataColors.secondaryColor,
-                                  ],
-                                ),
-                                btntxt: "Login",
-                                iconImage: SvgPicture.asset(
-                                  UIDATAIcons.sendIcon,
-                                  height: 25,
-                                  width: 25,
-                                  fit: BoxFit.fitWidth,
-                                ),
-                                buttontxtColor: UIDataColors.whiteColor,
-                                onPressed: () {
-                                  _.loginfunction();
-                                },
+                      child: _.isLoading
+                          ? const SizedBox(
+                              child: Center(
+                              child: CircularProgressIndicator(),
+                            ))
+                          : RaisedGradientButton(
+                              gradient: const LinearGradient(
+                                colors: <Color>[
+                                  UIDataColors.secondaryColor,
+                                  UIDataColors.secondaryColor,
+                                ],
                               ),
-                      ),
+                              btntxt: "Login",
+                              iconImage: SvgPicture.asset(
+                                UIDATAIcons.sendIcon,
+                                height: 25,
+                                width: 25,
+                                fit: BoxFit.fitWidth,
+                              ),
+                              buttontxtColor: UIDataColors.whiteColor,
+                              onPressed: () {
+                                if (form.currentState!.validate()) {
+                                  _.loginfunction();
+                                }
+                              },
+                            ),
                     ),
                     // TextButton(
                     //   onPressed: () {

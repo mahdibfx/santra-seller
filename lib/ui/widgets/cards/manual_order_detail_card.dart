@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:santra_seller/controllers/home_controller/home_controller.dart';
 import 'package:santra_seller/utils/uidata.dart';
 
 import '../../../models/home_model.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../buttons/border_button.dart';
+import '../buttons/material_buttons/raised_gradient_button.dart';
 
 class ManualOrderCard extends StatefulWidget {
   final String orderStatus;
@@ -15,6 +17,8 @@ class ManualOrderCard extends StatefulWidget {
   final String customerName;
   final String deliveryTime;
   final String paymentMethod;
+  final String colorCode;
+
 
   final String orderNumber;
   final String totalPrice;
@@ -30,6 +34,8 @@ class ManualOrderCard extends StatefulWidget {
     required this.orderNumber,
     required this.orderItemList,
     required this.totalPrice,
+    required this.colorCode,
+
   });
 
   @override
@@ -42,10 +48,12 @@ class _ManualOrderCardState extends State<ManualOrderCard>
   late Animation<double> _heightFactorAnimation;
 
   bool _isOpen = false;
+  String color = '';
 
   @override
   void initState() {
     super.initState();
+    color = '0xff'+widget.colorCode;
     _controller = AnimationController(
         vsync: this, duration: const Duration(microseconds: 10));
     _heightFactorAnimation =
@@ -111,7 +119,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                         onTap: _toggleCard,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: UIDataColors.primaryColor,
+                            color: Color(int.parse(color)),
                             borderRadius: BorderRadius.circular(15.0),
                           ),
                           child: Center(
@@ -151,6 +159,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                   color: UIDataColors.primaryColor,
                                 ),
                                 SpacingWidth.widthlistspacing,
+                                widget.deliveryTime.toString().isEmpty ? Text('---') :
                                 Text('${widget.deliveryTime}'),
                               ],
                             )),
@@ -192,7 +201,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                       : Container(
                           height: 40,
                           decoration:  BoxDecoration(
-                            color: widget.orderStatus == ''? Color(0xff01957A) : Color(0xff01957A),
+                            color: Get.find<HomeController>().getColor(widget.orderStatus),
                             borderRadius: BorderRadius.only(
                                 // topRight: Radius.circular(15.0),
                                 bottomRight: Radius.circular(15.0),
@@ -201,7 +210,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                           ),
                           child: Center(
                             child: Text(
-                              widget.orderStatus,
+                              Get.find<HomeController>().getStatus(widget.orderStatus),
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
@@ -211,7 +220,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
             ),
             Container(
               height: (_heightFactorAnimation.value *
-                  (84 + _calculateContainerHeight())),
+                  (155 + _calculateContainerHeight())),
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -254,21 +263,36 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                   SpacingHeight.heightlistspacing10,
                   Container(
                     height: 40,
-                    decoration: const BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.only(
-                          // topRight: Radius.circular(15.0),
-                          bottomRight: Radius.circular(15.0),
-                          // topLeft: Radius.circular(15.0),
-                          bottomLeft: Radius.circular(15.0)),
+                    decoration:  BoxDecoration(
+                      color:  Get.find<HomeController>().getColor(widget.orderStatus) ,
+                                 
                     ),
                     child: Center(
                       child: Text(
-                        widget.orderStatus,
+                         Get.find<HomeController>().getStatus(widget.orderStatus),
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ),
+                  RaisedGradientButton(
+                              gradient: const LinearGradient(
+                                colors: <Color>[
+                                  UIDataColors.primaryColor,
+                                  UIDataColors.primaryColor,
+                                ],
+                              ),
+                              btntxt: "Repeat Order",
+                              iconImage: SvgPicture.asset(
+                                UIDATAIcons.sendIcon,
+                                height: 25,
+                                width: 25,
+                                fit: BoxFit.fitWidth,
+                              ),
+                              buttontxtColor: UIDataColors.whiteColor,
+                              onPressed: () {
+                               
+                              },
+                            ).marginAll(10),
                 ],
               ),
             ),

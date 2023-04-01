@@ -12,12 +12,12 @@ import '../../utils/uidata.dart';
 
 class LoginController extends GetxController {
   // bool isLoading = true;
-  RxBool isLoading = false.obs;
+  bool isLoading = false;
   bool securetext = true;
   bool remember = false;
   bool isvisible = true;
   var roleset;
-  final form = GlobalKey<FormState>();
+
   String emailstore = "";
   String passwordstore = "";
 
@@ -25,6 +25,10 @@ class LoginController extends GetxController {
   List userprofilelist = [];
 
   //     Services
+  updateLoginLoadingStatus(bool value) {
+    isLoading = value;
+    update();
+  }
 
   var userToken;
   var eaToken;
@@ -70,41 +74,40 @@ class LoginController extends GetxController {
   }
 
   void loginfunction() async {
-    if (form.currentState!.validate()) {
-      isLoading = true.obs;
-      update();
-      try {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        var body = <String, String>{};
-        body['user_name'] = email.text;
-        body['user_password'] = password.text;
-        body["gcms_code"] = firebaseMessagingToken.toString();
-        var res =
-            await http.post(Uri.parse("${ApiData.mainurl}login"), body: body);
-        if (res.statusCode == 200) {
-          var data = jsonDecode(res.body);
-          var newdata = LoginModel.fromJson(data);
-          saveSharedPrefData(newdata.data[0], prefs);
-          isLoading = false.obs;
-          update();
-          Get.offAllNamed(Routes.homeRoutes);
-        } else {
-          isLoading = false.obs;
+    updateLoginLoadingStatus(true);
+    update();
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var body = <String, String>{};
+      body['user_name'] = email.text;
+      body['user_password'] = password.text;
+      body["gcms_code"] = firebaseMessagingToken.toString();
+      var res =
+          await http.post(Uri.parse("${ApiData.mainurl}login"), body: body);
+      if (res.statusCode == 200) {
+        var data = jsonDecode(res.body);
+        var newdata = LoginModel.fromJson(data);
+        saveSharedPrefData(newdata.data[0], prefs);
+
         update();
-          CommonSnackbar.getSnackbar(
-              "Error", "Error in login", UIDataColors.redColor);
-        }
-      } catch (e) {
-        print("check error ${e}");
-        isLoading = false.obs;
+        Get.offAllNamed(Routes.homeRoutes);
+      } else {
         update();
-        // Get.offAllNamed(Routes.homeRoutes);
+        print(res.body);
         CommonSnackbar.getSnackbar(
-            "Server Error",
-            "Server Error or Please Check your internet connection",
-            UIDataColors.redColor);
+            "Error", "Error in login", UIDataColors.redColor);
       }
+    } catch (e) {
+      isLoading = false;
+      update();
+
+      CommonSnackbar.getSnackbar(
+          "Server Error",
+          "Server Error or Please Check your internet connection",
+          UIDataColors.redColor);
     }
+
+    updateLoginLoadingStatus(false);
   }
 
   saveSharedPrefData(LoginData data, SharedPreferences prefs) {
@@ -116,6 +119,7 @@ class LoginController extends GetxController {
     prefs.setString("logo", data.sellerLogo);
     prefs.setString("sellercode", data.sellerCode);
     prefs.setString("status", data.userStatus);
+    prefs.setString("sellercity", data.userCountry);
     prefs.setString("dob", data.dateOfBirth.toString());
     prefs.setString("password", password.text);
   }

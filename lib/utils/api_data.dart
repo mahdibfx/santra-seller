@@ -17,4 +17,7 @@ class ApiData {
   static const deliveryCharges = "${mainurl}delivery_charges";
   static const orderSubmitCash= "${mainurl}order_submit_new";
   static const generateLink = "${mainurl}generate_link";
+  static const registerSellerApi = "${mainurl}signup_seller";
+  static const resetPasswordApi = "${mainurl}reset_password";
+  static const verifyResetPassword = "${mainurl}verify_reset";
 }

@@ -93,6 +93,8 @@ class Order {
         required this.advanceTime,
         required this.orderRemarks,
         required this.orderItems,
+        required this.paymentLink,
+        required this.colorCode,
     });
 
     String orderNumber;
@@ -103,6 +105,8 @@ class Order {
     String paymentMethod;
     String advanceTime;
     String orderRemarks;
+    String paymentLink;
+    String colorCode;
     List<OrderItem> orderItems;
 
     factory Order.fromJson(Map<String, dynamic> json) => Order(
@@ -114,6 +118,8 @@ class Order {
         paymentMethod: json["payment_method"],
         advanceTime: json["advance_time"],
         orderRemarks: json["order_remarks"],
+        paymentLink: json["payment_link"],
+        colorCode: json["color_code"],
         orderItems: List<OrderItem>.from(json["order_items"].map((x) => OrderItem.fromJson(x))),
     );
 
@@ -146,7 +152,7 @@ class OrderItem {
     factory OrderItem.fromJson(Map<String, dynamic> json) => OrderItem(
         productName: json["product_name"],
         productTotal: json["product_total"],
-        productImage: json["product_image"],
+        productImage: json["product_image"]??'',
         productQuantity: json["product_quantity"],
     );
 

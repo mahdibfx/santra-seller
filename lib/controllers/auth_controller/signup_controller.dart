@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../ui/widgets/snackbar/common_snackbar.dart';
 import '../../utils/api_data.dart';
@@ -10,183 +12,109 @@ import '../../utils/routes/app_routes.dart';
 import '../../utils/uidata.dart';
 
 class SignUpController extends GetxController {
-  RxBool isLoading = false.obs;
-  // bool isLoading = true;
-  bool securetext = true;
-  bool remember = false;
-  bool isvisible = true;
+  bool isLoading = false;
+  String? firebaseMessagingToken;
+  bool passwordSecuretext = true;
+  bool confirmPasswordSecuretext = true;
+  updateLoginLoadingStatus(bool value) {
+    isLoading = value;
+    update();
+  }
 
-  var roleset;
+  bool isAgree = false;
+  changeIsAgree(bool value) {
+    isAgree = value;
+    update();
+  }
+
+  Future getFcmToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    firebaseMessagingToken = await FirebaseMessaging.instance.getToken();
+    update();
+    prefs.setString('fcmtoken', firebaseMessagingToken.toString());
+    print("token: $firebaseMessagingToken");
+  }
+
+  bool securetext = true;
+  bool isvisible = true;
+  List<String> citiesList = ["Dubai", "Ajman", "third"];
 
   final form = GlobalKey<FormState>();
-
   List locale = [];
-
-  List userprofilelist = [];
-
-  //     Services
-
-  var userToken;
-  var eaToken;
-  TextEditingController firstname = TextEditingController();
-  TextEditingController username = TextEditingController();
-  TextEditingController lastname = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
-  TextEditingController conformpassword = TextEditingController();
-  TextEditingController address = TextEditingController();
-  TextEditingController phonenumber = TextEditingController();
-  TextEditingController rememberselect = TextEditingController();
+  String? sellerCity = "Dubai";
+  TextEditingController businessController = TextEditingController();
+  TextEditingController fullNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController conformPasswordController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
   RegExp emailRegex = RegExp(
     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$',
   );
+  clearValuesAfterSignup() {
+    businessController.clear();
+    fullNameController.clear();
+    emailController.clear();
+    phoneController.clear();
+    passwordController.clear();
+    conformPasswordController.clear();
+    addressController.clear();
+    sellerCity = "Dubai";
+    update();
+  }
 
   @override
   void onInit() async {
     locale = [
-      {'name': 'English', 'locale': Locale("en", "US")},
-      {'name': 'عربي', 'locale': Locale("ar", "SA")}
+      {'name': 'English', 'locale': const Locale("en", "US")},
+      {'name': 'عربي', 'locale': const Locale("ar", "SA")}
     ];
     super.onInit();
-  }
-
-  @override
-  void onReady() async {
-    // await checkfunction();
-    // loginfunction();
-    // getrole();
-
-    isLoading = false.obs;
-    update();
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void updatelang(Locale locale) {
-    Get.back();
-    Get.updateLocale(locale);
+    getFcmToken();
   }
 
   Future<void> signupMethod() async {
     if (form.currentState!.validate()) {
-      if (rememberselect.text == "" || rememberselect.text == "0") {
-        CommonSnackbar.getSnackbar(
-            "Error",
-            "Please  accept  terms and conditions".toString(),
-            UIDataColors.redColor);
-        isLoading = false.obs;
-        update();
-        return;
-      }
-      isLoading = true.obs;
-      update();
+      updateLoginLoadingStatus(true);
+
       try {
-        Map<String, String> header = {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-          // 'Content-Type': 'application/json; charset=UTF-8',
-        };
-        final msg = jsonEncode({
-          'username': username.text,
-          "first_name": firstname.text,
-          "last_name": lastname.text,
-          "email": email.text,
-          "password": password.text,
-          'confirm_password': conformpassword.text,
-          "profile_photo": "",
-          "phone_number": phonenumber.text,
-          "address": address.text,
-          "is_blocked": "",
-          "status": "",
-          "pay_rate": "",
-          "commision": "",
-          "is_verified": "",
-          "role": "user",
-          "territories": [
-            // {
-            //     "name": "Austin",
-            //     "zip_code": []
-            // }
-          ]
-        });
-        print(msg);
-        var res = await http.post(
-          Uri.parse("${ApiData.mainurl}register/"), body: msg, headers: header,
-
-          // 'username': username.text, "first_name" : firstname.text,
-          // "last_name": lastname.text,
-          // "email" :email.text,
-          // "password": password.text,
-          // 'confirm_password': conformpassword.text,
-          // "profile_photo": "",
-          // "c": phonenumber.text,
-          // "address": address.text,
-          // "is_blocked": "",
-          // "is_verified": "",
-          // "role":"user",
-        );
-        print(res.statusCode);
-        print("user data $msg");
-        var data = json.decode(res.body);
-        print(data);
-
-        isLoading = true.obs;
-        update();
-        if (res.statusCode == 200) {
-          if ((data["success"] == true &&
-              data["message"] == "User has been Successfully created!")) {
-            Get.offAllNamed(Routes.loginRoutes);
-            CommonSnackbar.getSnackbar(
-                "Message",
-                "User has been Successfully created!",
-                UIDataColors.primaryColor);
-          } else if (data["success"] == false &&
-              data["message"] == "Error in register!") {
-            CommonSnackbar.getSnackbar(
-                "Message", "Error in register!", UIDataColors.primaryColor);
-
-            isLoading = false.obs;
-            update();
-            return;
-          } else if (data["success"] == false &&
-              data["message"] == "Passwords do NOT match!") {
-            CommonSnackbar.getSnackbar(
-                "Message", "Passwords do NOT match!", UIDataColors.redColor);
-
-            isLoading = false.obs;
-            update();
-            return;
-          }
-        } else if (res.statusCode == 400) {
-          var username =
-              data["username"] == "Username already taken try another!.";
-          var useremail =
-              data['email'] == "A user with that Email already exists.";
-
-          print(useremail);
-
-          if (username == false || useremail == false) {
-            CommonSnackbar.getSnackbar(
-                "Message", "$data", UIDataColors.redColor);
-            isLoading = false.obs;
-            update();
-            return;
-          }
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        var url = Uri.parse(ApiData.registerSellerApi);
+        var request = http.MultipartRequest('POST', url);
+        var body = <String, String>{};
+        body['business_name'] = businessController.text;
+        body['full_name'] = fullNameController.text;
+        body['seller_email'] = emailController.text;
+        body['user_password'] = passwordController.text;
+        body['user_number'] = phoneController.text;
+        body['seller_city'] = sellerCity ?? "";
+        body['seller_address'] = addressController.text;
+        body['gcms_code'] = prefs.getString("fcmToken").toString();
+        request.fields.addAll(body);
+        var streamedResponse = await request.send();
+        var response = await http.Response.fromStream(streamedResponse);
+        if (response.statusCode == 200) {
+          CommonSnackbar.getSnackbar("Success", "Account has been registered",
+              UIDataColors.primaryColor);
+          Get.offAllNamed(Routes.loginRoutes);
+        } else {
+          update();
+          CommonSnackbar.getSnackbar(
+              "Error",
+              "Error while signing up, Please try again",
+              UIDataColors.redColor);
         }
       } catch (e) {
-        print("check error ${e}");
+        isLoading = false;
+        update();
 
         CommonSnackbar.getSnackbar(
-            "Server Error", e.toString(), UIDataColors.redColor);
-
-        isLoading = false.obs;
-        update();
-        return;
+            "Server Error",
+            "Server Error or Please Check your internet connection",
+            UIDataColors.redColor);
       }
     }
+    updateLoginLoadingStatus(false);
   }
 }

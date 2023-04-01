@@ -1,9 +1,11 @@
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:http/http.dart';
 import 'package:santra_seller/controllers/cutomer_controller/customer-controller.dart';
+import 'package:santra_seller/controllers/more_screen_controller.dart/my_customer/my_customer_controller.dart';
 import 'package:santra_seller/models/customers/view_all_customers.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
+import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 
 import '../../../controllers/auth_controller/signup_controller.dart';
 import '../../../utils/routes/app_routes.dart';
@@ -18,7 +20,7 @@ import 'package:get/get.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
-  CustomerController custCont = Get.put(CustomerController());
+
   Widget bodyData(context) {
     Size size = MediaQuery.of(context).size;
     return GetBuilder<SignUpController>(
@@ -36,8 +38,9 @@ class SignUpScreen extends StatelessWidget {
                         btntxt: "Create a New Acccount"),
                     Column(children: [
                       CommonTextField(
-                        controller: _.username,
+                        controller: _.businessController,
                         labelText: "Business Name",
+                        prefixIcon: UIDATAIcons.dashboardIcon,
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
                         keyboardType: TextInputType.text,
@@ -48,20 +51,22 @@ class SignUpScreen extends StatelessWidget {
                         },
                       ),
                       CommonTextField(
-                        controller: _.firstname,
+                        controller: _.fullNameController,
+                        prefixIcon: UIDATAIcons.userIcon,
                         labelText: "Full Name",
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
                         keyboardType: TextInputType.text,
                         validator: (val) {
                           if (val.isEmpty) {
-                            return "Please enter your full Name";
+                            return "Please enter your full name";
                           }
                         },
                       ),
                       CommonTextField(
-                        controller: _.email,
-                        hintText: 'Email'.tr,
+                        controller: _.emailController,
+                        labelText: "Email",
+                        prefixIcon: UIDATAIcons.emailIcon,
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
                         keyboardType: TextInputType.emailAddress,
@@ -75,15 +80,17 @@ class SignUpScreen extends StatelessWidget {
                         },
                       ),
                       CommonTextField(
-                        controller: _.phonenumber,
+                        controller: _.phoneController,
+                        prefixIcon: UIDATAIcons.callIcon,
                         labelText: "Mobile",
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
                         keyboardType: TextInputType.number,
+                        maxLength: 12,
                         validator: (val) {
                           String? name;
                           if (val.isEmpty || val.length < 12) {
-                            return "Please enter valid phonen Number";
+                            return "Please enter valid phone number";
                           } else if (val.isNotEmpty && val.length > 3) {
                             name = val.substring(0, 3);
 
@@ -96,69 +103,71 @@ class SignUpScreen extends StatelessWidget {
                         },
                       ),
                       CommonTextField(
-                        controller: _.password,
-                        hintText: 'Password'.tr,
+                        controller: _.passwordController,
+                        labelText: 'Password'.tr,
+                        prefixIcon: UIDATAIcons.lockIcon,
                         keyboardType: TextInputType.text,
                         fillcolor: UIDataColors.whiteColor,
                         togglePassword: true,
-                        toggleIcon: _.securetext == true
+                        toggleIcon: _.passwordSecuretext == true
                             ? UIDATAIcons.viewOffIcon
                             : UIDATAIcons.viewIcon,
                         toggleFunction: () {
-                          _.securetext = !_.securetext;
+                          _.passwordSecuretext = !_.passwordSecuretext;
                           _.update();
                         },
-                        isTextHidden: _.securetext,
+                        isTextHidden: _.passwordSecuretext,
                         validator: (val) {
                           if (val.isEmpty) {
-                            return "password should not be blank";
-                          } else if (val.length < 6) {
-                            return "password should contains 6 chractors";
+                            return "Password should not be blank";
                           }
                         },
                       ),
                       CommonTextField(
-                        controller: _.conformpassword,
-                        hintText: 'Confirm Password'.tr,
+                        controller: _.conformPasswordController,
+                        labelText: 'Confirm Password'.tr,
+                        prefixIcon: UIDATAIcons.lockIcon,
                         keyboardType: TextInputType.text,
                         fillcolor: UIDataColors.whiteColor,
                         togglePassword: true,
-                        toggleIcon: _.securetext == true
+                        toggleIcon: _.confirmPasswordSecuretext == true
                             ? UIDATAIcons.viewOffIcon
                             : UIDATAIcons.viewIcon,
                         toggleFunction: () {
-                          _.securetext = !_.securetext;
+                          _.confirmPasswordSecuretext =
+                              !_.confirmPasswordSecuretext;
                           _.update();
                         },
-                        isTextHidden: _.securetext,
+                        isTextHidden: _.confirmPasswordSecuretext,
                         validator: (val) {
                           if (val.isEmpty) {
-                            return "password should not be blank";
-                          } else if (val.length < 6) {
-                            return "password should contains 6 chractors";
+                            return "Password should not be blank";
+                          } else if (val != _.passwordController.text) {
+                            return "Both passwords should be same";
                           }
                         },
                       ),
-                      // Expanded(
-                      //     child: MyDropdown(
-                      //         label: "City",
-                      //         validator: (value) {
-                      //           if (value == null) {
-                      //             return "Please select city";
-                      //           }
-                      //         },
-                      //         prefixIcon: UIDATAIcons.location,
-                      //         options: _.citiesList!,
-                      //         selectedOption: _.city)),
+                      MyDropdown(
+                          label: "City",
+                          validator: (value) {
+                            if (value == null) {
+                              return "Please select city";
+                            }
+                          },
+                          prefixIcon: UIDATAIcons.location,
+                          options: _.citiesList,
+                          selectedOption: _.sellerCity),
+                      SpacingHeight.heightlistspacing5,
                       CommonTextField(
-                        controller: _.address,
-                        hintText: 'Address'.tr,
+                        controller: _.addressController,
+                        labelText: 'Address'.tr,
+                        prefixIcon: UIDATAIcons.locationPin,
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
                         keyboardType: TextInputType.emailAddress,
                         validator: (val) {
                           if (val.isEmpty) {
-                            return "please enter your Address";
+                            return "Please enter your Address";
                           }
                         },
                       ),
@@ -172,34 +181,34 @@ class SignUpScreen extends StatelessWidget {
                           toggleColor: UIDataColors.whiteColor,
                           padding: 2,
                           height: size.height * 0.03,
-                          value: true,
-                          onToggle: (val) {},
+                          value: _.isAgree,
+                          onToggle: (val) {
+                            _.isAgree = val;
+                            _.update();
+                          },
                         ),
                         SpacingWidth.widthlistspacing5,
-                        InkWell(
-                          onTap: () async {},
-                          child: Row(
-                            children: const [
-                              Text("I agree ",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontFamily: 'Markpro',
-                                    fontWeight: FontWeight.w600,
-                                  )),
-                              Text("Terms and Conditions ",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: UIDataColors.primaryColor,
-                                    fontFamily: 'Markpro',
-                                    fontWeight: FontWeight.w500,
-                                  )),
-                            ],
-                          ),
+                        Row(
+                          children: const [
+                            Text("I agree ",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontFamily: 'Markpro',
+                                  fontWeight: FontWeight.w600,
+                                )),
+                            Text("Terms and Conditions ",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: UIDataColors.primaryColor,
+                                  fontFamily: 'Markpro',
+                                  fontWeight: FontWeight.w500,
+                                )),
+                          ],
                         )
                       ],
                     ),
                     SpacingHeight.heightlistspacing15,
-                    Obx(() => _.isLoading.value
+                    _.isLoading
                         ? const SizedBox(
                             child: Center(
                             child: CircularProgressIndicator(),
@@ -207,13 +216,20 @@ class SignUpScreen extends StatelessWidget {
                         : PrimaryButtonWithIcon(
                             btntxt: "Sign Up",
                             iconImage: UIDATAIcons.signupIcon,
-                            onPressed: () {},
-                          )),
+                            onPressed: () {
+                              if (_.isAgree) {
+                                _.signupMethod();
+                              } else {
+                                exceptionDialog("Alert",
+                                    "Please agree to Santra's terms and conditions before you signup");
+                              }
+                            },
+                          ),
                     SpacingHeight.heightlistspacing15,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text("Already have an account ? ",
+                        const Text("Already have an account ?",
                             style: UIDataTextStyles.title),
                         GestureDetector(
                             onTap: () {
