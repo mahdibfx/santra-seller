@@ -2,14 +2,12 @@ import 'package:santra_seller/controllers/more_screen_controller.dart/about_us_c
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:santra_seller/controllers/more_screen_controller.dart/my_customer/my_customer_controller.dart';
+import 'package:santra_seller/ui/screens/more_setting/my_customer/edit_customer_details.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 
 import '../../../../utils/routes/app_routes.dart';
 import '../../../../utils/uidata.dart';
-import '../../../../utils/uidata/textStyles.dart';
-import '../../../widgets/buttons/icon_button.dart';
-import '../../../widgets/buttons/material_buttons/raised_gradient_button.dart';
 import '../../../widgets/cards/my_customer_card.dart';
 import '../../../widgets/scaffold/common_scaffold.dart';
 import '../../../widgets/textfields/common_textfield.dart';
@@ -50,22 +48,22 @@ class MyCustomerScreen extends StatelessWidget {
                       },
                     ),
                     SpacingHeight.heightlistspacing20,
-                    _.hasViewCustomerError
+                    _.hasViewCustomerError || _.allCustomers!.isEmpty
                         ? const Text("No Customers Found")
                         : ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: _.viewAllCustomers.data?.length,
+                            itemCount: _.allCustomers?.length,
                             itemBuilder: (BuildContext context, int index) {
                               return MyCustomerCard(
-                                name: _.viewAllCustomers.data?[index]
-                                        .customerName ??
+                                name: _.allCustomers?[index].customerName ??
                                     "No Name",
-                                number: _.viewAllCustomers.data?[index]
-                                        .customerMobile ??
+                                number: _.allCustomers?[index].customerMobile ??
                                     "No Contact Number",
                                 onTap: () {
-                                  Get.toNamed(Routes.editcustomer);
+                                  Get.to(() => EditCustomerDetails(
+                                        index: index,
+                                      ));
                                 },
                               ).marginOnly(bottom: 17);
                             }),

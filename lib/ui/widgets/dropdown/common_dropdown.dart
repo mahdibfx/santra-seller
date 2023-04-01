@@ -9,11 +9,13 @@ class MyDropdown extends StatefulWidget {
   String? selectedOption;
   var validator;
   String? prefixIcon;
+  String? label;
   MyDropdown(
       {super.key,
       required this.options,
       required this.selectedOption,
       required this.prefixIcon,
+      this.label,
       this.validator});
 
   @override
@@ -24,20 +26,35 @@ class _MyDropdownState extends State<MyDropdown> {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField(
+        isExpanded: true,
         validator: widget.validator,
         items: widget.options.map((String selOption) {
           return DropdownMenuItem(
               value: selOption,
               child: Text(
                 selOption,
+                style: const TextStyle(
+                    color: Color.fromARGB(255, 0, 0, 0),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'Markpro',
+                    letterSpacing: 0.0),
               ));
         }).toList(),
         onChanged: (newValue) {
           // do other stuff with _category
           setState(() => widget.selectedOption = newValue);
         },
+        icon: Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: SvgPicture.asset(UIDATAIcons.arrowDown),
+        ),
         value: widget.selectedOption ?? "City",
         decoration: InputDecoration(
+          label: Text(
+            widget.label ?? "",
+            style: const TextStyle(color: Colors.black),
+          ),
           prefixIcon: widget.prefixIcon != null
               ? GestureDetector(
                   child: SvgPicture.asset(
