@@ -11,6 +11,7 @@ import '/utils/uidata.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
+  final form = GlobalKey<FormState>();
   Widget bodyData(context) {
     return GetBuilder<LoginController>(
       builder: (_) {
@@ -21,7 +22,7 @@ class LoginScreen extends StatelessWidget {
                 maxHeight: Get.height / 1.1,
               ),
               child: Form(
-                key: _.form,
+                key: form,
                 child: Column(
                   children: [
                     SpacingHeight.heightlistspacing35,
@@ -137,7 +138,9 @@ class LoginScreen extends StatelessWidget {
                               ),
                               buttontxtColor: UIDataColors.whiteColor,
                               onPressed: () {
-                                _.loginfunction();
+                                if (form.currentState!.validate()) {
+                                  _.loginfunction();
+                                }
                               },
                             ),
                     ),

@@ -30,22 +30,26 @@ class RatingBarWithDetails extends StatelessWidget {
           style: UIDataTextStyles.h2,
         ),
         SpacingWidth.widthlistspacing5,
-        SizedBox(
-          width: MediaQuery.of(context).size.width * 0.53,
-          child: LinearPercentIndicator(
-            barRadius: const Radius.circular(5),
-            // width: 200.0,
-            lineHeight: 14.0,
-            percent: barPercentage ?? 0.0,
-            backgroundColor: Colors.grey.withOpacity(0.5),
-            progressColor: barColor,
+        Expanded(
+          flex: 3,
+          child: SizedBox(
+            // width: MediaQuery.of(context).size.width * 0.53,
+            child: LinearPercentIndicator(
+              barRadius: const Radius.circular(5),
+              // width: 200.0,
+              lineHeight: 14.0,
+              percent: barPercentage ?? 0.0,
+              backgroundColor: Colors.grey.withOpacity(0.5),
+              progressColor: barColor,
+            ),
           ),
         ),
-        Text(
-          "$percenatageToShow%",
-          style: UIDataTextStyles.h2,
+        Expanded(
+          child: Text(
+            "$percenatageToShow%",
+            style: UIDataTextStyles.h2,
+          ),
         ),
-        const Spacer(),
         Text(
           totalReviews ?? "",
           style: UIDataTextStyles.h2,

@@ -53,7 +53,7 @@ class CustomerReviewCard extends StatelessWidget {
                       itemCount: 5,
                       unratedColor: Colors.grey,
                       glowColor: Colors.amber,
-                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 0.0),
                       itemSize: 15,
                       ratingWidget: RatingWidget(
                           full: SvgPicture.asset(UIDATAIcons.starIconFilled,
