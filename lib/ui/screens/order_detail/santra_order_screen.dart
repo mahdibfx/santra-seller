@@ -6,6 +6,7 @@ import '../../../controllers/home_controller/home_controller.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/cards/home_card.dart';
+import '../../widgets/cards/manual_order_detail_card.dart';
 import '../../widgets/cards/order_detail_card.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 
@@ -47,17 +48,42 @@ class SantraOrderScreen extends StatelessWidget {
                         shrinkWrap: true,
                         itemCount: _.homeData!.santraOrders[0].santraOrders.length,
                         itemBuilder: (context, index) {
-                          return CustomCard(
+                          var santraList = _.homeData!.santraOrders[0].santraOrders[index];
+                          return 
+                          // santraList.orderStatus == 'devliered' ? ManualOrderCard(
+                          //     orderStatus: santraList.orderStatus.toString(),
+                          //   totalPrice: santraList.totalOrderAmount.toString(),
+                          //   orderTime: santraList.orderDateStamp.toString(),
+                          //   deliveryTime: santraList.advanceTime.toString(),
+                          //   customerName: santraList.customerName.toString(),
+                          //   paymentMethod: santraList.paymentMethod.toString(),
+                          //   orderNumber:santraList.orderNumber.toString(),
+                          //   orderItemList: santraList.orderItems,
+                          //   colorCode: santraList.colorCode.toString(),
+                          // ) : 
+                          santraList.orderStatus == 'new_order' || santraList.orderStatus == 'assigned_3pl' ||santraList.orderStatus == 'payment_pending'?
+                          CustomCard(
                             title: 'Card',
-                            totalPrice: _.homeData!.santraOrders[0].santraOrders[index].totalOrderAmount.toString(),
-                            orderRemarks: _.homeData!.santraOrders[0].santraOrders[index].orderRemarks.toString(),
-                            orderTime: _.homeData!.santraOrders[0].santraOrders[index].orderDateStamp.toString(),
-                            deliveryTime: _.homeData!.santraOrders[0].santraOrders[index].advanceTime.toString(),
-                            customerName: _.homeData!.santraOrders[0].santraOrders[index].customerName.toString(),
-                            paymentMethod: _.homeData!.santraOrders[0].santraOrders[index].paymentMethod.toString(),
-                            orderNumber:_.homeData!.santraOrders[0].santraOrders[index].orderNumber.toString(),
-                            orderItemList: _.homeData!.santraOrders[0].santraOrders[index].orderItems,
-                          );
+                             orderStatus: santraList.orderStatus.toString(),
+                            totalPrice: santraList.totalOrderAmount.toString(),
+                            orderRemarks: santraList.orderRemarks.toString(),
+                            orderTime: santraList.orderDateStamp.toString(),
+                            deliveryTime: santraList.advanceTime.toString(),
+                            customerName: santraList.customerName.toString(),
+                            paymentMethod: santraList.paymentMethod.toString(),
+                            orderNumber:santraList.orderNumber.toString(),
+                            orderItemList: santraList.orderItems,
+                          ): ManualOrderCard(
+                              orderStatus: santraList.orderStatus.toString(),
+                            totalPrice: santraList.totalOrderAmount.toString(),
+                            orderTime: santraList.orderDateStamp.toString(),
+                            deliveryTime: santraList.advanceTime.toString(),
+                            customerName: santraList.customerName.toString(),
+                            paymentMethod: santraList.paymentMethod.toString(),
+                            orderNumber:santraList.orderNumber.toString(),
+                            orderItemList: santraList.orderItems,
+                            colorCode: santraList.colorCode.toString(),
+                          ) ;
                         }
                       ),
                      

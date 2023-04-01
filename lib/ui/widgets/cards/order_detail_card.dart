@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:santra_seller/utils/uidata.dart';
 
+import '../../../controllers/home_controller/home_controller.dart';
 import '../../../models/home_model.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../buttons/border_button.dart';
@@ -18,7 +19,7 @@ class CustomCard extends StatefulWidget {
   final String orderRemarks;
   final String orderNumber;
   final String totalPrice;
-
+final String orderStatus;
   List<OrderItem> orderItemList;
 
   CustomCard({
@@ -31,6 +32,8 @@ class CustomCard extends StatefulWidget {
     required this.orderNumber,
     required this.orderItemList,
     required this.totalPrice,
+    required this.orderStatus,
+
   });
 
   @override
@@ -190,17 +193,17 @@ class _CustomCardState extends State<CustomCard>
                     ? SizedBox()
                     : Container(
                         height: 40,
-                        decoration: const BoxDecoration(
-                          color: Colors.blue,
+                        decoration:  BoxDecoration(
+                          color:  Get.find<HomeController>().getColor(widget.orderStatus),
                           borderRadius: BorderRadius.only(
                               // topRight: Radius.circular(10.0),
                               bottomRight: Radius.circular(10.0),
                               // topLeft: Radius.circular(10.0),
                               bottomLeft: Radius.circular(10.0)),
                         ),
-                        child: const Center(
+                        child:  Center(
                           child: Text(
-                            'New Request',
+                           Get.find<HomeController>().getStatus(widget.orderStatus),
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -263,23 +266,47 @@ class _CustomCardState extends State<CustomCard>
                 ),
                 Container(
                   height: 40,
-                  decoration: const BoxDecoration(
-                    color: Colors.blue,
+                  decoration:  BoxDecoration(
+                    color:  Get.find<HomeController>().getColor(widget.orderStatus),
                   ),
-                  child: const Center(
+                  child:  Center(
                     child: Text(
-                      'New Reequest',
+                       Get.find<HomeController>().getStatus(widget.orderStatus),
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
                 SpacingHeight.heightlistspacing10,
+                widget.orderStatus == 'payment_pending' ?
                 Row(
                   children: [
                     BorderButton(
                       height: 35,
                       width: 140,
-                      btntxt: 'Reject',
+                      btntxt: 'Cancelling',
+                      borderColor: Colors.red,
+                      buttontxtColor: Colors.red,
+                      backEndColor: Colors.white,
+                      onPressed: () {},
+                    ),
+                    Spacer(),
+                    BorderButton(
+                      height: 35,
+                      width: 170,
+                      btntxt: 'Copy payment link',
+                      borderColor: Colors.blue,
+                      buttontxtColor: Colors.white,
+                      // backEndColor: Colors.blue,
+                      onPressed: () {},
+                    ),
+                  ],
+                ).marginOnly(left: 10, right: 10):widget.orderStatus == 'assigned_3pl' ?
+                Row(
+                  children: [
+                    BorderButton(
+                      height: 35,
+                      width: 140,
+                      btntxt: 'Cancel',
                       borderColor: Colors.red,
                       buttontxtColor: Colors.red,
                       backEndColor: Colors.white,
@@ -289,11 +316,38 @@ class _CustomCardState extends State<CustomCard>
                     BorderButton(
                       height: 35,
                       width: 140,
-                      btntxt: 'Accept',
+                      btntxt: 'Repeat Order',
                       borderColor: Colors.blue,
                       buttontxtColor: Colors.white,
                       // backEndColor: Colors.blue,
                       onPressed: () {},
+                    ),
+                  ],
+                ).marginOnly(left: 10, right: 10):
+                Row(
+                  children: [
+                    BorderButton(
+                      height: 35,
+                      width: 140,
+                      btntxt: 'Reject',
+                      borderColor: Colors.red,
+                      buttontxtColor: Colors.red,
+                      backEndColor: Colors.white,
+                      onPressed: () {
+                        Get.find<HomeController>().rejectOrderMethod(widget.orderNumber);
+                      },
+                    ),
+                    Spacer(),
+                    BorderButton(
+                      height: 35,
+                      width: 140,
+                      btntxt: 'Accept',
+                      borderColor: Colors.blue,
+                      buttontxtColor: Colors.white,
+                      // backEndColor: Colors.blue,
+                      onPressed: () {
+                        Get.find<HomeController>().acceptOrdermethod(widget.orderNumber);
+                      },
                     ),
                   ],
                 ).marginOnly(left: 10, right: 10),
