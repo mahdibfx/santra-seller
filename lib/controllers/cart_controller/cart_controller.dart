@@ -219,7 +219,7 @@ class CartItem {
   final String code;
   final double price;
   final String imageString;
-  final List<SubModifier> subModifiers;
+   List<SubModifier> subModifiers = [];
   int quantity;
 
   CartItem({required this.name, required this.price, required this.code, required this.imageString, this.quantity = 1, required this.subModifiers});
