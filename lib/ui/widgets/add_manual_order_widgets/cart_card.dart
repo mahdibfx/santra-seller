@@ -25,7 +25,7 @@ class CartCardOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 96,
+      height: 100,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -78,10 +78,26 @@ class CartCardOrder extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      Text(
-                        "Large",
-                        // allProducts?[index!].name ?? "",
-                        style: UIDataTextStyles.title.copyWith(fontSize: 12),
+                      Container(
+                        child: Column(
+                          children: List.generate(allProducts![index!].subModifiers.length, (subInex) => 
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  // "Large",
+                                  allProducts![index!].subModifiers[subInex].nameModifier.toString(),
+                                  style: UIDataTextStyles.title.copyWith(fontSize: 12),
+                                ),
+                                Text(
+                                  // "Large",
+                                  allProducts![index!].subModifiers[subInex].priceModifier.toString() + " AED",
+                                  style: UIDataTextStyles.title.copyWith(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          )
+                        ),
                       ),
                       Text(
                         "AED ${allProducts?[index!].price ?? ""}",

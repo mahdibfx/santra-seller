@@ -113,14 +113,56 @@ class CartController extends GetxController {
     }
   }
 
-  double get totalPrice => cartItems.fold(
-        0,
-        (previousValue, cartItem) => previousValue + cartItem.price * cartItem.quantity,
-      );
-       double get grandTotal => cartItems.fold(
-        0,
-        (previousValue, cartItem) => (previousValue + cartItem.price * cartItem.quantity) + deliveryCharges,
-      );
+  double get totalPrice {
+    double subAmount = 0;
+
+    cartItems.fold(subAmount, (prevValue, element) {
+      double modifierAmount = 0;
+      if (element.subModifiers != null) {
+        for (var j in element.subModifiers) {
+          modifierAmount =
+              (double.parse(j.priceModifier.toString()) * element.quantity) +
+                  modifierAmount;
+        }
+      }
+
+      subAmount +=
+          (double.parse(element.price.toString()) * element.quantity) +
+              modifierAmount;
+      return subAmount;
+    });
+    print("sub$subAmount");
+    return subAmount;
+  }
+  // double get totalPrice => cartItems.fold(
+  //       0,
+  //       (previousValue, cartItem) => previousValue + (cartItem.price +)* cartItem.quantity,
+  //     );
+      //  double get grandTotal => cartItems.fold(
+      //   0,
+      //   (previousValue, cartItem) => (previousValue + cartItem.price * cartItem.quantity) + deliveryCharges,
+      // );
+      double get grandTotal {
+    double amount = 0;
+    amount = totalPrice + deliveryCharges;
+
+    return amount;
+  }
+
+      double calculateTotalPrice() {
+    double totalPrice = 0;
+    
+    for (var product in cartItems) {
+      totalPrice += product.price;
+      for (var addon in product.subModifiers) {
+        totalPrice += double.parse(addon.priceModifier.toString());
+      }
+      totalPrice += totalPrice + product.quantity;
+    }
+    
+    return totalPrice;
+  }
+
 
        void showToast(String msg) {
   Get.snackbar(
@@ -177,7 +219,7 @@ class CartItem {
   final String code;
   final double price;
   final String imageString;
-  final List<SubModifier> subModifiers;
+   List<SubModifier> subModifiers = [];
   int quantity;
 
   CartItem({required this.name, required this.price, required this.code, required this.imageString, this.quantity = 1, required this.subModifiers});
