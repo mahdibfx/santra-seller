@@ -1,11 +1,14 @@
-import 'package:date_picker_timeline/date_picker_widget.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 
 import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../buttons/material_buttons/primaryButtonWithIcon.dart';
+import 'DatePicker/date_picker.dart';
 
 class OrderDate extends StatelessWidget {
 
@@ -18,42 +21,58 @@ class OrderDate extends StatelessWidget {
             height: 250,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+      
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Choose Delivery Date:", style: UIDataTextStyles.textMedium),
               
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-    shape: CircleBorder(),
-    padding: EdgeInsets.all(10),
-
-  ),
-                   
-                      onPressed: null,
-                        child: Icon(Icons.cabin),
+                    SizedBox(
+                          width:32,
+                          height: 32,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                      
+                            shape: CircleBorder(),
+                            padding: EdgeInsets.all(5),
+                            primary: UIDataColors.lightGrayColor
+                          ),
+                        onPressed: (() => Get.back()),
+                          child: SvgPicture.asset(
+                             width: 20,
+                              height: 20,
+                                 color: UIDataColors.blackColor,
+                                    UIDATAIcons.close,
+                                    
+                              ),
+                      ).paddingOnly(top: 5),
                     ),
                   ],
-                ).paddingOnly(top: 00, left: 10, right: 10),
+                ).paddingOnly(top: 10, left: 10, right: 10),
 
                 Padding(
                   padding: const EdgeInsets.only(top: 10.0, bottom: 20.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      DatePicker(
-                        DateTime.now(),
-                        initialSelectedDate: DateTime.now(),
-                        selectionColor: Colors.black,
-                        selectedTextColor: Colors.white,
-                        onDateChange: (date) {
-                          // New date selected
-                          // setState(() {
-                          //   _selectedValue = date;
-                          // });
-                        },
-                      ),
+                       DatePicker(
+                          DateTime.now(),
+                          initialSelectedDate: DateTime.now(),
+                          selectionColor: UIDataColors.primaryColor,
+                          selectedTextColor: Colors.white,
+                          monthTextStyle: UIDataTextStyles.monthStyle,
+                          dayTextStyle: UIDataTextStyles.dayStyle,
+                          dateTextStyle: UIDataTextStyles.dateStyle,
+                          onDateChange: (date) {
+                            // New date selected
+                            // setState(() {
+                            //   _selectedValue = date;
+                            // });
+                          },
+                        ),
+                      
                     ],
               ),
                 ),
