@@ -17,7 +17,7 @@ class LoginController extends GetxController {
   bool remember = false;
   bool isvisible = true;
   var roleset;
-  final form = GlobalKey<FormState>();
+
   String emailstore = "";
   String passwordstore = "";
 
@@ -74,39 +74,38 @@ class LoginController extends GetxController {
   }
 
   void loginfunction() async {
-    if (form.currentState!.validate()) {
-      updateLoginLoadingStatus(true);
-      update();
-      try {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        var body = <String, String>{};
-        body['user_name'] = email.text;
-        body['user_password'] = password.text;
-        body["gcms_code"] = firebaseMessagingToken.toString();
-        var res =
-            await http.post(Uri.parse("${ApiData.mainurl}login"), body: body);
-        if (res.statusCode == 200) {
-          var data = jsonDecode(res.body);
-          var newdata = LoginModel.fromJson(data);
-          saveSharedPrefData(newdata.data[0], prefs);
+    updateLoginLoadingStatus(true);
+    update();
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var body = <String, String>{};
+      body['user_name'] = email.text;
+      body['user_password'] = password.text;
+      body["gcms_code"] = firebaseMessagingToken.toString();
+      var res =
+          await http.post(Uri.parse("${ApiData.mainurl}login"), body: body);
+      if (res.statusCode == 200) {
+        var data = jsonDecode(res.body);
+        var newdata = LoginModel.fromJson(data);
+        saveSharedPrefData(newdata.data[0], prefs);
 
-          update();
-          Get.offAllNamed(Routes.homeRoutes);
-        } else {
-          update();
-          CommonSnackbar.getSnackbar(
-              "Error", "Error in login", UIDataColors.redColor);
-        }
-      } catch (e) {
-        isLoading = false;
         update();
-
+        Get.offAllNamed(Routes.homeRoutes);
+      } else {
+        update();
         CommonSnackbar.getSnackbar(
-            "Server Error",
-            "Server Error or Please Check your internet connection",
-            UIDataColors.redColor);
+            "Error", "Error in login", UIDataColors.redColor);
       }
+    } catch (e) {
+      isLoading = false;
+      update();
+
+      CommonSnackbar.getSnackbar(
+          "Server Error",
+          "Server Error or Please Check your internet connection",
+          UIDataColors.redColor);
     }
+
     updateLoginLoadingStatus(false);
   }
 

@@ -27,7 +27,7 @@ class RatingOverview extends StatelessWidget {
           unratedColor: Colors.grey,
           glowColor: Colors.amber,
           itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-          itemSize: 23,
+          itemSize: 20,
           ratingWidget: RatingWidget(
               full: SvgPicture.asset(UIDATAIcons.starIconFilled,
                   color: Colors.amber),
