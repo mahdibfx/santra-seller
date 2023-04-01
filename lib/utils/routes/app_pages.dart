@@ -49,6 +49,7 @@ import '../bindings/more_screen_binding/about_us_binding.dart';
 import '../bindings/more_screen_binding/contact_binding/contact_us_binding.dart';
 import '../bindings/more_screen_binding/more_screen_binding.dart';
 import '../bindings/more_screen_binding/settings/settings_bindings.dart';
+import '../bindings/products/product_settings_bindings.dart';
 import '../bindings/splash_binding.dart';
 
 class AppPages {
@@ -124,7 +125,7 @@ class AppPages {
     GetPage(
       name: Routes.productSetting,
       page: () => ProductSettingScreen(),
-      binding: AddManualOrderBinding(),
+      binding: ProductSettingsBinding(),
     ),
     GetPage(
       name: Routes.moreScreen,

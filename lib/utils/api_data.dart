@@ -13,4 +13,5 @@ class ApiData {
   static const updateCustomer = "${mainurl}update_seller_customer";
   static const aboutUsApi = "${mainurl}new_about";
   static const contactUsApi = "${mainurl}contact_us";
+  static const productStatusApi = "${mainurl}products_enable_seller";
 }
