@@ -14,4 +14,5 @@ class ApiData {
   static const aboutUsApi = "${mainurl}new_about";
   static const contactUsApi = "${mainurl}contact_us";
   static const productStatusApi = "${mainurl}products_enable_seller";
+  static const registerSellerApi = "${mainurl}signup_seller";
 }

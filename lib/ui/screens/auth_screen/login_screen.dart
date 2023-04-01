@@ -116,32 +116,30 @@ class LoginScreen extends StatelessWidget {
                     SpacingHeight.heightlistspacing10,
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0),
-                      child: Obx(
-                        () => _.isLoading.value
-                            ? const SizedBox(
-                                child: Center(
-                                child: CircularProgressIndicator(),
-                              ))
-                            : RaisedGradientButton(
-                                gradient: const LinearGradient(
-                                  colors: <Color>[
-                                    UIDataColors.secondaryColor,
-                                    UIDataColors.secondaryColor,
-                                  ],
-                                ),
-                                btntxt: "Login",
-                                iconImage: SvgPicture.asset(
-                                  UIDATAIcons.sendIcon,
-                                  height: 25,
-                                  width: 25,
-                                  fit: BoxFit.fitWidth,
-                                ),
-                                buttontxtColor: UIDataColors.whiteColor,
-                                onPressed: () {
-                                  _.loginfunction();
-                                },
+                      child: _.isLoading
+                          ? const SizedBox(
+                              child: Center(
+                              child: CircularProgressIndicator(),
+                            ))
+                          : RaisedGradientButton(
+                              gradient: const LinearGradient(
+                                colors: <Color>[
+                                  UIDataColors.secondaryColor,
+                                  UIDataColors.secondaryColor,
+                                ],
                               ),
-                      ),
+                              btntxt: "Login",
+                              iconImage: SvgPicture.asset(
+                                UIDATAIcons.sendIcon,
+                                height: 25,
+                                width: 25,
+                                fit: BoxFit.fitWidth,
+                              ),
+                              buttontxtColor: UIDataColors.whiteColor,
+                              onPressed: () {
+                                _.loginfunction();
+                              },
+                            ),
                     ),
                     // TextButton(
                     //   onPressed: () {
