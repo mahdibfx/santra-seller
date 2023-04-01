@@ -73,6 +73,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../models/seller_all_products_model.dart';
+
 class CartController extends GetxController {
    bool isLoading = false;
    int deliveryCharges = 10;
@@ -131,6 +133,43 @@ class CartController extends GetxController {
     icon: Icon(Icons.check_circle_outline, color: Colors.green),
   );
 }
+
+
+addItemForCustomer() async {
+    var data = {
+      "customer_name": "", // This is the name of the customer
+      "coupn_code": "", // coupon code if any other wise send 0
+      "sub_total": "", // This is the subtotal amount
+      "total_delivery_charges": "", //this is the delivery charges
+      "total_discount": "", //this is the discount if any otherwise send 0
+      "d_reason": "", // If there is any discount otherwise send no_discount
+      "d_type": "", //this is discount type otherwise send no_discount
+      "seller_code": "", // this is seller code
+      "c_number": "", //this is customer number
+      "c_id": "", // send seller code here
+      "user_id": "", // send customer id here
+      "payment_method": "", // Send cash
+      "c_address": "", //Address of the customer
+      "area_customer": "", // area of the customer
+      "building_number": "", // building  of the customer
+      "order_remarks": "", // order comments if any otherwise send no_remarks
+      "user_tips": "", // if any otherwise send 0
+// Order Item array to be posted as follows
+// Field name: "", order_items and items in this array are as follows(id, name, price, quantity, item_remarks, modifiers_list(modifier_code,name_modifier,price_modifier))
+      "order_items": [
+        {
+          "id": "",
+          "name": "",
+          "price": "",
+          "quantity": "",
+          "item_remarks": "",
+          "modifiers_list": [
+            {"modifier_code": "", "name_modifier": "", "price_modifier ": ""}
+          ]
+        }
+      ],
+    };
+  }
 }
 
 class CartItem {
@@ -138,7 +177,8 @@ class CartItem {
   final String code;
   final double price;
   final String imageString;
+  final List<SubModifier> subModifiers;
   int quantity;
 
-  CartItem({required this.name, required this.price, required this.code, required this.imageString, this.quantity = 1});
+  CartItem({required this.name, required this.price, required this.code, required this.imageString, this.quantity = 1, required this.subModifiers});
 }

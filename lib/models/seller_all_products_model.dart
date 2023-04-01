@@ -17,14 +17,14 @@ class SelllerAllProductsModel {
   });
 
   bool? status;
-  List<Datum>? data;
+  List<SellerProductData>? data;
 
   factory SelllerAllProductsModel.fromJson(Map<String, dynamic> json) =>
       SelllerAllProductsModel(
         status: json["status"],
         data: json["data"] == null
             ? []
-            : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+            : List<SellerProductData>.from(json["data"]!.map((x) => SellerProductData.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -35,14 +35,14 @@ class SelllerAllProductsModel {
       };
 }
 
-class Datum {
-  Datum({
+class SellerProductData {
+  SellerProductData({
     this.products,
   });
 
   List<Product>? products;
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory SellerProductData.fromJson(Map<String, dynamic> json) => SellerProductData(
         products: json["products"] == null
             ? []
             : List<Product>.from(

@@ -20,12 +20,20 @@ import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../utils/uidata.dart';
+import '../../widgets/snackbar/common_snackbar.dart';
 
-class AddManulOrder extends StatelessWidget {
+class AddManulOrder extends StatefulWidget {
+  AddManulOrder({super.key});
+
+  @override
+  State<AddManulOrder> createState() => _AddManulOrderState();
+}
+
+class _AddManulOrderState extends State<AddManulOrder> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
-  AddManulOrder({super.key});
   CartController cartController = Get.put((CartController()));
+
   Widget bodyData(context) {
     Size size = MediaQuery.of(context).size;
     return GetBuilder<AddManualOrderController>(
@@ -80,140 +88,266 @@ class AddManulOrder extends StatelessWidget {
                                             showBottomSheet(
                                                 context: context,
                                                 builder: (context) {
-                                                  return Container(
-                                                    // height: size.height -
-                                                    //     size.height * 0.27,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10)),
-                                                    width: double.infinity,
-                                                    child:
-                                                        SingleChildScrollView(
-                                                      child: Column(
-                                                        children: [
-                                                          productImageOnSheet(
-                                                              size,
-                                                              manualOrderController,
-                                                              index),
-                                                          Column(
-                                                            children: [
-                                                              ProductNameAndPriceOnSheet(
-                                                                productName: manualOrderController
-                                                                    .allProducts?[
-                                                                        index]
-                                                                    .productName,
-                                                                productPrice: manualOrderController
-                                                                    .allProducts?[
-                                                                        index]
-                                                                    .productPrice,
-                                                              ),
-                                                              SpacingHeight
-                                                                  .heightlistspacing10,
-                                                              // PriceOnSelection(
-                                                              //     onMinus: () {
-                                                              //   print("Minus");
-                                                              // }, onPlus: () {
-                                                              //   print("Plus");
-                                                              // }),
-                                                              // SpacingHeight
-                                                              //     .heightlistspacing10,
-                                                              if (manualOrderController
-                                                                  .allProducts![
-                                                                      index]
-                                                                  .modifiers!
-                                                                  .isNotEmpty)
-                                                                Text(
-                                                                  manualOrderController
-                                                                      .allProducts![
+                                                  return StatefulBuilder(
+                                                      builder:
+                                                          (context, setStatec) {
+                                                    return Container(
+                                                      // height: size.height -
+                                                      //     size.height * 0.27,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10)),
+                                                      width: double.infinity,
+                                                      child:
+                                                          SingleChildScrollView(
+                                                        child: Column(
+                                                          children: [
+                                                            productImageOnSheet(
+                                                                size,
+                                                                manualOrderController,
+                                                                index),
+                                                            Column(
+                                                              children: [
+                                                                ProductNameAndPriceOnSheet(
+                                                                  productName: manualOrderController
+                                                                      .allProducts?[
                                                                           index]
-                                                                      .modifiers!
-                                                                      .length
-                                                                      .toString(),
-                                                                  textScaleFactor:
-                                                                      5,
+                                                                      .productName,
+                                                                  productPrice: manualOrderController
+                                                                      .allProducts?[
+                                                                          index]
+                                                                      .productPrice,
                                                                 ),
-                                                              if (manualOrderController
-                                                                  .allProducts![
-                                                                      index]
-                                                                  .modifiers!
-                                                                  .isNotEmpty)
-                                                                ListView
-                                                                    .builder(
-                                                                  physics:
-                                                                      const NeverScrollableScrollPhysics(),
-                                                                  padding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  shrinkWrap:
-                                                                      true,
-                                                                  itemCount: 3,
-                                                                  itemBuilder:
-                                                                      (context,
-                                                                          index) {
-                                                                    return CheckBoxModifier(
-                                                                      modName:
-                                                                          "Small",
-                                                                      price:
-                                                                          "230",
-                                                                      isChecked:
-                                                                          false,
-                                                                    );
+                                                                SpacingHeight
+                                                                    .heightlistspacing10,
+                                                                // PriceOnSelection(
+                                                                //     onMinus: () {
+                                                                //   print("Minus");
+                                                                // }, onPlus: () {
+                                                                //   print("Plus");
+                                                                // }),
+                                                                // SpacingHeight
+                                                                //     .heightlistspacing10,
+                                                                // if (manualOrderController
+                                                                //     .allProducts![
+                                                                //         index]
+                                                                //     .modifiers!
+                                                                //     .isNotEmpty)
+                                                                //   Text(
+                                                                //     manualOrderController
+                                                                //         .allProducts![
+                                                                //             index]
+                                                                //         .modifiers!
+                                                                //         .length
+                                                                //         .toString(),
+                                                                //     textScaleFactor:
+                                                                //         5,
+                                                                //   ),
+                                                                manualOrderController
+                                                                        .allProducts![
+                                                                            index]
+                                                                        .modifiers!
+                                                                        .isNotEmpty
+                                                                    ? ListView
+                                                                        .builder(
+                                                                        physics:
+                                                                            const NeverScrollableScrollPhysics(),
+                                                                        padding:
+                                                                            EdgeInsets.zero,
+                                                                        shrinkWrap:
+                                                                            true,
+                                                                        itemCount: manualOrderController
+                                                                            .allProducts![index]
+                                                                            .modifiers!
+                                                                            .length,
+                                                                        itemBuilder:
+                                                                            (context,
+                                                                                index2) {
+                                                                          return
+                                                                              //manualOrderController.allProducts![index].modifiers![index2].selectionType.toString().toLowerCase() == "checkbox"
+                                                                              // ?
+                                                                              ListView.builder(
+                                                                                  shrinkWrap: true,
+                                                                                  itemCount: manualOrderController.allProducts![index].modifiers![index2].subModifiers!.length,
+                                                                                  itemBuilder: (context, sebIndex) {
+                                                                                    var newData = manualOrderController.allProducts![index].modifiers![index2].subModifiers!;
+                                                                                    return Padding(
+                                                                                      padding: const EdgeInsets.only(bottom: 8.0),
+                                                                                      child: Row(
+                                                                                        children: [
+                                                                                          manualOrderController.allProducts![index].modifiers![index2].selectionType.toString().toLowerCase() != "checkbox"
+                                                                                              ? GestureDetector(
+                                                                                                  onTap: () {
+                                                                                                    for (var e in newData) {
+                                                                                                      if (e.byDefault.toString() == '1') {
+                                                                                                        setStatec(() {
+                                                                                                          e.byDefault = '0';
+                                                                                                        });
+                                                                                                      }
+                                                                                                    }
+                                                                                                    setStatec(() {
+                                                                                                      if (newData[sebIndex].byDefault.toString() == '1') {
+                                                                                                        newData[sebIndex].byDefault = '0';
+                                                                                                      } else {
+                                                                                                        newData[sebIndex].byDefault = '1';
+                                                                                                      }
+                                                                                                    });
+                                                                                                  },
+                                                                                                  child: Container(
+                                                                                                    width: 28,
+                                                                                                    height: 28,
+                                                                                                    decoration: BoxDecoration(
+                                                                                                      color: newData[sebIndex].byDefault.toString() == "1" ? Colors.black : Colors.white, // border color
+                                                                                                      shape: BoxShape.circle,
+                                                                                                    ),
+                                                                                                    child: Padding(
+                                                                                                      padding: const EdgeInsets.all(2), // border width
+                                                                                                      child: Container(
+                                                                                                        // or ClipRRect if you need to clip the content
+                                                                                                        decoration: BoxDecoration(
+                                                                                                          shape: BoxShape.circle,
+                                                                                                          color: Colors.amber, // inner circle color
+                                                                                                          border: Border.all(
+                                                                                                              width: 2, //                   <--- border width here5
+                                                                                                              color: Colors.white),
+                                                                                                        ),
+                                                                                                        child: Container(), // inner content
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                )
+                                                                                              : Checkbox(
+                                                                                                  value: newData[sebIndex].byDefault.toString() == "1" ? true : false,
+                                                                                                  onChanged: (value) {
+                                                                                                    var minVals = manualOrderController.allProducts![index].modifiers![index2].limitModifiers.toString().split(",").first;
+                                                                                                    var maxVals = manualOrderController.allProducts![index].modifiers![index2].limitModifiers.toString().split(",").last;
+                                                                                                    var byDefList = [];
+                                                                                                    for (var e in newData) {
+                                                                                                      if (e.byDefault.toString() == "1") {
+                                                                                                        byDefList.add("bedfltt");
+                                                                                                      }
+                                                                                                    }
+
+                                                                                                    if (byDefList.length >= int.parse(maxVals) && newData[sebIndex].byDefault.toString() == "0") {
+                                                                                                      CommonSnackbar.getSnackbar("Error", "Your selection limit is $maxVals", UIDataColors.redColor);
+                                                                                                    } else {
+                                                                                                      if (value!) {
+                                                                                                        setStatec(() {
+                                                                                                          newData[sebIndex].byDefault = "1";
+                                                                                                        });
+                                                                                                        print(newData[sebIndex].byDefault.toString());
+                                                                                                      } else {
+                                                                                                        setStatec(() {
+                                                                                                          newData[sebIndex].byDefault = "0";
+                                                                                                        });
+                                                                                                        print(newData[sebIndex].byDefault.toString());
+                                                                                                      }
+                                                                                                    }
+
+                                                                                                    manualOrderController.update();
+                                                                                                    // manualOrderController.changeStatus(newData[sebIndex].byDefault.toString(),value!);
+                                                                                                  },
+                                                                                                ),
+                                                                                          Text(newData[sebIndex].nameModifier.toString()),
+                                                                                          Text("${newData[sebIndex].priceModifier}AED"),
+                                                                                        ],
+                                                                                      ),
+                                                                                    );
+                                                                                  });
+                                                                          // : SizedBox();
+                                                                        },
+                                                                      )
+                                                                    : SizedBox(),
+
+                                                                SpacingHeight
+                                                                    .heightlistspacing10,
+                                                                SizedBox(
+                                                                  height: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .height *
+                                                                      0.03,
+                                                                ),
+                                                                PrimaryButtonWithIcon(
+                                                                  onPressed:
+                                                                      () {
+                                                                    for (var e in manualOrderController
+                                                                        .allProducts![
+                                                                            index]
+                                                                        .modifiers!) {
+                                                                      var minLimits = e
+                                                                          .limitModifiers
+                                                                          .toString()
+                                                                          .split(
+                                                                              ",")
+                                                                          .first;
+                                                                      var listnew =
+                                                                          [];
+                                                                      for (var s
+                                                                          in e.subModifiers!) {
+                                                                        if (s.byDefault.toString() ==
+                                                                            '1') {
+                                                                          listnew
+                                                                              .add('byDefault');
+                                                                        }
+                                                                      }
+                                                                      if (listnew
+                                                                              .length <
+                                                                          int.parse(
+                                                                              minLimits)) {
+                                                                        return CommonSnackbar.getSnackbar(
+                                                                            "Error",
+                                                                            "Your minimum limit is $minLimits",
+                                                                            UIDataColors.redColor);
+                                                                      }
+                                                                    }
+
+                                                                  
+                                                                    var itemValue =
+                                                                        manualOrderController
+                                                                            .allProducts![index];
+
+                                                                    var data = CartItem(
+                                                                        imageString: itemValue
+                                                                            .productImages
+                                                                            .toString(),
+                                                                        name: itemValue
+                                                                            .productName
+                                                                            .toString(),
+                                                                        price: double.parse(itemValue
+                                                                            .productPrice
+                                                                            .toString()),
+                                                                        code: itemValue
+                                                                            .productCode
+                                                                            .toString(),
+                                                                            subModifiers: []);
+                                                                    manualOrderController
+                                                                        .addIntoCart(
+                                                                            data);
+                                                                              Get.back();
+
+                                                                    // Get.offAllNamed(
+                                                                    //     Routes
+                                                                    //         .cartroute);
                                                                   },
-                                                                ),
-                                                              SpacingHeight
-                                                                  .heightlistspacing10,
-                                                              SizedBox(
-                                                                height: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .height *
-                                                                    0.03,
-                                                              ),
-                                                              PrimaryButtonWithIcon(
-                                                                onPressed: () {
-                                                                  Get.back();
-                                                                  var itemValue =
-                                                                      manualOrderController
-                                                                              .allProducts![
-                                                                          index];
-
-                                                                  var data = CartItem(
-                                                                      imageString: itemValue
-                                                                          .productImages
-                                                                          .toString(),
-                                                                      name: itemValue
-                                                                          .productName
-                                                                          .toString(),
-                                                                      price: double.parse(itemValue
-                                                                          .productPrice
-                                                                          .toString()),
-                                                                      code: itemValue
-                                                                          .productCode
-                                                                          .toString());
-                                                                  manualOrderController
-                                                                      .addIntoCart(
-                                                                          data);
-
-                                                                  // Get.offAllNamed(
-                                                                  //     Routes
-                                                                  //         .cartroute);
-                                                                },
-                                                                btntxt:
-                                                                    "Add To Cart",
-                                                                iconImage:
-                                                                    UIDATAIcons
-                                                                        .cartIcon,
-                                                              )
-                                                            ],
-                                                          ).paddingOnly(
-                                                              left: 12,
-                                                              right: 12,
-                                                              top: 18),
-                                                        ],
+                                                                  btntxt:
+                                                                      "Add To Cart",
+                                                                  iconImage:
+                                                                      UIDATAIcons
+                                                                          .cartIcon,
+                                                                )
+                                                              ],
+                                                            ).paddingOnly(
+                                                                left: 12,
+                                                                right: 12,
+                                                                top: 18),
+                                                          ],
+                                                        ),
                                                       ),
-                                                    ),
-                                                  );
+                                                    );
+                                                  });
                                                 });
                                           },
                                         );

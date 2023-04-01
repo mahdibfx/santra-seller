@@ -20,6 +20,7 @@ class AddManualOrderController extends GetxController {
 
   List<Product>? allProducts = [];
   List<Product> filteredProducts = [];
+    List<CheckProduct> addOnProducts = [];
 
   changeLoadingStatus(bool value) {
     isLoading = value;
@@ -94,6 +95,16 @@ class AddManualOrderController extends GetxController {
     update();
   }
 
+  changeStatus(String newData, bool value){
+if(value){
+  newData == "1";
+  update();
+}else{
+  newData == "0";
+  update();
+}
+  }
+
   @override
   void onInit() async {
     if (Get.arguments != null) {
@@ -108,4 +119,20 @@ class AddManualOrderController extends GetxController {
 
     super.onInit();
   }
+}
+
+
+class CheckProduct {
+  String groupCode;
+  String minValue;
+  String maxValue;
+  SubModifier subModifier;
+  bool isChecked = false;
+  CheckProduct({
+    required this.subModifier,
+    required this.groupCode,
+    required this.maxValue,
+    required this.minValue,
+    required this.isChecked,
+  });
 }
