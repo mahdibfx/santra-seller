@@ -79,6 +79,7 @@ class CustomDetailBottomSheet extends StatelessWidget {
                         iconImage: UIDATAIcons.userIcon,
                         onPressed: () {
                               Get.back();
+                                   Get.toNamed(Routes.addNewcustomer);
                         },
                       ),
                  )
