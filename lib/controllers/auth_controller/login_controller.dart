@@ -93,6 +93,7 @@ class LoginController extends GetxController {
         Get.offAllNamed(Routes.homeRoutes);
       } else {
         update();
+        print(res.body);
         CommonSnackbar.getSnackbar(
             "Error", "Error in login", UIDataColors.redColor);
       }

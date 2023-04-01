@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'dart:convert';
 import 'package:flutter_svg/svg.dart';
+import 'package:santra_seller/ui/widgets/dropdown/common_dropdown.dart';
 
 import '../../../controllers/home_controller/home_controller.dart';
 import '../../../utils/routes/app_routes.dart';
@@ -17,7 +18,7 @@ class HomeScreen extends StatelessWidget {
 
   HomeScreen({super.key});
 
-  Widget bodyData() {
+  Widget bodyData(context) {
     return GetBuilder<HomeController>(
       builder: (_) {
         return _.isLoading
@@ -46,21 +47,26 @@ class HomeScreen extends StatelessWidget {
                                     BorderRadius.all(Radius.circular(15)),
                               ),
                               child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
-                                  Container(
-                                    // height: 40,
-                                    child: SvgPicture.asset(
-                                      UIDataImage.dollarIconSVG,
-                                      fit: BoxFit.fitWidth,
-                                    ),
-                                  ).marginOnly(left: 20, right: 10, top: 10),
                                   Column(
                                     children: [
-                                      Text('Orders Monthly',
-                                          style: UIDataTextStyles.h2.copyWith(
-                                              color: Colors.white,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500)),
+                                      Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            UIDATAIcons.walletIcon,
+                                            fit: BoxFit.fitWidth,
+                                          ),
+                                          Text('Orders Monthly',
+                                              style: UIDataTextStyles.h2
+                                                  .copyWith(
+                                                      color: Colors.white,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w500)),
+                                        ],
+                                      ),
                                       SpacingHeight.heightlistspacing15,
                                       Text(
                                         _.homeData!.ordersMonthly.toString(),
@@ -69,17 +75,185 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ).marginOnly(top: 15, right: 10),
-                                  VerticalDivider(
+                                  const VerticalDivider(
                                     width: 2,
                                     color: UIDataColors.whiteColor,
                                   ).marginOnly(top: 20, bottom: 20),
                                   Column(
                                     children: [
-                                      Text('Profit Monthly',
-                                          style: UIDataTextStyles.h2.copyWith(
-                                              color: Colors.white,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500)),
+                                      Row(
+                                        children: [
+                                          Text('Profit Monthly',
+                                              style: UIDataTextStyles.h2
+                                                  .copyWith(
+                                                      color: Colors.white,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w500)),
+                                          GestureDetector(
+                                            onTap: () {
+                                              showModalBottomSheet(
+
+                                                  // backgroundColor:
+                                                  //     Colors.transparent,
+                                                  context: context,
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.vertical(
+                                                            top:
+                                                                Radius.circular(
+                                                                    25.0)),
+                                                  ),
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                      children: [
+                                                        Column(
+                                                          children: [
+                                                            Row(
+                                                              children: [
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .all(
+                                                                          8.0),
+                                                                  child:
+                                                                      SvgPicture
+                                                                          .asset(
+                                                                    UIDATAIcons
+                                                                        .dollarCircle,
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                  "Monthly Total Earnings",
+                                                                  style:
+                                                                      UIDataTextStyles
+                                                                          .title,
+                                                                ),
+                                                                const Spacer(),
+                                                                GestureDetector(
+                                                                  onTap: () {
+                                                                    Get.back();
+                                                                  },
+                                                                  child:
+                                                                      SvgPicture
+                                                                          .asset(
+                                                                    UIDATAIcons
+                                                                        .close,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Divider(
+                                                              height: 40,
+                                                              thickness: 0.3,
+                                                              color: UIDataColors
+                                                                  .primaryColor,
+                                                            ),
+                                                            Row(
+                                                              children: [
+                                                                Expanded(
+                                                                  child: MyDropdown(
+                                                                      options: [
+                                                                        "2",
+                                                                        "3",
+                                                                        "4"
+                                                                      ],
+                                                                      selectedOption:
+                                                                          "2",
+                                                                      prefixIcon:
+                                                                          UIDATAIcons
+                                                                              .calendarIcon),
+                                                                ),
+                                                                SpacingWidth
+                                                                    .widthlistspacing15,
+                                                                Expanded(
+                                                                  child: MyDropdown(
+                                                                      options: [
+                                                                        "5",
+                                                                        "6",
+                                                                        "7"
+                                                                      ],
+                                                                      selectedOption:
+                                                                          "5",
+                                                                      prefixIcon:
+                                                                          UIDATAIcons
+                                                                              .calendarIcon),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ],
+                                                        ).paddingOnly(
+                                                            left: 15,
+                                                            right: 15,
+                                                            top: 20),
+                                                        SpacingHeight
+                                                            .heightlistspacing25,
+                                                        Container(
+                                                            color: Color(
+                                                                0xFFEEEEEE),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceEvenly,
+                                                              children: [
+                                                                Column(
+                                                                  children: [
+                                                                    Text(
+                                                                      "Orders Monthly",
+                                                                      style: UIDataTextStyles
+                                                                          .title
+                                                                          .copyWith(
+                                                                              fontWeight: FontWeight.bold),
+                                                                    ),
+                                                                    Text("24",
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                40,
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            color: UIDataColors.primaryColor)),
+                                                                  ],
+                                                                ),
+                                                                Column(
+                                                                  children: [
+                                                                    Text(
+                                                                      "Profit Monthly",
+                                                                      style: UIDataTextStyles
+                                                                          .title
+                                                                          .copyWith(
+                                                                              fontWeight: FontWeight.bold),
+                                                                    ),
+                                                                    Text("24",
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                40,
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            color: UIDataColors.primaryColor)),
+                                                                  ],
+                                                                )
+                                                              ],
+                                                            ).paddingSymmetric(
+                                                                vertical: 20,
+                                                                horizontal:
+                                                                    20)),
+                                                        SpacingHeight
+                                                            .heightlistspacing20
+                                                      ],
+                                                    );
+                                                  });
+                                            },
+                                            child: SvgPicture.asset(
+                                                UIDATAIcons.filterIcon),
+                                          )
+                                        ],
+                                      ),
                                       SpacingHeight.heightlistspacing15,
                                       Text(
                                         _.homeData!.profitMonthly.toString(),
@@ -98,20 +272,22 @@ class HomeScreen extends StatelessWidget {
                       Row(
                         children: [
                           HomeCardWidget(
-                            onTap: (){
+                            onTap: () {
                               Get.toNamed(Routes.santraorders);
                             },
                             heading: 'Santra Orders',
-                            count: _.homeData!.santraOrders[0].orderCount.toString(),
+                            count: _.homeData!.santraOrders[0].orderCount
+                                .toString(),
                             imageAsset: UIDataImage.santraOrderSVG,
                           ),
                           SpacingWidth.widthlistspacing,
                           HomeCardWidget(
-                            onTap: (){
-                               Get.toNamed(Routes.manualOrderScreen);
+                            onTap: () {
+                              Get.toNamed(Routes.manualOrderScreen);
                             },
                             heading: 'Manual Orders',
-                            count: _.homeData!.manualOrders[0].orderCount.toString(),
+                            count: _.homeData!.manualOrders[0].orderCount
+                                .toString(),
                             imageAsset: UIDataImage.manualOrderSVG,
                           ),
                         ],
@@ -120,17 +296,18 @@ class HomeScreen extends StatelessWidget {
                       Row(
                         children: [
                           HomeCardWidget(
-                            onTap: (){
-                                Get.toNamed(Routes.pendingOrderScreen);
+                            onTap: () {
+                              Get.toNamed(Routes.pendingOrderScreen);
                             },
                             heading: 'Pending Orders',
-                            count: _.homeData!.pendingOrders[0].orderCount.toString(),
+                            count: _.homeData!.pendingOrders[0].orderCount
+                                .toString(),
                             imageAsset: UIDataImage.pendingOrderSVG,
                           ),
                           SpacingWidth.widthlistspacing,
                           HomeCardWidget(
-                            onTap: (){
-                                 Get.toNamed(Routes.allOrderScreen);
+                            onTap: () {
+                              Get.toNamed(Routes.allOrderScreen);
                             },
                             heading: 'All Orders',
                             count: _.allOrders.length.toString(),
@@ -149,8 +326,9 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(
-      bodyData: bodyData(),
+      bodyData: bodyData(context),
       backgroundcolor: UIDataColors.whiteColor,
+      backGroundImage: UIDataImage.backgroundImage,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,

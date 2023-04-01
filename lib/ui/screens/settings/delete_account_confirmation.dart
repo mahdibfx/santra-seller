@@ -21,72 +21,70 @@ class DeleteAccountConfirmation extends StatelessWidget {
               constraints: BoxConstraints(
                 maxHeight: Get.height / 1.1,
               ),
-              child: Form(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    HeadingWithIcon(
-                        icon: UIDATAIcons.deleteIcon, btntxt: "Delete Account"),
-                    SpacingHeight.heightlistspacing15,
-                    const Text(
-                      "Enter OTP",
-                      style: UIDataTextStyles.h1Heavy,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  HeadingWithIcon(
+                      icon: UIDATAIcons.deleteIcon, btntxt: "Delete Account"),
+                  SpacingHeight.heightlistspacing15,
+                  const Text(
+                    "Enter OTP",
+                    style: UIDataTextStyles.h1Heavy,
+                  ),
+                  SpacingHeight.heightlistspacing15,
+                  const Text("An 6 digit code has been sent to",
+                      style: TextStyle(color: Colors.black, fontSize: 16)),
+                  SpacingHeight.heightlistspacing5,
+                  Text(_.phoneNumber ?? "",
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w600, fontSize: 16)),
+
+                  SpacingHeight.heightlistspacing15,
+                  Form(
+                    key: _.form,
+                    child: CommonTextField(
+                      isTextHidden: false,
+                      fillcolor: Colors.white,
+                      keyboardType: TextInputType.phone,
+                      labelText: "OTP",
+                      maxLength: 6,
+                      controller: _.otpController,
+                      validator: (val) {
+                        if (val.isEmpty) {
+                          return "Please Enter 6 Digits OTP Code";
+                        } else if (_.otpController.text.toString() !=
+                            _.otpCode.toString()) {
+                          return "Incorrect OTP Code";
+                        } else {
+                          return null;
+                        }
+                      },
                     ),
-                    SpacingHeight.heightlistspacing15,
-                    const Text("An 6 digit code has been sent to",
-                        style: TextStyle(color: Colors.black, fontSize: 16)),
-                    SpacingHeight.heightlistspacing5,
-                    Text(_.phoneNumber ?? "",
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 16)),
+                  ),
 
-                    SpacingHeight.heightlistspacing15,
-                    Form(
-                      key: _.form,
-                      child: CommonTextField(
-                        isTextHidden: false,
-                        fillcolor: Colors.white,
-                        keyboardType: TextInputType.phone,
-                        labelText: "OTP",
-                        maxLength: 6,
-                        controller: _.otpController,
-                        validator: (val) {
-                          if (val.isEmpty) {
-                            return "Please Enter 6 Digits OTP Code";
-                          } else if (_.otpController.text.toString() !=
-                              _.otpCode.toString()) {
-                            return "Incorrect OTP Code";
-                          } else {
-                            return null;
-                          }
-                        },
-                      ),
-                    ),
+                  SpacingHeight.heightlistspacing5,
+                  _.isdelAccLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : BorderButton(
+                          btntxt: "Delete Account",
+                          backEndColor: Colors.white,
+                          borderColor: UIDataColors.redColor,
+                          buttontxtColor: UIDataColors.redColor,
+                          onPressed: () {
+                            _.deleteAccount();
+                          },
+                        ),
 
-                    SpacingHeight.heightlistspacing5,
-                    _.isdelAccLoading
-                        ? const Center(child: CircularProgressIndicator())
-                        : BorderButton(
-                            btntxt: "Delete Account",
-                            backEndColor: Colors.white,
-                            borderColor: UIDataColors.redColor,
-                            buttontxtColor: UIDataColors.redColor,
-                            onPressed: () {
-                              _.deleteAccount();
-                            },
-                          ),
+                  SpacingHeight.heightlistspacing15,
+                  // Obx(() => _.isLoading
+                  //         ? const Center(
+                  //             child: CircularProgressIndicator(),
+                  //           )
+                  //         :
 
-                    SpacingHeight.heightlistspacing15,
-                    // Obx(() => _.isLoading
-                    //         ? const Center(
-                    //             child: CircularProgressIndicator(),
-                    //           )
-                    //         :
-
-                    //),
-                  ],
-                ).marginOnly(left: 20.0, right: 20.0),
-              ),
+                  //),
+                ],
+              ).marginOnly(left: 20.0, right: 20.0),
             ),
           ),
         );
