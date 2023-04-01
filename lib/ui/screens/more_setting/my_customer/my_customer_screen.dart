@@ -64,6 +64,7 @@ class MyCustomerScreen extends StatelessWidget {
                                     "No Name",
                                 number: _.allCustomers?[index].customerMobile ??
                                     "No Contact Number",
+                                  forView: comingFromCart,
                                 onTap: () {
                                   if (!comingFromCart) {
                                   Get.to(() => EditCustomerDetails(

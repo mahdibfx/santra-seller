@@ -129,4 +129,6 @@ class UIDataTextStyles {
       // fontWeight: FontWeight.bold,
       // fontFamily: 'Markpro',
       letterSpacing: 0.0);
+
+      
 }
