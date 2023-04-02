@@ -17,7 +17,6 @@ class ForgotPasswordController extends GetxController {
   bool confirmPasswordSecuretext = true;
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmNewPasswordController = TextEditingController();
-  final form = GlobalKey<FormState>();
   TextEditingController otpController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   String? otpCode;
@@ -29,6 +28,17 @@ class ForgotPasswordController extends GetxController {
 
   updateResetPassLoadingState(bool value) {
     isResetPassLoading = value;
+    update();
+  }
+
+  disposeValues() {
+    newPasswordController.clear();
+    confirmNewPasswordController.clear();
+    otpController.clear();
+    phoneController.clear();
+    otpCode = null;
+    sellerCode = null;
+
     update();
   }
 
@@ -84,6 +94,7 @@ class ForgotPasswordController extends GetxController {
         customOntapDialog(
             "Success", "You Password Has Been Successfully Updated!", "Okay",
             () {
+          disposeValues();
           Get.back();
           Get.offNamed(Routes.loginRoutes);
         });

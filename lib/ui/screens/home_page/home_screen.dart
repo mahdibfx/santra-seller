@@ -107,146 +107,143 @@ class HomeScreen extends StatelessWidget {
                                                   ),
                                                   builder:
                                                       (BuildContext context) {
-                                                    return Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: [
-                                                        Column(
-                                                          children: [
-                                                            Row(
-                                                              children: [
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          8.0),
-                                                                  child:
-                                                                      SvgPicture
-                                                                          .asset(
-                                                                    UIDATAIcons
-                                                                        .dollarCircle,
+                                                    return StatefulBuilder(
+                                                        builder: (BuildContext
+                                                                context,
+                                                            StateSetter
+                                                                setState) {
+                                                      return Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          Column(
+                                                            children: [
+                                                              Row(
+                                                                children: [
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsets.all(
+                                                                            8.0),
+                                                                    child: SvgPicture
+                                                                        .asset(
+                                                                      UIDATAIcons
+                                                                          .dollarCircle,
+                                                                    ),
                                                                   ),
-                                                                ),
-                                                                Text(
-                                                                  "Monthly Total Earnings",
-                                                                  style:
-                                                                      UIDataTextStyles
-                                                                          .title,
-                                                                ),
-                                                                const Spacer(),
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    Get.back();
-                                                                  },
-                                                                  child:
-                                                                      SvgPicture
-                                                                          .asset(
-                                                                    UIDATAIcons
-                                                                        .close,
+                                                                  const Text(
+                                                                    "Monthly Total Earnings",
+                                                                    style: UIDataTextStyles
+                                                                        .title,
                                                                   ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            Divider(
-                                                              height: 40,
-                                                              thickness: 0.3,
-                                                              color: UIDataColors
-                                                                  .primaryColor,
-                                                            ),
-                                                            Row(
-                                                              children: [
-                                                                Expanded(
-                                                                  child: MyDropdown(
-                                                                      options: [
-                                                                        "2",
-                                                                        "3",
-                                                                        "4"
-                                                                      ],
+                                                                  const Spacer(),
+                                                                  GestureDetector(
+                                                                    onTap: () {
+                                                                      Get.back();
+                                                                    },
+                                                                    child: SvgPicture
+                                                                        .asset(
+                                                                      UIDATAIcons
+                                                                          .close,
+                                                                      color: Colors
+                                                                          .black,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              const Divider(
+                                                                height: 40,
+                                                                thickness: 0.3,
+                                                                color: UIDataColors
+                                                                    .primaryColor,
+                                                              ),
+                                                              Row(
+                                                                children: [
+                                                                  Expanded(
+                                                                    child:
+                                                                        MyDropdown(
+                                                                      options: _
+                                                                          .years,
                                                                       selectedOption:
-                                                                          "2",
+                                                                          _.selectedYear,
                                                                       prefixIcon:
                                                                           UIDATAIcons
-                                                                              .calendarIcon),
-                                                                ),
-                                                                SpacingWidth
-                                                                    .widthlistspacing15,
-                                                                Expanded(
-                                                                  child: MyDropdown(
-                                                                      options: [
-                                                                        "5",
-                                                                        "6",
-                                                                        "7"
-                                                                      ],
-                                                                      selectedOption:
-                                                                          "5",
-                                                                      prefixIcon:
-                                                                          UIDATAIcons
-                                                                              .calendarIcon),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ).paddingOnly(
-                                                            left: 15,
-                                                            right: 15,
-                                                            top: 20),
-                                                        SpacingHeight
-                                                            .heightlistspacing25,
-                                                        Container(
-                                                            color: Color(
-                                                                0xFFEEEEEE),
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceEvenly,
-                                                              children: [
-                                                                Column(
-                                                                  children: [
-                                                                    Text(
-                                                                      "Orders Monthly",
-                                                                      style: UIDataTextStyles
-                                                                          .title
-                                                                          .copyWith(
-                                                                              fontWeight: FontWeight.bold),
+                                                                              .calendarIcon,
                                                                     ),
-                                                                    Text("24",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                40,
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                            color: UIDataColors.primaryColor)),
-                                                                  ],
-                                                                ),
-                                                                Column(
-                                                                  children: [
-                                                                    Text(
-                                                                      "Profit Monthly",
-                                                                      style: UIDataTextStyles
-                                                                          .title
-                                                                          .copyWith(
-                                                                              fontWeight: FontWeight.bold),
-                                                                    ),
-                                                                    Text("24",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                40,
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                            color: UIDataColors.primaryColor)),
-                                                                  ],
+                                                                  ),
+                                                                  SpacingWidth
+                                                                      .widthlistspacing15,
+                                                                  Expanded(
+                                                                    child: MyDropdown(
+                                                                        options: _.months,
+                                                                        selectedOption: _.selectedMonth,
+                                                                        prefixIcon: UIDATAIcons.calendarIcon,
+                                                                        doSomething: () {
+                                                                          // _.filterOrder();
+
+                                                                          print(
+                                                                              "DOOOOOOO");
+                                                                        }),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ).paddingOnly(
+                                                              left: 15,
+                                                              right: 15,
+                                                              top: 20),
+                                                          SpacingHeight
+                                                              .heightlistspacing25,
+                                                          _.isFilterOrderLoading
+                                                              ? const Center(
+                                                                  child:
+                                                                      CircularProgressIndicator(),
                                                                 )
-                                                              ],
-                                                            ).paddingSymmetric(
-                                                                vertical: 20,
-                                                                horizontal:
-                                                                    20)),
-                                                        SpacingHeight
-                                                            .heightlistspacing20
-                                                      ],
-                                                    );
+                                                              : Container(
+                                                                  color: const Color(
+                                                                      0xFFEEEEEE),
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceEvenly,
+                                                                    children: [
+                                                                      Column(
+                                                                        children: [
+                                                                          Text(
+                                                                            "Orders Monthly",
+                                                                            style:
+                                                                                UIDataTextStyles.title.copyWith(fontWeight: FontWeight.bold),
+                                                                          ),
+                                                                          const Text(
+                                                                              "24",
+                                                                              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: UIDataColors.primaryColor)),
+                                                                        ],
+                                                                      ),
+                                                                      Column(
+                                                                        children: [
+                                                                          Text(
+                                                                            "Profit Monthly",
+                                                                            style:
+                                                                                UIDataTextStyles.title.copyWith(fontWeight: FontWeight.bold),
+                                                                          ),
+                                                                          const Text(
+                                                                              "24",
+                                                                              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: UIDataColors.primaryColor)),
+                                                                        ],
+                                                                      )
+                                                                    ],
+                                                                  ).paddingSymmetric(
+                                                                      vertical:
+                                                                          20,
+                                                                      horizontal:
+                                                                          20)),
+                                                          SpacingHeight
+                                                              .heightlistspacing20
+                                                        ],
+                                                      );
+                                                    });
                                                   });
                                             },
                                             child: SvgPicture.asset(

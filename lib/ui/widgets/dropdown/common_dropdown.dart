@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 
 import '../../../utils/uidata.dart';
 
@@ -10,12 +11,14 @@ class MyDropdown extends StatefulWidget {
   var validator;
   String? prefixIcon;
   String? label;
+  Function? doSomething;
   MyDropdown(
       {super.key,
       required this.options,
       required this.selectedOption,
       required this.prefixIcon,
       this.label,
+      this.doSomething,
       this.validator});
 
   @override
@@ -43,7 +46,10 @@ class _MyDropdownState extends State<MyDropdown> {
         }).toList(),
         onChanged: (newValue) {
           // do other stuff with _category
-          setState(() => widget.selectedOption = newValue);
+          setState(() {
+            widget.selectedOption = newValue;
+            widget.doSomething;
+          });
         },
         icon: Padding(
           padding: const EdgeInsets.only(right: 8.0),
