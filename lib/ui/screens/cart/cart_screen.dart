@@ -67,7 +67,9 @@ class CartScreen extends StatelessWidget {
                     CartPayemntDescriptionCard(
                       subtotal: '${_.totalPrice.toStringAsFixed(2)}',
                       total: '${_.grandTotal.toStringAsFixed(2)}',
-                      deliveryCharges: _.deliveryCharges.toString(),
+                      deliveryCharges: _.deliveryCharges.toString(), dateSelected: (dateTime ) { 
+                        _.updateDate(dateTime);
+                       },
                     ),
 
 
