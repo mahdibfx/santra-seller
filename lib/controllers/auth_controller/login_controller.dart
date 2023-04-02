@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/login_model.dart';
@@ -17,7 +18,7 @@ class LoginController extends GetxController {
   bool remember = false;
   bool isvisible = true;
   var roleset;
-
+var sellerStatus;
   String emailstore = "";
   String passwordstore = "";
 
@@ -87,6 +88,9 @@ class LoginController extends GetxController {
       if (res.statusCode == 200) {
         var data = jsonDecode(res.body);
         var newdata = LoginModel.fromJson(data);
+        sellerStatus = newdata.data[0].message.toString();
+        GetStorage().write('sellerStatus', sellerStatus);
+        update();
         saveSharedPrefData(newdata.data[0], prefs);
 
         update();
@@ -126,10 +130,10 @@ class LoginController extends GetxController {
 
   }
 
- Future<String> sellerStatus()async{
+ Future<String> sellerSt()async{
      SharedPreferences prefs = await SharedPreferences.getInstance();
-     var status = prefs.get('sellerStatus');
+      sellerStatus = prefs.get('sellerStatus');
 
-    return status.toString();
+    return sellerStatus.toString();
   }
 }

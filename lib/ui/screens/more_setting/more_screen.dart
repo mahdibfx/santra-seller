@@ -112,7 +112,7 @@ class MoreSettingScreen extends StatelessWidget {
       appTitle: 'Add customer',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAllNamed(Routes.signuproutes);
+        Get.offAllNamed(Routes.addManualOrder);
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

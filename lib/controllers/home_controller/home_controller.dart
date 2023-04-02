@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:santra_seller/models/home_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,7 +14,7 @@ import 'package:http/http.dart' as http;
 
 class HomeController extends GetxController {
   bool isFilterOrderLoading = false;
-  bool isLoading = false;
+  bool isLoading = true;
   bool acceptOrder = false;
   bool rejectOrder = false;
   bool cancelOrder = false;
@@ -22,6 +23,7 @@ class HomeController extends GetxController {
   String? orderMonthly;
   String? profitMonthly;
   List<Order> allOrders = [];
+  var sellerStatusNew;
   List<String> years = [
     '2022',
     '2023',
@@ -63,6 +65,7 @@ class HomeController extends GetxController {
     }
     isLoading = true;
     update();
+    sellerSt();
     homeDataCall();
     update();
     super.onInit();
@@ -100,7 +103,7 @@ class HomeController extends GetxController {
     if (sellerCode != null) {
       isLoading = true;
       update();
-      // try {
+      try {
       var body = <String, String>{};
       body['seller_code'] = sellerCode!;
       var res = await http.post(Uri.parse("${ApiData.mainurl}seller_home"),
@@ -117,16 +120,16 @@ class HomeController extends GetxController {
       } else {
         CommonSnackbar.getSnackbar("Error", "Error ", UIDataColors.redColor);
       }
-      // } catch (e) {
-      //   print("check error ${e}");
-      //   isLoading = false;
-      //   update();
-      //   // Get.offAllNamed(Routes.homeRoutes);
-      //   CommonSnackbar.getSnackbar(
-      //       "Server Error",
-      //       "Server Error or Please Check your internet connection",
-      //       UIDataColors.redColor);
-      // }
+      } catch (e) {
+        print("check error ${e}");
+        isLoading = false;
+        update();
+        // Get.offAllNamed(Routes.homeRoutes);
+        CommonSnackbar.getSnackbar(
+            "Server Error",
+            "Server Error or Please Check your internet connection",
+            UIDataColors.redColor);
+      }
     }
   }
 
@@ -266,5 +269,11 @@ class HomeController extends GetxController {
       default:
         return status;
     }
+  }
+ sellerSt() {
+    sellerStatusNew = GetStorage().read('sellerStatus');
+   update();
+print(sellerStatusNew);
+
   }
 }

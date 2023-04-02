@@ -16,10 +16,10 @@ class SplashController extends GetxController {
   checkAlreadyLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var checkemail = prefs.getString("email");
-    var checkpassword = prefs.getString("password");
-    if (checkemail != null || checkpassword != null) {
-      // Get.offAllNamed(Routes.homeRoutes);
-      Get.offAndToNamed(Routes.loginRoutes);
+    // var checkpassword = prefs.getString("password");
+    if (checkemail != null) {
+      Get.offAllNamed(Routes.homeRoutes);
+      // Get.offAndToNamed(Routes.loginRoutes);
     } else {
       Get.offAndToNamed(Routes.loginRoutes);
     }

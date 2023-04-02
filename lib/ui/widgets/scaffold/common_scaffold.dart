@@ -4,14 +4,22 @@ import 'package:flutter_svg/svg.dart';
 
 // package imports
 import 'package:get/get.dart';
+import 'package:santra_seller/controllers/auth_controller/login_controller.dart';
+import 'package:santra_seller/controllers/home_controller/home_controller.dart';
 
 // lib imports
+import '../../../controllers/cart_controller/cart_controller.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../buttons/icon_button.dart';
 import '../custom_float.dart';
+import '../dialogs/custom_dialogs.dart';
 import '../drawer/clip_drawer.dart';
+// LoginController loginController = Get.put(LoginController());
+// HomeController homeController = Get.put(HomeController());
+// CartController cartController = Get.put(CartController());
+
 
 class CommonScaffold extends StatelessWidget {
   final resizeToAvoid;
@@ -53,6 +61,7 @@ class CommonScaffold extends StatelessWidget {
   final appBarSearchShow;
   final appBarAction;
   bool? showActions;
+  final bool isBackArrowShow;
 
   CommonScaffold(
       {this.resizeToAvoid,
@@ -92,6 +101,7 @@ class CommonScaffold extends StatelessWidget {
       this.actionSecondIconCallBack,
       this.appBarSearch,
       this.appBarSearchShow = false,
+      this.isBackArrowShow = false,
       this.appBarAction,
       this.showActions = true});
 
@@ -144,7 +154,7 @@ class CommonScaffold extends StatelessWidget {
                   style: UIDataTextStyles.h2,
                   textAlign: TextAlign.center,
                 ),
-              ),
+              ).marginOnly(top: 20),
               ReusableIconButton(
                 iconClr: UIDataColors.primaryColor,
                 icon: UIDATAIcons.more2,
@@ -174,6 +184,12 @@ class CommonScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final LoginController loginController = Get.find<LoginController>();
+                final HomeController homeController = Get.find<HomeController>();
+
+        
+
+
     return Scaffold(
       resizeToAvoidBottomInset: resizeToAvoid,
       key: scaffoldKey != null ? scaffoldKey : null,
@@ -187,7 +203,7 @@ class CommonScaffold extends StatelessWidget {
               //automaticallyImplyLeading: automaticallyImplyLeading,
               systemOverlayStyle: brightness,
 
-              leading: GestureDetector(
+              leading: isBackArrowShow ? GestureDetector(
                 onTap: () {
                   Get.back();
                 },
@@ -205,7 +221,7 @@ class CommonScaffold extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
+              ) : SizedBox(),
               //leading,
               backgroundColor: appbarcolor,
               title: SvgPicture.asset(
@@ -260,8 +276,8 @@ class CommonScaffold extends StatelessWidget {
                       ? backgroundcolor
                       : const Color(0xffffffff),
                   image: DecorationImage(
-                      colorFilter: new ColorFilter.mode(
-                          Colors.black.withOpacity(0.6), BlendMode.dstATop),
+                      colorFilter:  ColorFilter.mode(
+                          Colors.black.withOpacity(0.1), BlendMode.dstATop),
                       image: backGroundImage != null
                           ? AssetImage(backGroundImage!)
                           : const AssetImage(UIDataImage.splash),
@@ -281,7 +297,13 @@ class CommonScaffold extends StatelessWidget {
                     )
                   : null,
               icon: floatingIcon,
-              qrCallback: qrCallback,
+              // ignore: unrelated_type_equality_checks
+              qrCallback:  homeController.sellerStatusNew != "done" ? (){
+       customOntapDialog('Alert', 'Your status is not approved.', 'ok', (){
+        print(homeController.sellerStatusNew);
+        Get.back();
+       } );
+      } :qrCallback,
             )
           : null,
       floatingActionButtonLocation: centerDocked
@@ -303,6 +325,7 @@ class CartIconWithBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CartController cartController = Get.find<CartController>();
     return GestureDetector(
       onTap: onTap!,
       child: Stack(
@@ -320,7 +343,7 @@ class CartIconWithBadge extends StatelessWidget {
                   bottom: 25,
                   child: Container(
                     height: 20,
-                    width: 20,
+                    // width: 20,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         color: const Color(0xffC32C4C),
@@ -328,10 +351,13 @@ class CartIconWithBadge extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 5.0, vertical: 2),
-                      child: Text(
-                        value ?? "",
-                        style: UIDataTextStyles.caption,
-                      ),
+                      child: 
+                      
+                       Text(
+                          cartController.itemCount.toString(),
+                          style: UIDataTextStyles.caption,
+                        ),
+                      
                     ),
                   ))
               : const SizedBox(),
@@ -350,6 +376,8 @@ class NotificationIconWithBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+            final HomeController homeController = Get.find<HomeController>();
+
     return Stack(
       clipBehavior: Clip.none,
       alignment: Alignment.center,
@@ -365,7 +393,7 @@ class NotificationIconWithBadge extends StatelessWidget {
                 bottom: 25,
                 child: Container(
                   height: 20,
-                  width: 20,
+                  // width: 20,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       color: const Color(0xffC32C4C),
@@ -374,7 +402,8 @@ class NotificationIconWithBadge extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 5.0, vertical: 2),
                     child: Text(
-                      value ?? "",
+                      homeController.homeData == null ? '0' :
+                    homeController.homeData!.totalNotifications.toString(),
                       style: UIDataTextStyles.caption,
                     ),
                   ),

@@ -47,7 +47,7 @@ class HomeCardWidget extends StatelessWidget {
                     Text(
                       heading,
                       style: UIDataTextStyles.h2
-                          .copyWith(color: UIDataColors.primaryColor),
+                          .copyWith(color: UIDataColors.primaryColor, fontSize: 13),
                     ),
                     const Spacer(),
                     Text(

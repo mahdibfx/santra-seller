@@ -21,7 +21,8 @@ class HomeScreen extends StatelessWidget {
   Widget bodyData(context) {
     return GetBuilder<HomeController>(
       builder: (_) {
-        return _.isLoading
+        return 
+        _.isLoading
             ? const SizedBox(
                 child: Center(
                 child: CircularProgressIndicator(),
@@ -58,6 +59,7 @@ class HomeScreen extends StatelessWidget {
                                             UIDATAIcons.walletIcon,
                                             fit: BoxFit.fitWidth,
                                           ),
+                                           SpacingWidth.widthlistspacing15,
                                           Text('Orders Monthly',
                                               style: UIDataTextStyles.h2
                                                   .copyWith(
@@ -69,7 +71,7 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                       SpacingHeight.heightlistspacing15,
                                       Text(
-                                        _.homeData!.ordersMonthly.toString(),
+                                       _.homeData==  null ? '0' : _.homeData!.ordersMonthly.toString(),
                                         style: UIDataTextStyles.counth1
                                             .copyWith(color: Colors.white),
                                       ),
@@ -90,6 +92,8 @@ class HomeScreen extends StatelessWidget {
                                                       fontSize: 14,
                                                       fontWeight:
                                                           FontWeight.w500)),
+                                  SpacingWidth.widthlistspacing15,
+
                                           GestureDetector(
                                             onTap: () {
                                               showModalBottomSheet(
@@ -252,7 +256,7 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                       SpacingHeight.heightlistspacing15,
                                       Text(
-                                        _.homeData!.profitMonthly.toString(),
+                                      _.homeData == null ? '0':  _.homeData!.profitMonthly.toString(),
                                         style: UIDataTextStyles.counth1
                                             .copyWith(color: Colors.white),
                                       ),

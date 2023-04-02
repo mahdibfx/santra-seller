@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 
+import '../../controllers/auth_controller/login_controller.dart';
 import '../../utils/routes/app_routes.dart';
 import '../../utils/uidata.dart';
 import 'package:get/get.dart';
@@ -14,10 +16,11 @@ class CustomFloat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+   
     return FloatingActionButton(
       clipBehavior: Clip.antiAlias,
       mini: isMini,
-      onPressed: qrCallback,
+      onPressed:  qrCallback,
       backgroundColor: UIDataColors.primaryColor,
       child: Ink(
         // decoration: new BoxDecoration(
