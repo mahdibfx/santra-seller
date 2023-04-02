@@ -181,10 +181,7 @@ class HomeScreen extends StatelessWidget {
                                                                         selectedOption: _.selectedMonth,
                                                                         prefixIcon: UIDATAIcons.calendarIcon,
                                                                         doSomething: () {
-                                                                          // _.filterOrder();
-
-                                                                          print(
-                                                                              "DOOOOOOO");
+                                                                          _.filterOrder();
                                                                         }),
                                                                   ),
                                                                 ],
@@ -216,8 +213,8 @@ class HomeScreen extends StatelessWidget {
                                                                             style:
                                                                                 UIDataTextStyles.title.copyWith(fontWeight: FontWeight.bold),
                                                                           ),
-                                                                          const Text(
-                                                                              "24",
+                                                                          Text(
+                                                                              _.orderMonthly ?? "0",
                                                                               style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: UIDataColors.primaryColor)),
                                                                         ],
                                                                       ),
@@ -228,8 +225,8 @@ class HomeScreen extends StatelessWidget {
                                                                             style:
                                                                                 UIDataTextStyles.title.copyWith(fontWeight: FontWeight.bold),
                                                                           ),
-                                                                          const Text(
-                                                                              "24",
+                                                                          Text(
+                                                                              _.profitMonthly ?? "00",
                                                                               style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: UIDataColors.primaryColor)),
                                                                         ],
                                                                       )

@@ -19,6 +19,8 @@ class HomeController extends GetxController {
   bool cancelOrder = false;
   String? sellerCode;
   HomeData? homeData;
+  String? orderMonthly;
+  String? profitMonthly;
   List<Order> allOrders = [];
   List<String> years = [
     '2022',
@@ -78,7 +80,11 @@ class HomeController extends GetxController {
       body['filter_year'] = selectedYear.toString();
       var response = await http.post(url, body: body);
       if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        profitMonthly = data['data'][0]['profit_monthly'];
+        orderMonthly = data['data'][0]['orders_monthly'];
         print(response.body);
+        print(profitMonthly);
       } else {
         print(response.body);
       }
