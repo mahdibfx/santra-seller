@@ -20,7 +20,7 @@ class PaymentLinkBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  SizedBox(
-            height: 230,
+            height: 250,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
       
@@ -29,10 +29,10 @@ class PaymentLinkBottomSheet extends StatelessWidget {
 
                      Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Create a payment link:", style: UIDataTextStyles.textMedium),
-              
-                    SizedBox(
+                                     children: [
+                                       Text("Create a payment link:", style: UIDataTextStyles.textMedium),
+                                 
+                                       SizedBox(
                           width:32,
                           height: 32,
                       child: ElevatedButton(
@@ -51,79 +51,74 @@ class PaymentLinkBottomSheet extends StatelessWidget {
                                     
                               ),
                       ).paddingOnly(top: 5),
-                    ),
-                  ],
-                ).paddingOnly(top: 10, left: 10, right: 10),
+                                       ),
+                                     ],
+                                   ).paddingOnly(top: 10, left: 10, right: 10),
            Divider(
                     height: 1,
                     color: Colors.green.withOpacity(0.2),
-                  ).paddingOnly(top: 5),
+                  ).paddingOnly(top: 10, bottom: 0, left: 10, right: 10),
 
+                  Text("Send this link to your customer so they can checkout. You will be notified by santra when it pays.").paddingAll(10),
 
+                    CommonTextField(
+                      readOnly: true,
+                            labelText: "Link",
+                            isTextHidden: false,
+                            fillcolor: Color.fromARGB(255, 255, 255, 255),
+                            keyboardType: TextInputType.text,
+                            initVal: cartdController.link.text,
+                          ).paddingOnly(right: 10, left: 10),
+                        
 
-
-
-
-
-                             Divider(
+    Divider(
                     height: 1,
                     color: Colors.green.withOpacity(0.2),
-                  ).paddingOnly(top: 5),
+                  ).paddingOnly(right: 10, left: 10, top: 5),
 
-
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Send this link to your customer so they can checkout. You will be notified by santra when it pays."),
-
-                      CommonTextField(
-                        controller: cartdController.link,
-                        labelText: "Link",
-                        isTextHidden: false,
-                        fillcolor: UIDataColors.whiteColor,
-                        keyboardType: TextInputType.text,
-                        initVal: cartdController.link.text,
-                      ),
-
-                    ],
-                  ),
-
-
-                  Row(
-                    children: [
- Padding(
-                   padding: const EdgeInsets.only(left: 10, top: 20),
-                   child: PrimaryButtonWithIcon(
-                        btntxt: "Copy Link",
-                        iconImage: UIDATAIcons.cardOpen,
-                        onPressed: () {
-                          Get.back();
-                            
-                   
-                          
-                        
-                        },
-                      ),
-                 ),
-
-                 Padding(
-                   padding: const EdgeInsets.only(left: 10),
-                   child: PrimaryButtonWithIcon(
-                        btntxt: "Share",
-                        backEndColor: UIDataColors.whiteColor,
-                        buttontxtColor: UIDataColors.primaryColor,
-                        iconImageColor: UIDataColors.primaryColor,
-                        iconImage: UIDATAIcons.userIcon,
-                        onPressed: () {
+                  Expanded(
+                    child: Row(
+                      
+                      children: [
+                        Expanded(
+                          child: Padding(
+                                           padding: const EdgeInsets.only(left: 0, top: 0),
+                                           child: PrimaryButtonWithIcon(
+                            btntxt: "Copy Link",
+                            iconImage: UIDATAIcons.cardOpen,
+                            onPressed: () {
                               Get.back();
-                                  
-                        },
-                      ),
-                 )
-
-
-                    ],
-                  ).paddingAll(20)
+                               Get.offAllNamed(Routes.homeRoutes);
+                                
+                                           
+                              
+                            
+                            },
+                          ),
+                                         ),
+                        ),
+                  
+                            Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: PrimaryButtonWithIcon(
+                            btntxt: "Share",
+                            backEndColor: UIDataColors.whiteColor,
+                            buttontxtColor: UIDataColors.primaryColor,
+                            iconImageColor: UIDataColors.primaryColor,
+                            iconImage: UIDATAIcons.userIcon,
+                            onPressed: () {
+                                  Get.back();
+                                      
+                            },
+                          ),
+                     ),
+                                   )
+                  
+                  
+                      ],
+                    ).paddingOnly(right: 10, left: 10),
+                  )
 
                  
 

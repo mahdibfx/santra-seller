@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:santra_seller/models/customers/view_all_customers.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:santra_seller/utils/api_data.dart';
@@ -14,7 +15,7 @@ import '../../cart_controller/cart_controller.dart';
 
 class MyCustomerController extends GetxController {
 
-  final cartdController = Get.find<CartController>();
+  final cartdController = Get.put(CartController());
   
   TextEditingController link = TextEditingController();
   bool isViewCustomerLoading = false;
@@ -216,7 +217,7 @@ class MyCustomerController extends GetxController {
       var url = Uri.parse(ApiData.generateLink);
       var response = await http.post(url, body: finalSubmitData);
       if (response.statusCode == 200) {
-        // var decodedJson = jsonDecode(response.body);
+        var decodedJson = jsonDecode(response.body);
         // var data = SelllerAllProductsModel.fromJson(decodedJson);
         // if (data.data![0].products!.isNotEmpty) {
         //   allProducts = data.data?[0].products;
@@ -224,7 +225,11 @@ class MyCustomerController extends GetxController {
         // selllerAllProductsModel =
         //     selllerAllProductsModelFromJson(response.body);
         // update();
-        link.text =  "asdasdasdasdasdas";
+
+        
+
+
+        link.text =  decodedJson['data'].first['payment_link'];
          updateCustomerLoadingState(false);
           popupPaymentlink = true;
           return true;
@@ -266,6 +271,7 @@ class MyCustomerController extends GetxController {
       "building_number": customerDetail.buildingNumber, // building  of the customer
       "order_remarks": "no_remarks", // order comments if any otherwise send no_remarks
       "user_tips": "0", // if any otherwise send 0
+      "order_schedule": cartdController.selectedDateTime != null ? DateFormat('yyyy-MM-dd').format(cartdController.selectedDateTime!) : "",
 // Order Item array to be posted as follows
 // Field name: "", order_items and items in this array are as follows(id, name, price, quantity, item_remarks, modifiers_list(modifier_code,name_modifier,price_modifier))
       "order_items": jsonEncode(cartdController.cartItems),
