@@ -262,14 +262,6 @@ class CommonScaffold extends StatelessWidget {
                   color: backgroundcolor != null
                       ? backgroundcolor
                       : const Color(0xffffffff),
-
-                  // gradient: new LinearGradient(
-                  //   colors: [
-                  //     const Color(0xFFd7e1ec),
-                  //     const Color(0xFFffffff),
-                  //   ],
-                  //   begin: Alignment(1.0, 1.0),
-                  // ),
                 )
               : BoxDecoration(
                   color: backgroundcolor != null
@@ -378,38 +370,43 @@ class NotificationIconWithBadge extends StatelessWidget {
   Widget build(BuildContext context) {
             final HomeController homeController = Get.find<HomeController>();
 
-    return Stack(
-      clipBehavior: Clip.none,
-      alignment: Alignment.center,
-      children: [
-        SvgPicture.asset(
-          UIDATAIcons.bell,
-          height: 30,
-          color: Colors.black,
-        ),
-        showBadge == true
-            ? Positioned(
-                right: -7,
-                bottom: 25,
-                child: Container(
-                  height: 20,
-                  // width: 20,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: const Color(0xffC32C4C),
-                      borderRadius: BorderRadius.circular(50)),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 5.0, vertical: 2),
-                    child: Text(
-                      homeController.homeData == null ? '0' :
-                    homeController.homeData!.totalNotifications.toString(),
-                      style: UIDataTextStyles.caption,
+    return GestureDetector(
+      onTap: (){
+        Get.toNamed(Routes.notificationscreen);
+      },
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.center,
+        children: [
+          SvgPicture.asset(
+            UIDATAIcons.bell,
+            height: 30,
+            color: Colors.black,
+          ),
+          showBadge == true
+              ? Positioned(
+                  right: -7,
+                  bottom: 25,
+                  child: Container(
+                    height: 20,
+                    // width: 20,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: const Color(0xffC32C4C),
+                        borderRadius: BorderRadius.circular(50)),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5.0, vertical: 2),
+                      child: Text(
+                        homeController.homeData == null ? '0' :
+                      homeController.homeData!.totalNotifications.toString(),
+                        style: UIDataTextStyles.caption,
+                      ),
                     ),
-                  ),
-                ))
-            : const SizedBox(),
-      ],
+                  ))
+              : const SizedBox(),
+        ],
+      ),
     );
   }
 }

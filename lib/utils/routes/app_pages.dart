@@ -8,6 +8,7 @@ import 'package:santra_seller/ui/screens/cart/cart_screen.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/ui/screens/customer/add_customer.dart';
 import 'package:santra_seller/ui/screens/more_setting/customer_reviews.dart';
+import 'package:santra_seller/ui/screens/notification/notification_screen.dart';
 import 'package:santra_seller/ui/screens/order_detail/all_order_screen.dart';
 import 'package:santra_seller/ui/screens/order_detail/manual_order_screen.dart';
 import 'package:santra_seller/ui/screens/order_detail/pending_order_screen.dart';
@@ -54,6 +55,7 @@ import '../bindings/more_screen_binding/about_us_binding.dart';
 import '../bindings/more_screen_binding/contact_binding/contact_us_binding.dart';
 import '../bindings/more_screen_binding/more_screen_binding.dart';
 import '../bindings/more_screen_binding/settings/settings_bindings.dart';
+import '../bindings/notification/notification_binding.dart';
 import '../bindings/products/product_settings_bindings.dart';
 import '../bindings/splash_binding.dart';
 
@@ -109,6 +111,12 @@ class AppPages {
       name: Routes.pendingOrderScreen,
       page: () => PendingOrderScreen(),
       binding: HomeBindings(),
+      // middlewares: [AuthMiddleware()],
+    ),
+    GetPage(
+      name: Routes.notificationscreen,
+      page: () => NotificationScreen(),
+      binding: NotificationBinding(),
       // middlewares: [AuthMiddleware()],
     ),
     GetPage(
