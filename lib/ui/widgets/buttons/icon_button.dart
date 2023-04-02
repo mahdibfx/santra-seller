@@ -14,6 +14,7 @@ class ReusableIconButton extends StatelessWidget {
     return TextButton(
       onPressed: onPressed,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         // Replace with a Row for horizontal icon + text
         children: <Widget>[
           SvgPicture.asset(

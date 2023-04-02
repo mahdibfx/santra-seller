@@ -52,50 +52,51 @@ class CommonScaffold extends StatelessWidget {
   final appBarSearch;
   final appBarSearchShow;
   final appBarAction;
+  bool? showActions;
 
-  CommonScaffold({
-    this.resizeToAvoid,
-    this.backgroundcolor,
-    this.appTitle,
-    this.leading,
-    this.automaticallyImplyLeading = true,
-    this.brightness,
-    this.appbarstyle,
-    this.appbarImage = false,
-    this.appbarSvg = false,
-    this.tabar = false,
-    this.appbarcolor,
-    this.extendBodyBehindAppBar = false,
-    this.backarrow,
-    this.bodyData,
-    this.showFAB = false,
-    this.showDrawer = false,
-    this.showClipdrawer = false,
-    this.showAppBar = false,
-    this.backGroundImage,
-    this.actionFirstIcon = false,
-    this.actionSecondIcon = false,
-    this.scaffoldKey,
-    this.showBottomNav = false,
-    this.centerDocked = false,
-    this.floatingIcon,
-    this.elevation = 4.0,
-    this.enableHeader = false,
-    this.headerName = false,
-    this.headerTitle = '',
-    this.headerSubTitle = '',
-    this.topButton = 'menu',
-    this.qrCallback,
-    this.headerImage = '',
-    this.actionFirstIconCallBack,
-    this.actionSecondIconCallBack,
-    this.appBarSearch,
-    this.appBarSearchShow = false,
-    this.appBarAction,
-  });
+  CommonScaffold(
+      {this.resizeToAvoid,
+      this.backgroundcolor,
+      this.appTitle,
+      this.leading,
+      this.automaticallyImplyLeading = true,
+      this.brightness,
+      this.appbarstyle,
+      this.appbarImage = false,
+      this.appbarSvg = false,
+      this.tabar = false,
+      this.appbarcolor,
+      this.extendBodyBehindAppBar = false,
+      this.backarrow,
+      this.bodyData,
+      this.showFAB = false,
+      this.showDrawer = false,
+      this.showClipdrawer = false,
+      this.showAppBar = false,
+      this.backGroundImage,
+      this.actionFirstIcon = false,
+      this.actionSecondIcon = false,
+      this.scaffoldKey,
+      this.showBottomNav = false,
+      this.centerDocked = false,
+      this.floatingIcon,
+      this.elevation = 4.0,
+      this.enableHeader = false,
+      this.headerName = false,
+      this.headerTitle = '',
+      this.headerSubTitle = '',
+      this.topButton = 'menu',
+      this.qrCallback,
+      this.headerImage = '',
+      this.actionFirstIconCallBack,
+      this.actionSecondIconCallBack,
+      this.appBarSearch,
+      this.appBarSearchShow = false,
+      this.appBarAction,
+      this.showActions = true});
 
   Widget myBottomBar() => BottomAppBar(
-        shape: CircularNotchedRectangle(),
+        shape: const CircularNotchedRectangle(),
         // color: UIDataColors.blue,//shape of notch
         notchMargin: 5, //
         // shape:
@@ -109,38 +110,26 @@ class CommonScaffold extends StatelessWidget {
         //     ),
         // )),
         clipBehavior: Clip.antiAlias,
-        child: Container(
+        child: SizedBox(
           height: Get.height / 11,
-          // decoration: ShapeDecoration(
-          //   shape: RoundedRectangleBorder(
-          //     borderRadius:
-          //     BorderRadius.only(
-          //       topLeft: Radius.circular(20.0),
-          //       topRight: Radius.circular(20.0),
-          //       bottomLeft: Radius.circular(20.0),
-          //       bottomRight: Radius.circular(20.0),
-          //     ),
-          //   ),
-          // ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               ReusableIconButton(
                 icon: UIDATAIcons.homeIcon,
-                iconClr: Get.currentRoute == Routes.homeRoutes
-                    ? UIDataColors.primaryColor
-                    : Colors.grey,
-                // Icon(
-                //   Icons.home,
-
-                // ),
+                iconClr: UIDataColors.primaryColor,
                 btntxt: Text(
                   "Home",
                   style: Get.currentRoute == Routes.homeRoutes
-                      ? UIDataTextStyles.title
-                          .copyWith(fontSize: 14, fontWeight: FontWeight.w800)
+                      ? UIDataTextStyles.title.copyWith(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w800,
+                          color: UIDataColors.primaryColor)
                       : UIDataTextStyles.subTitle.copyWith(
-                          fontSize: 12, fontWeight: FontWeight.normal),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
                 ),
                 onPressed: () {
                   Get.offAllNamed(Routes.homeRoutes);
@@ -149,75 +138,28 @@ class CommonScaffold extends StatelessWidget {
                   }
                 },
               ),
-              // ReusableIconButton(
-              //   icon: Icon(
-              //     Icons.cleaning_services,
-              //     color: Get.currentRoute == Routes.createrequestroute
-              //         ? UIDataColors.fbbtnColor
-              //         : Colors.grey,
-              //   ),
-              //   btntxt: Text(
-              //     "Services",
-              //     style: Get.currentRoute == Routes.createrequestroute
-              //         ? UIDataTextStyles.bottomcolor
-              //         : UIDataTextStyles.btntext1,
-              //   ),
-              //   onPressed: () {
-              //     // if (Get.currentRoute != Routes.createrequestroute) {
-              //     //   Get.offAllNamed(Routes.createrequestroute);
-              //     // }
-              //   },
-              // ),
-              // ReusableHomeIconButton(
-              //   icon: Icon(
-              //     Icons.home,
-              //     color: Get.currentRoute == Routes.homeRoutes
-              //         ? UIDataColors.fbbtnColor
-              //         : Colors.grey,
-              //   ),
-              //   btntxt: Text(
-              //     "Home",
-              //     style: Get.currentRoute == Routes.homeRoutes
-              //         ? UIDataTextStyles.bottomcolor
-              //         : UIDataTextStyles.btntext1,
-              //   ),
-              //   onPressed: () {
-              //     Get.offAllNamed(Routes.homeRoutes);
-              //     // if (Get.currentRoute != Routes.orderRoutes) {
-              //     //   Get.toNamed(Routes.orderRoutes);
-              //     // }
-              //   },
-              // ),
-
-              // ReusableIconButton(
-              //   icon: Icon(
-              //     Icons.history,
-              //     color: Get.currentRoute == Routes.historyrotues
-              //         ? UIDataColors.fbbtnColor
-              //         : Colors.grey,
-              //   ),
-              //   btntxt: Text(
-              //     "History",
-              //     style: Get.currentRoute == Routes.historyrotues
-              //         ? UIDataTextStyles.bottomcolor
-              //         : UIDataTextStyles.btntext1,
-              //   ),
-              //   onPressed: () {
-              //     // if (Get.currentRoute != Routes.historyrotues) {
-              //     //   Get.offAllNamed(Routes.historyrotues);
-              //     // }
-              //   },
-              // ),
+              const Center(
+                child: Text(
+                  'Add Order',
+                  style: UIDataTextStyles.h2,
+                  textAlign: TextAlign.center,
+                ),
+              ),
               ReusableIconButton(
-                iconClr: Get.currentRoute == Routes.moreScreen
-                    ? UIDataColors.primaryColor
-                    : Colors.grey,
-                icon: UIDATAIcons.homeIcon,
+                iconClr: UIDataColors.primaryColor,
+                icon: UIDATAIcons.more2,
                 btntxt: Text(
                   "More",
                   style: Get.currentRoute == Routes.moreScreen
-                      ? UIDataTextStyles.title
-                      : UIDataTextStyles.subTitle,
+                      ? UIDataTextStyles.title.copyWith(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w800,
+                          color: UIDataColors.primaryColor)
+                      : UIDataTextStyles.subTitle.copyWith(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
                 ),
                 onPressed: () {
                   if (Get.currentRoute != Routes.moreScreen) {
@@ -225,40 +167,6 @@ class CommonScaffold extends StatelessWidget {
                   }
                 },
               ),
-              // ReusableIconButton(
-              //   icon: Icon(Icons.request_page_outlined, color:
-              //   // Get.currentRoute
-              //   //     == Routes.reportsRoutes
-              //   //     ? UIDataColors.btnColor
-              //   //     :
-              //   Colors.grey,
-              //   ),
-              //   btntxt: Text("Reports" , style:
-              //   // Get.currentRoute
-              //   //     == Routes.reportsRoutes ? UIDataTextStyles.btntext :
-              //   UIDataTextStyles.btntext1,),
-              //   onPressed: () {
-              //     // if (Get.currentRoute != Routes.reportsRoutes) {
-              //     //   // Get.toNamed(Routes.orderRoutes);
-              //     // }
-              //   },),
-              // ReusableIconButton(
-              //   icon: Icon(Icons.settings, color:
-              //   // Get.currentRoute
-              //   //     == Routes.settingsRoutes
-              //   //     ? UIDataColors.btnColor
-              //   //     :
-              //   Colors.grey,
-              //   ),
-              //   btntxt: Text("Settings" , style:
-              //   // Get.currentRoute
-              //   //     == Routes.settingsRoutes ? UIDataTextStyles.btntext :
-              //   UIDataTextStyles.btntext1,),
-              //   onPressed: () {
-              //     // if (Get.currentRoute != Routes.settingsRoutes) {
-              //     //   // Get.toNamed(Routes.settingsRoutes);
-              //     // }
-              //   },),
             ],
           ),
         ),
@@ -276,33 +184,56 @@ class CommonScaffold extends StatelessWidget {
                 color: backarrow ?? const Color(0xffF9F9F9),
               ),
               elevation: elevation,
-              automaticallyImplyLeading: automaticallyImplyLeading,
+              //automaticallyImplyLeading: automaticallyImplyLeading,
               systemOverlayStyle: brightness,
-              // leading: InkWell(child: Icon(Icons.keyboard_arrow_left),onTap:(){
-              //   Get.back(result: true);
-              // }),
-              leading: leading,
+
+              leading: GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(UIDATAIcons.back),
+                      SpacingWidth.widthlistspacing5,
+                      const Text(
+                        "Back",
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.w500),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              //leading,
               backgroundColor: appbarcolor,
-              title: appbarImage == true
-                  ? Image.asset(
-                      UIDataImage.splash,
-                      width: 100.0,
-                      height: 50.0,
-                    )
-                  : appbarSvg == true
-                      ? SvgPicture.asset(
-                          UIDataImage.sellerLogoIconSVG,
-                          height: 35,
-                          width: 35,
-                          fit: BoxFit.fitWidth,
-                        )
-                      : Text(
-                          appTitle,
-                          style: appbarstyle != null
-                              ? appbarstyle
-                              : UIDataTextStyles.h2,
-                        ),
-              actions: appBarAction,
+              title: SvgPicture.asset(
+                UIDataImage.sellerLogoIconSVG,
+                height: 35,
+                width: 35,
+                // fit: BoxFit.fitWidth,
+              ),
+              actions: showActions == true
+                  ? [
+                      CartIconWithBadge(
+                        onTap: () {
+                          Get.toNamed(Routes.cartroute);
+                        },
+                        showBadge: true,
+                        value: "2",
+                      ),
+                      SpacingWidth.widthlistspacing15,
+                      NotificationIconWithBadge(
+                        showBadge: true,
+                        value: "2",
+                      ),
+                      const SizedBox(
+                        width: 25,
+                      )
+                    ]
+                  : null,
+
               centerTitle: true,
             )
           : null,
@@ -314,7 +245,7 @@ class CommonScaffold extends StatelessWidget {
               ? BoxDecoration(
                   color: backgroundcolor != null
                       ? backgroundcolor
-                      : Color(0xffffffff),
+                      : const Color(0xffffffff),
 
                   // gradient: new LinearGradient(
                   //   colors: [
@@ -327,13 +258,13 @@ class CommonScaffold extends StatelessWidget {
               : BoxDecoration(
                   color: backgroundcolor != null
                       ? backgroundcolor
-                      : Color(0xffffffff),
+                      : const Color(0xffffffff),
                   image: DecorationImage(
                       colorFilter: new ColorFilter.mode(
                           Colors.black.withOpacity(0.6), BlendMode.dstATop),
                       image: backGroundImage != null
                           ? AssetImage(backGroundImage!)
-                          : AssetImage(UIDataImage.splash),
+                          : const AssetImage(UIDataImage.splash),
                       fit: BoxFit.cover),
                 ),
           width: (MediaQuery.of(context).size.width.ceil()).toDouble(),
@@ -342,24 +273,114 @@ class CommonScaffold extends StatelessWidget {
         );
       }),
       floatingActionButton: showFAB
-          ? Visibility(
-              visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
-              child: CustomFloat(
-                builder: centerDocked
-                    ? const Text(
-                        "5",
-                        style: TextStyle(color: Colors.white, fontSize: 10.0),
-                      )
-                    : null,
-                icon: floatingIcon,
-                qrCallback: qrCallback,
-              ),
+          ? CustomFloat(
+              builder: centerDocked
+                  ? const Text(
+                      "5",
+                      style: TextStyle(color: Colors.red, fontSize: 10.0),
+                    )
+                  : null,
+              icon: floatingIcon,
+              qrCallback: qrCallback,
             )
           : null,
       floatingActionButtonLocation: centerDocked
           ? FloatingActionButtonLocation.centerDocked
           : FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: showBottomNav ? myBottomBar() : null,
+    );
+  }
+}
+
+class CartIconWithBadge extends StatelessWidget {
+  String? icon;
+  String? value;
+  bool? showBadge;
+  var onTap;
+  CartIconWithBadge(
+      {Key? key, this.icon, this.value, this.showBadge, this.onTap})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap!,
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.center,
+        children: [
+          SvgPicture.asset(
+            UIDATAIcons.cartHallowIcon,
+            height: 30,
+            color: Colors.black,
+          ),
+          showBadge == true
+              ? Positioned(
+                  right: -7,
+                  bottom: 25,
+                  child: Container(
+                    height: 20,
+                    width: 20,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: const Color(0xffC32C4C),
+                        borderRadius: BorderRadius.circular(50)),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5.0, vertical: 2),
+                      child: Text(
+                        value ?? "",
+                        style: UIDataTextStyles.caption,
+                      ),
+                    ),
+                  ))
+              : const SizedBox(),
+        ],
+      ),
+    );
+  }
+}
+
+class NotificationIconWithBadge extends StatelessWidget {
+  String? icon;
+  String? value;
+  bool? showBadge;
+  NotificationIconWithBadge({Key? key, this.icon, this.value, this.showBadge})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      clipBehavior: Clip.none,
+      alignment: Alignment.center,
+      children: [
+        SvgPicture.asset(
+          UIDATAIcons.bell,
+          height: 30,
+          color: Colors.black,
+        ),
+        showBadge == true
+            ? Positioned(
+                right: -7,
+                bottom: 25,
+                child: Container(
+                  height: 20,
+                  width: 20,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: const Color(0xffC32C4C),
+                      borderRadius: BorderRadius.circular(50)),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 5.0, vertical: 2),
+                    child: Text(
+                      value ?? "",
+                      style: UIDataTextStyles.caption,
+                    ),
+                  ),
+                ))
+            : const SizedBox(),
+      ],
     );
   }
 }

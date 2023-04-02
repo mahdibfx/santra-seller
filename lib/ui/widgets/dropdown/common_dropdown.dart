@@ -49,10 +49,12 @@ class _MyDropdownState extends State<MyDropdown> {
           // do other stuff with _category
           setState(() {
             print("new val $newValue");
-            // print("nsel $newValue");
-            print("ON CHANGES");
+
             widget.selectedOption = newValue;
-            if (Get.currentRoute == Routes.homeRoutes) widget.doSomething!();
+
+            if (Get.currentRoute == Routes.homeRoutes &&
+                widget.options.contains("09")) widget.doSomething!();
+            print("SElected ${widget.selectedOption}");
           });
         },
         icon: Padding(

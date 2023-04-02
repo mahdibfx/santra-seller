@@ -182,7 +182,7 @@ class HomeScreen extends StatelessWidget {
                                                                         prefixIcon: UIDATAIcons.calendarIcon,
                                                                         doSomething: () {
                                                                           print(
-                                                                              _.selectedMonth);
+                                                                              "seleed ${_.selectedMonth}");
                                                                           _.filterOrder();
                                                                         }),
                                                                   ),
@@ -276,7 +276,7 @@ class HomeScreen extends StatelessWidget {
                                 .toString(),
                             imageAsset: UIDataImage.santraOrderSVG,
                           ),
-                          SpacingWidth.widthlistspacing,
+                          SpacingWidth.widthlistspacing20,
                           HomeCardWidget(
                             onTap: () {
                               Get.toNamed(Routes.manualOrderScreen);
@@ -288,7 +288,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SpacingHeight.heightlistspacing10,
+                      SpacingHeight.heightlistspacing20,
                       Row(
                         children: [
                           HomeCardWidget(
@@ -300,7 +300,7 @@ class HomeScreen extends StatelessWidget {
                                 .toString(),
                             imageAsset: UIDataImage.pendingOrderSVG,
                           ),
-                          SpacingWidth.widthlistspacing,
+                          SpacingWidth.widthlistspacing20,
                           HomeCardWidget(
                             onTap: () {
                               Get.toNamed(Routes.allOrderScreen);
@@ -312,7 +312,7 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                     ],
-                  ).marginAll(10),
+                  ).marginOnly(left: 20, right: 20),
                 ),
               );
       },
