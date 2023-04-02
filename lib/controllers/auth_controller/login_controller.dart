@@ -122,5 +122,7 @@ class LoginController extends GetxController {
     prefs.setString("sellercity", data.userCountry);
     prefs.setString("dob", data.dateOfBirth.toString());
     prefs.setString("password", password.text);
+    prefs.setString("sellerStatus", data.message);
+
   }
 }

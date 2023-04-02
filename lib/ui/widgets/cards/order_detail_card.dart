@@ -19,7 +19,8 @@ class CustomCard extends StatefulWidget {
   final String orderRemarks;
   final String orderNumber;
   final String totalPrice;
-final String orderStatus;
+  final String orderStatus;
+  final String paymentLink;
   List<OrderItem> orderItemList;
 
   CustomCard({
@@ -33,6 +34,7 @@ final String orderStatus;
     required this.orderItemList,
     required this.totalPrice,
     required this.orderStatus,
+    required this.paymentLink,
 
   });
 
@@ -193,17 +195,19 @@ class _CustomCardState extends State<CustomCard>
                     ? SizedBox()
                     : Container(
                         height: 40,
-                        decoration:  BoxDecoration(
-                          color:  Get.find<HomeController>().getColor(widget.orderStatus),
+                        decoration: BoxDecoration(
+                          color: Get.find<HomeController>()
+                              .getColor(widget.orderStatus),
                           borderRadius: BorderRadius.only(
                               // topRight: Radius.circular(10.0),
                               bottomRight: Radius.circular(10.0),
                               // topLeft: Radius.circular(10.0),
                               bottomLeft: Radius.circular(10.0)),
                         ),
-                        child:  Center(
+                        child: Center(
                           child: Text(
-                           Get.find<HomeController>().getStatus(widget.orderStatus),
+                            Get.find<HomeController>()
+                                .getStatus(widget.orderStatus),
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -266,95 +270,114 @@ class _CustomCardState extends State<CustomCard>
                 ),
                 Container(
                   height: 40,
-                  decoration:  BoxDecoration(
-                    color:  Get.find<HomeController>().getColor(widget.orderStatus),
+                  decoration: BoxDecoration(
+                    color:
+                        Get.find<HomeController>().getColor(widget.orderStatus),
                   ),
-                  child:  Center(
+                  child: Center(
                     child: Text(
-                       Get.find<HomeController>().getStatus(widget.orderStatus),
+                      Get.find<HomeController>().getStatus(widget.orderStatus),
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
                 SpacingHeight.heightlistspacing10,
-                widget.orderStatus == 'payment_pending' ?
-                Row(
-                  children: [
-                    BorderButton(
-                      height: 35,
-                      width: 140,
-                      btntxt: 'Cancel',
-                      borderColor: Colors.red,
-                      buttontxtColor: Colors.red,
-                      backEndColor: Colors.white,
-                      onPressed: () {
-                         Get.find<HomeController>().cancelOrdermethod(widget.orderNumber);
-                      },
-                    ),
-                    Spacer(),
-                    BorderButton(
-                      height: 35,
-                      width: 170,
-                      btntxt: 'Copy payment link',
-                      borderColor: Colors.blue,
-                      buttontxtColor: Colors.white,
-                      // backEndColor: Colors.blue,
-                      onPressed: () {},
-                    ),
-                  ],
-                ).marginOnly(left: 10, right: 10):widget.orderStatus == 'assigned_3pl' ?
-                Row(
-                  children: [
-                    BorderButton(
-                      height: 35,
-                      width: 140,
-                      btntxt: 'Cancel',
-                      borderColor: Colors.red,
-                      buttontxtColor: Colors.red,
-                      backEndColor: Colors.white,
-                      onPressed: () {
-                        Get.find<HomeController>().cancelOrdermethod(widget.orderNumber);
-                      },
-                    ),
-                    Spacer(),
-                    BorderButton(
-                      height: 35,
-                      width: 140,
-                      btntxt: 'Repeat Order',
-                      borderColor: Colors.blue,
-                      buttontxtColor: Colors.white,
-                      // backEndColor: Colors.blue,
-                      onPressed: () {},
-                    ),
-                  ],
-                ).marginOnly(left: 10, right: 10):
-                Row(
-                  children: [
-                    BorderButton(
-                      height: 35,
-                      width: 140,
-                      btntxt: 'Reject',
-                      borderColor: Colors.red,
-                      buttontxtColor: Colors.red,
-                      backEndColor: Colors.white,
-                      onPressed: () {
-                        Get.find<HomeController>().rejectOrderMethod(widget.orderNumber);
-                      },
-                    ),
-                    Spacer(),
-                    BorderButton(
-                      height: 35,
-                      width: 140,
-                      btntxt: 'Accept',
-                      borderColor: Colors.blue,
-                      buttontxtColor: Colors.white,
-                      // backEndColor: Colors.blue,
-                      onPressed: () {
-                        Get.find<HomeController>().acceptOrdermethod(widget.orderNumber);
-                      },
-                    ),
-                  ],
-                ).marginOnly(left: 10, right: 10),
+                widget.orderStatus == 'payment_pending'
+                    ? Row(
+                        children: [
+                          BorderButton(
+                            height: 35,
+                            width:  widget.paymentLink == 'no_link' ? 330 :140,
+                            btntxt: 'Cancel',
+                            borderColor: Colors.red,
+                            buttontxtColor: Colors.red,
+                            backEndColor: Colors.white,
+                            onPressed: () {
+                              showpopup('Are you sure you want to cancel order',
+                                  () {
+                                Get.find<HomeController>()
+                                    .cancelOrdermethod(widget.orderNumber);
+                              });
+                            },
+                          ),
+                          Spacer(),
+                          widget.paymentLink == 'no_link' ? Container() :
+                          BorderButton(
+                            height: 35,
+                            width: 170,
+                            btntxt: 'Copy payment link',
+                            borderColor: Colors.blue,
+                            buttontxtColor: Colors.white,
+                            // backEndColor: Colors.blue,
+                            onPressed: () {},
+                          ),
+                        ],
+                      ).marginOnly(left: 10, right: 10)
+                    : widget.orderStatus == 'assigned_3pl'
+                        ? Row(
+                            children: [
+                              BorderButton(
+                                height: 35,
+                                width: 140,
+                                btntxt: 'Cancel',
+                                borderColor: Colors.red,
+                                buttontxtColor: Colors.red,
+                                backEndColor: Colors.white,
+                                onPressed: () {
+                                  showpopup('Are you sure you want to cancel',
+                                      () {
+                                    Get.find<HomeController>()
+                                        .cancelOrdermethod(widget.orderNumber);
+                                  });
+                                },
+                              ),
+                              Spacer(),
+                              BorderButton(
+                                height: 35,
+                                width: 140,
+                                btntxt: 'Repeat Order',
+                                borderColor: Colors.blue,
+                                buttontxtColor: Colors.white,
+                                // backEndColor: Colors.blue,
+                                onPressed: () {},
+                              ),
+                            ],
+                          ).marginOnly(left: 10, right: 10)
+                        : Row(
+                            children: [
+                              BorderButton(
+                                height: 35,
+                                width: 140,
+                                btntxt: 'Reject',
+                                borderColor: Colors.red,
+                                buttontxtColor: Colors.red,
+                                backEndColor: Colors.white,
+                                onPressed: () {
+                                  showpopup('Are you sure you want to reject',
+                                      () {
+                                    Get.find<HomeController>()
+                                        .rejectOrderMethod(widget.orderNumber);
+                                  });
+                                },
+                              ),
+                              Spacer(),
+                              BorderButton(
+                                height: 35,
+                                width: 140,
+                                btntxt: 'Accept',
+                                borderColor: Colors.blue,
+                                buttontxtColor: Colors.white,
+                                // backEndColor: Colors.blue,
+                                onPressed: () {
+                                  showpopup('Are you sure you want to accept',
+                                      () {
+                                    Get.find<HomeController>()
+                                        .acceptOrdermethod(widget.orderNumber);
+                                  });
+                                },
+                              ),
+                            ],
+                          ).marginOnly(left: 10, right: 10),
               ],
             ),
           ),
@@ -362,15 +385,58 @@ class _CustomCardState extends State<CustomCard>
       ),
     ).marginOnly(bottom: 10);
   }
-String dateFormat(String date){
-var inputFormat = DateTime.parse(date);
-var outputFormat = DateFormat('hh:mm a yyyy/MM/dd');
-var outputDate = outputFormat.format(inputFormat);
-return outputDate;
-}
+
+  String dateFormat(String date) {
+    var inputFormat = DateTime.parse(date);
+    var outputFormat = DateFormat('hh:mm a yyyy/MM/dd');
+    var outputDate = outputFormat.format(inputFormat);
+    return outputDate;
+  }
+
   double _calculateContainerHeight() {
     return (widget.orderItemList.length * 65)
         .toDouble(); // 70 is the height of each ListTile
+  }
+
+  void showpopup(String statement, dynamic navigationFunction) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Confirmation"),
+          content: Text(statement),
+          actions: [
+            BorderButton(
+              height: 35,
+              width: 140,
+              btntxt: 'Cancel',
+              borderColor: Colors.red,
+              buttontxtColor: Colors.red,
+              backEndColor: Colors.white,
+              // backEndColor: Colors.blue,
+              onPressed: () {
+                Get.back();
+              },
+              //  () {
+              //   Get.find<HomeController>().acceptOrdermethod(widget.orderNumber);
+              // },
+            ),
+            BorderButton(
+              height: 35,
+              width: 140,
+              btntxt: 'Ok',
+              borderColor: Colors.blue,
+              buttontxtColor: Colors.white,
+              // backEndColor: Colors.blue,
+              onPressed: navigationFunction,
+              //  () {
+              //   Get.find<HomeController>().acceptOrdermethod(widget.orderNumber);
+              // },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
