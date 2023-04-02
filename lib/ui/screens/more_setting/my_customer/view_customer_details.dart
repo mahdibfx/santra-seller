@@ -110,6 +110,7 @@ class ViewCustomerDetails extends StatelessWidget {
                         iconImageColor: UIDataColors.primaryColor,
                         iconImage: UIDATAIcons.sendIcon,
                         onPressed: () {
+                         
                           if (customerDetail != null) {
                          
                               _.customerInfoSubmitedRequest(customerDetail!).then((value) {

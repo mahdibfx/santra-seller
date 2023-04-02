@@ -11,10 +11,12 @@ import '../buttons/material_buttons/primaryButtonWithIcon.dart';
 import 'DatePicker/date_picker.dart';
 
 class OrderDate extends StatelessWidget {
-
-  OrderDate({Key? key})
+  final Function(DateTime) dateSelected;
+  DateTime? dateSelectedValue;
+  OrderDate({Key? key, required this.dateSelected,   this.dateSelectedValue})
       : super(key: key);
 
+  
   @override
   Widget build(BuildContext context) {
     return  SizedBox(
@@ -66,11 +68,9 @@ class OrderDate extends StatelessWidget {
                           dayTextStyle: UIDataTextStyles.dayStyle,
                           dateTextStyle: UIDataTextStyles.dateStyle,
                           onDateChange: (date) {
-                            // New date selected
-                            // setState(() {
-                            //   _selectedValue = date;
-                            // });
+                            dateSelectedValue = date;
                           },
+
                         ),
                       
                     ],
@@ -82,7 +82,12 @@ class OrderDate extends StatelessWidget {
                    child: PrimaryButtonWithIcon(
                         btntxt: "Save",
                         iconImage: UIDATAIcons.saveIcon,
-                        onPressed: () {},
+                        onPressed: () {
+                          if (dateSelectedValue != null ) {
+                          Get.back();
+                          dateSelected(dateSelectedValue!);
+                        }
+                        },
                       ),
                  )
               ],

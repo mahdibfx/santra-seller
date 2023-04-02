@@ -78,17 +78,17 @@ class CartCardOrder extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      Container(
+                      Expanded(
                         child: Column(
                           children: List.generate(allProducts![index!].subModifiers.length, (subInex) => 
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
                                   // "Large",
                                   allProducts![index!].subModifiers[subInex].nameModifier.toString(),
                                   style: UIDataTextStyles.title.copyWith(fontSize: 12),
-                                ),
+                                ).paddingOnly(right: 8),
                                 Text(
                                   // "Large",
                                   allProducts![index!].subModifiers[subInex].priceModifier.toString() + " AED",

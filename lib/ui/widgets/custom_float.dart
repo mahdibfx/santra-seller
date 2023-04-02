@@ -18,7 +18,7 @@ class CustomFloat extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       mini: isMini,
       onPressed: qrCallback,
-      backgroundColor: Colors.white,
+      backgroundColor: UIDataColors.primaryColor,
       child: Ink(
         // decoration: new BoxDecoration(
         // gradient: new LinearGradient(colors: UIData.kitGradients)
@@ -28,10 +28,8 @@ class CustomFloat extends StatelessWidget {
           children: <Widget>[
             Icon(
               icon,
-              color: Get.currentRoute == Routes.addManualOrder
-                  ? UIDataColors.primaryColor
-                  : Colors.grey,
-              size: 30,
+              color: Colors.white,
+              size: 40,
             ),
             builder != null
                 ? Positioned(right: 7.0, top: 7.0, child: Text("")

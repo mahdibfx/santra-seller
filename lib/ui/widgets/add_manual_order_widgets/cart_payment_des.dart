@@ -15,13 +15,14 @@ class CartPayemntDescriptionCard extends StatelessWidget {
   final String subtotal;
   final String deliveryCharges;
   final String total;
+  final Function(DateTime) dateSelected;
 
   CartPayemntDescriptionCard({
     Key? key,
     required this.subtotal,
     required this.total,
     required this.deliveryCharges,
-
+    required this.dateSelected,
   }) : super(key: key);
 
   @override
@@ -110,7 +111,7 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                                   ),
                                 ),
                                 builder: (context) {
-                                  return OrderDate();
+                                  return OrderDate(dateSelected: (date ) => dateSelected(date));
                                 });
                           },
                           btntxt: "Delivery Time",

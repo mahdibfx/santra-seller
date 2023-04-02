@@ -75,24 +75,32 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../models/customers/delivery_charges.dart';
 import '../../models/customers/view_all_customers.dart';
 import '../../models/seller_all_products_model.dart';
 import '../../utils/api_data.dart';
+import '../../utils/routes/app_routes.dart';
 
 class CartController extends GetxController {
    bool isLoading = false;
    int deliveryCharges = 10;
    bool isShowCartButton = false;
    bool receiptPaymentType = true;
-  final List<CartItem> cartItems = [];
+   List<CartItem> cartItems = [];
+  DateTime? selectedDateTime;
 
   dynamic finalSubmitData;
 
 
   changeLoadingStatus(value) {
     isLoading = value;
+    update();
+  }
+
+  updateDate(date) {
+    selectedDateTime = date;
     update();
   }
 
@@ -212,6 +220,7 @@ addItemForCustomer(DeliveryChargesModel data, Customer customerDetail, String? s
       "building_number": customerDetail.buildingNumber, // building  of the customer
       "order_remarks": "no_remarks", // order comments if any otherwise send no_remarks
       "user_tips": "0", // if any otherwise send 0
+      "order_schedule": selectedDateTime != null ? DateFormat('yyyy-MM-dd').format(selectedDateTime!) : "",
 // Order Item array to be posted as follows
 // Field name: "", order_items and items in this array are as follows(id, name, price, quantity, item_remarks, modifiers_list(modifier_code,name_modifier,price_modifier))
       "order_items": jsonEncode(cartItems),
@@ -247,6 +256,7 @@ addItemForCustomer(DeliveryChargesModel data, Customer customerDetail, String? s
         // selllerAllProductsModel =
         //     selllerAllProductsModelFromJson(response.body);
         // update();
+        Get.offAllNamed(Routes.homeRoutes);
            showToast("Success", 'Successfully Completed');
       } else {
           showToast("Failed", 'Unable to proceed');
@@ -258,6 +268,17 @@ addItemForCustomer(DeliveryChargesModel data, Customer customerDetail, String? s
       // hasError = true;
     }
     changeLoadingStatus(false);
+  }
+
+
+  resetValue() {
+    deliveryCharges = 10;
+   isShowCartButton = false;
+   receiptPaymentType = true;
+   cartItems = [];
+   selectedDateTime = null;
+
+  finalSubmitData = null;
   }
 
 }
