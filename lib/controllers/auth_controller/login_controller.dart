@@ -125,4 +125,11 @@ class LoginController extends GetxController {
     prefs.setString("sellerStatus", data.message);
 
   }
+
+ Future<String> sellerStatus()async{
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+     var status = prefs.get('sellerStatus');
+
+    return status.toString();
+  }
 }
