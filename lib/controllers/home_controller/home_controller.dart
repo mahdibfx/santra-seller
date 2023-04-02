@@ -80,6 +80,7 @@ class HomeController extends GetxController {
       body['filter_year'] = selectedYear.toString();
       var response = await http.post(url, body: body);
       if (response.statusCode == 200) {
+        print(body);
         var data = jsonDecode(response.body);
         profitMonthly = data['data'][0]['profit_monthly'];
         orderMonthly = data['data'][0]['orders_monthly'];

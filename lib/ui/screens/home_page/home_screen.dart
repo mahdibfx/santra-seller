@@ -181,6 +181,8 @@ class HomeScreen extends StatelessWidget {
                                                                         selectedOption: _.selectedMonth,
                                                                         prefixIcon: UIDATAIcons.calendarIcon,
                                                                         doSomething: () {
+                                                                          print(
+                                                                              _.selectedMonth);
                                                                           _.filterOrder();
                                                                         }),
                                                                   ),
