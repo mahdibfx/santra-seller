@@ -50,17 +50,7 @@ class SantraOrderScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           var santraList = _.homeData!.santraOrders[0].santraOrders[index];
                           return 
-                          // santraList.orderStatus == 'devliered' ? ManualOrderCard(
-                          //     orderStatus: santraList.orderStatus.toString(),
-                          //   totalPrice: santraList.totalOrderAmount.toString(),
-                          //   orderTime: santraList.orderDateStamp.toString(),
-                          //   deliveryTime: santraList.advanceTime.toString(),
-                          //   customerName: santraList.customerName.toString(),
-                          //   paymentMethod: santraList.paymentMethod.toString(),
-                          //   orderNumber:santraList.orderNumber.toString(),
-                          //   orderItemList: santraList.orderItems,
-                          //   colorCode: santraList.colorCode.toString(),
-                          // ) : 
+                           
                           santraList.orderStatus == 'new_order' || santraList.orderStatus == 'assigned_3pl' ||santraList.orderStatus == 'payment_pending'?
                           CustomCard(
                             title: 'Card',
@@ -72,6 +62,7 @@ class SantraOrderScreen extends StatelessWidget {
                             customerName: santraList.customerName.toString(),
                             paymentMethod: santraList.paymentMethod.toString(),
                             orderNumber:santraList.orderNumber.toString(),
+                            paymentLink:santraList.paymentLink.toString(),
                             orderItemList: santraList.orderItems,
                           ): ManualOrderCard(
                               orderStatus: santraList.orderStatus.toString(),

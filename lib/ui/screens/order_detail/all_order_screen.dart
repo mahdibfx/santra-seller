@@ -62,6 +62,7 @@ class AllOrderScreen extends StatelessWidget {
                             customerName: santraList.customerName.toString(),
                             paymentMethod: santraList.paymentMethod.toString(),
                             orderNumber:santraList.orderNumber.toString(),
+                            paymentLink:santraList.paymentLink.toString(),
                             orderItemList: santraList.orderItems,
                           ): ManualOrderCard(
                               orderStatus: santraList.orderStatus.toString(),
