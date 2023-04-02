@@ -50,4 +50,7 @@ class UIDATAIcons {
   static const signupIcon = "$iconsDir/signup.svg";
   static const filterIcon = "$iconsDir/filter.svg";
   static const dollarCircle = "$iconsDir/dollar-circle.svg";
+  static const more2 = "$iconsDir/more2.svg";
+  static const back = "$iconsDir/arrow-left.svg";
+  static const bell = "$iconsDir/notification.svg";
 }

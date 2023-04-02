@@ -47,11 +47,15 @@ class _MyDropdownState extends State<MyDropdown> {
         }).toList(),
         onChanged: (newValue) {
           // do other stuff with _category
-          //setState(() {
-          print("ON CHANGES");
-          widget.selectedOption = newValue;
-          if (Get.currentRoute == Routes.homeRoutes) widget.doSomething!();
-          //});
+          setState(() {
+            print("new val $newValue");
+
+            widget.selectedOption = newValue;
+
+            if (Get.currentRoute == Routes.homeRoutes &&
+                widget.options.contains("09")) widget.doSomething!();
+            print("SElected ${widget.selectedOption}");
+          });
         },
         icon: Padding(
           padding: const EdgeInsets.only(right: 8.0),
