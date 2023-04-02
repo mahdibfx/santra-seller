@@ -17,7 +17,7 @@ class CartScreen extends StatelessWidget {
 
   CartScreen({super.key});
 
-  Widget bodyData() {
+  Widget bodyData(context) {
     return GetBuilder<CartController>(
       builder: (_) {
         return _.isLoading
@@ -27,74 +27,82 @@ class CartScreen extends StatelessWidget {
               ))
             : SafeArea(
                 child: SingleChildScrollView(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        // Icon(UIDATAIcons.cartIcon, size: 40, color: UIDataColors.primaryColor),
-                        SvgPicture.asset(
-                          UIDATAIcons.cartHallowIcon,
-                          color: UIDataColors.primaryColor,
-                        ),
-                        Text(
-                          ' Cart',
-                          style: UIDataTextStyles.title,
-                        ),
-                      ],
-                    ),
-                    SpacingHeight.heightlistspacing20,
-                    // SpacingHeight.heightlistspacing10,
-                    ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: _.cartItems.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CartCardOrder(
-                              allProducts: _.cartItems,
-                              index: index,
-                              onDecrese: () =>
-                                  _.removeFromCart(_.cartItems[index]),
-                              onIncrese: () => _.addToCart(_.cartItems[index]),
-                              quantity: _.cartItems[index].quantity.toString(),
-                            ),
-                          );
-                        }),
+                    child: _.cartItems.isEmpty
+                        ? Container(
+                            height: MediaQuery.of(context).size.height - 200,
+                            child:
+                                Center(child: Text("Nothing to show in cart")))
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  // Icon(UIDATAIcons.cartIcon, size: 40, color: UIDataColors.primaryColor),
+                                  SvgPicture.asset(
+                                    UIDATAIcons.cartHallowIcon,
+                                    color: UIDataColors.primaryColor,
+                                  ),
+                                  Text(
+                                    'Cart',
+                                    style: UIDataTextStyles.title,
+                                  ),
+                                ],
+                              ),
+                              SpacingHeight.heightlistspacing20,
+                              // SpacingHeight.heightlistspacing10,
+                              ListView.builder(
+                                  physics: const BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: _.cartItems.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: CartCardOrder(
+                                        allProducts: _.cartItems,
+                                        index: index,
+                                        onDecrese: () => _
+                                            .removeFromCart(_.cartItems[index]),
+                                        onIncrese: () =>
+                                            _.addToCart(_.cartItems[index]),
+                                        quantity: _.cartItems[index].quantity
+                                            .toString(),
+                                      ),
+                                    );
+                                  }),
 
-                    CartPayemntDescriptionCard(
-                      subtotal: '${_.totalPrice.toStringAsFixed(2)}',
-                      total: '${_.grandTotal.toStringAsFixed(2)}',
-                      deliveryCharges: _.deliveryCharges.toString(), dateSelected: (dateTime ) { 
-                        _.updateDate(dateTime);
-                       },
-                    ),
+                              CartPayemntDescriptionCard(
+                                subtotal: '${_.totalPrice.toStringAsFixed(2)}',
+                                total: '${_.grandTotal.toStringAsFixed(2)}',
+                                deliveryCharges: _.deliveryCharges.toString(),
+                                dateSelected: (dateTime) {
+                                  _.updateDate(dateTime);
+                                },
+                              ),
 
-
-
-                  Padding(
-                   padding: const EdgeInsets.only(top: 20.0),
-                   child: PrimaryButtonWithIcon(
-                        btntxt: "Submit",
-                        backEndColor: _.finalSubmitData != null ? UIDataColors.primaryColor : UIDataColors.whiteColor,
-                        buttontxtColor: _.finalSubmitData != null ? UIDataColors.whiteColor : UIDataColors.primaryColor,
-                        iconImageColor: _.finalSubmitData != null ? UIDataColors.whiteColor : UIDataColors.primaryColor,
-                        iconImage: UIDATAIcons.sendIcon,
-                        onPressed: () {
-                          if (_.finalSubmitData != null) {
-                          _.orderSubmit();
-                        }
-                      
-                        },
-                      ),
-                 )
-
-
-
-                  ],
-                ).marginAll(10)),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 20.0),
+                                child: PrimaryButtonWithIcon(
+                                  btntxt: "Submit",
+                                  backEndColor: _.finalSubmitData != null
+                                      ? UIDataColors.primaryColor
+                                      : UIDataColors.whiteColor,
+                                  buttontxtColor: _.finalSubmitData != null
+                                      ? UIDataColors.whiteColor
+                                      : UIDataColors.primaryColor,
+                                  iconImageColor: _.finalSubmitData != null
+                                      ? UIDataColors.whiteColor
+                                      : UIDataColors.primaryColor,
+                                  iconImage: UIDATAIcons.sendIcon,
+                                  onPressed: () {
+                                    if (_.finalSubmitData != null) {
+                                      _.orderSubmit();
+                                    }
+                                  },
+                                ),
+                              )
+                            ],
+                          ).marginAll(10)),
               );
       },
     );
@@ -103,8 +111,9 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(
-      bodyData: bodyData(),
-      backgroundcolor: UIDataColors.whiteColor,
+      bodyData: bodyData(context),
+      //backgroundcolor: UIDataColors.whiteColor,
+      backGroundImage: UIDataImage.backgroundImage,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,
@@ -132,7 +141,7 @@ class CartScreen extends StatelessWidget {
         Get.offAllNamed(Routes.addManualOrder);
       },
       floatingIcon: Icons.add,
-      elevation: 1.0,
+      // elevation: 3.0,
     );
   }
 }

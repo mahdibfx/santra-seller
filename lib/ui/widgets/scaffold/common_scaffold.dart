@@ -20,8 +20,8 @@ import '../drawer/clip_drawer.dart';
 // HomeController homeController = Get.put(HomeController());
 // CartController cartController = Get.put(CartController());
 
-
 class CommonScaffold extends StatelessWidget {
+  final CartController cartController = Get.find<CartController>();
   final resizeToAvoid;
   final appTitle;
   final automaticallyImplyLeading;
@@ -101,7 +101,7 @@ class CommonScaffold extends StatelessWidget {
       this.actionSecondIconCallBack,
       this.appBarSearch,
       this.appBarSearchShow = false,
-      this.isBackArrowShow = false,
+      this.isBackArrowShow = true,
       this.appBarAction,
       this.showActions = true});
 
@@ -184,11 +184,8 @@ class CommonScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        final LoginController loginController = Get.find<LoginController>();
-                final HomeController homeController = Get.find<HomeController>();
-
-        
-
+    final LoginController loginController = Get.find<LoginController>();
+    final HomeController homeController = Get.find<HomeController>();
 
     return Scaffold(
       resizeToAvoidBottomInset: resizeToAvoid,
@@ -203,25 +200,31 @@ class CommonScaffold extends StatelessWidget {
               //automaticallyImplyLeading: automaticallyImplyLeading,
               systemOverlayStyle: brightness,
 
-              leading: isBackArrowShow ? GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(UIDATAIcons.back),
-                      SpacingWidth.widthlistspacing5,
-                      const Text(
-                        "Back",
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.w500),
-                      )
-                    ],
-                  ),
-                ),
-              ) : SizedBox(),
+              leading: isBackArrowShow
+                  ? Container(
+                      width: 200,
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(UIDATAIcons.back),
+                              SpacingWidth.widthlistspacing5,
+                              const Text(
+                                "Back",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                  : SizedBox(),
               //leading,
               backgroundColor: appbarcolor,
               title: SvgPicture.asset(
@@ -237,13 +240,9 @@ class CommonScaffold extends StatelessWidget {
                           Get.toNamed(Routes.cartroute);
                         },
                         showBadge: true,
-                        value: "2",
                       ),
                       SpacingWidth.widthlistspacing15,
-                      NotificationIconWithBadge(
-                        showBadge: true,
-                        value: "2",
-                      ),
+                      NotificationIconWithBadge(),
                       const SizedBox(
                         width: 25,
                       )
@@ -276,7 +275,7 @@ class CommonScaffold extends StatelessWidget {
                       ? backgroundcolor
                       : const Color(0xffffffff),
                   image: DecorationImage(
-                      colorFilter:  ColorFilter.mode(
+                      colorFilter: ColorFilter.mode(
                           Colors.black.withOpacity(0.1), BlendMode.dstATop),
                       image: backGroundImage != null
                           ? AssetImage(backGroundImage!)
@@ -298,12 +297,15 @@ class CommonScaffold extends StatelessWidget {
                   : null,
               icon: floatingIcon,
               // ignore: unrelated_type_equality_checks
-              qrCallback:  homeController.sellerStatusNew != "done" ? (){
-       customOntapDialog('Alert', 'Your status is not approved.', 'ok', (){
-        print(homeController.sellerStatusNew);
-        Get.back();
-       } );
-      } :qrCallback,
+              qrCallback: homeController.sellerStatusNew != "done"
+                  ? () {
+                      customOntapDialog(
+                          'Alert', 'Your status is not approved.', 'ok', () {
+                        print(homeController.sellerStatusNew);
+                        Get.back();
+                      });
+                    }
+                  : qrCallback,
             )
           : null,
       floatingActionButtonLocation: centerDocked
@@ -316,11 +318,10 @@ class CommonScaffold extends StatelessWidget {
 
 class CartIconWithBadge extends StatelessWidget {
   String? icon;
-  String? value;
+
   bool? showBadge;
   var onTap;
-  CartIconWithBadge(
-      {Key? key, this.icon, this.value, this.showBadge, this.onTap})
+  CartIconWithBadge({Key? key, this.icon, this.showBadge, this.onTap})
       : super(key: key);
 
   @override
@@ -337,30 +338,26 @@ class CartIconWithBadge extends StatelessWidget {
             height: 30,
             color: Colors.black,
           ),
-          showBadge == true
-              ? Positioned(
-                  right: -7,
-                  bottom: 25,
-                  child: Container(
-                    height: 20,
-                    // width: 20,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: const Color(0xffC32C4C),
-                        borderRadius: BorderRadius.circular(50)),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 5.0, vertical: 2),
-                      child: 
-                      
-                       Text(
-                          cartController.itemCount.toString(),
-                          style: UIDataTextStyles.caption,
-                        ),
-                      
+          if (cartController.itemCount != 0)
+            Positioned(
+                right: -7,
+                bottom: 25,
+                child: Container(
+                  height: 20,
+                  // width: 20,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: const Color(0xffC32C4C),
+                      borderRadius: BorderRadius.circular(50)),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 5.0, vertical: 2),
+                    child: Text(
+                      cartController.itemCount.toString(),
+                      style: UIDataTextStyles.caption,
                     ),
-                  ))
-              : const SizedBox(),
+                  ),
+                ))
         ],
       ),
     );
@@ -376,7 +373,7 @@ class NotificationIconWithBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-            final HomeController homeController = Get.find<HomeController>();
+    final HomeController homeController = Get.find<HomeController>();
 
     return Stack(
       clipBehavior: Clip.none,
@@ -387,28 +384,29 @@ class NotificationIconWithBadge extends StatelessWidget {
           height: 30,
           color: Colors.black,
         ),
-        showBadge == true
-            ? Positioned(
-                right: -7,
-                bottom: 25,
-                child: Container(
-                  height: 20,
-                  // width: 20,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: const Color(0xffC32C4C),
-                      borderRadius: BorderRadius.circular(50)),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 5.0, vertical: 2),
-                    child: Text(
-                      homeController.homeData == null ? '0' :
-                    homeController.homeData!.totalNotifications.toString(),
-                      style: UIDataTextStyles.caption,
-                    ),
+        if (homeController.homeData!.totalNotifications != "0")
+          Positioned(
+              right: -7,
+              bottom: 25,
+              child: Container(
+                height: 20,
+                // width: 20,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: const Color(0xffC32C4C),
+                    borderRadius: BorderRadius.circular(50)),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2),
+                  child: Text(
+                    homeController.homeData == null
+                        ? '0'
+                        : homeController.homeData!.totalNotifications
+                            .toString(),
+                    style: UIDataTextStyles.caption,
                   ),
-                ))
-            : const SizedBox(),
+                ),
+              ))
       ],
     );
   }
