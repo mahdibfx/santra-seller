@@ -287,7 +287,7 @@ class _CustomCardState extends State<CustomCard>
                         children: [
                           BorderButton(
                             height: 35,
-                            width: 140,
+                            width:  widget.paymentLink == 'no_link' ? 330 :140,
                             btntxt: 'Cancel',
                             borderColor: Colors.red,
                             buttontxtColor: Colors.red,
