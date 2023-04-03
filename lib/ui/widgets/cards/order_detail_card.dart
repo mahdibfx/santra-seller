@@ -35,7 +35,6 @@ class CustomCard extends StatefulWidget {
     required this.totalPrice,
     required this.orderStatus,
     required this.paymentLink,
-
   });
 
   @override
@@ -82,7 +81,7 @@ class _CustomCardState extends State<CustomCard>
             color: Colors.grey.withOpacity(0.3),
             spreadRadius: 1,
             blurRadius: 1,
-            offset: Offset(-1, 1), // changes position of shadow
+            offset: const Offset(-1, 1), // changes position of shadow
           ),
         ],
       ),
@@ -110,7 +109,7 @@ class _CustomCardState extends State<CustomCard>
                       'Order No. ${widget.orderNumber}',
                       style: UIDataTextStyles.h2.copyWith(fontSize: 12),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     GestureDetector(
                       onTap: _toggleCard,
                       child: Container(
@@ -146,7 +145,7 @@ class _CustomCardState extends State<CustomCard>
                               Text(dateFormat(widget.orderTime)),
                             ],
                           )),
-                          Spacer(),
+                          const Spacer(),
                           Container(
                               child: Row(
                             children: [
@@ -174,7 +173,7 @@ class _CustomCardState extends State<CustomCard>
                               Text('${widget.customerName}'),
                             ],
                           )),
-                          Spacer(),
+                          const Spacer(),
                           Container(
                               child: Row(
                             children: [
@@ -192,13 +191,13 @@ class _CustomCardState extends State<CustomCard>
                   ),
                 ),
                 _isOpen
-                    ? SizedBox()
+                    ? const SizedBox()
                     : Container(
                         height: 40,
                         decoration: BoxDecoration(
                           color: Get.find<HomeController>()
                               .getColor(widget.orderStatus),
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                               // topRight: Radius.circular(10.0),
                               bottomRight: Radius.circular(10.0),
                               // topLeft: Radius.circular(10.0),
@@ -208,7 +207,7 @@ class _CustomCardState extends State<CustomCard>
                           child: Text(
                             Get.find<HomeController>()
                                 .getStatus(widget.orderStatus),
-                            style: TextStyle(color: Colors.white),
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ),
                       ),
@@ -277,7 +276,7 @@ class _CustomCardState extends State<CustomCard>
                   child: Center(
                     child: Text(
                       Get.find<HomeController>().getStatus(widget.orderStatus),
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
@@ -287,7 +286,7 @@ class _CustomCardState extends State<CustomCard>
                         children: [
                           BorderButton(
                             height: 35,
-                            width:  widget.paymentLink == 'no_link' ? 330 :140,
+                            width: widget.paymentLink == 'no_link' ? 330 : 140,
                             btntxt: 'Cancel',
                             borderColor: Colors.red,
                             buttontxtColor: Colors.red,
@@ -295,22 +294,24 @@ class _CustomCardState extends State<CustomCard>
                             onPressed: () {
                               showpopup('Are you sure you want to cancel order',
                                   () {
+                                Get.back();
                                 Get.find<HomeController>()
                                     .cancelOrdermethod(widget.orderNumber);
                               });
                             },
                           ),
-                          Spacer(),
-                          widget.paymentLink == 'no_link' ? Container() :
-                          BorderButton(
-                            height: 35,
-                            width: 170,
-                            btntxt: 'Copy payment link',
-                            borderColor: Colors.blue,
-                            buttontxtColor: Colors.white,
-                            // backEndColor: Colors.blue,
-                            onPressed: () {},
-                          ),
+                          const Spacer(),
+                          widget.paymentLink == 'no_link'
+                              ? Container()
+                              : BorderButton(
+                                  height: 35,
+                                  width: 170,
+                                  btntxt: 'Copy payment link',
+                                  borderColor: Colors.blue,
+                                  buttontxtColor: Colors.white,
+                                  // backEndColor: Colors.blue,
+                                  onPressed: () {},
+                                ),
                         ],
                       ).marginOnly(left: 10, right: 10)
                     : widget.orderStatus == 'assigned_3pl'
@@ -326,12 +327,13 @@ class _CustomCardState extends State<CustomCard>
                                 onPressed: () {
                                   showpopup('Are you sure you want to cancel',
                                       () {
+                                    Get.back();
                                     Get.find<HomeController>()
                                         .cancelOrdermethod(widget.orderNumber);
                                   });
                                 },
                               ),
-                              Spacer(),
+                              const Spacer(),
                               BorderButton(
                                 height: 35,
                                 width: 140,
@@ -355,12 +357,13 @@ class _CustomCardState extends State<CustomCard>
                                 onPressed: () {
                                   showpopup('Are you sure you want to reject',
                                       () {
+                                    Get.back();
                                     Get.find<HomeController>()
                                         .rejectOrderMethod(widget.orderNumber);
                                   });
                                 },
                               ),
-                              Spacer(),
+                              const Spacer(),
                               BorderButton(
                                 height: 35,
                                 width: 140,
@@ -371,6 +374,7 @@ class _CustomCardState extends State<CustomCard>
                                 onPressed: () {
                                   showpopup('Are you sure you want to accept',
                                       () {
+                                    Get.back();
                                     Get.find<HomeController>()
                                         .acceptOrdermethod(widget.orderNumber);
                                   });
@@ -383,7 +387,7 @@ class _CustomCardState extends State<CustomCard>
           ),
         ],
       ),
-    ).marginOnly(bottom: 10);
+    ).marginOnly(bottom: 20);
   }
 
   String dateFormat(String date) {
@@ -403,7 +407,7 @@ class _CustomCardState extends State<CustomCard>
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Confirmation"),
+          title: const Text("Confirmation"),
           content: Text(statement),
           actions: [
             BorderButton(
@@ -488,7 +492,7 @@ class OrderItemWidget extends StatelessWidget {
                                 child: CircularProgressIndicator(),
                               ),
                             ))),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Column(
@@ -504,7 +508,7 @@ class OrderItemWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Row(
                 children: [
                   Text(
@@ -517,7 +521,7 @@ class OrderItemWidget extends StatelessWidget {
             ],
           ),
         ),
-        Divider(),
+        const Divider(),
       ],
     ).marginOnly(right: 10);
   }

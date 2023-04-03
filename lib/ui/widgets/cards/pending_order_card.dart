@@ -11,7 +11,7 @@ import '../buttons/border_button.dart';
 
 class PendingCard extends StatefulWidget {
   final String title;
-   final String orderStatus;
+  final String orderStatus;
   final String orderTime;
   final String customerName;
   final String deliveryTime;
@@ -78,7 +78,7 @@ class _PendingCardState extends State<PendingCard>
             color: Colors.grey.withOpacity(0.3),
             spreadRadius: 1,
             blurRadius: 1,
-            offset: Offset(-1, 1), // changes position of shadow
+            offset: const Offset(-1, 1), // changes position of shadow
           ),
         ],
       ),
@@ -106,7 +106,7 @@ class _PendingCardState extends State<PendingCard>
                       'Order No. ${widget.orderNumber}',
                       style: UIDataTextStyles.h2.copyWith(fontSize: 12),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     GestureDetector(
                       onTap: _toggleCard,
                       child: Container(
@@ -142,7 +142,7 @@ class _PendingCardState extends State<PendingCard>
                               Text(dateFormat(widget.orderTime)),
                             ],
                           )),
-                          Spacer(),
+                          const Spacer(),
                           Container(
                               child: Row(
                             children: [
@@ -170,7 +170,7 @@ class _PendingCardState extends State<PendingCard>
                               Text('${widget.customerName}'),
                             ],
                           )),
-                          Spacer(),
+                          const Spacer(),
                           Container(
                               child: Row(
                             children: [
@@ -188,7 +188,7 @@ class _PendingCardState extends State<PendingCard>
                   ),
                 ),
                 _isOpen
-                    ? SizedBox()
+                    ? const SizedBox()
                     : Container(
                         height: 40,
                         decoration: const BoxDecoration(
@@ -199,10 +199,10 @@ class _PendingCardState extends State<PendingCard>
                               // topLeft: Radius.circular(10.0),
                               bottomLeft: Radius.circular(10.0)),
                         ),
-                        child:  Center(
+                        child: Center(
                           child: Text(
-                           widget.orderStatus,
-                            style: TextStyle(color: Colors.white),
+                            widget.orderStatus,
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ),
                       ),
@@ -267,10 +267,10 @@ class _PendingCardState extends State<PendingCard>
                   decoration: const BoxDecoration(
                     color: Colors.blue,
                   ),
-                  child:  Center(
+                  child: Center(
                     child: Text(
                       widget.orderStatus,
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
@@ -286,7 +286,7 @@ class _PendingCardState extends State<PendingCard>
                       backEndColor: Colors.white,
                       onPressed: () {},
                     ),
-                    Spacer(),
+                    const Spacer(),
                     BorderButton(
                       height: 35,
                       width: 140,
@@ -303,14 +303,16 @@ class _PendingCardState extends State<PendingCard>
           ),
         ],
       ),
-    ).marginOnly(bottom: 10);
+    ).marginOnly(bottom: 20);
   }
-String dateFormat(String date){
-var inputFormat = DateTime.parse(date);
-var outputFormat = DateFormat('hh:mm a yyyy/MM/dd');
-var outputDate = outputFormat.format(inputFormat);
-return outputDate;
-}
+
+  String dateFormat(String date) {
+    var inputFormat = DateTime.parse(date);
+    var outputFormat = DateFormat('hh:mm a yyyy/MM/dd');
+    var outputDate = outputFormat.format(inputFormat);
+    return outputDate;
+  }
+
   double _calculateContainerHeight() {
     return (widget.orderItemList.length * 65)
         .toDouble(); // 70 is the height of each ListTile
@@ -365,7 +367,7 @@ class OrderItemWidget extends StatelessWidget {
                                 child: CircularProgressIndicator(),
                               ),
                             ))),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Column(
@@ -381,7 +383,7 @@ class OrderItemWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Row(
                 children: [
                   Text(
@@ -394,7 +396,7 @@ class OrderItemWidget extends StatelessWidget {
             ],
           ),
         ),
-        Divider(),
+        const Divider(),
       ],
     ).marginOnly(right: 10);
   }

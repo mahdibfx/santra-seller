@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'dart:convert';
 import 'package:flutter_svg/svg.dart';
+import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 
 import '../../../controllers/home_controller/home_controller.dart';
 import '../../../utils/routes/app_routes.dart';
@@ -18,7 +19,7 @@ import '../../../utils/uidata.dart';
 class AllOrderScreen extends StatelessWidget {
   // final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
-  AllOrderScreen ({super.key});
+  AllOrderScreen({super.key});
 
   Widget bodyData() {
     return GetBuilder<HomeController>(
@@ -28,59 +29,90 @@ class AllOrderScreen extends StatelessWidget {
                 child: Center(
                 child: CircularProgressIndicator(),
               ))
-            : SafeArea(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      SpacingHeight.heightlistspacing10,
-                      Row(
+            : Stack(
+                children: [
+                  SafeArea(
+                    child: SingleChildScrollView(
+                      child: Column(
                         children: [
-                           SvgPicture.asset(
-                      UIDATAIcons.orderBascketBorder,
-                      color: UIDataColors.primaryColor,
-                    ),
-                    SpacingWidth.widthlistspacing,
-                          Text('All Orders'),
+                          HeadingWithIcon(
+                              icon: UIDATAIcons.orderBascketBorder,
+                              btntxt: "All Orders"),
+                          ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: _.allOrders.length,
+                              itemBuilder: (context, index) {
+                                var santraList = _.allOrders[index];
+                                return santraList.orderStatus == 'new_order' ||
+                                        santraList.orderStatus ==
+                                            'assigned_3pl' ||
+                                        santraList.orderStatus ==
+                                            'payment_pending'
+                                    ? CustomCard(
+                                        title: 'Card',
+                                        orderStatus:
+                                            santraList.orderStatus.toString(),
+                                        totalPrice: santraList.totalOrderAmount
+                                            .toString(),
+                                        orderRemarks:
+                                            santraList.orderRemarks.toString(),
+                                        orderTime: santraList.orderDateStamp
+                                            .toString(),
+                                        deliveryTime:
+                                            santraList.advanceTime.toString(),
+                                        customerName:
+                                            santraList.customerName.toString(),
+                                        paymentMethod:
+                                            santraList.paymentMethod.toString(),
+                                        orderNumber:
+                                            santraList.orderNumber.toString(),
+                                        paymentLink:
+                                            santraList.paymentLink.toString(),
+                                        orderItemList: santraList.orderItems,
+                                      )
+                                    : ManualOrderCard(
+                                        orderStatus:
+                                            santraList.orderStatus.toString(),
+                                        totalPrice: santraList.totalOrderAmount
+                                            .toString(),
+                                        orderTime: santraList.orderDateStamp
+                                            .toString(),
+                                        deliveryTime:
+                                            santraList.advanceTime.toString(),
+                                        customerName:
+                                            santraList.customerName.toString(),
+                                        paymentMethod:
+                                            santraList.paymentMethod.toString(),
+                                        orderNumber:
+                                            santraList.orderNumber.toString(),
+                                        orderItemList: santraList.orderItems,
+                                        colorCode:
+                                            santraList.colorCode.toString(),
+                                      );
+                              }),
                         ],
-                      ),
-                      SpacingHeight.heightlistspacing10,
-                      ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: _.allOrders.length,
-                        itemBuilder: (context, index) {
-                          var santraList =  _.allOrders[index];
-                          return 
-                            santraList.orderStatus == 'new_order' || santraList.orderStatus == 'assigned_3pl' ||santraList.orderStatus == 'payment_pending'?
-                          CustomCard(
-                            title: 'Card',
-                             orderStatus: santraList.orderStatus.toString(),
-                            totalPrice: santraList.totalOrderAmount.toString(),
-                            orderRemarks: santraList.orderRemarks.toString(),
-                            orderTime: santraList.orderDateStamp.toString(),
-                            deliveryTime: santraList.advanceTime.toString(),
-                            customerName: santraList.customerName.toString(),
-                            paymentMethod: santraList.paymentMethod.toString(),
-                            orderNumber:santraList.orderNumber.toString(),
-                            paymentLink:santraList.paymentLink.toString(),
-                            orderItemList: santraList.orderItems,
-                          ): ManualOrderCard(
-                              orderStatus: santraList.orderStatus.toString(),
-                            totalPrice: santraList.totalOrderAmount.toString(),
-                            orderTime: santraList.orderDateStamp.toString(),
-                            deliveryTime: santraList.advanceTime.toString(),
-                            customerName: santraList.customerName.toString(),
-                            paymentMethod: santraList.paymentMethod.toString(),
-                            orderNumber:santraList.orderNumber.toString(),
-                            orderItemList: santraList.orderItems,
-                            colorCode: santraList.colorCode.toString(),
-                          ) ;
-                        }
-                      ),
-                     
-                    ],
-                  ).marginAll(10),
-                ),
+                      ).paddingSymmetric(horizontal: 15),
+                    ),
+                  ),
+                  _.isAcceptOrderLoading ||
+                          _.isCancelOrderLoading ||
+                          _.isRejectOrderLoading
+                      ? Opacity(
+                          opacity: 0.8,
+                          child: ModalBarrier(
+                              dismissible: false,
+                              color: Colors.black.withOpacity(0.5)),
+                        )
+                      : Container(),
+                  _.isAcceptOrderLoading ||
+                          _.isCancelOrderLoading ||
+                          _.isRejectOrderLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : Container()
+                ],
               );
       },
     );
@@ -91,6 +123,8 @@ class AllOrderScreen extends StatelessWidget {
     return CommonScaffold(
       bodyData: bodyData(),
       backgroundcolor: UIDataColors.whiteColor,
+
+      backGroundImage: UIDataImage.backgroundImage,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,
