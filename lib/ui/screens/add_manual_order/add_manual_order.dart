@@ -442,6 +442,7 @@ class _AddManulOrderState extends State<AddManulOrder> {
     return CommonScaffold(
       bodyData: bodyData(context),
       backgroundcolor: UIDataColors.whiteColor,
+      backGroundImage: UIDataImage.backgroundImage,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,

@@ -270,10 +270,7 @@ class CommonScaffold extends StatelessWidget {
                   // ),
                 )
               : BoxDecoration(
-                  color: backgroundcolor ?? const Color(0xffffffff),
                   image: DecorationImage(
-                      colorFilter: ColorFilter.mode(
-                          Colors.black.withOpacity(0.1), BlendMode.dstATop),
                       image: backGroundImage != null
                           ? AssetImage(backGroundImage!)
                           : const AssetImage(UIDataImage.splash),
