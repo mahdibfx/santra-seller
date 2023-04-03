@@ -36,7 +36,7 @@ class MyCustomerCard extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(15)),
         color: Colors.white,
       ),
-      height: 80,
+      height: 110,
       child: Column(
         children: [
           Expanded(
@@ -77,11 +77,11 @@ class MyCustomerCard extends StatelessWidget {
                 SizedBox(
                   width: size.width * 0.11,
                 ),
-          
+
                 InkWell(
                   onTap: onTap,
                   child: SvgPicture.asset(
-                   forView ? UIDATAIcons.viewIcon : UIDATAIcons.editCustomer ,
+                    forView ? UIDATAIcons.viewIcon : UIDATAIcons.editCustomer,
                     color: UIDataColors.primaryColor,
                     height: 22,
                     //height: 20,
@@ -115,7 +115,7 @@ class MyCustomerCard extends StatelessWidget {
           )
         ],
       ).paddingSymmetric(
-              horizontal: size.width * 0.045, vertical: size.height * 0.02),
+          horizontal: size.width * 0.045, vertical: size.height * 0.02),
     );
   }
 }

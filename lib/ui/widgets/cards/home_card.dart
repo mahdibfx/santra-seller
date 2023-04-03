@@ -23,39 +23,39 @@ class HomeCardWidget extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          height: size.height * 0.26,
+          height: size.height * 0.25,
           decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(15)),
               color: Colors.white,
               border: Border.all(color: Colors.blue)),
           child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(0.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 SizedBox(
-                  height: 140,
+                  height: size.height * 0.15,
                   child: SvgPicture.asset(
                     imageAsset,
                     fit: BoxFit.fitWidth,
                   ),
-                ).marginOnly(left: 20, right: 20, top: 10),
-                const Spacer(),
+                ).marginOnly(left: 0, right: 0, top: 0),
+                // const Spacer(),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       heading,
-                      style: UIDataTextStyles.h2
-                          .copyWith(color: UIDataColors.primaryColor, fontSize: 13),
+                      style: UIDataTextStyles.h2.copyWith(
+                          color: UIDataColors.primaryColor, fontSize: 13),
                     ),
-                    const Spacer(),
+                    // const Spacer(),
                     Text(
                       count,
                       style: UIDataTextStyles.counth1.copyWith(fontSize: 18),
                     ),
                   ],
-                ).marginOnly(left: 10, right: 10, bottom: 10),
+                ).marginOnly(left: 10, right: 10, bottom: 0),
               ],
             ),
           ),
