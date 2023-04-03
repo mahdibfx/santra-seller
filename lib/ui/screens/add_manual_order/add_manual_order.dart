@@ -88,294 +88,303 @@ bool showAdd = true;
                                             setState(() {
                                               showAdd = false;
                                             });
-                                            showBottomSheet(
+                                            showModalBottomSheet(
+                                         isScrollControlled: true,
                                                 context: context,
                                                 builder: (context) {
-                                                  return StatefulBuilder(
-                                                      builder:
-                                                          (context, setStatec) {
-                                                    return Container(
-                                                      // height: size.height -
-                                                      //     size.height * 0.27,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      10)),
-                                                      width: double.infinity,
-                                                      child:
-                                                          SingleChildScrollView(
-                                                        child: Column(
-                                                          children: [
-                                                            productImageOnSheet(
-                                                                size,
-                                                                manualOrderController,
-                                                                index),
-                                                            Column(
-                                                              children: [
-                                                                ProductNameAndPriceOnSheet(
-                                                                  productName: manualOrderController
-                                                                      .allProducts?[
-                                                                          index]
-                                                                      .productName,
-                                                                  productPrice: manualOrderController
-                                                                      .allProducts?[
-                                                                          index]
-                                                                      .productPrice,
-                                                                ),
-                                                                SpacingHeight
-                                                                    .heightlistspacing10,
-                                                                // PriceOnSelection(
-                                                                //     onMinus: () {
-                                                                //   print("Minus");
-                                                                // }, onPlus: () {
-                                                                //   print("Plus");
-                                                                // }),
-                                                                // SpacingHeight
-                                                                //     .heightlistspacing10,
-                                                                // if (manualOrderController
-                                                                //     .allProducts![
-                                                                //         index]
-                                                                //     .modifiers!
-                                                                //     .isNotEmpty)
-                                                                //   Text(
-                                                                //     manualOrderController
-                                                                //         .allProducts![
-                                                                //             index]
-                                                                //         .modifiers!
-                                                                //         .length
-                                                                //         .toString(),
-                                                                //     textScaleFactor:
-                                                                //         5,
-                                                                //   ),
-                                                                manualOrderController
-                                                                        .allProducts![
+                                                  return Container(
+                                                    height: 700,
+                                                    child: StatefulBuilder(
+                                                        builder:
+                                                            (context, setStatec) {
+                                                      return Container(
+                                                        // height: size.height -
+                                                        //     size.height * 0.27,
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10)),
+                                                        width: double.infinity,
+                                                        child:
+                                                            SingleChildScrollView(
+                                                          child: Column(
+                                                            children: [
+                                                              productImageOnSheet(
+                                                                  size,
+                                                                  manualOrderController,
+                                                                  index),
+                                                              Column(
+                                                                children: [
+                                                                  ProductNameAndPriceOnSheet(
+                                                                    productName: manualOrderController
+                                                                        .allProducts?[
                                                                             index]
-                                                                        .modifiers!
-                                                                        .isNotEmpty
-                                                                    ? ListView
-                                                                        .builder(
-                                                                        physics:
-                                                                            const NeverScrollableScrollPhysics(),
-                                                                        padding:
-                                                                            EdgeInsets.zero,
-                                                                        shrinkWrap:
-                                                                            true,
-                                                                        itemCount: manualOrderController
-                                                                            .allProducts![index]
-                                                                            .modifiers!
-                                                                            .length,
-                                                                        itemBuilder:
-                                                                            (context,
-                                                                                index2) {
-                                                                          return
-                                                                              //manualOrderController.allProducts![index].modifiers![index2].selectionType.toString().toLowerCase() == "checkbox"
-                                                                              // ?
-                                                                              ListView.builder(
-                                                                                  shrinkWrap: true,
-                                                                                  itemCount: manualOrderController.allProducts![index].modifiers![index2].subModifiers!.length,
-                                                                                  itemBuilder: (context, sebIndex) {
-                                                                                    var newData = manualOrderController.allProducts![index].modifiers![index2].subModifiers!;
-                                                                                    return Padding(
-                                                                                      padding: const EdgeInsets.only(bottom: 8.0),
-                                                                                      child: Row(
-                                                                                        children: [
-                                                                                          manualOrderController.allProducts![index].modifiers![index2].selectionType.toString().toLowerCase() != "checkbox"
-                                                                                              ? GestureDetector(
-                                                                                                  onTap: () {
-                                                                                                    for (var e in newData) {
-                                                                                                      if (e.byDefault.toString() == '1') {
-                                                                                                        setStatec(() {
-                                                                                                          e.byDefault = '0';
-                                                                                                        });
+                                                                        .productName,
+                                                                    productPrice: manualOrderController
+                                                                        .allProducts?[
+                                                                            index]
+                                                                        .productPrice,
+                                                                  ),
+                                                                  SpacingHeight
+                                                                      .heightlistspacing10,
+                                                                  // PriceOnSelection(
+                                                                  //     onMinus: () {
+                                                                  //   print("Minus");
+                                                                  // }, onPlus: () {
+                                                                  //   print("Plus");
+                                                                  // }),
+                                                                  // SpacingHeight
+                                                                  //     .heightlistspacing10,
+                                                                  // if (manualOrderController
+                                                                  //     .allProducts![
+                                                                  //         index]
+                                                                  //     .modifiers!
+                                                                  //     .isNotEmpty)
+                                                                  //   Text(
+                                                                  //     manualOrderController
+                                                                  //         .allProducts![
+                                                                  //             index]
+                                                                  //         .modifiers!
+                                                                  //         .length
+                                                                  //         .toString(),
+                                                                  //     textScaleFactor:
+                                                                  //         5,
+                                                                  //   ),
+                                                                  manualOrderController
+                                                                          .allProducts![
+                                                                              index]
+                                                                          .modifiers!
+                                                                          .isNotEmpty
+                                                                      ? ListView
+                                                                          .builder(
+                                                                          physics:
+                                                                              const NeverScrollableScrollPhysics(),
+                                                                          padding:
+                                                                              EdgeInsets.zero,
+                                                                          shrinkWrap:
+                                                                              true,
+                                                                          itemCount: manualOrderController
+                                                                              .allProducts![index]
+                                                                              .modifiers!
+                                                                              .length,
+                                                                          itemBuilder:
+                                                                              (context,
+                                                                                  index2) {
+                                                                            return
+                                                                                //manualOrderController.allProducts![index].modifiers![index2].selectionType.toString().toLowerCase() == "checkbox"
+                                                                                // ?
+                                                                                ListView.builder(
+                                                                                    shrinkWrap: true,
+                                                                                    itemCount: manualOrderController.allProducts![index].modifiers![index2].subModifiers!.length,
+                                                                                    itemBuilder: (context, sebIndex) {
+                                                                                      var newData = manualOrderController.allProducts![index].modifiers![index2].subModifiers!;
+                                                                                      return Padding(
+                                                                                        padding: const EdgeInsets.only(bottom: 8.0),
+                                                                                        child: Row(
+                                                                                          children: [
+                                                                                            manualOrderController.allProducts![index].modifiers![index2].selectionType.toString().toLowerCase() != "checkbox"
+                                                                                                ? GestureDetector(
+                                                                                                    onTap: () {
+                                                                                                      for (var e in newData) {
+                                                                                                        if (e.byDefault.toString() == '1') {
+                                                                                                          setStatec(() {
+                                                                                                            e.byDefault = '0';
+                                                                                                          });
+                                                                                                        }
                                                                                                       }
-                                                                                                    }
-                                                                                                    setStatec(() {
-                                                                                                      if (newData[sebIndex].byDefault.toString() == '1') {
-                                                                                                        newData[sebIndex].byDefault = '0';
-                                                                                                      } else {
-                                                                                                        newData[sebIndex].byDefault = '1';
-                                                                                                      }
-                                                                                                    });
-                                                                                                  },
-                                                                                                  child: Container(
-                                                                                                    width: 28,
-                                                                                                    height: 28,
-                                                                                                    decoration: BoxDecoration(
-                                                                                                      color: newData[sebIndex].byDefault.toString() == "1" ? Colors.black : Colors.white, // border color
-                                                                                                      shape: BoxShape.circle,
-                                                                                                    ),
-                                                                                                    child: Padding(
-                                                                                                      padding: const EdgeInsets.all(2), // border width
-                                                                                                      child: Container(
-                                                                                                        // or ClipRRect if you need to clip the content
-                                                                                                        decoration: BoxDecoration(
-                                                                                                          shape: BoxShape.circle,
-                                                                                                          color: Colors.amber, // inner circle color
-                                                                                                          border: Border.all(
-                                                                                                              width: 2, //                   <--- border width here5
-                                                                                                              color: Colors.white),
+                                                                                                      setStatec(() {
+                                                                                                        if (newData[sebIndex].byDefault.toString() == '1') {
+                                                                                                          newData[sebIndex].byDefault = '0';
+                                                                                                        } else {
+                                                                                                          newData[sebIndex].byDefault = '1';
+                                                                                                        }
+                                                                                                      });
+                                                                                                    },
+                                                                                                    child: Container(
+                                                                                                      width: 28,
+                                                                                                      height: 28,
+                                                                                                      decoration: BoxDecoration(
+                                                                                                        color: newData[sebIndex].byDefault.toString() == "1" ? Colors.black : Colors.white, // border color
+                                                                                                        shape: BoxShape.circle,
+                                                                                                      ),
+                                                                                                      child: Padding(
+                                                                                                        padding: const EdgeInsets.all(2), // border width
+                                                                                                        child: Container(
+                                                                                                          // or ClipRRect if you need to clip the content
+                                                                                                          decoration: BoxDecoration(
+                                                                                                            shape: BoxShape.circle,
+                                                                                                            color: Colors.amber, // inner circle color
+                                                                                                            border: Border.all(
+                                                                                                                width: 2, //                   <--- border width here5
+                                                                                                                color: Colors.white),
+                                                                                                          ),
+                                                                                                          child: Container(), // inner content
                                                                                                         ),
-                                                                                                        child: Container(), // inner content
                                                                                                       ),
                                                                                                     ),
-                                                                                                  ),
-                                                                                                )
-                                                                                              : Checkbox(
-                                                                                                  value: newData[sebIndex].byDefault.toString() == "1" ? true : false,
-                                                                                                  onChanged: (value) {
-                                                                                                    var minVals = manualOrderController.allProducts![index].modifiers![index2].limitModifiers.toString().split(",").first;
-                                                                                                    var maxVals = manualOrderController.allProducts![index].modifiers![index2].limitModifiers.toString().split(",").last;
-                                                                                                    var byDefList = [];
-                                                                                                    for (var e in newData) {
-                                                                                                      if (e.byDefault.toString() == "1") {
-                                                                                                        byDefList.add("bedfltt");
+                                                                                                  )
+                                                                                                : Checkbox(
+                                                                                                    value: newData[sebIndex].byDefault.toString() == "1" ? true : false,
+                                                                                                    onChanged: (value) {
+                                                                                                      var minVals = manualOrderController.allProducts![index].modifiers![index2].limitModifiers.toString().split(",").first;
+                                                                                                      var maxVals = manualOrderController.allProducts![index].modifiers![index2].limitModifiers.toString().split(",").last;
+                                                                                                      var byDefList = [];
+                                                                                                      for (var e in newData) {
+                                                                                                        if (e.byDefault.toString() == "1") {
+                                                                                                          byDefList.add("bedfltt");
+                                                                                                        }
                                                                                                       }
-                                                                                                    }
 
-                                                                                                    if (byDefList.length >= int.parse(maxVals) && newData[sebIndex].byDefault.toString() == "0") {
-                                                                                                      CommonSnackbar.getSnackbar("Error", "Your selection limit is $maxVals", UIDataColors.redColor);
-                                                                                                    } else {
-                                                                                                      if (value!) {
-                                                                                                        setStatec(() {
-                                                                                                          newData[sebIndex].byDefault = "1";
-                                                                                                        });
-                                                                                                        print(newData[sebIndex].byDefault.toString());
+                                                                                                      if (byDefList.length >= int.parse(maxVals) && newData[sebIndex].byDefault.toString() == "0") {
+                                                                                                        CommonSnackbar.getSnackbar("Error", "Your selection limit is $maxVals", UIDataColors.redColor);
                                                                                                       } else {
-                                                                                                        setStatec(() {
-                                                                                                          newData[sebIndex].byDefault = "0";
-                                                                                                        });
-                                                                                                        print(newData[sebIndex].byDefault.toString());
+                                                                                                        if (value!) {
+                                                                                                          setStatec(() {
+                                                                                                            newData[sebIndex].byDefault = "1";
+                                                                                                          });
+                                                                                                          print(newData[sebIndex].byDefault.toString());
+                                                                                                        } else {
+                                                                                                          setStatec(() {
+                                                                                                            newData[sebIndex].byDefault = "0";
+                                                                                                          });
+                                                                                                          print(newData[sebIndex].byDefault.toString());
+                                                                                                        }
                                                                                                       }
-                                                                                                    }
 
-                                                                                                    manualOrderController.update();
-                                                                                                    // manualOrderController.changeStatus(newData[sebIndex].byDefault.toString(),value!);
-                                                                                                  },
-                                                                                                ),
-                                                                                          Text(newData[sebIndex].nameModifier.toString()),
-                                                                                          SpacingWidth.widthlistspacing15,
-                                                                                          Text(
-                                                                                            "${newData[sebIndex].priceModifier}AED",
-                                                                                            style: UIDataTextStyles.h1,
-                                                                                          ),
-                                                                                        ],
-                                                                                      ),
-                                                                                    );
-                                                                                  });
-                                                                          // : SizedBox();
-                                                                        },
-                                                                      )
-                                                                    : SizedBox(),
+                                                                                                      manualOrderController.update();
+                                                                                                      // manualOrderController.changeStatus(newData[sebIndex].byDefault.toString(),value!);
+                                                                                                    },
+                                                                                                  ),
+                                                                                            Text(newData[sebIndex].nameModifier.toString()),
+                                                                                            SpacingWidth.widthlistspacing15,
+                                                                                            Text(
+                                                                                              "${newData[sebIndex].priceModifier}AED",
+                                                                                              style: UIDataTextStyles.h1,
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+                                                                                      );
+                                                                                    });
+                                                                            // : SizedBox();
+                                                                          },
+                                                                        )
+                                                                      : SizedBox(),
 
-                                                                SpacingHeight
-                                                                    .heightlistspacing10,
-                                                                SizedBox(
-                                                                  height: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .height *
-                                                                      0.03,
-                                                                ),
-                                                                PrimaryButtonWithIcon(
-                                                                  onPressed:
-                                                                      () {
-                                                                    for (var e in manualOrderController
-                                                                        .allProducts![
-                                                                            index]
-                                                                        .modifiers!) {
-                                                                      var minLimits = e
-                                                                          .limitModifiers
-                                                                          .toString()
-                                                                          .split(
-                                                                              ",")
-                                                                          .first;
-                                                                      var listnew =
-                                                                          [];
-                                                                      for (var s
-                                                                          in e.subModifiers!) {
-                                                                        if (s.byDefault.toString() ==
-                                                                            '1') {
-                                                                          listnew
-                                                                              .add('byDefault');
+                                                                  SpacingHeight
+                                                                      .heightlistspacing10,
+                                                                  SizedBox(
+                                                                    height: MediaQuery.of(
+                                                                                context)
+                                                                            .size
+                                                                            .height *
+                                                                        0.03,
+                                                                  ),
+                                                                  PrimaryButtonWithIcon(
+                                                                    onPressed:
+                                                                        () {
+                                                                      for (var e in manualOrderController
+                                                                          .allProducts![
+                                                                              index]
+                                                                          .modifiers!) {
+                                                                        var minLimits = e
+                                                                            .limitModifiers
+                                                                            .toString()
+                                                                            .split(
+                                                                                ",")
+                                                                            .first;
+                                                                        var listnew =
+                                                                            [];
+                                                                        for (var s
+                                                                            in e.subModifiers!) {
+                                                                          if (s.byDefault.toString() ==
+                                                                              '1') {
+                                                                            listnew
+                                                                                .add('byDefault');
+                                                                          }
+                                                                        }
+                                                                        if (listnew
+                                                                                .length <
+                                                                            int.parse(
+                                                                                minLimits)) {
+                                                                          return CommonSnackbar.getSnackbar(
+                                                                              "Error",
+                                                                              "Your minimum limit is $minLimits",
+                                                                              UIDataColors.redColor);
                                                                         }
                                                                       }
-                                                                      if (listnew
-                                                                              .length <
-                                                                          int.parse(
-                                                                              minLimits)) {
-                                                                        return CommonSnackbar.getSnackbar(
-                                                                            "Error",
-                                                                            "Your minimum limit is $minLimits",
-                                                                            UIDataColors.redColor);
-                                                                      }
-                                                                    }
-                                                                    manualOrderController
-                                                                        .clearAddonPro();
+                                                                      manualOrderController
+                                                                          .clearAddonPro();
 
-                                                                    for (var f in manualOrderController
-                                                                        .allProducts![
-                                                                            index]
-                                                                        .modifiers!) {
-                                                                      for (var c
-                                                                          in f.subModifiers!) {
-                                                                        if (c.byDefault ==
-                                                                            "1") {
+                                                                      for (var f in manualOrderController
+                                                                          .allProducts![
+                                                                              index]
+                                                                          .modifiers!) {
+                                                                        for (var c
+                                                                            in f.subModifiers!) {
+                                                                          if (c.byDefault ==
+                                                                              "1") {
+                                                                            manualOrderController
+                                                                                .addOnProducts
+                                                                                .add(c);
+                                                                          }
+                                                                          print("add on length:" +
+                                                                              manualOrderController.addOnProducts.length.toString());
+                                                                        }
+                                                                      }
+
+                                                                      Get.back();
+                                                                      var itemValue =
                                                                           manualOrderController
-                                                                              .addOnProducts
-                                                                              .add(c);
-                                                                        }
-                                                                        print("add on length:" +
-                                                                            manualOrderController.addOnProducts.length.toString());
-                                                                      }
-                                                                    }
+                                                                              .allProducts![index];
 
-                                                                    Get.back();
-                                                                    var itemValue =
-                                                                        manualOrderController
-                                                                            .allProducts![index];
+                                                                      var data = CartItem(
+                                                                          imageString: itemValue
+                                                                              .productImages
+                                                                              .toString(),
+                                                                          name: itemValue
+                                                                              .productName
+                                                                              .toString(),
+                                                                          price: double.parse(itemValue
+                                                                              .productPrice
+                                                                              .toString()),
+                                                                          code: itemValue
+                                                                              .productCode
+                                                                              .toString(),
+                                                                          subModifiers:
+                                                                              manualOrderController.addOnProducts);
+                                                                      manualOrderController
+                                                                          .addIntoCart(
+                                                                              data);
+                                                                      Get.back();
 
-                                                                    var data = CartItem(
-                                                                        imageString: itemValue
-                                                                            .productImages
-                                                                            .toString(),
-                                                                        name: itemValue
-                                                                            .productName
-                                                                            .toString(),
-                                                                        price: double.parse(itemValue
-                                                                            .productPrice
-                                                                            .toString()),
-                                                                        code: itemValue
-                                                                            .productCode
-                                                                            .toString(),
-                                                                        subModifiers:
-                                                                            manualOrderController.addOnProducts);
-                                                                    manualOrderController
-                                                                        .addIntoCart(
-                                                                            data);
-                                                                    Get.back();
-
-                                                                    // Get.offAllNamed(
-                                                                    //     Routes
-                                                                    //         .cartroute);
-                                                                  },
-                                                                  btntxt:
-                                                                      "Add To Cart",
-                                                                  iconImage:
-                                                                      UIDATAIcons
-                                                                          .cartIcon,
-                                                                )
-                                                              ],
-                                                            ).paddingOnly(
-                                                                left: 12,
-                                                                right: 12,
-                                                                top: 18),
-                                                          ],
+                                                                      // Get.offAllNamed(
+                                                                      //     Routes
+                                                                      //         .cartroute);
+                                                                    },
+                                                                    btntxt:
+                                                                        "Add To Cart",
+                                                                    iconImage:
+                                                                        UIDATAIcons
+                                                                            .cartIcon,
+                                                                  )
+                                                                ],
+                                                              ).paddingOnly(
+                                                                  left: 12,
+                                                                  right: 12,
+                                                                  top: 18),
+                                                            ],
+                                                          ),
                                                         ),
-                                                      ),
-                                                    );
+                                                      );
+                                                    }),
+                                                  );
+                                                }).then((value) {
+                                                  setState(() {
+                                                    showAdd = true;
                                                   });
-                                                });
+                                                }
+                                                );
                                           },
                                         );
                                       }),
@@ -486,7 +495,7 @@ bool showAdd = true;
           },
         )
       ],
-      showBottomNav: true,
+      showBottomNav: showAdd,
       appbarcolor: UIDataColors.whiteColor,
       appbarSvg: true,
       backarrow: UIDataColors.primaryColor,

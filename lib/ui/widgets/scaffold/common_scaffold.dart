@@ -149,9 +149,9 @@ class CommonScaffold extends StatelessWidget {
                   }
                 },
               ),
-              const Center(
+               Center(
                 child: Text(
-                  'Add Order',
+                showFAB ?  'Add Order' : '',
                   style: UIDataTextStyles.h2,
                   textAlign: TextAlign.center,
                 ),
@@ -215,7 +215,7 @@ class CommonScaffold extends StatelessWidget {
                               SvgPicture.asset(UIDATAIcons.back),
                               SpacingWidth.widthlistspacing5,
                               const Text(
-                                "Back",
+                                "",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.w500),
