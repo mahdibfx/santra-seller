@@ -106,6 +106,9 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
                                 },
                                 prefixIcon: UIDATAIcons.location,
                                 options: _.citiesList!,
+                                onChanged: (val) {
+                                  _.city = val;
+                                },
                                 selectedOption: _.city)),
                         SpacingWidth.widthlistspacing15,
                         Expanded(
