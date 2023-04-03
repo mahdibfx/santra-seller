@@ -350,9 +350,10 @@ class CartIconWithBadge extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 5.0, vertical: 2),
-                    child: Text(
-                      cartController.itemCount.toString(),
-                      style: UIDataTextStyles.caption,
+                    child: Obx(() => Text(
+                        cartController.itemCount.toString(),
+                        style: UIDataTextStyles.caption,
+                      ),
                     ),
                   ),
                 ))
@@ -373,39 +374,44 @@ class NotificationIconWithBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final HomeController homeController = Get.find<HomeController>();
 
-    return Stack(
-      clipBehavior: Clip.none,
-      alignment: Alignment.center,
-      children: [
-        SvgPicture.asset(
-          UIDATAIcons.bell,
-          height: 30,
-          color: Colors.black,
-        ),
-        if (homeController.homeData!.totalNotifications != "0")
-          Positioned(
-              right: -7,
-              bottom: 25,
-              child: Container(
-                height: 20,
-                // width: 20,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: const Color(0xffC32C4C),
-                    borderRadius: BorderRadius.circular(50)),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2),
-                  child: Text(
-                    homeController.homeData == null
-                        ? '0'
-                        : homeController.homeData!.totalNotifications
-                            .toString(),
-                    style: UIDataTextStyles.caption,
+    return GestureDetector(
+      onTap: (){
+        Get.toNamed(Routes.notificationscreen);
+      },
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.center,
+        children: [
+          SvgPicture.asset(
+            UIDATAIcons.bell,
+            height: 30,
+            color: Colors.black,
+          ),
+          if (homeController.homeData!.totalNotifications != "0")
+            Positioned(
+                right: -7,
+                bottom: 25,
+                child: Container(
+                  height: 20,
+                  // width: 20,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: const Color(0xffC32C4C),
+                      borderRadius: BorderRadius.circular(50)),
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2),
+                    child: Text(
+                      homeController.homeData == null
+                          ? '0'
+                          : homeController.homeData!.totalNotifications
+                              .toString(),
+                      style: UIDataTextStyles.caption,
+                    ),
                   ),
-                ),
-              ))
-      ],
+                ))
+        ],
+      ),
     );
   }
 }
