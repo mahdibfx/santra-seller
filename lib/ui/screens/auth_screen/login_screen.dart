@@ -95,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                       isTextHidden: _.securetext,
                       validator: (val) {
                         if (val.isEmpty) {
-                          return "password should not be blank";
+                          return "Password should not be blank";
                         }
                         // else if (val.length < 6) {
                         //   return "password should contains 6 chractors";

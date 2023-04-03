@@ -18,7 +18,7 @@ class LoginController extends GetxController {
   bool remember = false;
   bool isvisible = true;
   var roleset;
-var sellerStatus;
+  var sellerStatus;
   String emailstore = "";
   String passwordstore = "";
 
@@ -90,10 +90,10 @@ var sellerStatus;
         var newdata = LoginModel.fromJson(data);
         sellerStatus = newdata.data[0].message.toString();
         GetStorage().write('sellerStatus', sellerStatus);
-        update();
-        saveSharedPrefData(newdata.data[0], prefs);
 
-        update();
+        saveSharedPrefData(newdata.data[0], prefs);
+        prefs.clear();
+
         Get.offAllNamed(Routes.homeRoutes);
       } else {
         update();
@@ -102,7 +102,6 @@ var sellerStatus;
             "Error", "Error in login", UIDataColors.redColor);
       }
     } catch (e) {
-      isLoading = false;
       update();
 
       CommonSnackbar.getSnackbar(
@@ -127,12 +126,11 @@ var sellerStatus;
     prefs.setString("dob", data.dateOfBirth.toString());
     prefs.setString("password", password.text);
     prefs.setString("sellerStatus", data.message);
-
   }
 
- Future<String> sellerSt()async{
-     SharedPreferences prefs = await SharedPreferences.getInstance();
-      sellerStatus = prefs.get('sellerStatus');
+  Future<String> sellerSt() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    sellerStatus = prefs.get('sellerStatus');
 
     return sellerStatus.toString();
   }
