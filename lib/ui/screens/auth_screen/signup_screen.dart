@@ -2,7 +2,9 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:http/http.dart';
 import 'package:santra_seller/controllers/cutomer_controller/customer-controller.dart';
 import 'package:santra_seller/controllers/more_screen_controller.dart/my_customer/my_customer_controller.dart';
+import 'package:santra_seller/controllers/more_screen_controller.dart/privacy_controller.dart';
 import 'package:santra_seller/models/customers/view_all_customers.dart';
+import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
@@ -20,7 +22,7 @@ import 'package:get/get.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
-
+  PrivacyController priCont = Get.put(PrivacyController());
   Widget bodyData(context) {
     Size size = MediaQuery.of(context).size;
     return GetBuilder<SignUpController>(
@@ -191,22 +193,83 @@ class SignUpScreen extends StatelessWidget {
                           },
                         ),
                         SpacingWidth.widthlistspacing5,
-                        Row(
-                          children: const [
-                            Text("I agree ",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontFamily: 'Markpro',
-                                  fontWeight: FontWeight.w600,
-                                )),
-                            Text("Terms and Conditions ",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: UIDataColors.primaryColor,
-                                  fontFamily: 'Markpro',
-                                  fontWeight: FontWeight.w500,
-                                )),
-                          ],
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(
+                                barrierColor:
+                                    UIDataColors.blackColor.withOpacity(0.4),
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    scrollable: true,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
+                                    // insetPadding: EdgeInsets.zero,
+                                    content: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        const Text(
+                                          "Terms & Conditions",
+                                          style: TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Obx(() => priCont.isLoading.isTrue
+                                            ? const CircularProgressIndicator()
+                                            : priCont.hasError
+                                                ? const Text(
+                                                    "Error Loading T&Cs")
+                                                : Text(priCont.terms.value
+                                                    .toString())),
+                                        SpacingHeight.heightlistspacing15,
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: PrimaryButtonWithIcon(
+                                            btntxt: "Accept",
+                                            onPressed: () {
+                                              Get.back();
+                                              _.changeIsAgree(true);
+                                            },
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: BorderButton(
+                                            borderColor: Colors.red,
+                                            buttontxtColor: Colors.red,
+                                            backEndColor: Colors.white,
+                                            btntxt: "Reject",
+                                            onPressed: () {
+                                              Get.back();
+                                              _.changeIsAgree(false);
+                                            },
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                });
+                          },
+                          child: Row(
+                            children: const [
+                              Text("I agree ",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontFamily: 'Markpro',
+                                    fontWeight: FontWeight.w600,
+                                  )),
+                              Text("Terms and Conditions ",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: UIDataColors.primaryColor,
+                                    fontFamily: 'Markpro',
+                                    fontWeight: FontWeight.w500,
+                                  )),
+                            ],
+                          ),
                         )
                       ],
                     ),
