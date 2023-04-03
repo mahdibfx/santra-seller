@@ -7,6 +7,7 @@ import 'package:santra_seller/utils/routes/app_pages.dart';
 
 //Lib Imports
 import './utils/uidata.dart';
+import 'controllers/add_manual_order_controller.dart/add_manual_order_controller.dart';
 import 'controllers/auth_controller/login_controller.dart';
 import 'controllers/cart_controller/cart_controller.dart';
 
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
         Get.put(LoginController());
         Get.put(CartController());
         Get.put(HomeController());
+        Get.put(AddManualOrderController());
+
+        
 
       }),
       debugShowCheckedModeBanner: false,

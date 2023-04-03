@@ -387,6 +387,7 @@ class NotificationIconWithBadge extends StatelessWidget {
             height: 30,
             color: Colors.black,
           ),
+          if (homeController.homeData != null )
           if (homeController.homeData!.totalNotifications != "0")
             Positioned(
                 right: -7,

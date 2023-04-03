@@ -12,6 +12,7 @@ import '../cart_controller/cart_controller.dart';
 class AddManualOrderController extends GetxController {
   late SelllerAllProductsModel selllerAllProductsModel;
   var cartController = Get.put(CartController());
+  bool showAddButton = true;
 
   bool isLoading = true;
   bool hasError = false;
@@ -38,6 +39,16 @@ class AddManualOrderController extends GetxController {
     cartController.addToCart(product);
     showToast();
   }
+
+showAddIcon(){
+  showAddButton = true;
+  update();
+}
+
+hideAddButton(){
+  showAddButton = false;
+  update();
+}
 
   void showToast() {
     Get.snackbar(

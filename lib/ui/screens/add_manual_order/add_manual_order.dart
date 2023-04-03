@@ -31,7 +31,7 @@ class AddManulOrder extends StatefulWidget {
 
 class _AddManulOrderState extends State<AddManulOrder> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
-
+bool showAdd = true;
   CartController cartController = Get.put((CartController()));
 
   Widget bodyData(context) {
@@ -85,6 +85,9 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                               manualOrderController,
                                           index: index,
                                           onTap: () {
+                                            setState(() {
+                                              showAdd = false;
+                                            });
                                             showBottomSheet(
                                                 context: context,
                                                 builder: (context) {
@@ -438,6 +441,9 @@ class _AddManulOrderState extends State<AddManulOrder> {
           top: 12,
           child: RoundedCloseButton(
             onTap: () {
+             setState(() {
+               showAdd = true;
+             });
               Get.back();
             },
           ),
@@ -454,7 +460,7 @@ class _AddManulOrderState extends State<AddManulOrder> {
       backGroundImage: UIDataImage.backgroundImage,
       isBackArrowShow: false,
       showDrawer: false,
-      showFAB: true,
+      showFAB: showAdd,
       centerDocked: true,
       showAppBar: true,
       // leading: Row(
