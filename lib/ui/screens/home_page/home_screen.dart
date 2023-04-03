@@ -280,6 +280,7 @@ class HomeScreen extends StatelessWidget {
                               : Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Column(
                                       children: [

@@ -388,6 +388,6 @@ class OrderItemWidget extends StatelessWidget {
         ),
         const Divider(),
       ],
-    ).marginOnly(right: 10);
+    ).paddingSymmetric(horizontal: 10);
   }
 }

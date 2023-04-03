@@ -252,7 +252,10 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                                                 ),
                                                                                           Text(newData[sebIndex].nameModifier.toString()),
                                                                                           SpacingWidth.widthlistspacing15,
-                                                                                          Text("${newData[sebIndex].priceModifier}AED", style: UIDataTextStyles.h1,),
+                                                                                          Text(
+                                                                                            "${newData[sebIndex].priceModifier}AED",
+                                                                                            style: UIDataTextStyles.h1,
+                                                                                          ),
                                                                                         ],
                                                                                       ),
                                                                                     );
@@ -304,22 +307,27 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                             UIDataColors.redColor);
                                                                       }
                                                                     }
-                                                                    manualOrderController.clearAddonPro();
+                                                                    manualOrderController
+                                                                        .clearAddonPro();
 
-                                                                    for(var f in manualOrderController
+                                                                    for (var f in manualOrderController
                                                                         .allProducts![
                                                                             index]
-                                                                        .modifiers!){
-                                                                         for(var c in f.subModifiers!){
-                                                                          if(c.byDefault == "1"){
-                                                                            manualOrderController.addOnProducts.add(c);
-                                                                          }
-                                                                          print("add on length:"+ manualOrderController.addOnProducts.length.toString());
-                                                                         }
+                                                                        .modifiers!) {
+                                                                      for (var c
+                                                                          in f.subModifiers!) {
+                                                                        if (c.byDefault ==
+                                                                            "1") {
+                                                                          manualOrderController
+                                                                              .addOnProducts
+                                                                              .add(c);
+                                                                        }
+                                                                        print("add on length:" +
+                                                                            manualOrderController.addOnProducts.length.toString());
+                                                                      }
+                                                                    }
 
-                                                                            }
-
-                                                                  Get.back();
+                                                                    Get.back();
                                                                     var itemValue =
                                                                         manualOrderController
                                                                             .allProducts![index];
@@ -337,11 +345,12 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                         code: itemValue
                                                                             .productCode
                                                                             .toString(),
-                                                                            subModifiers: manualOrderController.addOnProducts);
+                                                                        subModifiers:
+                                                                            manualOrderController.addOnProducts);
                                                                     manualOrderController
                                                                         .addIntoCart(
                                                                             data);
-                                                                              Get.back();
+                                                                    Get.back();
 
                                                                     // Get.offAllNamed(
                                                                     //     Routes
@@ -443,6 +452,7 @@ class _AddManulOrderState extends State<AddManulOrder> {
       bodyData: bodyData(context),
       backgroundcolor: UIDataColors.whiteColor,
       backGroundImage: UIDataImage.backgroundImage,
+      isBackArrowShow: false,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,

@@ -102,6 +102,7 @@ class MoreSettingScreen extends StatelessWidget {
       bodyData: bodyData(),
       backgroundcolor: UIDataColors.whiteColor,
       backGroundImage: UIDataImage.backgroundImage,
+      isBackArrowShow: false,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,

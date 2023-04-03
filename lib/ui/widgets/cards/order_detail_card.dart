@@ -216,7 +216,7 @@ class _CustomCardState extends State<CustomCard>
           ),
           Container(
             height: (_heightFactorAnimation.value *
-                (170 + _calculateContainerHeight())),
+                (200 + _calculateContainerHeight())),
             width: double.infinity,
             decoration: const BoxDecoration(
               color: Colors.white,
@@ -247,12 +247,12 @@ class _CustomCardState extends State<CustomCard>
                           color: UIDataColors.blackColor,
                         )),
                     SpacingWidth.widthlistspacing,
-                    Text(widget.totalPrice + ' AED',
+                    Text('${widget.totalPrice} AED',
                         style: UIDataTextStyles.textMediumColoredBlue.copyWith(
                           color: UIDataColors.primaryColor,
                         )),
                   ],
-                ).marginOnly(left: 10, right: 10),
+                ).paddingAll(10),
                 Container(
                   color: Colors.grey.shade200,
                   child: Row(
@@ -280,31 +280,35 @@ class _CustomCardState extends State<CustomCard>
                     ),
                   ),
                 ),
-                SpacingHeight.heightlistspacing10,
+                const Spacer(),
                 widget.orderStatus == 'payment_pending'
                     ? Row(
                         children: [
-                          BorderButton(
-                            height: 35,
-                            width: widget.paymentLink == 'no_link' ? 330 : 140,
-                            btntxt: 'Cancel',
-                            borderColor: Colors.red,
-                            buttontxtColor: Colors.red,
-                            backEndColor: Colors.white,
-                            onPressed: () {
-                              showpopup('Are you sure you want to cancel order',
-                                  () {
-                                Get.back();
-                                Get.find<HomeController>()
-                                    .cancelOrdermethod(widget.orderNumber);
-                              });
-                            },
+                          Expanded(
+                            child: BorderButton(
+                              height: 40,
+                              width:
+                                  widget.paymentLink == 'no_link' ? 330 : 140,
+                              btntxt: 'Cancel',
+                              borderColor: Colors.red,
+                              buttontxtColor: Colors.red,
+                              backEndColor: Colors.white,
+                              onPressed: () {
+                                showpopup(
+                                    'Are you sure you want to cancel order',
+                                    () {
+                                  Get.back();
+                                  Get.find<HomeController>()
+                                      .cancelOrdermethod(widget.orderNumber);
+                                });
+                              },
+                            ),
                           ),
-                          const Spacer(),
+                          // SpacingWidth.widthlistspacing20,
                           widget.paymentLink == 'no_link'
                               ? Container()
                               : BorderButton(
-                                  height: 35,
+                                  height: 40,
                                   width: 170,
                                   btntxt: 'Copy payment link',
                                   borderColor: Colors.blue,
@@ -313,75 +317,86 @@ class _CustomCardState extends State<CustomCard>
                                   onPressed: () {},
                                 ),
                         ],
-                      ).marginOnly(left: 10, right: 10)
+                      ).paddingAll(15)
                     : widget.orderStatus == 'assigned_3pl'
                         ? Row(
                             children: [
-                              BorderButton(
-                                height: 35,
-                                width: 140,
-                                btntxt: 'Cancel',
-                                borderColor: Colors.red,
-                                buttontxtColor: Colors.red,
-                                backEndColor: Colors.white,
-                                onPressed: () {
-                                  showpopup('Are you sure you want to cancel',
-                                      () {
-                                    Get.back();
-                                    Get.find<HomeController>()
-                                        .cancelOrdermethod(widget.orderNumber);
-                                  });
-                                },
+                              Expanded(
+                                child: BorderButton(
+                                  height: 40,
+                                  width: 140,
+                                  btntxt: 'Cancel',
+                                  borderColor: Colors.red,
+                                  buttontxtColor: Colors.red,
+                                  backEndColor: Colors.white,
+                                  onPressed: () {
+                                    showpopup('Are you sure you want to cancel',
+                                        () {
+                                      Get.back();
+                                      Get.find<HomeController>()
+                                          .cancelOrdermethod(
+                                              widget.orderNumber);
+                                    });
+                                  },
+                                ),
                               ),
-                              const Spacer(),
-                              BorderButton(
-                                height: 35,
-                                width: 140,
-                                btntxt: 'Repeat Order',
-                                borderColor: Colors.blue,
-                                buttontxtColor: Colors.white,
-                                // backEndColor: Colors.blue,
-                                onPressed: () {},
+                              SpacingWidth.widthlistspacing15,
+                              Expanded(
+                                child: BorderButton(
+                                  height: 40,
+                                  width: 140,
+                                  btntxt: 'Repeat Order',
+                                  borderColor: Colors.blue,
+                                  buttontxtColor: Colors.white,
+                                  // backEndColor: Colors.blue,
+                                  onPressed: () {},
+                                ),
                               ),
                             ],
-                          ).marginOnly(left: 10, right: 10)
+                          ).paddingAll(15)
                         : Row(
                             children: [
-                              BorderButton(
-                                height: 35,
-                                width: 140,
-                                btntxt: 'Reject',
-                                borderColor: Colors.red,
-                                buttontxtColor: Colors.red,
-                                backEndColor: Colors.white,
-                                onPressed: () {
-                                  showpopup('Are you sure you want to reject',
-                                      () {
-                                    Get.back();
-                                    Get.find<HomeController>()
-                                        .rejectOrderMethod(widget.orderNumber);
-                                  });
-                                },
+                              Expanded(
+                                child: BorderButton(
+                                  height: 40,
+                                  width: 140,
+                                  btntxt: 'Reject',
+                                  borderColor: Colors.red,
+                                  buttontxtColor: Colors.red,
+                                  backEndColor: Colors.white,
+                                  onPressed: () {
+                                    showpopup('Are you sure you want to reject',
+                                        () {
+                                      Get.back();
+                                      Get.find<HomeController>()
+                                          .rejectOrderMethod(
+                                              widget.orderNumber);
+                                    });
+                                  },
+                                ),
                               ),
-                              const Spacer(),
-                              BorderButton(
-                                height: 35,
-                                width: 140,
-                                btntxt: 'Accept',
-                                borderColor: Colors.blue,
-                                buttontxtColor: Colors.white,
-                                // backEndColor: Colors.blue,
-                                onPressed: () {
-                                  showpopup('Are you sure you want to accept',
-                                      () {
-                                    Get.back();
-                                    Get.find<HomeController>()
-                                        .acceptOrdermethod(widget.orderNumber);
-                                  });
-                                },
+                              SpacingWidth.widthlistspacing15,
+                              Expanded(
+                                child: BorderButton(
+                                  height: 40,
+                                  width: 140,
+                                  btntxt: 'Accept',
+                                  borderColor: Colors.blue,
+                                  buttontxtColor: Colors.white,
+                                  // backEndColor: Colors.blue,
+                                  onPressed: () {
+                                    showpopup('Are you sure you want to accept',
+                                        () {
+                                      Get.back();
+                                      Get.find<HomeController>()
+                                          .acceptOrdermethod(
+                                              widget.orderNumber);
+                                    });
+                                  },
+                                ),
                               ),
                             ],
-                          ).marginOnly(left: 10, right: 10),
+                          ).paddingAll(15)
               ],
             ),
           ),
@@ -398,7 +413,7 @@ class _CustomCardState extends State<CustomCard>
   }
 
   double _calculateContainerHeight() {
-    return (widget.orderItemList.length * 65)
+    return (widget.orderItemList.length * 75)
         .toDouble(); // 70 is the height of each ListTile
   }
 
@@ -469,14 +484,14 @@ class OrderItemWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Container(
+        SizedBox(
           height: 50,
           child: Row(
             children: [
               SizedBox(
                 child: Row(
                   children: [
-                    Container(
+                    SizedBox(
                         // padding: const EdgeInsets.all(5),
                         height: 50,
                         width: 50,
@@ -502,7 +517,7 @@ class OrderItemWidget extends StatelessWidget {
                           productName,
                           style: UIDataTextStyles.h2.copyWith(fontSize: 12),
                         ),
-                        Text('x' + productQuantity),
+                        Text('x$productQuantity'),
                       ],
                     ).marginOnly(top: 5),
                   ],
@@ -523,6 +538,6 @@ class OrderItemWidget extends StatelessWidget {
         ),
         const Divider(),
       ],
-    ).marginOnly(right: 10);
+    ).paddingSymmetric(horizontal: 10);
   }
 }
