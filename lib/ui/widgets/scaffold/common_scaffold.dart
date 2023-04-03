@@ -382,7 +382,7 @@ class NotificationIconWithBadge extends StatelessWidget {
           height: 30,
           color: Colors.black,
         ),
-        if (homeController.homeData!.totalNotifications != "0")
+        if (homeController.homeData?.totalNotifications != "0")
           Positioned(
               right: -7,
               bottom: 25,
@@ -399,8 +399,8 @@ class NotificationIconWithBadge extends StatelessWidget {
                   child: Text(
                     homeController.homeData == null
                         ? '0'
-                        : homeController.homeData!.totalNotifications
-                            .toString(),
+                        : homeController.homeData?.totalNotifications ??
+                            "".toString(),
                     style: UIDataTextStyles.caption,
                   ),
                 ),

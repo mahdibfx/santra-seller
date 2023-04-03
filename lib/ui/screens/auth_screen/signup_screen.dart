@@ -156,6 +156,9 @@ class SignUpScreen extends StatelessWidget {
                           },
                           prefixIcon: UIDATAIcons.location,
                           options: _.citiesList,
+                          onChanged: (val) {
+                            _.sellerCity = val;
+                          },
                           selectedOption: _.sellerCity),
                       SpacingHeight.heightlistspacing5,
                       CommonTextField(
@@ -254,6 +257,7 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonScaffold(
       bodyData: bodyData(context),
+      showActions: false,
       backGroundImage: UIDataImage.backgroundImage,
       showAppBar: true,
       appTitle: "SIGN UP",

@@ -37,7 +37,7 @@ class HomeCardWidget extends StatelessWidget {
                   height: size.height * 0.15,
                   child: SvgPicture.asset(
                     imageAsset,
-                    fit: BoxFit.fitWidth,
+                    fit: BoxFit.fill,
                   ),
                 ).marginOnly(left: 0, right: 0, top: 0),
                 // const Spacer(),

@@ -51,7 +51,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
   @override
   void initState() {
     super.initState();
-    color = '0xff' + widget.colorCode;
+    color = '0xff${widget.colorCode}';
     _controller = AnimationController(
         vsync: this, duration: const Duration(microseconds: 10));
     _heightFactorAnimation =
@@ -251,7 +251,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                           color: UIDataColors.blackColor,
                         )),
                     SpacingWidth.widthlistspacing,
-                    Text(widget.totalPrice + ' AED',
+                    Text('${widget.totalPrice} AED',
                         style: UIDataTextStyles.textMediumColoredBlue.copyWith(
                           color: UIDataColors.primaryColor,
                         )),
@@ -334,14 +334,14 @@ class OrderItemWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Container(
+        SizedBox(
           height: 50,
           child: Row(
             children: [
               SizedBox(
                 child: Row(
                   children: [
-                    Container(
+                    SizedBox(
                         // padding: const EdgeInsets.all(5),
                         height: 50,
                         width: 50,
@@ -367,7 +367,7 @@ class OrderItemWidget extends StatelessWidget {
                           productName,
                           style: UIDataTextStyles.h2.copyWith(fontSize: 12),
                         ),
-                        Text('x' + productQuantity),
+                        Text('x$productQuantity'),
                       ],
                     ).marginOnly(top: 5),
                   ],

@@ -117,6 +117,7 @@ class HomeController extends GetxController {
         var res = await http.post(Uri.parse("${ApiData.mainurl}seller_home"),
             body: body);
         if (res.statusCode == 200) {
+          print(res.body);
           var data = jsonDecode(res.body);
           var newdata = HomeModel.fromJson(data);
           homeData = newdata.data[0];
@@ -127,6 +128,7 @@ class HomeController extends GetxController {
           update();
         } else {
           CommonSnackbar.getSnackbar("Error", "Error ", UIDataColors.redColor);
+          print(res.body);
         }
       } catch (e) {
         print("check error ${e}");
@@ -138,6 +140,7 @@ class HomeController extends GetxController {
             "Server Error or Please Check your internet connection",
             UIDataColors.redColor);
       }
+      isLoading = false;
     }
   }
 

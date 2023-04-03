@@ -1,4 +1,5 @@
 // ignore_for_file: depend_on_referenced_packages
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:santra_seller/controllers/settings_controller/delete_account_controller.dart';
 import 'package:santra_seller/controllers/settings_controller/logout_controller.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
@@ -18,80 +19,103 @@ class Settings extends StatelessWidget {
   final logoutController = Get.put(LogoutController());
   final deleteAccountController = Get.put(DeleteAccountController());
   Widget bodyData(context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          HeadingWithIcon(icon: UIDATAIcons.settingsIcon, btntxt: "Setting"),
-          SpacingHeight.heightlistspacing15,
-          ReusableIconSetting(
-            icon: UIDATAIcons.infoIcon,
-            onPressed: () {
-              Get.toNamed(Routes.accountInfoRoute);
-            },
-            btntxt: "Account info",
-          ),
-          ReusableIconSetting(
-            icon: UIDATAIcons.emailIcon,
-            iconColor: UIDataColors.primaryColor,
-            onPressed: () {
-              Get.toNamed(Routes.changeEmail);
-            },
-            btntxt: "Change Email",
-          ),
-          ReusableIconSetting(
-            icon: UIDATAIcons.lockIcon,
-            onPressed: () {
-              Get.toNamed(Routes.changePassword);
-            },
-            btntxt: 'Change Password',
-          ),
-          ReusableIconSetting(
-            icon: UIDATAIcons.languageIcon,
-            onPressed: () {
-              Get.toNamed(Routes.languageSettings);
-            },
-            btntxt: 'Language',
-          ),
-          // GetBuilder<LogoutController>(builder: (logoutController) {
-          //   return
-          ReusableIconSetting(
-            icon: UIDATAIcons.logoutIcon,
-            onPressed: () {
-              customOntapDialogTwoButtons(context, "Logout",
-                  "Are You Sure You Want To Logout?", "Cancel", "Logout", () {
-                Get.back();
-              }, () {
-                Get.back();
-                logoutController.logout();
-              });
-            },
-            btntxt: 'Logout',
-          ),
-          //   ;
-          // }),
-          ReusableIconSetting(
-            icon: UIDATAIcons.deleteIcon,
-            onPressed: () {
-              Get.toNamed(Routes.deleteAccount);
+    return Stack(
+      children: [
+        SafeArea(
+          child: SingleChildScrollView(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              HeadingWithIcon(
+                  icon: UIDATAIcons.settingsIcon, btntxt: "Setting"),
+              SpacingHeight.heightlistspacing15,
+              ReusableIconSetting(
+                icon: UIDATAIcons.infoIcon,
+                onPressed: () {
+                  Get.toNamed(Routes.accountInfoRoute);
+                },
+                btntxt: "Account info",
+              ),
+              ReusableIconSetting(
+                icon: UIDATAIcons.emailIcon,
+                iconColor: UIDataColors.primaryColor,
+                onPressed: () {
+                  Get.toNamed(Routes.changeEmail);
+                },
+                btntxt: "Change Email",
+              ),
+              ReusableIconSetting(
+                icon: UIDATAIcons.lockIcon,
+                onPressed: () {
+                  Get.toNamed(Routes.changePassword);
+                },
+                btntxt: 'Change Password',
+              ),
+              ReusableIconSetting(
+                icon: UIDATAIcons.languageIcon,
+                onPressed: () {
+                  Get.toNamed(Routes.languageSettings);
+                },
+                btntxt: 'Language',
+              ),
+              // GetBuilder<LogoutController>(builder: (logoutController) {
+              //   return
+              ReusableIconSetting(
+                icon: UIDATAIcons.logoutIcon,
+                onPressed: () {
+                  customOntapDialogTwoButtons(
+                      context,
+                      "Logout",
+                      "Are You Sure You Want To Logout?",
+                      "Cancel",
+                      "Logout", () {
+                    Get.back();
+                  }, () {
+                    Get.back();
+                    logoutController.logout();
+                  });
+                },
+                btntxt: 'Logout',
+              ),
+              //   ;
+              // }),
+              ReusableIconSetting(
+                icon: UIDATAIcons.deleteIcon,
+                onPressed: () {
+                  Get.toNamed(Routes.deleteAccount);
 
-              // customOntapDialogTwoButtons(
-              //     context,
-              //     "Delete Account",
-              //     "Are You Sure You Want To Permanantly Delete Your Account?",
-              //     "Cancel",
-              //     "Delete", () {
-              //   Get.back();
-              // }, () {
-              //   Get.back();
-              //   deleteAccountController.deleteAccount();
-              // });
-            },
-            btntxt: 'Delete Account',
-          )
-        ],
-      ).paddingSymmetric(horizontal: 20)),
+                  // customOntapDialogTwoButtons(
+                  //     context,
+                  //     "Delete Account",
+                  //     "Are You Sure You Want To Permanantly Delete Your Account?",
+                  //     "Cancel",
+                  //     "Delete", () {
+                  //   Get.back();
+                  // }, () {
+                  //   Get.back();
+                  //   deleteAccountController.deleteAccount();
+                  // });
+                },
+                btntxt: 'Delete Account',
+              )
+            ],
+          ).paddingSymmetric(horizontal: 20)),
+        ),
+        Obx(
+          () => logoutController.isLogoutLoading.isTrue
+              ? Opacity(
+                  opacity: 0.8,
+                  child: ModalBarrier(
+                      dismissible: false, color: Colors.black.withOpacity(0.5)),
+                )
+              : Container(),
+        ),
+        Obx(() => logoutController.isLogoutLoading.isTrue
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Container())
+      ],
     );
   }
 
