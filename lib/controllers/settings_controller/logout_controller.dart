@@ -27,6 +27,7 @@ class LogoutController extends GetxController {
         //@todo
         // prefs.clear();
         Get.offAllNamed(Routes.loginRoutes);
+        prefs.clear();
       } else {
         generalException();
         if (kDebugMode) {

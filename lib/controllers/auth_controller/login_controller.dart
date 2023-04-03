@@ -92,8 +92,6 @@ class LoginController extends GetxController {
         GetStorage().write('sellerStatus', sellerStatus);
 
         saveSharedPrefData(newdata.data[0], prefs);
-        prefs.clear();
-
         Get.offAllNamed(Routes.homeRoutes);
       } else {
         update();

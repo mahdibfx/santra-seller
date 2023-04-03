@@ -108,6 +108,7 @@ class HomeController extends GetxController {
   }
 
   homeDataCall() async {
+    print(sellerCode);
     if (sellerCode != null) {
       isLoading = true;
       update();
@@ -116,7 +117,9 @@ class HomeController extends GetxController {
         body['seller_code'] = sellerCode!;
         var res = await http.post(Uri.parse("${ApiData.mainurl}seller_home"),
             body: body);
+        print(body);
         if (res.statusCode == 200) {
+          print(body);
           print(res.body);
           var data = jsonDecode(res.body);
           var newdata = HomeModel.fromJson(data);

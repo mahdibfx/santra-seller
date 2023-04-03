@@ -79,24 +79,38 @@ class CartCardOrder extends StatelessWidget {
                         ),
                       ),
                       Expanded(
-                        child: Column(
-                          children: List.generate(allProducts![index!].subModifiers.length, (subInex) => 
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  // "Large",
-                                  allProducts![index!].subModifiers[subInex].nameModifier.toString(),
-                                  style: UIDataTextStyles.title.copyWith(fontSize: 12),
-                                ).paddingOnly(right: 8),
-                                Text(
-                                  // "Large",
-                                  allProducts![index!].subModifiers[subInex].priceModifier.toString() + " AED",
-                                  style: UIDataTextStyles.title.copyWith(fontSize: 12),
-                                ),
-                              ],
-                            ),
-                          )
+                        child: SingleChildScrollView(
+                          child: Container(
+                            // height: 50,
+                            child: Column(
+                                children: List.generate(
+                              allProducts![index!].subModifiers.length,
+                              (subInex) => Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    // "Large",
+                                    allProducts![index!]
+                                        .subModifiers[subInex]
+                                        .nameModifier
+                                        .toString(),
+                                    style: UIDataTextStyles.title
+                                        .copyWith(fontSize: 12),
+                                  ).paddingOnly(right: 8),
+                                  Text(
+                                    // "Large",
+                                    allProducts![index!]
+                                            .subModifiers[subInex]
+                                            .priceModifier
+                                            .toString() +
+                                        " AED",
+                                    style: UIDataTextStyles.title
+                                        .copyWith(fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                            )),
+                          ),
                         ),
                       ),
                       Text(
