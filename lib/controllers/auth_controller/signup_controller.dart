@@ -37,7 +37,16 @@ class SignUpController extends GetxController {
 
   bool securetext = true;
   bool isvisible = true;
-  List<String> citiesList = ["Dubai", "Ajman", "third"];
+  List<String> citiesList = [
+    "Dubai",
+    "Ajman",
+    "Abu Dhabi",
+    "Sharjah",
+    "Umm Ul Quwain",
+    "Ras Al Khaimah",
+    "Fujairah",
+    "Al Ain"
+  ];
 
   final form = GlobalKey<FormState>();
   List locale = [];

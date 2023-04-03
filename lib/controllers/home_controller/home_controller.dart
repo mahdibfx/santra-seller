@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:santra_seller/models/home_model.dart';
+import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../ui/widgets/snackbar/common_snackbar.dart';
@@ -13,15 +14,15 @@ import '../../utils/uidata.dart';
 import 'package:http/http.dart' as http;
 
 class HomeController extends GetxController {
-  bool isFilterOrderLoading = false;
+  var isFilterOrderLoading = false.obs;
   bool isLoading = true;
   bool acceptOrder = false;
   bool rejectOrder = false;
   bool cancelOrder = false;
   String? sellerCode;
   HomeData? homeData;
-  String? orderMonthly;
-  String? profitMonthly;
+  var orderMonthly = '0'.obs;
+  var profitMonthly = '0'.obs;
   List<Order> allOrders = [];
   var sellerStatusNew;
   List<String> years = [
@@ -49,12 +50,12 @@ class HomeController extends GetxController {
     '11',
     '12'
   ];
-  String selectedYear = "2023";
-  String selectedMonth = "01";
-  updateFilterStatus(bool value) {
-    isFilterOrderLoading = value;
-    update();
-  }
+  var selectedYear = '2023'.obs;
+  var selectedMonth = '01'.obs;
+  // updateFilterStatus(bool value) {
+  //   isFilterOrderLoading = value;
+  //   update();
+  // }
 
   @override
   void onInit() async {
@@ -73,30 +74,27 @@ class HomeController extends GetxController {
 
   Future filterOrder() async {
     try {
-      updateFilterStatus(true);
+      isFilterOrderLoading(true);
 
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       var url = Uri.parse(ApiData.orderFilterApi);
       Map<String, dynamic> body = {};
       body['seller_code'] = prefs.getString("sellercode");
-      body['filter_month'] = selectedMonth.toString();
-      body['filter_year'] = selectedYear.toString();
+      body['filter_month'] = selectedMonth.value;
+      body['filter_year'] = selectedYear.value;
       var response = await http.post(url, body: body);
       if (response.statusCode == 200) {
-        print(body);
         var data = jsonDecode(response.body);
-        profitMonthly = data['data'][0]['profit_monthly'];
-        orderMonthly = data['data'][0]['orders_monthly'];
-        print(response.body);
-        print(profitMonthly);
+        profitMonthly.value = data['data'][0]['profit_monthly'];
+        orderMonthly.value = data['data'][0]['orders_monthly'];
       } else {
-        print(response.body);
+        generalException();
       }
     } catch (e) {
       CommonSnackbar.getSnackbar(
           "Oops", "Something went wrong", UIDataColors.redColor);
     }
-    updateFilterStatus(false);
+    isFilterOrderLoading(false);
   }
 
   homeDataCall() async {
@@ -104,22 +102,22 @@ class HomeController extends GetxController {
       isLoading = true;
       update();
       try {
-      var body = <String, String>{};
-      body['seller_code'] = sellerCode!;
-      var res = await http.post(Uri.parse("${ApiData.mainurl}seller_home"),
-          body: body);
-      if (res.statusCode == 200) {
-        var data = jsonDecode(res.body);
-        var newdata = HomeModel.fromJson(data);
-        homeData = newdata.data[0];
-        allOrders.addAll(homeData!.santraOrders[0].santraOrders);
-        allOrders.addAll(homeData!.manualOrders[0].manualOrders);
-        allOrders.addAll(homeData!.pendingOrders[0].pendingOrders);
-        isLoading = false;
-        update();
-      } else {
-        CommonSnackbar.getSnackbar("Error", "Error ", UIDataColors.redColor);
-      }
+        var body = <String, String>{};
+        body['seller_code'] = sellerCode!;
+        var res = await http.post(Uri.parse("${ApiData.mainurl}seller_home"),
+            body: body);
+        if (res.statusCode == 200) {
+          var data = jsonDecode(res.body);
+          var newdata = HomeModel.fromJson(data);
+          homeData = newdata.data[0];
+          allOrders.addAll(homeData!.santraOrders[0].santraOrders);
+          allOrders.addAll(homeData!.manualOrders[0].manualOrders);
+          allOrders.addAll(homeData!.pendingOrders[0].pendingOrders);
+          isLoading = false;
+          update();
+        } else {
+          CommonSnackbar.getSnackbar("Error", "Error ", UIDataColors.redColor);
+        }
       } catch (e) {
         print("check error ${e}");
         isLoading = false;
@@ -270,10 +268,10 @@ class HomeController extends GetxController {
         return status;
     }
   }
- sellerSt() {
-    sellerStatusNew = GetStorage().read('sellerStatus');
-   update();
-print(sellerStatusNew);
 
+  sellerSt() {
+    sellerStatusNew = GetStorage().read('sellerStatus');
+    update();
+    print(sellerStatusNew);
   }
 }

@@ -102,6 +102,9 @@ class AddCustomerScreen extends StatelessWidget {
                                 },
                                 prefixIcon: UIDATAIcons.location,
                                 options: _.citiesList!,
+                                onChanged: (val) {
+                                  _.city = val;
+                                },
                                 selectedOption: _.city)),
                         SpacingWidth.widthlistspacing15,
                         Expanded(

@@ -12,15 +12,16 @@ class MyDropdown extends StatefulWidget {
   var validator;
   String? prefixIcon;
   String? label;
-  final VoidCallback? doSomething;
+
+  var onChanged;
   MyDropdown(
       {super.key,
       required this.options,
       required this.selectedOption,
       required this.prefixIcon,
       this.label,
-      this.doSomething,
-      this.validator});
+      this.validator,
+      this.onChanged});
 
   @override
   _MyDropdownState createState() => _MyDropdownState();
@@ -45,23 +46,12 @@ class _MyDropdownState extends State<MyDropdown> {
                     letterSpacing: 0.0),
               ));
         }).toList(),
-        onChanged: (newValue) {
-          // do other stuff with _category
-          setState(() {
-            print("new val $newValue");
-
-            widget.selectedOption = newValue;
-
-            if (Get.currentRoute == Routes.homeRoutes &&
-                widget.options.contains("09")) widget.doSomething!();
-            print("SElected ${widget.selectedOption}");
-          });
-        },
+        onChanged: widget.onChanged,
         icon: Padding(
           padding: const EdgeInsets.only(right: 8.0),
           child: SvgPicture.asset(UIDATAIcons.arrowDown),
         ),
-        value: widget.selectedOption ?? "City",
+        value: widget.selectedOption ?? "",
         decoration: InputDecoration(
           label: Text(
             widget.label ?? "",
