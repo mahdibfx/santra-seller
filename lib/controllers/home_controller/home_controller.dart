@@ -15,10 +15,10 @@ import 'package:http/http.dart' as http;
 
 class HomeController extends GetxController {
   var isFilterOrderLoading = false.obs;
-  bool isLoading = true;
-  bool acceptOrder = false;
-  bool rejectOrder = false;
-  bool cancelOrder = false;
+  bool isLoading = false;
+  bool isAcceptOrderLoading = false;
+  bool isRejectOrderLoading = false;
+  bool isCancelOrderLoading = false;
   String? sellerCode;
   HomeData? homeData;
   var orderMonthly = '0'.obs;
@@ -52,10 +52,20 @@ class HomeController extends GetxController {
   ];
   var selectedYear = '2023'.obs;
   var selectedMonth = '01'.obs;
-  // updateFilterStatus(bool value) {
-  //   isFilterOrderLoading = value;
-  //   update();
-  // }
+  updateCancelOrderLoading(bool value) {
+    isCancelOrderLoading = value;
+    update();
+  }
+
+  updateAcceptOrderLoading(bool value) {
+    isAcceptOrderLoading = value;
+    update();
+  }
+
+  updateRejectOrderLoading(bool value) {
+    isRejectOrderLoading = value;
+    update();
+  }
 
   @override
   void onInit() async {
@@ -133,7 +143,7 @@ class HomeController extends GetxController {
 
   Future cancelOrdermethod(String orderNumber) async {
     try {
-      cancelOrder = true;
+      updateCancelOrderLoading(true);
       update();
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       var url = Uri.parse("${ApiData.mainurl}cancel_order");
@@ -142,7 +152,6 @@ class HomeController extends GetxController {
       body['order_number'] = orderNumber.toString();
       var response = await http.post(url, body: body);
       if (response.statusCode == 200) {
-        cancelOrder = false;
         update();
         // Get.snackbar("Accepted", "Order has been accepted");
         CommonSnackbar.getSnackbar(
@@ -150,22 +159,22 @@ class HomeController extends GetxController {
         Get.offAllNamed(Routes.homeRoutes);
         print("Order has been cancelled");
       } else {
-        cancelOrder = false;
+        generalException();
         update();
         print(response.statusCode.toString());
         print("Unable to cancel order");
       }
     } catch (e) {
-      cancelOrder = false;
       update();
       CommonSnackbar.getSnackbar(
           "Oops", "Something went wrong", UIDataColors.redColor);
     }
+    updateCancelOrderLoading(false);
   }
 
   Future acceptOrdermethod(String orderNumber) async {
     try {
-      acceptOrder = true;
+      updateAcceptOrderLoading(true);
       update();
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       var url = Uri.parse("${ApiData.mainurl}accept_order");
@@ -174,7 +183,6 @@ class HomeController extends GetxController {
       body['order_number'] = orderNumber.toString();
       var response = await http.post(url, body: body);
       if (response.statusCode == 200) {
-        acceptOrder = false;
         update();
         // Get.snackbar("Accepted", "Order has been accepted");
         CommonSnackbar.getSnackbar(
@@ -182,21 +190,21 @@ class HomeController extends GetxController {
         Get.offAllNamed(Routes.homeRoutes);
         print("Order has been Accepted");
       } else {
-        acceptOrder = false;
+        generalException();
         update();
         print(response.statusCode.toString());
         print("Unable to accept order");
       }
     } catch (e) {
-      acceptOrder = false;
       update();
       CommonSnackbar.getSnackbar(
           "Oops", "Something went wrong", UIDataColors.redColor);
     }
+    updateAcceptOrderLoading(false);
   }
 
   Future rejectOrderMethod(String orderNumber) async {
-    rejectOrder = true;
+    updateRejectOrderLoading(true);
     update();
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -206,25 +214,24 @@ class HomeController extends GetxController {
       body['order_number'] = orderNumber.toString();
       var response = await http.post(url, body: body);
       if (response.statusCode == 200) {
-        rejectOrder = false;
         update();
 
         CommonSnackbar.getSnackbar(
             "Rejected", "Order has been Rejected ", UIDataColors.primaryColor);
         Get.offAllNamed(Routes.homeRoutes);
       } else {
-        rejectOrder = false;
+        generalException();
         update();
         // print(response.statusCode);
         // print("Unable to reject order");
       }
     } catch (e) {
-      rejectOrder = false;
       update();
 
       CommonSnackbar.getSnackbar(
           "Oops", "Something went wrong", UIDataColors.redColor);
     }
+    updateRejectOrderLoading(false);
   }
 
   Color getColor(String colorName) {

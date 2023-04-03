@@ -342,6 +342,7 @@ class HomeScreen extends StatelessWidget {
       bodyData: bodyData(context),
       backgroundcolor: UIDataColors.whiteColor,
       backGroundImage: UIDataImage.backgroundImage,
+      isBackArrowShow: false,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,
