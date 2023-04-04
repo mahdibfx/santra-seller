@@ -2,6 +2,7 @@
 import 'package:santra_seller/controllers/more_screen_controller.dart/about_us_controller.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import '../../../utils/routes/app_routes.dart';
+import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ class AboutUsScreen extends StatelessWidget {
                                   btntxt: "About Us"),
                               Text(
                                 _.aboutUsText ?? "No Data To Show",
+                                style: UIDataTextStyles.title,
                                 textAlign: TextAlign.justify,
                               ),
                             ],

@@ -49,7 +49,7 @@ class LoginController extends GetxController {
     getFcmToken();
     setLoginValues();
     super.onInit();
-    signUpController.getCities();
+
     update();
   }
 
