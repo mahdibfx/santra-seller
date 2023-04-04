@@ -37,16 +37,7 @@ class SignUpController extends GetxController {
 
   bool securetext = true;
   bool isvisible = true;
-  List<String> citiesList = [
-    "Dubai",
-    "Ajman",
-    "Abu Dhabi",
-    "Sharjah",
-    "Umm Ul Quwain",
-    "Ras Al Khaimah",
-    "Fujairah",
-    "Al Ain"
-  ];
+  List<String> citiesList = [];
 
   final form = GlobalKey<FormState>();
   List locale = [];
@@ -81,6 +72,30 @@ class SignUpController extends GetxController {
     ];
     super.onInit();
     getFcmToken();
+
+    update();
+  }
+
+  Future getCities() async {
+    try {
+      var url = Uri.parse(ApiData.getCities);
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final body = jsonDecode(response.body) as Map<String, dynamic>;
+        final data = body["data"] as List<dynamic>;
+        citiesList = data
+            .map((d) => (d as Map<String, dynamic>)["city_name"].toString())
+            .toList();
+        print(citiesList);
+      } else {
+        CommonSnackbar.getSnackbar(
+            "Failed", "Unable to load cities list", UIDataColors.redColor);
+      }
+    } catch (e) {
+      CommonSnackbar.getSnackbar("Error",
+          "Error while loading data, Please try again", UIDataColors.redColor);
+    }
   }
 
   Future<void> signupMethod() async {

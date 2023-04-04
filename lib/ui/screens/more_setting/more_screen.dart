@@ -54,11 +54,11 @@ class MoreSettingScreen extends StatelessWidget {
                         btntxt: 'Customers List',
                       ),
                       ReusableIconSetting(
-                        icon: UIDATAIcons.customersIcon,
+                        icon: UIDATAIcons.starIcon,
                         onPressed: () {
                           Get.toNamed(Routes.customerReviews);
                         },
-                        btntxt: 'Customers Reviews',
+                        btntxt: 'Customer Reviews',
                       ),
                       ReusableIconSetting(
                         icon: UIDATAIcons.walletIcon,
@@ -70,7 +70,7 @@ class MoreSettingScreen extends StatelessWidget {
                       ReusableIconSetting(
                         icon: UIDATAIcons.whatsappIcon,
                         onPressed: () {
-                          // Get.toNamed(Routes.walletscreen);
+                          Get.toNamed(Routes.contactscreen);
                         },
                         btntxt: 'Contact Customer Service',
                       ),
@@ -83,9 +83,7 @@ class MoreSettingScreen extends StatelessWidget {
                       ),
                       ReusableIconSetting(
                         icon: UIDATAIcons.securityIcon,
-                        onPressed: () {
-                          // Get.toNamed(Routes.contactscreen);
-                        },
+                        onPressed: () {},
                         btntxt: 'Privacy Policy',
                       )
                     ],

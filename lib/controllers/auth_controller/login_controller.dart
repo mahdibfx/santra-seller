@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:santra_seller/controllers/auth_controller/signup_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/login_model.dart';
 import '../../ui/widgets/snackbar/common_snackbar.dart';
@@ -13,6 +14,7 @@ import '../../utils/uidata.dart';
 
 class LoginController extends GetxController {
   // bool isLoading = true;
+  SignUpController signUpController = Get.put(SignUpController());
   bool isLoading = false;
   bool securetext = true;
   bool remember = false;
@@ -47,6 +49,7 @@ class LoginController extends GetxController {
     getFcmToken();
     setLoginValues();
     super.onInit();
+    signUpController.getCities();
     update();
   }
 
@@ -92,9 +95,6 @@ class LoginController extends GetxController {
         GetStorage().write('sellerStatus', sellerStatus);
 
         saveSharedPrefData(newdata.data[0], prefs);
-        prefs.clear();
-
-        Get.offAllNamed(Routes.homeRoutes);
       } else {
         update();
         print(res.body);
@@ -126,6 +126,7 @@ class LoginController extends GetxController {
     prefs.setString("dob", data.dateOfBirth.toString());
     prefs.setString("password", password.text);
     prefs.setString("sellerStatus", data.message);
+    Get.offAllNamed(Routes.homeRoutes);
   }
 
   Future<String> sellerSt() async {
