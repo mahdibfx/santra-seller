@@ -1,4 +1,5 @@
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:santra_seller/controllers/auth_controller/signup_controller.dart';
 
 import '../../../controllers/auth_controller/login_controller.dart';
 import '../../../utils/routes/app_routes.dart';
@@ -12,6 +13,7 @@ import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
   final form = GlobalKey<FormState>();
+
   Widget bodyData(context) {
     return GetBuilder<LoginController>(
       builder: (_) {

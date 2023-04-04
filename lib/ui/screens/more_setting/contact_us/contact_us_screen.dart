@@ -1,3 +1,7 @@
+import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
+import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
+import 'package:santra_seller/utils/uidata/textStyles.dart';
+
 import '../../../../controllers/more_screen_controller.dart/contact_us/contact_us_controller.dart';
 import '../../../../utils/routes/app_routes.dart';
 import '../../../../utils/uidata.dart';
@@ -20,104 +24,121 @@ class ContactUsScreen extends StatelessWidget {
           child: SingleChildScrollView(
               child: Column(
             children: [
+              HeadingWithIcon(
+                  icon: UIDATAIcons.orderRemarks,
+                  btntxt: "Contact Customer Service"),
               Form(
                 key: _.form,
                 child: Column(
                   children: [
-                    SpacingHeight.heightlistspacing20,
-                    Container(
-                      child: Column(children: [
-                        CommonTextField(
-                          fieldHeading: 'Name',
-                          controller: _.username,
-                          hintText: "User Name".tr,
-                          isTextHidden: false,
-                          fillcolor: UIDataColors.whiteColor,
-                          keyboardType: TextInputType.emailAddress,
-                          validator: (val) {
-                            if (val.isEmpty) {
-                              return "please enter your User Name";
+                    Column(children: [
+                      CommonTextField(
+                        controller: _.username,
+                        labelText: "Name".tr,
+                        isTextHidden: false,
+                        fillcolor: UIDataColors.whiteColor,
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (val) {
+                          if (val.isEmpty) {
+                            return "Please enter your name";
+                          }
+                        },
+                      ),
+                      CommonTextField(
+                        controller: _.email,
+                        labelText: 'Email'.tr,
+                        isTextHidden: false,
+                        fillcolor: UIDataColors.whiteColor,
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (val) {
+                          bool email = _.emailRegex.hasMatch(val);
+                          if (val.isEmpty) {
+                            return "Please enter your email";
+                          } else if (!email) {
+                            return "Please enter valid email address";
+                          }
+                        },
+                      ),
+                      CommonTextField(
+                        controller: _.phonenumber,
+                        labelText: 'Phone Number'.tr,
+                        isTextHidden: false,
+                        fillcolor: UIDataColors.whiteColor,
+                        keyboardType: TextInputType.number,
+                        maxLength: 12,
+                        validator: (val) {
+                          String? name;
+                          if (val.isEmpty || val.length < 12) {
+                            return "Please enter valid phone number";
+                          } else if (val.isNotEmpty && val.length > 3) {
+                            name = val.substring(0, 3);
+
+                            if (name != "971") {
+                              return "Phone number must start with 971";
                             }
-                          },
-                        ),
-                        SpacingHeight.heightlistspacing10,
-                        CommonTextField(
-                          fieldHeading: 'Email',
-                          controller: _.email,
-                          hintText: 'Email'.tr,
-                          isTextHidden: false,
-                          fillcolor: UIDataColors.whiteColor,
-                          keyboardType: TextInputType.emailAddress,
-                          validator: (val) {
-                            bool email = _.emailRegex.hasMatch(val);
-                            if (val.isEmpty) {
-                              return "please enter your email";
-                            } else if (email == null) {
-                              return "please enter valid email address";
-                            }
-                          },
-                        ),
-                        SpacingHeight.heightlistspacing10,
-                        CommonTextField(
-                          fieldHeading: 'Phone Number',
-                          controller: _.phonenumber,
-                          hintText: 'Phone Number'.tr,
-                          isTextHidden: false,
-                          fillcolor: UIDataColors.whiteColor,
-                          keyboardType: TextInputType.number,
-                          validator: (val) {
-                            if (val.isEmpty) {
-                              return "please enter your phone Number";
-                            }
-                          },
-                        ),
-                        SpacingHeight.heightlistspacing10,
-                        CommonTextField(
-                          fieldHeading: 'Address',
-                          controller: _.address,
-                          hintText: 'Address'.tr,
-                          isTextHidden: false,
-                          fillcolor: UIDataColors.whiteColor,
-                          keyboardType: TextInputType.emailAddress,
-                          validator: (val) {
-                            if (val.isEmpty) {
-                              return "please enter your Address";
-                            }
-                          },
-                        ),
-                        SpacingHeight.heightlistspacing10,
-                      ]),
-                    ),
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                      CommonTextField(
+                        maxlines: 5,
+                        controller: _.address,
+                        hintText: 'Message'.tr,
+                        isTextHidden: false,
+                        fillcolor: UIDataColors.whiteColor,
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (val) {
+                          if (val.isEmpty) {
+                            return "Please enter your query";
+                          }
+                        },
+                      ),
+                      SpacingHeight.heightlistspacing10,
+                    ]),
                     SpacingHeight.heightlistspacing10,
-                    Obx(
-                      () => _.isLoading.value
-                          ? SizedBox(
-                              child: Center(
-                              child: CircularProgressIndicator(),
-                            ))
-                          : RaisedGradientButton(
-                              onPressed: () async {},
-                              gradient: const LinearGradient(
-                                colors: <Color>[
-                                  Color(0xff006EB8),
-                                  Color(0xff006EB8),
-                                ],
-                              ),
-                              btntxt: "Submit".tr,
-                              buttontxtColor: UIDataColors.whiteColor,
-                            ),
-                    ),
+                    Obx(() => _.isLoading.value
+                        ? const SizedBox(
+                            child: Center(
+                            child: CircularProgressIndicator(),
+                          ))
+                        : PrimaryButtonWithIcon(
+                            btntxt: "Send",
+                            iconImage: UIDATAIcons.sendIcon,
+                          )),
                     SpacingHeight.heightlistspacing15,
                   ],
                 ),
               ),
-              Text('Get in Touch'),
-              Text('+971 50 188 6867'),
-              Text('app.santra.ae'),
-              Text('Santra D-tech-497G'),
-              Text(' Dubai Silicon Oasis- Dubai,UAE'),
+              const Text(
+                'Get in Touch',
+                style: UIDataTextStyles.h1,
+              ),
+              SpacingHeight.heightlistspacing5,
+              const Text(
+                '+971 50 188 6867',
+                style: UIDataTextStyles.title,
+              ),
+              SpacingHeight.heightlistspacing5,
+              const Text(
+                'app.santra.ae',
+                style: UIDataTextStyles.title,
+              ),
+              SpacingHeight.heightlistspacing5,
+              const Text(
+                'Santra D-tech-497G',
+                style: UIDataTextStyles.title,
+              ),
+              const Text(
+                'Dubai Silicon Oasis- Dubai',
+                style: UIDataTextStyles.title,
+              ),
+              const Text(
+                'United Arab Emirates',
+                style: UIDataTextStyles.title,
+              ),
             ],
-          ).marginAll(10)),
+          ).paddingSymmetric(horizontal: 15)),
         );
       },
     );
@@ -128,6 +149,7 @@ class ContactUsScreen extends StatelessWidget {
     return CommonScaffold(
       bodyData: bodyData(),
       backgroundcolor: UIDataColors.whiteColor,
+      backGroundImage: UIDataImage.backgroundImage,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,

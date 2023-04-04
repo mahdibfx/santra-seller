@@ -22,4 +22,5 @@ class ApiData {
   static const verifyResetPassword = "${mainurl}verify_reset";
   static const orderFilterApi = "${mainurl}order_filter";
   static const termsAPi = "${mainurl}terms_seller";
+  static const getCities = "${mainurl}get_cities";
 }
