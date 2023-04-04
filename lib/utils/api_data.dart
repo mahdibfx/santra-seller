@@ -23,4 +23,5 @@ class ApiData {
   static const orderFilterApi = "${mainurl}order_filter";
   static const termsAPi = "${mainurl}terms_seller";
   static const getCities = "${mainurl}get_cities";
+  static const privacyApi = "${mainurl}new_privacy";
 }

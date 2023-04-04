@@ -83,7 +83,9 @@ class MoreSettingScreen extends StatelessWidget {
                       ),
                       ReusableIconSetting(
                         icon: UIDATAIcons.securityIcon,
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(Routes.privacy);
+                        },
                         btntxt: 'Privacy Policy',
                       )
                     ],

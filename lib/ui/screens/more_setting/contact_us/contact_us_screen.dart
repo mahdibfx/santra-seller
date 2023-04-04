@@ -16,7 +16,7 @@ class ContactUsScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
   ContactUsScreen({super.key});
-
+  final form = GlobalKey<FormState>();
   Widget bodyData() {
     return GetBuilder<ContactUsController>(
       builder: (_) {
@@ -28,12 +28,12 @@ class ContactUsScreen extends StatelessWidget {
                   icon: UIDATAIcons.orderRemarks,
                   btntxt: "Contact Customer Service"),
               Form(
-                key: _.form,
+                key: form,
                 child: Column(
                   children: [
                     Column(children: [
                       CommonTextField(
-                        controller: _.username,
+                        controller: _.usernameController,
                         labelText: "Name".tr,
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
@@ -45,7 +45,7 @@ class ContactUsScreen extends StatelessWidget {
                         },
                       ),
                       CommonTextField(
-                        controller: _.email,
+                        controller: _.emailController,
                         labelText: 'Email'.tr,
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
@@ -60,7 +60,7 @@ class ContactUsScreen extends StatelessWidget {
                         },
                       ),
                       CommonTextField(
-                        controller: _.phonenumber,
+                        controller: _.phonenumberController,
                         labelText: 'Phone Number'.tr,
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
@@ -83,7 +83,7 @@ class ContactUsScreen extends StatelessWidget {
                       ),
                       CommonTextField(
                         maxlines: 5,
-                        controller: _.address,
+                        controller: _.messageController,
                         hintText: 'Message'.tr,
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
@@ -97,7 +97,7 @@ class ContactUsScreen extends StatelessWidget {
                       SpacingHeight.heightlistspacing10,
                     ]),
                     SpacingHeight.heightlistspacing10,
-                    Obx(() => _.isLoading.value
+                    _.isLoading
                         ? const SizedBox(
                             child: Center(
                             child: CircularProgressIndicator(),
@@ -105,7 +105,12 @@ class ContactUsScreen extends StatelessWidget {
                         : PrimaryButtonWithIcon(
                             btntxt: "Send",
                             iconImage: UIDATAIcons.sendIcon,
-                          )),
+                            onPressed: () {
+                              if (form.currentState!.validate()) {
+                                _.sendMessage();
+                              }
+                            },
+                          ),
                     SpacingHeight.heightlistspacing15,
                   ],
                 ),

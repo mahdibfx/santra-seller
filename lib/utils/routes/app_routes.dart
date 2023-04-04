@@ -24,6 +24,7 @@ abstract class Routes {
   static const createrequestroute = "/createrequest";
   static const languageSettings = "/languagesettings";
   static const deleteAccount = "/deleteAccount";
+  static const privacy = "/privacy";
   static const forgotPasswordConfirmation = "/forgotPasswordConfirmation";
   static const resetPasswordAfterConfirmation =
       "/resetPasswordAfterConfirmation";
@@ -55,5 +56,4 @@ abstract class Routes {
   static const allOrderScreen = "/allOrderscreen";
   static const productSetting = "/productSetting";
   static const notificationscreen = "/notificationscreen";
-
 }

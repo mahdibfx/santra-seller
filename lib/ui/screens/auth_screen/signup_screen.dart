@@ -20,9 +20,26 @@ import 'package:flutter/material.dart';
 import '/utils/uidata.dart';
 import 'package:get/get.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   SignUpScreen({super.key});
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
   PrivacyController priCont = Get.put(PrivacyController());
+  SignUpController regCont = Get.put(SignUpController());
+  @override
+  void initState() {
+    super.initState();
+    regCont.getCities().then(
+      (value) {
+        setState(() {});
+      },
+    );
+  }
+
   Widget bodyData(context) {
     Size size = MediaQuery.of(context).size;
     return GetBuilder<SignUpController>(
