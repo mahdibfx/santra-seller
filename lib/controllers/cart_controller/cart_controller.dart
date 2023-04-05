@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -21,11 +22,20 @@ class CartController extends GetxController {
   bool receiptPaymentType = true;
   List<CartItem> cartItems = <CartItem>[].obs;
   DateTime? selectedDateTime;
-  int deliveryCharges = 0;
-  double codCharges = 0;
-  double discount = 0;
+  double deliveryCharges = 0.0;
+  double codCharges = 0.0;
+  double discount = 0.0;
   dynamic finalSubmitData;
   List<VoucherModel> vouchersList = [];
+  String? discountType;
+  double capAmount = 0.0;
+  String? voucherCode;
+  bool promoValid = false;
+  Set activeOffers = {};
+  bool isDiscountLoading = false;
+  String? voucherAppliedMsg;
+  String? voucherListVoucherCode;
+  List<DateTime?> dates = [];
   @override
   void onInit() async {
 //  getCartItems();
@@ -34,6 +44,11 @@ class CartController extends GetxController {
 
   getCartItems() {
     cartItems = GetStorage().read('cart') ?? [];
+  }
+
+  void changeDiscountLoadingState(value) {
+    isDiscountLoading = value;
+    update();
   }
 
   changeLoadingStatus(value) {
@@ -52,6 +67,97 @@ class CartController extends GetxController {
     update();
   }
 
+  double get deliveryFee {
+    double dFee = 0.0;
+    // if (preGrandTotal < deliveryChargesCap) {
+    //   dFee = deliveryChargesReal;
+    // } else {
+    //   dFee = deliveryCharges;
+    // }
+    dFee = deliveryCharges;
+    print("DELIVERY FEE$dFee");
+    return dFee;
+  }
+
+  get preGrandTotal {
+    double preAmount = 0;
+    // if (paymentType != "COD") {
+    //   codCharges = 0.0;
+    // }
+    preAmount = totalPrice - dis + codCharges;
+    print("PRE GRAND$preAmount");
+    return preAmount;
+  }
+
+  double get dis {
+    double disAmount = 0.0;
+
+    if (totalPrice >= capAmount) {
+      if (discountType == "AED") {
+        disAmount = discount;
+      } else if (discountType == "%") {
+        disAmount = (discount / 100) * totalPrice;
+      }
+    } else {
+      discount = 0.0;
+      disAmount = 0.0;
+      voucherCode = null;
+      promoValid = false;
+    }
+    print("DISCOUNT$disAmount");
+    return disAmount;
+  }
+
+  double get totalPrice {
+    double subAmount = 0;
+
+    cartItems.fold(subAmount, (prevValue, element) {
+      double modifierAmount = 0;
+      if (element.subModifiers != null) {
+        for (var j in element.subModifiers) {
+          modifierAmount =
+              (double.parse(j.priceModifier.toString()) * element.quantity) +
+                  modifierAmount;
+        }
+      }
+
+      subAmount += (double.parse(element.price.toString()) * element.quantity) +
+          modifierAmount;
+      return subAmount;
+    });
+    print("TOTAL PRICE$subAmount");
+    return subAmount;
+  }
+
+  get grandTotal {
+    double amount = 0;
+    amount = preGrandTotal + deliveryFee;
+
+    return amount;
+  }
+
+  /// *************************METHOD TO APPLY DISCOUNT BY CLICKING APPLY ON VOUCHER TILE*******************************/
+  voucherTileDiscountMethod(index) {
+    capAmount = double.parse(vouchersList[index].capAmount.toString());
+    discount = double.parse(vouchersList[index].discountApplied.toString());
+    discountType = vouchersList[index].disType;
+    // voucherListVoucherCode = vouchersList[index].offerTitle;
+    voucherCode = null;
+    promoValid = false;
+    update();
+  }
+
+  /// *************************APPLY/APPLIED TOGGLE ON VOUHCER TILE*******************************/
+  void toggleApplied(index) {
+    activeOffers.clear();
+    activeOffers.contains(index)
+        ? activeOffers.remove(index)
+        : activeOffers.add(index);
+    voucherCode = null;
+    promoValid = false;
+    update();
+  }
+
   Future cartScreenData() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -65,7 +171,8 @@ class CartController extends GetxController {
         var data = jsonDecode(response.body);
         print(data);
         var voucherL = data['data'][0]['vouchers'] as List<dynamic>;
-        deliveryCharges = data['data'][0]['delivery_charges'];
+        deliveryCharges =
+            double.parse(data['data'][0]['delivery_charges'].toString());
         codCharges = double.parse(data['data'][0]['cash_charges'].toString());
         var vList = voucherL.map((e) => VoucherModel.fromJson(e)).toList();
         vouchersList = vList;
@@ -76,6 +183,55 @@ class CartController extends GetxController {
       exceptionDialog("Oops", "Something went wrong");
     }
     changeCartLoadingState(false);
+  }
+
+  /// *************************PROMO DISCOUNT API*******************************/
+  Future promoDiscount() async {
+    try {
+      changeDiscountLoadingState(true);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? sellerCode = prefs.getString("sellercode");
+      var url = Uri.parse(ApiData.promoDiscountApi);
+      Map<String, dynamic> body = {};
+      body['seller_code'] = sellerCode.toString();
+      body['discount_coupon'] = voucherCode;
+      //body['user_id'] = prefs.getString("user_id").toString();
+      body['total_amount'] = grandTotal.toString();
+      body['sub_total'] = totalPrice.toString();
+      var response = await http.post(url, body: body);
+      if (response.statusCode == 200) {
+        changeDiscountLoadingState(false);
+        if (kDebugMode) {
+          print(response.body);
+        }
+        var data = jsonDecode(response.body);
+        discount = double.parse(data['data'][0]['discount_applied'].toString());
+        discountType = data['data'][0]['discount_type'].toString();
+        capAmount = double.parse(data['data'][0]['cap_amount'].toString());
+        voucherAppliedMsg = data['data'][0]['message'].toString();
+        voucherListVoucherCode = null;
+
+        activeOffers.clear();
+        promoValid = true;
+      } else {
+        changeDiscountLoadingState(false);
+        discount = 0.0;
+        voucherCode = null;
+
+        var data = jsonDecode(response.body);
+        String msg = data['data']['message'].toString();
+
+        exceptionDialog("Oops", msg);
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+
+      Get.snackbar("Oops", "An unknown error occured");
+    }
+    changeDiscountLoadingState(false);
+    update();
   }
 
   void addToCart(CartItem item) {
@@ -118,27 +274,6 @@ class CartController extends GetxController {
     //  GetStorage().write('cart', cartItems);
   }
 
-  double get totalPrice {
-    double subAmount = 0;
-
-    cartItems.fold(subAmount, (prevValue, element) {
-      double modifierAmount = 0;
-      if (element.subModifiers != null) {
-        for (var j in element.subModifiers) {
-          modifierAmount =
-              (double.parse(j.priceModifier.toString()) * element.quantity) +
-                  modifierAmount;
-        }
-      }
-
-      subAmount += (double.parse(element.price.toString()) * element.quantity) +
-          modifierAmount;
-      return subAmount;
-    });
-    print("sub$subAmount");
-    return subAmount;
-  }
-
   // double get totalPrice => cartItems.fold(
   //       0,
   //       (previousValue, cartItem) => previousValue + (cartItem.price +)* cartItem.quantity,
@@ -147,12 +282,6 @@ class CartController extends GetxController {
   //   0,
   //   (previousValue, cartItem) => (previousValue + cartItem.price * cartItem.quantity) + deliveryCharges,
   // );
-  double get grandTotal {
-    double amount = 0;
-    amount = totalPrice + deliveryCharges;
-
-    return amount;
-  }
 
   double calculateTotalPrice() {
     double totalPrice = 0;

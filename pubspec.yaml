@@ -43,6 +43,7 @@ dependencies:
   date_picker_timeline: ^1.2.3
   percent_indicator: ^4.2.3
   get_storage: ^2.1.1
+  calendar_date_picker2: ^0.4.9
 
 
 dev_dependencies:
