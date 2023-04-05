@@ -52,6 +52,7 @@ class AddCustomerScreen extends StatelessWidget {
                       labelText: "Mobile",
                       prefixIcon: UIDATAIcons.callIcon,
                       maxLength: 12,
+                      hintText: "971#########",
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,

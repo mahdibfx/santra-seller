@@ -1,5 +1,7 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:santra_seller/controllers/more_screen_controller.dart/wallet_controller.dart';
+import 'package:santra_seller/ui/widgets/add_manual_order_widgets/vouchers_section.dart';
+import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import '../../../../utils/routes/app_routes.dart';
 import '../../../../utils/uidata/textStyles.dart';
 import '../../../controllers/cart_controller/cart_controller.dart';
@@ -8,14 +10,24 @@ import 'package:get/get.dart';
 import '../../../../utils/uidata.dart';
 import '../../widgets/add_manual_order_widgets/cart_card.dart';
 import '../../widgets/add_manual_order_widgets/cart_payment_des.dart';
-import '../../widgets/add_manual_order_widgets/pd_card_add_manual_order.dart';
 import '../../widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 
-class CartScreen extends StatelessWidget {
-  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
-
+class CartScreen extends StatefulWidget {
   CartScreen({super.key});
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  CartController cartController = Get.put(CartController());
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    cartController.cartScreenData();
+  }
 
   Widget bodyData(context) {
     return GetBuilder<CartController>(
@@ -28,36 +40,24 @@ class CartScreen extends StatelessWidget {
             : SafeArea(
                 child: SingleChildScrollView(
                     child: _.cartItems.isEmpty
-                        ? Container(
+                        ? SizedBox(
                             height: MediaQuery.of(context).size.height - 200,
-                            child:
-                                Center(child: Text("Nothing to show in cart")))
+                            child: const Center(
+                                child: Text("Nothing to show in cart")))
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  // Icon(UIDATAIcons.cartIcon, size: 40, color: UIDataColors.primaryColor),
-                                  SvgPicture.asset(
-                                    UIDATAIcons.cartHallowIcon,
-                                    color: UIDataColors.primaryColor,
-                                  ),
-                                  Text(
-                                    'Cart',
-                                    style: UIDataTextStyles.title,
-                                  ),
-                                ],
-                              ),
-                              SpacingHeight.heightlistspacing20,
-                              // SpacingHeight.heightlistspacing10,
+                              HeadingWithIcon(
+                                  icon: UIDATAIcons.cartHallowIcon,
+                                  btntxt: "Cart"),
                               ListView.builder(
+                                  padding: EdgeInsets.zero,
                                   physics: const BouncingScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount: _.cartItems.length,
                                   itemBuilder: (context, index) {
                                     return Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.all(0.0),
                                       child: CartCardOrder(
                                         allProducts: _.cartItems,
                                         index: index,
@@ -70,16 +70,16 @@ class CartScreen extends StatelessWidget {
                                       ),
                                     );
                                   }),
-
+                              VouchersSection(),
                               CartPayemntDescriptionCard(
-                                subtotal: '${_.totalPrice.toStringAsFixed(2)}',
-                                total: '${_.grandTotal.toStringAsFixed(2)}',
+                                subtotal: _.totalPrice.toStringAsFixed(2),
+                                total: _.grandTotal.toStringAsFixed(2),
                                 deliveryCharges: _.deliveryCharges.toString(),
                                 dateSelected: (dateTime) {
                                   _.updateDate(dateTime);
                                 },
+                                discount: _.discount.toString(),
                               ),
-
                               Padding(
                                 padding: const EdgeInsets.only(top: 20.0),
                                 child: PrimaryButtonWithIcon(
@@ -102,7 +102,7 @@ class CartScreen extends StatelessWidget {
                                 ),
                               )
                             ],
-                          ).marginAll(10)),
+                          ).paddingSymmetric(horizontal: 15)),
               );
       },
     );

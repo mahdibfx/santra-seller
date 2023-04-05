@@ -16,6 +16,8 @@ import '../buttons/icon_button.dart';
 import '../custom_float.dart';
 import '../dialogs/custom_dialogs.dart';
 import '../drawer/clip_drawer.dart';
+import 'cart_icon_with_badge.dart';
+import 'notification_icon_with_badge.dart';
 
 LoginController loginController = Get.put(LoginController());
 HomeController homeController = Get.put(HomeController());
@@ -143,15 +145,14 @@ class CommonScaffold extends StatelessWidget {
                         ),
                 ),
                 onPressed: () {
-                  Get.offAllNamed(Routes.homeRoutes);
                   if (Get.currentRoute != Routes.homeRoutes) {
-                    Get.toNamed(Routes.homeRoutes);
+                    Get.offAllNamed(Routes.homeRoutes);
                   }
                 },
               ),
-               Center(
+              Center(
                 child: Text(
-                showFAB ?  'Add Order' : '',
+                  showFAB ? 'Add Order' : '',
                   style: UIDataTextStyles.h2,
                   textAlign: TextAlign.center,
                 ),
@@ -310,109 +311,6 @@ class CommonScaffold extends StatelessWidget {
           ? FloatingActionButtonLocation.centerDocked
           : FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: showBottomNav ? myBottomBar() : null,
-    );
-  }
-}
-
-class CartIconWithBadge extends StatelessWidget {
-  String? icon;
-
-  bool? showBadge;
-  var onTap;
-  CartIconWithBadge({Key? key, this.icon, this.showBadge, this.onTap})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final CartController cartController = Get.find<CartController>();
-    return GestureDetector(
-      onTap: onTap!,
-      child: Stack(
-        clipBehavior: Clip.none,
-        alignment: Alignment.center,
-        children: [
-          SvgPicture.asset(
-            UIDATAIcons.cartHallowIcon,
-            height: 30,
-            color: Colors.black,
-          ),
-          if (cartController.itemCount != 0)
-            Positioned(
-                right: -7,
-                bottom: 25,
-                child: Container(
-                  height: 20,
-                  // width: 20,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: const Color(0xffC32C4C),
-                      borderRadius: BorderRadius.circular(50)),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 5.0, vertical: 2),
-                    child: Obx(() => Text(
-                        cartController.itemCount.toString(),
-                        style: UIDataTextStyles.caption,
-                      ),
-                    ),
-                  ),
-                ))
-        ],
-      ),
-    );
-  }
-}
-
-class NotificationIconWithBadge extends StatelessWidget {
-  String? icon;
-  String? value;
-  bool? showBadge;
-  NotificationIconWithBadge({Key? key, this.icon, this.value, this.showBadge})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final HomeController homeController = Get.find<HomeController>();
-
-    return GestureDetector(
-      onTap: (){
-        Get.toNamed(Routes.notificationscreen);
-      },
-      child: Stack(
-        clipBehavior: Clip.none,
-        alignment: Alignment.center,
-        children: [
-          SvgPicture.asset(
-            UIDATAIcons.bell,
-            height: 30,
-            color: Colors.black,
-          ),
-          if (homeController.homeData != null )
-          if (homeController.homeData!.totalNotifications != "0")
-            Positioned(
-                right: -7,
-                bottom: 25,
-                child: Container(
-                  height: 20,
-                  // width: 20,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: const Color(0xffC32C4C),
-                      borderRadius: BorderRadius.circular(50)),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2),
-                    child: Text(
-                      homeController.homeData == null
-                          ? '0'
-                          : homeController.homeData!.totalNotifications
-                              .toString(),
-                      style: UIDataTextStyles.caption,
-                    ),
-                  ),
-                ))
-        ],
-      ),
     );
   }
 }

@@ -15,15 +15,17 @@ class CartPayemntDescriptionCard extends StatelessWidget {
   final String subtotal;
   final String deliveryCharges;
   final String total;
+  final String? discount;
   final Function(DateTime) dateSelected;
 
-  CartPayemntDescriptionCard({
-    Key? key,
-    required this.subtotal,
-    required this.total,
-    required this.deliveryCharges,
-    required this.dateSelected,
-  }) : super(key: key);
+  CartPayemntDescriptionCard(
+      {Key? key,
+      required this.subtotal,
+      required this.total,
+      required this.deliveryCharges,
+      required this.dateSelected,
+      this.discount})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,6 @@ class CartPayemntDescriptionCard extends StatelessWidget {
           ],
         ),
         padding: const EdgeInsets.all(8.0),
-        height: 300,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,7 +62,7 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                       children: [
                         const Text("Subtotal"),
                         const Spacer(),
-                         Text("$subtotal AED"),
+                        Text("$subtotal AED"),
                       ],
                     ),
                   ),
@@ -76,10 +77,26 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                       children: [
                         const Text("Delivery Charge"),
                         const Spacer(),
-                         Text("$deliveryCharges AED"),
+                        Text("$deliveryCharges AED"),
                       ],
                     ),
                   ),
+                  Divider(
+                    height: 1,
+                    color: Colors.green.withOpacity(0.2),
+                  ).paddingOnly(top: 5),
+                  if (discount != "0.0")
+                    Container(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Text("Discount"),
+                          const Spacer(),
+                          Text("-$discount AED"),
+                        ],
+                      ),
+                    ),
                   Divider(
                     height: 1,
                     color: Colors.green.withOpacity(0.2),
@@ -92,7 +109,7 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                         const Text("Total",
                             style: UIDataTextStyles.textMediumColoredBlue),
                         const Spacer(),
-                         Text("$total AED",
+                        Text("$total AED",
                             style: UIDataTextStyles.textMediumColoredBlue),
                       ],
                     ),
@@ -106,12 +123,15 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                             showModalBottomSheet(
                                 context: context,
                                 shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only( // <-- SEE HERE
+                                  borderRadius: BorderRadius.only(
+                                    // <-- SEE HERE
                                     topLeft: Radius.circular(15.0),
                                   ),
                                 ),
                                 builder: (context) {
-                                  return OrderDate(dateSelected: (date ) => dateSelected(date));
+                                  return OrderDate(
+                                      dateSelected: (date) =>
+                                          dateSelected(date));
                                 });
                           },
                           btntxt: "Delivery Time",
@@ -121,7 +141,8 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                       Expanded(
                         child: PrimaryButtonWithIcon(
                           onPressed: () {
-                            Get.toNamed(Routes.addManualOrder,arguments: 'cartScreen_to_add_manual');
+                            Get.toNamed(Routes.addManualOrder,
+                                arguments: 'cartScreen_to_add_manual');
                           },
                           btntxt: "Add Order",
                           buttontxtColor: UIDataColors.primaryColor,
@@ -133,15 +154,16 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                   PrimaryButtonWithIcon(
                     onPressed: () {
                       showModalBottomSheet(
-                                context: context,
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only( // <-- SEE HERE
-                                    topLeft: Radius.circular(15.0),
-                                  ),
-                                ),
-                                builder: (context) {
-                                  return CustomDetailBottomSheet();
-                                });
+                          context: context,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              // <-- SEE HERE
+                              topLeft: Radius.circular(15.0),
+                            ),
+                          ),
+                          builder: (context) {
+                            return CustomDetailBottomSheet();
+                          });
                     },
                     btntxt: "Add Customer Details",
                   ).paddingOnly(

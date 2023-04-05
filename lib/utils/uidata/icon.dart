@@ -11,7 +11,6 @@ class UIDATAIcons {
   static const cardOpen = "$iconsDir/card_open.svg";
   static const cardClose = "$iconsDir/card_close.svg";
   static const orderRemarks = "$iconsDir/order_remarks.svg";
-
   static const ordeBascketFull = "$iconsDir/order_bascket_colored.svg";
   static const orderBascketBorder = "$iconsDir/order_bascket_border.svg";
   static const calendarIcon = "$iconsDir/calendar.svg";
@@ -53,4 +52,8 @@ class UIDATAIcons {
   static const more2 = "$iconsDir/more2.svg";
   static const back = "$iconsDir/arrow-left.svg";
   static const bell = "$iconsDir/notification.svg";
+  static const voucherStarIcon = "$iconsDir/voucher_star.svg";
+  static const voucherTagIcon = "$iconsDir/voucher_tag.svg";
+  static const carIcon = "$iconsDir/car.svg";
+  static const voucerReal = "$iconsDir/voucher_real.svg";
 }
