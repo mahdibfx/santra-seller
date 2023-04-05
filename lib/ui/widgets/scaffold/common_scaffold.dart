@@ -4,8 +4,10 @@ import 'package:flutter_svg/svg.dart';
 
 // package imports
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/controllers/auth_controller/login_controller.dart';
 import 'package:santra_seller/controllers/home_controller/home_controller.dart';
+import 'package:santra_seller/provider/home_provider.dart';
 
 // lib imports
 import '../../../controllers/cart_controller/cart_controller.dart';
@@ -19,9 +21,9 @@ import '../drawer/clip_drawer.dart';
 import 'cart_icon_with_badge.dart';
 import 'notification_icon_with_badge.dart';
 
-LoginController loginController = Get.put(LoginController());
-HomeController homeController = Get.put(HomeController());
-CartController cartController = Get.put(CartController());
+// LoginController loginController = Get.put(LoginController());
+// HomeController homeController = Get.put(HomeController());
+// CartController cartController = Get.put(CartController());
 
 class CommonScaffold extends StatelessWidget {
   final CartController cartController = Get.find<CartController>();
@@ -186,8 +188,8 @@ class CommonScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LoginController loginController = Get.find<LoginController>();
-    final HomeController homeController = Get.find<HomeController>();
+    // final LoginController loginController = Get.find<LoginController>();
+    // final HomeController homeController = Get.find<HomeController>();
 
     return Scaffold(
       resizeToAvoidBottomInset: resizeToAvoid,
@@ -285,25 +287,30 @@ class CommonScaffold extends StatelessWidget {
       floatingActionButton: showFAB
           ? Visibility(
               visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
-              child: CustomFloat(
-                builder: centerDocked
-                    ? const Text(
-                        "5",
-                        style: TextStyle(color: Colors.red, fontSize: 10.0),
-                      )
-                    : null,
-                icon: floatingIcon,
-                // ignore: unrelated_type_equality_checks
-                qrCallback: homeController.sellerStatusNew != "done"
-                    ? () {
-                        customOntapDialog(
-                            'Alert', 'Your status is not approved.', 'Okay',
-                            () {
-                          print(homeController.sellerStatusNew);
-                          Get.back();
-                        });
-                      }
-                    : qrCallback,
+              child: Consumer<HomeProvider>(builder: (context, homeProvider, child) {
+                  return CustomFloat(
+                    builder: centerDocked
+                        ? const Text(
+                            "5",
+                            style: TextStyle(color: Colors.red, fontSize: 10.0),
+                          )
+                        : null,
+                    icon: floatingIcon,
+                    // ignore: unrelated_type_equality_checks
+                    qrCallback: 
+                    homeProvider.sellerStatusNew != "done"
+                        ? () {
+                            customOntapDialog(
+                                'Alert', 'Your status is not approved.', 'Okay',
+                                () {
+                              print(homeProvider.sellerStatusNew);
+                              Get.back();
+                            });
+                          }
+                        : 
+                        qrCallback,
+                  );
+                }
               ),
             )
           : null,
