@@ -370,6 +370,10 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                         // Get.offAllNamed(
                                                                         //     Routes
                                                                         //         .cartroute);
+                                                                        CommonSnackbar.getSnackbar(
+                                                                            "Added",
+                                                                            "${manualOrderController.allProducts?[index].productName} Successfully Added in Cart",
+                                                                            UIDataColors.primaryColor);
                                                                       },
                                                                       btntxt:
                                                                           "Add To Cart",

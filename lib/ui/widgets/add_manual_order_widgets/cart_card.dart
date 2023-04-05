@@ -25,115 +25,142 @@ class CartCardOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            spreadRadius: 0.1,
-            blurRadius: 4,
-            offset: const Offset(0, 0), // changes position of shadow
-          ),
-        ],
-      ),
-      child: SizedBox(
-        height: 65,
-        child: Row(
-          children: [
-            Container(
-              height: 65,
-              width: 65,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: CachedNetworkImage(
-                  imageUrl:
-                      "https://api.santra.ae/${allProducts?[index!].imageString}",
-                  fit: BoxFit.cover,
-                  memCacheHeight: 300,
-                  memCacheWidth: 400,
-                  placeholder: (context, url) => const Padding(
-                    padding: EdgeInsets.all(12.0),
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
-              ),
+        // height: 100,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              spreadRadius: 0.1,
+              blurRadius: 4,
+              offset: const Offset(0, 0), // changes position of shadow
             ),
-            SpacingWidth.widthlistspacing15,
-            Expanded(
-              child: SizedBox(
-                child: Container(
-                  child: Column(
-                    // mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: 100,
-                        child: Text(
-                          allProducts?[index!].name ?? "",
-                          style: UIDataTextStyles.textMedium
-                              .copyWith(fontSize: 14),
-                          overflow: TextOverflow.ellipsis,
+          ],
+        ),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 65,
+              child: Row(
+                children: [
+                  SizedBox(
+                    height: 65,
+                    width: 65,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            "https://api.santra.ae/${allProducts?[index!].imageString}",
+                        fit: BoxFit.cover,
+                        memCacheHeight: 300,
+                        memCacheWidth: 400,
+                        placeholder: (context, url) => const Padding(
+                          padding: EdgeInsets.all(12.0),
+                          child: CircularProgressIndicator(),
                         ),
                       ),
-                      Expanded(
-                        child: SingleChildScrollView(
-                          child: Container(
-                            // height: 50,
-                            child: Column(
-                                children: List.generate(
-                              allProducts![index!].subModifiers.length,
-                              (subInex) => Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                    ),
+                  ),
+                  SpacingWidth.widthlistspacing15,
+                  Expanded(
+                    child: SizedBox(
+                      child: Column(
+                        // mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 100,
+                            child: Text(
+                              allProducts?[index!].name ?? "",
+                              style: UIDataTextStyles.textMedium
+                                  .copyWith(fontSize: 14),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Text(
+                            "AED ${allProducts?[index!].price ?? ""}",
+                            style: UIDataTextStyles.textMedium,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 50,
+                    width: 130,
+                    child: PriceOnSelection(
+                      onMinus: onDecrese,
+                      onPlus: onIncrese,
+                      quantity: quantity,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Divider(
+              height: 30,
+            ),
+            SingleChildScrollView(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: List.generate(
+                      allProducts![index!].subModifiers.length,
+                      (subInex) => Container(
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  border: Border.all(
+                                      color: UIDataColors.primaryColor,
+                                      width: 0.5)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    // "Large",
                                     allProducts![index!]
                                         .subModifiers[subInex]
                                         .nameModifier
                                         .toString(),
                                     style: UIDataTextStyles.title
                                         .copyWith(fontSize: 12),
-                                  ).paddingOnly(right: 8),
-                                  Text(
-                                    // "Large",
-                                    allProducts![index!]
-                                            .subModifiers[subInex]
-                                            .priceModifier
-                                            .toString() +
-                                        " AED",
-                                    style: UIDataTextStyles.title
-                                        .copyWith(fontSize: 12),
                                   ),
+                                  allProducts![index!]
+                                              .subModifiers[subInex]
+                                              .priceModifier !=
+                                          "0"
+                                      ? RichText(
+                                          text: TextSpan(
+                                            text: "(",
+                                            style: const TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.black),
+                                            children: <TextSpan>[
+                                              const TextSpan(
+                                                  text: "AED ",
+                                                  style: TextStyle(
+                                                    fontSize: 10,
+                                                  )),
+                                              TextSpan(
+                                                  text:
+                                                      "${allProducts![index!].subModifiers[subInex].priceModifier}",
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                  )),
+                                              const TextSpan(
+                                                  text: ")",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                  )),
+                                            ],
+                                          ),
+                                        )
+                                      : const SizedBox()
                                 ],
-                              ),
-                            )),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        "AED ${allProducts?[index!].price ?? ""}",
-                        style: UIDataTextStyles.textMedium,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              height: 50,
-              width: 130,
-              child: PriceOnSelection(
-                onMinus: onDecrese,
-                onPlus: onIncrese,
-                quantity: quantity,
-              ),
-            ),
+                              ).paddingSymmetric(horizontal: 8, vertical: 2))
+                          .paddingOnly(right: 10),
+                    )).paddingOnly()),
           ],
-        ),
-      ).marginAll(15),
-    );
+        ).paddingAll(15));
   }
 }

@@ -65,13 +65,23 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
                     CommonTextField(
                       controller: _.mobileController,
                       labelText: "Mobile",
+                      hintText: "971#########",
                       prefixIcon: UIDATAIcons.callIcon,
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
                       validator: (val) {
-                        if (val.isEmpty) {
-                          return "Please enter phone Number";
+                        String? name;
+                        if (val.isEmpty || val.length < 12) {
+                          return "Please Enter Valid Phone Number";
+                        } else if (val.isNotEmpty && val.length > 3) {
+                          name = val.substring(0, 3);
+
+                          if (name != "971") {
+                            return "Phone Number Must Start With 971";
+                          }
+                        } else {
+                          return null;
                         }
                       },
                     ),

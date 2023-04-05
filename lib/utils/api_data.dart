@@ -24,4 +24,5 @@ class ApiData {
   static const termsAPi = "${mainurl}terms_seller";
   static const getCities = "${mainurl}get_cities";
   static const privacyApi = "${mainurl}new_privacy";
+  static const cartApi = "${mainurl}cart_options";
 }
