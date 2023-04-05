@@ -1,9 +1,11 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'dart:convert';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 
 import '../../../controllers/home_controller/home_controller.dart';
+import '../../../provider/home_provider.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/cards/home_card.dart';
@@ -22,8 +24,7 @@ class AllOrderScreen extends StatelessWidget {
   AllOrderScreen({super.key});
 
   Widget bodyData() {
-    return GetBuilder<HomeController>(
-      builder: (_) {
+    return Consumer<HomeProvider>(builder: (context, _, child)  {
         return _.isLoading
             ? const SizedBox(
                 child: Center(

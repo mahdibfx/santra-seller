@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/controllers/home_controller/home_controller.dart';
 import 'package:santra_seller/utils/uidata.dart';
 
 import '../../../models/home_model.dart';
+import '../../../provider/home_provider.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../buttons/border_button.dart';
 import '../buttons/material_buttons/raised_gradient_button.dart';
@@ -74,226 +76,228 @@ class _ManualOrderCardState extends State<ManualOrderCard>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.red,
-        borderRadius: BorderRadius.circular(15.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 1,
-            blurRadius: 1,
-            offset: const Offset(-1, 1), // changes position of shadow
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(15.0),
-                  bottomRight: Radius.circular(15.0),
-                  topLeft: Radius.circular(15.0),
-                  bottomLeft: Radius.circular(15.0)),
+    return Consumer<HomeProvider>(builder: (context, _, child) {
+      return Container(
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(15.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 1,
+              blurRadius: 1,
+              offset: const Offset(-1, 1), // changes position of shadow
             ),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      UIDATAIcons.ordeBascketFull,
-                      color: UIDataColors.primaryColor,
-                    ),
-                    SpacingWidth.widthlistspacing,
-                    Text(
-                      'Order No. ${widget.orderNumber}',
-                      style: UIDataTextStyles.h2.copyWith(fontSize: 12),
-                    ),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: _toggleCard,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Color(int.parse(color)),
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        child: Center(
-                          child: SvgPicture.asset(
-                            _isOpen
-                                ? UIDATAIcons.cardOpen
-                                : UIDATAIcons.cardClose,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ).marginOnly(left: 10, right: 10, top: 10, bottom: 10),
-                Container(
-                  color: Colors.grey.shade200,
-                  child: Column(
+          ],
+        ),
+        child: Column(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(15.0),
+                    bottomRight: Radius.circular(15.0),
+                    topLeft: Radius.circular(15.0),
+                    bottomLeft: Radius.circular(15.0)),
+              ),
+              child: Column(
+                children: [
+                  Row(
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                              child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                UIDATAIcons.orderTime,
-                                color: UIDataColors.primaryColor,
-                              ),
-                              SpacingWidth.widthlistspacing,
-                              Text(dateFormat(widget.orderTime)),
-                            ],
-                          )),
-                          const Spacer(),
-                          Container(
-                              child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                UIDATAIcons.deliveryIcon,
-                                color: UIDataColors.primaryColor,
-                              ),
-                              SpacingWidth.widthlistspacing,
-                              widget.deliveryTime.toString().isEmpty
-                                  ? const Text('---')
-                                  : Text('${widget.deliveryTime}'),
-                            ],
-                          )),
-                        ],
-                      ).marginOnly(left: 10, right: 10, top: 10, bottom: 5),
-                      Row(
-                        children: [
-                          Container(
-                              child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                height: 16,
-                                UIDATAIcons.userIcon,
-                                color: UIDataColors.primaryColor,
-                              ),
-                              SpacingWidth.widthlistspacing,
-                              Text('${widget.customerName}'),
-                            ],
-                          )),
-                          const Spacer(),
-                          Container(
-                              child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                UIDATAIcons.paymentMethod,
-                                color: UIDataColors.primaryColor,
-                              ),
-                              SpacingWidth.widthlistspacing,
-                              Text('${widget.paymentMethod}'),
-                            ],
-                          )),
-                        ],
-                      ).marginOnly(left: 10, right: 10, top: 5, bottom: 10),
-                    ],
-                  ),
-                ),
-                _isOpen
-                    ? const SizedBox()
-                    : Container(
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: Get.find<HomeController>()
-                              .getColor(widget.orderStatus),
-                          borderRadius: const BorderRadius.only(
-                              // topRight: Radius.circular(15.0),
-                              bottomRight: Radius.circular(15.0),
-                              // topLeft: Radius.circular(15.0),
-                              bottomLeft: Radius.circular(15.0)),
-                        ),
-                        child: Center(
-                          child: Text(
-                            Get.find<HomeController>()
-                                .getStatus(widget.orderStatus),
-                            style: const TextStyle(color: Colors.white),
+                      SvgPicture.asset(
+                        UIDATAIcons.ordeBascketFull,
+                        color: UIDataColors.primaryColor,
+                      ),
+                      SpacingWidth.widthlistspacing,
+                      Text(
+                        'Order No. ${widget.orderNumber}',
+                        style: UIDataTextStyles.h2.copyWith(fontSize: 12),
+                      ),
+                      const Spacer(),
+                      GestureDetector(
+                        onTap: _toggleCard,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Color(int.parse(color)),
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          child: Center(
+                            child: SvgPicture.asset(
+                              _isOpen
+                                  ? UIDATAIcons.cardOpen
+                                  : UIDATAIcons.cardClose,
+                            ),
                           ),
                         ),
                       ),
-              ],
-            ),
-          ),
-          Container(
-            height: (_heightFactorAnimation.value *
-                (155 + _calculateContainerHeight())),
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(15.0),
-                  bottomLeft: Radius.circular(15.0)),
-            ),
-            child: Column(
-              children: [
-                SpacingHeight.heightlistspacing15,
-                ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: widget.orderItemList.length,
-                    itemBuilder: (context, index) {
-                      return OrderItemWidget(
-                        imageString: widget.orderItemList[index].productImage,
-                        productQuantity:
-                            widget.orderItemList[index].productQuantity,
-                        productName: widget.orderItemList[index].productName,
-                        productPrice: widget.orderItemList[index].productTotal,
-                      );
-                    }),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text('Total Price',
-                        style: UIDataTextStyles.textMediumColoredBlue.copyWith(
-                          color: UIDataColors.blackColor,
-                        )),
-                    SpacingWidth.widthlistspacing,
-                    Text('${widget.totalPrice} AED',
-                        style: UIDataTextStyles.textMediumColoredBlue.copyWith(
-                          color: UIDataColors.primaryColor,
-                        )),
-                  ],
-                ).marginOnly(left: 10, right: 10),
-                SpacingHeight.heightlistspacing10,
-                Container(
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color:
-                        Get.find<HomeController>().getColor(widget.orderStatus),
-                  ),
-                  child: Center(
-                    child: Text(
-                      Get.find<HomeController>().getStatus(widget.orderStatus),
-                      style: const TextStyle(color: Colors.white),
+                    ],
+                  ).marginOnly(left: 10, right: 10, top: 10, bottom: 10),
+                  Container(
+                    color: Colors.grey.shade200,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                                child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  UIDATAIcons.orderTime,
+                                  color: UIDataColors.primaryColor,
+                                ),
+                                SpacingWidth.widthlistspacing,
+                                Text(dateFormat(widget.orderTime)),
+                              ],
+                            )),
+                            const Spacer(),
+                            Container(
+                                child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  UIDATAIcons.deliveryIcon,
+                                  color: UIDataColors.primaryColor,
+                                ),
+                                SpacingWidth.widthlistspacing,
+                                widget.deliveryTime.toString().isEmpty
+                                    ? const Text('---')
+                                    : Text('${widget.deliveryTime}'),
+                              ],
+                            )),
+                          ],
+                        ).marginOnly(left: 10, right: 10, top: 10, bottom: 5),
+                        Row(
+                          children: [
+                            Container(
+                                child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  height: 16,
+                                  UIDATAIcons.userIcon,
+                                  color: UIDataColors.primaryColor,
+                                ),
+                                SpacingWidth.widthlistspacing,
+                                Text('${widget.customerName}'),
+                              ],
+                            )),
+                            const Spacer(),
+                            Container(
+                                child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  UIDATAIcons.paymentMethod,
+                                  color: UIDataColors.primaryColor,
+                                ),
+                                SpacingWidth.widthlistspacing,
+                                Text('${widget.paymentMethod}'),
+                              ],
+                            )),
+                          ],
+                        ).marginOnly(left: 10, right: 10, top: 5, bottom: 10),
+                      ],
                     ),
                   ),
-                ),
-                RaisedGradientButton(
-                  gradient: const LinearGradient(
-                    colors: <Color>[
-                      UIDataColors.primaryColor,
-                      UIDataColors.primaryColor,
-                    ],
-                  ),
-                  btntxt: "Repeat Order",
-                  iconImage: SvgPicture.asset(
-                    UIDATAIcons.sendIcon,
-                    height: 25,
-                    width: 25,
-                    fit: BoxFit.fitWidth,
-                  ),
-                  buttontxtColor: UIDataColors.whiteColor,
-                  onPressed: () {},
-                ).marginAll(10),
-              ],
+                  _isOpen
+                      ? const SizedBox()
+                      : Container(
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: _.getColor(widget.orderStatus),
+                            borderRadius: const BorderRadius.only(
+                                // topRight: Radius.circular(15.0),
+                                bottomRight: Radius.circular(15.0),
+                                // topLeft: Radius.circular(15.0),
+                                bottomLeft: Radius.circular(15.0)),
+                          ),
+                          child: Center(
+                            child: Text(
+                              _.getStatus(widget.orderStatus),
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    ).paddingOnly(bottom: 20);
+            Container(
+              height: (_heightFactorAnimation.value *
+                  (155 + _calculateContainerHeight())),
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(15.0),
+                    bottomLeft: Radius.circular(15.0)),
+              ),
+              child: Column(
+                children: [
+                  SpacingHeight.heightlistspacing15,
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: widget.orderItemList.length,
+                      itemBuilder: (context, index) {
+                        return OrderItemWidget(
+                          imageString: widget.orderItemList[index].productImage,
+                          productQuantity:
+                              widget.orderItemList[index].productQuantity,
+                          productName: widget.orderItemList[index].productName,
+                          productPrice:
+                              widget.orderItemList[index].productTotal,
+                        );
+                      }),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text('Total Price',
+                          style:
+                              UIDataTextStyles.textMediumColoredBlue.copyWith(
+                            color: UIDataColors.blackColor,
+                          )),
+                      SpacingWidth.widthlistspacing,
+                      Text('${widget.totalPrice} AED',
+                          style:
+                              UIDataTextStyles.textMediumColoredBlue.copyWith(
+                            color: UIDataColors.primaryColor,
+                          )),
+                    ],
+                  ).marginOnly(left: 10, right: 10),
+                  SpacingHeight.heightlistspacing10,
+                  Container(
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: _.getColor(widget.orderStatus),
+                    ),
+                    child: Center(
+                      child: Text(
+                        _.getStatus(widget.orderStatus),
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  RaisedGradientButton(
+                    gradient: const LinearGradient(
+                      colors: <Color>[
+                        UIDataColors.primaryColor,
+                        UIDataColors.primaryColor,
+                      ],
+                    ),
+                    btntxt: "Repeat Order",
+                    iconImage: SvgPicture.asset(
+                      UIDATAIcons.sendIcon,
+                      height: 25,
+                      width: 25,
+                      fit: BoxFit.fitWidth,
+                    ),
+                    buttontxtColor: UIDataColors.whiteColor,
+                    onPressed: () {},
+                  ).marginAll(10),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ).paddingOnly(bottom: 20);
+    });
   }
 
   String dateFormat(String date) {

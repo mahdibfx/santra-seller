@@ -1,7 +1,10 @@
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/controllers/auth_controller/signup_controller.dart';
 
 import '../../../controllers/auth_controller/login_controller.dart';
+import '../../../provider/home_provider.dart';
+import '../../../provider/login_provider.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
@@ -11,12 +14,18 @@ import 'package:flutter/material.dart';
 import '/utils/uidata.dart';
 import 'package:get/get.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final form = GlobalKey<FormState>();
 
   Widget bodyData(context) {
-    return GetBuilder<LoginController>(
-      builder: (_) {
+    return Consumer<LoginProvider>(builder: (context, _, child) {
         return SafeArea(
           child: SingleChildScrollView(
             child: ConstrainedBox(
@@ -92,7 +101,7 @@ class LoginScreen extends StatelessWidget {
                           : UIDATAIcons.viewIcon,
                       toggleFunction: () {
                         _.securetext = !_.securetext;
-                        _.update();
+                    
                       },
                       isTextHidden: _.securetext,
                       validator: (val) {
@@ -179,7 +188,14 @@ class LoginScreen extends StatelessWidget {
       },
     );
   }
-
+ hitAllApis() async {
+    await Future.microtask(() => context.read<LoginProvider>().onInit());
+  }
+@override
+void initState() {
+    hitAllApis();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(

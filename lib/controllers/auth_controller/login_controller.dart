@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:santra_seller/controllers/auth_controller/signup_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/login_model.dart';
+import '../../ui/screens/home_page/home_screen.dart';
 import '../../ui/widgets/snackbar/common_snackbar.dart';
 import '../../utils/api_data.dart';
 import '../../utils/routes/app_routes.dart';
@@ -94,7 +95,8 @@ class LoginController extends GetxController {
         sellerStatus = newdata.data[0].message.toString();
         GetStorage().write('sellerStatus', sellerStatus);
 
-        saveSharedPrefData(newdata.data[0], prefs);
+       await saveSharedPrefData(newdata.data[0], prefs);
+       Get.offAll(() => HomeScreen());
       } else {
         update();
         print(res.body);
@@ -126,7 +128,6 @@ class LoginController extends GetxController {
     prefs.setString("dob", data.dateOfBirth.toString());
     prefs.setString("password", password.text);
     prefs.setString("sellerStatus", data.message);
-    Get.offAllNamed(Routes.homeRoutes);
   }
 
   Future<String> sellerSt() async {

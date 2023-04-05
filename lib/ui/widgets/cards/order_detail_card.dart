@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/utils/uidata.dart';
 
 import '../../../controllers/home_controller/home_controller.dart';
 import '../../../models/home_model.dart';
+import '../../../provider/home_provider.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../buttons/border_button.dart';
 
@@ -73,336 +75,334 @@ class _CustomCardState extends State<CustomCard>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 1,
-            blurRadius: 1,
-            offset: const Offset(-1, 1), // changes position of shadow
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(10.0),
-                  bottomRight: Radius.circular(10.0),
-                  topLeft: Radius.circular(10.0),
-                  bottomLeft: Radius.circular(10.0)),
+    return Consumer<HomeProvider>(builder: (context, _, child) {
+      return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 1,
+              blurRadius: 1,
+              offset: const Offset(-1, 1), // changes position of shadow
             ),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      UIDATAIcons.ordeBascketFull,
-                      color: UIDataColors.primaryColor,
-                    ),
-                    SpacingWidth.widthlistspacing,
-                    Text(
-                      'Order No. ${widget.orderNumber}',
-                      style: UIDataTextStyles.h2.copyWith(fontSize: 12),
-                    ),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: _toggleCard,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: UIDataColors.primaryColor,
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Center(
-                          child: SvgPicture.asset(
-                            _isOpen
-                                ? UIDATAIcons.cardOpen
-                                : UIDATAIcons.cardClose,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ).marginOnly(left: 10, right: 10, top: 10, bottom: 10),
-                Container(
-                  color: Colors.grey.shade200,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                              child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                UIDATAIcons.orderTime,
-                                color: UIDataColors.primaryColor,
-                              ),
-                              SpacingWidth.widthlistspacing,
-                              Text(dateFormat(widget.orderTime)),
-                            ],
-                          )),
-                          const Spacer(),
-                          Container(
-                              child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                UIDATAIcons.deliveryIcon,
-                                color: UIDataColors.primaryColor,
-                              ),
-                              SpacingWidth.widthlistspacing,
-                              Text('${widget.deliveryTime}'),
-                            ],
-                          )),
-                        ],
-                      ).marginOnly(left: 10, right: 10, top: 10, bottom: 5),
-                      Row(
-                        children: [
-                          Container(
-                              child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                height: 16,
-                                UIDATAIcons.userIcon,
-                                color: UIDataColors.primaryColor,
-                              ),
-                              SpacingWidth.widthlistspacing,
-                              Text('${widget.customerName}'),
-                            ],
-                          )),
-                          const Spacer(),
-                          Container(
-                              child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                UIDATAIcons.paymentMethod,
-                                color: UIDataColors.primaryColor,
-                              ),
-                              SpacingWidth.widthlistspacing,
-                              Text('${widget.paymentMethod}'),
-                            ],
-                          )),
-                        ],
-                      ).marginOnly(left: 10, right: 10, top: 5, bottom: 10),
-                    ],
-                  ),
-                ),
-                _isOpen
-                    ? const SizedBox()
-                    : Container(
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: Get.find<HomeController>()
-                              .getColor(widget.orderStatus),
-                          borderRadius: const BorderRadius.only(
-                              // topRight: Radius.circular(10.0),
-                              bottomRight: Radius.circular(10.0),
-                              // topLeft: Radius.circular(10.0),
-                              bottomLeft: Radius.circular(10.0)),
-                        ),
-                        child: Center(
-                          child: Text(
-                            Get.find<HomeController>()
-                                .getStatus(widget.orderStatus),
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-              ],
-            ),
-          ),
-          Container(
-            height: (_heightFactorAnimation.value *
-                (200 + _calculateContainerHeight())),
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(10.0),
-                  bottomLeft: Radius.circular(10.0)),
-            ),
-            child: Column(
-              children: [
-                SpacingHeight.heightlistspacing10,
-                ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: widget.orderItemList.length,
-                    itemBuilder: (context, index) {
-                      return OrderItemWidget(
-                        imageString: widget.orderItemList[index].productImage,
-                        productQuantity:
-                            widget.orderItemList[index].productQuantity,
-                        productName: widget.orderItemList[index].productName,
-                        productPrice: widget.orderItemList[index].productTotal,
-                      );
-                    }),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text('Total Price',
-                        style: UIDataTextStyles.textMediumColoredBlue.copyWith(
-                          color: UIDataColors.blackColor,
-                        )),
-                    SpacingWidth.widthlistspacing,
-                    Text('${widget.totalPrice} AED',
-                        style: UIDataTextStyles.textMediumColoredBlue.copyWith(
-                          color: UIDataColors.primaryColor,
-                        )),
-                  ],
-                ).paddingAll(10),
-                Container(
-                  color: Colors.grey.shade200,
-                  child: Row(
+          ],
+        ),
+        child: Column(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(10.0),
+                    bottomRight: Radius.circular(10.0),
+                    topLeft: Radius.circular(10.0),
+                    bottomLeft: Radius.circular(10.0)),
+              ),
+              child: Column(
+                children: [
+                  Row(
                     children: [
                       SvgPicture.asset(
-                        UIDATAIcons.orderRemarks,
+                        UIDATAIcons.ordeBascketFull,
                         color: UIDataColors.primaryColor,
                       ),
-                      Expanded(
-                        child: Text(widget.orderRemarks).marginAll(10),
+                      SpacingWidth.widthlistspacing,
+                      Text(
+                        'Order No. ${widget.orderNumber}',
+                        style: UIDataTextStyles.h2.copyWith(fontSize: 12),
                       ),
-                    ],
-                  ).marginOnly(left: 10, right: 10),
-                ),
-                Container(
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color:
-                        Get.find<HomeController>().getColor(widget.orderStatus),
-                  ),
-                  child: Center(
-                    child: Text(
-                      Get.find<HomeController>().getStatus(widget.orderStatus),
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-                const Spacer(),
-                widget.orderStatus == 'payment_pending'
-                    ? Row(
-                        children: [
-                          Expanded(
-                            child: BorderButton(
-                              height: 40,
-                              width:
-                                  widget.paymentLink == 'no_link' ? 330 : 140,
-                              btntxt: 'Cancel',
-                              borderColor: Colors.red,
-                              buttontxtColor: Colors.red,
-                              backEndColor: Colors.white,
-                              onPressed: () {
-                                showpopup(
-                                    'Are you sure you want to cancel order',
-                                    () {
-                                  Get.back();
-                                  Get.find<HomeController>()
-                                      .cancelOrdermethod(widget.orderNumber);
-                                });
-                              },
+                      const Spacer(),
+                      GestureDetector(
+                        onTap: _toggleCard,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: UIDataColors.primaryColor,
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Center(
+                            child: SvgPicture.asset(
+                              _isOpen
+                                  ? UIDATAIcons.cardOpen
+                                  : UIDATAIcons.cardClose,
                             ),
                           ),
-                          // SpacingWidth.widthlistspacing20,
-                          widget.paymentLink == 'no_link'
-                              ? Container()
-                              : BorderButton(
-                                  height: 40,
-                                  width: 170,
-                                  btntxt: 'Copy payment link',
-                                  borderColor: Colors.blue,
-                                  buttontxtColor: Colors.white,
-                                  // backEndColor: Colors.blue,
-                                  onPressed: () {},
+                        ),
+                      ),
+                    ],
+                  ).marginOnly(left: 10, right: 10, top: 10, bottom: 10),
+                  Container(
+                    color: Colors.grey.shade200,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                                child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  UIDATAIcons.orderTime,
+                                  color: UIDataColors.primaryColor,
                                 ),
-                        ],
-                      ).paddingAll(15)
-                    : widget.orderStatus == 'assigned_3pl'
-                        ? Row(
-                            children: [
-                              Expanded(
-                                child: BorderButton(
-                                  height: 40,
-                                  width: 140,
-                                  btntxt: 'Cancel',
-                                  borderColor: Colors.red,
-                                  buttontxtColor: Colors.red,
-                                  backEndColor: Colors.white,
-                                  onPressed: () {
-                                    showpopup('Are you sure you want to cancel',
-                                        () {
-                                      Get.back();
-                                      Get.find<HomeController>()
-                                          .cancelOrdermethod(
-                                              widget.orderNumber);
-                                    });
-                                  },
+                                SpacingWidth.widthlistspacing,
+                                Text(dateFormat(widget.orderTime)),
+                              ],
+                            )),
+                            const Spacer(),
+                            Container(
+                                child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  UIDATAIcons.deliveryIcon,
+                                  color: UIDataColors.primaryColor,
                                 ),
-                              ),
-                              SpacingWidth.widthlistspacing15,
-                              Expanded(
-                                child: BorderButton(
-                                  height: 40,
-                                  width: 140,
-                                  btntxt: 'Repeat Order',
-                                  borderColor: Colors.blue,
-                                  buttontxtColor: Colors.white,
-                                  // backEndColor: Colors.blue,
-                                  onPressed: () {},
+                                SpacingWidth.widthlistspacing,
+                                Text('${widget.deliveryTime}'),
+                              ],
+                            )),
+                          ],
+                        ).marginOnly(left: 10, right: 10, top: 10, bottom: 5),
+                        Row(
+                          children: [
+                            Container(
+                                child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  height: 16,
+                                  UIDATAIcons.userIcon,
+                                  color: UIDataColors.primaryColor,
                                 ),
-                              ),
-                            ],
-                          ).paddingAll(15)
-                        : Row(
-                            children: [
-                              Expanded(
-                                child: BorderButton(
-                                  height: 40,
-                                  width: 140,
-                                  btntxt: 'Reject',
-                                  borderColor: Colors.red,
-                                  buttontxtColor: Colors.red,
-                                  backEndColor: Colors.white,
-                                  onPressed: () {
-                                    showpopup('Are you sure you want to reject',
-                                        () {
-                                      Get.back();
-                                      Get.find<HomeController>()
-                                          .rejectOrderMethod(
-                                              widget.orderNumber);
-                                    });
-                                  },
+                                SpacingWidth.widthlistspacing,
+                                Text('${widget.customerName}'),
+                              ],
+                            )),
+                            const Spacer(),
+                            Container(
+                                child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  UIDATAIcons.paymentMethod,
+                                  color: UIDataColors.primaryColor,
                                 ),
-                              ),
-                              SpacingWidth.widthlistspacing15,
-                              Expanded(
-                                child: BorderButton(
-                                  height: 40,
-                                  width: 140,
-                                  btntxt: 'Accept',
-                                  borderColor: Colors.blue,
-                                  buttontxtColor: Colors.white,
-                                  // backEndColor: Colors.blue,
-                                  onPressed: () {
-                                    showpopup('Are you sure you want to accept',
-                                        () {
-                                      Get.back();
-                                      Get.find<HomeController>()
-                                          .acceptOrdermethod(
-                                              widget.orderNumber);
-                                    });
-                                  },
-                                ),
-                              ),
-                            ],
-                          ).paddingAll(15)
-              ],
+                                SpacingWidth.widthlistspacing,
+                                Text('${widget.paymentMethod}'),
+                              ],
+                            )),
+                          ],
+                        ).marginOnly(left: 10, right: 10, top: 5, bottom: 10),
+                      ],
+                    ),
+                  ),
+                  _isOpen
+                      ? const SizedBox()
+                      : Container(
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: _.getColor(widget.orderStatus),
+                            borderRadius: const BorderRadius.only(
+                                // topRight: Radius.circular(10.0),
+                                bottomRight: Radius.circular(10.0),
+                                // topLeft: Radius.circular(10.0),
+                                bottomLeft: Radius.circular(10.0)),
+                          ),
+                          child: Center(
+                            child: Text(
+                              _.getStatus(widget.orderStatus),
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    ).marginOnly(bottom: 20);
+            Container(
+              height: (_heightFactorAnimation.value *
+                  (200 + _calculateContainerHeight())),
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(10.0),
+                    bottomLeft: Radius.circular(10.0)),
+              ),
+              child: Column(
+                children: [
+                  SpacingHeight.heightlistspacing10,
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: widget.orderItemList.length,
+                      itemBuilder: (context, index) {
+                        return OrderItemWidget(
+                          imageString: widget.orderItemList[index].productImage,
+                          productQuantity:
+                              widget.orderItemList[index].productQuantity,
+                          productName: widget.orderItemList[index].productName,
+                          productPrice:
+                              widget.orderItemList[index].productTotal,
+                        );
+                      }),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text('Total Price',
+                          style:
+                              UIDataTextStyles.textMediumColoredBlue.copyWith(
+                            color: UIDataColors.blackColor,
+                          )),
+                      SpacingWidth.widthlistspacing,
+                      Text('${widget.totalPrice} AED',
+                          style:
+                              UIDataTextStyles.textMediumColoredBlue.copyWith(
+                            color: UIDataColors.primaryColor,
+                          )),
+                    ],
+                  ).paddingAll(10),
+                  Container(
+                    color: Colors.grey.shade200,
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          UIDATAIcons.orderRemarks,
+                          color: UIDataColors.primaryColor,
+                        ),
+                        Expanded(
+                          child: Text(widget.orderRemarks).marginAll(10),
+                        ),
+                      ],
+                    ).marginOnly(left: 10, right: 10),
+                  ),
+                  Container(
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: _.getColor(widget.orderStatus),
+                    ),
+                    child: Center(
+                      child: Text(
+                        _.getStatus(widget.orderStatus),
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  widget.orderStatus == 'payment_pending'
+                      ? Row(
+                          children: [
+                            Expanded(
+                              child: BorderButton(
+                                height: 40,
+                                width:
+                                    widget.paymentLink == 'no_link' ? 330 : 140,
+                                btntxt: 'Cancel',
+                                borderColor: Colors.red,
+                                buttontxtColor: Colors.red,
+                                backEndColor: Colors.white,
+                                onPressed: () {
+                                  showpopup(
+                                      'Are you sure you want to cancel order',
+                                      () {
+                                    Get.back();
+                                    _.cancelOrdermethod(widget.orderNumber);
+                                  });
+                                },
+                              ),
+                            ),
+                            // SpacingWidth.widthlistspacing20,
+                            widget.paymentLink == 'no_link'
+                                ? Container()
+                                : BorderButton(
+                                    height: 40,
+                                    width: 170,
+                                    btntxt: 'Copy payment link',
+                                    borderColor: Colors.blue,
+                                    buttontxtColor: Colors.white,
+                                    // backEndColor: Colors.blue,
+                                    onPressed: () {},
+                                  ),
+                          ],
+                        ).paddingAll(15)
+                      : widget.orderStatus == 'assigned_3pl'
+                          ? Row(
+                              children: [
+                                Expanded(
+                                  child: BorderButton(
+                                    height: 40,
+                                    width: 140,
+                                    btntxt: 'Cancel',
+                                    borderColor: Colors.red,
+                                    buttontxtColor: Colors.red,
+                                    backEndColor: Colors.white,
+                                    onPressed: () {
+                                      showpopup(
+                                          'Are you sure you want to cancel',
+                                          () {
+                                        Get.back();
+                                        _.cancelOrdermethod(widget.orderNumber);
+                                      });
+                                    },
+                                  ),
+                                ),
+                                SpacingWidth.widthlistspacing15,
+                                Expanded(
+                                  child: BorderButton(
+                                    height: 40,
+                                    width: 140,
+                                    btntxt: 'Repeat Order',
+                                    borderColor: Colors.blue,
+                                    buttontxtColor: Colors.white,
+                                    // backEndColor: Colors.blue,
+                                    onPressed: () {},
+                                  ),
+                                ),
+                              ],
+                            ).paddingAll(15)
+                          : Row(
+                              children: [
+                                Expanded(
+                                  child: BorderButton(
+                                    height: 40,
+                                    width: 140,
+                                    btntxt: 'Reject',
+                                    borderColor: Colors.red,
+                                    buttontxtColor: Colors.red,
+                                    backEndColor: Colors.white,
+                                    onPressed: () {
+                                      showpopup(
+                                          'Are you sure you want to reject',
+                                          () {
+                                        Get.back();
+                                        _.rejectOrderMethod(widget.orderNumber);
+                                      });
+                                    },
+                                  ),
+                                ),
+                                SpacingWidth.widthlistspacing15,
+                                Expanded(
+                                  child: BorderButton(
+                                    height: 40,
+                                    width: 140,
+                                    btntxt: 'Accept',
+                                    borderColor: Colors.blue,
+                                    buttontxtColor: Colors.white,
+                                    // backEndColor: Colors.blue,
+                                    onPressed: () {
+                                      showpopup(
+                                          'Are you sure you want to accept',
+                                          () {
+                                        Get.back();
+                                        _.acceptOrdermethod(widget.orderNumber);
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ).paddingAll(15)
+                ],
+              ),
+            ),
+          ],
+        ),
+      ).marginOnly(bottom: 20);
+    });
   }
 
   String dateFormat(String date) {
@@ -437,7 +437,7 @@ class _CustomCardState extends State<CustomCard>
                 Get.back();
               },
               //  () {
-              //   Get.find<HomeController>().acceptOrdermethod(widget.orderNumber);
+              //   _.acceptOrdermethod(widget.orderNumber);
               // },
             ),
             BorderButton(
@@ -449,7 +449,7 @@ class _CustomCardState extends State<CustomCard>
               // backEndColor: Colors.blue,
               onPressed: navigationFunction,
               //  () {
-              //   Get.find<HomeController>().acceptOrdermethod(widget.orderNumber);
+              //   _.acceptOrdermethod(widget.orderNumber);
               // },
             ),
           ],

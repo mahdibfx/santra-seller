@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:santra_seller/ui/screens/auth_screen/login_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:santra_seller/utils/api_data.dart';
 import 'package:santra_seller/utils/routes/app_routes.dart';
@@ -25,9 +26,8 @@ class LogoutController extends GetxController {
       var response = await http.Response.fromStream(streamedResponse);
       if (response.statusCode == 200) {
         //@todo
-        // prefs.clear();
-        Get.offAllNamed(Routes.loginRoutes);
         prefs.clear();
+         Get.offAll(() => const LoginScreen());
       } else {
         generalException();
         if (kDebugMode) {

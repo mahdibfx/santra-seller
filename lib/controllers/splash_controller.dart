@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:santra_seller/ui/screens/auth_screen/login_screen.dart';
+import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/routes/app_routes.dart';
@@ -18,10 +20,11 @@ class SplashController extends GetxController {
     var checkemail = prefs.getString("email");
     // var checkpassword = prefs.getString("password");
     if (checkemail != null) {
-      Get.offAllNamed(Routes.homeRoutes);
+          Future.delayed(const Duration(seconds: 1),
+        () => Get.offAll(() => HomeScreen()));
       // Get.offAndToNamed(Routes.loginRoutes);
     } else {
-      Get.offAndToNamed(Routes.loginRoutes);
+      Get.offAll(() => LoginScreen());
     }
   }
 }

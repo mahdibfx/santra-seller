@@ -1,6 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'dart:convert';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
+import 'package:santra_seller/provider/home_provider.dart';
 import 'package:santra_seller/ui/widgets/dropdown/common_dropdown.dart';
 
 import '../../../controllers/home_controller/home_controller.dart';
@@ -13,14 +15,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../utils/uidata.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
-  HomeScreen({super.key});
-
   Widget bodyData(context) {
-    return GetBuilder<HomeController>(
-      builder: (_) {
+    return Consumer<HomeProvider>(builder: (context, _, child){
         return _.isLoading
             ? const SizedBox(
                 child: Center(
@@ -180,7 +187,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  GestureDetector filterOrderBottomSheet(context, HomeController _) {
+  GestureDetector filterOrderBottomSheet(context, HomeProvider _) {
     return GestureDetector(
       onTap: () {
         showModalBottomSheet(
@@ -270,7 +277,7 @@ class HomeScreen extends StatelessWidget {
                     Obx(
                       () => Container(
                           color: const Color(0xFFEEEEEE),
-                          child: _.isFilterOrderLoading.isTrue
+                          child: _.isFilterOrderLoading
                               ? const Center(
                                   child: Padding(
                                     padding: EdgeInsets.all(20.0),
@@ -335,6 +342,14 @@ class HomeScreen extends StatelessWidget {
         ),
       ]),
     );
+  }
+ hitAllApis() async {
+    await Future.microtask(() => context.read<HomeProvider>().onInit());
+  }
+@override
+void initState() {
+    hitAllApis();
+    super.initState();
   }
 
   @override
