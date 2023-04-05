@@ -15,7 +15,7 @@ class VouchersSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(top: 10),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -29,7 +29,7 @@ class VouchersSection extends StatelessWidget {
             ),
           ],
         ),
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,6 +44,7 @@ class VouchersSection extends StatelessWidget {
                 itemCount: cartController.vouchersList.length,
                 itemBuilder: ((context, index) {
                   return VoucherTile(
+                      index: index,
                       title: cartController.vouchersList[index].offerTitle,
                       subtitle: cartController.vouchersList[index].msg,
                       buttonTitle: "Apply");
@@ -51,9 +52,7 @@ class VouchersSection extends StatelessWidget {
               ),
             ),
             SpacingHeight.heightlistspacing20,
-            VoucherCodeFormField(
-              value: "",
-            )
+            VoucherCodeFormField()
           ],
         ),
       ),

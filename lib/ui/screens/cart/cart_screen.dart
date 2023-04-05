@@ -1,4 +1,6 @@
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:santra_seller/controllers/more_screen_controller.dart/wallet_controller.dart';
 import 'package:santra_seller/ui/widgets/add_manual_order_widgets/vouchers_section.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
@@ -37,72 +39,105 @@ class _CartScreenState extends State<CartScreen> {
                 child: Center(
                 child: CircularProgressIndicator(),
               ))
-            : SafeArea(
-                child: SingleChildScrollView(
-                    child: _.cartItems.isEmpty
-                        ? SizedBox(
-                            height: MediaQuery.of(context).size.height - 200,
-                            child: const Center(
-                                child: Text("Nothing to show in cart")))
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              HeadingWithIcon(
-                                  icon: UIDATAIcons.cartHallowIcon,
-                                  btntxt: "Cart"),
-                              ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  physics: const BouncingScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: _.cartItems.length,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(0.0),
-                                      child: CartCardOrder(
-                                        allProducts: _.cartItems,
-                                        index: index,
-                                        onDecrese: () => _
-                                            .removeFromCart(_.cartItems[index]),
-                                        onIncrese: () =>
-                                            _.addToCart(_.cartItems[index]),
-                                        quantity: _.cartItems[index].quantity
-                                            .toString(),
-                                      ),
-                                    );
-                                  }),
-                              VouchersSection(),
-                              CartPayemntDescriptionCard(
-                                subtotal: _.totalPrice.toStringAsFixed(2),
-                                total: _.grandTotal.toStringAsFixed(2),
-                                deliveryCharges: _.deliveryCharges.toString(),
-                                dateSelected: (dateTime) {
-                                  _.updateDate(dateTime);
-                                },
-                                discount: _.discount.toString(),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 20.0),
-                                child: PrimaryButtonWithIcon(
-                                  btntxt: "Submit",
-                                  backEndColor: _.finalSubmitData != null
-                                      ? UIDataColors.primaryColor
-                                      : UIDataColors.whiteColor,
-                                  buttontxtColor: _.finalSubmitData != null
-                                      ? UIDataColors.whiteColor
-                                      : UIDataColors.primaryColor,
-                                  iconImageColor: _.finalSubmitData != null
-                                      ? UIDataColors.whiteColor
-                                      : UIDataColors.primaryColor,
-                                  iconImage: UIDATAIcons.sendIcon,
-                                  onPressed: () {
-                                    if (_.finalSubmitData != null) {
-                                      _.orderSubmit();
-                                    }
+            : ModalProgressHUD(
+                inAsyncCall:
+                    _.isCartLoading || _.isDiscountLoading ? true : false,
+                progressIndicator: const CircularProgressIndicator(),
+                child: SafeArea(
+                  child: SingleChildScrollView(
+                      child: _.cartItems.isEmpty
+                          ? SizedBox(
+                              height: MediaQuery.of(context).size.height - 200,
+                              child: const Center(
+                                  child: Text("Nothing to show in cart")))
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                HeadingWithIcon(
+                                    icon: UIDATAIcons.cartHallowIcon,
+                                    btntxt: "Cart"),
+                                ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    physics: const BouncingScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: _.cartItems.length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(0.0),
+                                        child: CartCardOrder(
+                                          allProducts: _.cartItems,
+                                          index: index,
+                                          onDecrese: () => _.removeFromCart(
+                                              _.cartItems[index]),
+                                          onIncrese: () =>
+                                              _.addToCart(_.cartItems[index]),
+                                          quantity: _.cartItems[index].quantity
+                                              .toString(),
+                                        ),
+                                      );
+                                    }),
+                                _.isCartLoading
+                                    ? const Center(
+                                        child: Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Text("Loading Vouchers..."),
+                                      ))
+                                    : VouchersSection(),
+                                SpacingHeight.heightlistspacing20,
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      HeadingWithIcon(
+                                              icon: UIDATAIcons.calendarIcon,
+                                              btntxt: "Delivery Date")
+                                          .paddingSymmetric(horizontal: 20),
+                                      CalendarDatePicker2(
+                                          config: CalendarDatePicker2Config(),
+                                          value: _.dates,
+                                          onValueChanged: (dates) =>
+                                              print(dates)
+                                          // _.dates = dates,
+                                          ),
+                                    ],
+                                  ),
+                                ).paddingOnly(bottom: 15),
+                                CartPayemntDescriptionCard(
+                                  subtotal: _.totalPrice.toStringAsFixed(1),
+                                  total: _.grandTotal.toStringAsFixed(1),
+                                  deliveryCharges: _.deliveryCharges.toString(),
+                                  dateSelected: (dateTime) {
+                                    _.updateDate(dateTime);
                                   },
+                                  discount: _.dis.toString(),
                                 ),
-                              )
-                            ],
-                          ).paddingSymmetric(horizontal: 15)),
+
+                                // Padding(
+                                //   padding: const EdgeInsets.only(top: 20.0),
+                                //   child: PrimaryButtonWithIcon(
+                                //     btntxt: "Submit",
+                                //     backEndColor: _.finalSubmitData != null
+                                //         ? UIDataColors.primaryColor
+                                //         : UIDataColors.whiteColor,
+                                //     buttontxtColor: _.finalSubmitData != null
+                                //         ? UIDataColors.whiteColor
+                                //         : UIDataColors.primaryColor,
+                                //     iconImageColor: _.finalSubmitData != null
+                                //         ? UIDataColors.whiteColor
+                                //         : UIDataColors.primaryColor,
+                                //     iconImage: UIDATAIcons.sendIcon,
+                                //     onPressed: () {
+                                //       if (_.finalSubmitData != null) {
+                                //         _.orderSubmit();
+                                //       }
+                                //     },
+                                //   ),
+                                // )
+                              ],
+                            ).paddingSymmetric(horizontal: 15)),
+                ),
               );
       },
     );
@@ -145,7 +180,6 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 }
-
 
 // class CartScreen extends StatelessWidget {
 //   final cartController = Get.put(CartController());

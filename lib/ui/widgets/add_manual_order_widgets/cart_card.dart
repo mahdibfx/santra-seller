@@ -123,7 +123,7 @@ class CartCardOrder extends StatelessWidget {
                                         .nameModifier
                                         .toString(),
                                     style: UIDataTextStyles.title
-                                        .copyWith(fontSize: 12),
+                                        .copyWith(fontSize: 14),
                                   ),
                                   allProducts![index!]
                                               .subModifiers[subInex]
@@ -139,7 +139,7 @@ class CartCardOrder extends StatelessWidget {
                                               const TextSpan(
                                                   text: "AED ",
                                                   style: TextStyle(
-                                                    fontSize: 10,
+                                                    fontSize: 9,
                                                   )),
                                               TextSpan(
                                                   text:

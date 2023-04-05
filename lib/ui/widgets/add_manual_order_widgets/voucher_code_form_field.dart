@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:santra_seller/controllers/cart_controller/cart_controller.dart';
 import 'package:santra_seller/utils/uidata.dart';
+
+import '../dialogs/custom_dialogs.dart';
 
 // ignore: must_be_immutable
 class VoucherCodeFormField extends StatelessWidget {
-  var value;
-
-  VoucherCodeFormField({super.key, this.value});
-
+  VoucherCodeFormField({
+    super.key,
+  });
+  CartController cartController = Get.put(CartController());
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -25,9 +28,7 @@ class VoucherCodeFormField extends StatelessWidget {
                   child: SizedBox(
                     height: 50,
                     child: TextFormField(
-                      key: const Key(""
-                          //value.voucherCode.toString()
-                          ),
+                      key: Key(cartController.voucherCode.toString()),
                       textAlignVertical: TextAlignVertical.center,
                       textAlign: TextAlign.start,
                       cursorWidth: 0.75,
@@ -43,12 +44,11 @@ class VoucherCodeFormField extends StatelessWidget {
                       cursorColor: UIDataColors.primaryColor,
 
                       onChanged: ((val) {
-                        // value.voucherCode = val;
+                        cartController.voucherCode = val;
                       }),
-                      initialValue: "USMAN Voucher code show",
-                      // value.voucherCode == null
-                      //     ? ""
-                      //     : value.voucherCode.toString(),
+                      initialValue: cartController.voucherCode == null
+                          ? ""
+                          : cartController.voucherCode.toString(),
                       decoration: InputDecoration(
                         isDense: true,
                         prefixIcon: SizedBox(
@@ -67,19 +67,18 @@ class VoucherCodeFormField extends StatelessWidget {
                           child: GestureDetector(
                               child: TextButton(
                                   onPressed: () {
-                                    // if (value.voucherCode == null) {
-                                    //   // exceptionDialog("No Voucher Code",
-                                    //   //     "Please enter valid voucher code");
-                                    //   print((value.voucherCode));
-                                    // } else if (value.promoValid) {
-                                    //   // exceptionDialog(
-                                    //   //     "Already Applied",
-                                    //   //     "Voucher Has Already Been Applied"
-                                    //   //         .capitalize!);
-                                    // } else {
-                                    //   value.promoDiscount(
-                                    //       value.cartItems[0].sellerCode);
-                                    // }
+                                    if (cartController.voucherCode == null) {
+                                      // exceptionDialog("No Voucher Code",
+                                      //     "Please enter valid voucher code");
+                                      print((cartController.voucherCode));
+                                    } else if (cartController.promoValid) {
+                                      exceptionDialog(
+                                          "Already Applied",
+                                          "Voucher Has Already Been Applied"
+                                              .capitalize!);
+                                    } else {
+                                      cartController.promoDiscount();
+                                    }
                                   },
                                   child: const Text("Submit",
                                       style: TextStyle(

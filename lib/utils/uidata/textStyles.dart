@@ -104,7 +104,7 @@ class UIDataTextStyles {
       letterSpacing: 0.0);
 
   static const textMediumColoredBlue = TextStyle(
-      color: Color.fromRGBO(38, 81, 152, 1),
+      color: UIDataColors.primaryColor,
       fontSize: 15,
       fontWeight: FontWeight.w600,
       fontFamily: 'Markpro',
@@ -116,25 +116,23 @@ class UIDataTextStyles {
       // fontFamily: 'Markpro',
       letterSpacing: 0.0);
 
-       static const monthStyle = TextStyle(
+  static const monthStyle = TextStyle(
       color: UIDataColors.primaryColor,
       fontSize: 12,
       // fontWeight: FontWeight.bold,
       // fontFamily: 'Markpro',
       letterSpacing: 0.0);
 
-           static const dayStyle = TextStyle(
+  static const dayStyle = TextStyle(
       color: UIDataColors.primaryColor,
       fontSize: 15,
       // fontWeight: FontWeight.bold,
       // fontFamily: 'Markpro',
       letterSpacing: 0.0);
 
-        static const h3 = TextStyle(
+  static const h3 = TextStyle(
       fontSize: 13,
       fontWeight: FontWeight.bold,
       fontFamily: 'Markpro',
       letterSpacing: 0.0);
-
-      
 }

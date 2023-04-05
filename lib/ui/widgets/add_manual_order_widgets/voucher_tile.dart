@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:santra_seller/controllers/cart_controller/cart_controller.dart';
 import 'package:santra_seller/utils/uidata.dart';
 
 class VoucherTile extends StatelessWidget {
+  CartController cartController = Get.put(CartController());
   int? index;
   String? icon;
   String? title;
@@ -55,22 +57,31 @@ class VoucherTile extends StatelessWidget {
           ),
         ),
         TextButton(
-            onPressed: () {},
-            // double.parse(value.vouchersList[index!].capAmount.toString()) >
-            //         value.subTotal
-            //     ? null
-            //     : buttonTitle != "Apply"
-            //         ? null
-            //         : () {
-            //             value.voucherTileDiscountMethod(index);
-            //             if (buttonTitle == "Apply") {
-            //               value.toggleApplied(index);
-            //             }
-            //           },
-            child: Text(
-              buttonTitle ?? "",
-              style: const TextStyle(color: UIDataColors.grayColor),
-            ))
+          onPressed: double.parse(cartController.vouchersList[index!].capAmount
+                      .toString()) >
+                  cartController.totalPrice
+              ? null
+              : buttonTitle != "Apply"
+                  ? null
+                  : () {
+                      cartController.voucherTileDiscountMethod(index);
+                      if (buttonTitle == "Apply") {
+                        cartController.toggleApplied(index);
+                      }
+                    },
+          child: Text(
+            buttonTitle ?? "",
+            style: TextStyle(
+                color: buttonTitle == "Applied"
+                    ? Colors.grey
+                    : (double.parse(cartController
+                                .vouchersList[index!].capAmount
+                                .toString()) >
+                            cartController.totalPrice)
+                        ? Colors.grey
+                        : UIDataColors.primaryColor),
+          ),
+        )
       ]),
     ).paddingOnly(right: 15);
   }

@@ -114,43 +114,43 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: PrimaryButtonWithIcon(
-                          onPressed: () {
-                            showModalBottomSheet(
-                                context: context,
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                    // <-- SEE HERE
-                                    topLeft: Radius.circular(15.0),
-                                  ),
-                                ),
-                                builder: (context) {
-                                  return OrderDate(
-                                      dateSelected: (date) =>
-                                          dateSelected(date));
-                                });
-                          },
-                          btntxt: "Delivery Time",
-                        ),
-                      ),
-                      Container(width: 20),
-                      Expanded(
-                        child: PrimaryButtonWithIcon(
-                          onPressed: () {
-                            Get.toNamed(Routes.addManualOrder,
-                                arguments: 'cartScreen_to_add_manual');
-                          },
-                          btntxt: "Add Order",
-                          buttontxtColor: UIDataColors.primaryColor,
-                          backEndColor: Colors.white,
-                        ),
-                      )
-                    ],
-                  ).paddingOnly(top: 20),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Expanded(
+                  //       child: PrimaryButtonWithIcon(
+                  //         onPressed: () {
+                  //           showModalBottomSheet(
+                  //               context: context,
+                  //               shape: const RoundedRectangleBorder(
+                  //                 borderRadius: BorderRadius.only(
+                  //                   // <-- SEE HERE
+                  //                   topLeft: Radius.circular(15.0),
+                  //                 ),
+                  //               ),
+                  //               builder: (context) {
+                  //                 return OrderDate(
+                  //                     dateSelected: (date) =>
+                  //                         dateSelected(date));
+                  //               });
+                  //         },
+                  //         btntxt: "Delivery Time",
+                  //       ),
+                  //     ),
+                  //     Container(width: 20),
+                  //     Expanded(
+                  //       child: PrimaryButtonWithIcon(
+                  //         onPressed: () {
+                  //           Get.toNamed(Routes.addManualOrder,
+                  //               arguments: 'cartScreen_to_add_manual');
+                  //         },
+                  //         btntxt: "Add Order",
+                  //         buttontxtColor: UIDataColors.primaryColor,
+                  //         backEndColor: Colors.white,
+                  //       ),
+                  //     )
+                  //   ],
+                  // ).paddingOnly(top: 20),
                   PrimaryButtonWithIcon(
                     onPressed: () {
                       showModalBottomSheet(
