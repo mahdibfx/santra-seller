@@ -36,6 +36,27 @@ class CartController extends GetxController {
   String? voucherAppliedMsg;
   String? voucherListVoucherCode;
   List<DateTime?> dates = [];
+  flushCart() {
+    deliveryCharges = 0.0;
+    isShowCartButton = false;
+    receiptPaymentType = true;
+    cartItems.clear();
+    selectedDateTime = null;
+    codCharges = 0.0;
+    discount = 0.0;
+    discountType = null;
+    vouchersList.clear();
+    voucherCode = null;
+    promoValid = false;
+    activeOffers.clear();
+    isDiscountLoading = false;
+    voucherAppliedMsg = null;
+    voucherListVoucherCode = null;
+    finalSubmitData = null;
+    dates.clear();
+    update();
+  }
+
   @override
   void onInit() async {
 //  getCartItems();
@@ -141,7 +162,7 @@ class CartController extends GetxController {
     capAmount = double.parse(vouchersList[index].capAmount.toString());
     discount = double.parse(vouchersList[index].discountApplied.toString());
     discountType = vouchersList[index].disType;
-    // voucherListVoucherCode = vouchersList[index].offerTitle;
+    voucherListVoucherCode = vouchersList[index].offerTitle;
     voucherCode = null;
     promoValid = false;
     update();
@@ -210,7 +231,6 @@ class CartController extends GetxController {
         capAmount = double.parse(data['data'][0]['cap_amount'].toString());
         voucherAppliedMsg = data['data'][0]['message'].toString();
         voucherListVoucherCode = null;
-
         activeOffers.clear();
         promoValid = true;
       } else {
@@ -270,6 +290,11 @@ class CartController extends GetxController {
     if (cartItems.isEmpty) {
       isShowCartButton = false;
       update();
+    }
+    if (totalPrice < capAmount) {
+      voucherCode = null;
+      voucherListVoucherCode = null;
+      activeOffers.clear();
     }
     //  GetStorage().write('cart', cartItems);
   }
@@ -388,16 +413,6 @@ class CartController extends GetxController {
       // hasError = true;
     }
     changeLoadingStatus(false);
-  }
-
-  resetValue() {
-    deliveryCharges = 10;
-    isShowCartButton = false;
-    receiptPaymentType = true;
-    cartItems = [];
-    selectedDateTime = null;
-
-    finalSubmitData = null;
   }
 }
 

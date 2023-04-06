@@ -44,10 +44,13 @@ class VouchersSection extends StatelessWidget {
                 itemCount: cartController.vouchersList.length,
                 itemBuilder: ((context, index) {
                   return VoucherTile(
-                      index: index,
-                      title: cartController.vouchersList[index].offerTitle,
-                      subtitle: cartController.vouchersList[index].msg,
-                      buttonTitle: "Apply");
+                    index: index,
+                    title: cartController.vouchersList[index].offerTitle,
+                    subtitle: cartController.vouchersList[index].msg,
+                    buttonTitle: cartController.activeOffers.contains(index)
+                        ? "Applied"
+                        : "Apply",
+                  );
                 }),
               ),
             ),
