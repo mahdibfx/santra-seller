@@ -1,22 +1,17 @@
 // ignore_for_file: depend_on_referenced_packages
-import 'dart:convert';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/home_provider.dart';
 import 'package:santra_seller/ui/widgets/dropdown/common_dropdown.dart';
-
-import '../../../controllers/home_controller/home_controller.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/cards/home_card.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../utils/uidata.dart';
 
 class HomeScreen extends StatefulWidget {
-
   const HomeScreen({super.key});
 
   @override
@@ -27,7 +22,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
   Widget bodyData(context) {
-    return Consumer<HomeProvider>(builder: (context, _, child){
+    return Consumer<HomeProvider>(
+      builder: (context, _, child) {
         return _.isLoading
             ? const SizedBox(
                 child: Center(
@@ -239,24 +235,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         Row(
                           children: [
                             Expanded(
-                              child: Obx(
-                                () => MyDropdown(
-                                  label: "Year",
-                                  options: _.years,
-                                  selectedOption: _.selectedYear.value,
-                                  prefixIcon: UIDATAIcons.calendarIcon,
-                                  onChanged: (newVal) {
-                                    _.selectedYear.value = newVal;
-                                  },
-                                ),
+                              child: MyDropdown(
+                                label: "Year",
+                                options: _.years,
+                                selectedOption: _.selectedYear,
+                                prefixIcon: UIDATAIcons.calendarIcon,
+                                onChanged: (newVal) {
+                                  _.selectedYear = newVal;
+                                },
                               ),
                             ),
                             SpacingWidth.widthlistspacing15,
                             Expanded(
-                              child: Obx(() => MyDropdown(
+                              child: MyDropdown(
                                   label: "Month",
                                   options: _.months,
-                                  selectedOption: _.selectedMonth.value,
+                                  selectedOption: _.selectedMonth,
                                   prefixIcon: UIDATAIcons.calendarIcon,
                                   // doSomething: () {
                                   //   print("seleed ${_.selectedMonth.value}");
@@ -264,72 +258,63 @@ class _HomeScreenState extends State<HomeScreen> {
                                   //   //     _.selectedMonth.value);
                                   // }
                                   onChanged: (newValue) {
-                                    _.selectedMonth.value = newValue;
+                                    _.selectedMonth = newValue;
 
                                     _.filterOrder();
-                                  })),
+                                  }),
                             ),
                           ],
                         ),
                       ],
                     ).paddingOnly(left: 15, right: 15, top: 20),
                     SpacingHeight.heightlistspacing25,
-                    Obx(
-                      () => Container(
-                          color: const Color(0xFFEEEEEE),
-                          child: _.isFilterOrderLoading
-                              ? const Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(20.0),
-                                    child: CircularProgressIndicator(),
+                    Container(
+                        color: const Color(0xFFEEEEEE),
+                        child: _.isFilterOrderLoading
+                            ? const Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(20.0),
+                                  child: CircularProgressIndicator(),
+                                ),
+                              )
+                            : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "Orders Monthly",
+                                        style: UIDataTextStyles.title.copyWith(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(_.orderMonthly.value.toString(),
+                                          style: const TextStyle(
+                                              fontSize: 40,
+                                              fontWeight: FontWeight.bold,
+                                              color:
+                                                  UIDataColors.primaryColor)),
+                                    ],
                                   ),
-                                )
-                              : Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Column(
-                                      children: [
-                                        Text(
-                                          "Orders Monthly",
-                                          style: UIDataTextStyles.title
-                                              .copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                        ),
-                                        Obx(() => Text(
-                                            _.orderMonthly.value.toString(),
-                                            style: const TextStyle(
-                                                fontSize: 40,
-                                                fontWeight: FontWeight.bold,
-                                                color: UIDataColors
-                                                    .primaryColor))),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          "Profit Monthly",
-                                          style: UIDataTextStyles.title
-                                              .copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                        ),
-                                        Obx(
-                                          () => Text(
-                                              _.profitMonthly.value.toString(),
-                                              style: const TextStyle(
-                                                  fontSize: 40,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: UIDataColors
-                                                      .primaryColor)),
-                                        ),
-                                        SpacingHeight.heightlistspacing20
-                                      ],
-                                    )
-                                  ],
-                                ).paddingSymmetric(
-                                  vertical: 20, horizontal: 20)),
-                    ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "Profit Monthly",
+                                        style: UIDataTextStyles.title.copyWith(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(_.profitMonthly.value.toString(),
+                                          style: const TextStyle(
+                                              fontSize: 40,
+                                              fontWeight: FontWeight.bold,
+                                              color:
+                                                  UIDataColors.primaryColor)),
+                                      SpacingHeight.heightlistspacing20
+                                    ],
+                                  )
+                                ],
+                              ).paddingSymmetric(vertical: 20, horizontal: 20)),
                   ],
                 );
               });
@@ -343,11 +328,13 @@ class _HomeScreenState extends State<HomeScreen> {
       ]),
     );
   }
- hitAllApis() async {
+
+  hitAllApis() async {
     await Future.microtask(() => context.read<HomeProvider>().onInit());
   }
-@override
-void initState() {
+
+  @override
+  void initState() {
     hitAllApis();
     super.initState();
   }

@@ -50,8 +50,8 @@ class HomeProvider extends ChangeNotifier {
     '11',
     '12'
   ];
-  var selectedYear = '2023'.obs;
-  var selectedMonth = '01'.obs;
+  var selectedYear = '2023';
+  var selectedMonth = '01';
   updateCancelOrderLoading(bool value) {
     isCancelOrderLoading = value;
     notifyListeners();
@@ -88,8 +88,8 @@ class HomeProvider extends ChangeNotifier {
       var url = Uri.parse(ApiData.orderFilterApi);
       Map<String, dynamic> body = {};
       body['seller_code'] = prefs.getString("sellercode");
-      body['filter_month'] = selectedMonth.value;
-      body['filter_year'] = selectedYear.value;
+      body['filter_month'] = selectedMonth;
+      body['filter_year'] = selectedYear;
       var response = await http.post(url, body: body);
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
