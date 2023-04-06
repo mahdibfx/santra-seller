@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/controllers/home_controller/home_controller.dart';
+import 'package:santra_seller/provider/all_orders_manual.dart';
 import 'package:santra_seller/provider/home_provider.dart';
 import 'package:santra_seller/provider/login_provider.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
@@ -23,6 +24,8 @@ class MyApp extends StatelessWidget {
       providers: [
          ChangeNotifierProvider<HomeProvider>(create: (_) => HomeProvider()),
          ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider()),
+         ChangeNotifierProvider<AddManualOrderProvider>(create: (_) => AddManualOrderProvider()),
+
 
       ],
       child: GetMaterialApp(
