@@ -1,6 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'dart:convert';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/controllers/add_manual_order_controller.dart/add_manual_order_controller.dart';
+import 'package:santra_seller/provider/all_orders_manual.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
 import '../../widgets/add_manual_order_widgets/checkbox_modifier_list.dart';
@@ -20,8 +22,8 @@ class CustomerScreen extends StatelessWidget {
   CustomerScreen({super.key});
 
   Widget bodyData() {
-    return GetBuilder<AddManualOrderController>(
-      builder: (_) {
+    return Consumer<AddManualOrderProvider>(
+      builder: (context, _, child) {
         return _.isLoading
             ? const SizedBox(
                 child: Center(

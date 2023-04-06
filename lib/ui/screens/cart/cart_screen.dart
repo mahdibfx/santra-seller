@@ -1,39 +1,40 @@
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:santra_seller/controllers/more_screen_controller.dart/wallet_controller.dart';
+import 'package:provider/provider.dart';
+import 'package:santra_seller/provider/cart_provider.dart';
 import 'package:santra_seller/ui/widgets/add_manual_order_widgets/vouchers_section.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import '../../../../utils/routes/app_routes.dart';
-import '../../../../utils/uidata/textStyles.dart';
-import '../../../controllers/cart_controller/cart_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../utils/uidata.dart';
 import '../../widgets/add_manual_order_widgets/cart_card.dart';
 import '../../widgets/add_manual_order_widgets/cart_payment_des.dart';
-import '../../widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 
 class CartScreen extends StatefulWidget {
-  CartScreen({super.key});
+  final bool isOrderReady;
+ const CartScreen({super.key, this.isOrderReady= false});
 
   @override
   State<CartScreen> createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
-  CartController cartController = Get.put(CartController());
+  // CartController cartController = Get.put(CartController());
+  hitAllApis() async {
+    await Future.microtask(() => context.read<CartProvider>().cartScreenData());
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
+    hitAllApis();
     super.initState();
-    cartController.cartScreenData();
   }
 
   Widget bodyData(context) {
-    return GetBuilder<CartController>(
-      builder: (_) {
+    return Consumer<CartProvider>(
+      builder: (context, _, child){
         return _.isLoading
             ? const SizedBox(
                 child: Center(

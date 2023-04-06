@@ -15,7 +15,7 @@ import '../../utils/uidata.dart';
 
 class LoginController extends GetxController {
   // bool isLoading = true;
-  SignUpController signUpController = Get.put(SignUpController());
+  // SignUpController signUpController = Get.put(SignUpController());
   bool isLoading = false;
   bool securetext = true;
   bool remember = false;

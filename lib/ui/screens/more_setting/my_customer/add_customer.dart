@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/controllers/auth_controller/signup_controller.dart';
 import 'package:santra_seller/controllers/more_screen_controller.dart/my_customer/my_customer_controller.dart';
+import 'package:santra_seller/provider/sign_up_provider.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
@@ -25,15 +26,17 @@ class AddCustomerScreen extends StatefulWidget {
 class _AddCustomerScreenState extends State<AddCustomerScreen> {
   // final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   GlobalKey<FormState> form = GlobalKey<FormState>();
-  SignUpController signUpController = Get.put(SignUpController());
+  // SignUpController signUpController = Get.put(SignUpController());
 
   hitAllApis() async {
     await Future.microtask(() => context
         .read<MyCustomerProvider>()
         .isComingFromCart(widget.isComingFromCart));
-    signUpController.getCities().then((value) {
-      setState(() {});
-    });
+    //     final provider = Provider.of<SignUpProvider>(context);
+    // provider.getCities();  
+ 
+          // Provider.of<MyCustomerProvider>(context, listen: false).isComingFromCart(widget.isComingFromCart);
+       
   }
 
   @override
@@ -41,10 +44,16 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
     hitAllApis();
     super.initState();
   }
-
+@override
+  void didChangeDependencies() {
+    final provider = Provider.of<SignUpProvider>(context);
+    provider.getCities();       // OK
+    super.didChangeDependencies();
+  }
   Widget bodyData() {
     return Consumer<MyCustomerProvider>(
       builder: (context, _, child) {
+        
         return SafeArea(
           child: SingleChildScrollView(
               padding: EdgeInsets.zero,
@@ -119,20 +128,22 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Expanded(
-                            child: MyDropdown(
-                                label: "City",
-                                validator: (value) {
-                                  if (value == null) {
-                                    return "Please select city";
-                                  }
-                                },
-                                prefixIcon: UIDATAIcons.location,
-                                options: signUpController.citiesList,
-                                onChanged: (val) {
-                                  _.city = val;
-                                },
-                                selectedOption: _.city)),
+                        Expanded(child: Consumer<SignUpProvider>(
+                            builder: (context, signUpController, child) {
+                          return MyDropdown(
+                              label: "City",
+                              validator: (value) {
+                                if (value == null) {
+                                  return "Please select city";
+                                }
+                              },
+                              prefixIcon: UIDATAIcons.location,
+                              options: signUpController.citiesList,
+                              onChanged: (val) {
+                                _.city = val;
+                              },
+                              selectedOption: _.city);
+                        })),
                         SpacingWidth.widthlistspacing15,
                         Expanded(
                           child: CommonTextField(

@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/widgets/cards/my_customer_card.dart';
 import 'package:santra_seller/ui/widgets/scaffold/common_scaffold.dart';
@@ -43,90 +44,96 @@ class ViewCustomerDetails extends StatelessWidget {
   Widget bodyData(BuildContext context) {
      Size size = MediaQuery.of(context).size;
     return Consumer<MyCustomerProvider>(builder: (context, _, child) {
-        return _.isViewCustomerLoading
-            ? const SizedBox(
-                child: Center(
-                child: CircularProgressIndicator(),
-              ))
-            : SafeArea(
-                child: SingleChildScrollView(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    HeadingWithIcon(
-                        icon: UIDATAIcons.userIcon,
-                        iconColor: UIDataColors.primaryColor,
-                        btntxt: "Customer Info".tr),
-
-                    SpacingHeight.heightlistspacing10,
-
-                    CardCustomerDetail(customerDetail: customerDetail),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-      
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text("Choose the payment methord", style: UIDataTextStyles.dialogMsg).paddingOnly(top: 40, bottom: 20),
-
-
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(child: Text("Online payment", style: UIDataTextStyles.h3)),
-                      Expanded(child: FlutterSwitch(
-                  activeColor: UIDataColors.primaryColor,
-                  width: size.width * 0.11,
-                  toggleColor: UIDataColors.whiteColor,
-                  padding: 2,
-                  height: size.height * 0.03,
-                  value: _.receiptPaymentMethord,
-                  onToggle: (val) {
-                    _.updatePaymentMethord(!_.receiptPaymentMethord);
-                    // setState(() {
-                    //   widget.currentStatus = val;
-                    //   widget.productSettingsController
-                    //       .toggleStatus(widget.index);
-                    //   widget.productSettingsController
-                    //       .changeProductAvailability(
-                    //           widget.productSettingsController
-                    //               .allProducts?[widget.index!].productCode,
-                    //           widget.currentStatus == true
-                    //               ? "enable"
-                    //               : "out_of_stock");
-                    // });
-                  },
-                )),
-                     Expanded(child: Text("Pay on receipt", style: UIDataTextStyles.h3))
-                  ],
-                ),
-                
-
-                Padding(
-                   padding: const EdgeInsets.only(top: 20.0),
-                   child: PrimaryButtonWithIcon(
-                        btntxt: "Submit",
-                        backEndColor: UIDataColors.whiteColor,
-                        buttontxtColor: UIDataColors.primaryColor,
-                        iconImageColor: UIDataColors.primaryColor,
-                        iconImage: UIDATAIcons.sendIcon,
-                        onPressed: () {
-                            if (customerDetail != null) {
-                              _.customerInfoSubmitedRequest(customerDetail!)
-                                  .then((value) {
-                                if (value) {
-                                  popupPaymentlink(context);
-                                }
-                              });
-                            }
-                          },
-                        ),
-                      ),
+        return 
+        // _.isViewCustomerLoading
+        //     ? const SizedBox(
+        //         child: Center(
+        //         child: CircularProgressIndicator(),
+        //       ))
+        //     :
+             ModalProgressHUD(
+                inAsyncCall: _.isSubmitOrder,
+                progressIndicator: const CircularProgressIndicator(),
+              child: SafeArea(
+                  child: SingleChildScrollView(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      HeadingWithIcon(
+                          icon: UIDATAIcons.userIcon,
+                          iconColor: UIDataColors.primaryColor,
+                          btntxt: "Customer Info".tr),
+            
+                      SpacingHeight.heightlistspacing10,
+            
+                      CardCustomerDetail(customerDetail: customerDetail),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                  
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text("Choose the payment methord", style: UIDataTextStyles.dialogMsg).paddingOnly(top: 40, bottom: 20),
+            
+            
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(child: Text("Online payment", style: UIDataTextStyles.h3)),
+                        Expanded(child: FlutterSwitch(
+                    activeColor: UIDataColors.primaryColor,
+                    width: size.width * 0.11,
+                    toggleColor: UIDataColors.whiteColor,
+                    padding: 2,
+                    height: size.height * 0.03,
+                    value: _.receiptPaymentMethord,
+                    onToggle: (val) {
+                      _.updatePaymentMethord(!_.receiptPaymentMethord);
+                      // setState(() {
+                      //   widget.currentStatus = val;
+                      //   widget.productSettingsController
+                      //       .toggleStatus(widget.index);
+                      //   widget.productSettingsController
+                      //       .changeProductAvailability(
+                      //           widget.productSettingsController
+                      //               .allProducts?[widget.index!].productCode,
+                      //           widget.currentStatus == true
+                      //               ? "enable"
+                      //               : "out_of_stock");
+                      // });
+                    },
+                  )),
+                       Expanded(child: Text("Pay on receipt", style: UIDataTextStyles.h3))
                     ],
                   ),
-                  SpacingHeight.heightlistspacing20,
-                ],
-              ).paddingSymmetric(horizontal: 15)),
+                  
+            
+                  Padding(
+                     padding: const EdgeInsets.only(top: 20.0),
+                     child: PrimaryButtonWithIcon(
+                          btntxt: "Submit",
+                          backEndColor: UIDataColors.whiteColor,
+                          buttontxtColor: UIDataColors.primaryColor,
+                          iconImageColor: UIDataColors.primaryColor,
+                          iconImage: UIDATAIcons.sendIcon,
+                          onPressed: () {
+                              if (customerDetail != null) {
+                                _.customerInfoSubmitedRequest(customerDetail!, context)
+                                    .then((value) {
+                                  if (value) {
+                                    popupPaymentlink(context);
+                                  }
+                                });
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SpacingHeight.heightlistspacing20,
+                  ],
+                ).paddingSymmetric(horizontal: 15)),
+              ),
             );
     });
   }

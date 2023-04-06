@@ -4,9 +4,11 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/controllers/home_controller/home_controller.dart';
 import 'package:santra_seller/provider/all_orders_manual.dart';
+import 'package:santra_seller/provider/cart_provider.dart';
 import 'package:santra_seller/provider/home_provider.dart';
 import 'package:santra_seller/provider/login_provider.dart';
 import 'package:santra_seller/provider/my_customer_provider.dart';
+import 'package:santra_seller/provider/sign_up_provider.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import 'package:santra_seller/utils/routes/app_pages.dart';
 
@@ -27,6 +29,10 @@ class MyApp extends StatelessWidget {
          ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider()),
          ChangeNotifierProvider<AddManualOrderProvider>(create: (_) => AddManualOrderProvider()),
          ChangeNotifierProvider<MyCustomerProvider>(create: (_) => MyCustomerProvider()),
+         ChangeNotifierProvider<CartProvider>(create: (_) => CartProvider()),
+         ChangeNotifierProvider<SignUpProvider>(create: (_) => SignUpProvider()),
+
+
       ],
       child: GetMaterialApp(
         title: UIData.appName,
@@ -37,9 +43,9 @@ class MyApp extends StatelessWidget {
         ),
         initialBinding: BindingsBuilder(() {
           Get.put(LoginController());
-          Get.put(CartController());
+          // Get.put(CartController());
           // Get.put(HomeController());
-          Get.put(AddManualOrderController());
+          // Get.put(AddManualOrderController());
     
           
     

@@ -11,6 +11,7 @@ import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonW
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/raised_gradient_button.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
+import '../../../provider/cart_provider.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../widgets/add_manual_order_widgets/checkbox_modifier_list.dart';
 import '../../widgets/add_manual_order_widgets/rounded_close_button.dart';
@@ -35,7 +36,7 @@ class AddManulOrder extends StatefulWidget {
 class _AddManulOrderState extends State<AddManulOrder> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   bool showAdd = true;
-  CartController cartController = Get.put((CartController()));
+  // CartController cartController = Get.put((CartController()));
 
   Widget bodyData(context) {
     Size size = MediaQuery.of(context).size;
@@ -281,7 +282,7 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                                                           }
                                                                                                           // @todo for updation
 
-                                                                                                          manualOrderController.notifyListeners();
+                                                                                                          // manualOrderController.notifyListeners();
                                                                                                           // manualOrderController.changeStatus(newData[sebIndex].byDefault.toString(),value!);
                                                                                                         },
                                                                                                       ),
@@ -367,8 +368,11 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                             price: double.parse(itemValue.productPrice.toString()),
                                                                             code: itemValue.productCode.toString(),
                                                                             subModifiers: manualOrderController.addOnProducts);
-                                                                        manualOrderController
-                                                                            .addIntoCart(data);
+                                                                        
+                                                                            final cartProvider = context.read<CartProvider>();
+                                                                            cartProvider.addToCart(data);
+                                                                            manualOrderController
+                                                                            .addIntoCart();
                                                                         Get.back();
 
                                                                         // Get.offAllNamed(
@@ -416,26 +420,32 @@ class _AddManulOrderState extends State<AddManulOrder> {
                       ],
                     ).paddingOnly(left: 15, right: 15)),
                   ),
-                  cartController.isShowCartButton ||
+                  Consumer<CartProvider>(
+      builder: (context, cartProvider, child)  {
+                          return 
+                          cartProvider.isShowCartButton ||
                           manualOrderController.isShowViewButton
-                      ? Positioned(
-                          bottom: 30,
-                          child: Center(
-                            child: BorderButton(
-                              onPressed: () {
-                                Get.toNamed(Routes.cartroute);
-                              },
-                              btntxt: "View Cart",
-                              iconImage: UIDATAIcons.cartHallowIcon,
-                              buttontxtColor: UIDataColors.primaryColor,
-                              width: size.width - 30,
-                              backEndColor: Colors.white,
-                              borderColor: UIDataColors.primaryColor,
-                              iconColor: UIDataColors.primaryColor,
-                            ),
-                          ),
-                        )
-                      : const SizedBox(),
+                      ? 
+                          Positioned(
+                              bottom: 30,
+                              child: Center(
+                                child: BorderButton(
+                                  onPressed: () {
+                                    Get.toNamed(Routes.cartroute);
+                                  },
+                                  btntxt: "View Cart",
+                                  iconImage: UIDATAIcons.cartHallowIcon,
+                                  buttontxtColor: UIDataColors.primaryColor,
+                                  width: size.width - 30,
+                                  backEndColor: Colors.white,
+                                  borderColor: UIDataColors.primaryColor,
+                                  iconColor: UIDataColors.primaryColor,
+                                ),
+                              ),
+                            ): const SizedBox();
+                        }
+                      )
+                      
                 ],
               );
       },

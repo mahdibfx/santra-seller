@@ -26,7 +26,7 @@ import 'notification_icon_with_badge.dart';
 // CartController cartController = Get.put(CartController());
 
 class CommonScaffold extends StatelessWidget {
-  final CartController cartController = Get.find<CartController>();
+  // final CartController cartController = Get.find<CartController>();
   final resizeToAvoid;
   final appTitle;
   final automaticallyImplyLeading;

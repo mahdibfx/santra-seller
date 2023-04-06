@@ -3,8 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/controllers/cart_controller/cart_controller.dart';
 import 'package:santra_seller/models/customers/view_all_customers.dart';
+import 'package:santra_seller/provider/cart_provider.dart';
+import 'package:santra_seller/ui/screens/cart/cart_screen.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/ui/screens/more_setting/my_customer/my_customer_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
@@ -16,15 +19,14 @@ import 'package:http/http.dart' as http;
 import '../../../models/customers/delivery_charges.dart';
 import '../ui/screens/more_setting/my_customer/view_customer_details.dart';
 
-
 class MyCustomerProvider extends ChangeNotifier {
+  // final cartdController = Get.put(CartController());
 
-  final cartdController = Get.put(CartController());
-  
   TextEditingController link = TextEditingController();
   bool isViewCustomerLoading = false;
   bool hasViewCustomerError = false;
   bool isShowDetailScreen = false;
+  bool isSubmitOrder = false;
   late ViewAllCustomers viewAllCustomers;
   List<String>? citiesList = [];
   String? city = 'Dubai';
@@ -40,7 +42,7 @@ class MyCustomerProvider extends ChangeNotifier {
   );
   updateCustomerLoadingState(bool value) {
     isViewCustomerLoading = value;
-   notifyListeners();
+    notifyListeners();
   }
 
   TextEditingController fnController = TextEditingController();
@@ -52,12 +54,12 @@ class MyCustomerProvider extends ChangeNotifier {
 
   updateAddLoadingState(bool value) {
     isAddCustomerLoading = value;
-   notifyListeners();
+    notifyListeners();
   }
 
   updateLoadingState(bool value) {
     isUpdateCustomerLoading = value;
-   notifyListeners();
+    notifyListeners();
   }
 
   void disposeValues() {
@@ -69,7 +71,7 @@ class MyCustomerProvider extends ChangeNotifier {
     aptController.clear();
     addressController.clear();
     cidForUpdate = null;
-   notifyListeners();
+    notifyListeners();
   }
 
   setValuesForEdit(index) {
@@ -81,10 +83,10 @@ class MyCustomerProvider extends ChangeNotifier {
     aptController.text = allCustomers?[index].buildingType ?? "";
     addressController.text = allCustomers?[index].addressLink ?? "";
     city = allCustomers?[index].customerCity ?? "";
-   notifyListeners();
+    notifyListeners();
   }
 
-  isComingFromCart(bool value){
+  isComingFromCart(bool value) {
     isShowDetailScreen = value;
     notifyListeners();
   }
@@ -111,7 +113,7 @@ class MyCustomerProvider extends ChangeNotifier {
       var response = await http.Response.fromStream(streamedResponse);
       if (response.statusCode == 200) {
         disposeValues();
-        Get.to(() =>  MyCustomerScreen());
+        Get.to(() => MyCustomerScreen());
         viewCustomers();
       } else {
         generalException();
@@ -121,7 +123,7 @@ class MyCustomerProvider extends ChangeNotifier {
     }
 
     updateLoadingState(false);
-   notifyListeners();
+    notifyListeners();
   }
 
   Future addCustomer() async {
@@ -143,12 +145,17 @@ class MyCustomerProvider extends ChangeNotifier {
       request.fields.addAll(body);
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
+
       if (response.statusCode == 200) {
-        print(response.body);
+        var data = jsonDecode(response.body);
+        var id = data['data']['user_id'];
+
+        print("add customer" + response.body.toString());
+ updateAddLoadingState(false);
         if (isShowDetailScreen) {
           Get.to(() => ViewCustomerDetails(
                 customerDetail: Customer(
-                  id: '',
+                  id: id,
                   customerCity: city ?? "",
                   customerEmail: emailController.text,
                   customerMobile: mobileController.text,
@@ -158,9 +165,11 @@ class MyCustomerProvider extends ChangeNotifier {
                   addressLink: addressController.text,
                 ),
               ));
+
+                 
         } else {
           disposeValues();
-          Get.to(() =>  MyCustomerScreen());
+          Get.to(() => MyCustomerScreen());
           viewCustomers();
         }
       } else {
@@ -171,7 +180,7 @@ class MyCustomerProvider extends ChangeNotifier {
     }
 
     updateAddLoadingState(false);
-   notifyListeners();
+    notifyListeners();
   }
 
   Future viewCustomers() async {
@@ -198,9 +207,12 @@ class MyCustomerProvider extends ChangeNotifier {
     updateCustomerLoadingState(false);
   }
 
-    Future<bool> customerInfoSubmitedRequest(Customer customerDetail) async {
+  Future<bool> customerInfoSubmitedRequest(
+      Customer customerDetail, context) async {
+    isSubmitOrder = true;
+    notifyListeners();
     try {
-      updateCustomerLoadingState(true);
+      // updateCustomerLoadingState(true);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       String? sellerCode = prefs.getString("sellercode");
       var url = Uri.parse(ApiData.deliveryCharges);
@@ -210,127 +222,134 @@ class MyCustomerProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         var decodedJson = jsonDecode(response.body);
         var data = DeliveryChargesModel.fromJson(decodedJson);
-      
-        updateCustomerLoadingState(false);
+
+        // updateCustomerLoadingState(false);
         if (receiptPaymentMethord) {
-             cartdController.addItemForCustomer(data, customerDetail, sellerCode, receiptPaymentMethord);
-              showToast("Success",'Submitted Request');
-              cartdController.flushCart();
-              Get.to(() =>  HomeScreen());
-             return false;
-             
+          // final cartProvider = context.read<CartProvider>();
+          var cartProvider = Provider.of<CartProvider>(context, listen: false);
+          cartProvider.addItemForCustomerCart(
+              data, customerDetail, sellerCode, receiptPaymentMethord);
+          // showToast("Success",'Submitted Request');
+          await cartProvider.orderSubmit();
+          // cartdController.flushCart();
+          isSubmitOrder = false;
+          notifyListeners();
+          return false;
         } else {
-         return await addItemForCustomer(data, customerDetail, sellerCode,);
+          return await addItemForCustomerLink(
+              data, customerDetail, sellerCode, context);
           //  _.customerInfoSubmitedRequest(customerDetail!);
         }
-  
       } else {
-         showToast("Failed",'Unable to proceed');
+        showToast("Failed", 'Unable to proceed');
         hasViewCustomerError = true;
-            updateCustomerLoadingState(false);
-         return false;
+        updateCustomerLoadingState(false);
+        isSubmitOrder = false;
+        notifyListeners();
+        return false;
       }
-      
     } catch (e) {
-       showToast("Failed", "Try again later, Unable to proceed");
+      showToast("Failed", "Try again later, Unable to proceed");
       generalException();
-          updateCustomerLoadingState(false);
+      updateCustomerLoadingState(false);
       return false;
     }
   }
 
-        Future<bool> orderSubmit() async {
+  Future<bool> orderSubmitByLink(context) async {
+    var cartProvider = Provider.of<CartProvider>(context, listen: false);
+    isSubmitOrder = true;
+    notifyListeners();
     try {
       updateCustomerLoadingState(true);
       var url = Uri.parse(ApiData.generateLink);
       var response = await http.post(url, body: finalSubmitData);
       if (response.statusCode == 200) {
         var decodedJson = jsonDecode(response.body);
-        // var data = SelllerAllProductsModel.fromJson(decodedJson);
-        // if (data.data![0].products!.isNotEmpty) {
-        //   allProducts = data.data?[0].products;
-        // }
-        // selllerAllProductsModel =
-        //     selllerAllProductsModelFromJson(response.body);
-        //notifyListeners();
-
-        
-
-
-        link.text =  decodedJson['data'].first['payment_link'];
-         updateCustomerLoadingState(false);
-          popupPaymentlink = true;
-          return true;
+        link.text = decodedJson['data'].first['payment_link'];
+        cartProvider.flushCart();
+        Get.offAll(() => const HomeScreen());
+        showToast("Success", 'Successfully Completed');
+        isSubmitOrder = false;
+        popupPaymentlink = true;
+        notifyListeners();
+        return true;
       } else {
-          showToast("Failed", 'Unable to proceed');
-        // hasError = true;
-          updateCustomerLoadingState(false);
-          return false;
+        showToast("Failed", 'Unable to proceed');
+        isSubmitOrder = false;
+        notifyListeners();
+        return false;
       }
-     
-
     } catch (e) {
-          showToast("Failed", 'Try again later, Unable to proceed');
-      // generalException();
-      // hasError = true;
-         updateCustomerLoadingState(false);
-          return false;
+      showToast("Failed", 'Try again later, Unable to proceed');
+      isSubmitOrder = false;
+      notifyListeners();
+
+      return false;
     }
- 
   }
 
-  Future<bool> addItemForCustomer(DeliveryChargesModel data, Customer customerDetail, String? sellerCode) async {
+  Future<bool> addItemForCustomerLink(DeliveryChargesModel data,
+      Customer customerDetail, String? sellerCode, context) async {
+    var cartProvider = Provider.of<CartProvider>(context, listen: false);
 
-    finalSubmitData  = {
-      "customer_name": customerDetail.customerName, // This is the name of the customer
+    finalSubmitData = {
+      "customer_name":
+          customerDetail.customerName, // This is the name of the customer
       "coupn_code": "0", // coupon code if any other wise send 0
-      "sub_total": "${cartdController.totalPrice}", // This is the subtotal amount
-      "total_delivery_charges": data.data?.first.deliveryCharges, //this is the delivery charges
-      "total_discount": "0", //this is the discount if any otherwise send 0
-      "d_reason": "no_discount", // If there is any discount otherwise send no_discount
-      "d_type": "no_discount", //this is discount type otherwise send no_discount
+      "sub_total": "${cartProvider.totalPrice}", // This is the subtotal amount
+      "total_delivery_charges":
+          data.data?.first.deliveryCharges, //this is the delivery charges
+      "total_discount": cartProvider.dis
+          .toString(), //this is the discount if any otherwise send 0
+      "d_reason":
+          "no_discount", // If there is any discount otherwise send no_discount
+      "d_type":
+          "no_discount", //this is discount type otherwise send no_discount
       "seller_code": sellerCode, // this is seller code
       "c_number": customerDetail.customerMobile, //this is customer number
       "c_id": sellerCode, // send seller code here
       "user_id": customerDetail.id, // send customer id here
-      "payment_method": "online_paid" , // Send cash
-      "c_address": '${customerDetail.buildingType} ${customerDetail.buildingNumber} ${customerDetail.customerCity}', //Address of the customer
+      "payment_method": "online_paid", // Send cash
+      "c_address":
+          '${customerDetail.buildingType} ${customerDetail.buildingNumber} ${customerDetail.customerCity}', //Address of the customer
       "area_customer": "", // area of the customer
-      "building_number": customerDetail.buildingNumber, // building  of the customer
-      "order_remarks": "no_remarks", // order comments if any otherwise send no_remarks
+      "building_number":
+          customerDetail.buildingNumber, // building  of the customer
+      "order_remarks":
+          "no_remarks", // order comments if any otherwise send no_remarks
       "user_tips": "0", // if any otherwise send 0
-      "order_schedule": cartdController.selectedDateTime != null ? DateFormat('yyyy-MM-dd').format(cartdController.selectedDateTime!) : "",
+      "order_schedule": cartProvider.selectedDateTime != null
+          ? DateFormat('yyyy-MM-dd').format(cartProvider.selectedDateTime!)
+          : "",
 // Order Item array to be posted as follows
 // Field name: "", order_items and items in this array are as follows(id, name, price, quantity, item_remarks, modifiers_list(modifier_code,name_modifier,price_modifier))
-      "order_items": jsonEncode(cartdController.cartItems),
+      "order_items": jsonEncode(cartProvider.cartItems),
     };
-    return await orderSubmit();
+    return await orderSubmitByLink(context);
   }
 
-
-    updatePaymentMethord(bool value) {
+  updatePaymentMethord(bool value) {
     receiptPaymentMethord = value;
-   notifyListeners();
+    notifyListeners();
   }
-
 
   void onInit() async {
-   
     viewAllCustomers = ViewAllCustomers();
     viewCustomers();
-   notifyListeners();
+    notifyListeners();
   }
 
   void showToast(String title, String msg) {
-  Get.snackbar(
-    title,
-    '$msg',
-    duration: Duration(seconds: 2),
-    snackPosition: SnackPosition.BOTTOM,
-    backgroundColor: Colors.grey[900],
-    colorText: Colors.white,
-    icon: Icon(Icons.check_circle_outline, color: title != "Failed" ? Colors.green : Colors.red),
-  );
-}
-
+    Get.snackbar(
+      title,
+      '$msg',
+      duration: Duration(seconds: 2),
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.grey[900],
+      colorText: Colors.white,
+      icon: Icon(Icons.check_circle_outline,
+          color: title != "Failed" ? Colors.green : Colors.red),
+    );
+  }
 }

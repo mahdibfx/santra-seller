@@ -3,6 +3,8 @@ import "package:collection/collection.dart";
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:santra_seller/provider/cart_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/seller_all_products_model.dart';
 import '../../ui/widgets/dialogs/custom_dialogs.dart';
@@ -11,7 +13,7 @@ import '../controllers/cart_controller/cart_controller.dart';
 
 class AddManualOrderProvider extends ChangeNotifier {
   late SelllerAllProductsModel selllerAllProductsModel;
-  var cartController = Get.put(CartController());
+  // var cartController = Get.put(CartController());
   bool showAddButton = true;
 
   bool isLoading = true;
@@ -23,6 +25,7 @@ class AddManualOrderProvider extends ChangeNotifier {
   List<Product> filteredProducts = [];
     List<SubModifier> addOnProducts = [];
 
+
     clearAddonPro(){
       addOnProducts =[];
       notifyListeners();
@@ -33,10 +36,9 @@ class AddManualOrderProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  addIntoCart(CartItem product) {
+  addIntoCart() {
     isShowViewButton = true;
     notifyListeners();
-    cartController.addToCart(product);
     showToast();
   }
 

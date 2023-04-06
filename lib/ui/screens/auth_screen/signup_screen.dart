@@ -1,9 +1,11 @@
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:http/http.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/controllers/cutomer_controller/customer-controller.dart';
 import 'package:santra_seller/controllers/more_screen_controller.dart/my_customer/my_customer_controller.dart';
 import 'package:santra_seller/controllers/more_screen_controller.dart/privacy_controller.dart';
 import 'package:santra_seller/models/customers/view_all_customers.dart';
+import 'package:santra_seller/provider/sign_up_provider.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
@@ -29,21 +31,22 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   PrivacyController priCont = Get.put(PrivacyController());
-  SignUpController regCont = Get.put(SignUpController());
+  // SignUpController regCont = Get.put(SignUpController());
+  hitAllApis() async {
+    await Future.microtask(
+        () => context.read<SignUpProvider>().onInit());
+  }
+
   @override
   void initState() {
+    hitAllApis();
     super.initState();
-    regCont.getCities().then(
-      (value) {
-        setState(() {});
-      },
-    );
   }
 
   Widget bodyData(context) {
     Size size = MediaQuery.of(context).size;
-    return GetBuilder<SignUpController>(
-      builder: (_) {
+    return Consumer<SignUpProvider>(
+      builder: (context, _, child) {
         return SafeArea(
           child: SingleChildScrollView(
             child: SingleChildScrollView(
@@ -134,7 +137,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             : UIDATAIcons.viewIcon,
                         toggleFunction: () {
                           _.passwordSecuretext = !_.passwordSecuretext;
-                          _.update();
+                        // @todo 
+                        //setstate the value
                         },
                         isTextHidden: _.passwordSecuretext,
                         validator: (val) {
@@ -156,7 +160,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         toggleFunction: () {
                           _.confirmPasswordSecuretext =
                               !_.confirmPasswordSecuretext;
-                          _.update();
+                            // @todo 
+                        //setstate the value
                         },
                         isTextHidden: _.confirmPasswordSecuretext,
                         validator: (val) {
@@ -207,7 +212,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           value: _.isAgree,
                           onToggle: (val) {
                             _.isAgree = val;
-                            _.update();
+                              // @todo 
+                        //setstate the value
                           },
                         ),
                         SpacingWidth.widthlistspacing5,

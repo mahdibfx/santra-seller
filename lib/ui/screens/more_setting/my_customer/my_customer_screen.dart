@@ -14,10 +14,16 @@ import '../../../widgets/cards/my_customer_card.dart';
 import '../../../widgets/scaffold/common_scaffold.dart';
 import '../../../widgets/textfields/common_textfield.dart';
 
-class MyCustomerScreen extends StatelessWidget {
+class MyCustomerScreen extends StatefulWidget {
+  final bool comingFromCart;
+  const MyCustomerScreen({super.key, this.comingFromCart = false});
+
+  @override
+  State<MyCustomerScreen> createState() => _MyCustomerScreenState();
+}
+
+class _MyCustomerScreenState extends State<MyCustomerScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
-  bool comingFromCart;
-  MyCustomerScreen({super.key, this.comingFromCart = false});
 
   Widget bodyData() {
     return Consumer<MyCustomerProvider>(builder: (context, _, child){
@@ -61,9 +67,9 @@ class MyCustomerScreen extends StatelessWidget {
                                     "No Name",
                                 number: _.allCustomers?[index].customerMobile ??
                                     "No Contact Number",
-                                  forView: comingFromCart,
+                                  forView: widget.comingFromCart,
                                 onTap: () {
-                                  if (!comingFromCart) {
+                                  if (!widget.comingFromCart) {
                                   Get.to(() => EditCustomerDetails(
                                         index: index,
                                       ));
@@ -81,6 +87,15 @@ class MyCustomerScreen extends StatelessWidget {
               );
       },
     );
+  }
+ hitAllApis() async {
+    await Future.microtask(() => context.read<MyCustomerProvider>().onInit());
+  }
+
+  @override
+  void initState() {
+    hitAllApis();
+    super.initState();
   }
 
   @override

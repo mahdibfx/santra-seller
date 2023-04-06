@@ -5,6 +5,7 @@ import 'package:santra_seller/controllers/cart_controller/cart_controller.dart';
 import 'package:santra_seller/ui/widgets/add_manual_order_widgets/price_on_selection.dart';
 import 'package:santra_seller/utils/uidata.dart';
 import '../../../models/seller_all_products_model.dart';
+import '../../../provider/cart_provider.dart';
 import '../../../utils/uidata/textStyles.dart';
 
 class CartCardOrder extends StatelessWidget {

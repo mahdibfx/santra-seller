@@ -6,7 +6,7 @@ class CartBindings extends Bindings
 {
   @override
   void dependencies() {
-    Get.lazyPut<CartController>(() => CartController());
+    // Get.lazyPut<CartController>(() => CartController());
   }
 
 }

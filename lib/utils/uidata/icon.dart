@@ -56,4 +56,8 @@ class UIDATAIcons {
   static const voucherTagIcon = "$iconsDir/voucher_tag.svg";
   static const carIcon = "$iconsDir/car.svg";
   static const voucerReal = "$iconsDir/voucher_real.svg";
+  static const copyLink = "$iconsDir/copy_link.svg";
+  static const shareIcon = "$iconsDir/share_icon.svg";
+
+
 }

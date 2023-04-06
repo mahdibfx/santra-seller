@@ -5,6 +5,6 @@ import 'package:get/get.dart';
 class AddManualOrderBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<AddManualOrderController>(() => AddManualOrderController());
+    // Get.lazyPut<AddManualOrderController>(() => AddManualOrderController());
   }
 }
