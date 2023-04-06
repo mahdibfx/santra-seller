@@ -79,22 +79,23 @@ class Datum {
 }
 
 class CustomerFeedback {
-  CustomerFeedback({
-    this.orderNumber,
-    this.feedbackStars,
-    this.feedbackMessage,
-  });
+  CustomerFeedback(
+      {this.orderNumber,
+      this.feedbackStars,
+      this.feedbackMessage,
+      this.feedbackStarsInDouble});
 
   String? orderNumber;
   String? feedbackStars;
   String? feedbackMessage;
+  double? feedbackStarsInDouble;
 
   factory CustomerFeedback.fromJson(Map<String, dynamic> json) =>
       CustomerFeedback(
-        orderNumber: json["order_number"],
-        feedbackStars: double.parse(json["feedback_stars"]).toString(),
-        feedbackMessage: json["feedback_message"],
-      );
+          orderNumber: json["order_number"],
+          feedbackStars: double.parse(json["feedback_stars"]).toString(),
+          feedbackMessage: json["feedback_message"],
+          feedbackStarsInDouble: double.parse(json["feedback_stars"]));
 
   Map<String, dynamic> toJson() => {
         "order_number": orderNumber,

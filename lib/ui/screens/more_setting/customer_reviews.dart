@@ -97,7 +97,11 @@ class CustomerReviews extends StatelessWidget {
                                   .customerFeedback?[index].feedbackMessage,
                               orderNumber: _.customerReviews.data?[0]
                                   .customerFeedback?[index].orderNumber,
-                              stars: 4,
+                              stars: _
+                                  .customerReviews
+                                  .data?[0]
+                                  .customerFeedback?[index]
+                                  .feedbackStarsInDouble,
                               rating: _.customerReviews.data?[0]
                                   .customerFeedback?[index].feedbackStars,
                             );
