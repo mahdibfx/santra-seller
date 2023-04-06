@@ -39,7 +39,8 @@ class _AddManulOrderState extends State<AddManulOrder> {
 
   Widget bodyData(context) {
     Size size = MediaQuery.of(context).size;
-    return Consumer<AddManualOrderProvider>(builder: (context, manualOrderController, child) {
+    return Consumer<AddManualOrderProvider>(
+      builder: (context, manualOrderController, child) {
         return manualOrderController.isLoading
             ? const SizedBox(
                 child: Center(
@@ -139,30 +140,8 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                           .productPrice,
                                                                     ),
                                                                     SpacingHeight
-                                                                        .heightlistspacing10,
-                                                                    // PriceOnSelection(
-                                                                    //     onMinus: () {
-                                                                    //   print("Minus");
-                                                                    // }, onPlus: () {
-                                                                    //   print("Plus");
-                                                                    // }),
-                                                                    // SpacingHeight
-                                                                    //     .heightlistspacing10,
-                                                                    // if (manualOrderController
-                                                                    //     .allProducts![
-                                                                    //         index]
-                                                                    //     .modifiers!
-                                                                    //     .isNotEmpty)
-                                                                    //   Text(
-                                                                    //     manualOrderController
-                                                                    //         .allProducts![
-                                                                    //             index]
-                                                                    //         .modifiers!
-                                                                    //         .length
-                                                                    //         .toString(),
-                                                                    //     textScaleFactor:
-                                                                    //         5,
-                                                                    //   ),
+                                                                        .heightlistspacing20,
+
                                                                     manualOrderController
                                                                             .allProducts![
                                                                                 index]
@@ -183,80 +162,94 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                               return
                                                                                   //manualOrderController.allProducts![index].modifiers![index2].selectionType.toString().toLowerCase() == "checkbox"
                                                                                   // ?
-                                                                                  Column(
-                                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                children: [
-                                                                                  Text(
-                                                                                    manualOrderController.allProducts![index].modifiers![index2].name.toString(),
-                                                                                    style: UIDataTextStyles.h1.copyWith(color: UIDataColors.primaryColor),
-                                                                                  ),
-                                                                                  SpacingHeight.heightlistspacing10,
-                                                                                  ListView.builder(
-                                                                                      physics: const NeverScrollableScrollPhysics(),
-                                                                                      shrinkWrap: true,
-                                                                                      itemCount: manualOrderController.allProducts![index].modifiers![index2].subModifiers!.length,
-                                                                                      itemBuilder: (context, sebIndex) {
-                                                                                        var newData = manualOrderController.allProducts![index].modifiers![index2].subModifiers!;
-                                                                                        return Padding(
-                                                                                          padding: const EdgeInsets.only(bottom: 8.0),
-                                                                                          child: Row(
+                                                                                  Padding(
+                                                                                padding: const EdgeInsets.symmetric(
+                                                                                  horizontal: 8,
+                                                                                ),
+                                                                                child: Column(
+                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      "${manualOrderController.allProducts![index].modifiers![index2].name.toString()} :",
+                                                                                      style: UIDataTextStyles.title.copyWith(fontWeight: FontWeight.w600, color: UIDataColors.primaryColor),
+                                                                                    ),
+                                                                                    SpacingHeight.heightlistspacing5,
+                                                                                    ListView.builder(
+                                                                                        padding: EdgeInsets.zero,
+                                                                                        physics: const NeverScrollableScrollPhysics(),
+                                                                                        shrinkWrap: true,
+                                                                                        itemCount: manualOrderController.allProducts![index].modifiers![index2].subModifiers!.length,
+                                                                                        itemBuilder: (context, sebIndex) {
+                                                                                          var newData = manualOrderController.allProducts![index].modifiers![index2].subModifiers!;
+                                                                                          return Column(
                                                                                             children: [
-                                                                                              // manualOrderController.allProducts![index].modifiers![index2].selectionType.toString().toLowerCase() != "checkbox"
-                                                                                              //     ? GestureDetector(
-                                                                                              //         onTap: () {
-                                                                                              //           for (var e in newData) {
-                                                                                              //             if (e.byDefault.toString() == '1') {
-                                                                                              //               setStatec(() {
-                                                                                              //                 e.byDefault = '0';
-                                                                                              //               });
-                                                                                              //             }
-                                                                                              //           }
-                                                                                              //           setStatec(() {
-                                                                                              //             if (newData[sebIndex].byDefault.toString() == '1') {
-                                                                                              //               newData[sebIndex].byDefault = '0';
-                                                                                              //             } else {
-                                                                                              //               newData[sebIndex].byDefault = '1';
-                                                                                              //             }
-                                                                                              //           });
-                                                                                              //         },
-                                                                                              //         child: Container(
-                                                                                              //           width: 28,
-                                                                                              //           height: 28,
+                                                                                              Row(
+                                                                                                children: [
+                                                                                                  // manualOrderController.allProducts![index].modifiers![index2].selectionType.toString().toLowerCase() != "checkbox"
+                                                                                                  //     ? GestureDetector(
+                                                                                                  //         onTap: () {
+                                                                                                  //           for (var e in newData) {
+                                                                                                  //             if (e.byDefault.toString() == '1') {
+                                                                                                  //               setStatec(() {
+                                                                                                  //                 e.byDefault = '0';
+                                                                                                  //               });
+                                                                                                  //             }
+                                                                                                  //           }
+                                                                                                  //           setStatec(() {
+                                                                                                  //             if (newData[sebIndex].byDefault.toString() == '1') {
+                                                                                                  //               newData[sebIndex].byDefault = '0';
+                                                                                                  //             } else {
+                                                                                                  //               newData[sebIndex].byDefault = '1';
+                                                                                                  //             }
+                                                                                                  //           });
+                                                                                                  //         },
+                                                                                                  //         child: Container(
+                                                                                                  //           width: 28,
+                                                                                                  //           height: 28,
 
-                                                                                              //           // decoration: BoxDecoration(
-                                                                                              //           //   color: newData[sebIndex].byDefault.toString() == "1" ? Colors.black : Colors.white, // border color
-                                                                                              //           //   shape: BoxShape.circle,
-                                                                                              //           // ),
-                                                                                              //           child: Padding(
-                                                                                              //             padding: const EdgeInsets.all(2), // border width
-                                                                                              //             child: Container(
-                                                                                              //               // or ClipRRect if you need to clip the content
-                                                                                              //               decoration: BoxDecoration(
-                                                                                              //                 shape: BoxShape.circle,
-                                                                                              //                 color: newData[sebIndex].byDefault.toString() == "1" ? UIDataColors.primaryColor : Colors.white, // inner circle color
-                                                                                              //                 border: Border.all(
-                                                                                              //                     width: 2, //                   <--- border width here5
-                                                                                              //                     color: Colors.grey),
-                                                                                              //               ),
-                                                                                              //               child: Container(), // inner content
-                                                                                              //             ),
-                                                                                              //           ),
-                                                                                              //         ),
-                                                                                              //       )
-                                                                                              //     : 
-                                                                                                 
-                                                                                              // SpacingWidth.widthlistspacing,
-                                                                                              Text(newData[sebIndex].nameModifier.toString(), style: UIDataTextStyles.h2),
-                                                                                              const Spacer(),
-                                                                                              Text(
-                                                                                                "${newData[sebIndex].priceModifier} AED",
-                                                                                                style: UIDataTextStyles.title,
-                                                                                              ),
-                                                                                               Theme(
-                                                                                                      data: ThemeData(),
+                                                                                                  //           // decoration: BoxDecoration(
+                                                                                                  //           //   color: newData[sebIndex].byDefault.toString() == "1" ? Colors.black : Colors.white, // border color
+                                                                                                  //           //   shape: BoxShape.circle,
+                                                                                                  //           // ),
+                                                                                                  //           child: Padding(
+                                                                                                  //             padding: const EdgeInsets.all(2), // border width
+                                                                                                  //             child: Container(
+                                                                                                  //               // or ClipRRect if you need to clip the content
+                                                                                                  //               decoration: BoxDecoration(
+                                                                                                  //                 shape: BoxShape.circle,
+                                                                                                  //                 color: newData[sebIndex].byDefault.toString() == "1" ? UIDataColors.primaryColor : Colors.white, // inner circle color
+                                                                                                  //                 border: Border.all(
+                                                                                                  //                     width: 2, //                   <--- border width here5
+                                                                                                  //                     color: Colors.grey),
+                                                                                                  //               ),
+                                                                                                  //               child: Container(), // inner content
+                                                                                                  //             ),
+                                                                                                  //           ),
+                                                                                                  //         ),
+                                                                                                  //       )
+                                                                                                  //     :
+
+                                                                                                  // SpacingWidth.widthlistspacing,
+                                                                                                  Text(newData[sebIndex].nameModifier.toString(), style: UIDataTextStyles.title.copyWith(fontWeight: FontWeight.w600)),
+
+                                                                                                  Text(
+                                                                                                    " (+AED ${newData[sebIndex].priceModifier})",
+                                                                                                    style: UIDataTextStyles.title.copyWith(fontWeight: FontWeight.w600),
+                                                                                                  ),
+                                                                                                  const Spacer(),
+                                                                                                  SizedBox(
+                                                                                                    width: 30,
+                                                                                                    child: Transform.scale(
+                                                                                                      scale: 1.15,
                                                                                                       child: Checkbox(
+                                                                                                        side: const BorderSide(
+                                                                                                          width: 0.8,
+                                                                                                        ),
+                                                                                                        shape: RoundedRectangleBorder(
+                                                                                                          borderRadius: BorderRadius.circular(10.0),
+                                                                                                        ),
                                                                                                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                                                                                        checkColor: UIDataColors.whiteColor,
+                                                                                                        checkColor: UIDataColors.primaryColor,
                                                                                                         fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
                                                                                                           return UIDataColors.primaryColor;
                                                                                                         }),
@@ -293,11 +286,17 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                                                         },
                                                                                                       ),
                                                                                                     ),
+                                                                                                  ),
+                                                                                                ],
+                                                                                              ),
+                                                                                              const Divider(
+                                                                                                height: 5,
+                                                                                              ),
                                                                                             ],
-                                                                                          ),
-                                                                                        );
-                                                                                      }),
-                                                                                ],
+                                                                                          );
+                                                                                        }),
+                                                                                  ],
+                                                                                ),
                                                                               );
                                                                               // : SizedBox();
                                                                             },
@@ -483,14 +482,16 @@ class _AddManulOrderState extends State<AddManulOrder> {
   }
 
   hitAllApis() async {
-    await Future.microtask(() => context.read<AddManualOrderProvider>().onInit());
+    await Future.microtask(
+        () => context.read<AddManualOrderProvider>().onInit());
   }
 
-@override
-void initState() {
+  @override
+  void initState() {
     hitAllApis();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(

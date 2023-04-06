@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:santra_seller/ui/widgets/add_manual_order_widgets/price_on_selection.dart';
 
 import '../../../utils/uidata/textStyles.dart';
 
@@ -14,14 +15,30 @@ class ProductNameAndPriceOnSheet extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          productName ?? "",
-          style: UIDataTextStyles.h2.copyWith(fontWeight: FontWeight.w600),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 250,
+              child: Text(
+                productName ?? "",
+                style:
+                    UIDataTextStyles.h2.copyWith(fontWeight: FontWeight.w600),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Text(
+              "${productPrice ?? ""} AED",
+              style: UIDataTextStyles.h1Heavy,
+            ),
+          ],
         ),
-        Text(
-          "${productPrice ?? ""} AED",
-          style: UIDataTextStyles.h1Heavy,
-        )
+        SizedBox(
+            height: 50,
+            width: 100,
+            child:
+                PriceOnSelection(onMinus: () {}, onPlus: () {}, quantity: "1"))
       ],
     );
   }
