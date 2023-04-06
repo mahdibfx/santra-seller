@@ -188,7 +188,7 @@ class AddCustomerScreen extends StatelessWidget {
                             ],
                           )
                   ],
-                ).marginAll(20),
+                ).paddingSymmetric(horizontal: 15),
               )),
         );
       },

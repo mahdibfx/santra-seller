@@ -202,7 +202,7 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
                             ],
                           )
                   ],
-                ).marginAll(20),
+                ).paddingSymmetric(horizontal: 15),
               )),
         );
       },
