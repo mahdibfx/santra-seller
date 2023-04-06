@@ -1,24 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/controllers/more_screen_controller.dart/my_customer/my_customer_controller.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import 'package:santra_seller/ui/widgets/dropdown/common_dropdown.dart';
 
+import '../../../../provider/my_customer_provider.dart';
 import '../../../../utils/routes/app_routes.dart';
 import '../../../../utils/uidata.dart';
 import '../../../widgets/scaffold/common_scaffold.dart';
 import '../../../widgets/textfields/common_textfield.dart';
 
-class AddCustomerScreen extends StatelessWidget {
-  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+class AddCustomerScreen extends StatefulWidget {
+  final bool isComingFromCart;
+   const AddCustomerScreen({super.key, this.isComingFromCart = false});
+
+  @override
+  State<AddCustomerScreen> createState() => _AddCustomerScreenState();
+}
+
+class _AddCustomerScreenState extends State<AddCustomerScreen> {
+  // final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   GlobalKey<FormState> form = GlobalKey<FormState>();
-  AddCustomerScreen({super.key});
+
+   hitAllApis() async {
+    await Future.microtask(() =>
+        context.read<MyCustomerProvider>().isComingFromCart(widget.isComingFromCart));
+  }
+
+  @override
+  void initState() {
+    hitAllApis();
+    super.initState();
+  }
 
   Widget bodyData() {
-    return GetBuilder<MyCustomerController>(
-      builder: (_) {
+    return Consumer<MyCustomerProvider>(builder: (context, _, child) {
         return SafeArea(
           child: SingleChildScrollView(
               padding: EdgeInsets.zero,

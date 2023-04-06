@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/controllers/more_screen_controller.dart/my_customer/my_customer_controller.dart';
 
+import '../../../provider/my_customer_provider.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';
@@ -13,7 +15,7 @@ import '../buttons/material_buttons/primaryButtonWithIcon.dart';
 import '../textfields/common_textfield.dart';
 
 class PaymentLinkBottomSheet extends StatelessWidget {
-  final cartdController = Get.find<MyCustomerController>();
+  // final cartdController = Get.find<MyCustomerController>();
   PaymentLinkBottomSheet({Key? key})
       : super(key: key);
 
@@ -61,14 +63,17 @@ class PaymentLinkBottomSheet extends StatelessWidget {
 
                   Text("Send this link to your customer so they can checkout. You will be notified by santra when it pays.").paddingAll(10),
 
-                    CommonTextField(
-                      readOnly: true,
-                            labelText: "Link",
-                            isTextHidden: false,
-                            fillcolor: Color.fromARGB(255, 255, 255, 255),
-                            keyboardType: TextInputType.text,
-                            initVal: cartdController.link.text,
-                          ).paddingOnly(right: 10, left: 10),
+                    Consumer<MyCustomerProvider>(builder: (context, _, child) {
+                        return CommonTextField(
+                          readOnly: true,
+                                labelText: "Link",
+                                isTextHidden: false,
+                                fillcolor: Color.fromARGB(255, 255, 255, 255),
+                                keyboardType: TextInputType.text,
+                                initVal: _.link.text,
+                              ).paddingOnly(right: 10, left: 10);
+                      }
+                    ),
                         
 
     Divider(

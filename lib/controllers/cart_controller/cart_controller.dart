@@ -77,6 +77,11 @@ class CartController extends GetxController {
     update();
   }
 
+  emptyCartList(){
+    cartItems = [];
+    update();
+  }
+
   updateDate(date) {
     selectedDateTime = date;
     update();

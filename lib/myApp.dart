@@ -6,6 +6,7 @@ import 'package:santra_seller/controllers/home_controller/home_controller.dart';
 import 'package:santra_seller/provider/all_orders_manual.dart';
 import 'package:santra_seller/provider/home_provider.dart';
 import 'package:santra_seller/provider/login_provider.dart';
+import 'package:santra_seller/provider/my_customer_provider.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import 'package:santra_seller/utils/routes/app_pages.dart';
 
@@ -25,8 +26,7 @@ class MyApp extends StatelessWidget {
          ChangeNotifierProvider<HomeProvider>(create: (_) => HomeProvider()),
          ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider()),
          ChangeNotifierProvider<AddManualOrderProvider>(create: (_) => AddManualOrderProvider()),
-
-
+         ChangeNotifierProvider<MyCustomerProvider>(create: (_) => MyCustomerProvider()),
       ],
       child: GetMaterialApp(
         title: UIData.appName,

@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'dart:convert';
 import 'package:santra_seller/controllers/more_screen_controller.dart/more_controller.dart';
+import 'package:santra_seller/ui/screens/more_setting/my_customer/my_customer_screen.dart';
 
 import '../../../controllers/home_controller/home_controller.dart';
 import '../../../utils/routes/app_routes.dart';
@@ -49,7 +50,7 @@ class MoreSettingScreen extends StatelessWidget {
                       ReusableIconSetting(
                         icon: UIDATAIcons.customersIcon,
                         onPressed: () {
-                          Get.toNamed(Routes.mycustomerscreen);
+                         Get.to(() =>  MyCustomerScreen());
                         },
                         btntxt: 'Customers List',
                       ),

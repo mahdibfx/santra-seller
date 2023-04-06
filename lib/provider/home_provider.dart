@@ -67,7 +67,6 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   void onInit() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var sellercode = prefs.getString("sellercode");
@@ -77,15 +76,14 @@ class HomeProvider extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
     sellerSt();
-   await homeDataCall();
+    await homeDataCall();
     notifyListeners();
-   
   }
 
   Future filterOrder() async {
     try {
       isFilterOrderLoading = true;
-notifyListeners();
+      notifyListeners();
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       var url = Uri.parse(ApiData.orderFilterApi);
       Map<String, dynamic> body = {};
@@ -94,12 +92,11 @@ notifyListeners();
       body['filter_year'] = selectedYear.value;
       var response = await http.post(url, body: body);
       if (response.statusCode == 200) {
-        
         var data = jsonDecode(response.body);
         profitMonthly.value = data['data'][0]['profit_monthly'];
         orderMonthly.value = data['data'][0]['orders_monthly'];
-          isFilterOrderLoading = false;
-    notifyListeners();
+        isFilterOrderLoading = false;
+        notifyListeners();
       } else {
         generalException();
       }
@@ -112,7 +109,8 @@ notifyListeners();
   }
 
   homeDataCall() async {
-    print(sellerCode);
+    allOrders = [];
+    notifyListeners();
     if (sellerCode != null) {
       isLoading = true;
       notifyListeners();
@@ -121,10 +119,7 @@ notifyListeners();
         body['seller_code'] = sellerCode!;
         var res = await http.post(Uri.parse("${ApiData.mainurl}seller_home"),
             body: body);
-        print(body);
         if (res.statusCode == 200) {
-          print(body);
-          print(res.body);
           var data = jsonDecode(res.body);
           var newdata = HomeModel.fromJson(data);
           homeData = newdata.data[0];
@@ -135,7 +130,6 @@ notifyListeners();
           notifyListeners();
         } else {
           CommonSnackbar.getSnackbar("Error", "Error ", UIDataColors.redColor);
-          print(res.body);
         }
       } catch (e) {
         print("check error ${e}");
@@ -147,7 +141,6 @@ notifyListeners();
             "Server Error or Please Check your internet connection",
             UIDataColors.redColor);
       }
-    
     }
   }
 

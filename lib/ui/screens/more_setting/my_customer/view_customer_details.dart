@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/widgets/cards/my_customer_card.dart';
 import 'package:santra_seller/ui/widgets/scaffold/common_scaffold.dart';
 import 'package:santra_seller/utils/routes/app_routes.dart';
@@ -11,6 +12,7 @@ import 'package:santra_seller/utils/uidata.dart';
 
 import '../../../../controllers/more_screen_controller.dart/my_customer/my_customer_controller.dart';
 import '../../../../models/customers/view_all_customers.dart';
+import '../../../../provider/my_customer_provider.dart';
 import '../../../../utils/uidata/textStyles.dart';
 import '../../../widgets/add_manual_order_widgets/payment_link.dart';
 import '../../../widgets/buttons/icon_setting_button.dart';
@@ -40,8 +42,7 @@ class ViewCustomerDetails extends StatelessWidget {
 
   Widget bodyData(BuildContext context) {
      Size size = MediaQuery.of(context).size;
-    return GetBuilder<MyCustomerController>(
-      builder: (_) {
+    return Consumer<MyCustomerProvider>(builder: (context, _, child) {
         return _.isViewCustomerLoading
             ? const SizedBox(
                 child: Center(
@@ -110,34 +111,24 @@ class ViewCustomerDetails extends StatelessWidget {
                         iconImageColor: UIDataColors.primaryColor,
                         iconImage: UIDATAIcons.sendIcon,
                         onPressed: () {
-                         
-                          if (customerDetail != null) {
-                         
-                              _.customerInfoSubmitedRequest(customerDetail!).then((value) {
+                            if (customerDetail != null) {
+                              _.customerInfoSubmitedRequest(customerDetail!)
+                                  .then((value) {
                                 if (value) {
                                   popupPaymentlink(context);
                                 }
                               });
-
-                            
-                        }
-                      
-                        },
+                            }
+                          },
+                        ),
                       ),
-                 )
-
-                 
-              ],
-            ),
-
-            
-
-                    SpacingHeight.heightlistspacing20,
-                  ],
-                ).paddingSymmetric(horizontal: 15)),
-              );
-      }
-    );
+                    ],
+                  ),
+                  SpacingHeight.heightlistspacing20,
+                ],
+              ).paddingSymmetric(horizontal: 15)),
+            );
+    });
   }
 
   @override

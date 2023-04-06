@@ -42,12 +42,11 @@ class CartIconWithBadge extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 5.0, vertical: 2),
-                    child: Obx(
-                      () => Text(
+                    child: Text(
                         cartController.itemCount.toString(),
                         style: UIDataTextStyles.caption,
                       ),
-                    ),
+                    
                   ),
                 ))
         ],

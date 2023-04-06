@@ -6,6 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';
+import '../../screens/more_setting/my_customer/add_customer.dart';
 import '../../screens/more_setting/my_customer/my_customer_screen.dart';
 import '../../screens/more_setting/my_customer/view_customer_details.dart';
 import '../buttons/material_buttons/primaryButtonWithIcon.dart';
@@ -52,8 +53,9 @@ class CustomDetailBottomSheet extends StatelessWidget {
               iconImage: UIDATAIcons.customersIcon,
               onPressed: () {
                 Get.back();
-                Get.toNamed(Routes.mycustomerscreen,
-                    arguments: "commingFromCart");
+                Get.to(() =>  MyCustomerScreen(comingFromCart: true));
+                // Get.toNamed(Routes.mycustomerscreen,
+                //     arguments: "commingFromCart");
               },
             ),
           ),
@@ -67,7 +69,7 @@ class CustomDetailBottomSheet extends StatelessWidget {
               iconImage: UIDATAIcons.userIcon,
               onPressed: () {
                 Get.back();
-                Get.toNamed(Routes.addNewcustomer);
+                Get.to(() => const AddCustomerScreen(isComingFromCart: true));
               },
             ),
           )

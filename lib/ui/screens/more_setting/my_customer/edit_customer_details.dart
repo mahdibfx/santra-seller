@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/controllers/more_screen_controller.dart/my_customer/my_customer_controller.dart';
+import '../../../../provider/my_customer_provider.dart';
 import '../../../../utils/routes/app_routes.dart';
 import '../../../../utils/uidata.dart';
 import '../../../widgets/buttons/border_button.dart';
@@ -21,19 +23,19 @@ class EditCustomerDetails extends StatefulWidget {
 class _EditCustomerDetailsState extends State<EditCustomerDetails> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   final formEdit = GlobalKey<FormState>();
-  MyCustomerController customerController = Get.put(MyCustomerController());
+  hitAllApis() async {
+    await Future.microtask(() =>
+        context.read<MyCustomerProvider>().setValuesForEdit(widget.index));
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
+    hitAllApis();
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      customerController.setValuesForEdit(widget.index);
-    });
   }
 
   Widget bodyData() {
-    return GetBuilder<MyCustomerController>(
-      builder: (_) {
+    return Consumer<MyCustomerProvider>(builder: (context, _, child) {
         return SafeArea(
           child: SingleChildScrollView(
               padding: EdgeInsets.zero,

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/controllers/more_screen_controller.dart/my_customer/my_customer_controller.dart';
 import 'package:santra_seller/ui/screens/more_setting/my_customer/edit_customer_details.dart';
 import 'package:santra_seller/ui/screens/more_setting/my_customer/view_customer_details.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 
+import '../../../../provider/my_customer_provider.dart';
 import '../../../../utils/routes/app_routes.dart';
 import '../../../../utils/uidata.dart';
 import '../../../widgets/cards/my_customer_card.dart';
@@ -17,14 +19,8 @@ class MyCustomerScreen extends StatelessWidget {
   bool comingFromCart;
   MyCustomerScreen({super.key, this.comingFromCart = false});
 
-  var data = Get.arguments;
-
   Widget bodyData() {
-      if (data != null) {
-        comingFromCart = true;
-       }
-    return GetBuilder<MyCustomerController>(
-      builder: (_) {
+    return Consumer<MyCustomerProvider>(builder: (context, _, child){
         return _.isViewCustomerLoading
             ? const SizedBox(
                 child: Center(
