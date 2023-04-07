@@ -14,11 +14,16 @@ import '../../utils/uidata.dart';
 import 'package:http/http.dart' as http;
 
 class HomeProvider extends ChangeNotifier {
+  TextEditingController filterController = TextEditingController();
   var isFilterOrderLoading = false;
   bool isLoading = true;
   bool isAcceptOrderLoading = false;
   bool isRejectOrderLoading = false;
   bool isCancelOrderLoading = false;
+  List<Order> santraOrders = [];
+  List<Order> filteredSantraOrders = [];
+  String selectedOrderOption = '';
+
   String? sellerCode;
   HomeData? homeData;
   var orderMonthly = '0'.obs;
@@ -126,6 +131,8 @@ class HomeProvider extends ChangeNotifier {
           allOrders.addAll(homeData!.santraOrders[0].santraOrders);
           allOrders.addAll(homeData!.manualOrders[0].manualOrders);
           allOrders.addAll(homeData!.pendingOrders[0].pendingOrders);
+          santraOrders = homeData!.santraOrders[0].santraOrders;
+          filteredSantraOrders = santraOrders;
           isLoading = false;
           notifyListeners();
         } else {
@@ -236,6 +243,48 @@ class HomeProvider extends ChangeNotifier {
     }
     updateRejectOrderLoading(false);
   }
+
+  //////////////////////////////--------Filteration START--------///////////
+  bool _doesActionSatisfy(Order e, String query) {
+    bool found = e.orderNumber.toString().toLowerCase().contains(query) &&
+        e.orderStatus.toString().toLowerCase().contains(selectedOrderOption);
+
+    return found;
+  }
+checkfilterCondition(){
+    santraOrders.where((e) {
+  bool matchesCondition1 = e.orderNumber.toString().toLowerCase().contains(filterController.text.trim());
+  bool matchesCondition2 = e.orderStatus.toString().toLowerCase().contains(selectedOrderOption);
+  return matchesCondition1 && matchesCondition2;
+}).toList();
+}
+  void filterSantraOrders() {
+    
+    // var valueList = santraOrders
+    //     .where((e) =>
+    //         _doesActionSatisfy(e, filterController.text.trim().toLowerCase()))
+    //     .toList();
+    filteredSantraOrders =  santraOrders.where((e) {
+  bool matchesCondition1 = e.orderNumber.toString().toLowerCase().contains(filterController.text.trim());
+  bool matchesCondition2 = e.orderStatus.toString().toLowerCase().contains(selectedOrderOption);
+  return matchesCondition1 && matchesCondition2;
+}).toList();
+    notifyListeners();
+  }
+
+  changeOrderGroupValue(value) {
+    selectedOrderOption = value;
+    notifyListeners();
+    filterSantraOrders();
+  }
+
+  resetOrderGroupValue() {
+    selectedOrderOption = '';
+    notifyListeners();
+    filterSantraOrders();
+  }
+
+//////////////////////////////--------Filteration END--------///////////
 
   Color getColor(String colorName) {
     switch (colorName.toLowerCase()) {

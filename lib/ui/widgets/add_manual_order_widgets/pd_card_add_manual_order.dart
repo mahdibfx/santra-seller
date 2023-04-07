@@ -44,7 +44,7 @@ class PDCardAddManualOrder extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                         child: CachedNetworkImage(
                           imageUrl:
-                              "https://api.santra.ae/${manualOrderController?.allProducts?[index!].productImages}",
+                              "https://api.santra.ae/${manualOrderController?.filteredProducts[index!].productImages}",
                           fit: BoxFit.cover,
                           memCacheHeight: 300,
                           memCacheWidth: 400,
@@ -63,14 +63,14 @@ class PDCardAddManualOrder extends StatelessWidget {
                       children: [
                         Text(
                           manualOrderController
-                                  ?.allProducts?[index!].productName ??
+                                  ?.filteredProducts[index!].productName ??
                               "",
                           style: UIDataTextStyles.h2,
                           overflow: TextOverflow.ellipsis,
                         ),
                         SpacingHeight.heightlistspacing5,
                         Text(
-                          "AED ${manualOrderController?.allProducts?[index!].productPrice ?? ""}",
+                          "AED ${manualOrderController?.filteredProducts[index!].productPrice ?? ""}",
                           style: UIDataTextStyles.title13Normal,
                         ),
                       ],

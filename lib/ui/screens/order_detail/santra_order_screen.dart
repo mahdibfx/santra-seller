@@ -18,13 +18,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../utils/uidata.dart';
 
-class SantraOrderScreen extends StatelessWidget {
+class SantraOrderScreen extends StatefulWidget {
   // final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
   SantraOrderScreen({super.key});
 
+  @override
+  State<SantraOrderScreen> createState() => _SantraOrderScreenState();
+}
+
+class _SantraOrderScreenState extends State<SantraOrderScreen> {
   Widget bodyData() {
-    return Consumer<HomeProvider>(builder: (context, _, child)  {
+    return Consumer<HomeProvider>(
+      builder: (context, _, child) {
         return _.isLoading
             ? const SizedBox(
                 child: Center(
@@ -39,14 +45,31 @@ class SantraOrderScreen extends StatelessWidget {
                           HeadingWithIcon(
                               icon: UIDATAIcons.orderBascketBorder,
                               btntxt: "Santra Orders"),
+                          // SpacingHeight.heightlistspacing10,
+                          // Row(
+                          //   children: [
+                          //     SizedBox(
+                          //       width: 100,
+                          //       child: TextField(
+                          //         controller: _.filterController,
+                          //       ),
+                          //     ),
+                          //     ElevatedButton(
+                          //         onPressed: () {
+                          //           newShhet(context);
+                          //         },
+                          //         child: Text('Bottom'))
+                          //   ],
+                          // ),
+                          // SpacingHeight.heightlistspacing20,
+                          _.filteredSantraOrders.isEmpty ? 
+                          Center(child: Text('No Order to show'),) :
                           ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: _.homeData!.santraOrders[0]
-                                  .santraOrders.length,
+                              itemCount: _.filteredSantraOrders.length,
                               itemBuilder: (context, index) {
-                                var santraList = _.homeData!.santraOrders[0]
-                                    .santraOrders[index];
+                                var santraList = _.filteredSantraOrders[index];
                                 return santraList.orderStatus == 'new_order' ||
                                         santraList.orderStatus ==
                                             'assigned_3pl' ||
@@ -119,6 +142,112 @@ class SantraOrderScreen extends StatelessWidget {
               );
       },
     );
+  }
+
+  Future<dynamic> newShhet(BuildContext context) {
+    return showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return Consumer<HomeProvider>(builder: (context, _, child) {
+            return Container(
+              height: 500,
+              color: Colors.white,
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            _.resetOrderGroupValue();
+                          },
+                          child: Text('reset')),
+                          Text('Filter'),
+                          ElevatedButton(
+                          onPressed: () {
+                            Get.back();
+                          },
+                          child: Text('Back')),
+                    ],
+                  ),
+                  RadioListTile(
+                    title: Text(_.getStatus('new_order')),
+                    value: 'new_order',
+                    groupValue: _.selectedOrderOption,
+                    onChanged: (value) {
+                      if (mounted) {
+                        _.changeOrderGroupValue(value);
+                      }
+                    },
+                  ),
+                  RadioListTile(
+                    title: Text(_.getStatus('payment_pending')),
+                    value: 'payment_pending',
+                    groupValue: _.selectedOrderOption,
+                    onChanged: (value) {
+                      if (mounted) {
+                        _.changeOrderGroupValue(value);
+                      }
+                    },
+                  ),
+                  RadioListTile(
+                    title: Text(_.getStatus('assigned_3pl')),
+                    value: 'assigned_3pl',
+                    groupValue: _.selectedOrderOption,
+                    onChanged: (value) {
+                      if (mounted) {
+                        _.changeOrderGroupValue(value);
+                      }
+                    },
+                  ),
+                  RadioListTile(
+                    title: Text(_.getStatus('canceled')),
+                    value: 'canceled',
+                    groupValue: _.selectedOrderOption,
+                    onChanged: (value) {
+                      if (mounted) {
+                        _.changeOrderGroupValue(value);
+                      }
+                    },
+                  ),
+                  RadioListTile(
+                    title: Text(_.getStatus('rejected')),
+                    value: 'rejected',
+                    groupValue: _.selectedOrderOption,
+                    onChanged: (value) {
+                      if (mounted) {
+                        _.changeOrderGroupValue(value);
+                      }
+                    },
+                  ),
+                  RadioListTile(
+                    title: Text(_.getStatus('accepted')),
+                    value: 'accepted',
+                    groupValue: _.selectedOrderOption,
+                    onChanged: (value) {
+                      if (mounted) {
+                        _.changeOrderGroupValue(value);
+                      }
+                    },
+                  ),
+                  RadioListTile(
+                    title: Text(_.getStatus('order_ready')),
+                    value: 'order_ready',
+                    groupValue: _.selectedOrderOption,
+                    onChanged: (value) {
+                      if (mounted) {
+                        _.changeOrderGroupValue(value);
+                      }
+                    },
+                  ),
+                  Text('Selected option: ${_.filteredSantraOrders.length}'),
+                ],
+              ),
+            );
+          });
+        });
   }
 
   @override

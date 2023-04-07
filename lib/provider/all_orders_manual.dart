@@ -115,8 +115,7 @@ hideAddButton(){
   }
 
   bool _doesActionSatisfy(Product e, String query) {
-    bool found = e.productName.toString().toLowerCase().contains(query) ||
-        e.categoryName.toString().toLowerCase().contains(query);
+    bool found = e.productName.toString().toLowerCase().contains(query);
     //  bool found =        allProducts!.any((s) => query
     //         .toLowerCase()
     //         .contains(s.productName.toString().toLowerCase()));
@@ -130,6 +129,7 @@ hideAddButton(){
         .toList();
     filteredProducts = valueList;
     notifyListeners();
+    print(filteredProducts[0].productName);
   }
 
   changeStatus(String newData, bool value){

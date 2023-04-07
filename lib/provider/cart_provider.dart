@@ -293,7 +293,7 @@ class CartProvider extends ChangeNotifier {
       if (cartItems[index].quantity > 1) {
         cartItems[index].quantity -= 1;
         notifyListeners();
-        showToast("Added", 'decreased by one');
+        // showToast("Added", 'decreased by one');
       } else {
         cartItems.removeAt(index);
         notifyListeners();
