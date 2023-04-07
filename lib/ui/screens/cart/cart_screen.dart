@@ -101,7 +101,9 @@ class _CartScreenState extends State<CartScreen> {
                                               firstDate: DateTime.now(),
                                               currentDate: DateTime.now(),
                                               // lastDate: DateTime(2024),
-
+                                              weekdayLabelTextStyle: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 12),
                                               selectedDayHighlightColor:
                                                   UIDataColors.primaryColor),
                                           value: _.dates,
