@@ -90,7 +90,7 @@ class VoucherCodeFormField extends StatelessWidget {
                           fillColor: Colors.white,
                           filled: true,
                           // hintText: value.voucherCode,
-                          label: Text("Voucher Code",
+                          label: Text("Add Voucher Code",
                               style: TextStyle(
                                   color: Colors.grey.shade600, fontSize: 15)),
                           border: OutlineInputBorder(
