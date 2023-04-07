@@ -37,6 +37,15 @@ class CartProvider extends ChangeNotifier {
   String? voucherAppliedMsg;
   String? voucherListVoucherCode;
   List<DateTime?> dates = [];
+  var deliveryDate;
+  setDeliveryDate() {
+    if (dates.isNotEmpty) {
+      deliveryDate = DateFormat('yyyy-MM-dd').format(dates[0]!);
+
+      notifyListeners();
+    }
+  }
+
   flushCart() {
     deliveryCharges = 0.0;
     isShowCartButton = false;
@@ -55,8 +64,9 @@ class CartProvider extends ChangeNotifier {
     voucherListVoucherCode = null;
     finalSubmitData = null;
     dates.clear();
+    deliveryDate = null;
     notifyListeners();
-      }
+  }
 
   final String _value = "Initial value";
 
@@ -69,28 +79,28 @@ class CartProvider extends ChangeNotifier {
   void changeDiscountLoadingState(value) {
     isDiscountLoading = value;
     notifyListeners();
-      }
+  }
 
   changeLoadingStatus(value) {
     isLoading = value;
     notifyListeners();
-      }
+  }
 
-  emptyCartList(){
+  emptyCartList() {
     cartItems = [];
     notifyListeners();
-      }
+  }
 
   updateDate(date) {
     selectedDateTime = date;
     notifyListeners();
-      }
+  }
 
   bool isCartLoading = false;
   changeCartLoadingState(value) {
     isCartLoading = value;
     notifyListeners();
-      }
+  }
 
   double get deliveryFee {
     double dFee = 0.0;
@@ -170,7 +180,7 @@ class CartProvider extends ChangeNotifier {
     voucherCode = null;
     promoValid = false;
     notifyListeners();
-      }
+  }
 
   /// *************************APPLY/APPLIED TOGGLE ON VOUHCER TILE*******************************/
   void toggleApplied(index) {
@@ -181,7 +191,7 @@ class CartProvider extends ChangeNotifier {
     voucherCode = null;
     promoValid = false;
     notifyListeners();
-      }
+  }
 
   Future cartScreenData() async {
     try {
@@ -256,21 +266,21 @@ class CartProvider extends ChangeNotifier {
     }
     changeDiscountLoadingState(false);
     notifyListeners();
-      }
+  }
 
   void addToCart(CartItem item) {
     isShowCartButton = true;
     notifyListeners();
-        final index =
+    final index =
         cartItems.indexWhere((cartItem) => cartItem.code == item.code);
     if (index != -1) {
       cartItems[index].quantity += 1;
       notifyListeners();
-            // showToast("Added", 'increased by one');
+      // showToast("Added", 'increased by one');
     } else {
       cartItems.add(item);
       notifyListeners();
-          }
+    }
     print(itemCount);
     print('............,,mmmmmmmmmmmmm');
     //  GetStorage().write('cart', cartItems);
@@ -285,16 +295,16 @@ class CartProvider extends ChangeNotifier {
       if (cartItems[index].quantity > 1) {
         cartItems[index].quantity -= 1;
         notifyListeners();
-                showToast("Added", 'decreased by one');
+        showToast("Added", 'decreased by one');
       } else {
         cartItems.removeAt(index);
         notifyListeners();
-              }
+      }
     }
     if (cartItems.isEmpty) {
       isShowCartButton = false;
       notifyListeners();
-          }
+    }
     if (totalPrice < capAmount) {
       voucherCode = null;
       voucherListVoucherCode = null;
@@ -389,7 +399,7 @@ class CartProvider extends ChangeNotifier {
       // ],
     };
     notifyListeners();
-      }
+  }
 
   Future orderSubmit() async {
     try {
@@ -406,7 +416,7 @@ class CartProvider extends ChangeNotifier {
         //     selllerAllProductsModelFromJson(response.body);
         // notifyListeners();
         //        Get.offAllNamed(Routes.homeRoutes);
-          Get.offAll(() =>  const HomeScreen());
+        Get.offAll(() => const HomeScreen());
         showToast("Success", 'Successfully Completed');
         flushCart();
       } else {

@@ -183,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  GestureDetector filterOrderBottomSheet(context, HomeProvider _) {
+  GestureDetector filterOrderBottomSheet(context, HomeProvider _s) {
     return GestureDetector(
       onTap: () {
         showModalBottomSheet(
@@ -197,125 +197,139 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (BuildContext context) {
               return StatefulBuilder(
                   builder: (BuildContext context, StateSetter setState) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Column(
+                return Consumer<HomeProvider>(
+                  builder: (context, value, child) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Row(
+                        Column(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: SvgPicture.asset(
-                                UIDATAIcons.dollarCircle,
-                              ),
-                            ),
-                            const Text(
-                              "Monthly Total Earnings",
-                              style: UIDataTextStyles.title,
-                            ),
-                            const Spacer(),
-                            GestureDetector(
-                              onTap: () {
-                                Get.back();
-                              },
-                              child: SvgPicture.asset(
-                                UIDATAIcons.close,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const Divider(
-                          height: 40,
-                          thickness: 0.3,
-                          color: UIDataColors.primaryColor,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: MyDropdown(
-                                label: "Year",
-                                options: _.years,
-                                selectedOption: _.selectedYear,
-                                prefixIcon: UIDATAIcons.calendarIcon,
-                                onChanged: (newVal) {
-                                  _.selectedYear = newVal;
-                                },
-                              ),
-                            ),
-                            SpacingWidth.widthlistspacing15,
-                            Expanded(
-                              child: MyDropdown(
-                                  label: "Month",
-                                  options: _.months,
-                                  selectedOption: _.selectedMonth,
-                                  prefixIcon: UIDATAIcons.calendarIcon,
-                                  // doSomething: () {
-                                  //   print("seleed ${_.selectedMonth.value}");
-                                  //   // _.filterOrder(_.selectedYear.value,
-                                  //   //     _.selectedMonth.value);
-                                  // }
-                                  onChanged: (newValue) {
-                                    _.selectedMonth = newValue;
-
-                                    _.filterOrder();
-                                  }),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ).paddingOnly(left: 15, right: 15, top: 20),
-                    SpacingHeight.heightlistspacing25,
-                    Container(
-                        color: const Color(0xFFEEEEEE),
-                        child: _.isFilterOrderLoading
-                            ? const Center(
-                                child: Padding(
-                                  padding: EdgeInsets.all(20.0),
-                                  child: CircularProgressIndicator(),
-                                ),
-                              )
-                            : Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Orders Monthly",
-                                        style: UIDataTextStyles.title.copyWith(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(_.orderMonthly.value.toString(),
-                                          style: const TextStyle(
-                                              fontSize: 40,
-                                              fontWeight: FontWeight.bold,
-                                              color:
-                                                  UIDataColors.primaryColor)),
-                                    ],
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SvgPicture.asset(
+                                    UIDATAIcons.dollarCircle,
                                   ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Profit Monthly",
-                                        style: UIDataTextStyles.title.copyWith(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(_.profitMonthly.value.toString(),
-                                          style: const TextStyle(
-                                              fontSize: 40,
-                                              fontWeight: FontWeight.bold,
-                                              color:
-                                                  UIDataColors.primaryColor)),
-                                      SpacingHeight.heightlistspacing20
-                                    ],
+                                ),
+                                const Text(
+                                  "Monthly Total Earnings",
+                                  style: UIDataTextStyles.title,
+                                ),
+                                const Spacer(),
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.back();
+                                  },
+                                  child: SvgPicture.asset(
+                                    UIDATAIcons.close,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Divider(
+                              height: 40,
+                              thickness: 0.3,
+                              color: UIDataColors.primaryColor,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: MyDropdown(
+                                    label: "Year",
+                                    options: value.years,
+                                    selectedOption: value.selectedYear,
+                                    prefixIcon: UIDATAIcons.calendarIcon,
+                                    onChanged: (newVal) {
+                                      value.selectedYear = newVal;
+                                    },
+                                  ),
+                                ),
+                                SpacingWidth.widthlistspacing15,
+                                Expanded(
+                                  child: MyDropdown(
+                                      label: "Month",
+                                      options: value.months,
+                                      selectedOption: value.selectedMonth,
+                                      prefixIcon: UIDATAIcons.calendarIcon,
+                                      // doSomething: () {
+                                      //   print("seleed ${_.selectedMonth.value}");
+                                      //   // _.filterOrder(_.selectedYear.value,
+                                      //   //     _.selectedMonth.value);
+                                      // }
+                                      onChanged: (newValue) {
+                                        value.selectedMonth = newValue;
+
+                                        value.filterOrder();
+                                      }),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ).paddingOnly(left: 15, right: 15, top: 20),
+                        SpacingHeight.heightlistspacing25,
+                        Container(
+                            color: const Color(0xFFEEEEEE),
+                            child: value.isFilterOrderLoading
+                                ? const Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(20.0),
+                                      child: CircularProgressIndicator(),
+                                    ),
                                   )
-                                ],
-                              ).paddingSymmetric(vertical: 20, horizontal: 20)),
-                  ],
+                                : Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Text(
+                                            "Orders Monthly",
+                                            style: UIDataTextStyles.title
+                                                .copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                          ),
+                                          Text(
+                                              value.orderMonthly.value
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                  fontSize: 40,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: UIDataColors
+                                                      .primaryColor)),
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            "Profit Monthly",
+                                            style: UIDataTextStyles.title
+                                                .copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                          ),
+                                          Text(
+                                              value.profitMonthly.value
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                  fontSize: 40,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: UIDataColors
+                                                      .primaryColor)),
+                                          SpacingHeight.heightlistspacing20
+                                        ],
+                                      )
+                                    ],
+                                  ).paddingSymmetric(
+                                    vertical: 20, horizontal: 20)),
+                      ],
+                    );
+                  },
                 );
               });
             });

@@ -14,7 +14,7 @@ import '../../widgets/scaffold/common_scaffold.dart';
 
 class CartScreen extends StatefulWidget {
   final bool isOrderReady;
- const CartScreen({super.key, this.isOrderReady= false});
+  const CartScreen({super.key, this.isOrderReady = false});
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -34,7 +34,7 @@ class _CartScreenState extends State<CartScreen> {
 
   Widget bodyData(context) {
     return Consumer<CartProvider>(
-      builder: (context, _, child){
+      builder: (context, _, child) {
         return _.isLoading
             ? const SizedBox(
                 child: Center(
@@ -86,7 +86,7 @@ class _CartScreenState extends State<CartScreen> {
                                     : VouchersSection(),
                                 SpacingHeight.heightlistspacing20,
                                 Container(
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     color: Colors.white,
                                   ),
                                   child: Column(
@@ -96,12 +96,17 @@ class _CartScreenState extends State<CartScreen> {
                                               btntxt: "Delivery Date")
                                           .paddingSymmetric(horizontal: 20),
                                       CalendarDatePicker2(
-                                          config: CalendarDatePicker2Config(),
+                                          config: CalendarDatePicker2Config(
+                                              firstDate: DateTime.now(),
+                                              currentDate: DateTime.now(),
+                                              lastDate: DateTime(2024),
+                                              selectedDayHighlightColor:
+                                                  UIDataColors.primaryColor),
                                           value: _.dates,
-                                          onValueChanged: (dates) =>
-                                              print(dates)
-                                          // _.dates = dates,
-                                          ),
+                                          onValueChanged: (dates) {
+                                            _.dates = dates;
+                                            _.setDeliveryDate();
+                                          }),
                                     ],
                                   ),
                                 ).paddingOnly(bottom: 15),
