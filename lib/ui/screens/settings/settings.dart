@@ -97,7 +97,8 @@ class Settings extends StatelessWidget {
                   // });
                 },
                 btntxt: 'Delete Account',
-              )
+              ),
+              SpacingHeight.heightlistspacing50
             ],
           ).paddingSymmetric(horizontal: 20)),
         ),
@@ -132,7 +133,7 @@ class Settings extends StatelessWidget {
       scaffoldKey: _key,
       showBottomNav: true,
       appbarcolor: UIDataColors.whiteColor,
-      appTitle: 'Add customer',
+      appTitle: '',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
         Get.offAllNamed(Routes.signuproutes);

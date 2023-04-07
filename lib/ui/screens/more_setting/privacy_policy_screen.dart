@@ -41,6 +41,7 @@ class PrivacyScreen extends StatelessWidget {
                                   textAlign: TextAlign.justify,
                                 ),
                               ),
+                              SpacingHeight.heightlistspacing50
                             ],
                           ).marginOnly(left: 20, right: 20)),
               );

@@ -35,7 +35,8 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
   }
 
   Widget bodyData() {
-    return Consumer<MyCustomerProvider>(builder: (context, _, child) {
+    return Consumer<MyCustomerProvider>(
+      builder: (context, _, child) {
         return SafeArea(
           child: SingleChildScrollView(
               padding: EdgeInsets.zero,
@@ -202,7 +203,8 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
                                 ),
                               ),
                             ],
-                          )
+                          ),
+                    SpacingHeight.heightlistspacing50
                   ],
                 ).paddingSymmetric(horizontal: 15),
               )),

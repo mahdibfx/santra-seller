@@ -26,7 +26,8 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
   Widget bodyData() {
-    return Consumer<MyCustomerProvider>(builder: (context, _, child){
+    return Consumer<MyCustomerProvider>(
+      builder: (context, _, child) {
         return _.isViewCustomerLoading
             ? const SizedBox(
                 child: Center(
@@ -62,33 +63,40 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: _.allCustomers?.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return MyCustomerCard(
-                                name: _.allCustomers?[index].customerName ??
-                                    "No Name",
-                                number: _.allCustomers?[index].customerMobile ??
-                                    "No Contact Number",
-                                  forView: widget.comingFromCart,
+                              return GestureDetector(
                                 onTap: () {
                                   if (!widget.comingFromCart) {
-                                  Get.to(() => EditCustomerDetails(
-                                        index: index,
-                                      ));
+                                    Get.to(() => EditCustomerDetails(
+                                          index: index,
+                                        ));
                                   } else {
-                                    if (_.allCustomers?[index] != null ) {
-                                      Get.to(() => ViewCustomerDetails(customerDetail: _.allCustomers![index],
-                                      ));
-                                  }
+                                    if (_.allCustomers?[index] != null) {
+                                      Get.to(() => ViewCustomerDetails(
+                                            customerDetail:
+                                                _.allCustomers![index],
+                                          ));
+                                    }
                                   }
                                 },
-                              ).marginOnly(bottom: 17);
+                                child: MyCustomerCard(
+                                  name: _.allCustomers?[index].customerName ??
+                                      "No Name",
+                                  number:
+                                      _.allCustomers?[index].customerMobile ??
+                                          "No Contact Number",
+                                  forView: widget.comingFromCart,
+                                ).marginOnly(bottom: 17),
+                              );
                             }),
+                    SpacingHeight.heightlistspacing50
                   ],
-                ).paddingSymmetric(horizontal: 20)),
+                ).paddingSymmetric(horizontal: 15)),
               );
       },
     );
   }
- hitAllApis() async {
+
+  hitAllApis() async {
     await Future.microtask(() => context.read<MyCustomerProvider>().onInit());
   }
 

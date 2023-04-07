@@ -11,14 +11,14 @@ class MyCustomerCard extends StatelessWidget {
   final String name;
   final String number;
   final bool forView;
-  final dynamic onTap;
+  // final dynamic onTap;
 
-  const MyCustomerCard(
-      {super.key,
-      required this.name,
-      required this.number,
-      required this.forView,
-      required this.onTap});
+  const MyCustomerCard({
+    super.key,
+    required this.name,
+    required this.number,
+    required this.forView,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +79,6 @@ class MyCustomerCard extends StatelessWidget {
                 ),
 
                 InkWell(
-                  onTap: onTap,
                   child: SvgPicture.asset(
                     forView ? UIDATAIcons.viewIcon : UIDATAIcons.editCustomer,
                     color: UIDataColors.primaryColor,

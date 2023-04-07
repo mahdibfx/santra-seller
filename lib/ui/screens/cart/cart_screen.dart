@@ -142,6 +142,7 @@ class _CartScreenState extends State<CartScreen> {
                                 //     },
                                 //   ),
                                 // )
+                                SpacingHeight.heightlistspacing50
                               ],
                             ).paddingSymmetric(horizontal: 15)),
                 ),

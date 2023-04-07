@@ -25,7 +25,9 @@ class SpacingHeight {
   static const heightlistspacing35 = SizedBox(
     height: 35.0,
   );
-
+  static const heightlistspacing50 = SizedBox(
+    height: 50.0,
+  );
   static const heightlistspacingdrawer = SizedBox(
     height: 30.0,
   );

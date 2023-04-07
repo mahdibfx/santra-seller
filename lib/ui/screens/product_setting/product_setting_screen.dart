@@ -78,6 +78,7 @@ class _ProductSettingScreenState extends State<ProductSettingScreen> {
                                   }),
                             ],
                           ),
+                SpacingHeight.heightlistspacing50
               ],
             ).paddingOnly(left: 15, right: 15)),
           ),
