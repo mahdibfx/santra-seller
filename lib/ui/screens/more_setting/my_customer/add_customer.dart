@@ -33,10 +33,9 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
         .read<MyCustomerProvider>()
         .isComingFromCart(widget.isComingFromCart));
     //     final provider = Provider.of<SignUpProvider>(context);
-    // provider.getCities();  
- 
-          // Provider.of<MyCustomerProvider>(context, listen: false).isComingFromCart(widget.isComingFromCart);
-       
+    // provider.getCities();
+
+    // Provider.of<MyCustomerProvider>(context, listen: false).isComingFromCart(widget.isComingFromCart);
   }
 
   @override
@@ -44,16 +43,17 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
     hitAllApis();
     super.initState();
   }
-@override
+
+  @override
   void didChangeDependencies() {
     final provider = Provider.of<SignUpProvider>(context);
-    provider.getCities();       // OK
+    provider.getCities(); // OK
     super.didChangeDependencies();
   }
+
   Widget bodyData() {
     return Consumer<MyCustomerProvider>(
       builder: (context, _, child) {
-        
         return SafeArea(
           child: SingleChildScrollView(
               padding: EdgeInsets.zero,
@@ -223,7 +223,8 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                                 ),
                               ),
                             ],
-                          )
+                          ),
+                    SpacingHeight.heightlistspacing50
                   ],
                 ).paddingSymmetric(horizontal: 15),
               )),

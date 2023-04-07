@@ -15,30 +15,35 @@ class ProductNameAndPriceOnSheet extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: 250,
-              child: Text(
-                productName ?? "",
-                style:
-                    UIDataTextStyles.h2.copyWith(fontWeight: FontWeight.w600),
-                overflow: TextOverflow.ellipsis,
+        Expanded(
+          flex: 2,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                // width: 250,
+                child: Text(
+                  productName ?? "",
+                  style:
+                      UIDataTextStyles.h2.copyWith(fontWeight: FontWeight.w600),
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ),
-            Text(
-              "${productPrice ?? ""} AED",
-              style: UIDataTextStyles.h1Heavy,
-            ),
-          ],
+              Text(
+                "${productPrice ?? ""} AED",
+                style: UIDataTextStyles.h1Heavy,
+              ),
+            ],
+          ),
         ),
-        SizedBox(
-            height: 50,
-            width: 100,
-            child:
-                PriceOnSelection(onMinus: () {}, onPlus: () {}, quantity: "1"))
+        Expanded(
+          child: SizedBox(
+              height: 50,
+              // width: 100,
+              child: PriceOnSelection(
+                  onMinus: () {}, onPlus: () {}, quantity: "1")),
+        )
       ],
     );
   }

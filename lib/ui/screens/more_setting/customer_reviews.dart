@@ -105,7 +105,8 @@ class CustomerReviews extends StatelessWidget {
                               rating: _.customerReviews.data?[0]
                                   .customerFeedback?[index].feedbackStars,
                             );
-                          })
+                          }),
+                      SpacingHeight.heightlistspacing50
                     ],
                   ).paddingSymmetric(horizontal: 20),
                 ),

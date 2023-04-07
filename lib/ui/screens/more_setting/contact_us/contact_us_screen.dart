@@ -143,6 +143,7 @@ class ContactUsScreen extends StatelessWidget {
                 'United Arab Emirates',
                 style: UIDataTextStyles.title,
               ),
+              SpacingHeight.heightlistspacing50
             ],
           ).paddingSymmetric(horizontal: 15)),
         );

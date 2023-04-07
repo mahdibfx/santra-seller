@@ -73,10 +73,10 @@ class _AddManulOrderState extends State<AddManulOrder> {
                             : Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(
-                                    "Category Name",
-                                    style: UIDataTextStyles.h1,
-                                  ).paddingOnly(left: 10),
+                                  // const Text(
+                                  //   "Category Name",
+                                  //   style: UIDataTextStyles.h1,
+                                  // ).paddingOnly(left: 10),
                                   SpacingHeight.heightlistspacing10,
                                   ListView.builder(
                                       physics: const BouncingScrollPhysics(),
@@ -368,10 +368,12 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                             price: double.parse(itemValue.productPrice.toString()),
                                                                             code: itemValue.productCode.toString(),
                                                                             subModifiers: manualOrderController.addOnProducts);
-                                                                        
-                                                                            final cartProvider = context.read<CartProvider>();
-                                                                            cartProvider.addToCart(data);
-                                                                            manualOrderController
+
+                                                                        final cartProvider =
+                                                                            context.read<CartProvider>();
+                                                                        cartProvider
+                                                                            .addToCart(data);
+                                                                        manualOrderController
                                                                             .addIntoCart();
                                                                         Get.back();
 
@@ -413,39 +415,36 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                         );
                                       }),
                                   const SizedBox(
-                                    height: 80,
-                                  )
+                                    height: 100,
+                                  ),
                                 ],
                               ),
                       ],
                     ).paddingOnly(left: 15, right: 15)),
                   ),
                   Consumer<CartProvider>(
-      builder: (context, cartProvider, child)  {
-                          return 
-                          cartProvider.isShowCartButton ||
-                          manualOrderController.isShowViewButton
-                      ? 
-                          Positioned(
-                              bottom: 30,
-                              child: Center(
-                                child: BorderButton(
-                                  onPressed: () {
-                                    Get.toNamed(Routes.cartroute);
-                                  },
-                                  btntxt: "View Cart",
-                                  iconImage: UIDATAIcons.cartHallowIcon,
-                                  buttontxtColor: UIDataColors.primaryColor,
-                                  width: size.width - 30,
-                                  backEndColor: Colors.white,
-                                  borderColor: UIDataColors.primaryColor,
-                                  iconColor: UIDataColors.primaryColor,
-                                ),
+                      builder: (context, cartProvider, child) {
+                    return cartProvider.isShowCartButton ||
+                            manualOrderController.isShowViewButton
+                        ? Positioned(
+                            bottom: 30,
+                            child: Center(
+                              child: BorderButton(
+                                onPressed: () {
+                                  Get.toNamed(Routes.cartroute);
+                                },
+                                btntxt: "View Cart",
+                                iconImage: UIDATAIcons.cartHallowIcon,
+                                buttontxtColor: UIDataColors.primaryColor,
+                                width: size.width - 30,
+                                backEndColor: Colors.white,
+                                borderColor: UIDataColors.primaryColor,
+                                iconColor: UIDataColors.primaryColor,
                               ),
-                            ): const SizedBox();
-                        }
-                      )
-                      
+                            ),
+                          )
+                        : const SizedBox();
+                  })
                 ],
               );
       },

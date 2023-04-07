@@ -50,7 +50,7 @@ class MoreSettingScreen extends StatelessWidget {
                       ReusableIconSetting(
                         icon: UIDATAIcons.customersIcon,
                         onPressed: () {
-                         Get.to(() =>  MyCustomerScreen());
+                          Get.to(() => MyCustomerScreen());
                         },
                         btntxt: 'Customers List',
                       ),
@@ -88,7 +88,8 @@ class MoreSettingScreen extends StatelessWidget {
                           Get.toNamed(Routes.privacy);
                         },
                         btntxt: 'Privacy Policy',
-                      )
+                      ),
+                      SpacingHeight.heightlistspacing50
                     ],
                   ).paddingSymmetric(horizontal: 20),
                 ),

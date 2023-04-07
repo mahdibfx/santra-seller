@@ -24,8 +24,7 @@ class NotificationScreen extends StatelessWidget {
   Widget bodyData(context) {
     return GetBuilder<NotificationController>(
       builder: (_) {
-        return 
-        _.isLoading
+        return _.isLoading
             ? const SizedBox(
                 child: Center(
                 child: CircularProgressIndicator(),
@@ -34,49 +33,57 @@ class NotificationScreen extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                       HeadingWithIcon(
-                            icon: UIDATAIcons.bell, btntxt: "Notifications"),
-                      SpacingHeight.heightlistspacing10,
-
+                      HeadingWithIcon(
+                        icon: UIDATAIcons.bell,
+                        btntxt: "Notifications",
+                        iconColor: UIDataColors.primaryColor,
+                      ),
                       ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: _.oldNotifications.length,
-                        itemBuilder: ((context, index) {
-                          var notification = _.oldNotifications[index];
-                        return Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            spreadRadius: 0.1,
-            blurRadius: 4,
-            offset: const Offset(0, 0), // changes position of shadow
-          ),
-        ],
-      ),
-                          child: Row(children: [
-                          Text(notification.notifiactionDetail, style: UIDataTextStyles.title13Normal.copyWith(fontWeight: FontWeight.w500),),
-                          // Text( dateFormat(notification.notificationTime.toIso8601String())),
-                        
-                        
-                          ],).paddingAll(10),
-                        ).marginOnly(bottom: 10);
-                      }))
-                    
-                      
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: _.oldNotifications.length,
+                          itemBuilder: ((context, index) {
+                            var notification = _.oldNotifications[index];
+                            return Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12, horizontal: 2),
+                                    // height: 50,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          spreadRadius: 0.1,
+                                          blurRadius: 4,
+                                          offset: const Offset(0,
+                                              0), // changes position of shadow
+                                        ),
+                                      ],
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          notification.notifiactionDetail,
+                                          style: UIDataTextStyles.title13Normal
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w500),
+                                        ),
+                                        // Text( dateFormat(notification.notificationTime.toIso8601String())),
+                                      ],
+                                    ).paddingSymmetric(horizontal: 15))
+                                .marginOnly(bottom: 10);
+                          })),
+                      SpacingHeight.heightlistspacing50
                     ],
                   ).marginOnly(left: 20, right: 20),
                 ),
               );
       },
     );
-    
   }
-   String dateFormat(String date) {
+
+  String dateFormat(String date) {
     var inputFormat = DateTime.parse(date);
     var outputFormat = DateFormat('hh:mm a yyyy/MM/dd');
     var outputDate = outputFormat.format(inputFormat);
