@@ -14,7 +14,7 @@ import '../../widgets/scaffold/common_scaffold.dart';
 
 class CartScreen extends StatefulWidget {
   final bool isOrderReady;
- const CartScreen({super.key, this.isOrderReady= false});
+  const CartScreen({super.key, this.isOrderReady = false});
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -34,7 +34,7 @@ class _CartScreenState extends State<CartScreen> {
 
   Widget bodyData(context) {
     return Consumer<CartProvider>(
-      builder: (context, _, child){
+      builder: (context, _, child) {
         return _.isLoading
             ? const SizedBox(
                 child: Center(
@@ -86,22 +86,31 @@ class _CartScreenState extends State<CartScreen> {
                                     : VouchersSection(),
                                 SpacingHeight.heightlistspacing20,
                                 Container(
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     color: Colors.white,
                                   ),
                                   child: Column(
                                     children: [
                                       HeadingWithIcon(
-                                              icon: UIDATAIcons.calendarIcon,
-                                              btntxt: "Delivery Date")
-                                          .paddingSymmetric(horizontal: 20),
+                                        icon: UIDATAIcons.calendarIcon,
+                                        btntxt: "Delivery Date",
+                                        iconColor: UIDataColors.primaryColor,
+                                      ).paddingSymmetric(horizontal: 20),
                                       CalendarDatePicker2(
-                                          config: CalendarDatePicker2Config(),
+                                          config: CalendarDatePicker2Config(
+                                              firstDate: DateTime.now(),
+                                              currentDate: DateTime.now(),
+                                              // lastDate: DateTime(2024),
+                                              weekdayLabelTextStyle: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 12),
+                                              selectedDayHighlightColor:
+                                                  UIDataColors.primaryColor),
                                           value: _.dates,
-                                          onValueChanged: (dates) =>
-                                              print(dates)
-                                          // _.dates = dates,
-                                          ),
+                                          onValueChanged: (dates) {
+                                            _.dates = dates;
+                                            _.setDeliveryDate();
+                                          }),
                                     ],
                                   ),
                                 ).paddingOnly(bottom: 15),
@@ -109,9 +118,6 @@ class _CartScreenState extends State<CartScreen> {
                                   subtotal: _.totalPrice.toStringAsFixed(1),
                                   total: _.grandTotal.toStringAsFixed(1),
                                   deliveryCharges: _.deliveryCharges.toString(),
-                                  dateSelected: (dateTime) {
-                                    _.updateDate(dateTime);
-                                  },
                                   discount: _.dis.toString(),
                                 ),
 

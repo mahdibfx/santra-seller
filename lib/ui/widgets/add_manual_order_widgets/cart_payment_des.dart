@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:santra_seller/provider/cart_provider.dart';
 import 'package:santra_seller/ui/widgets/add_manual_order_widgets/Order_Date.dart';
 import 'package:santra_seller/ui/widgets/add_manual_order_widgets/price_on_selection.dart';
+import 'package:santra_seller/ui/widgets/snackbar/common_snackbar.dart';
 import '../../../controllers/cart_controller/cart_controller.dart';
 import '../../../models/seller_all_products_model.dart';
 import '../../../utils/routes/app_routes.dart';
@@ -16,14 +19,12 @@ class CartPayemntDescriptionCard extends StatelessWidget {
   final String deliveryCharges;
   final String total;
   final String? discount;
-  final Function(DateTime) dateSelected;
 
   CartPayemntDescriptionCard(
       {Key? key,
       required this.subtotal,
       required this.total,
       required this.deliveryCharges,
-      required this.dateSelected,
       this.discount})
       : super(key: key);
 
@@ -153,17 +154,26 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                   // ).paddingOnly(top: 20),
                   PrimaryButtonWithIcon(
                     onPressed: () {
-                      showModalBottomSheet(
-                          context: context,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              // <-- SEE HERE
-                              topLeft: Radius.circular(15.0),
+                      if (Provider.of<CartProvider>(context, listen: false)
+                              .deliveryDate ==
+                          null) {
+                        CommonSnackbar.getSnackbar(
+                            "No Date Selected",
+                            "Please Select Delivery Date",
+                            UIDataColors.redColor);
+                      } else {
+                        showModalBottomSheet(
+                            context: context,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                // <-- SEE HERE
+                                topLeft: Radius.circular(15.0),
+                              ),
                             ),
-                          ),
-                          builder: (context) {
-                            return CustomDetailBottomSheet();
-                          });
+                            builder: (context) {
+                              return CustomDetailBottomSheet();
+                            });
+                      }
                     },
                     btntxt: "Add Customer Details",
                   ).paddingOnly(
