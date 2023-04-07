@@ -114,9 +114,6 @@ class _CartScreenState extends State<CartScreen> {
                                   subtotal: _.totalPrice.toStringAsFixed(1),
                                   total: _.grandTotal.toStringAsFixed(1),
                                   deliveryCharges: _.deliveryCharges.toString(),
-                                  dateSelected: (dateTime) {
-                                    _.updateDate(dateTime);
-                                  },
                                   discount: _.dis.toString(),
                                 ),
 

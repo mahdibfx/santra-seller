@@ -151,7 +151,7 @@ class MyCustomerProvider extends ChangeNotifier {
         var id = data['data']['user_id'];
 
         print("add customer" + response.body.toString());
- updateAddLoadingState(false);
+        updateAddLoadingState(false);
         if (isShowDetailScreen) {
           Get.to(() => ViewCustomerDetails(
                 customerDetail: Customer(
@@ -165,8 +165,6 @@ class MyCustomerProvider extends ChangeNotifier {
                   addressLink: addressController.text,
                 ),
               ));
-
-                 
         } else {
           disposeValues();
           Get.to(() => MyCustomerScreen());
@@ -319,9 +317,7 @@ class MyCustomerProvider extends ChangeNotifier {
       "order_remarks":
           "no_remarks", // order comments if any otherwise send no_remarks
       "user_tips": "0", // if any otherwise send 0
-      "order_schedule": cartProvider.selectedDateTime != null
-          ? DateFormat('yyyy-MM-dd').format(cartProvider.selectedDateTime!)
-          : "",
+      "order_schedule": cartProvider.deliveryDate ?? "",
 // Order Item array to be posted as follows
 // Field name: "", order_items and items in this array are as follows(id, name, price, quantity, item_remarks, modifiers_list(modifier_code,name_modifier,price_modifier))
       "order_items": jsonEncode(cartProvider.cartItems),

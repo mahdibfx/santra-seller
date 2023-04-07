@@ -22,7 +22,7 @@ class CartProvider extends ChangeNotifier {
   bool isShowCartButton = false;
   bool receiptPaymentType = true;
   List<CartItem> cartItems = <CartItem>[].obs;
-  DateTime? selectedDateTime;
+
   double deliveryCharges = 0.0;
   double codCharges = 0.0;
   double discount = 0.0;
@@ -51,7 +51,7 @@ class CartProvider extends ChangeNotifier {
     isShowCartButton = false;
     receiptPaymentType = true;
     cartItems.clear();
-    selectedDateTime = null;
+
     codCharges = 0.0;
     discount = 0.0;
     discountType = null;
@@ -88,11 +88,6 @@ class CartProvider extends ChangeNotifier {
 
   emptyCartList() {
     cartItems = [];
-    notifyListeners();
-  }
-
-  updateDate(date) {
-    selectedDateTime = date;
     notifyListeners();
   }
 
@@ -378,9 +373,7 @@ class CartProvider extends ChangeNotifier {
       "order_remarks":
           "no_remarks", // order comments if any otherwise send no_remarks
       "user_tips": "0", // if any otherwise send 0
-      "order_schedule": selectedDateTime != null
-          ? DateFormat('yyyy-MM-dd').format(selectedDateTime!)
-          : "",
+      "order_schedule": deliveryDate ?? "",
 // Order Item array to be posted as follows
 // Field name: "", order_items and items in this array are as follows(id, name, price, quantity, item_remarks, modifiers_list(modifier_code,name_modifier,price_modifier))
       "order_items": jsonEncode(cartItems),

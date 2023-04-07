@@ -19,14 +19,12 @@ class CartPayemntDescriptionCard extends StatelessWidget {
   final String deliveryCharges;
   final String total;
   final String? discount;
-  final Function(DateTime) dateSelected;
 
   CartPayemntDescriptionCard(
       {Key? key,
       required this.subtotal,
       required this.total,
       required this.deliveryCharges,
-      required this.dateSelected,
       this.discount})
       : super(key: key);
 
