@@ -41,6 +41,25 @@ class AddManualOrderProvider extends ChangeNotifier {
     notifyListeners();
     showToast();
   }
+ void increaseDefaultQuanity(Product product) {
+    if (product.productQuantity >= 0 && product.productQuantity < 99) {
+      product.productQuantity += 1;
+    }
+    notifyListeners();
+  }
+
+  void decreaseDefaultQuanity(Product product) {
+    if (product.productQuantity >1) {
+      product.productQuantity -= 1;
+    }
+    notifyListeners();
+  }
+
+  void resetDefaultQuanity(Product product) {
+     product.productQuantity = 1;
+    notifyListeners();
+  }
+ 
 
 showAddIcon(){
   showAddButton = true;

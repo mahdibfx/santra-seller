@@ -131,6 +131,9 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                 Column(
                                                                   children: [
                                                                     ProductNameAndPriceOnSheet(
+                                                                      product: manualOrderController
+                                                                          .allProducts?[
+                                                                              index],
                                                                       productName: manualOrderController
                                                                           .allProducts?[
                                                                               index]
@@ -362,6 +365,7 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                             manualOrderController.allProducts![index];
 
                                                                         var data = CartItem(
+                                                                          quantity: itemValue.productQuantity,
                                                                             imageString:
                                                                                 itemValue.productImages.toString(),
                                                                             name: itemValue.productName.toString(),
@@ -375,6 +379,7 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                             .addToCart(data);
                                                                         manualOrderController
                                                                             .addIntoCart();
+                                                                            manualOrderController.resetDefaultQuanity(manualOrderController.allProducts![index]);
                                                                         Get.back();
 
                                                                         // Get.offAllNamed(

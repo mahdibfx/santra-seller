@@ -66,6 +66,7 @@ class Product {
     this.categoryName,
     this.productImages,
     this.productStatus,
+    this.productQuantity = 1,
     this.modifiers,
   });
 
@@ -77,6 +78,7 @@ class Product {
   String? categoryName;
   String? productImages;
   String? productStatus;
+  int productQuantity;
   List<Modifier>? modifiers;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
@@ -88,6 +90,7 @@ class Product {
         categoryName: json["category_name"],
         productImages: json["product_images"],
         productStatus: json["product_status"],
+        productQuantity: 1,
         modifiers: json["modifiers"] == null
             ? []
             : List<Modifier>.from(

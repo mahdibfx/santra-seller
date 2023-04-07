@@ -8,6 +8,7 @@ import 'package:santra_seller/utils/uidata.dart';
 
 import '../../../controllers/home_controller/home_controller.dart';
 import '../../../models/home_model.dart';
+import '../../../provider/cart_provider.dart';
 import '../../../provider/home_provider.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../buttons/border_button.dart';
@@ -343,15 +344,32 @@ class _CustomCardState extends State<CustomCard>
                                 ),
                                 SpacingWidth.widthlistspacing15,
                                 Expanded(
-                                  child: BorderButton(
-                                    height: 40,
-                                    width: 140,
-                                    btntxt: 'Repeat Order',
-                                    borderColor: Colors.blue,
-                                    buttontxtColor: Colors.white,
-                                    // backEndColor: Colors.blue,
-                                    onPressed: () {},
-                                  ),
+                                  child: Consumer<CartProvider>(
+                                      builder: (context, cartProvider, child) {
+                                    return BorderButton(
+                                      height: 40,
+                                      width: 140,
+                                      btntxt: 'Repeat Order',
+                                      borderColor: Colors.blue,
+                                      buttontxtColor: Colors.white,
+                                      // backEndColor: Colors.blue,
+                                      onPressed: () {
+                                        for (var e in widget.orderItemList) {
+                                          var data = CartItem(
+                                              quantity:
+                                                  int.parse(e.productQuantity),
+                                              imageString:
+                                                  e.productImage.toString(),
+                                              name: e.productName.toString(),
+                                              price: double.parse(e.productTotal
+                                                  .toString()), //@todo confirm what is total price backend
+                                              code: '', //@todo add code backend
+                                              subModifiers: []); //@todo add modifiers from backend
+                                          cartProvider.addToCart(data);
+                                        }
+                                      },
+                                    );
+                                  }),
                                 ),
                               ],
                             ).paddingAll(15)

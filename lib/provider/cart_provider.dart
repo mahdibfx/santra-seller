@@ -269,8 +269,11 @@ class CartProvider extends ChangeNotifier {
     final index =
         cartItems.indexWhere((cartItem) => cartItem.code == item.code);
     if (index != -1) {
-      cartItems[index].quantity += 1;
+      if( cartItems[index].quantity < 99){
+        cartItems[index].quantity += 1;
       notifyListeners();
+      }
+      
       // showToast("Added", 'increased by one');
     } else {
       cartItems.add(item);
@@ -438,7 +441,7 @@ class CartItem {
       required this.price,
       required this.code,
       required this.imageString,
-      this.quantity = 1,
+      required this.quantity,
       required this.subModifiers});
 
   Map toJson() => {
