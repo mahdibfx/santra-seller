@@ -92,14 +92,16 @@ class _CartScreenState extends State<CartScreen> {
                                   child: Column(
                                     children: [
                                       HeadingWithIcon(
-                                              icon: UIDATAIcons.calendarIcon,
-                                              btntxt: "Delivery Date")
-                                          .paddingSymmetric(horizontal: 20),
+                                        icon: UIDATAIcons.calendarIcon,
+                                        btntxt: "Delivery Date",
+                                        iconColor: UIDataColors.primaryColor,
+                                      ).paddingSymmetric(horizontal: 20),
                                       CalendarDatePicker2(
                                           config: CalendarDatePicker2Config(
                                               firstDate: DateTime.now(),
                                               currentDate: DateTime.now(),
-                                              lastDate: DateTime(2024),
+                                              // lastDate: DateTime(2024),
+
                                               selectedDayHighlightColor:
                                                   UIDataColors.primaryColor),
                                           value: _.dates,
