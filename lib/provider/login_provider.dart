@@ -19,6 +19,7 @@ class LoginProvider extends ChangeNotifier {
   bool isLoading = false;
   bool securetext = true;
   var sellerStatus;
+  String? sellerCode;
   // String emailstore = "";
   // String passwordstore = "";
 
@@ -40,15 +41,14 @@ class LoginProvider extends ChangeNotifier {
   );
   String? firebaseMessagingToken;
 
- 
   void onInit() async {
-     clearFields();
+    clearFields();
     getFcmToken();
     setLoginValues();
     notifyListeners();
   }
 
-  clearFields(){
+  clearFields() {
     email.clear();
     password.clear();
   }
@@ -63,8 +63,6 @@ class LoginProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
-
-
 
   Future getFcmToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -91,8 +89,8 @@ class LoginProvider extends ChangeNotifier {
         sellerStatus = newdata.data[0].message.toString();
         GetStorage().write('sellerStatus', sellerStatus);
 
-       await saveSharedPrefData(newdata.data[0], prefs);
-       Get.offAll(() => HomeScreen());
+        await saveSharedPrefData(newdata.data[0], prefs);
+        Get.offAll(() => HomeScreen());
       } else {
         notifyListeners();
         print(res.body);
@@ -124,12 +122,15 @@ class LoginProvider extends ChangeNotifier {
     prefs.setString("dob", data.dateOfBirth.toString());
     prefs.setString("password", password.text);
     prefs.setString("sellerStatus", data.message);
+    sellerCode = prefs.getString('sellercode');
+    notifyListeners();
   }
 
   Future<String> sellerSt() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     sellerStatus = prefs.get('sellerStatus');
 
+    notifyListeners();
     return sellerStatus.toString();
   }
 }

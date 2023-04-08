@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Transform.translate(
-                  offset: Offset(0, -170),
+                  offset: const Offset(0, -170),
                   child: Column(
                     children: [
                       SvgPicture.asset(
