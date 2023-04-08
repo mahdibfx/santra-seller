@@ -443,32 +443,45 @@ class _CustomCardState extends State<CustomCard>
           title: const Text("Confirmation"),
           content: Text(statement),
           actions: [
-            BorderButton(
-              height: 35,
-              width: 140,
-              btntxt: 'Cancel',
-              borderColor: Colors.red,
-              buttontxtColor: Colors.red,
-              backEndColor: Colors.white,
-              // backEndColor: Colors.blue,
-              onPressed: () {
-                Get.back();
-              },
-              //  () {
-              //   _.acceptOrdermethod(widget.orderNumber);
-              // },
-            ),
-            BorderButton(
-              height: 35,
-              width: 140,
-              btntxt: 'Ok',
-              borderColor: Colors.blue,
-              buttontxtColor: Colors.white,
-              // backEndColor: Colors.blue,
-              onPressed: navigationFunction,
-              //  () {
-              //   _.acceptOrdermethod(widget.orderNumber);
-              // },
+            Container(
+              padding: EdgeInsets.all(8),
+              height: 60,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: BorderButton(
+                      // height: 35,
+                      // width: 140,
+                      btntxt: 'Cancel',
+                      borderColor: Colors.red,
+                      buttontxtColor: Colors.red,
+                      backEndColor: Colors.white,
+                      // backEndColor: Colors.blue,
+                      onPressed: () {
+                        Get.back();
+                      },
+                      //  () {
+                      //   _.acceptOrdermethod(widget.orderNumber);
+                      // },
+                    ),
+                  ),
+                  SpacingWidth.widthlistspacing15,
+                  Expanded(
+                    child: BorderButton(
+                      // height: 35,
+                      // width: 140,
+                      btntxt: 'Ok',
+                      borderColor: Colors.blue,
+                      buttontxtColor: Colors.white,
+                      // backEndColor: Colors.blue,
+                      onPressed: navigationFunction,
+                      //  () {
+                      //   _.acceptOrdermethod(widget.orderNumber);
+                      // },
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         );
