@@ -1,9 +1,11 @@
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/controllers/add_manual_order_controller.dart/add_manual_order_controller.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
 import '../../../controllers/products/product_settings.dart';
+import '../../../provider/product_setting_provider.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../widgets/cards/product_edit_card.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
@@ -23,8 +25,8 @@ class _ProductSettingScreenState extends State<ProductSettingScreen> {
 
   Widget bodyData(context) {
     Size size = MediaQuery.of(context).size;
-    return GetBuilder<ProductSettingsController>(
-      builder: (pSettings) {
+    return Consumer<ProductSettingsProvider>(
+      builder: (context, pSettings, child){
         return ModalProgressHUD(
           color: Colors.grey.withOpacity(1),
           inAsyncCall: pSettings.isChangeAvailibilityLoading ? true : false,
@@ -41,6 +43,9 @@ class _ProductSettingScreenState extends State<ProductSettingScreen> {
                   prefixIcon: UIDATAIcons.searchIcon,
                   fillcolor: Colors.white,
                   labelText: "Search For a Product",
+                  onChanged: (value){
+                    pSettings.filterList(value);
+                  },
                 ),
                 SpacingHeight.heightlistspacing10,
                 pSettings.isViewAllProductsLoading
@@ -53,10 +58,10 @@ class _ProductSettingScreenState extends State<ProductSettingScreen> {
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                "Category Name",
-                                style: UIDataTextStyles.h1,
-                              ).paddingOnly(left: 10),
+                              // const Text(
+                              //   "Category Name",
+                              //   style: UIDataTextStyles.h1,
+                              // ).paddingOnly(left: 10),
                               SpacingHeight.heightlistspacing10,
                               ListView.builder(
                                   physics: const BouncingScrollPhysics(),
@@ -85,6 +90,17 @@ class _ProductSettingScreenState extends State<ProductSettingScreen> {
         );
       },
     );
+  }
+
+  hitAllApis() async {
+    await Future.microtask(
+        () => context.read<ProductSettingsProvider>().onInit());
+  }
+
+  @override
+  void initState() {
+    hitAllApis();
+    super.initState();
   }
 
   @override

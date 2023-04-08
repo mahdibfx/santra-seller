@@ -5,11 +5,12 @@ import 'package:get/get.dart';
 import 'package:santra_seller/controllers/add_manual_order_controller.dart/add_manual_order_controller.dart';
 import 'package:santra_seller/controllers/products/product_settings.dart';
 
+import '../../../provider/product_setting_provider.dart';
 import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';
 
 class ProductEditCard extends StatefulWidget {
-  ProductSettingsController productSettingsController;
+  ProductSettingsProvider productSettingsController;
   int? index;
   final String title;
 

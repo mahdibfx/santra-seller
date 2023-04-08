@@ -129,7 +129,6 @@ hideAddButton(){
         .toList();
     filteredProducts = valueList;
     notifyListeners();
-    print(filteredProducts[0].productName);
   }
 
   changeStatus(String newData, bool value){
