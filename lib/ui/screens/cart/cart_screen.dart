@@ -23,7 +23,11 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   // CartController cartController = Get.put(CartController());
   hitAllApis() async {
-    await Future.microtask(() => context.read<CartProvider>().cartScreenData());
+    await Future.microtask(() {
+      if (context.read<CartProvider>().cartItems.isNotEmpty) {
+        context.read<CartProvider>().cartScreenData();
+      }
+    });
   }
 
   @override

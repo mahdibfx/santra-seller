@@ -129,7 +129,7 @@ class ForgotPasswordConfirmation extends StatelessWidget {
       appTitle: '',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAllNamed(Routes.signuproutes);
+        Get.offAllNamed(Routes.addManualOrder);
       },
       floatingIcon: Icons.add,
       elevation: 0.0,
