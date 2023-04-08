@@ -30,7 +30,8 @@ class MyCustomerProvider extends ChangeNotifier {
   late ViewAllCustomers viewAllCustomers;
   List<String>? citiesList = [];
   String? city = 'Dubai';
-  List<Customer>? allCustomers = [];
+  List<Customer> allNewCustomers = [];
+  List<Customer>? allFilterCustomers = [];
   bool isAddCustomerLoading = false;
   bool isUpdateCustomerLoading = false;
   bool receiptPaymentMethord = true;
@@ -75,14 +76,14 @@ class MyCustomerProvider extends ChangeNotifier {
   }
 
   setValuesForEdit(index) {
-    cidForUpdate = allCustomers?[index].id;
-    fnController.text = allCustomers?[index].customerName ?? "";
-    mobileController.text = allCustomers?[index].customerMobile ?? "";
-    emailController.text = allCustomers?[index].customerEmail ?? "";
-    buildingController.text = allCustomers?[index].buildingNumber ?? "";
-    aptController.text = allCustomers?[index].buildingType ?? "";
-    addressController.text = allCustomers?[index].addressLink ?? "";
-    city = allCustomers?[index].customerCity ?? "";
+    cidForUpdate = allFilterCustomers?[index].id;
+    fnController.text = allFilterCustomers?[index].customerName ?? "";
+    mobileController.text = allFilterCustomers?[index].customerMobile ?? "";
+    emailController.text = allFilterCustomers?[index].customerEmail ?? "";
+    buildingController.text = allFilterCustomers?[index].buildingNumber ?? "";
+    aptController.text = allFilterCustomers?[index].buildingType ?? "";
+    addressController.text = allFilterCustomers?[index].addressLink ?? "";
+    city = allFilterCustomers?[index].customerCity ?? "";
     notifyListeners();
   }
 
@@ -193,9 +194,12 @@ class MyCustomerProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         var decodedJson = jsonDecode(response.body);
         var data = ViewAllCustomers.fromJson(decodedJson);
-        allCustomers = data.data?[0].customers?.toList();
+        allNewCustomers = data.data![0].customers!.toList();
+        allFilterCustomers = allNewCustomers;
+
         citiesList = data.data?[0].cities?.toList();
         viewAllCustomers = viewAllCustomersFromJson(response.body);
+        notifyListeners();
       } else {
         hasViewCustomerError = true;
       }
@@ -203,6 +207,14 @@ class MyCustomerProvider extends ChangeNotifier {
       generalException();
     }
     updateCustomerLoadingState(false);
+  }
+
+  void filterList(String value) {
+    var valueList = allNewCustomers
+        .where((e) => (e.customerName.toString().toLowerCase().contains(value.trim().toLowerCase())))
+        .toList();
+    allFilterCustomers = valueList;
+    notifyListeners();
   }
 
   Future<bool> customerInfoSubmitedRequest(

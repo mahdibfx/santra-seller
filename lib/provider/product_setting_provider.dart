@@ -93,7 +93,6 @@ class ProductSettingsProvider extends ChangeNotifier {
         .toList();
     allProducts = valueList;
     notifyListeners();
-    // print(allProducts![0].productName);
   }
  
   void onInit() async {

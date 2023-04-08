@@ -46,6 +46,9 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                       prefixIcon: UIDATAIcons.searchIcon,
                       fillcolor: Colors.white,
                       labelText: 'Search by customer name'.tr,
+                      onChanged: (value){
+                        _.filterList(value);
+                      },
                     ),
                     SpacingHeight.heightlistspacing10,
                     PrimaryButtonWithIcon(
@@ -56,12 +59,12 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                       },
                     ),
                     SpacingHeight.heightlistspacing20,
-                    _.hasViewCustomerError || _.allCustomers!.isEmpty
+                    _.hasViewCustomerError || _.allFilterCustomers!.isEmpty
                         ? const Text("No Customers Found")
                         : ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: _.allCustomers?.length,
+                            itemCount: _.allFilterCustomers?.length,
                             itemBuilder: (BuildContext context, int index) {
                               return GestureDetector(
                                 onTap: () {
@@ -70,19 +73,19 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                                           index: index,
                                         ));
                                   } else {
-                                    if (_.allCustomers?[index] != null) {
+                                    if (_.allFilterCustomers?[index] != null) {
                                       Get.to(() => ViewCustomerDetails(
                                             customerDetail:
-                                                _.allCustomers![index],
+                                                _.allFilterCustomers![index],
                                           ));
                                     }
                                   }
                                 },
                                 child: MyCustomerCard(
-                                  name: _.allCustomers?[index].customerName ??
+                                  name: _.allFilterCustomers?[index].customerName ??
                                       "No Name",
                                   number:
-                                      _.allCustomers?[index].customerMobile ??
+                                      _.allFilterCustomers?[index].customerMobile ??
                                           "No Contact Number",
                                   forView: widget.comingFromCart,
                                 ).marginOnly(bottom: 17),
