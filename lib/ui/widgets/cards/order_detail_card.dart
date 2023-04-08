@@ -343,34 +343,34 @@ class _CustomCardState extends State<CustomCard>
                                   ),
                                 ),
                                 SpacingWidth.widthlistspacing15,
-                                Expanded(
-                                  child: Consumer<CartProvider>(
-                                      builder: (context, cartProvider, child) {
-                                    return BorderButton(
-                                      height: 40,
-                                      width: 140,
-                                      btntxt: 'Repeat Order',
-                                      borderColor: Colors.blue,
-                                      buttontxtColor: Colors.white,
-                                      // backEndColor: Colors.blue,
-                                      onPressed: () {
-                                        for (var e in widget.orderItemList) {
-                                          var data = CartItem(
-                                              quantity:
-                                                  int.parse(e.productQuantity),
-                                              imageString:
-                                                  e.productImage.toString(),
-                                              name: e.productName.toString(),
-                                              price: double.parse(e.productTotal
-                                                  .toString()), //@todo confirm what is total price backend
-                                              code: '', //@todo add code backend
-                                              subModifiers: []); //@todo add modifiers from backend
-                                          cartProvider.addToCart(data);
-                                        }
-                                      },
-                                    );
-                                  }),
-                                ),
+                                // Expanded(
+                                //   child: Consumer<CartProvider>(
+                                //       builder: (context, cartProvider, child) {
+                                //     return BorderButton(
+                                //       height: 40,
+                                //       width: 140,
+                                //       btntxt: 'Repeat Order',
+                                //       borderColor: Colors.blue,
+                                //       buttontxtColor: Colors.white,
+                                //       // backEndColor: Colors.blue,
+                                //       onPressed: () {
+                                //         for (var e in widget.orderItemList) {
+                                //           var data = CartItem(
+                                //               quantity:
+                                //                   int.parse(e.productQuantity),
+                                //               imageString:
+                                //                   e.productImage.toString(),
+                                //               name: e.productName.toString(),
+                                //               price: double.parse(e.productTotal
+                                //                   .toString()), //@todo confirm what is total price backend
+                                //               code: '', //@todo add code backend
+                                //               subModifiers: []); //@todo add modifiers from backend
+                                //           cartProvider.addToCart(data);
+                                //         }
+                                //       },
+                                //     );
+                                //   }),
+                                // ),
                               ],
                             ).paddingAll(15)
                           : Row(

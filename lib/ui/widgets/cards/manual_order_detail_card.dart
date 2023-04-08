@@ -222,7 +222,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
             ),
             Container(
               height: (_heightFactorAnimation.value *
-                  (155 + _calculateContainerHeight())),
+                  (105 + _calculateContainerHeight())),   //@todo repeat order button hide when unhide it change the height to 155
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -275,37 +275,37 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                       ),
                     ),
                   ),
-                  Consumer<CartProvider>(builder: (context, cartProvider, child) {
-                    return RaisedGradientButton(
-                      gradient: const LinearGradient(
-                        colors: <Color>[
-                          UIDataColors.primaryColor,
-                          UIDataColors.primaryColor,
-                        ],
-                      ),
-                      btntxt: "Repeat Order",
-                      iconImage: SvgPicture.asset(
-                        UIDATAIcons.sendIcon,
-                        height: 25,
-                        width: 25,
-                        fit: BoxFit.fitWidth,
-                      ),
-                      buttontxtColor: UIDataColors.whiteColor,
-                      onPressed: () {
-                        for (var e in widget.orderItemList) {
-                          var data = CartItem(
-                              quantity: int.parse(e.productQuantity),
-                              imageString: e.productImage.toString(),
-                              name: e.productName.toString(),
-                              price: double.parse(e.productTotal
-                                  .toString()), //@todo confirm what is total price backend
-                              code: '', //@todo add code backend
-                              subModifiers: []); //@todo add modifiers from backend
-                          cartProvider.addToCart(data);
-                        }
-                      },
-                    ).marginAll(10);
-                  }),
+                  // Consumer<CartProvider>(builder: (context, cartProvider, child) {
+                  //   return RaisedGradientButton(
+                  //     gradient: const LinearGradient(
+                  //       colors: <Color>[
+                  //         UIDataColors.primaryColor,
+                  //         UIDataColors.primaryColor,
+                  //       ],
+                  //     ),
+                  //     btntxt: "Repeat Order",
+                  //     iconImage: SvgPicture.asset(
+                  //       UIDATAIcons.sendIcon,
+                  //       height: 25,
+                  //       width: 25,
+                  //       fit: BoxFit.fitWidth,
+                  //     ),
+                  //     buttontxtColor: UIDataColors.whiteColor,
+                  //     onPressed: () {
+                  //       for (var e in widget.orderItemList) {
+                  //         var data = CartItem(
+                  //             quantity: int.parse(e.productQuantity),
+                  //             imageString: e.productImage.toString(),
+                  //             name: e.productName.toString(),
+                  //             price: double.parse(e.productTotal
+                  //                 .toString()), //@todo confirm what is total price backend
+                  //             code: '', //@todo add code backend
+                  //             subModifiers: []); //@todo add modifiers from backend
+                  //         cartProvider.addToCart(data);
+                  //       }
+                  //     },
+                  //   ).marginAll(10);
+                  // }),
                 ],
               ),
             ),
