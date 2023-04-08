@@ -132,8 +132,8 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                   children: [
                                                                     ProductNameAndPriceOnSheet(
                                                                       product: manualOrderController
-                                                                          .allProducts?[
-                                                                              index],
+                                                                              .allProducts?[
+                                                                          index],
                                                                       productName: manualOrderController
                                                                           .allProducts?[
                                                                               index]
@@ -365,9 +365,9 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                             manualOrderController.allProducts![index];
 
                                                                         var data = CartItem(
-                                                                          quantity: itemValue.productQuantity,
-                                                                            imageString:
-                                                                                itemValue.productImages.toString(),
+                                                                            quantity:
+                                                                                itemValue.productQuantity,
+                                                                            imageString: itemValue.productImages.toString(),
                                                                             name: itemValue.productName.toString(),
                                                                             price: double.parse(itemValue.productPrice.toString()),
                                                                             code: itemValue.productCode.toString(),
@@ -379,7 +379,8 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                             .addToCart(data);
                                                                         manualOrderController
                                                                             .addIntoCart();
-                                                                            manualOrderController.resetDefaultQuanity(manualOrderController.allProducts![index]);
+                                                                        manualOrderController
+                                                                            .resetDefaultQuanity(manualOrderController.allProducts![index]);
                                                                         Get.back();
 
                                                                         // Get.offAllNamed(
@@ -512,7 +513,7 @@ class _AddManulOrderState extends State<AddManulOrder> {
       bodyData: bodyData(context),
       backgroundcolor: UIDataColors.whiteColor,
       backGroundImage: UIDataImage.backgroundImage,
-      isBackArrowShow: false,
+      isBackArrowShow: true,
       showDrawer: false,
       showFAB: showAdd,
       centerDocked: true,

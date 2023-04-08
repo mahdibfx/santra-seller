@@ -231,11 +231,16 @@ class CommonScaffold extends StatelessWidget {
                   : const SizedBox(),
               //leading,
               backgroundColor: appbarcolor,
-              title: SvgPicture.asset(
-                UIDataImage.sellerLogoIconSVG,
-                height: 35,
-                width: 35,
-                // fit: BoxFit.fitWidth,
+              title: GestureDetector(
+                onTap: () {
+                  Get.offAllNamed(Routes.homeRoutes);
+                },
+                child: SvgPicture.asset(
+                  UIDataImage.sellerLogoIconSVG,
+                  height: 35,
+                  width: 35,
+                  // fit: BoxFit.fitWidth,
+                ),
               ),
               actions: showActions == true
                   ? [
@@ -256,7 +261,7 @@ class CommonScaffold extends StatelessWidget {
               centerTitle: true,
             )
           : null,
-      drawer: showDrawer ? ClipDrawer() : null,
+      endDrawer: showDrawer ? ClipDrawer() : null,
       extendBodyBehindAppBar: extendBodyBehindAppBar,
       body: OrientationBuilder(builder: (context, orientation) {
         return Container(
@@ -287,31 +292,29 @@ class CommonScaffold extends StatelessWidget {
       floatingActionButton: showFAB
           ? Visibility(
               visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
-              child: Consumer<HomeProvider>(builder: (context, homeProvider, child) {
-                  return CustomFloat(
-                    builder: centerDocked
-                        ? const Text(
-                            "5",
-                            style: TextStyle(color: Colors.red, fontSize: 10.0),
-                          )
-                        : null,
-                    icon: floatingIcon,
-                    // ignore: unrelated_type_equality_checks
-                    qrCallback: 
-                    homeProvider.sellerStatusNew != "done"
-                        ? () {
-                            customOntapDialog(
-                                'Alert', 'Your status is not approved.', 'Okay',
-                                () {
-                              print(homeProvider.sellerStatusNew);
-                              Get.back();
-                            });
-                          }
-                        : 
-                        qrCallback,
-                  );
-                }
-              ),
+              child: Consumer<HomeProvider>(
+                  builder: (context, homeProvider, child) {
+                return CustomFloat(
+                  builder: centerDocked
+                      ? const Text(
+                          "5",
+                          style: TextStyle(color: Colors.red, fontSize: 10.0),
+                        )
+                      : null,
+                  icon: floatingIcon,
+                  // ignore: unrelated_type_equality_checks
+                  qrCallback: homeProvider.sellerStatusNew != "done"
+                      ? () {
+                          customOntapDialog(
+                              'Alert', 'Your status is not approved.', 'Okay',
+                              () {
+                            print(homeProvider.sellerStatusNew);
+                            Get.back();
+                          });
+                        }
+                      : qrCallback,
+                );
+              }),
             )
           : null,
       floatingActionButtonLocation: centerDocked
