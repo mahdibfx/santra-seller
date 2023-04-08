@@ -300,10 +300,11 @@ class MyCustomerProvider extends ChangeNotifier {
           data.data?.first.deliveryCharges, //this is the delivery charges
       "total_discount": cartProvider.dis
           .toString(), //this is the discount if any otherwise send 0
-      "d_reason":
+      "d_reason": cartProvider.voucherListVoucherCode ??
+          cartProvider.voucherCode ??
           "no_discount", // If there is any discount otherwise send no_discount
-      "d_type":
-          "no_discount", //this is discount type otherwise send no_discount
+      // "d_type":
+      //     "no_discount", //this is discount type otherwise send no_discount
       "seller_code": sellerCode, // this is seller code
       "c_number": customerDetail.customerMobile, //this is customer number
       "c_id": sellerCode, // send seller code here
