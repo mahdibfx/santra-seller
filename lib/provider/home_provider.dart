@@ -139,7 +139,6 @@ class HomeProvider extends ChangeNotifier {
           CommonSnackbar.getSnackbar("Error", "Error ", UIDataColors.redColor);
         }
       } catch (e) {
-        print("check error ${e}");
         isLoading = false;
         notifyListeners();
         // Get.offAllNamed(Routes.homeRoutes);
@@ -165,14 +164,11 @@ class HomeProvider extends ChangeNotifier {
         notifyListeners();
         // Get.snackbar("Accepted", "Order has been accepted");
         CommonSnackbar.getSnackbar(
-            "Accepted", "Order has been cancelled", UIDataColors.primaryColor);
+            "Cancelled", "Order has been cancelled", UIDataColors.primaryColor);
         Get.offAllNamed(Routes.homeRoutes);
-        print("Order has been cancelled");
       } else {
         generalException();
         notifyListeners();
-        print(response.statusCode.toString());
-        print("Unable to cancel order");
       }
     } catch (e) {
       notifyListeners();
@@ -198,12 +194,9 @@ class HomeProvider extends ChangeNotifier {
         CommonSnackbar.getSnackbar(
             "Accepted", "Order has been accepted", UIDataColors.primaryColor);
         Get.offAllNamed(Routes.homeRoutes);
-        print("Order has been Accepted");
       } else {
         generalException();
         notifyListeners();
-        print(response.statusCode.toString());
-        print("Unable to accept order");
       }
     } catch (e) {
       notifyListeners();
@@ -251,24 +244,33 @@ class HomeProvider extends ChangeNotifier {
 
     return found;
   }
-checkfilterCondition(){
+
+  checkfilterCondition() {
     santraOrders.where((e) {
-  bool matchesCondition1 = e.orderNumber.toString().toLowerCase().contains(filterController.text.trim());
-  bool matchesCondition2 = e.orderStatus.toString().toLowerCase().contains(selectedOrderOption);
-  return matchesCondition1 && matchesCondition2;
-}).toList();
-}
+      bool matchesCondition1 = e.orderNumber
+          .toString()
+          .toLowerCase()
+          .contains(filterController.text.trim());
+      bool matchesCondition2 =
+          e.orderStatus.toString().toLowerCase().contains(selectedOrderOption);
+      return matchesCondition1 && matchesCondition2;
+    }).toList();
+  }
+
   void filterSantraOrders() {
-    
     // var valueList = santraOrders
     //     .where((e) =>
     //         _doesActionSatisfy(e, filterController.text.trim().toLowerCase()))
     //     .toList();
-    filteredSantraOrders =  santraOrders.where((e) {
-  bool matchesCondition1 = e.orderNumber.toString().toLowerCase().contains(filterController.text.trim());
-  bool matchesCondition2 = e.orderStatus.toString().toLowerCase().contains(selectedOrderOption);
-  return matchesCondition1 && matchesCondition2;
-}).toList();
+    filteredSantraOrders = santraOrders.where((e) {
+      bool matchesCondition1 = e.orderNumber
+          .toString()
+          .toLowerCase()
+          .contains(filterController.text.trim());
+      bool matchesCondition2 =
+          e.orderStatus.toString().toLowerCase().contains(selectedOrderOption);
+      return matchesCondition1 && matchesCondition2;
+    }).toList();
     notifyListeners();
   }
 
@@ -289,19 +291,19 @@ checkfilterCondition(){
   Color getColor(String colorName) {
     switch (colorName.toLowerCase()) {
       case 'new_order':
-        return Color(0xff0098B1);
+        return const Color(0xff0098B1);
       case 'payment_pending':
-        return Color(0xff7B7B7B);
+        return const Color(0xff7B7B7B);
       case 'assigned_3pl':
-        return Color(0xff265198);
+        return const Color(0xff265198);
       case 'devliered':
-        return Color(0xff01957A);
+        return const Color(0xff01957A);
       case 'canceled':
-        return Color(0xffC23C4C);
+        return const Color(0xffC23C4C);
       case 'rejected':
-        return Color(0xffC23C4C);
+        return const Color(0xffC23C4C);
       default:
-        return Color(0xff0098B1);
+        return const Color(0xff0098B1);
     }
   }
 

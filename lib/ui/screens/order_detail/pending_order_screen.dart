@@ -20,7 +20,8 @@ class PendingOrderScreen extends StatelessWidget {
   PendingOrderScreen({super.key});
 
   Widget bodyData() {
-    return Consumer<HomeProvider>(builder: (context, _, child)  {
+    return Consumer<HomeProvider>(
+      builder: (context, _, child) {
         return _.isLoading
             ? const SizedBox(
                 child: Center(
@@ -90,6 +91,7 @@ class PendingOrderScreen extends StatelessWidget {
                                             santraList.colorCode.toString(),
                                       );
                               }),
+                          SpacingHeight.heightlistspacing50
                         ],
                       ).paddingSymmetric(horizontal: 15),
                       _.isAcceptOrderLoading ||

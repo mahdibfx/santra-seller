@@ -53,11 +53,11 @@ class _ProductSettingScreenState extends State<ProductSettingScreen> {
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                "Category Name",
-                                style: UIDataTextStyles.h1,
-                              ).paddingOnly(left: 10),
-                              SpacingHeight.heightlistspacing10,
+                              // const Text(
+                              //   "Category Name",
+                              //   style: UIDataTextStyles.h1,
+                              // ).paddingOnly(left: 10),
+                              // SpacingHeight.heightlistspacing10,
                               ListView.builder(
                                   physics: const BouncingScrollPhysics(),
                                   shrinkWrap: true,
