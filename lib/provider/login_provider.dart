@@ -123,14 +123,15 @@ class LoginProvider extends ChangeNotifier {
     prefs.setString("password", password.text);
     prefs.setString("sellerStatus", data.message);
     sellerCode = prefs.getString('sellercode');
-    notifyListeners();
-  }
-
-  Future<String> sellerSt() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     sellerStatus = prefs.get('sellerStatus');
-
     notifyListeners();
-    return sellerStatus.toString();
   }
+
+  // Future<String> sellerSt() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   sellerStatus = prefs.get('sellerStatus');
+
+  //   notifyListeners();
+  //   return sellerStatus.toString();
+  // }
 }

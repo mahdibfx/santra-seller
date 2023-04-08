@@ -26,8 +26,9 @@ class LogoutController extends GetxController {
       var response = await http.Response.fromStream(streamedResponse);
       if (response.statusCode == 200) {
         //@todo
-        prefs.clear();
-         Get.offAll(() => const LoginScreen());
+        await prefs.clear();
+        update();
+        Get.offAll(() => const LoginScreen());
       } else {
         generalException();
         if (kDebugMode) {
@@ -38,5 +39,6 @@ class LogoutController extends GetxController {
       generalException();
     }
     isLogoutLoading(false);
+    update();
   }
 }

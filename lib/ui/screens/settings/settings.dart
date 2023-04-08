@@ -1,7 +1,10 @@
 // ignore_for_file: depend_on_referenced_packages
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/controllers/settings_controller/delete_account_controller.dart';
 import 'package:santra_seller/controllers/settings_controller/logout_controller.dart';
+import 'package:santra_seller/provider/login_provider.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 
 import '../../../utils/routes/app_routes.dart';
@@ -72,7 +75,12 @@ class Settings extends StatelessWidget {
                     Get.back();
                   }, () {
                     Get.back();
-                    logoutController.logout();
+                    logoutController.logout().then((value) {
+                      Provider.of<LoginProvider>(context, listen: false)
+                          .sellerCode = null;
+                      Provider.of<LoginProvider>(context, listen: false)
+                          .sellerStatus = null;
+                    });
                   });
                 },
                 btntxt: 'Logout',
