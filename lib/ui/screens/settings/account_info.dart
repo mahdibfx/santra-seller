@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:santra_seller/controllers/settings_controller/account_info_controller.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
@@ -84,7 +85,8 @@ class AccountInfo extends StatelessWidget {
                       },
                       prefixIcon: UIDATAIcons.calendarIcon,
                       fieldHeight: 50,
-                      value: _.formatteUserDob.toString(),
+                      value:
+                          DateFormat('yyyy-MM-dd').format(_.formatteUserDob!),
                     ),
                     SpacingHeight.heightlistspacing20,
                     Obx(() => _.isUpdateAccInfoLoading.isTrue
@@ -137,7 +139,7 @@ class AccountInfo extends StatelessWidget {
       appTitle: '',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAllNamed(Routes.signuproutes);
+        Get.offAllNamed(Routes.addManualOrder);
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

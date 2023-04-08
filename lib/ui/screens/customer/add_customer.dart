@@ -53,11 +53,11 @@ class CustomerScreen extends StatelessWidget {
                       labelText: "Search",
                     ),
                     SpacingHeight.heightlistspacing10,
-                    const Text(
-                      "Category Name",
-                      style: UIDataTextStyles.h1,
-                    ),
-                    SpacingHeight.heightlistspacing10,
+                    // const Text(
+                    //   "Category Name",
+                    //   style: UIDataTextStyles.h1,
+                    // ),
+                    // SpacingHeight.heightlistspacing10,
                     ListView.builder(
                         shrinkWrap: true,
                         itemCount: 20,

@@ -62,61 +62,75 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                           //   ],
                           // ),
                           // SpacingHeight.heightlistspacing20,
-                          _.filteredSantraOrders.isEmpty ? 
-                          Center(child: Text('No Order to show'),) :
-                          ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: _.filteredSantraOrders.length,
-                              itemBuilder: (context, index) {
-                                var santraList = _.filteredSantraOrders[index];
-                                return santraList.orderStatus == 'new_order' ||
-                                        santraList.orderStatus ==
-                                            'assigned_3pl' ||
-                                        santraList.orderStatus ==
-                                            'payment_pending'
-                                    ? CustomCard(
-                                        title: 'Card',
-                                        orderStatus:
-                                            santraList.orderStatus.toString(),
-                                        totalPrice: santraList.totalOrderAmount
-                                            .toString(),
-                                        orderRemarks:
-                                            santraList.orderRemarks.toString(),
-                                        orderTime: santraList.orderDateStamp
-                                            .toString(),
-                                        deliveryTime:
-                                            santraList.advanceTime.toString(),
-                                        customerName:
-                                            santraList.customerName.toString(),
-                                        paymentMethod:
-                                            santraList.paymentMethod.toString(),
-                                        orderNumber:
-                                            santraList.orderNumber.toString(),
-                                        paymentLink:
-                                            santraList.paymentLink.toString(),
-                                        orderItemList: santraList.orderItems,
-                                      )
-                                    : ManualOrderCard(
-                                        orderStatus:
-                                            santraList.orderStatus.toString(),
-                                        totalPrice: santraList.totalOrderAmount
-                                            .toString(),
-                                        orderTime: santraList.orderDateStamp
-                                            .toString(),
-                                        deliveryTime:
-                                            santraList.advanceTime.toString(),
-                                        customerName:
-                                            santraList.customerName.toString(),
-                                        paymentMethod:
-                                            santraList.paymentMethod.toString(),
-                                        orderNumber:
-                                            santraList.orderNumber.toString(),
-                                        orderItemList: santraList.orderItems,
-                                        colorCode:
-                                            santraList.colorCode.toString(),
-                                      );
-                              }),
+                          _.filteredSantraOrders.isEmpty
+                              ? Center(
+                                  child: Text('No Order to show'),
+                                )
+                              : ListView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: _.filteredSantraOrders.length,
+                                  itemBuilder: (context, index) {
+                                    var santraList =
+                                        _.filteredSantraOrders[index];
+                                    return santraList.orderStatus ==
+                                                'new_order' ||
+                                            santraList.orderStatus ==
+                                                'assigned_3pl' ||
+                                            santraList.orderStatus ==
+                                                'payment_pending'
+                                        ? CustomCard(
+                                            title: 'Card',
+                                            orderStatus: santraList.orderStatus
+                                                .toString(),
+                                            totalPrice: santraList
+                                                .totalOrderAmount
+                                                .toString(),
+                                            orderRemarks: santraList
+                                                .orderRemarks
+                                                .toString(),
+                                            orderTime: santraList.orderDateStamp
+                                                .toString(),
+                                            deliveryTime: santraList.advanceTime
+                                                .toString(),
+                                            customerName: santraList
+                                                .customerName
+                                                .toString(),
+                                            paymentMethod: santraList
+                                                .paymentMethod
+                                                .toString(),
+                                            orderNumber: santraList.orderNumber
+                                                .toString(),
+                                            paymentLink: santraList.paymentLink
+                                                .toString(),
+                                            orderItemList:
+                                                santraList.orderItems,
+                                          )
+                                        : ManualOrderCard(
+                                            orderStatus: santraList.orderStatus
+                                                .toString(),
+                                            totalPrice: santraList
+                                                .totalOrderAmount
+                                                .toString(),
+                                            orderTime: santraList.orderDateStamp
+                                                .toString(),
+                                            deliveryTime: santraList.advanceTime
+                                                .toString(),
+                                            customerName: santraList
+                                                .customerName
+                                                .toString(),
+                                            paymentMethod: santraList
+                                                .paymentMethod
+                                                .toString(),
+                                            orderNumber: santraList.orderNumber
+                                                .toString(),
+                                            orderItemList:
+                                                santraList.orderItems,
+                                            colorCode:
+                                                santraList.colorCode.toString(),
+                                          );
+                                  }),
+                          SpacingHeight.heightlistspacing50
                         ],
                       ).paddingSymmetric(horizontal: 15),
                     ),
@@ -164,8 +178,8 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                             _.resetOrderGroupValue();
                           },
                           child: Text('reset')),
-                          Text('Filter'),
-                          ElevatedButton(
+                      Text('Filter'),
+                      ElevatedButton(
                           onPressed: () {
                             Get.back();
                           },

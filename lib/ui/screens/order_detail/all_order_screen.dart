@@ -24,7 +24,8 @@ class AllOrderScreen extends StatelessWidget {
   AllOrderScreen({super.key});
 
   Widget bodyData() {
-    return Consumer<HomeProvider>(builder: (context, _, child)  {
+    return Consumer<HomeProvider>(
+      builder: (context, _, child) {
         return _.isLoading
             ? const SizedBox(
                 child: Center(
@@ -92,6 +93,7 @@ class AllOrderScreen extends StatelessWidget {
                                             santraList.colorCode.toString(),
                                       );
                               }),
+                          SpacingHeight.heightlistspacing50
                         ],
                       ).paddingSymmetric(horizontal: 15),
                     ),
