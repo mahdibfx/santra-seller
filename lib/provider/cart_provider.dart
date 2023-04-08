@@ -269,11 +269,11 @@ class CartProvider extends ChangeNotifier {
     final index =
         cartItems.indexWhere((cartItem) => cartItem.code == item.code);
     if (index != -1) {
-      if( cartItems[index].quantity < 99){
+      if (cartItems[index].quantity < 99) {
         cartItems[index].quantity += 1;
-      notifyListeners();
+        notifyListeners();
       }
-      
+
       // showToast("Added", 'increased by one');
     } else {
       cartItems.add(item);
@@ -358,11 +358,13 @@ class CartProvider extends ChangeNotifier {
       "sub_total": "$totalPrice", // This is the subtotal amount
       "total_delivery_charges":
           data.data?.first.deliveryCharges, //this is the delivery charges
-      "total_discount": "0", //this is the discount if any otherwise send 0
-      "d_reason":
+      "total_discount":
+          dis.toString(), //this is the discount if any otherwise send 0
+      "d_reason": voucherListVoucherCode ??
+          voucherCode ??
           "no_discount", // If there is any discount otherwise send no_discount
-      "d_type":
-          "no_discount", //this is discount type otherwise send no_discount
+      // "d_type":
+      //     "no_discount", //this is discount type otherwise send no_discount
       "seller_code": sellerCode, // this is seller code
       "c_number": customerDetail.customerMobile, //this is customer number
       "c_id": sellerCode, // send seller code here
