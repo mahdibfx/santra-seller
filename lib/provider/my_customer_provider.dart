@@ -47,8 +47,9 @@ class MyCustomerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  String? phoneCon;
   TextEditingController fnController = TextEditingController();
-  TextEditingController mobileController = TextEditingController();
+  TextEditingController mobileController = TextEditingController(text: "971");
   TextEditingController emailController = TextEditingController();
   TextEditingController buildingController = TextEditingController();
   TextEditingController aptController = TextEditingController();
@@ -65,7 +66,10 @@ class MyCustomerProvider extends ChangeNotifier {
   }
 
   void disposeValues() {
+    receiptPaymentMethord = true;
+    onlinePayment = false;
     city = "Dubai";
+    phoneCon = null;
     fnController.clear();
     mobileController.clear();
     emailController.clear();
@@ -283,6 +287,7 @@ class MyCustomerProvider extends ChangeNotifier {
         var decodedJson = jsonDecode(response.body);
         link.text = decodedJson['data'].first['payment_link'];
         cartProvider.flushCart();
+        disposeValues();
         Get.offAll(() => const HomeScreen());
         showToast("Success", 'Successfully Completed');
         isSubmitOrder = false;
