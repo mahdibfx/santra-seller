@@ -40,6 +40,7 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
             : SafeArea(
                 child: SingleChildScrollView(
                   child: Stack(
+                      alignment: AlignmentDirectional.center,
                     children: [
                       Column(
                         children: [

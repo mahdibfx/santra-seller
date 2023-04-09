@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/utils/routes/app_routes.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
 
+import '../../../models/customers/view_all_customers.dart';
+import '../../../provider/my_customer_provider.dart';
 import '../../../utils/uidata.dart';
+import '../../screens/more_setting/my_customer/view_customer_details.dart';
+import '../buttons/border_button.dart';
 import '../buttons/icon_button.dart';
 
 class MyCustomerCard extends StatelessWidget {
   final String name;
   final String number;
   final bool forView;
-  // final dynamic onTap;
+  final Customer customer;
 
   const MyCustomerCard({
     super.key,
     required this.name,
     required this.number,
     required this.forView,
+    required this.customer,
   });
 
   @override
@@ -39,82 +45,163 @@ class MyCustomerCard extends StatelessWidget {
       height: 110,
       child: Column(
         children: [
-          Expanded(
-            flex: 2,
-            child: Row(
-              children: [
-                SvgPicture.asset(
-                  UIDATAIcons.userIcon,
-                  height: 20,
-                  color: UIDataColors.primaryColor,
-                ),
-                SpacingWidth.widthlistspacing,
-                Expanded(
-                  child: SizedBox(
-                    // width: MediaQuery.of(context).size.width * 0.56,
-                    child: Text(
-                      name,
-                      style: UIDataTextStyles.title,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+          Row(
+            children: [
+              Expanded(
+                flex: 5,
+                child: SizedBox(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            UIDATAIcons.userIcon,
+                            height: 20,
+                            color: UIDataColors.primaryColor,
+                          ),
+                          SpacingWidth.widthlistspacing,
+                          SizedBox(
+                            child: Text(
+                              name,
+                              style: UIDataTextStyles.title,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Divider(
+                        color: UIDataColors.primaryColor,
+                      ).marginAll(5),
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            UIDATAIcons.callIcon,
+                            height: 20,
+                            color: UIDataColors.primaryColor,
+                          ),
+                          SpacingWidth.widthlistspacing,
+                          Expanded(
+                            child: Text(
+                              number,
+                              style: UIDataTextStyles.title,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Container(
-                    // width: size.width * 0.65,
-                    height: 0.25,
-                    color: UIDataColors.primaryColor,
+              ),
+              Expanded(
+                flex: 1,
+                child: SizedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Get.to(() => ViewCustomerDetails(
+                                  customerDetail: customer));
+                            },
+                            child: SvgPicture.asset(
+                              forView
+                                  ? UIDATAIcons.viewIcon
+                                  : UIDATAIcons.editCustomer,
+                              color: UIDataColors.primaryColor,
+                              height: 18,
+                              //height: 20,
+                            ),
+                          ),
+                          const Divider(
+                            color: UIDataColors.primaryColor,
+                          ).marginAll(2),
+                          InkWell(
+                            onTap: () {
+                              print('delereeeeeeee');
+                              showpopup('Do you realy want to delete this customer', customer.id.toString(),
+                                  context);
+                            },
+                            child: SvgPicture.asset(
+                              UIDATAIcons.deleteIcon,
+                              color: UIDataColors.primaryColor,
+                              height: 18,
+                              //height: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(
-                  width: size.width * 0.11,
-                ),
-
-                InkWell(
-                  child: SvgPicture.asset(
-                    forView ? UIDATAIcons.viewIcon : UIDATAIcons.editCustomer,
-                    color: UIDataColors.primaryColor,
-                    height: 22,
-                    //height: 20,
-                  ),
-                ),
-                // ReusableIconButton(
-                //   icon: UIDATAIcons.editCustomer,
-                //   onPressed: onTap,
-                // )
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Row(
-              children: [
-                SvgPicture.asset(
-                  UIDATAIcons.callIcon,
-                  height: 20,
-                  color: UIDataColors.primaryColor,
-                ),
-                SpacingWidth.widthlistspacing,
-                Expanded(
-                  child: Text(
-                    number,
-                    style: UIDataTextStyles.title,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           )
         ],
       ).paddingSymmetric(
           horizontal: size.width * 0.045, vertical: size.height * 0.02),
     );
   }
+}
+
+void showpopup(String statement, String customerID, context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Consumer<MyCustomerProvider>(
+      builder: (context, _, child) {
+          return AlertDialog(
+            title: const Text("Confirmation"),
+            content: Text(statement),
+            actions: [
+              Container(
+                padding: EdgeInsets.all(8),
+                height: 60,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: BorderButton(
+                        // height: 35,
+                        // width: 140,
+                        btntxt: 'Cancel',
+                        borderColor: Colors.red,
+                        buttontxtColor: Colors.red,
+                        backEndColor: Colors.white,
+                        // backEndColor: Colors.blue,
+                        onPressed: () {
+                          Get.back();
+                        },
+                        //  () {
+                        //   _.acceptOrdermethod(widget.orderNumber);
+                        // },
+                      ),
+                    ),
+                    SpacingWidth.widthlistspacing15,
+                    Expanded(
+                      child: BorderButton(
+                        // height: 35,
+                        // width: 140,
+                        btntxt: 'Ok',
+                        borderColor: Colors.blue,
+                        buttontxtColor: Colors.white,
+                        // backEndColor: Colors.blue,
+                        onPressed: () {
+                          Get.back();
+                          _.deleteCustomers(customerID);
+                        },
+                        //  () {
+                        //   _.acceptOrdermethod(widget.orderNumber);
+                        // },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        }
+      );
+    },
+  );
 }

@@ -73,15 +73,16 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                                           index: index,
                                         ));
                                   } else {
-                                    if (_.allFilterCustomers?[index] != null) {
-                                      Get.to(() => ViewCustomerDetails(
-                                            customerDetail:
-                                                _.allFilterCustomers![index],
-                                          ));
-                                    }
+                                    // if (_.allFilterCustomers?[index] != null) {
+                                    //   Get.to(() => ViewCustomerDetails(
+                                    //         customerDetail:
+                                    //             _.allFilterCustomers![index],
+                                    //       ));
+                                    // }
                                   }
                                 },
                                 child: MyCustomerCard(
+                                  customer: _.allFilterCustomers![index],
                                   name: _.allFilterCustomers?[index].customerName ??
                                       "No Name",
                                   number:
