@@ -44,7 +44,7 @@ exceptionDialog(String title, String msg) {
             onPressed: () {
               Get.back();
             },
-            child: const Text("Okay", style: UIDataTextStyles.dialogButton))
+            child: const Text("Ok", style: UIDataTextStyles.dialogButton))
       ]);
 }
 

@@ -22,12 +22,12 @@ class HomeProvider extends ChangeNotifier {
   bool isCancelOrderLoading = false;
   List<Order> santraOrders = [];
   List<Order> filteredSantraOrders = [];
-    List<Order> pendingOrders = [];
+  List<Order> pendingOrders = [];
   List<Order> filteredPendingOrders = [];
-      List<Order> manualOrders = [];
+  List<Order> manualOrders = [];
   List<Order> filteredManualOrders = [];
-    List<Order> allOrders = [];
-    List<Order> filteredAllOrders = [];
+  List<Order> allOrders = [];
+  List<Order> filteredAllOrders = [];
 
   String selectedOrderOption = '';
 
@@ -39,7 +39,6 @@ class HomeProvider extends ChangeNotifier {
   int newItemCountManual = 0;
   int previousManualCount = 0;
   int latestManualCount = 0;
-
 
   var sellerStatusNew;
   List<String> years = [
@@ -126,6 +125,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
   homeDataCall() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     allOrders = [];
     notifyListeners();
     if (sellerCode != null) {
@@ -139,6 +139,10 @@ class HomeProvider extends ChangeNotifier {
         if (res.statusCode == 200) {
           var data = jsonDecode(res.body);
           var newdata = HomeModel.fromJson(data);
+          sellerStatusNew = data['data'][0]['seller_status'];
+          prefs.setString("sellerStatus", sellerStatusNew.toString());
+          print("SEEEEEEE $sellerStatusNew");
+          print(res.body);
           homeData = newdata.data[0];
           allOrders.addAll(homeData!.santraOrders[0].santraOrders);
           allOrders.addAll(homeData!.manualOrders[0].manualOrders);
@@ -287,7 +291,8 @@ class HomeProvider extends ChangeNotifier {
         .toList();
     notifyListeners();
   }
-    void filterPendingOrders() {
+
+  void filterPendingOrders() {
     var valueList = pendingOrders
         .where((e) =>
             e.orderNumber.contains(filterController.text.trim().toLowerCase()))
@@ -300,7 +305,8 @@ class HomeProvider extends ChangeNotifier {
         .toList();
     notifyListeners();
   }
-     void filtermanualOrders() {
+
+  void filtermanualOrders() {
     var valueList = manualOrders
         .where((e) =>
             e.orderNumber.contains(filterController.text.trim().toLowerCase()))
@@ -313,7 +319,8 @@ class HomeProvider extends ChangeNotifier {
         .toList();
     notifyListeners();
   }
-     void filterAllOrders() {
+
+  void filterAllOrders() {
     var valueList = allOrders
         .where((e) =>
             e.orderNumber.contains(filterController.text.trim().toLowerCase()))
@@ -331,9 +338,9 @@ class HomeProvider extends ChangeNotifier {
     selectedOrderOption = value;
     notifyListeners();
     filterSantraOrders();
-     filterPendingOrders();
-     filtermanualOrders();
-     filterAllOrders();
+    filterPendingOrders();
+    filtermanualOrders();
+    filterAllOrders();
   }
 
   resetOrderGroupValue() {
@@ -341,9 +348,9 @@ class HomeProvider extends ChangeNotifier {
     filterController.clear();
     notifyListeners();
     filterSantraOrders();
-     filterPendingOrders();
-     filtermanualOrders();
-     filterAllOrders();
+    filterPendingOrders();
+    filtermanualOrders();
+    filterAllOrders();
   }
 
 //////////////////////////////--------Filteration END--------///////////
@@ -390,8 +397,9 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  sellerSt() {
-    sellerStatusNew = GetStorage().read('sellerStatus');
+  sellerSt() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    sellerStatusNew = prefs.getString('sellerStatus');
     notifyListeners();
     print(sellerStatusNew);
   }

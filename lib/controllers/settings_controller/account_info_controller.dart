@@ -80,7 +80,7 @@ class AccountInfoController extends GetxController {
         body['first_name'] = fNameController.text;
         body['last_name'] = lNameController.text;
         body['user_email'] = emailController.text;
-        body['date_of_birth'] = userDob.toString();
+        body['date_of_birth'] = "";
         request.fields.addAll(body);
         var streamedResponse = await request.send();
         var response = await http.Response.fromStream(streamedResponse);

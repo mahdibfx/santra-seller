@@ -51,6 +51,7 @@ class SplashProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var checkemail = prefs.getString("email");
     sellerCode = prefs.getString("sellercode");
+
     print("SELLER $sellerCode");
     // var checkpassword = prefs.getString("password");
     if (checkemail != null) {

@@ -26,7 +26,7 @@ class _ProductSettingScreenState extends State<ProductSettingScreen> {
   Widget bodyData(context) {
     Size size = MediaQuery.of(context).size;
     return Consumer<ProductSettingsProvider>(
-      builder: (context, pSettings, child){
+      builder: (context, pSettings, child) {
         return ModalProgressHUD(
           color: Colors.grey.withOpacity(1),
           inAsyncCall: pSettings.isChangeAvailibilityLoading ? true : false,
@@ -43,7 +43,7 @@ class _ProductSettingScreenState extends State<ProductSettingScreen> {
                   prefixIcon: UIDATAIcons.searchIcon,
                   fillcolor: Colors.white,
                   labelText: "Search For a Product",
-                  onChanged: (value){
+                  onChanged: (value) {
                     pSettings.filterList(value);
                   },
                 ),
@@ -53,7 +53,7 @@ class _ProductSettingScreenState extends State<ProductSettingScreen> {
                         child: Center(
                         child: CircularProgressIndicator(),
                       ))
-                    : pSettings.hasError
+                    : pSettings.allProducts!.isEmpty
                         ? const Center(child: Text("No Products To Show"))
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
