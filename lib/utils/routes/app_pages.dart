@@ -59,18 +59,17 @@ import '../bindings/more_screen_binding/more_screen_binding.dart';
 import '../bindings/more_screen_binding/settings/settings_bindings.dart';
 import '../bindings/notification/notification_binding.dart';
 import '../bindings/products/product_settings_bindings.dart';
-import '../bindings/splash_binding.dart';
 
 class AppPages {
-  static const INITIAL = Routes.splashRoutes;
+  //static const INITIAL = Routes.splashRoutes;
 
   static final routes = [
     // < -------------------- Splash Page ----------------->
-    GetPage(
-      name: Routes.splashRoutes,
-      page: () => SplashScreen(),
-      binding: SplashBindings(),
-    ),
+    // GetPage(
+    //   name: Routes.splashRoutes,
+    //   page: () => SplashScreen(),
+    //   binding: SplashBindings(),
+    // ),
 
     //<-------------- Forgotpassword Page Define ------------------>
     GetPage(

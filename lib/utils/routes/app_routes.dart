@@ -2,7 +2,7 @@ abstract class Routes {
   static const homeRoutes = '/home';
   static const loginRoutes = '/login';
   static const forgotpasswordRoutes = '/forgotpassword';
-  static const splashRoutes = '/splash';
+  // static const splashRoutes = '/splash';
   static const signuproutes = '/signuproutes';
   static const accountInfoRoute = '/accountinfo';
   static const changeEmail = '/changeemail';

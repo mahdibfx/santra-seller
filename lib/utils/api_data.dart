@@ -26,4 +26,5 @@ class ApiData {
   static const privacyApi = "${mainurl}new_privacy";
   static const cartApi = "${mainurl}cart_options";
   static const promoDiscountApi = "${mainurl}discount";
+  static const forceUpdateApi = "${mainurl}force_update";
 }
