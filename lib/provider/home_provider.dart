@@ -36,6 +36,11 @@ class HomeProvider extends ChangeNotifier {
   var orderMonthly = '0'.obs;
   var profitMonthly = '0'.obs;
 
+  int newItemCountManual = 0;
+  int previousManualCount = 0;
+  int latestManualCount = 0;
+
+
   var sellerStatusNew;
   List<String> years = [
     '2022',

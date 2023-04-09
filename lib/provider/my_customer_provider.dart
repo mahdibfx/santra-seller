@@ -89,6 +89,7 @@ class MyCustomerProvider extends ChangeNotifier {
 
   isComingFromCart(bool value) {
     isShowDetailScreen = value;
+    disposeValues();
     notifyListeners();
   }
 
@@ -196,9 +197,9 @@ class MyCustomerProvider extends ChangeNotifier {
         var data = ViewAllCustomers.fromJson(decodedJson);
         allNewCustomers = data.data![0].customers!.toList();
         allFilterCustomers = allNewCustomers;
-
+notifyListeners();
         citiesList = data.data?[0].cities?.toList();
-        viewAllCustomers = viewAllCustomersFromJson(response.body);
+        // viewAllCustomers = viewAllCustomersFromJson(response.body);
         notifyListeners();
       } else {
         hasViewCustomerError = true;

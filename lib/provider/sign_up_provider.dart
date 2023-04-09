@@ -98,6 +98,7 @@ class SignUpProvider extends ChangeNotifier {
           "Error while loading data, Please try again", UIDataColors.redColor);
     }
   }
+  
 
   Future<void> signupMethod() async {
     if (form.currentState!.validate()) {
@@ -115,15 +116,25 @@ class SignUpProvider extends ChangeNotifier {
         body['user_number'] = phoneController.text;
         body['seller_city'] = sellerCity ?? "";
         body['seller_address'] = addressController.text;
-        body['gcms_code'] = prefs.getString("fcmToken").toString();
+        body['gcms_code'] = firebaseMessagingToken.toString();
         request.fields.addAll(body);
+        print(body);
         var streamedResponse = await request.send();
         var response = await http.Response.fromStream(streamedResponse);
+        var data = jsonDecode(response.body);
+
         if (response.statusCode == 200) {
+
           CommonSnackbar.getSnackbar("Success", "Account has been registered",
               UIDataColors.primaryColor);
+              clearValuesAfterSignup();
           Get.offAllNamed(Routes.loginRoutes);
-        } else {
+        } else if(response.statusCode == 430){
+          CommonSnackbar.getSnackbar("Error", "User already registered",
+              UIDataColors.primaryColor);
+
+        }
+         else {
           notifyListeners();
           CommonSnackbar.getSnackbar(
               "Error",

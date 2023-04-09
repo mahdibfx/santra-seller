@@ -59,7 +59,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                       },
                     ),
                     SpacingHeight.heightlistspacing20,
-                    _.hasViewCustomerError || _.allFilterCustomers!.isEmpty
+                    _.allFilterCustomers!.isEmpty
                         ? const Text("No Customers Found")
                         : ListView.builder(
                             shrinkWrap: true,

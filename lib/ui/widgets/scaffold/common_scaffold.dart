@@ -290,29 +290,42 @@ class CommonScaffold extends StatelessWidget {
       endDrawer: showDrawer ? ClipDrawer() : null,
       extendBodyBehindAppBar: extendBodyBehindAppBar,
       body: OrientationBuilder(builder: (context, orientation) {
-        return Container(
-          decoration: backGroundImage == null
-              ? BoxDecoration(
-                  color: backgroundcolor ?? const Color(0xffffffff),
+        return Stack(
+          
+          children: [
+           backgroundcolor != null?  SvgPicture.asset(
+          UIDATAIcons.addIcon,
+          alignment: Alignment.center,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+        ) : SizedBox(),
+            Container(
+              decoration: backGroundImage == null
+                  ? BoxDecoration(
+                      color: backgroundcolor ?? const Color(0xffffffff),
 
-                  // gradient: new LinearGradient(
-                  //   colors: [
-                  //     const Color(0xFFd7e1ec),
-                  //     const Color(0xFFffffff),
-                  //   ],
-                  //   begin: Alignment(1.0, 1.0),
-                  // ),
-                )
-              : BoxDecoration(
-                  image: DecorationImage(
-                      image: backGroundImage != null
-                          ? AssetImage(backGroundImage!)
-                          : const AssetImage(UIDataImage.splash),
-                      fit: BoxFit.cover),
-                ),
-          width: (MediaQuery.of(context).size.width.ceil()).toDouble(),
-          height: (MediaQuery.of(context).size.height.ceil()).toDouble(),
-          child: bodyData,
+                      // gradient: new LinearGradient(
+                      //   colors: [
+                      //     const Color(0xFFd7e1ec),
+                      //     const Color(0xFFffffff),
+                      //   ],
+                      //   begin: Alignment(1.0, 1.0),
+                      // ),
+                    )
+                  : BoxDecoration(
+                      // color: backgroundcolor ?? const Color(0xffffffff),
+                      // image: DecorationImage(
+                      //     image: backGroundImage != null
+                      //         ? 
+                      //         AssetImage(backGroundImage!)
+                      //         : const AssetImage(UIDataImage.splash),
+                      //     fit: BoxFit.cover),
+                    ),
+              width: (MediaQuery.of(context).size.width.ceil()).toDouble(),
+              height: (MediaQuery.of(context).size.height.ceil()).toDouble(),
+              child: bodyData,
+            ),
+          ],
         );
       }),
       floatingActionButton: Provider.of<SplashProvider>(context, listen: false)
