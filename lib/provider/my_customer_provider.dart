@@ -35,6 +35,7 @@ class MyCustomerProvider extends ChangeNotifier {
   bool isAddCustomerLoading = false;
   bool isUpdateCustomerLoading = false;
   bool receiptPaymentMethord = true;
+  bool onlinePayment = false;
   dynamic finalSubmitData;
   String? cidForUpdate;
   bool popupPaymentlink = false;
@@ -115,7 +116,7 @@ class MyCustomerProvider extends ChangeNotifier {
       var response = await http.Response.fromStream(streamedResponse);
       if (response.statusCode == 200) {
         disposeValues();
-        Get.to(() => MyCustomerScreen());
+        Get.to(() => const MyCustomerScreen());
         viewCustomers();
       } else {
         generalException();
@@ -169,7 +170,7 @@ class MyCustomerProvider extends ChangeNotifier {
               ));
         } else {
           disposeValues();
-          Get.to(() => MyCustomerScreen());
+          Get.to(() => const MyCustomerScreen());
           viewCustomers();
         }
       } else {
@@ -197,7 +198,7 @@ class MyCustomerProvider extends ChangeNotifier {
         var data = ViewAllCustomers.fromJson(decodedJson);
         allNewCustomers = data.data![0].customers!.toList();
         allFilterCustomers = allNewCustomers;
-notifyListeners();
+        notifyListeners();
         citiesList = data.data?[0].cities?.toList();
         // viewAllCustomers = viewAllCustomersFromJson(response.body);
         notifyListeners();
@@ -212,7 +213,10 @@ notifyListeners();
 
   void filterList(String value) {
     var valueList = allNewCustomers
-        .where((e) => (e.customerName.toString().toLowerCase().contains(value.trim().toLowerCase())))
+        .where((e) => (e.customerName
+            .toString()
+            .toLowerCase()
+            .contains(value.trim().toLowerCase())))
         .toList();
     allFilterCustomers = valueList;
     notifyListeners();
@@ -339,34 +343,43 @@ notifyListeners();
     return await orderSubmitByLink(context);
   }
 
-
-    Future deleteCustomers(String customerID) async {
+  Future deleteCustomers(String customerID) async {
     // try {
-      updateCustomerLoadingState(true);
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? sellerCode = prefs.getString("sellercode");
-      var url = Uri.parse(ApiData.deleteCustomerApi);
-      Map<String, dynamic> body = {};
-      body['seller_code'] = sellerCode;
-      body['customer_id'] = customerID;
-      var response = await http.post(url, body: body);
-      if (response.statusCode == 200) {
-        var decodedJson = jsonDecode(response.body);
-        print(decodedJson);
-         viewCustomers();
-         showToast("Success", 'Successfully deleted customer');
-        notifyListeners();
-      } else {
-        hasViewCustomerError = true;
-      }
+    updateCustomerLoadingState(true);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? sellerCode = prefs.getString("sellercode");
+    var url = Uri.parse(ApiData.deleteCustomerApi);
+    Map<String, dynamic> body = {};
+    body['seller_code'] = sellerCode;
+    body['customer_id'] = customerID;
+    var response = await http.post(url, body: body);
+    if (response.statusCode == 200) {
+      var decodedJson = jsonDecode(response.body);
+      print(decodedJson);
+      viewCustomers();
+      showToast("Success", 'Successfully deleted customer');
+      notifyListeners();
+    } else {
+      hasViewCustomerError = true;
+    }
     // } catch (e) {
     //   generalException();
     // }
     updateCustomerLoadingState(false);
+    notifyListeners();
   }
 
-  updatePaymentMethord(bool value) {
-    receiptPaymentMethord = value;
+  paymentMethodReceipt() {
+    receiptPaymentMethord = true;
+    onlinePayment = false;
+    print("Receipt");
+    notifyListeners();
+  }
+
+  paymentMethodOnline() {
+    receiptPaymentMethord = false;
+    onlinePayment = true;
+    print("Online");
     notifyListeners();
   }
 
@@ -379,8 +392,8 @@ notifyListeners();
   void showToast(String title, String msg) {
     Get.snackbar(
       title,
-      '$msg',
-      duration: Duration(seconds: 2),
+      msg,
+      duration: const Duration(seconds: 2),
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Colors.grey[900],
       colorText: Colors.white,

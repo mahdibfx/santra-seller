@@ -70,43 +70,103 @@ class ViewCustomerDetails extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text("Choose the payment methord",
+                  const Text("Choose the payment methord",
                           style: UIDataTextStyles.dialogMsg)
-                      .paddingOnly(top: 40, bottom: 20),
+                      .paddingOnly(top: 40, bottom: 10),
+                  // Row(
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Expanded(
+                  //         child: Text("Online payment",
+                  //             style: UIDataTextStyles.h3)),
+                  //     Expanded(
+                  //         child: FlutterSwitch(
+                  //       activeColor: UIDataColors.primaryColor,
+                  //       width: size.width * 0.11,
+                  //       toggleColor: UIDataColors.whiteColor,
+                  //       padding: 2,
+                  //       height: size.height * 0.03,
+                  //       value: _.receiptPaymentMethord,
+                  //       onToggle: (val) {
+                  //         _.updatePaymentMethord(!_.receiptPaymentMethord);
+                  //         // setState(() {
+                  //         //   widget.currentStatus = val;
+                  //         //   widget.productSettingsController
+                  //         //       .toggleStatus(widget.index);
+                  //         //   widget.productSettingsController
+                  //         //       .changeProductAvailability(
+                  //         //           widget.productSettingsController
+                  //         //               .allProducts?[widget.index!].productCode,
+                  //         //           widget.currentStatus == true
+                  //         //               ? "enable"
+                  //         //               : "out_of_stock");
+                  //         // });
+                  //       },
+                  //     )),
+                  //     Expanded(
+                  //         child: Text("Pay on receipt",
+                  //             style: UIDataTextStyles.h3))
+                  //   ],
+                  // ),
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                          child: Text("Online payment",
-                              style: UIDataTextStyles.h3)),
-                      Expanded(
-                          child: FlutterSwitch(
-                        activeColor: UIDataColors.primaryColor,
-                        width: size.width * 0.11,
-                        toggleColor: UIDataColors.whiteColor,
-                        padding: 2,
-                        height: size.height * 0.03,
-                        value: _.receiptPaymentMethord,
-                        onToggle: (val) {
-                          _.updatePaymentMethord(!_.receiptPaymentMethord);
-                          // setState(() {
-                          //   widget.currentStatus = val;
-                          //   widget.productSettingsController
-                          //       .toggleStatus(widget.index);
-                          //   widget.productSettingsController
-                          //       .changeProductAvailability(
-                          //           widget.productSettingsController
-                          //               .allProducts?[widget.index!].productCode,
-                          //           widget.currentStatus == true
-                          //               ? "enable"
-                          //               : "out_of_stock");
-                          // });
-                        },
-                      )),
-                      Expanded(
-                          child: Text("Pay on receipt",
-                              style: UIDataTextStyles.h3))
+                      SizedBox(
+                        width: 30,
+                        child: Transform.scale(
+                          scale: 1.15,
+                          child: Checkbox(
+                            side: const BorderSide(
+                              width: 0.8,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                            checkColor: UIDataColors.primaryColor,
+                            fillColor: MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                              return UIDataColors.primaryColor;
+                            }),
+                            value: _.onlinePayment,
+                            onChanged: (value) {
+                              _.paymentMethodOnline();
+                            },
+                          ),
+                        ),
+                      ),
+                      const Text("Online Payment", style: UIDataTextStyles.h3)
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 30,
+                        child: Transform.scale(
+                          scale: 1.15,
+                          child: Checkbox(
+                            side: const BorderSide(
+                              width: 0.8,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                            checkColor: UIDataColors.primaryColor,
+                            fillColor: MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                              return UIDataColors.primaryColor;
+                            }),
+                            value: _.receiptPaymentMethord,
+                            onChanged: (value) {
+                              _.paymentMethodReceipt();
+                            },
+                          ),
+                        ),
+                      ),
+                      const Text("Pay on receipt", style: UIDataTextStyles.h3)
                     ],
                   ),
                   Padding(
