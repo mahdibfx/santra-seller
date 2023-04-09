@@ -105,6 +105,9 @@ class MyCustomerCard extends StatelessWidget {
                         children: [
                           InkWell(
                             onTap: () {
+                              forView
+                                  ? Get.to(() => ViewCustomerDetails(
+                                  customerDetail: customer)) :
                               Get.to(() => EditCustomerDetails(
                                   index: customerIndex));
                             },
@@ -120,7 +123,7 @@ class MyCustomerCard extends StatelessWidget {
                           const Divider(
                             color: UIDataColors.primaryColor,
                           ).marginAll(2),
-                          InkWell(
+                       forView ? const SizedBox():   InkWell(
                             onTap: () {
                               print('delereeeeeeee');
                               showpopup('Do you realy want to delete this customer', customer.id.toString(),
@@ -159,7 +162,7 @@ void showpopup(String statement, String customerID, context) {
             content: Text(statement),
             actions: [
               Container(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 height: 60,
                 child: Row(
                   children: [
