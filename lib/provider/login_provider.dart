@@ -127,6 +127,11 @@ class LoginProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void flushLoginDataData() {
+    sellerCode = null;
+    sellerStatus = null;
+    notifyListeners();
+  }
   // Future<String> sellerSt() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
   //   sellerStatus = prefs.get('sellerStatus');

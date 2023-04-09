@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/controllers/auth_controller/login_controller.dart';
 import 'package:santra_seller/controllers/home_controller/home_controller.dart';
+import 'package:santra_seller/controllers/splash_controller.dart';
 import 'package:santra_seller/provider/home_provider.dart';
 import 'package:santra_seller/provider/login_provider.dart';
 
@@ -112,7 +113,9 @@ class CommonScaffold extends StatelessWidget {
       this.showActions = true});
 
   Widget myBottomBar(context) =>
-      Provider.of<LoginProvider>(context, listen: false).sellerCode == null
+      Provider.of<SplashProvider>(context, listen: false).sellerCode == null &&
+              Provider.of<LoginProvider>(context, listen: false).sellerCode ==
+                  null
           ? const SizedBox()
           : BottomAppBar(
               shape: const CircularNotchedRectangle(),
@@ -237,11 +240,18 @@ class CommonScaffold extends StatelessWidget {
               backgroundColor: appbarcolor,
               title: GestureDetector(
                 onTap: () {
-                  if (Provider.of<LoginProvider>(context, listen: false)
-                          .sellerCode ==
-                      null) {
+                  if (Provider.of<SplashProvider>(context, listen: false)
+                              .sellerCode ==
+                          null &&
+                      Provider.of<LoginProvider>(context, listen: false)
+                              .sellerCode ==
+                          null) {
+                    null;
                   } else {
-                    Get.offAllNamed(Routes.homeRoutes);
+                    if (Get.currentRoute == Routes.homeRoutes) {
+                    } else {
+                      Get.offAllNamed(Routes.homeRoutes);
+                    }
                   }
                 },
                 child: SvgPicture.asset(
@@ -252,9 +262,12 @@ class CommonScaffold extends StatelessWidget {
                 ),
               ),
               actions: showActions == true
-                  ? Provider.of<LoginProvider>(context, listen: false)
-                              .sellerCode ==
-                          null
+                  ? Provider.of<SplashProvider>(context, listen: false)
+                                  .sellerCode ==
+                              null &&
+                          Provider.of<LoginProvider>(context, listen: false)
+                                  .sellerCode ==
+                              null
                       ? []
                       : [
                           CartIconWithBadge(
@@ -302,39 +315,40 @@ class CommonScaffold extends StatelessWidget {
           child: bodyData,
         );
       }),
-      floatingActionButton:
-          Provider.of<LoginProvider>(context, listen: false).sellerCode == null
-              ? const SizedBox()
-              : showFAB
-                  ? Visibility(
-                      visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
-                      child: Consumer<HomeProvider>(
-                          builder: (context, homeProvider, child) {
-                        return CustomFloat(
-                          builder: centerDocked
-                              ? const Text(
-                                  "5",
-                                  style: TextStyle(
-                                      color: Colors.red, fontSize: 10.0),
-                                )
-                              : null,
-                          icon: floatingIcon,
-                          // ignore: unrelated_type_equality_checks
-                          qrCallback: homeProvider.sellerStatusNew != "done"
-                              ? () {
-                                  customOntapDialog(
-                                      'Alert',
-                                      'Your status is not approved.',
-                                      'Okay', () {
-                                    print(homeProvider.sellerStatusNew);
-                                    Get.back();
-                                  });
-                                }
-                              : qrCallback,
-                        );
-                      }),
-                    )
-                  : null,
+      floatingActionButton: Provider.of<SplashProvider>(context, listen: false)
+                      .sellerCode ==
+                  null &&
+              Provider.of<LoginProvider>(context, listen: false).sellerCode ==
+                  null
+          ? const SizedBox()
+          : showFAB
+              ? Visibility(
+                  visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
+                  child: Consumer<HomeProvider>(
+                      builder: (context, homeProvider, child) {
+                    return CustomFloat(
+                      builder: centerDocked
+                          ? const Text(
+                              "5",
+                              style:
+                                  TextStyle(color: Colors.red, fontSize: 10.0),
+                            )
+                          : null,
+                      icon: floatingIcon,
+                      // ignore: unrelated_type_equality_checks
+                      qrCallback: homeProvider.sellerStatusNew != "done"
+                          ? () {
+                              customOntapDialog('Alert',
+                                  'Your status is not approved.', 'Okay', () {
+                                print(homeProvider.sellerStatusNew);
+                                Get.back();
+                              });
+                            }
+                          : qrCallback,
+                    );
+                  }),
+                )
+              : null,
       floatingActionButtonLocation: centerDocked
           ? FloatingActionButtonLocation.centerDocked
           : FloatingActionButtonLocation.endFloat,
