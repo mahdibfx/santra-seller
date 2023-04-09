@@ -22,13 +22,20 @@ class HomeProvider extends ChangeNotifier {
   bool isCancelOrderLoading = false;
   List<Order> santraOrders = [];
   List<Order> filteredSantraOrders = [];
+    List<Order> pendingOrders = [];
+  List<Order> filteredPendingOrders = [];
+      List<Order> manualOrders = [];
+  List<Order> filteredManualOrders = [];
+    List<Order> allOrders = [];
+    List<Order> filteredAllOrders = [];
+
   String selectedOrderOption = '';
 
   String? sellerCode;
   HomeData? homeData;
   var orderMonthly = '0'.obs;
   var profitMonthly = '0'.obs;
-  List<Order> allOrders = [];
+
   var sellerStatusNew;
   List<String> years = [
     '2022',
@@ -133,6 +140,11 @@ class HomeProvider extends ChangeNotifier {
           allOrders.addAll(homeData!.pendingOrders[0].pendingOrders);
           santraOrders = homeData!.santraOrders[0].santraOrders;
           filteredSantraOrders = santraOrders;
+          pendingOrders = homeData!.pendingOrders[0].pendingOrders;
+          filteredPendingOrders = pendingOrders;
+          manualOrders = homeData!.manualOrders[0].manualOrders;
+          filteredManualOrders = manualOrders;
+          filteredAllOrders = allOrders;
           isLoading = false;
           notifyListeners();
         } else {
@@ -258,19 +270,55 @@ class HomeProvider extends ChangeNotifier {
   }
 
   void filterSantraOrders() {
-    // var valueList = santraOrders
-    //     .where((e) =>
-    //         _doesActionSatisfy(e, filterController.text.trim().toLowerCase()))
-    //     .toList();
-    filteredSantraOrders = santraOrders.where((e) {
-      bool matchesCondition1 = e.orderNumber
-          .toString()
-          .toLowerCase()
-          .contains(filterController.text.trim());
-      bool matchesCondition2 =
-          e.orderStatus.toString().toLowerCase().contains(selectedOrderOption);
-      return matchesCondition1 && matchesCondition2;
-    }).toList();
+    var valueList = santraOrders
+        .where((e) =>
+            e.orderNumber.contains(filterController.text.trim().toLowerCase()))
+        .toList();
+    filteredSantraOrders = valueList
+        .where((e) => e.orderStatus
+            .toString()
+            .toLowerCase()
+            .contains(selectedOrderOption))
+        .toList();
+    notifyListeners();
+  }
+    void filterPendingOrders() {
+    var valueList = pendingOrders
+        .where((e) =>
+            e.orderNumber.contains(filterController.text.trim().toLowerCase()))
+        .toList();
+    filteredPendingOrders = valueList
+        .where((e) => e.orderStatus
+            .toString()
+            .toLowerCase()
+            .contains(selectedOrderOption))
+        .toList();
+    notifyListeners();
+  }
+     void filtermanualOrders() {
+    var valueList = manualOrders
+        .where((e) =>
+            e.orderNumber.contains(filterController.text.trim().toLowerCase()))
+        .toList();
+    filteredManualOrders = valueList
+        .where((e) => e.orderStatus
+            .toString()
+            .toLowerCase()
+            .contains(selectedOrderOption))
+        .toList();
+    notifyListeners();
+  }
+     void filterAllOrders() {
+    var valueList = allOrders
+        .where((e) =>
+            e.orderNumber.contains(filterController.text.trim().toLowerCase()))
+        .toList();
+    filteredAllOrders = valueList
+        .where((e) => e.orderStatus
+            .toString()
+            .toLowerCase()
+            .contains(selectedOrderOption))
+        .toList();
     notifyListeners();
   }
 
@@ -278,12 +326,19 @@ class HomeProvider extends ChangeNotifier {
     selectedOrderOption = value;
     notifyListeners();
     filterSantraOrders();
+     filterPendingOrders();
+     filtermanualOrders();
+     filterAllOrders();
   }
 
   resetOrderGroupValue() {
     selectedOrderOption = '';
+    filterController.clear();
     notifyListeners();
     filterSantraOrders();
+     filterPendingOrders();
+     filtermanualOrders();
+     filterAllOrders();
   }
 
 //////////////////////////////--------Filteration END--------///////////
