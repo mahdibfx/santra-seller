@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:santra_seller/ui/screens/more_setting/my_customer/edit_customer_details.dart';
 import 'package:santra_seller/utils/routes/app_routes.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
 
@@ -17,6 +18,7 @@ class MyCustomerCard extends StatelessWidget {
   final String number;
   final bool forView;
   final Customer customer;
+  final int customerIndex;
 
   const MyCustomerCard({
     super.key,
@@ -24,6 +26,7 @@ class MyCustomerCard extends StatelessWidget {
     required this.number,
     required this.forView,
     required this.customer,
+    required this.customerIndex,
   });
 
   @override
@@ -102,8 +105,8 @@ class MyCustomerCard extends StatelessWidget {
                         children: [
                           InkWell(
                             onTap: () {
-                              Get.to(() => ViewCustomerDetails(
-                                  customerDetail: customer));
+                              Get.to(() => EditCustomerDetails(
+                                  index: customerIndex));
                             },
                             child: SvgPicture.asset(
                               forView
