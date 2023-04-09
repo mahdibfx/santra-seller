@@ -82,6 +82,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                                   }
                                 },
                                 child: MyCustomerCard(
+                                  customerIndex: index,
                                   customer: _.allFilterCustomers![index],
                                   name: _.allFilterCustomers?[index].customerName ??
                                       "No Name",
