@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'dart:convert';
 import 'package:flutter_svg/svg.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/cards/manual_order_detail_card.dart';
@@ -37,133 +38,145 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                 child: Center(
                 child: CircularProgressIndicator(),
               ))
-            : SafeArea(
-                child: SingleChildScrollView(
-                  child: Stack(
+            : ModalProgressHUD(
+                inAsyncCall: _.isAcceptOrderLoading ||
+                    _.isCancelOrderLoading ||
+                    _.isRejectOrderLoading,
+                progressIndicator: const CircularProgressIndicator(),
+                child: SafeArea(
+                  child: SingleChildScrollView(
+                    child: Stack(
                       alignment: AlignmentDirectional.center,
-                    children: [
-                      Column(
-                        children: [
-                          HeadingWithIcon(
-                              icon: UIDATAIcons.orderBascketBorder,
-                              btntxt: "Manual Orders"),
-                              SpacingHeight.heightlistspacing10,
-                          Row(
-                            children: [
-                              Expanded(
-                                child: SizedBox(
-                                  // width: 100,
-                                  child: CommonTextField(
-                                    prefixIcon: UIDATAIcons.searchIcon,
-                                    isTextHidden: false,
-                                    hintText: 'Enter the order number',
-                                    fillcolor: UIDataColors.whiteColor,
-                                    keyboardType: TextInputType.text,
-                                    controller: _.filterController,
-                                    onChanged: (value) {
-                                      _.filtermanualOrders();
-                                    },
-                                  ),
-                                ),
-                              ),
-                              SpacingWidth.widthlistspacing,
-                              GestureDetector(
-                                onTap: () {
-                                  newShhet(context);
-                                },
-                                child: Container(
-                                  width: 45,
-                                  height: 45,
-                                  decoration: const BoxDecoration(
-                                    color: UIDataColors.primaryColor,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  child: Center(
-                                    child: SvgPicture.asset(
-                                      UIDATAIcons.filterIcon,
-                                      color: Colors.white,
+                      children: [
+                        Column(
+                          children: [
+                            HeadingWithIcon(
+                                icon: UIDATAIcons.orderBascketBorder,
+                                btntxt: "Manual Orders"),
+                            SpacingHeight.heightlistspacing10,
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: SizedBox(
+                                    // width: 100,
+                                    child: CommonTextField(
+                                      prefixIcon: UIDATAIcons.searchIcon,
+                                      isTextHidden: false,
+                                      hintText: 'Enter the order number',
+                                      fillcolor: UIDataColors.whiteColor,
+                                      keyboardType: TextInputType.text,
+                                      controller: _.filterController,
+                                      onChanged: (value) {
+                                        _.filtermanualOrders();
+                                      },
                                     ),
                                   ),
                                 ),
-                              )
-                            ],
-                          ),
-                          SpacingHeight.heightlistspacing20,
-                          ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: _.filteredManualOrders.length,
-                              itemBuilder: (context, index) {
-                                var santraList = _.filteredManualOrders[index];
-                                return santraList.orderStatus == 'new_order' ||
-                                        santraList.orderStatus ==
-                                            'assigned_3pl' ||
-                                        santraList.orderStatus ==
-                                            'payment_pending'
-                                    ? CustomCard(
-                                        title: 'Card',
-                                        orderStatus:
-                                            santraList.orderStatus.toString(),
-                                        totalPrice: santraList.totalOrderAmount
-                                            .toString(),
-                                        orderRemarks:
-                                            santraList.orderRemarks.toString(),
-                                        orderTime: santraList.orderDateStamp
-                                            .toString(),
-                                        deliveryTime:
-                                            santraList.advanceTime.toString(),
-                                        customerName:
-                                            santraList.customerName.toString(),
-                                        paymentMethod:
-                                            santraList.paymentMethod.toString(),
-                                        orderNumber:
-                                            santraList.orderNumber.toString(),
-                                        paymentLink:
-                                            santraList.paymentLink.toString(),
-                                        orderItemList: santraList.orderItems,
-                                      )
-                                    : ManualOrderCard(
-                                        orderStatus:
-                                            santraList.orderStatus.toString(),
-                                        totalPrice: santraList.totalOrderAmount
-                                            .toString(),
-                                        orderTime: santraList.orderDateStamp
-                                            .toString(),
-                                        deliveryTime:
-                                            santraList.advanceTime.toString(),
-                                        customerName:
-                                            santraList.customerName.toString(),
-                                        paymentMethod:
-                                            santraList.paymentMethod.toString(),
-                                        orderNumber:
-                                            santraList.orderNumber.toString(),
-                                        orderItemList: santraList.orderItems,
-                                        colorCode:
-                                            santraList.colorCode.toString(),
-                                      );
-                              }),
-                          SpacingHeight.heightlistspacing50
-                        ],
-                      ).paddingSymmetric(horizontal: 15),
-                      _.isAcceptOrderLoading ||
-                              _.isCancelOrderLoading ||
-                              _.isRejectOrderLoading
-                          ? Opacity(
-                              opacity: 0.8,
-                              child: ModalBarrier(
-                                  dismissible: false,
-                                  color: Colors.black.withOpacity(0.5)),
-                            )
-                          : Container(),
-                      _.isAcceptOrderLoading ||
-                              _.isCancelOrderLoading ||
-                              _.isRejectOrderLoading
-                          ? const Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          : Container()
-                    ],
+                                SpacingWidth.widthlistspacing,
+                                GestureDetector(
+                                  onTap: () {
+                                    newShhet(context);
+                                  },
+                                  child: Container(
+                                    width: 45,
+                                    height: 45,
+                                    decoration: const BoxDecoration(
+                                      color: UIDataColors.primaryColor,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                    ),
+                                    child: Center(
+                                      child: SvgPicture.asset(
+                                        UIDATAIcons.filterIcon,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            SpacingHeight.heightlistspacing20,
+                            ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: _.filteredManualOrders.length,
+                                itemBuilder: (context, index) {
+                                  var santraList =
+                                      _.filteredManualOrders[index];
+                                  return santraList.orderStatus ==
+                                              'new_order' ||
+                                          santraList.orderStatus ==
+                                              'assigned_3pl' ||
+                                          santraList.orderStatus ==
+                                              'payment_pending'
+                                      ? CustomCard(
+                                          title: 'Card',
+                                          orderStatus:
+                                              santraList.orderStatus.toString(),
+                                          totalPrice: santraList
+                                              .totalOrderAmount
+                                              .toString(),
+                                          orderRemarks: santraList.orderRemarks
+                                              .toString(),
+                                          orderTime: santraList.orderDateStamp
+                                              .toString(),
+                                          deliveryTime:
+                                              santraList.advanceTime.toString(),
+                                          customerName: santraList.customerName
+                                              .toString(),
+                                          paymentMethod: santraList
+                                              .paymentMethod
+                                              .toString(),
+                                          orderNumber:
+                                              santraList.orderNumber.toString(),
+                                          paymentLink:
+                                              santraList.paymentLink.toString(),
+                                          orderItemList: santraList.orderItems,
+                                        )
+                                      : ManualOrderCard(
+                                          orderStatus:
+                                              santraList.orderStatus.toString(),
+                                          totalPrice: santraList
+                                              .totalOrderAmount
+                                              .toString(),
+                                          orderTime: santraList.orderDateStamp
+                                              .toString(),
+                                          deliveryTime:
+                                              santraList.advanceTime.toString(),
+                                          customerName: santraList.customerName
+                                              .toString(),
+                                          paymentMethod: santraList
+                                              .paymentMethod
+                                              .toString(),
+                                          orderNumber:
+                                              santraList.orderNumber.toString(),
+                                          orderItemList: santraList.orderItems,
+                                          colorCode:
+                                              santraList.colorCode.toString(),
+                                        );
+                                }),
+                            SpacingHeight.heightlistspacing50
+                          ],
+                        ).paddingSymmetric(horizontal: 15),
+                        // _.isAcceptOrderLoading ||
+                        //         _.isCancelOrderLoading ||
+                        //         _.isRejectOrderLoading
+                        //     ? Opacity(
+                        //         opacity: 0.8,
+                        //         child: ModalBarrier(
+                        //             dismissible: false,
+                        //             color: Colors.black.withOpacity(0.5)),
+                        //       )
+                        //     : Container(),
+                        // _.isAcceptOrderLoading ||
+                        //         _.isCancelOrderLoading ||
+                        //         _.isRejectOrderLoading
+                        //     ? const Center(
+                        //         child: CircularProgressIndicator(),
+                        //       )
+                        //     : Container()
+                      ],
+                    ),
                   ),
                 ),
               );
@@ -171,7 +184,7 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
     );
   }
 
-Future<dynamic> newShhet(BuildContext context) {
+  Future<dynamic> newShhet(BuildContext context) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         isScrollControlled: true,
@@ -194,7 +207,7 @@ Future<dynamic> newShhet(BuildContext context) {
                         child: SizedBox(
                             child: Row(
                           children: [
-                            Text('reset'),
+                            const Text('reset'),
                             SpacingWidth.widthlistspacing5,
                             SvgPicture.asset(
                               UIDATAIcons.resetIcon,
@@ -214,7 +227,7 @@ Future<dynamic> newShhet(BuildContext context) {
                         child: SizedBox(
                             child: Row(
                           children: [
-                            Text('Back'),
+                            const Text('Back'),
                             SpacingWidth.widthlistspacing5,
                             SvgPicture.asset(
                               UIDATAIcons.forwardArrow,
