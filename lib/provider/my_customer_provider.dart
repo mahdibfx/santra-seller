@@ -143,7 +143,7 @@ class MyCustomerProvider extends ChangeNotifier {
       var body = <String, String>{};
       body['seller_code'] = sellerCode ?? "";
       body['customer_name'] = fnController.text;
-      body['customer_mobile'] = mobileController.text;
+      body['customer_mobile'] = phoneCon.toString();
       body['customer_email'] = emailController.text;
       body['customer_city'] = city ?? "";
       body['building_number'] = buildingController.text;
