@@ -338,6 +338,32 @@ class MyCustomerProvider extends ChangeNotifier {
     return await orderSubmitByLink(context);
   }
 
+
+    Future deleteCustomers(String customerID) async {
+    // try {
+      updateCustomerLoadingState(true);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? sellerCode = prefs.getString("sellercode");
+      var url = Uri.parse(ApiData.deleteCustomerApi);
+      Map<String, dynamic> body = {};
+      body['seller_code'] = sellerCode;
+      body['customer_id'] = customerID;
+      var response = await http.post(url, body: body);
+      if (response.statusCode == 200) {
+        var decodedJson = jsonDecode(response.body);
+        print(decodedJson);
+         viewCustomers();
+         showToast("Success", 'Successfully deleted customer');
+        notifyListeners();
+      } else {
+        hasViewCustomerError = true;
+      }
+    // } catch (e) {
+    //   generalException();
+    // }
+    updateCustomerLoadingState(false);
+  }
+
   updatePaymentMethord(bool value) {
     receiptPaymentMethord = value;
     notifyListeners();

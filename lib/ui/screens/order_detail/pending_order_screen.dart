@@ -38,6 +38,7 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
             : SafeArea(
                 child: SingleChildScrollView(
                   child: Stack(
+                    alignment: AlignmentDirectional.center,
                     children: [
                       Column(
                         children: [
