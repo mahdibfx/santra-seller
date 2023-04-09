@@ -237,14 +237,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             Row(
                               children: [
                                 Expanded(
-                                  child: MyDropdown(
-                                    label: "Year",
-                                    options: value.years,
-                                    selectedOption: value.selectedYear,
-                                    prefixIcon: UIDATAIcons.calendarIcon,
-                                    onChanged: (newVal) {
-                                      value.selectedYear = newVal;
-                                    },
+                                  child: Container(
+                                    width: 10,
+                                    child: MyDropdown(
+                                      label: "Year",
+                                      options: value.years,
+                                      selectedOption: value.selectedYear,
+                                      prefixIcon: UIDATAIcons.calendarIcon,
+                                      onChanged: (newVal) {
+                                        value.selectedYear = newVal;
+                                      },
+                                    ),
                                   ),
                                 ),
                                 SpacingWidth.widthlistspacing15,

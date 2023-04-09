@@ -16,12 +16,11 @@ class AccountInfoController extends GetxController {
   String? email;
   String? firstName;
   String? lastName;
+
   RegExp emailRegex = RegExp(
     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$',
   );
   DateTime? userDob;
-
-  var formatteUserDob;
 
   Future pickUserDob(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -31,10 +30,10 @@ class AccountInfoController extends GetxController {
         lastDate: DateTime.now());
     if (picked != null) {
       userDob = picked;
-      formatteUserDob = DateFormat('yyyy-MM-dd').format(userDob!);
-      if (kDebugMode) {
-        print(formatteUserDob.toString());
-      }
+      // date = DateFormat('yyyy-MM-dd').format(userDob!);
+      // if (kDebugMode) {
+      //   print(formatteUserDob.toString());
+      // }
     }
     update();
   }
@@ -54,7 +53,7 @@ class AccountInfoController extends GetxController {
       emailController.text = email!;
       fNameController.text = firstName!;
       lNameController.text = lastName!;
-      formatteUserDob = userDob;
+      userDob = date;
     }
     update();
   }
@@ -64,7 +63,7 @@ class AccountInfoController extends GetxController {
     prefs.setString("email", emailController.text);
     prefs.setString("firstname", fNameController.text);
     prefs.setString("lastname", lNameController.text);
-    prefs.setString("dob", formatteUserDob.toString());
+    prefs.setString("dob", userDob.toString());
     update();
   }
 
@@ -81,7 +80,7 @@ class AccountInfoController extends GetxController {
         body['first_name'] = fNameController.text;
         body['last_name'] = lNameController.text;
         body['user_email'] = emailController.text;
-        body['date_of_birth'] = formatteUserDob.toString();
+        body['date_of_birth'] = userDob.toString();
         request.fields.addAll(body);
         var streamedResponse = await request.send();
         var response = await http.Response.fromStream(streamedResponse);

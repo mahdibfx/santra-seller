@@ -52,7 +52,6 @@ class DeleteAccount extends StatelessWidget {
                           fillcolor: Colors.white,
                           keyboardType: TextInputType.phone,
                           labelText: "Your Mobile Number",
-                          hintText: "971#########",
                           maxLength: 12,
                           validator: (val) {
                             String? name;

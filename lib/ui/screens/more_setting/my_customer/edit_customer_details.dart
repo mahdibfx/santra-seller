@@ -68,7 +68,6 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
                     CommonTextField(
                       controller: _.mobileController,
                       labelText: "Mobile",
-                      hintText: "971#########",
                       prefixIcon: UIDATAIcons.callIcon,
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,

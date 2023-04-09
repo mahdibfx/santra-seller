@@ -30,59 +30,62 @@ class MyDropdown extends StatefulWidget {
 class _MyDropdownState extends State<MyDropdown> {
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField(
-        isExpanded: true,
-        validator: widget.validator,
-        items: widget.options.map((String selOption) {
-          return DropdownMenuItem(
-              value: selOption,
-              child: Text(
-                selOption,
-                style: const TextStyle(
-                    color: Color.fromARGB(255, 0, 0, 0),
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'Markpro',
-                    letterSpacing: 0.0),
-              ));
-        }).toList(),
-        onChanged: widget.onChanged,
-        icon: Padding(
-          padding: const EdgeInsets.only(right: 8.0),
-          child: SvgPicture.asset(UIDATAIcons.arrowDown),
-        ),
-        value: widget.selectedOption ?? "",
-        decoration: InputDecoration(
-          label: Text(
-            widget.label ?? "",
-            style: const TextStyle(color: Colors.black),
+    return ButtonTheme(
+      alignedDropdown: true,
+      child: DropdownButtonFormField(
+          isExpanded: true,
+          validator: widget.validator,
+          items: widget.options.map((String selOption) {
+            return DropdownMenuItem(
+                value: selOption,
+                child: Text(
+                  selOption,
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 0, 0, 0),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Markpro',
+                      letterSpacing: 0.0),
+                ));
+          }).toList(),
+          onChanged: widget.onChanged,
+          icon: Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: SvgPicture.asset(UIDATAIcons.arrowDown),
           ),
-          prefixIcon: widget.prefixIcon != null
-              ? GestureDetector(
-                  child: SvgPicture.asset(
-                  widget.prefixIcon!,
-                  color: UIDataColors.blackText,
-                ).paddingSymmetric(vertical: 11))
-              : null,
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: const Color(0xff757575).withOpacity(0.7),
+          value: widget.selectedOption ?? "",
+          decoration: InputDecoration(
+            label: Text(
+              widget.label ?? "",
+              style: const TextStyle(color: Colors.black),
             ),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(15),
+            prefixIcon: widget.prefixIcon != null
+                ? GestureDetector(
+                    child: SvgPicture.asset(
+                    widget.prefixIcon!,
+                    color: UIDataColors.blackText,
+                  ).paddingSymmetric(vertical: 11))
+                : null,
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: const Color(0xff757575).withOpacity(0.7),
+              ),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(15),
+              ),
             ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: const Color(0xff757575).withOpacity(0.7),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: const Color(0xff757575).withOpacity(0.7),
+              ),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(15),
+              ),
             ),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(15),
-            ),
-          ),
-          contentPadding: const EdgeInsets.only(left: 10),
-          filled: true,
-          fillColor: Colors.white,
-        ));
+            contentPadding: const EdgeInsets.only(left: 10),
+            filled: true,
+            fillColor: Colors.white,
+          )),
+    );
   }
 }

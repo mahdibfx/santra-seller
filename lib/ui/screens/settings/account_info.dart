@@ -85,8 +85,9 @@ class AccountInfo extends StatelessWidget {
                       },
                       prefixIcon: UIDATAIcons.calendarIcon,
                       fieldHeight: 50,
-                      value:
-                          DateFormat('yyyy-MM-dd').format(_.formatteUserDob!),
+                      value: _.userDob != null
+                          ? DateFormat('yyyy-MM-dd').format(_.userDob!)
+                          : _.userDob.toString(),
                     ),
                     SpacingHeight.heightlistspacing20,
                     Obx(() => _.isUpdateAccInfoLoading.isTrue

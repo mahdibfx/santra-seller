@@ -32,6 +32,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
     await Future.microtask(() => context
         .read<MyCustomerProvider>()
         .isComingFromCart(widget.isComingFromCart));
+
     //     final provider = Provider.of<SignUpProvider>(context);
     // provider.getCities();
 
@@ -40,16 +41,19 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
 
   @override
   void initState() {
+    final provider = Provider.of<SignUpProvider>(context, listen: false);
+    provider.getCities();
     hitAllApis();
+
     super.initState();
   }
 
-  @override
-  void didChangeDependencies() {
-    final provider = Provider.of<SignUpProvider>(context);
-    provider.getCities(); // OK
-    super.didChangeDependencies();
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   final provider = Provider.of<SignUpProvider>(context);
+  //   provider.getCities(); // OK
+  //   super.didChangeDependencies();
+  // }
 
   Widget bodyData() {
     return Consumer<MyCustomerProvider>(
@@ -87,7 +91,6 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       labelText: "Mobile",
                       prefixIcon: UIDATAIcons.callIcon,
                       maxLength: 12,
-                      hintText: "971#########",
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,

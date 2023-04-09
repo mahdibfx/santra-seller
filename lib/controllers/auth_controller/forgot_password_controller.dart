@@ -18,7 +18,7 @@ class ForgotPasswordController extends GetxController {
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmNewPasswordController = TextEditingController();
   TextEditingController otpController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
+  TextEditingController phoneController = TextEditingController(text: "971");
   String? otpCode;
   String? sellerCode;
   updateOtpLoadingState(bool value) {

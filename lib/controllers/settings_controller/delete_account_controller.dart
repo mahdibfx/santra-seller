@@ -15,7 +15,7 @@ class DeleteAccountController extends GetxController {
   String? phoneNumber;
   TextEditingController explainationController = TextEditingController();
   TextEditingController otpController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
+  TextEditingController phoneController = TextEditingController(text: "971");
   bool isdelAccLoading = false;
   bool isOtpLoading = false;
   String? otpCode;
