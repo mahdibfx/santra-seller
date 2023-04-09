@@ -294,7 +294,7 @@ class CommonScaffold extends StatelessWidget {
           
           children: [
            backgroundcolor != null?  SvgPicture.asset(
-          UIDATAIcons.addIcon,
+          UIDATAIcons.backgroundSVG,
           alignment: Alignment.center,
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
@@ -313,13 +313,8 @@ class CommonScaffold extends StatelessWidget {
                       // ),
                     )
                   : BoxDecoration(
-                      // color: backgroundcolor ?? const Color(0xffffffff),
-                      // image: DecorationImage(
-                      //     image: backGroundImage != null
-                      //         ? 
-                      //         AssetImage(backGroundImage!)
-                      //         : const AssetImage(UIDataImage.splash),
-                      //     fit: BoxFit.cover),
+                      color: backgroundcolor ??  Colors.transparent,
+                      
                     ),
               width: (MediaQuery.of(context).size.width.ceil()).toDouble(),
               height: (MediaQuery.of(context).size.height.ceil()).toDouble(),
