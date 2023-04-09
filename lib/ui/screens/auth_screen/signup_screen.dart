@@ -33,8 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   PrivacyController priCont = Get.put(PrivacyController());
   // SignUpController regCont = Get.put(SignUpController());
   hitAllApis() async {
-    await Future.microtask(
-        () => context.read<SignUpProvider>().onInit());
+    await Future.microtask(() => context.read<SignUpProvider>().onInit());
   }
 
   @override
@@ -137,8 +136,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             : UIDATAIcons.viewIcon,
                         toggleFunction: () {
                           _.passwordSecuretext = !_.passwordSecuretext;
-                        // @todo 
-                        //setstate the value
+                          setState(() {});
                         },
                         isTextHidden: _.passwordSecuretext,
                         validator: (val) {
@@ -160,8 +158,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         toggleFunction: () {
                           _.confirmPasswordSecuretext =
                               !_.confirmPasswordSecuretext;
-                            // @todo 
-                        //setstate the value
+                          setState(() {});
                         },
                         isTextHidden: _.confirmPasswordSecuretext,
                         validator: (val) {
@@ -212,8 +209,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           value: _.isAgree,
                           onToggle: (val) {
                             _.isAgree = val;
-                              // @todo 
-                        //setstate the value
+                            setState(() {});
                           },
                         ),
                         SpacingWidth.widthlistspacing5,
