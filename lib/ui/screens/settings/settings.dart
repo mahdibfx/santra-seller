@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:santra_seller/controllers/settings_controller/delete_account_controller.dart';
 import 'package:santra_seller/controllers/settings_controller/logout_controller.dart';
 import 'package:santra_seller/controllers/splash_controller.dart';
+import 'package:santra_seller/provider/cart_provider.dart';
 import 'package:santra_seller/provider/login_provider.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 
@@ -81,6 +82,8 @@ class Settings extends StatelessWidget {
                           .flushSplashData();
                       Provider.of<LoginProvider>(context, listen: false)
                           .flushLoginDataData();
+                      Provider.of<CartProvider>(context, listen: false)
+                          .flushCart();
                     });
                   });
                 },
