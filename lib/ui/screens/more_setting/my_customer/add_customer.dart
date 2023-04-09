@@ -87,13 +87,18 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       },
                     ),
                     CommonTextField(
-                      controller: _.mobileController,
+                      //controller: _.mobileController,
                       labelText: "Mobile",
+                      initVal: "971",
                       prefixIcon: UIDATAIcons.callIcon,
                       maxLength: 12,
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
+                      onChanged: (val) {
+                        _.phoneCon = val;
+                        print(_.phoneCon);
+                      },
                       validator: (val) {
                         String? name;
                         if (val.isEmpty || val.length < 12) {

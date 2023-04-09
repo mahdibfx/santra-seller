@@ -45,7 +45,7 @@ class SignUpProvider extends ChangeNotifier {
   TextEditingController businessController = TextEditingController();
   TextEditingController fullNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
+  TextEditingController phoneController = TextEditingController(text: "971");
   TextEditingController passwordController = TextEditingController();
   TextEditingController conformPasswordController = TextEditingController();
   TextEditingController addressController = TextEditingController();
@@ -64,14 +64,13 @@ class SignUpProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   void onInit() async {
     locale = [
       {'name': 'English', 'locale': const Locale("en", "US")},
       {'name': 'عربي', 'locale': const Locale("ar", "SA")}
     ];
-   await  getFcmToken();
-   await getCities();
+    await getFcmToken();
+    await getCities();
 
     notifyListeners();
   }
@@ -87,7 +86,7 @@ class SignUpProvider extends ChangeNotifier {
         citiesList = data
             .map((d) => (d as Map<String, dynamic>)["city_name"].toString())
             .toList();
-            notifyListeners();
+        notifyListeners();
         print(citiesList);
       } else {
         CommonSnackbar.getSnackbar(
@@ -98,7 +97,6 @@ class SignUpProvider extends ChangeNotifier {
           "Error while loading data, Please try again", UIDataColors.redColor);
     }
   }
-  
 
   Future<void> signupMethod() async {
     if (form.currentState!.validate()) {
@@ -124,17 +122,14 @@ class SignUpProvider extends ChangeNotifier {
         var data = jsonDecode(response.body);
 
         if (response.statusCode == 200) {
-
           CommonSnackbar.getSnackbar("Success", "Account has been registered",
               UIDataColors.primaryColor);
-              clearValuesAfterSignup();
+          clearValuesAfterSignup();
           Get.offAllNamed(Routes.loginRoutes);
-        } else if(response.statusCode == 430){
-          CommonSnackbar.getSnackbar("Error", "User already registered",
-              UIDataColors.primaryColor);
-
-        }
-         else {
+        } else if (response.statusCode == 430) {
+          CommonSnackbar.getSnackbar(
+              "Error", "User already registered", UIDataColors.primaryColor);
+        } else {
           notifyListeners();
           CommonSnackbar.getSnackbar(
               "Error",
