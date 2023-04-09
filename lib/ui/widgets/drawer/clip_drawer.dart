@@ -1,3 +1,7 @@
+import 'package:flutter_svg/svg.dart';
+import 'package:get/route_manager.dart';
+import 'package:santra_seller/utils/routes/app_routes.dart';
+
 import '../../../utils/uidata/textStyles.dart';
 import '/utils/uidata.dart';
 import 'package:flutter/material.dart';
@@ -6,87 +10,78 @@ class ClipDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final homecont = Get.find<HomeController>();
-    return ClipPath(
-      clipper: OvalRightBorderClipper(),
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      child: Drawer(
-        child: Container(
-          padding: const EdgeInsets.only(left: 16.0, right: 40),
-          decoration: BoxDecoration(
-            color: UIDataColors.whiteColor,
-          ),
-          child: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.power_settings_new,
-                        color: UIDataColors.grayColor2,
+    return Drawer(
+      child: Container(
+        padding: const EdgeInsets.only(left: 16.0, right: 40),
+        decoration: const BoxDecoration(
+          color: UIDataColors.whiteColor,
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                    alignment: Alignment.centerLeft, child: const CloseButton()
+                    //  IconButton(
+                    //   icon: Icon(
+                    //     Icons.close,
+                    //     color: UIDataColors.whiteColor,
+                    //   ),
+                    //   onPressed: () async {
+                    //     Scaffold.of(context).closeEndDrawer();
+                    //   },
+                    // ),
+                    ),
+                Center(
+                  child: Column(
+                    children: [
+                      SvgPicture.asset(
+                        UIDataImage.sellerLogoIconSVG,
+                        height: 40,
+                        width: 40,
+                        fit: BoxFit.fitWidth,
                       ),
-                      onPressed: () async {
-                        // await homecont.signOut();
-                      },
-                    ),
+                      SpacingHeight.heightlistspacing10,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Santra",
+                              style: UIDataTextStyles.h1
+                                  .copyWith(fontSize: 20, letterSpacing: 2)),
+                          Text("Seller",
+                              style: UIDataTextStyles.h1.copyWith(
+                                  fontSize: 14,
+                                  letterSpacing: 2,
+                                  color: UIDataColors.secondaryColor)),
+                        ],
+                      ),
+                    ],
                   ),
-                  Container(
-                    height: 90,
-                    width: 90,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(width: 2, color: Colors.orange),
-                      // image: const DecorationImage(
-                      //     image: CachedNetworkImageProvider(
-                      //         'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTD8u1Nmrk78DSX0v2i_wTgS6tW5yvHSD7o6g&usqp=CAU')),
-                    ),
-                  ),
-                  SizedBox(height: 5.0),
-                  Text(
-                    "Hello",
-                    style: UIDataTextStyles.title,
-                  ),
-                  Text(
-                    "Berkay Mohamed",
-                    style: UIDataTextStyles.title,
-                  ),
-                  SpacingHeight.heightlistspacingdrawer,
-                  itemList(
-                      Icon(Icons.perm_identity, color: UIDataColors.grayColor2),
-                      "My Account"),
-                  Divider(),
-                  SpacingHeight.heightlistspacing15,
-                  itemList(
-                      Icon(Icons.notifications_outlined,
-                          color: UIDataColors.grayColor2),
-                      "Notification"),
-                  Divider(),
-                  SpacingHeight.heightlistspacing15,
-                  itemList(
-                      Icon(Icons.settings_outlined,
-                          color: UIDataColors.grayColor2),
-                      "Settings"),
-                  Divider(),
-                  SpacingHeight.heightlistspacing15,
-                  itemList(
-                      Icon(Icons.stacked_line_chart,
-                          color: UIDataColors.grayColor2),
-                      "Statistics"),
-                  Divider(),
-                  SpacingHeight.heightlistspacing15,
-                  itemList(
-                      Icon(Icons.star_border, color: UIDataColors.grayColor2),
-                      "Subscriptions"),
-                  Divider(),
-                  SpacingHeight.heightlistspacing15,
-                  itemList(
-                      Icon(Icons.bookmark_border,
-                          color: UIDataColors.grayColor2),
-                      "Saved"),
-                ],
-              ),
+                ),
+                SpacingHeight.heightlistspacing20,
+                itemList(() {
+                  Get.toNamed(Routes.aboutscreen);
+                }, UIDATAIcons.santraVectorIcon, "About Us"),
+                const Divider(
+                  height: 30,
+                ),
+                itemList(() {
+                  Get.toNamed(Routes.contactscreen);
+                }, UIDATAIcons.whatsappIcon, "Contact Customer Service"),
+                const Divider(
+                  height: 30,
+                ),
+                itemList(() {
+                  Get.toNamed(Routes.languageSettings);
+                }, UIDATAIcons.languageIcon, "Language"),
+                const Divider(
+                  height: 30,
+                ),
+                itemList(() {
+                  Get.toNamed(Routes.privacy);
+                }, UIDATAIcons.securityIcon, "Privacy Policy"),
+              ],
             ),
           ),
         ),
@@ -94,13 +89,18 @@ class ClipDrawer extends StatelessWidget {
     );
   }
 
-  Widget itemList(Widget icon, String title) {
-    return Row(
-      children: [
-        icon,
-        SpacingWidth.widthlistspacing,
-        Text(title, style: UIDataTextStyles.title),
-      ],
+  Widget itemList(var onTap, String icon, String title) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Row(
+        children: [
+          SvgPicture.asset(icon),
+          SpacingWidth.widthlistspacing,
+          Text(title,
+              style:
+                  UIDataTextStyles.title.copyWith(fontWeight: FontWeight.w600)),
+        ],
+      ),
     );
   }
 }
