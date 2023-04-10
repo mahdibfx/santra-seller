@@ -146,7 +146,7 @@ class HomeProvider extends ChangeNotifier {
           homeData = newdata.data[0];
           allOrders.addAll(homeData!.santraOrders[0].santraOrders);
           allOrders.addAll(homeData!.manualOrders[0].manualOrders);
-          allOrders.addAll(homeData!.pendingOrders[0].pendingOrders);
+          // allOrders.addAll(homeData!.pendingOrders[0].pendingOrders);
           santraOrders = homeData!.santraOrders[0].santraOrders;
           filteredSantraOrders = santraOrders;
           pendingOrders = homeData!.pendingOrders[0].pendingOrders;

@@ -169,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Get.toNamed(Routes.allOrderScreen);
                               },
                               heading: 'All Orders',
-                              count: _.allOrders.length.toString(),
+                              count: _.filteredAllOrders.length.toString(),
                               imageAsset: UIDataImage.allOrderSVG,
                             ),
                           ],
