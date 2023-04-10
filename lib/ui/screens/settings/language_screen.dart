@@ -50,11 +50,11 @@ class LanguageSettings extends StatelessWidget {
                     //             child: CircularProgressIndicator(),
                     //           )
                     //         :
-                    PrimaryButtonWithIcon(
-                      btntxt: "Save",
-                      iconImage: UIDATAIcons.saveIcon,
-                      onPressed: () {},
-                    )
+                    // PrimaryButtonWithIcon(
+                    //   btntxt: "Save",
+                    //   iconImage: UIDATAIcons.saveIcon,
+                    //   onPressed: () {},
+                    // )
 
                     //),
                   ],

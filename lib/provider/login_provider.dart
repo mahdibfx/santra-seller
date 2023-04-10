@@ -123,7 +123,7 @@ class LoginProvider extends ChangeNotifier {
     prefs.setString("password", password.text);
     prefs.setString("sellerStatus", data.message);
     sellerCode = prefs.getString('sellercode');
-    sellerStatus = prefs.get('sellerStatus');
+    sellerStatus = prefs.getString('sellerStatus');
     notifyListeners();
   }
 

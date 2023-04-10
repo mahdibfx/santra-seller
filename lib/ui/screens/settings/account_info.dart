@@ -33,7 +33,7 @@ class AccountInfo extends StatelessWidget {
                     SpacingHeight.heightlistspacing15,
                     CommonTextField(
                       controller: _.emailController,
-                      labelText: "Email",
+                      labelText: "Number",
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
                       prefixIcon: UIDATAIcons.emailIcon,
@@ -49,7 +49,7 @@ class AccountInfo extends StatelessWidget {
                     SpacingHeight.heightlistspacing5,
                     CommonTextField(
                       controller: _.fNameController,
-                      labelText: "First Name",
+                      labelText: "Business Name",
                       isTextHidden: false,
                       prefixIcon: UIDATAIcons.userIcon,
                       fillcolor: UIDataColors.whiteColor,
@@ -65,7 +65,7 @@ class AccountInfo extends StatelessWidget {
                     SpacingHeight.heightlistspacing5,
                     CommonTextField(
                       controller: _.lNameController,
-                      labelText: "Last Name",
+                      labelText: "Contact Person",
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
                       prefixIcon: UIDATAIcons.userIcon,
@@ -78,17 +78,17 @@ class AccountInfo extends StatelessWidget {
                         }
                       },
                     ),
-                    SpacingHeight.heightlistspacing5,
-                    TappableTextField(
-                      ontap: () {
-                        _.pickUserDob(context);
-                      },
-                      prefixIcon: UIDATAIcons.calendarIcon,
-                      fieldHeight: 50,
-                      value: _.userDob != null
-                          ? DateFormat('yyyy-MM-dd').format(_.userDob!)
-                          : _.userDob.toString(),
-                    ),
+                    // SpacingHeight.heightlistspacing5,
+                    // TappableTextField(
+                    //   ontap: () {
+                    //     _.pickUserDob(context);
+                    //   },
+                    //   prefixIcon: UIDATAIcons.calendarIcon,
+                    //   fieldHeight: 50,
+                    //   value: _.userDob != null
+                    //       ? DateFormat('yyyy-MM-dd').format(_.userDob!)
+                    //       : "",
+                    // ),
                     SpacingHeight.heightlistspacing20,
                     Obx(() => _.isUpdateAccInfoLoading.isTrue
                             ? const Center(child: CircularProgressIndicator())
