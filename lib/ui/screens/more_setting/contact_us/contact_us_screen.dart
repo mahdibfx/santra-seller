@@ -127,12 +127,12 @@ class ContactUsScreen extends StatelessWidget {
               ),
               SpacingHeight.heightlistspacing5,
               const Text(
-                'app.santra.ae',
+                'santra.ae',
                 style: UIDataTextStyles.title,
               ),
               SpacingHeight.heightlistspacing5,
               const Text(
-                'Santra D-tech-497G',
+                'Office# 154 D-Tech',
                 style: UIDataTextStyles.title,
               ),
               const Text(

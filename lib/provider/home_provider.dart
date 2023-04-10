@@ -20,6 +20,7 @@ class HomeProvider extends ChangeNotifier {
   bool isLoading = true;
   bool isAcceptOrderLoading = false;
   bool isRejectOrderLoading = false;
+  bool isOrderReadyLoading = false;
   bool isCancelOrderLoading = false;
   List<Order> santraOrders = [];
   List<Order> filteredSantraOrders = [];
@@ -43,6 +44,7 @@ class HomeProvider extends ChangeNotifier {
 
   var sellerStatusNew;
   List<String> years = [
+    'Select Year',
     '2022',
     '2023',
     '2024',
@@ -54,6 +56,7 @@ class HomeProvider extends ChangeNotifier {
     '2030'
   ];
   List<String> months = [
+    'Select Month',
     '01',
     '02',
     '03',
@@ -67,8 +70,8 @@ class HomeProvider extends ChangeNotifier {
     '11',
     '12'
   ];
-  var selectedYear = '2023';
-  var selectedMonth = '01';
+  var selectedYear = 'Select Year';
+  var selectedMonth = 'Select Month';
   updateCancelOrderLoading(bool value) {
     isCancelOrderLoading = value;
     notifyListeners();
@@ -76,6 +79,11 @@ class HomeProvider extends ChangeNotifier {
 
   updateAcceptOrderLoading(bool value) {
     isAcceptOrderLoading = value;
+    notifyListeners();
+  }
+
+  updateOrderReadyLoading(bool value) {
+    isOrderReadyLoading = value;
     notifyListeners();
   }
 
@@ -227,6 +235,7 @@ class HomeProvider extends ChangeNotifier {
     }
     updateAcceptOrderLoading(false);
   }
+
   Future rejectOrderMethod(String orderNumber) async {
     updateRejectOrderLoading(true);
     notifyListeners();
@@ -259,8 +268,8 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future readyOrderMethod(String orderNumber) async {
-    isFilterOrderLoading =  true; // check for loader
-    notifyListeners();
+    updateOrderReadyLoading(true);
+
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       var url = Uri.parse("${ApiData.mainurl}order_ready");
@@ -269,22 +278,21 @@ class HomeProvider extends ChangeNotifier {
       body['order_number'] = orderNumber.toString();
       var response = await http.post(url, body: body);
       if (response.statusCode == 200) {
-        CommonSnackbar.getSnackbar(
-            "Success", "Order has been mark as ready ", UIDataColors.primaryColor);
-        Get.offAll(()=>const HomeScreen());
+        CommonSnackbar.getSnackbar("Success", "Order has been mark as ready",
+            UIDataColors.primaryColor);
+        Get.offAll(() => const HomeScreen());
       } else {
         generalException();
-        notifyListeners();
+
         // print(response.statusCode);
         // print("Unable to reject order");
       }
     } catch (e) {
-      notifyListeners();
-
       CommonSnackbar.getSnackbar(
           "Oops", "Something went wrong", UIDataColors.redColor);
     }
-     isFilterOrderLoading =  false;
+    updateOrderReadyLoading(false);
+    notifyListeners();
   }
 
   //////////////////////////////--------Filteration START--------///////////

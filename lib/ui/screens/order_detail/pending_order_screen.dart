@@ -45,7 +45,7 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
                           HeadingWithIcon(
                               icon: UIDATAIcons.orderBascketBorder,
                               btntxt: "Pending Orders"),
-                              SpacingHeight.heightlistspacing10,
+                          SpacingHeight.heightlistspacing10,
                           Row(
                             children: [
                               Expanded(
@@ -156,7 +156,8 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
                           : Container(),
                       _.isAcceptOrderLoading ||
                               _.isCancelOrderLoading ||
-                              _.isRejectOrderLoading
+                              _.isRejectOrderLoading ||
+                              _.isOrderReadyLoading
                           ? const Center(
                               child: CircularProgressIndicator(),
                             )
@@ -169,7 +170,7 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
     );
   }
 
-Future<dynamic> newShhet(BuildContext context) {
+  Future<dynamic> newShhet(BuildContext context) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         isScrollControlled: true,
