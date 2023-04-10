@@ -37,7 +37,7 @@ class HomeCardWidget extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(15)),
                   color: Colors.white,
-                  border: Border.all(color: Colors.blue)),
+                  border: Border.all(color:  isSantraCard ==  true && santraNewCount.toString() != '0' ? Color(0xffC32C4C) : Colors.blue)),
               child: Padding(
                 padding: const EdgeInsets.all(0.0),
                 child: Column(
@@ -70,19 +70,20 @@ class HomeCardWidget extends StatelessWidget {
                 ),
               ),
             ),
+            isSantraCard ?
               Positioned(
-                right: 27,
+                right: 15,
                     top: -10,
                child: Container(
-                                      height: 20,
-                                      width: 20,
+                                      height: 24,
+                                      width: 24,
                                       decoration: BoxDecoration(
                                         color: Color(0xffC32C4C),
-                                        borderRadius: BorderRadius.all(Radius.circular(10))
+                                        borderRadius: BorderRadius.all(Radius.circular(100))
                                       ),
-                                      child: Center(child: Text('2'),),
+                                      child: Center(child: Text(santraNewCount.toString(), style: UIDataTextStyles.countTitle.copyWith(fontSize: 12,color: Colors.white),),),
                                     ),
-             ),
+             ) :SizedBox(),
           ],
         ),
       ),

@@ -131,6 +131,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         Row(
                           children: [
                             HomeCardWidget(
+                              santraNewCount: '4',
+                              isSantraCard: true,
                               onTap: () {
                                 Get.toNamed(Routes.santraorders);
                               },
