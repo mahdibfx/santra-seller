@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/controllers/home_controller/home_controller.dart';
+import 'package:santra_seller/ui/widgets/cards/my_customer_card.dart';
 import 'package:santra_seller/utils/uidata.dart';
 
 import '../../../models/home_model.dart';
@@ -279,28 +280,32 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                       ),
                     ),
                   ),
-                  widget.orderStatus.toLowerCase() == 'accepted' ? 
-                   Consumer<CartProvider>(builder: (context, cartProvider, child) {
-                    return RaisedGradientButton(
-                      gradient: const LinearGradient(
-                        colors: <Color>[
-                          UIDataColors.primaryColor,
-                          UIDataColors.primaryColor,
-                        ],
-                      ),
-                      btntxt: "Ready Order",
-                      iconImage: SvgPicture.asset(
-                        UIDATAIcons.sendIcon,
-                        height: 25,
-                        width: 25,
-                        fit: BoxFit.fitWidth,
-                      ),
-                      buttontxtColor: UIDataColors.whiteColor,
-                      onPressed: () {
-                      _.readyOrderMethod(widget.orderNumber);
-                      },
-                    ).marginAll(10);
-                  }) : SizedBox(),
+                  widget.orderStatus.toLowerCase() == 'accepted'
+                      ? Consumer<CartProvider>(
+                          builder: (context, cartProvider, child) {
+                          return RaisedGradientButton(
+                            gradient: const LinearGradient(
+                              colors: <Color>[
+                                UIDataColors.primaryColor,
+                                UIDataColors.primaryColor,
+                              ],
+                            ),
+                            btntxt: "Ready Order",
+                            iconImage: SvgPicture.asset(
+                              UIDATAIcons.sendIcon,
+                              height: 25,
+                              width: 25,
+                              fit: BoxFit.fitWidth,
+                            ),
+                            buttontxtColor: UIDataColors.whiteColor,
+                            onPressed: () {
+                              confirmationPopup("Are you sure?", context, () {
+                                _.readyOrderMethod(widget.orderNumber);
+                              });
+                            },
+                          ).marginAll(10);
+                        })
+                      : SizedBox(),
                   // Consumer<CartProvider>(builder: (context, cartProvider, child) {
                   //   return RaisedGradientButton(
                   //     gradient: const LinearGradient(

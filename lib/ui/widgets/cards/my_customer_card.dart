@@ -206,3 +206,62 @@ void showpopup(String statement, String customerID, context) {
     },
   );
 }
+
+void confirmationPopup(String statement, context, var onYes) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Consumer<MyCustomerProvider>(builder: (context, _, child) {
+        return AlertDialog(
+          title: const Text("Confirmation"),
+          content: Text(statement),
+          actions: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              height: 60,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: BorderButton(
+                      // height: 35,
+                      // width: 140,
+                      btntxt: 'Cancel',
+                      borderColor: Colors.red,
+                      buttontxtColor: Colors.red,
+                      backEndColor: Colors.white,
+                      // backEndColor: Colors.blue,
+                      onPressed: () {
+                        Get.back();
+                      },
+                      //  () {
+                      //   _.acceptOrdermethod(widget.orderNumber);
+                      // },
+                    ),
+                  ),
+                  SpacingWidth.widthlistspacing15,
+                  Expanded(
+                    child: BorderButton(
+                      // height: 35,
+                      // width: 140,
+                      btntxt: 'Ok',
+                      borderColor: Colors.blue,
+                      buttontxtColor: Colors.white,
+                      // backEndColor: Colors.blue,
+                      onPressed: () {
+                        Get.back();
+                        onYes();
+                      },
+                      //  () {
+                      //   _.acceptOrdermethod(widget.orderNumber);
+                      // },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      });
+    },
+  );
+}

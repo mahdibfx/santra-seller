@@ -194,6 +194,8 @@ class MyCustomerProvider extends ChangeNotifier {
   }
 
   Future viewCustomers() async {
+    allFilterCustomers!.clear();
+    notifyListeners();
     try {
       updateCustomerLoadingState(true);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -218,6 +220,7 @@ class MyCustomerProvider extends ChangeNotifier {
       generalException();
     }
     updateCustomerLoadingState(false);
+    notifyListeners();
   }
 
   void filterList(String value) {

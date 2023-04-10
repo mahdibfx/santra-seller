@@ -47,7 +47,7 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
                           HeadingWithIcon(
                               icon: UIDATAIcons.orderBascketBorder,
                               btntxt: "All Orders"),
-                              SpacingHeight.heightlistspacing10,
+                          SpacingHeight.heightlistspacing10,
                           Row(
                             children: [
                               Expanded(
@@ -150,7 +150,8 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
                   ),
                   _.isAcceptOrderLoading ||
                           _.isCancelOrderLoading ||
-                          _.isRejectOrderLoading
+                          _.isRejectOrderLoading ||
+                          _.isOrderReadyLoading
                       ? Opacity(
                           opacity: 0.8,
                           child: ModalBarrier(
@@ -171,7 +172,7 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
     );
   }
 
- Future<dynamic> newShhet(BuildContext context) {
+  Future<dynamic> newShhet(BuildContext context) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         isScrollControlled: true,
