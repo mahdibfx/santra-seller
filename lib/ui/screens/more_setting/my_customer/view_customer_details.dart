@@ -1,24 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/ui/widgets/cards/my_customer_card.dart';
 import 'package:santra_seller/ui/widgets/scaffold/common_scaffold.dart';
 import 'package:santra_seller/utils/routes/app_routes.dart';
 import 'package:santra_seller/utils/uidata.dart';
-
-import '../../../../controllers/more_screen_controller.dart/my_customer/my_customer_controller.dart';
 import '../../../../models/customers/view_all_customers.dart';
 import '../../../../provider/my_customer_provider.dart';
 import '../../../../utils/uidata/textStyles.dart';
 import '../../../widgets/add_manual_order_widgets/payment_link.dart';
 import '../../../widgets/buttons/icon_setting_button.dart';
 import '../../../widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
-import '../../../widgets/textfields/common_textfield.dart';
 import 'card_customer_detail.dart';
 
 class ViewCustomerDetails extends StatelessWidget {
@@ -109,66 +101,54 @@ class ViewCustomerDetails extends StatelessWidget {
                   //             style: UIDataTextStyles.h3))
                   //   ],
                   // ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 30,
-                        child: Transform.scale(
-                          scale: 1.15,
-                          child: Checkbox(
-                            side: const BorderSide(
-                              width: 0.8,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                            checkColor: UIDataColors.primaryColor,
-                            fillColor: MaterialStateProperty.resolveWith<Color>(
-                                (Set<MaterialState> states) {
-                              return UIDataColors.primaryColor;
-                            }),
-                            value: _.onlinePayment,
-                            onChanged: (value) {
-                              _.paymentMethodOnline();
-                            },
-                          ),
-                        ),
+                  SizedBox(
+                    height: 35,
+                    child: CheckboxListTile(
+                      checkboxShape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      contentPadding: EdgeInsets.zero,
+                      title: const Text("Online payment",
+                          style: UIDataTextStyles.h3),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      side: const BorderSide(
+                        width: 0.8,
                       ),
-                      const Text("Online Payment", style: UIDataTextStyles.h3)
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 30,
-                        child: Transform.scale(
-                          scale: 1.15,
-                          child: Checkbox(
-                            side: const BorderSide(
-                              width: 0.8,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                            checkColor: UIDataColors.primaryColor,
-                            fillColor: MaterialStateProperty.resolveWith<Color>(
-                                (Set<MaterialState> states) {
-                              return UIDataColors.primaryColor;
-                            }),
-                            value: _.receiptPaymentMethord,
-                            onChanged: (value) {
-                              _.paymentMethodReceipt();
-                            },
-                          ),
-                        ),
+                      activeColor: UIDataColors.primaryColor,
+                      checkColor: UIDataColors.primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
-                      const Text("Pay on receipt", style: UIDataTextStyles.h3)
-                    ],
+                      value: _.onlinePayment,
+                      onChanged: (value) {
+                        _.paymentMethodOnline();
+                      },
+                    ),
                   ),
+
+                  SizedBox(
+                    height: 35,
+                    child: CheckboxListTile(
+                      checkboxShape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      contentPadding: EdgeInsets.zero,
+                      title: const Text("Pay on receipt",
+                          style: UIDataTextStyles.h3),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      side: const BorderSide(
+                        width: 0.8,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      activeColor: UIDataColors.primaryColor,
+                      checkColor: UIDataColors.primaryColor,
+                      value: _.receiptPaymentMethord,
+                      onChanged: (value) {
+                        _.paymentMethodReceipt();
+                      },
+                    ),
+                  ),
+
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
                     child: PrimaryButtonWithIcon(
