@@ -374,7 +374,7 @@ class CartProvider extends ChangeNotifier {
       "payment_method": "cash", // Send cash
       "c_address":
           '${customerDetail.buildingType} ${customerDetail.buildingNumber} ${customerDetail.customerCity}', //Address of the customer
-      "area_customer": "", // area of the customer
+      "area_customer": customerDetail.customerCity, // area of the customer
       "building_number":
           customerDetail.buildingNumber, // building  of the customer
       "order_remarks":
@@ -417,7 +417,7 @@ class CartProvider extends ChangeNotifier {
         // notifyListeners();
         //        Get.offAllNamed(Routes.homeRoutes);
         Get.offAll(() => const HomeScreen());
-        showToast("Success", 'Successfully Completed');
+        showToast("Success", 'Order Placed Successfully');
         flushCart();
       } else {
         showToast("Failed", 'Unable to proceed');

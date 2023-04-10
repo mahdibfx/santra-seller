@@ -62,6 +62,5 @@ class UIDATAIcons {
   static const resetIcon = "$iconsDir/reset.svg";
   static const forwardArrow = "$iconsDir/arrow_forward.svg";
   static const backgroundSVG = "$iconsDir/bgnew.svg";
-
-
+  static const businessIcon = "$iconsDir/briefcase.svg";
 }
