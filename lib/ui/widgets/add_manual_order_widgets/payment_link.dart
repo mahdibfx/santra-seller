@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/controllers/more_screen_controller.dart/my_customer/my_customer_controller.dart';
+import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../provider/my_customer_provider.dart';
@@ -85,12 +86,12 @@ class PaymentLinkBottomSheet extends StatelessWidget {
                         iconImage: UIDATAIcons.copyLink,
                         onPressed: () {
                           Clipboard.setData(ClipboardData(text: _.link.text));
-                          CommonSnackbar.getSnackbar(
+                          _.showToast(
                               "Success",
                               "Copied to clipboard'",
-                              UIDataColors.primaryColor);
-                          Get.back();
-                          //  Get.offAllNamed(Routes.homeRoutes);
+                             );
+                           Get.back();
+                           Get.offAll(()=> const HomeScreen());
                         },
                       ),
                     ),

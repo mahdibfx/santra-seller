@@ -293,8 +293,7 @@ class MyCustomerProvider extends ChangeNotifier {
         link.text = decodedJson['data'].first['payment_link'];
         cartProvider.flushCart();
         disposeValues();
-        Get.offAll(() => const HomeScreen());
-        showToast("Success", 'Successfully Completed');
+        // showToast("Success", 'Successfully Completed');
         isSubmitOrder = false;
         popupPaymentlink = true;
         notifyListeners();
