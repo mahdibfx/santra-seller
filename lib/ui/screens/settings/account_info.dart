@@ -34,6 +34,7 @@ class AccountInfo extends StatelessWidget {
                     CommonTextField(
                       controller: _.emailController,
                       labelText: "Number",
+                      inputFormatters: [_.phoneMask],
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
                       prefixIcon: UIDATAIcons.emailIcon,

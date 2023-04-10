@@ -63,7 +63,7 @@ class ContactUsScreen extends StatelessWidget {
                         controller: _.phonenumberController,
                         labelText: 'Phone Number'.tr,
                         isTextHidden: false,
-                        hintText: "971#########",
+                        inputFormatters: [_.phoneMask],
                         fillcolor: UIDataColors.whiteColor,
                         keyboardType: TextInputType.number,
                         maxLength: 12,
