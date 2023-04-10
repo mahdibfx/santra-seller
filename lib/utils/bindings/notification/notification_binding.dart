@@ -4,6 +4,6 @@ import 'package:santra_seller/controllers/notification/notification_controller.d
 class NotificationBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<NotificationController>(() => NotificationController());
+    // Get.lazyPut<NotificationController>(() => NotificationController());
   }
 }

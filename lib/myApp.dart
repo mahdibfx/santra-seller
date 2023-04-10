@@ -9,6 +9,7 @@ import 'package:santra_seller/provider/cart_provider.dart';
 import 'package:santra_seller/provider/home_provider.dart';
 import 'package:santra_seller/provider/login_provider.dart';
 import 'package:santra_seller/provider/my_customer_provider.dart';
+import 'package:santra_seller/provider/notification_provider.dart';
 import 'package:santra_seller/provider/product_setting_provider.dart';
 import 'package:santra_seller/provider/sign_up_provider.dart';
 import 'package:santra_seller/ui/screens/splash/splash_screen.dart';
@@ -39,6 +40,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SignUpProvider>(create: (_) => SignUpProvider()),
         ChangeNotifierProvider<ProductSettingsProvider>(
             create: (_) => ProductSettingsProvider()),
+            ChangeNotifierProvider<NotificationProvider>(
+            create: (_) => NotificationProvider()),
       ],
       child: GetMaterialApp(
         title: UIData.appName,

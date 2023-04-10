@@ -34,22 +34,22 @@ class NotificationData {
         required this.oldNotifications,
     });
 
-    List<dynamic> newNotifications;
-    List<OldNotification> oldNotifications;
+    List<Notifications> newNotifications;
+    List<Notifications> oldNotifications;
 
     factory NotificationData.fromJson(Map<String, dynamic> json) => NotificationData(
-        newNotifications: List<dynamic>.from(json["new_notifications"].map((x) => x)),
-        oldNotifications: List<OldNotification>.from(json["old_notifications"].map((x) => OldNotification.fromJson(x))),
+        newNotifications: List<Notifications>.from(json["new_notifications"].map((x) => Notifications.fromJson(x))),
+        oldNotifications: List<Notifications>.from(json["old_notifications"].map((x) => Notifications.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
-        "new_notifications": List<dynamic>.from(newNotifications.map((x) => x)),
+        "new_notifications": List<dynamic>.from(newNotifications.map((x) => x.toJson())),
         "old_notifications": List<dynamic>.from(oldNotifications.map((x) => x.toJson())),
     };
 }
 
-class OldNotification {
-    OldNotification({
+class Notifications {
+    Notifications({
         required this.notifiactionDetail,
         required this.notificationStatus,
         required this.notificationTime,
@@ -59,7 +59,7 @@ class OldNotification {
     NotificationStatus notificationStatus;
     DateTime notificationTime;
 
-    factory OldNotification.fromJson(Map<String, dynamic> json) => OldNotification(
+    factory Notifications.fromJson(Map<String, dynamic> json) => Notifications(
         notifiactionDetail: json["notifiaction_detail"],
         notificationStatus: notificationStatusValues.map[json["notification_status"]]!,
         notificationTime: DateTime.parse(json["notification_time"]),
@@ -72,9 +72,10 @@ class OldNotification {
     };
 }
 
-enum NotificationStatus { VIEWED }
+enum NotificationStatus { NEW, VIEWED }
 
 final notificationStatusValues = EnumValues({
+    "new": NotificationStatus.NEW,
     "viewed": NotificationStatus.VIEWED
 });
 

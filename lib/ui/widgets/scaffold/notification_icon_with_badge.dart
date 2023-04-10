@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/home_provider.dart';
+import 'package:santra_seller/ui/screens/notification/notification_screen.dart';
 
 import '../../../controllers/home_controller/home_controller.dart';
 import '../../../utils/routes/app_routes.dart';
@@ -23,7 +24,7 @@ class NotificationIconWithBadge extends StatelessWidget {
     return Consumer<HomeProvider>(builder: (context, _, child) {
         return GestureDetector(
           onTap: () {
-            Get.toNamed(Routes.notificationscreen);
+            Get.to(()=> NotificationScreen());
           },
           child: Stack(
             clipBehavior: Clip.none,
