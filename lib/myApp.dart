@@ -47,12 +47,12 @@ class MyApp extends StatelessWidget {
           fontFamily: UIDataFonts.quickFont,
           primarySwatch: Colors.blue,
         ),
-        // initialBinding: BindingsBuilder(() {
-        //   Get.put(LoginController());
-        //   // Get.put(CartController());
-        //   // Get.put(HomeController());
-        //   // Get.put(AddManualOrderController());
-        // }),
+        initialBinding: BindingsBuilder(() {
+          Get.put(LoginController());
+          // Get.put(CartController());
+          // Get.put(HomeController());
+          // Get.put(AddManualOrderController());
+        }),
         debugShowCheckedModeBanner: false,
         defaultTransition: Get.defaultTransition,
         showPerformanceOverlay: false,
