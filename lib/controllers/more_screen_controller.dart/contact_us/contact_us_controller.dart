@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 
 import '../../../ui/widgets/snackbar/common_snackbar.dart';
@@ -20,6 +21,10 @@ class ContactUsController extends GetxController {
   RegExp emailRegex = RegExp(
     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$',
   );
+  var phoneMask = MaskTextInputFormatter(
+      mask: '971#########',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
   clearFieldsAfterSend() {
     usernameController.clear();
     emailController.clear();

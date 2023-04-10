@@ -89,7 +89,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                     CommonTextField(
                       //controller: _.mobileController,
                       labelText: "Mobile",
-                      initVal: "971",
+                      inputFormatters: [_.phoneMask],
                       prefixIcon: UIDATAIcons.callIcon,
                       maxLength: 12,
                       isTextHidden: false,

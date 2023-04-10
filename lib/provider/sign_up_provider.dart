@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../ui/widgets/snackbar/common_snackbar.dart';
@@ -42,10 +43,14 @@ class SignUpProvider extends ChangeNotifier {
   final form = GlobalKey<FormState>();
   List locale = [];
   String? sellerCity = "Dubai";
+  var phoneMask = MaskTextInputFormatter(
+      mask: '971#########',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
   TextEditingController businessController = TextEditingController();
   TextEditingController fullNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController phoneController = TextEditingController(text: "971");
+  TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController conformPasswordController = TextEditingController();
   TextEditingController addressController = TextEditingController();

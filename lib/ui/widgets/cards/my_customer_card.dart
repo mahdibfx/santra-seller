@@ -96,50 +96,48 @@ class MyCustomerCard extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: 1,
-                child: SizedBox(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              forView
-                                  ? Get.to(() => ViewCustomerDetails(
-                                  customerDetail: customer)) :
-                              Get.to(() => EditCustomerDetails(
-                                  index: customerIndex));
-                            },
-                            child: SvgPicture.asset(
-                              forView
-                                  ? UIDATAIcons.viewIcon
-                                  : UIDATAIcons.editCustomer,
-                              color: UIDataColors.primaryColor,
-                              height: 18,
-                              //height: 20,
-                            ),
-                          ),
-                          const Divider(
-                            color: UIDataColors.primaryColor,
-                          ).marginAll(2),
-                       forView ? const SizedBox():   InkWell(
-                            onTap: () {
-                              print('delereeeeeeee');
-                              showpopup('Do you realy want to delete this customer', customer.id.toString(),
-                                  context);
-                            },
-                            child: SvgPicture.asset(
-                              UIDATAIcons.deleteIcon,
-                              color: UIDataColors.primaryColor,
-                              height: 18,
-                              //height: 20,
-                            ),
-                          ),
-                        ],
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: InkWell(
+                        onTap: () {
+                          forView
+                              ? Get.to(() =>
+                                  ViewCustomerDetails(customerDetail: customer))
+                              : Get.to(() =>
+                                  EditCustomerDetails(index: customerIndex));
+                        },
+                        child: SvgPicture.asset(
+                          forView
+                              ? UIDATAIcons.viewIcon
+                              : UIDATAIcons.editCustomer,
+                          color: UIDataColors.primaryColor,
+                          height: 18,
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                    forView
+                        ? const SizedBox()
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6),
+                            child: InkWell(
+                              onTap: () {
+                                print('delereeeeeeee');
+                                showpopup(
+                                    'Do you realy want to delete this customer',
+                                    customer.id.toString(),
+                                    context);
+                              },
+                              child: SvgPicture.asset(
+                                UIDATAIcons.deleteIcon,
+                                color: UIDataColors.primaryColor,
+                                height: 18,
+                                //height: 20,
+                              ),
+                            ),
+                          ),
+                  ],
                 ),
               ),
             ],
@@ -155,59 +153,57 @@ void showpopup(String statement, String customerID, context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return Consumer<MyCustomerProvider>(
-      builder: (context, _, child) {
-          return AlertDialog(
-            title: const Text("Confirmation"),
-            content: Text(statement),
-            actions: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                height: 60,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: BorderButton(
-                        // height: 35,
-                        // width: 140,
-                        btntxt: 'Cancel',
-                        borderColor: Colors.red,
-                        buttontxtColor: Colors.red,
-                        backEndColor: Colors.white,
-                        // backEndColor: Colors.blue,
-                        onPressed: () {
-                          Get.back();
-                        },
-                        //  () {
-                        //   _.acceptOrdermethod(widget.orderNumber);
-                        // },
-                      ),
+      return Consumer<MyCustomerProvider>(builder: (context, _, child) {
+        return AlertDialog(
+          title: const Text("Confirmation"),
+          content: Text(statement),
+          actions: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              height: 60,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: BorderButton(
+                      // height: 35,
+                      // width: 140,
+                      btntxt: 'Cancel',
+                      borderColor: Colors.red,
+                      buttontxtColor: Colors.red,
+                      backEndColor: Colors.white,
+                      // backEndColor: Colors.blue,
+                      onPressed: () {
+                        Get.back();
+                      },
+                      //  () {
+                      //   _.acceptOrdermethod(widget.orderNumber);
+                      // },
                     ),
-                    SpacingWidth.widthlistspacing15,
-                    Expanded(
-                      child: BorderButton(
-                        // height: 35,
-                        // width: 140,
-                        btntxt: 'Ok',
-                        borderColor: Colors.blue,
-                        buttontxtColor: Colors.white,
-                        // backEndColor: Colors.blue,
-                        onPressed: () {
-                          Get.back();
-                          _.deleteCustomers(customerID);
-                        },
-                        //  () {
-                        //   _.acceptOrdermethod(widget.orderNumber);
-                        // },
-                      ),
+                  ),
+                  SpacingWidth.widthlistspacing15,
+                  Expanded(
+                    child: BorderButton(
+                      // height: 35,
+                      // width: 140,
+                      btntxt: 'Ok',
+                      borderColor: Colors.blue,
+                      buttontxtColor: Colors.white,
+                      // backEndColor: Colors.blue,
+                      onPressed: () {
+                        Get.back();
+                        _.deleteCustomers(customerID);
+                      },
+                      //  () {
+                      //   _.acceptOrdermethod(widget.orderNumber);
+                      // },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          );
-        }
-      );
+            ),
+          ],
+        );
+      });
     },
   );
 }

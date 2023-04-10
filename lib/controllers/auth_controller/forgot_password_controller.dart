@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import '../../ui/widgets/dialogs/custom_dialogs.dart';
 import '../../utils/api_data.dart';
 import '../../utils/routes/app_routes.dart';
@@ -18,9 +19,13 @@ class ForgotPasswordController extends GetxController {
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmNewPasswordController = TextEditingController();
   TextEditingController otpController = TextEditingController();
-  TextEditingController phoneController = TextEditingController(text: "971");
+  TextEditingController phoneController = TextEditingController();
   String? otpCode;
   String? sellerCode;
+  var phoneMask = MaskTextInputFormatter(
+      mask: '971#########',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
   updateOtpLoadingState(bool value) {
     isOtpLoading = value;
     update();

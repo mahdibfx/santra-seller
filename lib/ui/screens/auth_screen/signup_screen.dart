@@ -104,7 +104,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller: _.phoneController,
                         prefixIcon: UIDATAIcons.callIcon,
                         labelText: "Mobile",
-                        hintText: "971#########",
+                        inputFormatters: [_.phoneMask],
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
                         keyboardType: TextInputType.number,

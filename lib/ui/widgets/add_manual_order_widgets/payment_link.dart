@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/controllers/more_screen_controller.dart/my_customer/my_customer_controller.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../provider/my_customer_provider.dart';
 import '../../../utils/routes/app_routes.dart';
@@ -105,6 +106,7 @@ class PaymentLinkBottomSheet extends StatelessWidget {
                         iconImage: UIDATAIcons.shareIcon,
                         onPressed: () {
                           Get.back();
+                          Share.share(_.link.text, subject: _.link.text);
                         },
                       ),
                     ),

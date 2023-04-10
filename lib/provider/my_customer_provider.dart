@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/controllers/cart_controller/cart_controller.dart';
 import 'package:santra_seller/models/customers/view_all_customers.dart';
@@ -47,9 +48,13 @@ class MyCustomerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  var phoneMask = MaskTextInputFormatter(
+      mask: '971#########',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
   String? phoneCon;
   TextEditingController fnController = TextEditingController();
-  TextEditingController mobileController = TextEditingController(text: "971");
+  TextEditingController mobileController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController buildingController = TextEditingController();
   TextEditingController aptController = TextEditingController();
