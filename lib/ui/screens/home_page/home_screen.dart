@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text('Profit Monthly',
+                                          Text('Sales Monthly',
                                               style: UIDataTextStyles.h2
                                                   .copyWith(
                                                       color: Colors.white,
@@ -310,7 +310,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Column(
                                         children: [
                                           Text(
-                                            "Profit Monthly",
+                                            "Sales Monthly",
                                             style: UIDataTextStyles.title
                                                 .copyWith(
                                                     fontWeight:

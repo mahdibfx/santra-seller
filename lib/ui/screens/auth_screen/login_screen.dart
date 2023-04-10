@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         //
                         controller: _.email,
                         hintText: 'Your Email or Mobile Number',
-                        labelText: "Email",
+                        labelText: "Email/Number",
                         prefixIcon: UIDATAIcons.userIcon,
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,

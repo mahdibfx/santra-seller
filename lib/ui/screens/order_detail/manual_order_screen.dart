@@ -41,7 +41,8 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
             : ModalProgressHUD(
                 inAsyncCall: _.isAcceptOrderLoading ||
                     _.isCancelOrderLoading ||
-                    _.isRejectOrderLoading,
+                    _.isRejectOrderLoading ||
+                    _.isOrderReadyLoading,
                 progressIndicator: const CircularProgressIndicator(),
                 child: SafeArea(
                   child: SingleChildScrollView(

@@ -165,7 +165,8 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                   ),
                   _.isAcceptOrderLoading ||
                           _.isCancelOrderLoading ||
-                          _.isRejectOrderLoading
+                          _.isRejectOrderLoading ||
+                          _.isOrderReadyLoading
                       ? Opacity(
                           opacity: 0.8,
                           child: ModalBarrier(
