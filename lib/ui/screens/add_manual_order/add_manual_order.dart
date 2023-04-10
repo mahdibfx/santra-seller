@@ -430,8 +430,7 @@ class _AddManulOrderState extends State<AddManulOrder> {
                   ),
                   Consumer<CartProvider>(
                       builder: (context, cartProvider, child) {
-                    return cartProvider.isShowCartButton ||
-                            manualOrderController.isShowViewButton
+                    return cartProvider.isShowCartButton
                         ? Positioned(
                             bottom: 30,
                             child: Center(
