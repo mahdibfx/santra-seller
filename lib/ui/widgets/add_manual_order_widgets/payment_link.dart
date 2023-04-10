@@ -106,8 +106,9 @@ class PaymentLinkBottomSheet extends StatelessWidget {
                         iconImageColor: UIDataColors.primaryColor,
                         iconImage: UIDATAIcons.shareIcon,
                         onPressed: () {
-                          Get.back();
+                          // Get.back();
                           Share.share(_.link.text, subject: _.link.text);
+                          Get.offAll(() => const HomeScreen());
                         },
                       ),
                     ),
