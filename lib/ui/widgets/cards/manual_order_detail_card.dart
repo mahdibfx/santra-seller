@@ -221,8 +221,12 @@ class _ManualOrderCardState extends State<ManualOrderCard>
               ),
             ),
             Container(
-              height: (_heightFactorAnimation.value *
-                  (105 + _calculateContainerHeight())),   //@todo repeat order button hide when unhide it change the height to 155
+              height: widget.orderStatus.toLowerCase() == 'accepted'
+                  ? (_heightFactorAnimation.value *
+                      (155 + _calculateContainerHeight()))
+                  : (_heightFactorAnimation.value *
+                      (105 +
+                          _calculateContainerHeight())), //@todo repeat order button hide when unhide it change the height to 155
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -275,6 +279,28 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                       ),
                     ),
                   ),
+                  widget.orderStatus.toLowerCase() == 'accepted' ? 
+                   Consumer<CartProvider>(builder: (context, cartProvider, child) {
+                    return RaisedGradientButton(
+                      gradient: const LinearGradient(
+                        colors: <Color>[
+                          UIDataColors.primaryColor,
+                          UIDataColors.primaryColor,
+                        ],
+                      ),
+                      btntxt: "Ready Order",
+                      iconImage: SvgPicture.asset(
+                        UIDATAIcons.sendIcon,
+                        height: 25,
+                        width: 25,
+                        fit: BoxFit.fitWidth,
+                      ),
+                      buttontxtColor: UIDataColors.whiteColor,
+                      onPressed: () {
+                      _.readyOrderMethod(widget.orderNumber);
+                      },
+                    ).marginAll(10);
+                  }) : SizedBox(),
                   // Consumer<CartProvider>(builder: (context, cartProvider, child) {
                   //   return RaisedGradientButton(
                   //     gradient: const LinearGradient(

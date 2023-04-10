@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:santra_seller/models/home_model.dart';
+import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -226,7 +227,6 @@ class HomeProvider extends ChangeNotifier {
     }
     updateAcceptOrderLoading(false);
   }
-
   Future rejectOrderMethod(String orderNumber) async {
     updateRejectOrderLoading(true);
     notifyListeners();
@@ -256,6 +256,35 @@ class HomeProvider extends ChangeNotifier {
           "Oops", "Something went wrong", UIDataColors.redColor);
     }
     updateRejectOrderLoading(false);
+  }
+
+  Future readyOrderMethod(String orderNumber) async {
+    isFilterOrderLoading =  true; // check for loader
+    notifyListeners();
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      var url = Uri.parse("${ApiData.mainurl}order_ready");
+      Map<String, dynamic> body = {};
+      body['seller_code'] = prefs.getString("sellercode");
+      body['order_number'] = orderNumber.toString();
+      var response = await http.post(url, body: body);
+      if (response.statusCode == 200) {
+        CommonSnackbar.getSnackbar(
+            "Success", "Order has been mark as ready ", UIDataColors.primaryColor);
+        Get.offAll(()=>const HomeScreen());
+      } else {
+        generalException();
+        notifyListeners();
+        // print(response.statusCode);
+        // print("Unable to reject order");
+      }
+    } catch (e) {
+      notifyListeners();
+
+      CommonSnackbar.getSnackbar(
+          "Oops", "Something went wrong", UIDataColors.redColor);
+    }
+     isFilterOrderLoading =  false;
   }
 
   //////////////////////////////--------Filteration START--------///////////
