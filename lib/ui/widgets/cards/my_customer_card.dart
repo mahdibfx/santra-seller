@@ -123,9 +123,8 @@ class MyCustomerCard extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(vertical: 6),
                             child: InkWell(
                               onTap: () {
-                                print('delereeeeeeee');
                                 showpopup(
-                                    'Do you realy want to delete this customer',
+                                    'Do you really want to delete this customer?',
                                     customer.id.toString(),
                                     context);
                               },
