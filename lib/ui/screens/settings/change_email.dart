@@ -3,7 +3,6 @@ import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
-import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
 import '/utils/uidata.dart';
@@ -28,7 +27,24 @@ class ChangeEmail extends StatelessWidget {
                   children: [
                     HeadingWithIcon(
                         icon: UIDATAIcons.infoIcon, btntxt: "Change Email"),
-                    SpacingHeight.heightlistspacing15,
+                    IgnorePointer(
+                      ignoring: true,
+                      child: CommonTextField(
+                        controller: _.currentEmailController,
+                        labelText: "Current Email",
+                        isTextHidden: false,
+                        fillcolor: UIDataColors.whiteColor,
+                        prefixIcon: UIDATAIcons.emailIcon,
+                        keyboardType: TextInputType.text,
+                        validator: (val) {
+                          if (val.isEmpty) {
+                            return "Please enter your email";
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                    ),
                     CommonTextField(
                       controller: _.emailController,
                       labelText: "New Email",
@@ -39,9 +55,9 @@ class ChangeEmail extends StatelessWidget {
                       validator: (val) {
                         bool email = _.emailRegex.hasMatch(val);
                         if (val.isEmpty) {
-                          return "please enter your email";
+                          return "Please enter your email";
                         } else if (!email) {
-                          return "please enter valid email address";
+                          return "Please enter valid email address";
                         } else {
                           return null;
                         }
@@ -58,9 +74,9 @@ class ChangeEmail extends StatelessWidget {
                       validator: (val) {
                         bool email = _.emailRegex.hasMatch(val);
                         if (val.isEmpty) {
-                          return "please enter your email";
+                          return "Please enter your email";
                         } else if (!email) {
-                          return "please enter valid email address";
+                          return "Please enter valid email address";
                         } else {
                           return null;
                         }
@@ -84,7 +100,7 @@ class ChangeEmail extends StatelessWidget {
                       },
                       validator: (val) {
                         if (val.isEmpty) {
-                          return "please enter your password";
+                          return "Please enter your password";
                         } else {
                           return null;
                         }

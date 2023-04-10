@@ -81,6 +81,7 @@ class _CartScreenState extends State<CartScreen> {
                                         ),
                                       );
                                     }),
+                                SpacingHeight.heightlistspacing10,
                                 _.isCartLoading
                                     ? const Center(
                                         child: Padding(
@@ -90,9 +91,19 @@ class _CartScreenState extends State<CartScreen> {
                                     : VouchersSection(),
                                 SpacingHeight.heightlistspacing20,
                                 Container(
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                  ),
+                                  decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(15)),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.08),
+                                          spreadRadius: 1,
+                                          blurRadius: 10,
+                                          offset: const Offset(0,
+                                              0), // changes position of shadow
+                                        ),
+                                      ]),
                                   child: Column(
                                     children: [
                                       HeadingWithIcon(
@@ -105,9 +116,10 @@ class _CartScreenState extends State<CartScreen> {
                                               firstDate: DateTime.now(),
                                               currentDate: DateTime.now(),
                                               // lastDate: DateTime(2024),
-                                              weekdayLabelTextStyle: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 12),
+                                              weekdayLabelTextStyle:
+                                                  const TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12),
                                               selectedDayHighlightColor:
                                                   UIDataColors.primaryColor),
                                           value: _.dates,
@@ -117,7 +129,7 @@ class _CartScreenState extends State<CartScreen> {
                                           }),
                                     ],
                                   ),
-                                ).paddingOnly(bottom: 15),
+                                ).paddingOnly(bottom: 20),
                                 CartPayemntDescriptionCard(
                                   subtotal: _.totalPrice.toStringAsFixed(1),
                                   total: _.grandTotal.toStringAsFixed(1),

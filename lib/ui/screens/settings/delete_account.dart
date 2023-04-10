@@ -31,7 +31,6 @@ class DeleteAccount extends StatelessWidget {
                   children: [
                     HeadingWithIcon(
                         icon: UIDATAIcons.deleteIcon, btntxt: "Delete Account"),
-                    SpacingHeight.heightlistspacing15,
                     const Text(
                       "Can you please share to us what was not working? We are fixing bugs as soon as we spot them. if somthing slipped though our fingers, we'd be so grateful to be aware of it and fix it.",
                       style: UIDataTextStyles.title,

@@ -88,7 +88,7 @@ class LoginProvider extends ChangeNotifier {
         var newdata = LoginModel.fromJson(data);
         sellerStatus = newdata.data[0].message.toString();
         GetStorage().write('sellerStatus', sellerStatus);
-
+        print(res.body);
         await saveSharedPrefData(newdata.data[0], prefs);
         Get.offAll(() => HomeScreen());
       } else {
@@ -111,6 +111,7 @@ class LoginProvider extends ChangeNotifier {
 
   saveSharedPrefData(LoginData data, SharedPreferences prefs) {
     prefs.setString("email", email.text);
+    prefs.setString("userEmail", data.userEmail);
     prefs.setString("firstname", data.firstName);
     prefs.setString("lastname", data.lastName);
     prefs.setString("phonenumber", data.phoneNumber);

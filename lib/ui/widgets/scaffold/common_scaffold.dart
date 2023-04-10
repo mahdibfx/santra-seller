@@ -212,26 +212,23 @@ class CommonScaffold extends StatelessWidget {
               systemOverlayStyle: brightness,
 
               leading: isBackArrowShow
-                  ? SizedBox(
-                      // width: 200,
-                      child: GestureDetector(
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(UIDATAIcons.back),
-                              SpacingWidth.widthlistspacing5,
-                              const Text(
-                                "",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500),
-                              )
-                            ],
-                          ),
+                  ? GestureDetector(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(UIDATAIcons.back),
+                            SpacingWidth.widthlistspacing5,
+                            const Text(
+                              "",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
+                            )
+                          ],
                         ),
                       ),
                     )
