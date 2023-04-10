@@ -130,12 +130,12 @@ class AppPages {
         binding: SignupBinding()
         // middlewares: [AuthMiddleware()],
         ),
-    // GetPage(
-    //     name: Routes.loginRoutes,
-    //     page: () => LoginScreen(),
-    //     binding: LoginBinding()
-    //     // middlewares: [AuthMiddleware()],
-    //     ),
+    GetPage(
+        name: Routes.loginRoutes,
+        page: () => LoginScreen(),
+        binding: LoginBinding()
+        // middlewares: [AuthMiddleware()],
+        ),
     GetPage(
       name: Routes.addCustomer,
       page: () => CustomerScreen(),

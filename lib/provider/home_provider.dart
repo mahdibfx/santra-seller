@@ -278,7 +278,7 @@ class HomeProvider extends ChangeNotifier {
       body['order_number'] = orderNumber.toString();
       var response = await http.post(url, body: body);
       if (response.statusCode == 200) {
-        CommonSnackbar.getSnackbar("Success", "Order has been mark as ready",
+        CommonSnackbar.getSnackbar("Success", "Order has been marked as ready",
             UIDataColors.primaryColor);
         Get.offAll(() => const HomeScreen());
       } else {
