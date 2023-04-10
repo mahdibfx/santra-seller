@@ -29,7 +29,7 @@ class LanguageSettings extends StatelessWidget {
                   children: [
                     HeadingWithIcon(
                         icon: UIDATAIcons.languageIcon, btntxt: "Language"),
-                    SpacingHeight.heightlistspacing10,
+
                     BorderButton(
                       btntxt: "عربي",
                       backEndColor: Colors.white,

@@ -28,7 +28,6 @@ class ChangePassword extends StatelessWidget {
                   children: [
                     HeadingWithIcon(
                         icon: UIDATAIcons.lockIcon, btntxt: "Change Password"),
-                    SpacingHeight.heightlistspacing15,
                     CommonTextField(
                       controller: _.currentPasswordController,
                       labelText: "Current Password",

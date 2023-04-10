@@ -172,7 +172,7 @@ class ViewCustomerDetails extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
                     child: PrimaryButtonWithIcon(
-                      btntxt: "Submit",
+                      btntxt: "Submit Order",
                       backEndColor: UIDataColors.whiteColor,
                       buttontxtColor: UIDataColors.primaryColor,
                       iconImageColor: UIDataColors.primaryColor,

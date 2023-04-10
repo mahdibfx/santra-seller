@@ -301,6 +301,7 @@ class CartProvider extends ChangeNotifier {
     }
     if (cartItems.isEmpty) {
       isShowCartButton = false;
+      flushCart();
       notifyListeners();
     }
     if (totalPrice < capAmount) {
@@ -308,6 +309,7 @@ class CartProvider extends ChangeNotifier {
       voucherListVoucherCode = null;
       activeOffers.clear();
     }
+    notifyListeners();
     //  GetStorage().write('cart', cartItems);
   }
 

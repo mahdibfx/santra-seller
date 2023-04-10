@@ -29,12 +29,12 @@ class CartCardOrder extends StatelessWidget {
         // height: 100,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              spreadRadius: 0.1,
-              blurRadius: 4,
+              color: Colors.black.withOpacity(0.08),
+              spreadRadius: 1,
+              blurRadius: 10,
               offset: const Offset(0, 0), // changes position of shadow
             ),
           ],

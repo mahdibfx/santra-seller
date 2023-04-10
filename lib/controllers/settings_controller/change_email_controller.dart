@@ -8,13 +8,25 @@ import 'package:http/http.dart' as http;
 class ChangeEmailController extends GetxController {
   bool securetext = true;
   var isUpdateEmailLoading = false.obs;
+  TextEditingController currentEmailController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController confirmeEmailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  String? currentEmail;
   final form = GlobalKey<FormState>();
   RegExp emailRegex = RegExp(
     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$',
   );
+  Future getCurrentEmail() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    currentEmail = preferences.getString("userEmail");
+
+    if (currentEmail != null) {
+      currentEmailController.text = currentEmail!;
+    }
+    update();
+  }
+
   Future updateEmail() async {
     if (form.currentState!.validate()) {
       if (emailController.text != confirmeEmailController.text) {
@@ -55,5 +67,12 @@ class ChangeEmailController extends GetxController {
     }
     isUpdateEmailLoading(false);
     update();
+  }
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    getCurrentEmail();
   }
 }

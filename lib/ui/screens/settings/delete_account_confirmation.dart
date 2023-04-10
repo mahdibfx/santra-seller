@@ -26,7 +26,7 @@ class DeleteAccountConfirmation extends StatelessWidget {
                 children: [
                   HeadingWithIcon(
                       icon: UIDATAIcons.deleteIcon, btntxt: "Delete Account"),
-                  SpacingHeight.heightlistspacing15,
+
                   const Text(
                     "Enter OTP",
                     style: UIDataTextStyles.h1Heavy,

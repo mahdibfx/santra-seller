@@ -25,7 +25,7 @@ class PaymentLinkBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 250,
+      height: 300,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -87,11 +87,11 @@ class PaymentLinkBottomSheet extends StatelessWidget {
                         onPressed: () {
                           Clipboard.setData(ClipboardData(text: _.link.text));
                           _.showToast(
-                              "Success",
-                              "Copied to clipboard'",
-                             );
-                           Get.back();
-                           Get.offAll(()=> const HomeScreen());
+                            "Success",
+                            "Copied to clipboard'",
+                          );
+                          Get.back();
+                          Get.offAll(() => const HomeScreen());
                         },
                       ),
                     ),
@@ -115,7 +115,8 @@ class PaymentLinkBottomSheet extends StatelessWidget {
                 ],
               ).paddingOnly(right: 10, left: 10),
             );
-          })
+          }),
+          SpacingHeight.heightlistspacing35
         ],
       ),
     );

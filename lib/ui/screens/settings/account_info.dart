@@ -30,7 +30,7 @@ class AccountInfo extends StatelessWidget {
                   children: [
                     HeadingWithIcon(
                         icon: UIDATAIcons.infoIcon, btntxt: "Account Info"),
-                    SpacingHeight.heightlistspacing15,
+
                     CommonTextField(
                       controller: _.emailController,
                       labelText: "Number",
