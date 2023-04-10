@@ -70,6 +70,7 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
                       labelText: "Mobile",
                       prefixIcon: UIDATAIcons.callIcon,
                       isTextHidden: false,
+                      inputFormatters: [_.phoneMask],
                       fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
                       validator: (val) {
