@@ -70,7 +70,7 @@ class HomeCardWidget extends StatelessWidget {
                 ),
               ),
             ),
-            isSantraCard ?
+            isSantraCard ==  true && santraNewCount.toString() != '0' ?
               Positioned(
                 right: 15,
                     top: -10,

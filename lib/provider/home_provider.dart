@@ -38,11 +38,8 @@ class HomeProvider extends ChangeNotifier {
   var orderMonthly = '0'.obs;
   var profitMonthly = '0'.obs;
 
-   int newOrderSantraCount = 0;
-  resetSantraCount(){
-    newOrderSantraCount= 0;
-    notifyListeners();
-  }
+   String newOrderSantraCount = '0';
+
 
   var sellerStatusNew;
   List<String> years = [
@@ -158,6 +155,7 @@ class HomeProvider extends ChangeNotifier {
           allOrders.addAll(homeData!.santraOrders[0].santraOrders);
           allOrders.addAll(homeData!.manualOrders[0].manualOrders);
           // allOrders.addAll(homeData!.pendingOrders[0].pendingOrders);
+          newOrderSantraCount = data['data'][0]['santra_orders'][0]['order_count_notification'].toString();
           santraOrders = homeData!.santraOrders[0].santraOrders;
           filteredSantraOrders = santraOrders;
           pendingOrders = homeData!.pendingOrders[0].pendingOrders;
@@ -167,6 +165,7 @@ class HomeProvider extends ChangeNotifier {
           filteredAllOrders = allOrders;
           isLoading = false;
           notifyListeners();
+          print(newOrderSantraCount);
         } else {
           CommonSnackbar.getSnackbar("Error", "Error ", UIDataColors.redColor);
         }
