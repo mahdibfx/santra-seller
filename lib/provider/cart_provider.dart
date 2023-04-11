@@ -37,6 +37,8 @@ class CartProvider extends ChangeNotifier {
   String? voucherAppliedMsg;
   String? voucherListVoucherCode;
   List<DateTime?> dates = [];
+  bool equalLists = true;
+  bool checkMods =  false;
   var deliveryDate;
   setDeliveryDate() {
     if (dates.isNotEmpty) {
@@ -65,6 +67,7 @@ class CartProvider extends ChangeNotifier {
     finalSubmitData = null;
     dates.clear();
     deliveryDate = null;
+
     notifyListeners();
   }
 
@@ -263,12 +266,59 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addToCart(CartItem item) {
+  checkModes(CartItem item) {
+    equalLists = true;
+    notifyListeners();
+    var isexistsModsWithsameCode = cartItems.where((e) {
+      if (e.code == item.code &&
+          e.subModifiers.length == item.subModifiers.length) {
+        for (int i = 0; i < e.subModifiers.length; i++) {
+          if (e.subModifiers == item.subModifiers) {
+            equalLists = true;
+            notifyListeners();
+            print('equal list print: ' + equalLists.toString());
+            notifyListeners();
+            // break;
+            return equalLists;
+          }
+        }
+      }
+
+      print('equal list print: ' + equalLists.toString());
+      return equalLists;
+    });
+
+    print(isexistsModsWithsameCode);
+  }
+
+
+  
+
+
+  addToCart(CartItem item) {
     isShowCartButton = true;
     notifyListeners();
     final index =
         cartItems.indexWhere((cartItem) => cartItem.code == item.code);
-    if (index != -1) {
+    final checkValue = cartItems
+        .where((cartItem) =>
+            cartItem.code == item.code &&
+            cartItem.subModifiers.length == item.subModifiers.length)
+        .toList();
+    List listOfAdd = [];
+
+
+    bool newcheckVal() {
+      for (var m in checkValue) {
+        if (m.subModifiers.every((element) => item.subModifiers.contains(element))) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    if (index != -1 && newcheckVal()) {
       if (cartItems[index].quantity < 99) {
         cartItems[index].quantity += 1;
         notifyListeners();
