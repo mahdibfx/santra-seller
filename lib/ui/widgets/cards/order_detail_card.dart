@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:santra_seller/ui/widgets/snackbar/common_snackbar.dart';
 import 'package:santra_seller/utils/uidata.dart';
 
 import '../../../controllers/home_controller/home_controller.dart';
@@ -290,9 +292,9 @@ class _CustomCardState extends State<CustomCard>
                           children: [
                             Expanded(
                               child: BorderButton(
-                                height: 40,
-                                width:
-                                    widget.paymentLink == 'no_link' ? 330 : 140,
+                                // height: 40,
+                                // width:
+                                //     widget.paymentLink == 'no_link' ? 330 : 140,
                                 btntxt: 'Cancel',
                                 borderColor: Colors.red,
                                 buttontxtColor: Colors.red,
@@ -307,17 +309,30 @@ class _CustomCardState extends State<CustomCard>
                                 },
                               ),
                             ),
-                            // SpacingWidth.widthlistspacing20,
+                            SpacingWidth.widthlistspacing,
                             widget.paymentLink == 'no_link'
                                 ? Container()
-                                : BorderButton(
-                                    height: 40,
-                                    width: 170,
-                                    btntxt: 'Copy payment link',
-                                    borderColor: Colors.blue,
-                                    buttontxtColor: Colors.white,
-                                    // backEndColor: Colors.blue,
-                                    onPressed: () {},
+                                : Expanded(
+                                    child: BorderButton(
+                                      // height: 40,
+                                      // width: 170,
+                                      btntxt: 'Copy payment link',
+                                      borderColor: Colors.blue,
+                                      buttontxtColor: Colors.white,
+                                      // backEndColor: Colors.blue,
+                                      onPressed: () async {
+                                        await Clipboard.setData(ClipboardData(
+                                                text: widget.paymentLink))
+                                            .then((value) {
+                                          CommonSnackbar.getSnackbar(
+                                              "Copied",
+                                              "Payment link has been copied in to clipbaord",
+                                              UIDataColors.primaryColor);
+                                        });
+
+                                        // copied successfully
+                                      },
+                                    ),
                                   ),
                           ],
                         ).paddingAll(15)

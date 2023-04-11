@@ -191,6 +191,7 @@ class ViewCustomerDetails extends StatelessWidget {
       showFAB: true,
       centerDocked: true,
       showAppBar: true,
+      showActions: false,
       scaffoldKey: _key,
       showBottomNav: true,
       appbarcolor: UIDataColors.whiteColor,

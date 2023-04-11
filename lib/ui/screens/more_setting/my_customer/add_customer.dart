@@ -87,7 +87,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       },
                     ),
                     CommonTextField(
-                      //controller: _.mobileController,
+                      controller: _.mobileController,
                       labelText: "Mobile",
                       inputFormatters: [_.phoneMask],
                       prefixIcon: UIDATAIcons.callIcon,
@@ -95,10 +95,6 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
-                      onChanged: (val) {
-                        _.phoneCon = val;
-                        print(_.phoneCon);
-                      },
                       validator: (val) {
                         String? name;
                         if (val.isEmpty || val.length < 12) {
@@ -252,6 +248,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
       centerDocked: true,
       showAppBar: true,
       // scaffoldKey: _key,
+      showActions: false,
       showBottomNav: true,
       appbarcolor: UIDataColors.whiteColor,
       appTitle: 'My Customer',

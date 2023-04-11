@@ -37,7 +37,7 @@ class AccountInfo extends StatelessWidget {
                       inputFormatters: [_.phoneMask],
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
-                      prefixIcon: UIDATAIcons.emailIcon,
+                      prefixIcon: UIDATAIcons.callIcon,
                       keyboardType: TextInputType.text,
                       validator: (val) {
                         if (val.isEmpty) {
@@ -52,7 +52,7 @@ class AccountInfo extends StatelessWidget {
                       controller: _.fNameController,
                       labelText: "Business Name",
                       isTextHidden: false,
-                      prefixIcon: UIDATAIcons.userIcon,
+                      prefixIcon: UIDATAIcons.businessIcon,
                       fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
                       validator: (val) {

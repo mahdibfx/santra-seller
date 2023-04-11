@@ -115,7 +115,8 @@ class _CartScreenState extends State<CartScreen> {
                                           config: CalendarDatePicker2Config(
                                               firstDate: DateTime.now(),
                                               currentDate: DateTime.now(),
-                                              // lastDate: DateTime(2024),
+                                              lastDate: DateTime.now().add(
+                                                  const Duration(days: 10)),
                                               weekdayLabelTextStyle:
                                                   const TextStyle(
                                                       color: Colors.black,
@@ -193,6 +194,7 @@ class _CartScreenState extends State<CartScreen> {
       //   ],
       // ),
       showBottomNav: true,
+      showActions: false,
       appbarcolor: UIDataColors.whiteColor,
       appbarSvg: true,
       backarrow: UIDataColors.primaryColor,

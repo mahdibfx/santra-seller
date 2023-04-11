@@ -148,7 +148,7 @@ class MyCustomerProvider extends ChangeNotifier {
       var body = <String, String>{};
       body['seller_code'] = sellerCode ?? "";
       body['customer_name'] = fnController.text;
-      body['customer_mobile'] = phoneCon.toString();
+      body['customer_mobile'] = mobileController.text;
       body['customer_email'] = emailController.text;
       body['customer_city'] = city ?? "";
       body['building_number'] = buildingController.text;
@@ -296,7 +296,7 @@ class MyCustomerProvider extends ChangeNotifier {
         link.text = decodedJson['data'].first['payment_link'];
         cartProvider.flushCart();
         disposeValues();
-        // showToast("Success", 'Successfully Completed');
+        showToast("Success", 'Order Placed Successfully');
         isSubmitOrder = false;
         popupPaymentlink = true;
         notifyListeners();
@@ -341,7 +341,7 @@ class MyCustomerProvider extends ChangeNotifier {
       "payment_method": "online_paid", // Send cash
       "c_address":
           '${customerDetail.buildingType} ${customerDetail.buildingNumber} ${customerDetail.customerCity}', //Address of the customer
-      "area_customer": "", // area of the customer
+      "area_customer": customerDetail.customerCity, // area of the customer
       "building_number":
           customerDetail.buildingNumber, // building  of the customer
       "order_remarks":
