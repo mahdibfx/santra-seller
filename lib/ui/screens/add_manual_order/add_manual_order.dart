@@ -512,26 +512,11 @@ class _AddManulOrderState extends State<AddManulOrder> {
       bodyData: bodyData(context),
       backgroundcolor: UIDataColors.whiteColor,
       backGroundImage: UIDataImage.backgroundImage,
-      isBackArrowShow: true,
+      isBackArrowShow: false,
       showDrawer: false,
       showFAB: showAdd,
       centerDocked: true,
       showAppBar: true,
-      // leading: Row(
-      //   children: [
-      //     GestureDetector(
-      //       child: Icon(
-      //         Icons.arrow_back,
-      //         color: Colors.black,
-      //       ),
-      //       onTap: () => Navigator.of(context).pop(),
-      //     ),
-      //     Text(
-      //       'Back',
-      //       style: TextStyle(color: Colors.black, fontSize: 10),
-      //     )
-      //   ],
-      // ),
       appBarAction: [
         IconButton(
           icon: const Icon(Icons.sports_basketball),
