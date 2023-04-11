@@ -298,8 +298,9 @@ class CartProvider extends ChangeNotifier {
   addToCart(CartItem item) {
     isShowCartButton = true;
     notifyListeners();
-    final index =
-        cartItems.indexWhere((cartItem) => cartItem.code == item.code);
+    // final index =
+    //     cartItems.indexWhere((cartItem) => cartItem.code == item.code);
+  
     final checkValue = cartItems
         .where((cartItem) =>
             cartItem.code == item.code &&
@@ -307,16 +308,24 @@ class CartProvider extends ChangeNotifier {
         .toList();
     List listOfAdd = [];
 
-
+ List<SubModifier> matchArray = item.subModifiers;
+ notifyListeners();
     bool newcheckVal() {
-      for (var m in checkValue) {
-        if (m.subModifiers.every((element) => item.subModifiers.contains(element))) {
-          return true;
-        }
-      }
+      // for (var m in checkValue) {
+      //   if (item.subModifiers.every((element) =>  m.subModifiers.contains(element.modifierCode))) {
+      //     return true;
+      //   }
+      // }
 
-      return false;
+      // return false;
+     
+
+      bool containsExactMatch = checkValue.any((array) =>
+          array.subModifiers.every((item) => matchArray.contains(item)));
+      return containsExactMatch;
     }
+      final index = checkValue.indexWhere((element) => 
+          element.subModifiers.every((item) => matchArray.contains(item)));
 
     if (index != -1 && newcheckVal()) {
       if (cartItems[index].quantity < 99) {
