@@ -106,6 +106,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         labelText: "Mobile",
                         inputFormatters: [_.phoneMask],
                         isTextHidden: false,
+                        hintText: "Ex: 501234567",
                         fillcolor: UIDataColors.whiteColor,
                         keyboardType: TextInputType.number,
                         maxLength: 12,

@@ -93,6 +93,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       prefixIcon: UIDATAIcons.callIcon,
                       maxLength: 12,
                       isTextHidden: false,
+                      hintText: "Ex: 501234567",
                       fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
                       onChanged: (val) {
