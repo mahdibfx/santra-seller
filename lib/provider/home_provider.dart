@@ -42,14 +42,14 @@ class HomeProvider extends ChangeNotifier {
 
   var sellerStatusNew;
   List<String> years = [
-    'Select Year',
+    'Year',
     '2022',
     '2023',
     '2024',
     '2025',
   ];
   List<String> months = [
-    'Select Month',
+    'Month',
     '01',
     '02',
     '03',
@@ -63,8 +63,8 @@ class HomeProvider extends ChangeNotifier {
     '11',
     '12'
   ];
-  var selectedYear = 'Select Year';
-  var selectedMonth = 'Select Month';
+  var selectedYear = 'Year';
+  var selectedMonth = 'Month';
   updateCancelOrderLoading(bool value) {
     isCancelOrderLoading = value;
     notifyListeners();
