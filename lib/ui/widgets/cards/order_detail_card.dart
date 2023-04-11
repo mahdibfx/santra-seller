@@ -220,7 +220,7 @@ class _CustomCardState extends State<CustomCard>
             ),
             Container(
               height: (_heightFactorAnimation.value *
-                  (200 + _calculateContainerHeight())),
+                  (220 + _calculateContainerHeight())),
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -231,7 +231,7 @@ class _CustomCardState extends State<CustomCard>
               child:  Column(
                 children: [
                   SpacingHeight.heightlistspacing10,
-                widget.orderItemList.isNotEmpty ? SizedBox():  Container(
+                  Container(
                     height: _calculateContainerHeight(),
                     child: ListView.builder(
                         shrinkWrap: true,
@@ -449,7 +449,7 @@ class _CustomCardState extends State<CustomCard>
   }
 
   double _calculateContainerHeight() {
-    return (widget.orderItemList.length >2 ? 2 : widget.orderItemList.length * 75)
+    return (widget.orderItemList.length >2 ? 2*75 : widget.orderItemList.length * 75)
         .toDouble(); // 70 is the height of each ListTile
   }
 

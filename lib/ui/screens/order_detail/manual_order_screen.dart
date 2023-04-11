@@ -323,7 +323,7 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                         UIDataColors.primaryColor,
                       ],
                     ),
-                    btntxt: 'Showing ${_.filteredPendingOrders.length} results',
+                    btntxt: 'Showing ${_.filteredManualOrders.length} results',
                     buttontxtColor: UIDataColors.whiteColor,
                     onPressed: () {
                        Get.back();
