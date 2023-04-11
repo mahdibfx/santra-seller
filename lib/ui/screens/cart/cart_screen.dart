@@ -61,26 +61,29 @@ class _CartScreenState extends State<CartScreen> {
                                 HeadingWithIcon(
                                     icon: UIDATAIcons.cartHallowIcon,
                                     btntxt: "Cart"),
-                                ListView.builder(
-                                    padding: EdgeInsets.zero,
-                                    physics: const BouncingScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: _.cartItems.length,
-                                    itemBuilder: (context, index) {
-                                      return Padding(
-                                        padding: const EdgeInsets.all(0.0),
-                                        child: CartCardOrder(
-                                          allProducts: _.cartItems,
-                                          index: index,
-                                          onDecrese: () => _.removeFromCart(
-                                              _.cartItems[index]),
-                                          onIncrese: () =>
-                                              _.addToCart(_.cartItems[index]),
-                                          quantity: _.cartItems[index].quantity
-                                              .toString(),
-                                        ),
-                                      );
-                                    }),
+                                Container(
+                                  height: _.cartItems.length>3 ? 3*110 : _.cartItems.length*110,
+                                  child: ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      physics: const BouncingScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: _.cartItems.length,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(0.0),
+                                          child: CartCardOrder(
+                                            allProducts: _.cartItems,
+                                            index: index,
+                                            onDecrese: () => _.removeFromCart(
+                                                _.cartItems[index]),
+                                            onIncrese: () =>
+                                                _.addToCart(_.cartItems[index]),
+                                            quantity: _.cartItems[index].quantity
+                                                .toString(),
+                                          ),
+                                        );
+                                      }),
+                                ),
                                 SpacingHeight.heightlistspacing10,
                                 _.isCartLoading
                                     ? const Center(

@@ -231,19 +231,22 @@ class _CustomCardState extends State<CustomCard>
               child: Column(
                 children: [
                   SpacingHeight.heightlistspacing10,
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: widget.orderItemList.length,
-                      itemBuilder: (context, index) {
-                        return OrderItemWidget(
-                          imageString: widget.orderItemList[index].productImage,
-                          productQuantity:
-                              widget.orderItemList[index].productQuantity,
-                          productName: widget.orderItemList[index].productName,
-                          productPrice:
-                              widget.orderItemList[index].productTotal,
-                        );
-                      }),
+                  Container(
+                    height: _calculateContainerHeight(),
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: widget.orderItemList.length,
+                        itemBuilder: (context, index) {
+                          return OrderItemWidget(
+                            imageString: widget.orderItemList[index].productImage,
+                            productQuantity:
+                                widget.orderItemList[index].productQuantity,
+                            productName: widget.orderItemList[index].productName,
+                            productPrice:
+                                widget.orderItemList[index].productTotal,
+                          );
+                        }),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -446,7 +449,7 @@ class _CustomCardState extends State<CustomCard>
   }
 
   double _calculateContainerHeight() {
-    return (widget.orderItemList.length * 75)
+    return (widget.orderItemList.length >2 ? 2 : widget.orderItemList.length * 75)
         .toDouble(); // 70 is the height of each ListTile
   }
 
