@@ -61,8 +61,10 @@ class _CartScreenState extends State<CartScreen> {
                                 HeadingWithIcon(
                                     icon: UIDATAIcons.cartHallowIcon,
                                     btntxt: "Cart"),
-                                Container(
-                                  height: _.cartItems.length>3 ? 3*125 : _.cartItems.length*125,
+                                SizedBox(
+                                  height: _.cartItems.length > 3
+                                      ? 3 * 135
+                                      : _.cartItems.length * 135,
                                   child: ListView.builder(
                                       padding: EdgeInsets.zero,
                                       physics: const BouncingScrollPhysics(),
@@ -78,7 +80,8 @@ class _CartScreenState extends State<CartScreen> {
                                                 _.cartItems[index]),
                                             onIncrese: () =>
                                                 _.addToCart(_.cartItems[index]),
-                                            quantity: _.cartItems[index].quantity
+                                            quantity: _
+                                                .cartItems[index].quantity
                                                 .toString(),
                                           ),
                                         );
