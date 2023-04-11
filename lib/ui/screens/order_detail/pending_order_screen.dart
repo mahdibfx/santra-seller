@@ -310,7 +310,9 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
                     ),
                     btntxt: 'Showing ${_.filteredPendingOrders.length} results',
                     buttontxtColor: UIDataColors.whiteColor,
-                    onPressed: () {},
+                    onPressed: () {
+                       Get.back();
+                    },
                   ),
                 ],
               ).marginAll(10),

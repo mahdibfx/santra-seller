@@ -327,7 +327,9 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                     ),
                     btntxt: 'Showing ${_.filteredSantraOrders.length} results',
                     buttontxtColor: UIDataColors.whiteColor,
-                    onPressed: () {},
+                    onPressed: () {
+                       Get.back();
+                    },
                   ),
                 ],
               ).marginAll(10),
