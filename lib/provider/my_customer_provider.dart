@@ -361,7 +361,9 @@ class MyCustomerProvider extends ChangeNotifier {
   }
 
   Future deleteCustomers(String customerID) async {
-    // try {
+       isLoaderShowDeleteCustumer = true;
+    notifyListeners();
+    try {
     updateCustomerLoadingState(true);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? sellerCode = prefs.getString("sellercode");
@@ -373,8 +375,7 @@ class MyCustomerProvider extends ChangeNotifier {
     if (response.statusCode == 200) {
       var decodedJson = jsonDecode(response.body);
       print(decodedJson);
-          isLoaderShowDeleteCustumer = true;
-    notifyListeners();
+       
       Get.to(() => const MyCustomerScreen());
      await viewCustomers();
       showToast("Success", 'Successfully deleted customer');
@@ -382,9 +383,9 @@ class MyCustomerProvider extends ChangeNotifier {
     } else {
       hasViewCustomerError = true;
     }
-    // } catch (e) {
-    //   generalException();
-    // }
+    } catch (e) {
+      generalException();
+    }
     updateCustomerLoadingState(false);
     notifyListeners();
   }
