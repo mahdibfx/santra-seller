@@ -67,6 +67,7 @@ class ContactUsScreen extends StatelessWidget {
                         fillcolor: UIDataColors.whiteColor,
                         keyboardType: TextInputType.number,
                         maxLength: 12,
+                        hintText: "Ex: 501234567",
                         onChanged: (val) {
                           String? check0;
 

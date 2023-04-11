@@ -52,6 +52,7 @@ class DeleteAccount extends StatelessWidget {
                           keyboardType: TextInputType.phone,
                           labelText: "Your Mobile Number",
                           inputFormatters: [_.phoneMask],
+                          hintText: "Ex: 501234567",
                           maxLength: 12,
                           onChanged: (val) {
                             String? check0;

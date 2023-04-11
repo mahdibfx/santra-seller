@@ -137,8 +137,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Get.toNamed(Routes.santraorders);
                               },
                               heading: 'Santra Orders',
-                              count: _.homeData == null ? '' : _.homeData!.santraOrders[0].orderCount
-                                  .toString(),
+                              count: _.homeData == null
+                                  ? ''
+                                  : _.homeData!.santraOrders[0].orderCount
+                                      .toString(),
                               imageAsset: UIDataImage.santraOrderSVG,
                             ),
                             SpacingWidth.widthlistspacing20,
@@ -299,9 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     fontWeight:
                                                         FontWeight.bold),
                                           ),
-                                          Text(
-                                              value.orderMonthly.value
-                                                  .toString(),
+                                          Text(value.orderMonthly.toString(),
                                               style: const TextStyle(
                                                   fontSize: 40,
                                                   fontWeight: FontWeight.bold,
@@ -318,9 +318,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     fontWeight:
                                                         FontWeight.bold),
                                           ),
-                                          Text(
-                                              value.profitMonthly.value
-                                                  .toString(),
+                                          Text(value.profitMonthly.toString(),
                                               style: const TextStyle(
                                                   fontSize: 40,
                                                   fontWeight: FontWeight.bold,

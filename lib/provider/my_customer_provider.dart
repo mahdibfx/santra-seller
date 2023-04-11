@@ -126,7 +126,7 @@ class MyCustomerProvider extends ChangeNotifier {
       var response = await http.Response.fromStream(streamedResponse);
       if (response.statusCode == 200) {
         disposeValues();
-        Get.to(() => const MyCustomerScreen());
+        Get.off(() => const MyCustomerScreen());
         viewCustomers();
       } else {
         generalException();
@@ -166,7 +166,7 @@ class MyCustomerProvider extends ChangeNotifier {
         print("add customer" + response.body.toString());
         updateAddLoadingState(false);
         if (isShowDetailScreen) {
-          Get.to(() => ViewCustomerDetails(
+          Get.off(() => ViewCustomerDetails(
                 customerDetail: Customer(
                   id: id,
                   customerCity: city ?? "",
@@ -180,7 +180,7 @@ class MyCustomerProvider extends ChangeNotifier {
               ));
         } else {
           disposeValues();
-          Get.to(() => const MyCustomerScreen());
+          Get.off(() => const MyCustomerScreen());
           viewCustomers();
         }
       } else {

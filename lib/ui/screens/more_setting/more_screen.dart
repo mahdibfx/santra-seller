@@ -61,13 +61,13 @@ class MoreSettingScreen extends StatelessWidget {
                         },
                         btntxt: 'Customer Reviews',
                       ),
-                      ReusableIconSetting(
-                        icon: UIDATAIcons.walletIcon,
-                        onPressed: () {
-                          Get.toNamed(Routes.walletscreen);
-                        },
-                        btntxt: 'Wallet',
-                      ),
+                      // ReusableIconSetting(
+                      //   icon: UIDATAIcons.walletIcon,
+                      //   onPressed: () {
+                      //     Get.toNamed(Routes.walletscreen);
+                      //   },
+                      //   btntxt: 'Wallet',
+                      // ),
                       ReusableIconSetting(
                         icon: UIDATAIcons.whatsappIcon,
                         onPressed: () {
