@@ -228,10 +228,10 @@ class _CustomCardState extends State<CustomCard>
                     bottomRight: Radius.circular(10.0),
                     bottomLeft: Radius.circular(10.0)),
               ),
-              child: Column(
+              child:  Column(
                 children: [
                   SpacingHeight.heightlistspacing10,
-                  Container(
+                widget.orderItemList.isNotEmpty ? SizedBox():  Container(
                     height: _calculateContainerHeight(),
                     child: ListView.builder(
                         shrinkWrap: true,
