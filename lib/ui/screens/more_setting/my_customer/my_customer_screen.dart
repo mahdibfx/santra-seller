@@ -32,7 +32,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
   Widget bodyData() {
     return Consumer<MyCustomerProvider>(
       builder: (context, _, child) {
-        return _.isViewCustomerLoading
+        return _.isViewCustomerLoading || _.allNewCustomers.isEmpty
             ? const SizedBox(
                 child: Center(
                 child: CircularProgressIndicator(),
