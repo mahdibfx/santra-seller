@@ -62,7 +62,7 @@ class _CartScreenState extends State<CartScreen> {
                                     icon: UIDATAIcons.cartHallowIcon,
                                     btntxt: "Cart"),
                                 Container(
-                                  height: _.cartItems.length>3 ? 3*110 : _.cartItems.length*110,
+                                  height: _.cartItems.length>3 ? 3*125 : _.cartItems.length*125,
                                   child: ListView.builder(
                                       padding: EdgeInsets.zero,
                                       physics: const BouncingScrollPhysics(),
