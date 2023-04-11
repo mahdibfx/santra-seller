@@ -116,7 +116,7 @@ class _CartScreenState extends State<CartScreen> {
                                               firstDate: DateTime.now(),
                                               currentDate: DateTime.now(),
                                               lastDate: DateTime.now().add(
-                                                  const Duration(days: 10)),
+                                                  const Duration(days: 180)),
                                               weekdayLabelTextStyle:
                                                   const TextStyle(
                                                       color: Colors.black,

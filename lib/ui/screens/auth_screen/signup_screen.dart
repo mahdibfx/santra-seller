@@ -109,6 +109,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         fillcolor: UIDataColors.whiteColor,
                         keyboardType: TextInputType.number,
                         maxLength: 12,
+                        onChanged: (val) {
+                          String? check0;
+
+                          if (val.isNotEmpty && val.length > 3) {
+                            check0 = val.substring(0, 4);
+                            if (check0 == "9710") {
+                              _.phoneController.clear();
+                            }
+                          }
+                        },
                         validator: (val) {
                           String? name;
                           if (val.isEmpty || val.length < 12) {

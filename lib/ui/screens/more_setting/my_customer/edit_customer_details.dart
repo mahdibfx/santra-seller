@@ -73,6 +73,16 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
                       inputFormatters: [_.phoneMask],
                       fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
+                      onChanged: (val) {
+                        String? check0;
+
+                        if (val.isNotEmpty && val.length > 3) {
+                          check0 = val.substring(0, 4);
+                          if (check0 == "9710") {
+                            _.mobileController.clear();
+                          }
+                        }
+                      },
                       validator: (val) {
                         String? name;
                         if (val.isEmpty || val.length < 12) {
