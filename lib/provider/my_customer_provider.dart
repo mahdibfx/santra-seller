@@ -27,6 +27,7 @@ class MyCustomerProvider extends ChangeNotifier {
   bool isViewCustomerLoading = false;
   bool hasViewCustomerError = false;
   bool isShowDetailScreen = false;
+  bool isLoaderShowDeleteCustumer = true;
   bool isSubmitOrder = false;
   late ViewAllCustomers viewAllCustomers;
   List<String>? citiesList = [];
@@ -194,7 +195,10 @@ class MyCustomerProvider extends ChangeNotifier {
   }
 
   Future viewCustomers() async {
+    isLoaderShowDeleteCustumer = true;
+    notifyListeners();
     allFilterCustomers!.clear();
+    isLoaderShowDeleteCustumer = true;
     notifyListeners();
     try {
       updateCustomerLoadingState(true);
@@ -219,6 +223,7 @@ class MyCustomerProvider extends ChangeNotifier {
     } catch (e) {
       generalException();
     }
+    isLoaderShowDeleteCustumer= false;
     updateCustomerLoadingState(false);
     notifyListeners();
   }
@@ -368,7 +373,10 @@ class MyCustomerProvider extends ChangeNotifier {
     if (response.statusCode == 200) {
       var decodedJson = jsonDecode(response.body);
       print(decodedJson);
-      viewCustomers();
+          isLoaderShowDeleteCustumer = true;
+    notifyListeners();
+      Get.to(() => const MyCustomerScreen());
+     await viewCustomers();
       showToast("Success", 'Successfully deleted customer');
       notifyListeners();
     } else {
@@ -395,7 +403,9 @@ class MyCustomerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onInit() async {
+   onInit()  async{
+    isLoaderShowDeleteCustumer = true;
+    notifyListeners();
     viewAllCustomers = ViewAllCustomers();
     viewCustomers();
     notifyListeners();

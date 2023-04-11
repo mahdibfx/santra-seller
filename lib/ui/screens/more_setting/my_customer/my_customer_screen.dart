@@ -32,7 +32,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
   Widget bodyData() {
     return Consumer<MyCustomerProvider>(
       builder: (context, _, child) {
-        return _.isViewCustomerLoading || _.allNewCustomers.isEmpty
+        return _.isViewCustomerLoading && _.isLoaderShowDeleteCustumer
             ? const SizedBox(
                 child: Center(
                 child: CircularProgressIndicator(),
@@ -80,16 +80,16 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                               return GestureDetector(
                                 onTap: () {
                                   if (!widget.comingFromCart) {
-                                    Get.to(() => EditCustomerDetails(
-                                          index: index,
-                                        ));
+                                    // Get.to(() => EditCustomerDetails(
+                                    //       index: index,
+                                    //     ));
                                   } else {
-                                    // if (_.allFilterCustomers?[index] != null) {
-                                    //   Get.to(() => ViewCustomerDetails(
-                                    //         customerDetail:
-                                    //             _.allFilterCustomers![index],
-                                    //       ));
-                                    // }
+                                    if (_.allFilterCustomers?[index] != null) {
+                                      Get.to(() => ViewCustomerDetails(
+                                            customerDetail:
+                                                _.allFilterCustomers![index],
+                                          ));
+                                    }
                                   }
                                 },
                                 child: MyCustomerCard(

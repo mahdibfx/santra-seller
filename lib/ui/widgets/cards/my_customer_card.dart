@@ -117,6 +117,7 @@ class MyCustomerCard extends StatelessWidget {
                         ),
                       ),
                     ),
+                    SpacingHeight.heightlistspacing10,
                     forView
                         ? const SizedBox()
                         : Padding(
