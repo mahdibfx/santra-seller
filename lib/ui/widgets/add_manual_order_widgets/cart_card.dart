@@ -104,6 +104,7 @@ class CartCardOrder extends StatelessWidget {
               height: 30,
             ),
             SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: List.generate(
@@ -162,6 +163,6 @@ class CartCardOrder extends StatelessWidget {
                           .paddingOnly(right: 10),
                     )).paddingOnly()),
           ],
-        ).paddingAll(15));
+        ).paddingOnly(left: 15, top: 15, bottom: 15, right: 3));
   }
 }
