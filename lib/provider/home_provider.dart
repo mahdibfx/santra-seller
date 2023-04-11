@@ -35,11 +35,10 @@ class HomeProvider extends ChangeNotifier {
 
   String? sellerCode;
   HomeData? homeData;
-  var orderMonthly = '0'.obs;
-  var profitMonthly = '0'.obs;
+  var orderMonthly = '0';
+  var profitMonthly = '0';
 
-   String newOrderSantraCount = '0';
-
+  String newOrderSantraCount = '0';
 
   var sellerStatusNew;
   List<String> years = [
@@ -48,11 +47,6 @@ class HomeProvider extends ChangeNotifier {
     '2023',
     '2024',
     '2025',
-    '2026',
-    '2027',
-    '2028',
-    '2029',
-    '2030'
   ];
   List<String> months = [
     'Select Month',
@@ -104,19 +98,22 @@ class HomeProvider extends ChangeNotifier {
     await homeDataCall();
     notifyListeners();
   }
-Future<bool> isInternetAvailable() async {
-  try {
-    final result = await InternetAddress.lookup('google.com');
-    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-      final response =  await http.get(Uri.parse('https://google.com'));
-      return response.statusCode == HttpStatus.ok;
+
+  Future<bool> isInternetAvailable() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        final response = await http.get(Uri.parse('https://google.com'));
+        return response.statusCode == HttpStatus.ok;
+      }
+    } on SocketException catch (_) {
+      CommonSnackbar.getSnackbar(
+          "Error", "Internet is not available ", UIDataColors.redColor);
+      return false;
     }
-  } on SocketException catch (_) {
-    CommonSnackbar.getSnackbar("Error", "Internet is not available ", UIDataColors.redColor);
     return false;
   }
-  return false;
-}
+
   Future filterOrder() async {
     try {
       isFilterOrderLoading = true;
@@ -130,8 +127,8 @@ Future<bool> isInternetAvailable() async {
       var response = await http.post(url, body: body);
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        profitMonthly.value = data['data'][0]['profit_monthly'];
-        orderMonthly.value = data['data'][0]['orders_monthly'];
+        profitMonthly = data['data'][0]['profit_monthly'];
+        orderMonthly = data['data'][0]['orders_monthly'];
         isFilterOrderLoading = false;
         notifyListeners();
       } else {
@@ -141,7 +138,6 @@ Future<bool> isInternetAvailable() async {
       CommonSnackbar.getSnackbar(
           "Oops", "Something went wrong", UIDataColors.redColor);
     }
-
   }
 
   homeDataCall() async {
@@ -167,7 +163,9 @@ Future<bool> isInternetAvailable() async {
           allOrders.addAll(homeData!.santraOrders[0].santraOrders);
           allOrders.addAll(homeData!.manualOrders[0].manualOrders);
           // allOrders.addAll(homeData!.pendingOrders[0].pendingOrders);
-          newOrderSantraCount = data['data'][0]['santra_orders'][0]['order_count_notification'].toString();
+          newOrderSantraCount = data['data'][0]['santra_orders'][0]
+                  ['order_count_notification']
+              .toString();
           santraOrders = homeData!.santraOrders[0].santraOrders;
           filteredSantraOrders = santraOrders;
           pendingOrders = homeData!.pendingOrders[0].pendingOrders;

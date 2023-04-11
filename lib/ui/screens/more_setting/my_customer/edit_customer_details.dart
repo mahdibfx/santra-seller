@@ -73,6 +73,7 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
                       inputFormatters: [_.phoneMask],
                       fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
+                      hintText: "Ex: 501234567",
                       onChanged: (val) {
                         String? check0;
 

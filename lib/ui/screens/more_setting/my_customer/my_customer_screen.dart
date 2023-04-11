@@ -66,7 +66,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                                       "Your status is not approved");
                                 }
                               : () {
-                                  Get.toNamed(Routes.addNewcustomer);
+                                  Get.offNamed(Routes.addNewcustomer);
                                 },
                     ),
                     SpacingHeight.heightlistspacing20,
