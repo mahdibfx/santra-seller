@@ -10,6 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import '../ui/widgets/dialogs/custom_dialogs.dart';
+import '../ui/widgets/snackbar/common_snackbar.dart';
+import '../utils/uidata.dart';
 
 class SplashProvider extends ChangeNotifier {
   bool isLoading = false;
@@ -22,6 +24,7 @@ class SplashProvider extends ChangeNotifier {
   }
 
   void checkUpdateAndMakeDescision() async {
+    isInternetAvailable();
     forceUpdate().then((value) {
       if (updateAvailable == true) {
         customOntapDialog(
@@ -40,6 +43,20 @@ class SplashProvider extends ChangeNotifier {
     // update();
     // super.onInit();
   }
+
+  Future<bool> isInternetAvailable() async {
+  try {
+    final result = await InternetAddress.lookup('google.com');
+    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+      final response =  await http.get(Uri.parse('https://google.com'));
+      return response.statusCode == HttpStatus.ok;
+    }
+  } on SocketException catch (_) {
+    CommonSnackbar.getSnackbar("Error", "Internet is not available ", UIDataColors.redColor);
+    return false;
+  }
+  return false;
+}
 
   Future<void> goToStore() async {
     if (!await launchUrl(link)) {

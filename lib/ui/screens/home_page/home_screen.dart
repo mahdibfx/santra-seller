@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget bodyData(context) {
     return Consumer<HomeProvider>(
       builder: (context, _, child) {
-        return _.isLoading
+        return _.isLoading || _.homeData == null
             ? const SizedBox(
                 child: Center(
                 child: CircularProgressIndicator(),
@@ -137,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Get.toNamed(Routes.santraorders);
                               },
                               heading: 'Santra Orders',
-                              count: _.homeData!.santraOrders[0].orderCount
+                              count: _.homeData == null ? '' : _.homeData!.santraOrders[0].orderCount
                                   .toString(),
                               imageAsset: UIDataImage.santraOrderSVG,
                             ),

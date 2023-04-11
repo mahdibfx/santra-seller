@@ -7,7 +7,7 @@ import 'package:santra_seller/models/home_model.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'dart:io';
 import '../../ui/widgets/snackbar/common_snackbar.dart';
 import '../../utils/api_data.dart';
 import '../../utils/routes/app_routes.dart';
@@ -99,11 +99,24 @@ class HomeProvider extends ChangeNotifier {
     }
     isLoading = true;
     notifyListeners();
+    isInternetAvailable();
     sellerSt();
     await homeDataCall();
     notifyListeners();
   }
-
+Future<bool> isInternetAvailable() async {
+  try {
+    final result = await InternetAddress.lookup('google.com');
+    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+      final response =  await http.get(Uri.parse('https://google.com'));
+      return response.statusCode == HttpStatus.ok;
+    }
+  } on SocketException catch (_) {
+    CommonSnackbar.getSnackbar("Error", "Internet is not available ", UIDataColors.redColor);
+    return false;
+  }
+  return false;
+}
   Future filterOrder() async {
     try {
       isFilterOrderLoading = true;
@@ -128,8 +141,7 @@ class HomeProvider extends ChangeNotifier {
       CommonSnackbar.getSnackbar(
           "Oops", "Something went wrong", UIDataColors.redColor);
     }
-    isFilterOrderLoading = false;
-    notifyListeners();
+
   }
 
   homeDataCall() async {
