@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             _.homeData == null
                                                 ? '0'
                                                 : _.homeData!.ordersMonthly
-                                                    .toString(),
+                                                    .toStringAsFixed(0),
                                             style: UIDataTextStyles.counth1
                                                 .copyWith(
                                               color: Colors.white,
@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             _.homeData == null
                                                 ? '0'
                                                 : _.homeData!.profitMonthly
-                                                    .toString(),
+                                                    .toStringAsFixed(0),
                                             textAlign: TextAlign.start,
                                             style: UIDataTextStyles.counth1
                                                 .copyWith(

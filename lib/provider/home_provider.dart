@@ -182,12 +182,13 @@ class HomeProvider extends ChangeNotifier {
           notifyListeners();
           print(newOrderSantraCount);
         } else {
-          CommonSnackbar.getSnackbar("Error", "Error ", UIDataColors.redColor);
+          CommonSnackbar.getSnackbar("Error",
+              "Something Went Wrong, Please Try Again ", UIDataColors.redColor);
         }
       } catch (e) {
         isLoading = false;
         notifyListeners();
-        print(e);
+
         CommonSnackbar.getSnackbar(
             "Server Error",
             "Server Error or Please Check your internet connection",
