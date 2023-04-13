@@ -36,6 +36,7 @@ class ChangePasswordController extends GetxController {
           body['current_password'] = currentPasswordController.text;
           body['new_password'] = newPasswordController.text;
           request.fields.addAll(body);
+          request.headers.addAll(ApiData.header);
           var streamedResponse = await request.send();
           var response = await http.Response.fromStream(streamedResponse);
           if (response.statusCode == 200) {

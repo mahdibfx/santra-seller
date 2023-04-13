@@ -40,6 +40,7 @@ dependencies:
   calendar_date_picker2: ^0.4.9
   share_plus: ^6.3.0
   adjust_sdk: ^4.31.0
+  envify:
 
 
 dev_dependencies:

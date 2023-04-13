@@ -9,6 +9,7 @@ import 'package:santra_seller/provider/cart_provider.dart';
 import 'package:santra_seller/provider/login_provider.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 
+import '../../../config/env.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
@@ -110,6 +111,7 @@ class Settings extends StatelessWidget {
                 },
                 btntxt: 'Delete Account',
               ),
+
               SpacingHeight.heightlistspacing50
             ],
           ).paddingSymmetric(horizontal: 20)),

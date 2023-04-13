@@ -38,7 +38,7 @@ class CartProvider extends ChangeNotifier {
   String? voucherListVoucherCode;
   List<DateTime?> dates = [];
   bool equalLists = true;
-  bool checkMods =  false;
+  bool checkMods = false;
   var deliveryDate;
   setDeliveryDate() {
     if (dates.isNotEmpty) {
@@ -199,7 +199,8 @@ class CartProvider extends ChangeNotifier {
       var url = Uri.parse(ApiData.cartApi);
       Map<String, dynamic> body = {};
       body['seller_code'] = sellerCode ?? "";
-      final response = await http.post(url, body: body);
+      final response =
+          await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         print(data);
@@ -231,7 +232,7 @@ class CartProvider extends ChangeNotifier {
       //body['user_id'] = prefs.getString("user_id").toString();
       body['total_amount'] = grandTotal.toString();
       body['sub_total'] = totalPrice.toString();
-      var response = await http.post(url, body: body);
+      var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
         changeDiscountLoadingState(false);
         if (kDebugMode) {
@@ -291,16 +292,12 @@ class CartProvider extends ChangeNotifier {
     print(isexistsModsWithsameCode);
   }
 
-
-  
-
-
   addToCart(CartItem item) {
     isShowCartButton = true;
     notifyListeners();
     // final index =
     //     cartItems.indexWhere((cartItem) => cartItem.code == item.code);
-  
+
     final checkValue = cartItems
         .where((cartItem) =>
             cartItem.code == item.code &&
@@ -308,8 +305,8 @@ class CartProvider extends ChangeNotifier {
         .toList();
     List listOfAdd = [];
 
- List<SubModifier> matchArray = item.subModifiers;
- notifyListeners();
+    List<SubModifier> matchArray = item.subModifiers;
+    notifyListeners();
     bool newcheckVal() {
       // for (var m in checkValue) {
       //   if (item.subModifiers.every((element) =>  m.subModifiers.contains(element.modifierCode))) {
@@ -318,14 +315,14 @@ class CartProvider extends ChangeNotifier {
       // }
 
       // return false;
-     
 
       bool containsExactMatch = checkValue.any((array) =>
           array.subModifiers.every((item) => matchArray.contains(item)));
       return containsExactMatch;
     }
-      final index = checkValue.indexWhere((element) => 
-          element.subModifiers.every((item) => matchArray.contains(item)));
+
+    final index = checkValue.indexWhere((element) =>
+        element.subModifiers.every((item) => matchArray.contains(item)));
 
     if (index != -1 && newcheckVal()) {
       if (cartItems[index].quantity < 99) {
@@ -464,7 +461,8 @@ class CartProvider extends ChangeNotifier {
     try {
       changeLoadingStatus(true);
       var url = Uri.parse(ApiData.orderSubmitCash);
-      var response = await http.post(url, body: finalSubmitData);
+      var response =
+          await http.post(url, headers: ApiData.header, body: finalSubmitData);
       if (response.statusCode == 200) {
         // var decodedJson = jsonDecode(response.body);
         // var data = SelllerAllProductsModel.fromJson(decodedJson);

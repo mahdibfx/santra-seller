@@ -21,7 +21,7 @@ class AboutUsController extends GetxController {
 
       var url = Uri.parse(ApiData.aboutUsApi);
       var request = http.MultipartRequest('GET', url);
-
+      request.headers.addAll(ApiData.header);
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
 
