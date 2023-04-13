@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
         ),
         initialBinding: BindingsBuilder(() {
           Get.put(LoginController());
-          // Get.put(CartController());
+
           // Get.put(HomeController());
           // Get.put(AddManualOrderController());
         }),
