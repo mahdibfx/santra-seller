@@ -1,7 +1,7 @@
 import 'package:santra_seller/config/env.dart';
 
 class ApiData {
-  static const mainurl = "https://api.santra.ae/new/?api=";
+  static const mainurl = Secret.api_key_url;
   static const logoutApi = "${mainurl}logout_seller";
   static const deleteAccountApi = "${mainurl}delete_seller";
   static const updatePasswordApi = "${mainurl}update_account_password";
