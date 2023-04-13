@@ -13,7 +13,7 @@ class ProductSettingsProvider extends ChangeNotifier {
   bool isViewAllProductsLoading = false;
   bool isChangeAvailibilityLoading = false;
   bool hasError = false;
-   List<Product> onLoadProducts = [];
+  List<Product> onLoadProducts = [];
   List<Product>? allProducts = [];
   changeLoadingStatus(bool value) {
     isViewAllProductsLoading = value;
@@ -42,14 +42,13 @@ class ProductSettingsProvider extends ChangeNotifier {
       var url = Uri.parse(ApiData.sellerAllProducts);
       Map<String, dynamic> body = {};
       body['seller_code'] = sellercode.toString();
-      var response = await http.post(url, body: body);
+      var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
         var decodedJson = jsonDecode(response.body);
         var data = SelllerAllProductsModel.fromJson(decodedJson);
         if (data.data![0].products!.isNotEmpty) {
           allProducts = data.data?[0].products;
           onLoadProducts = data.data![0].products!;
-
         }
         selllerAllProductsModel =
             selllerAllProductsModelFromJson(response.body);
@@ -87,17 +86,20 @@ class ProductSettingsProvider extends ChangeNotifier {
     }
     updateChangeAvailibilityLoadingStatus(false);
   }
+
   void filterList(String value) {
     var valueList = onLoadProducts
-        .where((e) => (e.productName.toString().toLowerCase().contains(value.trim().toLowerCase())))
+        .where((e) => (e.productName
+            .toString()
+            .toLowerCase()
+            .contains(value.trim().toLowerCase())))
         .toList();
     allProducts = valueList;
     notifyListeners();
   }
- 
+
   void onInit() async {
     selllerAllProductsModel = SelllerAllProductsModel();
     viewSellerAllProducts();
-
   }
 }

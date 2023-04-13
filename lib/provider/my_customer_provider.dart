@@ -122,6 +122,7 @@ class MyCustomerProvider extends ChangeNotifier {
       body['building_type'] = aptController.text;
       body['address_link'] = addressController.text;
       request.fields.addAll(body);
+      request.headers.addAll(ApiData.header);
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
       if (response.statusCode == 200) {
@@ -156,6 +157,7 @@ class MyCustomerProvider extends ChangeNotifier {
       body['building_type'] = aptController.text;
       body['address_link'] = addressController.text;
       request.fields.addAll(body);
+      request.headers.addAll(ApiData.header);
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
 
@@ -207,7 +209,7 @@ class MyCustomerProvider extends ChangeNotifier {
       var url = Uri.parse(ApiData.customerListApi);
       Map<String, dynamic> body = {};
       body['seller_code'] = sellerCode;
-      var response = await http.post(url, body: body);
+      var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
         var decodedJson = jsonDecode(response.body);
         var data = ViewAllCustomers.fromJson(decodedJson);
@@ -223,7 +225,7 @@ class MyCustomerProvider extends ChangeNotifier {
     } catch (e) {
       generalException();
     }
-    isLoaderShowDeleteCustumer= false;
+    isLoaderShowDeleteCustumer = false;
     updateCustomerLoadingState(false);
     notifyListeners();
   }
@@ -250,7 +252,7 @@ class MyCustomerProvider extends ChangeNotifier {
       var url = Uri.parse(ApiData.deliveryCharges);
       Map<String, dynamic> body = {};
       body['seller_code'] = sellerCode;
-      var response = await http.post(url, body: body);
+      var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
         var decodedJson = jsonDecode(response.body);
         var data = DeliveryChargesModel.fromJson(decodedJson);
@@ -295,7 +297,8 @@ class MyCustomerProvider extends ChangeNotifier {
     try {
       updateCustomerLoadingState(true);
       var url = Uri.parse(ApiData.generateLink);
-      var response = await http.post(url, body: finalSubmitData);
+      var response =
+          await http.post(url, headers: ApiData.header, body: finalSubmitData);
       if (response.statusCode == 200) {
         var decodedJson = jsonDecode(response.body);
         link.text = decodedJson['data'].first['payment_link'];
@@ -361,28 +364,28 @@ class MyCustomerProvider extends ChangeNotifier {
   }
 
   Future deleteCustomers(String customerID) async {
-       isLoaderShowDeleteCustumer = true;
+    isLoaderShowDeleteCustumer = true;
     notifyListeners();
     try {
-    updateCustomerLoadingState(true);
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? sellerCode = prefs.getString("sellercode");
-    var url = Uri.parse(ApiData.deleteCustomerApi);
-    Map<String, dynamic> body = {};
-    body['seller_code'] = sellerCode;
-    body['customer_id'] = customerID;
-    var response = await http.post(url, body: body);
-    if (response.statusCode == 200) {
-      var decodedJson = jsonDecode(response.body);
-      print(decodedJson);
-       
-      Get.to(() => const MyCustomerScreen());
-     await viewCustomers();
-      showToast("Success", 'Successfully deleted customer');
-      notifyListeners();
-    } else {
-      hasViewCustomerError = true;
-    }
+      updateCustomerLoadingState(true);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? sellerCode = prefs.getString("sellercode");
+      var url = Uri.parse(ApiData.deleteCustomerApi);
+      Map<String, dynamic> body = {};
+      body['seller_code'] = sellerCode;
+      body['customer_id'] = customerID;
+      var response = await http.post(url, headers: ApiData.header, body: body);
+      if (response.statusCode == 200) {
+        var decodedJson = jsonDecode(response.body);
+        print(decodedJson);
+
+        Get.to(() => const MyCustomerScreen());
+        await viewCustomers();
+        showToast("Success", 'Successfully deleted customer');
+        notifyListeners();
+      } else {
+        hasViewCustomerError = true;
+      }
     } catch (e) {
       generalException();
     }
@@ -404,7 +407,7 @@ class MyCustomerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-   onInit()  async{
+  onInit() async {
     isLoaderShowDeleteCustumer = true;
     notifyListeners();
     viewAllCustomers = ViewAllCustomers();

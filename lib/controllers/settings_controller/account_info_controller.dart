@@ -86,6 +86,7 @@ class AccountInfoController extends GetxController {
         body['user_email'] = emailController.text;
         body['date_of_birth'] = "";
         request.fields.addAll(body);
+        request.headers.addAll(ApiData.header);
         var streamedResponse = await request.send();
         var response = await http.Response.fromStream(streamedResponse);
         if (response.statusCode == 200) {

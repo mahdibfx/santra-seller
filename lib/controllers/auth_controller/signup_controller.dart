@@ -79,7 +79,7 @@ class SignUpController extends GetxController {
   Future getCities() async {
     try {
       var url = Uri.parse(ApiData.getCities);
-      final response = await http.get(url);
+      final response = await http.get(url, headers: ApiData.header);
 
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body) as Map<String, dynamic>;

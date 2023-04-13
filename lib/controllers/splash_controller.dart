@@ -45,18 +45,19 @@ class SplashProvider extends ChangeNotifier {
   }
 
   Future<bool> isInternetAvailable() async {
-  try {
-    final result = await InternetAddress.lookup('google.com');
-    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-      final response =  await http.get(Uri.parse('https://google.com'));
-      return response.statusCode == HttpStatus.ok;
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        final response = await http.get(Uri.parse('https://google.com'));
+        return response.statusCode == HttpStatus.ok;
+      }
+    } on SocketException catch (_) {
+      CommonSnackbar.getSnackbar(
+          "Error", "Internet is not available ", UIDataColors.redColor);
+      return false;
     }
-  } on SocketException catch (_) {
-    CommonSnackbar.getSnackbar("Error", "Internet is not available ", UIDataColors.redColor);
     return false;
   }
-  return false;
-}
 
   Future<void> goToStore() async {
     if (!await launchUrl(link)) {
@@ -97,7 +98,7 @@ class SplashProvider extends ChangeNotifier {
       body['app_type'] = "seller";
       body['platform'] =
           Platform.isIOS ? "Mobile_App_iOS" : "Mobile_App_Android";
-      var response = await http.post(url, body: body);
+      var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
         print(body);
         setLoadingState(false);

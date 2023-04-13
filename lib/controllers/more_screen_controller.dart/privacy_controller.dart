@@ -23,7 +23,7 @@ class PrivacyController extends GetxController {
     try {
       updatePrivacyLoadingStatus(true);
       var url = Uri.parse(ApiData.privacyApi);
-      var response = await http.get(url);
+      var response = await http.get(url, headers: ApiData.header);
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         msg.value = data['data'][0]['page_content'].toString();
@@ -47,7 +47,7 @@ class PrivacyController extends GetxController {
     try {
       isLoading(true);
       var url = Uri.parse(ApiData.termsAPi);
-      final response = await http.get(url);
+      final response = await http.get(url, headers: ApiData.header);
 
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body);

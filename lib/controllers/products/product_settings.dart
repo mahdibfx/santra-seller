@@ -40,7 +40,7 @@ class ProductSettingsController extends GetxController {
       var url = Uri.parse(ApiData.sellerAllProducts);
       Map<String, dynamic> body = {};
       body['seller_code'] = sellercode.toString();
-      var response = await http.post(url, body: body);
+      var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
         var decodedJson = jsonDecode(response.body);
         var data = SelllerAllProductsModel.fromJson(decodedJson);
@@ -71,7 +71,7 @@ class ProductSettingsController extends GetxController {
       body['seller_code'] = sellercode.toString();
       body['product_code'] = productCode;
       body['new_status'] = newStatus;
-      var response = await http.post(url, body: body);
+      var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
         update();
       } else {

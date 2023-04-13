@@ -87,8 +87,8 @@ class LoginController extends GetxController {
       body['user_name'] = email.text;
       body['user_password'] = password.text;
       body["gcms_code"] = firebaseMessagingToken.toString();
-      var res =
-          await http.post(Uri.parse("${ApiData.mainurl}login"), body: body);
+      var res = await http.post(Uri.parse("${ApiData.mainurl}login"),
+          headers: ApiData.header, body: body);
       if (res.statusCode == 200) {
         var data = jsonDecode(res.body);
         var newdata = LoginModel.fromJson(data);
