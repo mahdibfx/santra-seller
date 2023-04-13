@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:santra_seller/models/home_model.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
@@ -107,8 +106,13 @@ class HomeProvider extends ChangeNotifier {
         return response.statusCode == HttpStatus.ok;
       }
     } on SocketException catch (_) {
-      CommonSnackbar.getSnackbar(
-          "Error", "Internet is not available ", UIDataColors.redColor);
+      customOntapDialog(
+          "No Internet", "Looks like you are not connected to internet", "Okay",
+          () {
+        Get.back();
+      });
+      // CommonSnackbar.getSnackbar(
+      //     "Error", "Internet is not available ", UIDataColors.redColor);
       return false;
     }
     return false;
