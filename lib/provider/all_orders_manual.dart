@@ -23,13 +23,12 @@ class AddManualOrderProvider extends ChangeNotifier {
 
   List<Product>? allProducts = [];
   List<Product> filteredProducts = [];
-    List<SubModifier> addOnProducts = [];
+  List<SubModifier> addOnProducts = [];
 
-
-    clearAddonPro(){
-      addOnProducts =[];
-      notifyListeners();
-    }
+  clearAddonPro() {
+    addOnProducts = [];
+    notifyListeners();
+  }
 
   changeLoadingStatus(bool value) {
     isLoading = value;
@@ -41,7 +40,8 @@ class AddManualOrderProvider extends ChangeNotifier {
     notifyListeners();
     showToast();
   }
- void increaseDefaultQuanity(Product product) {
+
+  void increaseDefaultQuanity(Product product) {
     if (product.productQuantity >= 0 && product.productQuantity < 99) {
       product.productQuantity += 1;
     }
@@ -49,27 +49,26 @@ class AddManualOrderProvider extends ChangeNotifier {
   }
 
   void decreaseDefaultQuanity(Product product) {
-    if (product.productQuantity >1) {
+    if (product.productQuantity > 1) {
       product.productQuantity -= 1;
     }
     notifyListeners();
   }
 
   void resetDefaultQuanity(Product product) {
-     product.productQuantity = 1;
+    product.productQuantity = 1;
     notifyListeners();
   }
- 
 
-showAddIcon(){
-  showAddButton = true;
-  notifyListeners();
-}
+  showAddIcon() {
+    showAddButton = true;
+    notifyListeners();
+  }
 
-hideAddButton(){
-  showAddButton = false;
-  notifyListeners();
-}
+  hideAddButton() {
+    showAddButton = false;
+    notifyListeners();
+  }
 
   void showToast() {
     Get.snackbar(
@@ -91,7 +90,7 @@ hideAddButton(){
       var url = Uri.parse(ApiData.sellerAllProducts);
       Map<String, dynamic> body = {};
       body['seller_code'] = sellercode.toString();
-      var response = await http.post(url, body: body);
+      var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
         var decodedJson = jsonDecode(response.body);
         var data = SelllerAllProductsModel.fromJson(decodedJson);
@@ -131,16 +130,15 @@ hideAddButton(){
     notifyListeners();
   }
 
-  changeStatus(String newData, bool value){
-if(value){
-  newData == "1";
-  notifyListeners();
-}else{
-  newData == "0";
-  notifyListeners();
-}
+  changeStatus(String newData, bool value) {
+    if (value) {
+      newData == "1";
+      notifyListeners();
+    } else {
+      newData == "0";
+      notifyListeners();
+    }
   }
-
 
   void onInit() async {
     //// @todo after change in provider, need to add param
@@ -153,11 +151,8 @@ if(value){
       selllerAllProductsModel = SelllerAllProductsModel();
       viewSellerAllProducts();
     }
-
-
   }
 }
-
 
 class CheckProduct {
   String groupCode;

@@ -33,7 +33,7 @@ class CustomerReviewsController extends GetxController {
       var url = Uri.parse(ApiData.customerReviewsApi);
       Map<String, dynamic> body = {};
       body['seller_code'] = "110";
-      var response = await http.post(url, body: body);
+      var response = await http.post(url, body: body, headers: ApiData.header);
       if (response.statusCode == 200) {
         // var data = jsonDecode(response.body);
         customerReviews = customerReviewsModelFromJson(response.body);

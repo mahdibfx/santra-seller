@@ -83,7 +83,7 @@ class SignUpProvider extends ChangeNotifier {
   Future getCities() async {
     try {
       var url = Uri.parse(ApiData.getCities);
-      final response = await http.get(url);
+      final response = await http.get(url, headers: ApiData.header);
 
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body) as Map<String, dynamic>;
@@ -121,6 +121,7 @@ class SignUpProvider extends ChangeNotifier {
         body['seller_address'] = addressController.text;
         body['gcms_code'] = firebaseMessagingToken.toString();
         request.fields.addAll(body);
+        request.headers.addAll(ApiData.header);
         print(body);
         var streamedResponse = await request.send();
         var response = await http.Response.fromStream(streamedResponse);

@@ -8,13 +8,12 @@ import '../../utils/uidata.dart';
 import '../models/notification/notification_model.dart';
 
 class NotificationProvider extends ChangeNotifier {
-
   bool isLoading = false;
   var sellerCode = '';
   List<Notifications> notificationList = [];
   List<Notifications> oldNotifications = [];
 
-   onInit() async {
+  onInit() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var sellercod = prefs.getString("sellercode");
     if (sellercod != null) {
@@ -24,10 +23,6 @@ class NotificationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  
- 
-
-
   void loginfunction() async {
     isLoading = true;
     notifyListeners();
@@ -35,25 +30,25 @@ class NotificationProvider extends ChangeNotifier {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var body = <String, String>{};
       body['seller_code'] = sellerCode;
-      var res =
-          await http.post(Uri.parse("${ApiData.mainurl}all_notifications"), body: body);
+      var res = await http.post(
+          Uri.parse("${ApiData.mainurl}all_notifications"),
+          headers: ApiData.header,
+          body: body);
       if (res.statusCode == 200) {
         var data = jsonDecode(res.body);
         var newdata = NotificationModel.fromJson(data);
-        var notificationData  =newdata.data;
+        var notificationData = newdata.data;
         notificationList = notificationData[0].newNotifications;
         oldNotifications = notificationData[0].oldNotifications;
         notifyListeners();
-      
-         isLoading = false;
-      notifyListeners();
 
+        isLoading = false;
+        notifyListeners();
       } else {
-         isLoading = false;
-      notifyListeners();
+        isLoading = false;
+        notifyListeners();
         print(res.body);
-        CommonSnackbar.getSnackbar(
-            "Error", "Error ", UIDataColors.redColor);
+        CommonSnackbar.getSnackbar("Error", "Error ", UIDataColors.redColor);
       }
     } catch (e) {
       isLoading = false;
@@ -65,9 +60,7 @@ class NotificationProvider extends ChangeNotifier {
           UIDataColors.redColor);
     }
 
-     isLoading = false;
-      notifyListeners();
+    isLoading = false;
+    notifyListeners();
   }
-
-  
 }

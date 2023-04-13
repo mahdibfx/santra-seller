@@ -124,7 +124,7 @@ class HomeProvider extends ChangeNotifier {
       body['seller_code'] = prefs.getString("sellercode");
       body['filter_month'] = selectedMonth;
       body['filter_year'] = selectedYear;
-      var response = await http.post(url, body: body);
+      var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         profitMonthly = data['data'][0]['profit_monthly'];
@@ -151,7 +151,8 @@ class HomeProvider extends ChangeNotifier {
         var body = <String, String>{};
         body['seller_code'] = sellerCode!;
         var res = await http.post(Uri.parse("${ApiData.mainurl}seller_home"),
-            body: body);
+            headers: ApiData.header, body: body);
+
         if (res.statusCode == 200) {
           var data = jsonDecode(res.body);
           var newdata = HomeModel.fromJson(data);
@@ -182,7 +183,7 @@ class HomeProvider extends ChangeNotifier {
       } catch (e) {
         isLoading = false;
         notifyListeners();
-        // Get.offAllNamed(Routes.homeRoutes);
+        print(e);
         CommonSnackbar.getSnackbar(
             "Server Error",
             "Server Error or Please Check your internet connection",
@@ -200,7 +201,7 @@ class HomeProvider extends ChangeNotifier {
       Map<String, dynamic> body = {};
       body['seller_code'] = prefs.getString("sellercode");
       body['order_number'] = orderNumber.toString();
-      var response = await http.post(url, body: body);
+      var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
         notifyListeners();
         // Get.snackbar("Accepted", "Order has been accepted");
@@ -228,7 +229,7 @@ class HomeProvider extends ChangeNotifier {
       Map<String, dynamic> body = {};
       body['seller_code'] = prefs.getString("sellercode");
       body['order_number'] = orderNumber.toString();
-      var response = await http.post(url, body: body);
+      var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
         notifyListeners();
         // Get.snackbar("Accepted", "Order has been accepted");
@@ -256,7 +257,7 @@ class HomeProvider extends ChangeNotifier {
       Map<String, dynamic> body = {};
       body['seller_code'] = prefs.getString("sellercode");
       body['order_number'] = orderNumber.toString();
-      var response = await http.post(url, body: body);
+      var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
         notifyListeners();
 
@@ -287,7 +288,7 @@ class HomeProvider extends ChangeNotifier {
       Map<String, dynamic> body = {};
       body['seller_code'] = prefs.getString("sellercode");
       body['order_number'] = orderNumber.toString();
-      var response = await http.post(url, body: body);
+      var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
         CommonSnackbar.getSnackbar("Success", "Order has been marked as ready",
             UIDataColors.primaryColor);

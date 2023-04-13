@@ -48,7 +48,7 @@ class ContactUsController extends GetxController {
       body['email_user'] = emailController.text;
       body['subject'] = phonenumberController.text;
       body['message'] = messageController.text;
-      var response = await http.post(url, body: body);
+      var response = await http.post(url, body: body, headers: ApiData.header);
       if (response.statusCode == 200) {
         CommonSnackbar.getSnackbar(
             "Success",

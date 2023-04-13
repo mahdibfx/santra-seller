@@ -55,6 +55,7 @@ class ForgotPasswordController extends GetxController {
       var body = <String, String>{};
       body['user_number'] = phoneController.text.toString();
       request.fields.addAll(body);
+      request.headers.addAll(ApiData.header);
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
       if (response.statusCode == 200) {
@@ -92,6 +93,7 @@ class ForgotPasswordController extends GetxController {
       body['seller_code'] = sellerCode ?? "";
       body['new_password'] = newPasswordController.text;
       request.fields.addAll(body);
+      request.headers.addAll(ApiData.header);
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
       if (response.statusCode == 200) {

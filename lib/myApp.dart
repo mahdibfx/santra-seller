@@ -23,7 +23,7 @@ import 'controllers/auth_controller/login_controller.dart';
 import 'controllers/cart_controller/cart_controller.dart';
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SignUpProvider>(create: (_) => SignUpProvider()),
         ChangeNotifierProvider<ProductSettingsProvider>(
             create: (_) => ProductSettingsProvider()),
-            ChangeNotifierProvider<NotificationProvider>(
+        ChangeNotifierProvider<NotificationProvider>(
             create: (_) => NotificationProvider()),
       ],
       child: GetMaterialApp(
