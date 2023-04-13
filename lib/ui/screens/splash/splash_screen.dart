@@ -1,3 +1,4 @@
+import 'package:adjust_sdk/adjust.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
@@ -47,5 +48,21 @@ class _SplashScreenState extends State<SplashScreen> {
       bodyData: bodyData(),
       backgroundcolor: UIDataColors.whiteColor,
     );
+  }
+
+    @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.inactive:
+        break;
+      case AppLifecycleState.resumed:
+        Adjust.onResume();
+        break;
+      case AppLifecycleState.paused:
+        Adjust.onPause();
+        break;
+      case AppLifecycleState.detached:
+        break;
+    }
   }
 }

@@ -8,6 +8,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.7"
+  adjust_sdk:
+    dependency: "direct main"
+    description:
+      name: adjust_sdk
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.33.1"
   args:
     dependency: transitive
     description:
