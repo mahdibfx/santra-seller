@@ -1,4 +1,5 @@
 PODS:
+<<<<<<< HEAD
   - Adjust (4.33.4):
     - Adjust/Core (= 4.33.4)
   - Adjust/Core (4.33.4)
@@ -6,6 +7,9 @@ PODS:
     - Adjust (= 4.33.4)
     - Flutter
   - Firebase/Auth (10.0.0):
+=======
+  - Firebase/Auth (10.7.0):
+>>>>>>> origin/development
     - Firebase/CoreOnly
     - FirebaseAuth (~> 10.7.0)
   - Firebase/CoreOnly (10.7.0):
@@ -178,6 +182,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
+<<<<<<< HEAD
   Adjust: 4690e07ea401ee56d4d3f4f5bdad86c94f51903f
   adjust_sdk: 77c1d3cc6df375bd089ebe969d65bc2aaa448100
   Firebase: 1b810f3d0c0532e27a48f1961f8c0400a668a2cf
@@ -189,6 +194,17 @@ SPEC CHECKSUMS:
   FirebaseCoreInternal: 5eb3960335da5ea30115d57d39db6988c4ad06f3
   FirebaseInstallations: 7f1c9ae6bd9df6abe9c74124b38fa8740aba5df4
   FirebaseMessaging: 8916bf5edb1dbfac74665a181e4d1ab3a78a08a2
+=======
+  Firebase: 0219acf760880eeec8ce479895bd7767466d9f81
+  firebase_auth: 5984ebaf5463319e304ab1c0966b06994bd1c69a
+  firebase_core: d85432877e814811e040e7659f9c82faeab66e04
+  firebase_messaging: 45c0514ca78426630338a42fb7b55af962c7ccd2
+  FirebaseAuth: dd64c01631df724b09f33e584625775c52f7d71f
+  FirebaseCore: e317665b9d744727a97e623edbbed009320afdd7
+  FirebaseCoreInternal: fa2899eb1f340054858d289e5a0fb935a0a74e52
+  FirebaseInstallations: b2a05a3fe707df764345d68685534d07d0664af3
+  FirebaseMessaging: ac9062bcc35ed56e15a0241d8fd317022499baf8
+>>>>>>> origin/development
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
@@ -210,4 +226,8 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
 
+<<<<<<< HEAD
 COCOAPODS: 1.11.2
+=======
+COCOAPODS: 1.12.0
+>>>>>>> origin/development
