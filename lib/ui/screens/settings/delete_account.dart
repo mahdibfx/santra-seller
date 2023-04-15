@@ -45,39 +45,42 @@ class DeleteAccount extends StatelessWidget {
                     ),
                     Form(
                         key: _.formDeleteAccScreen1,
-                        child: CommonTextField(
-                          controller: _.phoneController,
-                          isTextHidden: false,
-                          fillcolor: Colors.white,
-                          keyboardType: TextInputType.phone,
-                          labelText: "Your Mobile Number",
-                          inputFormatters: [_.phoneMask],
-                          hintText: "Ex: 501234567",
-                          maxLength: 12,
-                          onChanged: (val) {
-                            String? check0;
+                        child: IgnorePointer(
+                          ignoring: true,
+                          child: CommonTextField(
+                            controller: _.phoneController,
+                            isTextHidden: false,
+                            fillcolor: Colors.white,
+                            keyboardType: TextInputType.phone,
+                            labelText: "Your Mobile Number",
+                            inputFormatters: [_.phoneMask],
+                            hintText: "Ex: 501234567",
+                            maxLength: 12,
+                            onChanged: (val) {
+                              String? check0;
 
-                            if (val.isNotEmpty && val.length > 3) {
-                              check0 = val.substring(0, 4);
-                              if (check0 == "9710") {
-                                _.phoneController.clear();
+                              if (val.isNotEmpty && val.length > 3) {
+                                check0 = val.substring(0, 4);
+                                if (check0 == "9710") {
+                                  _.phoneController.clear();
+                                }
                               }
-                            }
-                          },
-                          validator: (val) {
-                            String? name;
-                            if (val.isEmpty || val.length < 12) {
-                              return "Please Enter Valid Phone Number";
-                            } else if (val.isNotEmpty && val.length > 3) {
-                              name = val.substring(0, 3);
+                            },
+                            validator: (val) {
+                              String? name;
+                              if (val.isEmpty || val.length < 12) {
+                                return "Please Enter Valid Phone Number";
+                              } else if (val.isNotEmpty && val.length > 3) {
+                                name = val.substring(0, 3);
 
-                              if (name != "971") {
-                                return "Phone Number Must Start With 971";
+                                if (name != "971") {
+                                  return "Phone Number Must Start With 971";
+                                }
+                              } else {
+                                return null;
                               }
-                            } else {
-                              return null;
-                            }
-                          },
+                            },
+                          ),
                         )),
                     SpacingHeight.heightlistspacing5,
                     _.isOtpLoading
