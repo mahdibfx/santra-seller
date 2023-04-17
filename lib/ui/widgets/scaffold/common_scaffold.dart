@@ -304,7 +304,7 @@ class CommonScaffold extends StatelessWidget {
                   image: DecorationImage(
                       image: backGroundImage != null
                           ? AssetImage(UIDataImage.backgroundImage)
-                          : const AssetImage(UIDataImage.splash),
+                          : AssetImage(UIDataImage.backgroundImage),
                       fit: BoxFit.cover),
                 ),
           width: (MediaQuery.of(context).size.width.ceil()).toDouble(),
