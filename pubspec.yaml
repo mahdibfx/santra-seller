@@ -54,7 +54,6 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
-    - assets/images/splash_full_svg.svg
   fonts:
     - family: Markpro
       fonts:

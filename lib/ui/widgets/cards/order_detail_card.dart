@@ -219,8 +219,9 @@ class _CustomCardState extends State<CustomCard>
               ),
             ),
             Container(
-              height: (_heightFactorAnimation.value *
-                  (220 + _calculateContainerHeight())),
+              height:widget.orderRemarks.toString().isEmpty ?  (_heightFactorAnimation.value *
+                  (220 + _calculateContainerHeight())) : (_heightFactorAnimation.value *
+                  (260 + _calculateContainerHeight())),
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -272,7 +273,7 @@ class _CustomCardState extends State<CustomCard>
                           color: UIDataColors.primaryColor,
                         ),
                         Expanded(
-                          child: Text(widget.orderRemarks).marginAll(10),
+                          child: Text(widget.orderRemarks, maxLines: 4,).marginAll(10),
                         ),
                       ],
                     ).marginOnly(left: 10, right: 10),
@@ -449,7 +450,7 @@ class _CustomCardState extends State<CustomCard>
   }
 
   double _calculateContainerHeight() {
-    return (widget.orderItemList.length >2 ? 2*75 : widget.orderItemList.length * 75)
+    return (widget.orderItemList.length >2 ? 2*75 : widget.orderItemList.length * 75 )
         .toDouble(); // 70 is the height of each ListTile
   }
 
