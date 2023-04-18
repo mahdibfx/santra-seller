@@ -74,7 +74,7 @@ class ProductSettingsProvider extends ChangeNotifier {
       body['seller_code'] = sellercode.toString();
       body['product_code'] = productCode;
       body['new_status'] = newStatus;
-      var response = await http.post(url, body: body);
+      var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
         notifyListeners();
       } else {

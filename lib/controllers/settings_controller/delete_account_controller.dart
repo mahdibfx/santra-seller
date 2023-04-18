@@ -36,6 +36,13 @@ class DeleteAccountController extends GetxController {
     update();
   }
 
+  getPhoneFromSp() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var phone = preferences.getString("phonenumber");
+    phoneController.text = phone!;
+    update();
+  }
+
   Future getOtp() async {
     if (formDeleteAccScreen1.currentState!.validate()) {
       try {
@@ -47,7 +54,7 @@ class DeleteAccountController extends GetxController {
         request.fields.addAll(body);
         request.headers.addAll(ApiData.header);
         var streamedResponse = await request.send();
-
+        print(phoneController.text);
         var response = await http.Response.fromStream(streamedResponse);
         if (response.statusCode == 200) {
           print(phoneController.text);
@@ -64,8 +71,10 @@ class DeleteAccountController extends GetxController {
         } else {
           exceptionDialog(
               "Oops", "Something went wrong, you may try again in a while");
+          print(response.body);
         }
       } catch (err) {
+        print(err);
         generalException();
       }
       updateOtpLoadingState(false);
@@ -82,13 +91,16 @@ class DeleteAccountController extends GetxController {
         body['seller_code'] = prefs.getString('sellercode');
         body['phone'] = phoneController.text.toString();
         body['explaination'] = explainationController.text.toString();
-        var response = await http.post(url, body: body);
+        var response =
+            await http.post(url, headers: ApiData.header, body: body);
         if (response.statusCode == 200) {
           logoutController.logout();
         } else {
+          print(response.body);
           generalException();
         }
       } catch (e) {
+        print(e);
         generalException();
 
         if (kDebugMode) {
@@ -97,5 +109,12 @@ class DeleteAccountController extends GetxController {
       }
       updateDelAccState(false);
     }
+  }
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    getPhoneFromSp();
   }
 }
