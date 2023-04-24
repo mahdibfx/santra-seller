@@ -151,7 +151,8 @@ class MyCustomerProvider extends ChangeNotifier {
       body['seller_code'] = sellerCode ?? "";
       body['customer_name'] = fnController.text;
       body['customer_mobile'] = mobileController.text;
-      body['customer_email'] = emailController.text;
+      body['customer_email'] =
+          emailController.text.isEmpty ? "" : emailController.text;
       body['customer_city'] = city ?? "";
       body['building_number'] = buildingController.text;
       body['building_type'] = aptController.text;

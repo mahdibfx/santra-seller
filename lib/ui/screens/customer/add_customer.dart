@@ -83,14 +83,14 @@ class CustomerScreen extends StatelessWidget {
                                           Stack(
                                             clipBehavior: Clip.none,
                                             children: [
-                                              SizedBox(
-                                                height: 250,
-                                                width: double.infinity,
-                                                child: Image.asset(
-                                                  UIDataImage.dummyImage,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
+                                              // SizedBox(
+                                              //   height: 250,
+                                              //   width: double.infinity,
+                                              //   child: Image.asset(
+                                              //     UIDataImage.dummyImage,
+                                              //     fit: BoxFit.cover,
+                                              //   ),
+                                              // ),
                                               Positioned(
                                                 left: 12,
                                                 top: 12,

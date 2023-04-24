@@ -130,16 +130,16 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
-                      validator: (val) {
-                        bool email = _.emailRegex.hasMatch(val);
-                        if (val.isEmpty) {
-                          return "Please enter Email";
-                        } else if (!email) {
-                          return "Please Enter valid Email";
-                        } else {
-                          return null;
-                        }
-                      },
+                      // validator: (val) {
+                      //   bool email = _.emailRegex.hasMatch(val);
+                      //   if (val.isEmpty) {
+                      //     return "Please enter Email";
+                      //   } else if (!email) {
+                      //     return "Please Enter valid Email";
+                      //   } else {
+                      //     return null;
+                      //   }
+                      // },
                     ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,

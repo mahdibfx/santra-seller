@@ -219,9 +219,11 @@ class _CustomCardState extends State<CustomCard>
               ),
             ),
             Container(
-              height:widget.orderRemarks.toString().isEmpty ?  (_heightFactorAnimation.value *
-                  (220 + _calculateContainerHeight())) : (_heightFactorAnimation.value *
-                  (260 + _calculateContainerHeight())),
+              height: widget.orderRemarks.toString().isEmpty
+                  ? (_heightFactorAnimation.value *
+                      (220 + _calculateContainerHeight()))
+                  : (_heightFactorAnimation.value *
+                      (262 + _calculateContainerHeight())),
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -229,20 +231,22 @@ class _CustomCardState extends State<CustomCard>
                     bottomRight: Radius.circular(10.0),
                     bottomLeft: Radius.circular(10.0)),
               ),
-              child:  Column(
+              child: Column(
                 children: [
                   SpacingHeight.heightlistspacing10,
-                  Container(
+                  SizedBox(
                     height: _calculateContainerHeight(),
                     child: ListView.builder(
                         shrinkWrap: true,
                         itemCount: widget.orderItemList.length,
                         itemBuilder: (context, index) {
                           return OrderItemWidget(
-                            imageString: widget.orderItemList[index].productImage,
+                            imageString:
+                                widget.orderItemList[index].productImage,
                             productQuantity:
                                 widget.orderItemList[index].productQuantity,
-                            productName: widget.orderItemList[index].productName,
+                            productName:
+                                widget.orderItemList[index].productName,
                             productPrice:
                                 widget.orderItemList[index].productTotal,
                           );
@@ -273,7 +277,10 @@ class _CustomCardState extends State<CustomCard>
                           color: UIDataColors.primaryColor,
                         ),
                         Expanded(
-                          child: Text(widget.orderRemarks, maxLines: 4,).marginAll(10),
+                          child: Text(
+                            widget.orderRemarks,
+                            maxLines: 4,
+                          ).marginAll(10),
                         ),
                       ],
                     ).marginOnly(left: 10, right: 10),
@@ -450,7 +457,9 @@ class _CustomCardState extends State<CustomCard>
   }
 
   double _calculateContainerHeight() {
-    return (widget.orderItemList.length >2 ? 2*75 : widget.orderItemList.length * 75 )
+    return (widget.orderItemList.length > 2
+            ? 2 * 75
+            : widget.orderItemList.length * 75)
         .toDouble(); // 70 is the height of each ListTile
   }
 
