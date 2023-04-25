@@ -7,9 +7,16 @@ import 'package:flutter/material.dart';
 import '/utils/uidata.dart';
 import 'package:get/get.dart';
 
-class LanguageSettings extends StatelessWidget {
-  LanguageSettings({super.key});
+class LanguageSettings extends StatefulWidget {
+  const LanguageSettings({super.key});
+
+  @override
+  State<LanguageSettings> createState() => _LanguageSettingsState();
+}
+
+class _LanguageSettingsState extends State<LanguageSettings> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+
   Widget bodyData(context) {
     return GetBuilder<LangaugeSettingsController>(
       builder: (_) {
@@ -27,6 +34,9 @@ class LanguageSettings extends StatelessWidget {
                         icon: UIDATAIcons.languageIcon, btntxt: "Language"),
 
                     BorderButton(
+                      onPressed: (){
+                         Get.updateLocale(const Locale('ar', 'AE'));
+                      },
                       btntxt: "عربي",
                       backEndColor: Colors.white,
                       borderColor: Colors.transparent,
@@ -34,6 +44,9 @@ class LanguageSettings extends StatelessWidget {
                     ),
                     SpacingHeight.heightlistspacing15,
                     BorderButton(
+                      onPressed: (){
+                         Get.updateLocale(const Locale('en', 'us'));
+                      },
                       btntxt: "English",
                       backEndColor: Colors.white,
                       borderColor: UIDataColors.primaryColor,
