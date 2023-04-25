@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/controllers/cart_controller/cart_controller.dart';
 import 'package:santra_seller/ui/widgets/add_manual_order_widgets/voucher_code_form_field.dart';
 import 'package:santra_seller/ui/widgets/add_manual_order_widgets/voucher_tile.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
@@ -39,25 +37,30 @@ class VouchersSection extends StatelessWidget {
             children: [
               HeadingWithIcon(
                   icon: UIDATAIcons.voucherStarIcon, btntxt: "Vouchers"),
-              SizedBox(
-                height: 55,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: cartController.vouchersList.length,
-                  itemBuilder: ((context, index) {
-                    return VoucherTile(
-                      index: index,
-                      title: cartController.vouchersList[index].offerTitle,
-                      subtitle: cartController.vouchersList[index].msg,
-                      buttonTitle: cartController.activeOffers.contains(index)
-                          ? "Applied"
-                          : "Apply",
-                    );
-                  }),
-                ),
-              ),
-              SpacingHeight.heightlistspacing20,
+              cartController.vouchersList.isNotEmpty
+                  ? SizedBox(
+                      height: 55,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemCount: cartController.vouchersList.length,
+                        itemBuilder: ((context, index) {
+                          return VoucherTile(
+                            index: index,
+                            title:
+                                cartController.vouchersList[index].offerTitle,
+                            subtitle: cartController.vouchersList[index].msg,
+                            buttonTitle:
+                                cartController.activeOffers.contains(index)
+                                    ? "Applied"
+                                    : "Apply",
+                          );
+                        }),
+                      ),
+                    )
+                  : const SizedBox(),
+              if (cartController.vouchersList.isNotEmpty)
+                SpacingHeight.heightlistspacing20,
               VoucherCodeFormField()
             ],
           ),

@@ -7,7 +7,7 @@ PODS:
   - Firebase/Messaging (10.7.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 10.7.0)
-  - firebase_auth (4.4.0):
+  - firebase_auth (4.4.1):
     - Firebase/Auth (= 10.7.0)
     - firebase_core
     - Flutter
@@ -169,7 +169,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Firebase: 0219acf760880eeec8ce479895bd7767466d9f81
-  firebase_auth: 5984ebaf5463319e304ab1c0966b06994bd1c69a
+  firebase_auth: 5a84572b7f5315a3aff5b07c62bb0cd5a28cade5
   firebase_core: d85432877e814811e040e7659f9c82faeab66e04
   firebase_messaging: 45c0514ca78426630338a42fb7b55af962c7ccd2
   FirebaseAuth: dd64c01631df724b09f33e584625775c52f7d71f
@@ -196,6 +196,6 @@ SPEC CHECKSUMS:
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
 
-PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
+PODFILE CHECKSUM: d5a092ca6e05974a8b1509297f4e2c8dc8451c01
 
 COCOAPODS: 1.12.0

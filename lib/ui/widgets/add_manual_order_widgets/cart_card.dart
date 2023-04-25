@@ -43,7 +43,6 @@ class CartCardOrder extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 65,
               child: Row(
                 children: [
                   SizedBox(
@@ -68,17 +67,14 @@ class CartCardOrder extends StatelessWidget {
                   Expanded(
                     child: SizedBox(
                       child: Column(
-                        // mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            width: 100,
                             child: Text(
                               allProducts?[index!].name ?? "",
                               style: UIDataTextStyles.textMedium
                                   .copyWith(fontSize: 14),
-                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                           Text(
@@ -89,22 +85,24 @@ class CartCardOrder extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 50,
-                    width: 130,
-                    child: PriceOnSelection(
-                      onMinus: onDecrese,
-                      onPlus: onIncrese,
-                      quantity: quantity,
-                    ),
-                  ),
+                  Expanded(
+                    child: SizedBox(
+                      child: PriceOnSelection(
+                        onMinus: onDecrese,
+                        onPlus: onIncrese,
+                        quantity: quantity,
+                      ),
+                    ).paddingOnly(right: 12),
+                  )
                 ],
               ),
             ),
-            const Divider(
-              height: 30,
-            ),
+            if (allProducts![index!].subModifiers.isNotEmpty)
+              const Divider(
+                height: 30,
+              ),
             SingleChildScrollView(
+                padding: const EdgeInsets.all(0),
                 scrollDirection: Axis.horizontal,
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,

@@ -4,7 +4,7 @@ class UIDataImage {
   // <---------------------- Define Image Name Here ------------------------>
 
   static const String imageDir = "assets/images";
-  static const String splash = "$imageDir/Splash.png";
+  //static const String splash = "$imageDir/Splash.png";
   // static const String logo = "$imageDir/logo.png";
   // static const String card = "$imageDir/credit.png";
   // static const String paypal = "$imageDir/paypal.png";
@@ -19,7 +19,7 @@ class UIDataImage {
   static String pendingOrderSVG = "$imageDir/pending_order_image.svg";
   static String dollarIconSVG = "$imageDir/dollar_icon.svg";
   static String sellerLogoIconSVG = "$imageDir/seller_logo.svg";
-  static String bg = "$imageDir/camera_icon.png";
-  static String dummyImage = "$imageDir/dummy_image.jpg";
+  //static String bg = "$imageDir/camera_icon.png";
+  //static String dummyImage = "$imageDir/dummy_image.jpg";
   static String backgroundImage = "$imageDir/bgsvgnew.png";
 }
