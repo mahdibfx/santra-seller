@@ -1,11 +1,7 @@
-import 'package:santra_seller/controllers/settings_controller/change_email_controller.dart';
 import 'package:santra_seller/controllers/settings_controller/language_settings_controller.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
-import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
-import '../../widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
-import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
 import '/utils/uidata.dart';

@@ -2,18 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/controllers/cart_controller/cart_controller.dart';
 import 'package:santra_seller/models/customers/view_all_customers.dart';
 import 'package:santra_seller/provider/cart_provider.dart';
-import 'package:santra_seller/ui/screens/cart/cart_screen.dart';
-import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/ui/screens/more_setting/my_customer/my_customer_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:santra_seller/utils/api_data.dart';
-import 'package:santra_seller/utils/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 

@@ -9,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/seller_all_products_model.dart';
 import '../../ui/widgets/dialogs/custom_dialogs.dart';
 import '../../utils/api_data.dart';
-import '../controllers/cart_controller/cart_controller.dart';
 
 class AddManualOrderProvider extends ChangeNotifier {
   late SelllerAllProductsModel selllerAllProductsModel;

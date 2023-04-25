@@ -1,4 +1,3 @@
-import 'package:santra_seller/controllers/more_screen_controller.dart/wallet_controller.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
@@ -13,14 +12,7 @@ class WalletScreen extends StatelessWidget {
   WalletScreen({super.key});
 
   Widget bodyData() {
-    return GetBuilder<WalletController>(
-      builder: (_) {
-        return _.isLoading
-            ? const SizedBox(
-                child: Center(
-                child: CircularProgressIndicator(),
-              ))
-            : SafeArea(
+    return SafeArea(
                 child: SingleChildScrollView(
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,8 +26,7 @@ class WalletScreen extends StatelessWidget {
                   ],
                 ).marginAll(10)),
               );
-      },
-    );
+    
   }
 
   @override

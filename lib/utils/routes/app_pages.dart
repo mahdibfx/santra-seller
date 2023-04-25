@@ -91,12 +91,12 @@ class AppPages {
 
  
 
-    GetPage(
-      name: Routes.notificationscreen,
-      page: () => NotificationScreen(),
-      binding: NotificationBinding(),
-      // middlewares: [AuthMiddleware()],
-    ),
+    // GetPage(
+    //   name: Routes.notificationscreen,
+    //   page: () => NotificationScreen(),
+    //   binding: NotificationBinding(),
+    //   // middlewares: [AuthMiddleware()],
+    // ),
     GetPage(
         name: Routes.signuproutes,
         page: () => SignUpScreen(),
@@ -125,11 +125,11 @@ class AppPages {
       page: () => MoreSettingScreen(),
       binding: MoreScreenBindings(),
     ),
-    GetPage(
-      name: Routes.settings,
-      page: () => Settings(),
-      binding: SettingsBindings(),
-    ),
+    // GetPage(
+    //   name: Routes.settings,
+    //   page: () => Settings(),
+    //   binding: SettingsBindings(),
+    // ),
     // GetPage(
     //   name: Routes.accountInfoRoute,
     //   page: () => AccountInfo(),
@@ -150,22 +150,22 @@ class AppPages {
       page: () => AboutUsScreen(),
       binding: AboutUsBindings(),
     ),
-    GetPage(
-      name: Routes.walletscreen,
-      page: () => WalletScreen(),
-      binding: WalletBindings(),
-    ),
+    // GetPage(
+    //   name: Routes.walletscreen,
+    //   page: () => WalletScreen(),
+    //   binding: WalletBindings(),
+    // ),
     GetPage(
       name: Routes.contactscreen,
       page: () => ContactUsScreen(),
       binding: ContactUsBinding(),
     ),
    
-    GetPage(
-      name: Routes.cartroute,
-      page: () => CartScreen(),
-      binding: CartBindings(),
-    ),
+    // GetPage(
+    //   name: Routes.cartroute,
+    //   page: () => CartScreen(),
+    //   binding: CartBindings(),
+    // ),
     GetPage(
       name: Routes.languageSettings,
       page: () => LanguageSettings(),
