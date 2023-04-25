@@ -1,17 +1,10 @@
 // ignore_for_file: depend_on_referenced_packages
-import 'dart:convert';
-import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/ui/widgets/dropdown/common_dropdown.dart';
-
-import '../../../controllers/home_controller/home_controller.dart';
-import '../../../controllers/notification/notification_controller.dart';
 import '../../../provider/notification_provider.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
-import '../../widgets/cards/home_card.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 
 import 'package:flutter/material.dart';

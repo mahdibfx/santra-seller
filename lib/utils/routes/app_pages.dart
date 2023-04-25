@@ -88,36 +88,9 @@ class AppPages {
         name: Routes.resetPasswordAfterConfirmation,
         page: () => ResetPasswordAfterConfirmation(),
         binding: FogotPassowordBinding()),
-    GetPage(
-      name: Routes.homeRoutes,
-      page: () => HomeScreen(),
-      binding: HomeBindings(),
-      // middlewares: [AuthMiddleware()],
-    ),
-    GetPage(
-      name: Routes.santraorders,
-      page: () => SantraOrderScreen(),
-      binding: HomeBindings(),
-      // middlewares: [AuthMiddleware()],
-    ),
-    GetPage(
-      name: Routes.manualOrderScreen,
-      page: () => ManualOrderScreen(),
-      binding: HomeBindings(),
-      // middlewares: [AuthMiddleware()],
-    ),
-    GetPage(
-      name: Routes.allOrderScreen,
-      page: () => AllOrderScreen(),
-      binding: HomeBindings(),
-      // middlewares: [AuthMiddleware()],
-    ),
-    GetPage(
-      name: Routes.pendingOrderScreen,
-      page: () => PendingOrderScreen(),
-      binding: HomeBindings(),
-      // middlewares: [AuthMiddleware()],
-    ),
+
+ 
+
     GetPage(
       name: Routes.notificationscreen,
       page: () => NotificationScreen(),
@@ -130,27 +103,23 @@ class AppPages {
         binding: SignupBinding()
         // middlewares: [AuthMiddleware()],
         ),
-    GetPage(
-        name: Routes.loginRoutes,
-        page: () => LoginScreen(),
-        binding: LoginBinding()
-        // middlewares: [AuthMiddleware()],
-        ),
-    GetPage(
-      name: Routes.addCustomer,
-      page: () => CustomerScreen(),
-      binding: CustomerBindings(),
-    ),
-    GetPage(
-      name: Routes.addManualOrder,
-      page: () => AddManulOrder(),
-      binding: AddManualOrderBinding(),
-    ),
-    GetPage(
-      name: Routes.productSetting,
-      page: () => ProductSettingScreen(),
-      binding: ProductSettingsBinding(),
-    ),
+    // GetPage(
+    //     name: Routes.loginRoutes,
+    //     page: () => LoginScreen(),
+    //     binding: LoginBinding()
+    //     // middlewares: [AuthMiddleware()],
+    //     ),
+    // GetPage(
+    //   name: Routes.addCustomer,
+    //   page: () => CustomerScreen(),
+    //   binding: CustomerBindings(),
+    // ),
+
+    // GetPage(
+    //   name: Routes.productSetting,
+    //   page: () => ProductSettingScreen(),
+    //   binding: ProductSettingsBinding(),
+    // ),
     GetPage(
       name: Routes.moreScreen,
       page: () => MoreSettingScreen(),
@@ -161,16 +130,16 @@ class AppPages {
       page: () => Settings(),
       binding: SettingsBindings(),
     ),
-    GetPage(
-      name: Routes.accountInfoRoute,
-      page: () => AccountInfo(),
-      binding: AccountInfoBinding(),
-    ),
-    GetPage(
-      name: Routes.changeEmail,
-      page: () => ChangeEmail(),
-      binding: ChangeEmailBinding(),
-    ),
+    // GetPage(
+    //   name: Routes.accountInfoRoute,
+    //   page: () => AccountInfo(),
+    //   binding: AccountInfoBinding(),
+    // ),
+    // GetPage(
+    //   name: Routes.changeEmail,
+    //   page: () => ChangeEmail(),
+    //   binding: ChangeEmailBinding(),
+    // ),
     GetPage(
       name: Routes.changePassword,
       page: () => ChangePassword(),
@@ -191,26 +160,7 @@ class AppPages {
       page: () => ContactUsScreen(),
       binding: ContactUsBinding(),
     ),
-    GetPage(
-      name: Routes.mycustomerscreen,
-      page: () => MyCustomerScreen(),
-      binding: MyCustomerBindings(),
-    ),
-    GetPage(
-      name: Routes.mycustomerscreenview,
-      page: () => ViewCustomerDetails(),
-      binding: MyCustomerBindings(),
-    ),
-    GetPage(
-      name: Routes.addNewcustomer,
-      page: () => AddCustomerScreen(),
-      binding: MyCustomerBindings(),
-    ),
-    GetPage(
-      name: Routes.editcustomer,
-      page: () => EditCustomerDetails(),
-      binding: MyCustomerBindings(),
-    ),
+   
     GetPage(
       name: Routes.cartroute,
       page: () => CartScreen(),

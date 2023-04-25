@@ -1,30 +1,22 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:http/http.dart';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/controllers/add_manual_order_controller.dart/add_manual_order_controller.dart';
-import 'package:santra_seller/controllers/cart_controller/cart_controller.dart';
 import 'package:santra_seller/provider/all_orders_manual.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
-import 'package:santra_seller/ui/widgets/buttons/material_buttons/raised_gradient_button.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
 import '../../../provider/cart_provider.dart';
 import '../../../utils/routes/app_routes.dart';
-import '../../widgets/add_manual_order_widgets/checkbox_modifier_list.dart';
 import '../../widgets/add_manual_order_widgets/rounded_close_button.dart';
 import '../../widgets/add_manual_order_widgets/pd_card_add_manual_order.dart';
-import '../../widgets/add_manual_order_widgets/price_on_selection.dart';
 import '../../widgets/add_manual_order_widgets/product_name_and_price_on_sheet.dart';
-import '../../widgets/buttons/add_to_basket_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../utils/uidata.dart';
 import '../../widgets/snackbar/common_snackbar.dart';
-import 'package:flutter/src/foundation/change_notifier.dart';
 
 class AddManulOrder extends StatefulWidget {
   AddManulOrder({super.key});

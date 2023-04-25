@@ -1,10 +1,6 @@
-// ignore_for_file: depend_on_referenced_packages
-import 'dart:convert';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
-
-import '../../../controllers/home_controller/home_controller.dart';
 import '../../../provider/home_provider.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata/textStyles.dart';

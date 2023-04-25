@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/controllers/home_controller/home_controller.dart';
 import 'package:santra_seller/ui/widgets/cards/my_customer_card.dart';
 import 'package:santra_seller/utils/uidata.dart';
 
@@ -12,7 +11,6 @@ import '../../../models/home_model.dart';
 import '../../../provider/cart_provider.dart';
 import '../../../provider/home_provider.dart';
 import '../../../utils/uidata/textStyles.dart';
-import '../buttons/border_button.dart';
 import '../buttons/material_buttons/raised_gradient_button.dart';
 
 class ManualOrderCard extends StatefulWidget {

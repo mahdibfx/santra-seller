@@ -4,9 +4,6 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/home_provider.dart';
 import 'package:santra_seller/ui/screens/notification/notification_screen.dart';
-
-import '../../../controllers/home_controller/home_controller.dart';
-import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';
 

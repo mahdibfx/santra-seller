@@ -1,22 +1,39 @@
-import 'package:intl/intl.dart';
-import 'package:santra_seller/controllers/settings_controller/account_info_controller.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
+import '../../../provider/setting_provider/account_info_provider.dart';
 import '../../../utils/routes/app_routes.dart';
-import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import '../../widgets/textfields/common_textfield.dart';
 import 'package:flutter/material.dart';
-import '../../widgets/textfields/tappable_text_field.dart';
 import '/utils/uidata.dart';
 import 'package:get/get.dart';
 
-class AccountInfo extends StatelessWidget {
-  AccountInfo({super.key});
+class AccountInfo extends StatefulWidget {
+  const AccountInfo({super.key});
+  
+
+  @override
+  State<AccountInfo> createState() => _AccountInfoState();
+}
+
+class _AccountInfoState extends State<AccountInfo> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+
+  hitAllApis() async {
+    await Future.microtask(() => context.read<AccountInfoProvider>().onInit());
+  }
+
+  @override
+  void initState() {
+    hitAllApis();
+    super.initState();
+  }
+
   Widget bodyData(context) {
-    return GetBuilder<AccountInfoController>(
-      builder: (_) {
+    return Consumer<AccountInfoProvider>(
+      builder: (context, _, child) {
+
         return SafeArea(
           child: SingleChildScrollView(
             child: ConstrainedBox(
@@ -91,7 +108,7 @@ class AccountInfo extends StatelessWidget {
                     //       : "",
                     // ),
                     SpacingHeight.heightlistspacing20,
-                    Obx(() => _.isUpdateAccInfoLoading.isTrue
+                    Obx(() => _.isUpdateAccInfoLoading
                             ? const Center(child: CircularProgressIndicator())
                             : PrimaryButtonWithIcon(
                                 btntxt: "Save",

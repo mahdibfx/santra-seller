@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/controllers/more_screen_controller.dart/my_customer/my_customer_controller.dart';
-import 'package:santra_seller/controllers/splash_controller.dart';
 import 'package:santra_seller/provider/home_provider.dart';
-import 'package:santra_seller/provider/login_provider.dart';
-import 'package:santra_seller/ui/screens/more_setting/my_customer/edit_customer_details.dart';
 import 'package:santra_seller/ui/screens/more_setting/my_customer/view_customer_details.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';

@@ -1,15 +1,11 @@
 // ignore_for_file: depend_on_referenced_packages
-import 'dart:convert';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/controllers/add_manual_order_controller.dart/add_manual_order_controller.dart';
 import 'package:santra_seller/provider/all_orders_manual.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
 import '../../widgets/add_manual_order_widgets/checkbox_modifier_list.dart';
 import '../../widgets/add_manual_order_widgets/rounded_close_button.dart';
 import '../../widgets/add_manual_order_widgets/pd_card_add_manual_order.dart';
-import '../../widgets/add_manual_order_widgets/price_on_selection.dart';
-import '../../widgets/add_manual_order_widgets/product_name_and_price_on_sheet.dart';
 import '../../widgets/buttons/add_to_basket_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';

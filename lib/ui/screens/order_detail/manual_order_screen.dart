@@ -1,20 +1,15 @@
 // ignore_for_file: depend_on_referenced_packages
-import 'dart:convert';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/cards/manual_order_detail_card.dart';
-
-import '../../../controllers/home_controller/home_controller.dart';
 import '../../../provider/home_provider.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
-import '../../widgets/cards/home_card.dart';
 import '../../widgets/cards/order_detail_card.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../utils/uidata.dart';

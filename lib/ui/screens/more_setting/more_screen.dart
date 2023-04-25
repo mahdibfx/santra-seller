@@ -2,8 +2,6 @@
 import 'dart:convert';
 import 'package:santra_seller/controllers/more_screen_controller.dart/more_controller.dart';
 import 'package:santra_seller/ui/screens/more_setting/my_customer/my_customer_screen.dart';
-
-import '../../../controllers/home_controller/home_controller.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';

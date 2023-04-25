@@ -1,10 +1,7 @@
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/controllers/add_manual_order_controller.dart/add_manual_order_controller.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
-import 'package:santra_seller/utils/uidata/textStyles.dart';
-import '../../../controllers/products/product_settings.dart';
 import '../../../provider/product_setting_provider.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../widgets/cards/product_edit_card.dart';

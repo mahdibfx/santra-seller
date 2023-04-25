@@ -5,14 +5,11 @@ import 'package:flutter_svg/svg.dart';
 // package imports
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/controllers/auth_controller/login_controller.dart';
-import 'package:santra_seller/controllers/home_controller/home_controller.dart';
 import 'package:santra_seller/controllers/splash_controller.dart';
 import 'package:santra_seller/provider/home_provider.dart';
 import 'package:santra_seller/provider/login_provider.dart';
 
 // lib imports
-import '../../../controllers/cart_controller/cart_controller.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';

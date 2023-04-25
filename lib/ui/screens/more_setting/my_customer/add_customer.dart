@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/controllers/auth_controller/signup_controller.dart';
-import 'package:santra_seller/controllers/more_screen_controller.dart/my_customer/my_customer_controller.dart';
 import 'package:santra_seller/provider/sign_up_provider.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';

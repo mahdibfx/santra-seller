@@ -7,10 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/widgets/snackbar/common_snackbar.dart';
 import 'package:santra_seller/utils/uidata.dart';
-
-import '../../../controllers/home_controller/home_controller.dart';
 import '../../../models/home_model.dart';
-import '../../../provider/cart_provider.dart';
 import '../../../provider/home_provider.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../buttons/border_button.dart';

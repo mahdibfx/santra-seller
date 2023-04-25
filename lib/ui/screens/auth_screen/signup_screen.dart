@@ -1,20 +1,14 @@
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:http/http.dart';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/controllers/cutomer_controller/customer-controller.dart';
-import 'package:santra_seller/controllers/more_screen_controller.dart/my_customer/my_customer_controller.dart';
 import 'package:santra_seller/controllers/more_screen_controller.dart/privacy_controller.dart';
-import 'package:santra_seller/models/customers/view_all_customers.dart';
 import 'package:santra_seller/provider/sign_up_provider.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 
-import '../../../controllers/auth_controller/signup_controller.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata/textStyles.dart';
-import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
 import '../../widgets/dropdown/common_dropdown.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import '../../widgets/textfields/common_textfield.dart';

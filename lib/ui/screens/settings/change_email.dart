@@ -1,5 +1,6 @@
-import 'package:santra_seller/controllers/settings_controller/change_email_controller.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
+import '../../../provider/setting_provider/change_email_provider.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
@@ -8,12 +9,27 @@ import 'package:flutter/material.dart';
 import '/utils/uidata.dart';
 import 'package:get/get.dart';
 
-class ChangeEmail extends StatelessWidget {
-  ChangeEmail({super.key});
+class ChangeEmail extends StatefulWidget {
+  const ChangeEmail({super.key});
+
+  @override
+  State<ChangeEmail> createState() => _ChangeEmailState();
+}
+
+class _ChangeEmailState extends State<ChangeEmail> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+  hitAllApis() async {
+    await Future.microtask(() => context.read<ChangeEmailProvider>().onInit());
+  }
+
+  @override
+  void initState() {
+    hitAllApis();
+    super.initState();
+  }
   Widget bodyData(context) {
-    return GetBuilder<ChangeEmailController>(
-      builder: (_) {
+    return Consumer<ChangeEmailProvider>(
+      builder: (context, _, child) {
         return SafeArea(
           child: SingleChildScrollView(
             child: ConstrainedBox(
@@ -96,7 +112,9 @@ class ChangeEmail extends StatelessWidget {
                           : UIDATAIcons.viewIcon,
                       toggleFunction: () {
                         _.securetext = !_.securetext;
-                        _.update();
+                       setState(() {
+                         
+                       });
                       },
                       validator: (val) {
                         if (val.isEmpty) {
@@ -107,7 +125,7 @@ class ChangeEmail extends StatelessWidget {
                       },
                     ),
                     SpacingHeight.heightlistspacing10,
-                    Obx(() => _.isUpdateEmailLoading.isTrue
+                    Obx(() => _.isUpdateEmailLoading
                             ? const Center(
                                 child: CircularProgressIndicator(),
                               )

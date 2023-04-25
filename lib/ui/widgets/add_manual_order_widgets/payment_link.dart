@@ -2,20 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/controllers/more_screen_controller.dart/my_customer/my_customer_controller.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:share_plus/share_plus.dart';
-
 import '../../../provider/my_customer_provider.dart';
-import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';
-import '../../screens/more_setting/my_customer/my_customer_screen.dart';
-import '../../screens/more_setting/my_customer/view_customer_details.dart';
 import '../buttons/material_buttons/primaryButtonWithIcon.dart';
-import '../snackbar/common_snackbar.dart';
 import '../textfields/common_textfield.dart';
 
 class PaymentLinkBottomSheet extends StatelessWidget {
