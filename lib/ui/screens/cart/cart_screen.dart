@@ -11,6 +11,7 @@ import '../../../../utils/uidata.dart';
 import '../../widgets/add_manual_order_widgets/cart_card.dart';
 import '../../widgets/add_manual_order_widgets/cart_payment_des.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
+import '../add_manual_order/add_manual_order.dart';
 
 class CartScreen extends StatefulWidget {
   final bool isOrderReady;
@@ -218,7 +219,7 @@ class _CartScreenState extends State<CartScreen> {
       appbarSvg: true,
       backarrow: UIDataColors.primaryColor,
       qrCallback: () {
-        Get.offAllNamed(Routes.addManualOrder);
+        Get.offAll(() =>  const AddManulOrder());
       },
       floatingIcon: Icons.add,
       // elevation: 3.0,

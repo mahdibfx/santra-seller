@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../widgets/textfields/common_textfield.dart';
+import '../../add_manual_order/add_manual_order.dart';
 
 class ContactUsScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
@@ -178,7 +179,7 @@ class ContactUsScreen extends StatelessWidget {
       appTitle: 'Contact Us',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAllNamed(Routes.addManualOrder);
+        Get.offAll(() =>  const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 1.0,

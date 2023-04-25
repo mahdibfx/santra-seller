@@ -8,6 +8,7 @@ import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../utils/uidata.dart';
+import '../add_manual_order/add_manual_order.dart';
 
 class AboutUsScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
@@ -62,7 +63,7 @@ class AboutUsScreen extends StatelessWidget {
       appTitle: 'About Us',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAllNamed(Routes.addManualOrder);
+        Get.offAll(() =>  const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

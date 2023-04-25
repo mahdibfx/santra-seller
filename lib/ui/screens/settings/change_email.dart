@@ -6,6 +6,7 @@ import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
+import '../add_manual_order/add_manual_order.dart';
 import '/utils/uidata.dart';
 import 'package:get/get.dart';
 
@@ -176,7 +177,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
       appTitle: '',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAllNamed(Routes.addManualOrder);
+        Get.offAll(() =>  const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

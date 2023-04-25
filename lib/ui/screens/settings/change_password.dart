@@ -1,4 +1,5 @@
 import 'package:santra_seller/controllers/settings_controller/change_password_controller.dart';
+import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
@@ -151,7 +152,7 @@ class ChangePassword extends StatelessWidget {
       appTitle: '',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAllNamed(Routes.addManualOrder);
+        Get.offAll(() =>  const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

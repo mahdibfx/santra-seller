@@ -382,7 +382,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appbarSvg: true,
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-          Get.offAll(() =>  AddManulOrder());
+          Get.offAll(() =>  const AddManulOrder());
       
       },
       floatingIcon: Icons.add,

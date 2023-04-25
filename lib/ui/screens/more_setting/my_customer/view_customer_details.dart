@@ -11,6 +11,7 @@ import '../../../../utils/uidata/textStyles.dart';
 import '../../../widgets/add_manual_order_widgets/payment_link.dart';
 import '../../../widgets/buttons/icon_setting_button.dart';
 import '../../../widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
+import '../../add_manual_order/add_manual_order.dart';
 import 'card_customer_detail.dart';
 
 class ViewCustomerDetails extends StatelessWidget {
@@ -198,7 +199,7 @@ class ViewCustomerDetails extends StatelessWidget {
       appTitle: 'Customer Detail',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAllNamed(Routes.addManualOrder);
+        Get.offAll(() =>  const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 1.0,

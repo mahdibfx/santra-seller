@@ -13,6 +13,7 @@ import '../../../../utils/uidata.dart';
 import '../../../widgets/cards/my_customer_card.dart';
 import '../../../widgets/scaffold/common_scaffold.dart';
 import '../../../widgets/textfields/common_textfield.dart';
+import '../../add_manual_order/add_manual_order.dart';
 
 class MyCustomerScreen extends StatefulWidget {
   final bool comingFromCart;
@@ -135,7 +136,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
       appTitle: 'My Customer',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAllNamed(Routes.addManualOrder);
+        Get.offAll(() =>  const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 1.0,

@@ -1,3 +1,5 @@
+import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
+
 import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
@@ -44,7 +46,7 @@ class WalletScreen extends StatelessWidget {
       appTitle: 'Wallet',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAllNamed(Routes.addManualOrder);
+        Get.offAll(() =>  const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

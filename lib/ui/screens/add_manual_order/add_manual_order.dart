@@ -522,7 +522,7 @@ class _AddManulOrderState extends State<AddManulOrder> {
       appbarSvg: true,
       backarrow: UIDataColors.primaryColor,
       qrCallback: () {
-        // Get.offAllNamed(Routes.addManualOrder);
+        // Get.offAll(() =>  const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

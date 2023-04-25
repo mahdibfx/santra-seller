@@ -10,6 +10,7 @@ import '../../../widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import '../../../widgets/dropdown/common_dropdown.dart';
 import '../../../widgets/scaffold/common_scaffold.dart';
 import '../../../widgets/textfields/common_textfield.dart';
+import '../../add_manual_order/add_manual_order.dart';
 
 class EditCustomerDetails extends StatefulWidget {
   int? index;
@@ -239,7 +240,7 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
       appTitle: 'Edit Customer Details',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAllNamed(Routes.addManualOrder);
+        Get.offAll(() =>  const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 1.0,

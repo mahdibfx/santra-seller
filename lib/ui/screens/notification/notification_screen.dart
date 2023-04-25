@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import '../../../provider/notification_provider.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata/textStyles.dart';
@@ -151,7 +152,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       appbarSvg: true,
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAllNamed(Routes.addManualOrder);
+        Get.offAll(() =>  const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 1.0,

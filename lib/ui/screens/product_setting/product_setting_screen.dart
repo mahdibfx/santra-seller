@@ -1,5 +1,6 @@
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
+import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import '../../../provider/product_setting_provider.dart';
@@ -119,7 +120,7 @@ class _ProductSettingScreenState extends State<ProductSettingScreen> {
       appbarSvg: true,
       backarrow: UIDataColors.primaryColor,
       qrCallback: () {
-        Get.offAllNamed(Routes.addManualOrder);
+        Get.offAll(() =>  const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

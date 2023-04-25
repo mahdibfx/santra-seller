@@ -6,6 +6,7 @@ import '../../../utils/routes/app_routes.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import '../../widgets/textfields/common_textfield.dart';
 import 'package:flutter/material.dart';
+import '../add_manual_order/add_manual_order.dart';
 import '/utils/uidata.dart';
 import 'package:get/get.dart';
 
@@ -158,7 +159,7 @@ class _AccountInfoState extends State<AccountInfo> {
       appTitle: '',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAllNamed(Routes.addManualOrder);
+        Get.offAll(() =>  const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 0.0,
