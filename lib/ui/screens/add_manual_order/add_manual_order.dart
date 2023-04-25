@@ -19,7 +19,7 @@ import '../../../utils/uidata.dart';
 import '../../widgets/snackbar/common_snackbar.dart';
 
 class AddManulOrder extends StatefulWidget {
-  AddManulOrder({super.key});
+  const AddManulOrder({super.key});
 
   @override
   State<AddManulOrder> createState() => _AddManulOrderState();

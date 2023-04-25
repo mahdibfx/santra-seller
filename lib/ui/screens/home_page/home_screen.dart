@@ -2,6 +2,10 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/home_provider.dart';
+import 'package:santra_seller/ui/screens/order_detail/all_order_screen.dart';
+import 'package:santra_seller/ui/screens/order_detail/manual_order_screen.dart';
+import 'package:santra_seller/ui/screens/order_detail/pending_order_screen.dart';
+import 'package:santra_seller/ui/screens/order_detail/santra_order_screen.dart';
 import 'package:santra_seller/ui/widgets/dropdown/common_dropdown.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata/textStyles.dart';
@@ -10,6 +14,7 @@ import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../utils/uidata.dart';
+import '../add_manual_order/add_manual_order.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -134,7 +139,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               santraNewCount: _.newOrderSantraCount.toString(),
                               isSantraCard: true,
                               onTap: () {
-                                Get.toNamed(Routes.santraorders);
+                                  Get.to(() =>  SantraOrderScreen());
+                              
                               },
                               heading: 'Santra Orders',
                               count: _.homeData == null
@@ -146,7 +152,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             SpacingWidth.widthlistspacing20,
                             HomeCardWidget(
                               onTap: () {
-                                Get.toNamed(Routes.manualOrderScreen);
+                                  Get.to(() =>  ManualOrderScreen());
+                                
                               },
                               heading: 'Manual Orders',
                               count: _.homeData!.manualOrders[0].orderCount
@@ -160,7 +167,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             HomeCardWidget(
                               onTap: () {
-                                Get.toNamed(Routes.pendingOrderScreen);
+                                 Get.to(() =>  PendingOrderScreen());
+                              
                               },
                               heading: 'Pending Orders',
                               count: _.homeData!.pendingOrders[0].orderCount
@@ -170,7 +178,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             SpacingWidth.widthlistspacing20,
                             HomeCardWidget(
                               onTap: () {
-                                Get.toNamed(Routes.allOrderScreen);
+                                  Get.to(() =>  AllOrderScreen());
+                              
                               },
                               heading: 'All Orders',
                               count: _.filteredAllOrders.length.toString(),
@@ -373,7 +382,8 @@ class _HomeScreenState extends State<HomeScreen> {
       appbarSvg: true,
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAllNamed(Routes.addManualOrder);
+          Get.offAll(() =>  AddManulOrder());
+      
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

@@ -1,7 +1,9 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'dart:convert';
 import 'package:santra_seller/controllers/more_screen_controller.dart/more_controller.dart';
+import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/ui/screens/more_setting/my_customer/my_customer_screen.dart';
+import 'package:santra_seller/ui/screens/product_setting/product_setting_screen.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
@@ -9,6 +11,7 @@ import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../utils/uidata.dart';
+import '../settings/settings.dart';
 
 class MoreSettingScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
@@ -34,14 +37,16 @@ class MoreSettingScreen extends StatelessWidget {
                       ReusableIconSetting(
                         icon: UIDATAIcons.settingsIcon,
                         onPressed: () {
-                          Get.toNamed(Routes.settings);
+                            Get.to(() =>  Settings());
+                       
                         },
                         btntxt: 'settings',
                       ),
                       ReusableIconSetting(
                         icon: UIDATAIcons.dashboardIcon,
                         onPressed: () {
-                          Get.toNamed(Routes.productSetting);
+                          Get.to(() =>  ProductSettingScreen());
+                       
                         },
                         btntxt: 'Products',
                       ),
@@ -113,7 +118,7 @@ class MoreSettingScreen extends StatelessWidget {
       appTitle: 'Add customer',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAllNamed(Routes.addManualOrder);
+        Get.offAll(() => const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

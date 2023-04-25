@@ -13,6 +13,7 @@ import 'package:santra_seller/provider/login_provider.dart';
 import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';
+import '../../screens/home_page/home_screen.dart';
 import '../buttons/icon_button.dart';
 import '../custom_float.dart';
 import '../dialogs/custom_dialogs.dart';
@@ -152,7 +153,7 @@ class CommonScaffold extends StatelessWidget {
                       ),
                       onPressed: () {
                         if (Get.currentRoute != Routes.homeRoutes) {
-                          Get.offAllNamed(Routes.homeRoutes);
+                          Get.offAll(() => const HomeScreen());
                         }
                       },
                     ),

@@ -125,7 +125,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
                       },
                     ),
                     SpacingHeight.heightlistspacing10,
-                    Obx(() => _.isUpdateEmailLoading
+                 _.isUpdateEmailLoading
                             ? const Center(
                                 child: CircularProgressIndicator(),
                               )
@@ -149,7 +149,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
                         //       _.updateEmail();
                         //     },
                         //   ),
-                        ),
+                        
                   ],
                 ).marginOnly(left: 20.0, right: 20.0),
               ),

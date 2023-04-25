@@ -108,7 +108,7 @@ class _AccountInfoState extends State<AccountInfo> {
                     //       : "",
                     // ),
                     SpacingHeight.heightlistspacing20,
-                    Obx(() => _.isUpdateAccInfoLoading
+                _.isUpdateAccInfoLoading
                             ? const Center(child: CircularProgressIndicator())
                             : PrimaryButtonWithIcon(
                                 btntxt: "Save",
@@ -131,7 +131,7 @@ class _AccountInfoState extends State<AccountInfo> {
                         //       _.updateAccountInfo();
                         //     },
                         //   ),
-                        ),
+                        
                   ],
                 ).paddingSymmetric(horizontal: 20),
               ),

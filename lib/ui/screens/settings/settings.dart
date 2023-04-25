@@ -7,6 +7,8 @@ import 'package:santra_seller/controllers/settings_controller/logout_controller.
 import 'package:santra_seller/controllers/splash_controller.dart';
 import 'package:santra_seller/provider/cart_provider.dart';
 import 'package:santra_seller/provider/login_provider.dart';
+import 'package:santra_seller/ui/screens/settings/account_info.dart';
+import 'package:santra_seller/ui/screens/settings/change_email.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 
 import '../../../config/env.dart';
@@ -38,7 +40,8 @@ class Settings extends StatelessWidget {
               ReusableIconSetting(
                 icon: UIDATAIcons.infoIcon,
                 onPressed: () {
-                  Get.toNamed(Routes.accountInfoRoute);
+                    Get.to(() =>  AccountInfo());
+                
                 },
                 btntxt: "Account info",
               ),
@@ -46,7 +49,8 @@ class Settings extends StatelessWidget {
                 icon: UIDATAIcons.emailIcon,
                 iconColor: UIDataColors.primaryColor,
                 onPressed: () {
-                  Get.toNamed(Routes.changeEmail);
+                    Get.to(() =>  ChangeEmail());
+              
                 },
                 btntxt: "Change Email",
               ),
