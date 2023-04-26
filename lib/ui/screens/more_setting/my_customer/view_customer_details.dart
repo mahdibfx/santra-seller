@@ -3,10 +3,9 @@ import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/widgets/scaffold/common_scaffold.dart';
-import 'package:santra_seller/utils/routes/app_routes.dart';
 import 'package:santra_seller/utils/uidata.dart';
 import '../../../../models/customers/view_all_customers.dart';
-import '../../../../provider/my_customer_provider.dart';
+import '../../../../provider/more_settings_provider/my_customer_provider.dart';
 import '../../../../utils/uidata/textStyles.dart';
 import '../../../widgets/add_manual_order_widgets/payment_link.dart';
 import '../../../widgets/buttons/icon_setting_button.dart';
@@ -199,7 +198,7 @@ class ViewCustomerDetails extends StatelessWidget {
       appTitle: 'Customer Detail',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAll(() =>  const AddManulOrder());
+        Get.offAll(() => const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 1.0,

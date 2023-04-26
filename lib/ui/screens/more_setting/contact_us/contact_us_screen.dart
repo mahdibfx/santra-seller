@@ -1,11 +1,10 @@
+import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
 
-import '../../../../controllers/more_screen_controller.dart/contact_us/contact_us_controller.dart';
-import '../../../../utils/routes/app_routes.dart';
+import '../../../../provider/more_settings_provider/contact_us_provider.dart';
 import '../../../../utils/uidata.dart';
-import '../../../widgets/buttons/material_buttons/raised_gradient_button.dart';
 import '../../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,8 +18,8 @@ class ContactUsScreen extends StatelessWidget {
   ContactUsScreen({super.key});
   final form = GlobalKey<FormState>();
   Widget bodyData() {
-    return GetBuilder<ContactUsController>(
-      builder: (_) {
+    return Consumer<ContactUsProvider>(
+      builder: (con, _, child) {
         return SafeArea(
           child: SingleChildScrollView(
               child: Column(
@@ -179,7 +178,7 @@ class ContactUsScreen extends StatelessWidget {
       appTitle: 'Contact Us',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAll(() =>  const AddManulOrder());
+        Get.offAll(() => const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 1.0,

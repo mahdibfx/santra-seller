@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
-import '../../../provider/product_setting_provider.dart';
+import '../../../provider/more_settings_provider/product_setting_provider.dart';
 import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';
 

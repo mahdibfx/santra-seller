@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/home_provider.dart';
+import 'package:santra_seller/ui/screens/more_setting/my_customer/add_customer.dart';
 import 'package:santra_seller/ui/screens/more_setting/my_customer/view_customer_details.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 
-import '../../../../provider/my_customer_provider.dart';
-import '../../../../utils/routes/app_routes.dart';
+import '../../../../provider/more_settings_provider/my_customer_provider.dart';
+
 import '../../../../utils/uidata.dart';
 import '../../../widgets/cards/my_customer_card.dart';
 import '../../../widgets/scaffold/common_scaffold.dart';
@@ -63,7 +64,8 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                                       "Your status is not approved");
                                 }
                               : () {
-                                  Get.offNamed(Routes.addNewcustomer);
+                                  Get.to(() => const AddCustomerScreen());
+                                  // Get.offNamed(Routes.addNewcustomer);
                                 },
                     ),
                     SpacingHeight.heightlistspacing20,
@@ -136,7 +138,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
       appTitle: 'My Customer',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAll(() =>  const AddManulOrder());
+        Get.offAll(() => const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 1.0,

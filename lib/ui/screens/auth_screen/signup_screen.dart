@@ -1,13 +1,13 @@
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/controllers/more_screen_controller.dart/privacy_controller.dart';
-import 'package:santra_seller/provider/sign_up_provider.dart';
+import 'package:santra_seller/provider/more_settings_provider/privacy_provider.dart';
+import 'package:santra_seller/provider/auth_providers/sign_up_provider.dart';
+import 'package:santra_seller/ui/screens/auth_screen/login_screen.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 
-import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/dropdown/common_dropdown.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
@@ -24,10 +24,13 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  PrivacyController priCont = Get.put(PrivacyController());
-  // SignUpController regCont = Get.put(SignUpController());
   hitAllApis() async {
-    await Future.microtask(() => context.read<SignUpProvider>().onInit());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<PrivacyProvider>(context, listen: false).termsAndCondition();
+    });
+
+    await Future.microtask(
+        () => context.read<SignUpProvider>().signUpProviderOnInit());
   }
 
   @override
@@ -231,49 +234,55 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         borderRadius:
                                             BorderRadius.circular(15)),
                                     // insetPadding: EdgeInsets.zero,
-                                    content: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        const Text(
-                                          "Terms & Conditions",
-                                          style: TextStyle(
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Obx(() => priCont.isLoading.isTrue
-                                            ? const CircularProgressIndicator()
-                                            : priCont.hasError
-                                                ? const Text(
-                                                    "Error Loading T&Cs")
-                                                : Text(priCont.terms.value
-                                                    .toString())),
-                                        SpacingHeight.heightlistspacing15,
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: PrimaryButtonWithIcon(
-                                            btntxt: "Accept",
-                                            onPressed: () {
-                                              Get.back();
-                                              _.changeIsAgree(true);
-                                            },
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: BorderButton(
-                                            borderColor: Colors.red,
-                                            buttontxtColor: Colors.red,
-                                            backEndColor: Colors.white,
-                                            btntxt: "Reject",
-                                            onPressed: () {
-                                              Get.back();
-                                              _.changeIsAgree(false);
-                                            },
-                                          ),
-                                        )
-                                      ],
+                                    content: Consumer<PrivacyProvider>(
+                                      builder: (context, pValue, child) {
+                                        return Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            const Text(
+                                              "Terms & Conditions",
+                                              style: TextStyle(
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            pValue.isTnCLoading
+                                                ? const CircularProgressIndicator()
+                                                : pValue.hasError
+                                                    ? const Text(
+                                                        "Error Loading T&Cs")
+                                                    : Text(pValue.terms
+                                                        .toString()),
+                                            SpacingHeight.heightlistspacing15,
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: PrimaryButtonWithIcon(
+                                                btntxt: "Accept",
+                                                onPressed: () {
+                                                  Get.back();
+                                                  _.changeIsAgree(true);
+                                                },
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: BorderButton(
+                                                borderColor: Colors.red,
+                                                buttontxtColor: Colors.red,
+                                                backEndColor: Colors.white,
+                                                btntxt: "Reject",
+                                                onPressed: () {
+                                                  Get.back();
+                                                  _.changeIsAgree(false);
+                                                },
+                                              ),
+                                            )
+                                          ],
+                                        );
+                                      },
                                     ),
                                   );
                                 });
@@ -324,7 +333,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             style: UIDataTextStyles.title),
                         GestureDetector(
                             onTap: () {
-                              Get.offAllNamed(Routes.loginRoutes);
+                              Get.offAll(() => const LoginScreen());
                             },
                             child: Text("Sign In",
                                 style: UIDataTextStyles.title.copyWith(

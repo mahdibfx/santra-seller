@@ -1,22 +1,32 @@
 import 'package:flutter_svg/svg.dart';
-import 'package:santra_seller/controllers/auth_controller/forgot_password_controller.dart';
+import 'package:provider/provider.dart';
+import 'package:santra_seller/provider/auth_providers/forgot_password_provider.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
-import '../../../utils/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import '/utils/uidata.dart';
 import 'package:get/get.dart';
 
-class ResetPasswordAfterConfirmation extends StatelessWidget {
+class ResetPasswordAfterConfirmation extends StatefulWidget {
   ResetPasswordAfterConfirmation({super.key});
+
+  @override
+  State<ResetPasswordAfterConfirmation> createState() =>
+      _ResetPasswordAfterConfirmationState();
+}
+
+class _ResetPasswordAfterConfirmationState
+    extends State<ResetPasswordAfterConfirmation> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+
   final form = GlobalKey<FormState>();
+
   Widget bodyData(context) {
-    return GetBuilder<ForgotPasswordController>(
-      builder: (_) {
+    return Consumer<ForgotPasswordProvider>(
+      builder: (context, _, child) {
         return SafeArea(
           child: SingleChildScrollView(
             child: ConstrainedBox(
@@ -71,7 +81,7 @@ class ResetPasswordAfterConfirmation extends StatelessWidget {
                               : UIDATAIcons.viewIcon,
                           toggleFunction: () {
                             _.newPasswordSecuretext = !_.newPasswordSecuretext;
-                            _.update();
+                            setState(() {});
                           },
                           validator: (val) {
                             if (val.isEmpty) {
@@ -96,7 +106,7 @@ class ResetPasswordAfterConfirmation extends StatelessWidget {
                           toggleFunction: () {
                             _.confirmPasswordSecuretext =
                                 !_.confirmPasswordSecuretext;
-                            _.update();
+                            setState(() {});
                           },
                           validator: (val) {
                             if (val.isEmpty) {
@@ -160,7 +170,7 @@ class ResetPasswordAfterConfirmation extends StatelessWidget {
       appTitle: '',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAll(() =>  const AddManulOrder());
+        Get.offAll(() => const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

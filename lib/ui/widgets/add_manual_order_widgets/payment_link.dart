@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:share_plus/share_plus.dart';
-import '../../../provider/my_customer_provider.dart';
+import '../../../provider/more_settings_provider/my_customer_provider.dart';
 import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../buttons/material_buttons/primaryButtonWithIcon.dart';

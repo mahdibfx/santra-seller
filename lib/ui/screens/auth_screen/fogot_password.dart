@@ -1,7 +1,8 @@
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:santra_seller/controllers/auth_controller/forgot_password_controller.dart';
+import 'package:provider/provider.dart';
+import 'package:santra_seller/ui/screens/auth_screen/login_screen.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
-import '../../../utils/routes/app_routes.dart';
+import '../../../provider/auth_providers/forgot_password_provider.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import '../../widgets/textfields/common_textfield.dart';
@@ -14,8 +15,8 @@ class forgotPassowrd extends StatelessWidget {
 
   Widget bodyData(context) {
     final form = GlobalKey<FormState>();
-    return GetBuilder<ForgotPasswordController>(
-      builder: (_) {
+    return Consumer<ForgotPasswordProvider>(
+      builder: (context, _, child) {
         return SafeArea(
           child: SingleChildScrollView(
             child: ConstrainedBox(
@@ -101,7 +102,7 @@ class forgotPassowrd extends StatelessWidget {
                   SpacingHeight.heightlistspacing25,
                   GestureDetector(
                       onTap: () {
-                        Get.toNamed(Routes.loginRoutes);
+                        Get.to(() => const LoginScreen());
                       },
                       child: Text("Back To Login Page",
                           style: UIDataTextStyles.title

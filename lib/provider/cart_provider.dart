@@ -8,20 +8,18 @@ import 'package:intl/intl.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../models/customers/delivery_charges.dart';
 import '../../models/customers/view_all_customers.dart';
 import '../../models/seller_all_products_model.dart';
 import '../../models/voucher_model.dart';
 import '../../utils/api_data.dart';
-import '../../utils/routes/app_routes.dart';
 
 class CartProvider extends ChangeNotifier {
   bool isLoading = false;
 
   bool isShowCartButton = false;
   bool receiptPaymentType = true;
-  List<CartItem> cartItems = <CartItem>[].obs;
+  List<CartItem> cartItems = <CartItem>[];
 
   double deliveryCharges = 0.0;
   double codCharges = 0.0;

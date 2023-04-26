@@ -5,12 +5,13 @@ import 'package:get/get.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:santra_seller/ui/screens/auth_screen/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../ui/widgets/snackbar/common_snackbar.dart';
-import '../../utils/api_data.dart';
-import '../../utils/routes/app_routes.dart';
-import '../../utils/uidata.dart';
+import '../../../ui/widgets/snackbar/common_snackbar.dart';
+import '../../../utils/api_data.dart';
+
+import '../../../utils/uidata.dart';
 
 class SignUpProvider extends ChangeNotifier {
   bool isLoading = false;
@@ -69,7 +70,7 @@ class SignUpProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onInit() async {
+  void signUpProviderOnInit() async {
     locale = [
       {'name': 'English', 'locale': const Locale("en", "US")},
       {'name': 'عربي', 'locale': const Locale("ar", "SA")}
@@ -131,7 +132,7 @@ class SignUpProvider extends ChangeNotifier {
           CommonSnackbar.getSnackbar("Success", "Account has been registered",
               UIDataColors.primaryColor);
           clearValuesAfterSignup();
-          Get.offAllNamed(Routes.loginRoutes);
+          Get.offAll(() => const LoginScreen());
         } else if (response.statusCode == 430) {
           CommonSnackbar.getSnackbar(
               "Error", "User already registered", UIDataColors.primaryColor);

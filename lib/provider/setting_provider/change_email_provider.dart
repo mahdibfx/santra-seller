@@ -70,8 +70,8 @@ class ChangeEmailProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   void onInit() {
     getCurrentEmail();
+    notifyListeners();
   }
 }

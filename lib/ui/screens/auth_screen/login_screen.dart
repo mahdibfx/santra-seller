@@ -1,8 +1,8 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-
-import '../../../provider/login_provider.dart';
-import '../../../utils/routes/app_routes.dart';
+import 'package:santra_seller/ui/screens/auth_screen/fogot_password.dart';
+import 'package:santra_seller/ui/screens/auth_screen/signup_screen.dart';
+import '../../../provider/auth_providers/login_provider.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Transform.translate(
-                  offset: Offset(220, -170),
+                  offset: const Offset(220, -170),
                   child: Stack(
                     alignment: Alignment.bottomLeft,
                     children: [
@@ -147,7 +147,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Get.toNamed(Routes.forgotpasswordRoutes);
+                              Get.to(() => const forgotPassowrd());
+                              // Get.toNamed(Routes.forgotpasswordRoutes);
                             },
                             child: const Text("Forgot your password?",
                                 style: UIDataTextStyles.title),
@@ -200,7 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: UIDataTextStyles.title),
                           GestureDetector(
                               onTap: () {
-                                Get.toNamed(Routes.signuproutes);
+                                Get.to(() => SignUpScreen());
                               },
                               child: Text("Sign Up",
                                   style: UIDataTextStyles.title.copyWith(
@@ -211,7 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Transform.translate(
-                  offset: Offset(-220, 120),
+                  offset: const Offset(-220, 120),
                   child: Stack(
                     alignment: Alignment.bottomLeft,
                     children: [

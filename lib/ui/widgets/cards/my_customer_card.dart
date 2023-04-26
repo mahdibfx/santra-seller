@@ -3,15 +3,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/screens/more_setting/my_customer/edit_customer_details.dart';
-import 'package:santra_seller/utils/routes/app_routes.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
-
 import '../../../models/customers/view_all_customers.dart';
-import '../../../provider/my_customer_provider.dart';
+import '../../../provider/more_settings_provider/my_customer_provider.dart';
 import '../../../utils/uidata.dart';
 import '../../screens/more_setting/my_customer/view_customer_details.dart';
 import '../buttons/border_button.dart';
-import '../buttons/icon_button.dart';
 
 class MyCustomerCard extends StatelessWidget {
   final String name;

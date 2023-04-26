@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import '../../../../provider/my_customer_provider.dart';
-import '../../../../utils/routes/app_routes.dart';
+import '../../../../provider/more_settings_provider/my_customer_provider.dart';
+
 import '../../../../utils/uidata.dart';
 import '../../../widgets/buttons/border_button.dart';
 import '../../../widgets/buttons/icon_setting_button.dart';
@@ -240,7 +240,7 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
       appTitle: 'Edit Customer Details',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAll(() =>  const AddManulOrder());
+        Get.offAll(() => const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 1.0,

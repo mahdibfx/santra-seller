@@ -9,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import '../../ui/widgets/snackbar/common_snackbar.dart';
 import '../../utils/api_data.dart';
-import '../../utils/routes/app_routes.dart';
 import '../../utils/uidata.dart';
 import 'package:http/http.dart' as http;
 
@@ -212,7 +211,8 @@ class HomeProvider extends ChangeNotifier {
         // Get.snackbar("Accepted", "Order has been accepted");
         CommonSnackbar.getSnackbar(
             "Cancelled", "Order has been cancelled", UIDataColors.primaryColor);
-        Get.offAllNamed(Routes.homeRoutes);
+        Get.offAll(() => const HomeScreen());
+        // Get.offAllNamed(Routes.homeRoutes);
       } else {
         generalException();
         notifyListeners();
@@ -240,7 +240,8 @@ class HomeProvider extends ChangeNotifier {
         // Get.snackbar("Accepted", "Order has been accepted");
         CommonSnackbar.getSnackbar(
             "Accepted", "Order has been accepted", UIDataColors.primaryColor);
-        Get.offAllNamed(Routes.homeRoutes);
+        // Get.offAllNamed(Routes.homeRoutes);
+        Get.offAll(() => const HomeScreen());
       } else {
         generalException();
         notifyListeners();
@@ -268,7 +269,8 @@ class HomeProvider extends ChangeNotifier {
 
         CommonSnackbar.getSnackbar(
             "Rejected", "Order has been Rejected ", UIDataColors.primaryColor);
-        Get.offAllNamed(Routes.homeRoutes);
+        // Get.offAllNamed(Routes.homeRoutes);
+        Get.offAll(() => const HomeScreen());
       } else {
         generalException();
         notifyListeners();

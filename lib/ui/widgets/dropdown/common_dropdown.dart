@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
-import 'package:santra_seller/utils/routes/app_routes.dart';
-
 import '../../../utils/uidata.dart';
 
 class MyDropdown extends StatefulWidget {

@@ -1,60 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:santra_seller/ui/widgets/add_manual_order_widgets/Order_Date.dart';
 import 'package:santra_seller/utils/uidata.dart';
 import '../../../../models/customers/view_all_customers.dart';
-import '../../../../utils/routes/app_routes.dart';
 import '../../../../utils/uidata/textStyles.dart';
-import '../../../widgets/add_manual_order_widgets/custom_detail_bottomSheet.dart';
-import '../../../widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 
 class CardCustomerDetail extends StatelessWidget {
+  final Customer? customerDetail;
 
- final Customer ?customerDetail;
-
-
-  CardCustomerDetail({
-    Key? key,  this.customerDetail,
+  const CardCustomerDetail({
+    Key? key,
+    this.customerDetail,
   }) : super(key: key);
 
-
   Widget iconText(double width, String svg, String tilte) {
-    
-    return 
-    Column(
+    return Column(
       children: [
         Container(
-                        padding: const EdgeInsets.only(top: 5.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                               SvgPicture.asset(
-                                svg,
-                                 
-                                  height: 12,
-                                  color: UIDataColors.primaryColor,
-                                ),
-                                 SizedBox(
-                                  width: width,
-                                ),
-
-                             Expanded(child: Text(tilte)),
-                          ],
-                        ),
-                      ),
-                       Divider(
-                    height: 1,
-                    color: Colors.green.withOpacity(0.2),
-                  ).paddingOnly(top: 8)
+          padding: const EdgeInsets.only(top: 5.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SvgPicture.asset(
+                svg,
+                height: 12,
+                color: UIDataColors.primaryColor,
+              ),
+              SizedBox(
+                width: width,
+              ),
+              Expanded(child: Text(tilte)),
+            ],
+          ),
+        ),
+        Divider(
+          height: 1,
+          color: Colors.green.withOpacity(0.2),
+        ).paddingOnly(top: 8)
       ],
     );
-                 
   }
 
   @override
   Widget build(BuildContext context) {
-        Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Container(
@@ -76,17 +65,23 @@ class CardCustomerDetail extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(customerDetail?.customerName ?? "", style: UIDataTextStyles.dateStyle)
+            Text(customerDetail?.customerName ?? "",
+                    style: UIDataTextStyles.dateStyle)
                 .paddingAll(10),
             Container(
               padding: const EdgeInsets.only(top: 10.0, left: 10, right: 10),
               child: Column(
                 children: [
-                    iconText(size.width * 0.05, UIDATAIcons.callIcon,  customerDetail?.customerMobile ?? ""),
-                       iconText(size.width * 0.05, UIDATAIcons.locationPin,  customerDetail?.customerCity ?? ""),
-                         iconText(size.width * 0.05, UIDATAIcons.building,  customerDetail?.buildingType ?? ""),
-                            iconText(size.width * 0.05, UIDATAIcons.homeIcon,  customerDetail?.buildingNumber ?? ""),
-                              iconText(size.width * 0.05, UIDATAIcons.lockIcon,  customerDetail?.addressLink ?? ""),
+                  iconText(size.width * 0.05, UIDATAIcons.callIcon,
+                      customerDetail?.customerMobile ?? ""),
+                  iconText(size.width * 0.05, UIDATAIcons.locationPin,
+                      customerDetail?.customerCity ?? ""),
+                  iconText(size.width * 0.05, UIDATAIcons.building,
+                      customerDetail?.buildingType ?? ""),
+                  iconText(size.width * 0.05, UIDATAIcons.homeIcon,
+                      customerDetail?.buildingNumber ?? ""),
+                  iconText(size.width * 0.05, UIDATAIcons.lockIcon,
+                      customerDetail?.addressLink ?? ""),
                 ],
               ),
             )

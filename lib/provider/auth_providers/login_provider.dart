@@ -4,14 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:santra_seller/controllers/auth_controller/signup_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../models/login_model.dart';
-import '../../ui/screens/home_page/home_screen.dart';
-import '../../ui/widgets/snackbar/common_snackbar.dart';
-import '../../utils/api_data.dart';
-import '../../utils/routes/app_routes.dart';
-import '../../utils/uidata.dart';
+import '../../../models/login_model.dart';
+import '../../../ui/screens/home_page/home_screen.dart';
+import '../../../ui/widgets/snackbar/common_snackbar.dart';
+import '../../../utils/api_data.dart';
+import '../../../utils/uidata.dart';
 
 class LoginProvider extends ChangeNotifier {
   // bool isLoading = true;

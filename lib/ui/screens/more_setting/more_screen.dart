@@ -1,10 +1,12 @@
 // ignore_for_file: depend_on_referenced_packages
-import 'dart:convert';
-import 'package:santra_seller/controllers/more_screen_controller.dart/more_controller.dart';
+
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
+import 'package:santra_seller/ui/screens/more_setting/about_us_screen.dart';
+import 'package:santra_seller/ui/screens/more_setting/contact_us/contact_us_screen.dart';
+import 'package:santra_seller/ui/screens/more_setting/customer_reviews.dart';
 import 'package:santra_seller/ui/screens/more_setting/my_customer/my_customer_screen.dart';
+import 'package:santra_seller/ui/screens/more_setting/privacy_policy_screen.dart';
 import 'package:santra_seller/ui/screens/product_setting/product_setting_screen.dart';
-import '../../../utils/routes/app_routes.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 
@@ -19,85 +21,73 @@ class MoreSettingScreen extends StatelessWidget {
   MoreSettingScreen({super.key});
 
   Widget bodyData() {
-    return GetBuilder<MoreScreenController>(
-      builder: (_) {
-        return _.isLoading
-            ? const SizedBox(
-                child: Center(
-                child: CircularProgressIndicator(),
-              ))
-            : SafeArea(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      HeadingWithIcon(
-                          icon: UIDATAIcons.moreHorizontal, btntxt: "More"),
-                      SpacingHeight.heightlistspacing15,
-                      ReusableIconSetting(
-                        icon: UIDATAIcons.settingsIcon,
-                        onPressed: () {
-                            Get.to(() =>  Settings());
-                       
-                        },
-                        btntxt: 'settings',
-                      ),
-                      ReusableIconSetting(
-                        icon: UIDATAIcons.dashboardIcon,
-                        onPressed: () {
-                          Get.to(() =>  ProductSettingScreen());
-                       
-                        },
-                        btntxt: 'Products',
-                      ),
-                      ReusableIconSetting(
-                        icon: UIDATAIcons.customersIcon,
-                        onPressed: () {
-                          Get.to(() => MyCustomerScreen());
-                        },
-                        btntxt: 'Customers List',
-                      ),
-                      ReusableIconSetting(
-                        icon: UIDATAIcons.starIcon,
-                        onPressed: () {
-                          Get.toNamed(Routes.customerReviews);
-                        },
-                        btntxt: 'Customer Reviews',
-                      ),
-                      // ReusableIconSetting(
-                      //   icon: UIDATAIcons.walletIcon,
-                      //   onPressed: () {
-                      //     Get.toNamed(Routes.walletscreen);
-                      //   },
-                      //   btntxt: 'Wallet',
-                      // ),
-                      ReusableIconSetting(
-                        icon: UIDATAIcons.whatsappIcon,
-                        onPressed: () {
-                          Get.toNamed(Routes.contactscreen);
-                        },
-                        btntxt: 'Contact Customer Service',
-                      ),
-                      ReusableIconSetting(
-                        icon: UIDATAIcons.santraVectorIcon,
-                        onPressed: () {
-                          Get.toNamed(Routes.aboutscreen);
-                        },
-                        btntxt: 'About Us',
-                      ),
-                      ReusableIconSetting(
-                        icon: UIDATAIcons.securityIcon,
-                        onPressed: () {
-                          Get.toNamed(Routes.privacy);
-                        },
-                        btntxt: 'Privacy Policy',
-                      ),
-                      SpacingHeight.heightlistspacing50
-                    ],
-                  ).paddingSymmetric(horizontal: 20),
-                ),
-              );
-      },
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            HeadingWithIcon(icon: UIDATAIcons.moreHorizontal, btntxt: "More"),
+            SpacingHeight.heightlistspacing15,
+            ReusableIconSetting(
+              icon: UIDATAIcons.settingsIcon,
+              onPressed: () {
+                Get.to(() => Settings());
+              },
+              btntxt: 'settings',
+            ),
+            ReusableIconSetting(
+              icon: UIDATAIcons.dashboardIcon,
+              onPressed: () {
+                Get.to(() => ProductSettingScreen());
+              },
+              btntxt: 'Products',
+            ),
+            ReusableIconSetting(
+              icon: UIDATAIcons.customersIcon,
+              onPressed: () {
+                Get.to(() => const MyCustomerScreen());
+              },
+              btntxt: 'Customers List',
+            ),
+            ReusableIconSetting(
+              icon: UIDATAIcons.starIcon,
+              onPressed: () {
+                Get.to(() => CustomerReviews());
+              },
+              btntxt: 'Customer Reviews',
+            ),
+            // ReusableIconSetting(
+            //   icon: UIDATAIcons.walletIcon,
+            //   onPressed: () {
+            //     Get.toNamed(Routes.walletscreen);
+            //   },
+            //   btntxt: 'Wallet',
+            // ),
+            ReusableIconSetting(
+              icon: UIDATAIcons.whatsappIcon,
+              onPressed: () {
+                Get.to(() => ContactUsScreen());
+              },
+              btntxt: 'Contact Customer Service',
+            ),
+            ReusableIconSetting(
+              icon: UIDATAIcons.santraVectorIcon,
+              onPressed: () {
+                Get.to(() => AboutUsScreen());
+              },
+              btntxt: 'About Us',
+            ),
+            ReusableIconSetting(
+              icon: UIDATAIcons.securityIcon,
+              onPressed: () {
+                Get.to(() => PrivacyScreen());
+              },
+              btntxt: 'Privacy Policy',
+            ),
+            SpacingHeight.heightlistspacing50
+          ],
+        ).paddingSymmetric(horizontal: 20),
+      ),
     );
   }
 

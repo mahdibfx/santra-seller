@@ -1,7 +1,8 @@
-import 'package:santra_seller/controllers/settings_controller/language_settings_controller.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
-import '../../../utils/routes/app_routes.dart';
+import '../../../provider/setting_provider/language_settings_controller.dart';
+
 import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,8 @@ class _LanguageSettingsState extends State<LanguageSettings> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
   Widget bodyData(context) {
-    return GetBuilder<LangaugeSettingsController>(
-      builder: (_) {
+    return Consumer<LangaugeSettingsProvider>(
+      builder: (con, _, child) {
         return SafeArea(
           child: SingleChildScrollView(
             child: ConstrainedBox(
@@ -35,8 +36,8 @@ class _LanguageSettingsState extends State<LanguageSettings> {
                         icon: UIDATAIcons.languageIcon, btntxt: "Language"),
 
                     BorderButton(
-                      onPressed: (){
-                         Get.updateLocale(const Locale('ar', 'AE'));
+                      onPressed: () {
+                        Get.updateLocale(const Locale('ar', 'AE'));
                       },
                       btntxt: "عربي",
                       backEndColor: Colors.white,
@@ -45,8 +46,8 @@ class _LanguageSettingsState extends State<LanguageSettings> {
                     ),
                     SpacingHeight.heightlistspacing15,
                     BorderButton(
-                      onPressed: (){
-                         Get.updateLocale(const Locale('en', 'us'));
+                      onPressed: () {
+                        Get.updateLocale(const Locale('en', 'us'));
                       },
                       btntxt: "English",
                       backEndColor: Colors.white,
@@ -93,7 +94,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
       appTitle: '',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAll(() =>  const AddManulOrder());
+        Get.offAll(() => const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

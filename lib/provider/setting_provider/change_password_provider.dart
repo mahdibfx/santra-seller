@@ -1,15 +1,12 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:santra_seller/utils/api_data.dart';
 import 'package:http/http.dart' as http;
-import 'package:santra_seller/utils/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ChangePasswordController extends GetxController {
-  var isUpdatePassLoading = false.obs;
+class ChangePasswordProvider with ChangeNotifier {
+  bool isUpdatePassLoading = false;
   bool currentPasswordSecuretext = true;
   bool newPasswordSecuretext = true;
   bool confirmPasswordSecuretext = true;
@@ -17,6 +14,17 @@ class ChangePasswordController extends GetxController {
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmNewPasswordController = TextEditingController();
   final form = GlobalKey<FormState>();
+  changeUpdatePassLoadingState(value) {
+    isUpdatePassLoading = value;
+    notifyListeners();
+  }
+
+  resetControllers() {
+    confirmNewPasswordController.clear();
+    newPasswordController.clear();
+    currentPasswordController.clear();
+    notifyListeners();
+  }
 
   Future updatePassword() async {
     if (form.currentState!.validate()) {
@@ -25,7 +33,7 @@ class ChangePasswordController extends GetxController {
             "Please Enter Same Password in new password and confirm new password");
       } else {
         try {
-          isUpdatePassLoading(true);
+          changeUpdatePassLoadingState(true);
           SharedPreferences prefs = await SharedPreferences.getInstance();
           String? sellerCode = prefs.getString("sellercode");
 
@@ -42,6 +50,7 @@ class ChangePasswordController extends GetxController {
           if (response.statusCode == 200) {
             customOntapDialog("Success",
                 "You Password Has Been Successfully Updated!", "Okay", () {
+              resetControllers();
               Get.back();
               Get.back();
               // Get.offNamed(Routes.settings);
@@ -57,7 +66,7 @@ class ChangePasswordController extends GetxController {
         }
       }
     }
-    isUpdatePassLoading(false);
-    update();
+    changeUpdatePassLoadingState(false);
+    notifyListeners();
   }
 }

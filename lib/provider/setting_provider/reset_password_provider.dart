@@ -1,22 +1,25 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:santra_seller/utils/api_data.dart';
 import 'package:http/http.dart' as http;
-import 'package:santra_seller/utils/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ResetPasswordController extends GetxController {
-  var isUpdatePassLoading = false.obs;
+class ResetPasswordProvider with ChangeNotifier {
+  bool isUpdatePassLoading = false;
   bool currentPasswordSecuretext = true;
   bool newPasswordSecuretext = true;
   bool confirmPasswordSecuretext = true;
+
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmNewPasswordController = TextEditingController();
   final form = GlobalKey<FormState>();
+  changeUpdatePassLoadingState(value) {
+    isUpdatePassLoading = value;
+    notifyListeners();
+  }
 
+  resetControllers() {}
   Future updatePassword() async {
     if (form.currentState!.validate()) {
       if (newPasswordController.text != confirmNewPasswordController.text) {
@@ -24,7 +27,7 @@ class ResetPasswordController extends GetxController {
             "Please Enter Same Password in new password and confirm new password");
       } else {
         try {
-          isUpdatePassLoading(true);
+          changeUpdatePassLoadingState(true);
           SharedPreferences prefs = await SharedPreferences.getInstance();
           String? sellerCode = prefs.getString("sellercode");
 
@@ -55,7 +58,7 @@ class ResetPasswordController extends GetxController {
         }
       }
     }
-    isUpdatePassLoading(false);
-    update();
+    changeUpdatePassLoadingState(false);
+    notifyListeners();
   }
 }
