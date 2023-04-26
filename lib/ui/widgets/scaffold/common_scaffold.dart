@@ -1,16 +1,15 @@
 // flutter imports
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 // package imports
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/controllers/splash_controller.dart';
+import 'package:santra_seller/provider/splash_provider.dart';
 import 'package:santra_seller/provider/home_provider.dart';
-import 'package:santra_seller/provider/login_provider.dart';
-
+import 'package:santra_seller/provider/auth_providers/login_provider.dart';
+import 'package:santra_seller/ui/screens/cart/cart_screen.dart';
+import 'package:santra_seller/ui/screens/more_setting/more_screen.dart';
 // lib imports
-import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../screens/home_page/home_screen.dart';
@@ -21,12 +20,7 @@ import '../drawer/clip_drawer.dart';
 import 'cart_icon_with_badge.dart';
 import 'notification_icon_with_badge.dart';
 
-// LoginController loginController = Get.put(LoginController());
-// HomeController homeController = Get.put(HomeController());
-// CartController cartController = Get.put(CartController());
-
 class CommonScaffold extends StatelessWidget {
-  // final CartController cartController = Get.find<CartController>();
   final resizeToAvoid;
   final appTitle;
   final automaticallyImplyLeading;
@@ -140,21 +134,23 @@ class CommonScaffold extends StatelessWidget {
                       iconClr: UIDataColors.primaryColor,
                       btntxt: Text(
                         "Home",
-                        style: Get.currentRoute == Routes.homeRoutes
-                            ? UIDataTextStyles.title.copyWith(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w800,
-                                color: UIDataColors.primaryColor)
-                            : UIDataTextStyles.subTitle.copyWith(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                              ),
+                        style:
+                            // Get.currentRoute == Routes.homeRoutes
+                            //     ? UIDataTextStyles.title.copyWith(
+                            //         fontSize: 14,
+                            //         fontWeight: FontWeight.w800,
+                            //         color: UIDataColors.primaryColor)
+                            //     :
+                            UIDataTextStyles.subTitle.copyWith(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
                       ),
                       onPressed: () {
-                        if (Get.currentRoute != Routes.homeRoutes) {
-                          Get.offAll(() => const HomeScreen());
-                        }
+                        // if (Get.currentRoute != Routes.homeRoutes) {
+                        Get.offAll(() => const HomeScreen());
+                        // }
                       },
                     ),
                     Center(
@@ -169,21 +165,25 @@ class CommonScaffold extends StatelessWidget {
                       icon: UIDATAIcons.more2,
                       btntxt: Text(
                         "More",
-                        style: Get.currentRoute == Routes.moreScreen
-                            ? UIDataTextStyles.title.copyWith(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w800,
-                                color: UIDataColors.primaryColor)
-                            : UIDataTextStyles.subTitle.copyWith(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                              ),
+                        style:
+                            //  Get.currentRoute == Routes.moreScreen
+                            //     ?
+                            // UIDataTextStyles.title.copyWith(
+                            //     fontSize: 14,
+                            //     fontWeight: FontWeight.w800,
+                            //     color: UIDataColors.primaryColor)
+                            //:
+                            UIDataTextStyles.subTitle.copyWith(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
                       ),
                       onPressed: () {
-                        if (Get.currentRoute != Routes.moreScreen) {
-                          Get.offAllNamed(Routes.moreScreen);
-                        }
+                        Get.offAll(() => MoreSettingScreen());
+                        // if (Get.currentRoute != Routes.moreScreen) {
+                        //   Get.offAllNamed(Routes.moreScreen);
+                        // }
                       },
                     ),
                   ],
@@ -243,10 +243,10 @@ class CommonScaffold extends StatelessWidget {
                           null) {
                     null;
                   } else {
-                    if (Get.currentRoute == Routes.homeRoutes) {
-                    } else {
-                      Get.offAllNamed(Routes.homeRoutes);
-                    }
+                    // if (Get.currentRoute == Routes.homeRoutes) {
+                    // } else {
+                    Get.offAll(() => const HomeScreen());
+                    // }
                   }
                 },
                 child: SvgPicture.asset(
@@ -267,7 +267,8 @@ class CommonScaffold extends StatelessWidget {
                       : [
                           CartIconWithBadge(
                             onTap: () {
-                              Get.toNamed(Routes.cartroute);
+                              Get.to(() => CartScreen());
+                              //Get.toNamed(Routes.cartroute);
                             },
                             showBadge: true,
                           ),

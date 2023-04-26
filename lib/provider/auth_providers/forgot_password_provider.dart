@@ -1,15 +1,15 @@
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:santra_seller/ui/screens/auth_screen/login_screen.dart';
+import 'package:santra_seller/ui/screens/auth_screen/reset_password_confirmation.dart';
 import '../../ui/widgets/dialogs/custom_dialogs.dart';
 import '../../utils/api_data.dart';
-import '../../utils/routes/app_routes.dart';
 
-class ForgotPasswordController extends GetxController {
+class ForgotPasswordProvider extends ChangeNotifier {
   bool isLoading = true;
   bool isOtpLoading = false;
   bool isResetPassLoading = false;
@@ -28,12 +28,12 @@ class ForgotPasswordController extends GetxController {
       type: MaskAutoCompletionType.lazy);
   updateOtpLoadingState(bool value) {
     isOtpLoading = value;
-    update();
+    notifyListeners();
   }
 
   updateResetPassLoadingState(bool value) {
     isResetPassLoading = value;
-    update();
+    notifyListeners();
   }
 
   disposeValues() {
@@ -44,7 +44,7 @@ class ForgotPasswordController extends GetxController {
     otpCode = null;
     sellerCode = null;
 
-    update();
+    notifyListeners();
   }
 
   Future confirmSellerAndGetOtp() async {
@@ -70,7 +70,8 @@ class ForgotPasswordController extends GetxController {
           print(sellerCode);
           print(otpCode);
         }
-        Get.toNamed(Routes.forgotPasswordConfirmation);
+        Get.to(() => ForgotPasswordConfirmation());
+        // Get.toNamed(Routes.forgotPasswordConfirmation);
       } else {
         var data = jsonDecode(response.body);
 
@@ -103,7 +104,8 @@ class ForgotPasswordController extends GetxController {
             () {
           disposeValues();
           Get.back();
-          Get.offNamed(Routes.loginRoutes);
+          Get.offAll(const LoginScreen());
+          // Get.offNamed(Routes.loginRoutes);
         });
       } else {
         customOntapDialog("Failed", "Failed to update password", "Okay", () {
@@ -115,12 +117,6 @@ class ForgotPasswordController extends GetxController {
     }
 
     updateResetPassLoadingState(false);
-    update();
-  }
-
-  @override
-  void onInit() async {
-    super.onInit();
-    update();
+    notifyListeners();
   }
 }

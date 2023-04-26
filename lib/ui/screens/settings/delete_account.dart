@@ -1,21 +1,36 @@
-import 'package:santra_seller/controllers/settings_controller/delete_account_controller.dart';
+import 'package:provider/provider.dart';
+import 'package:santra_seller/provider/setting_provider/delete_account_provider.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
-import '../../../utils/routes/app_routes.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
 import '/utils/uidata.dart';
 import 'package:get/get.dart';
 
-class DeleteAccount extends StatelessWidget {
+class DeleteAccount extends StatefulWidget {
   DeleteAccount({super.key});
+
+  @override
+  State<DeleteAccount> createState() => _DeleteAccountState();
+}
+
+class _DeleteAccountState extends State<DeleteAccount> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<DeleteAccountProvider>(context, listen: false)
+          .deleteAccountonInit();
+    });
+  }
+
   Widget bodyData(context) {
-    return GetBuilder<DeleteAccountController>(
-      builder: (_) {
+    return Consumer<DeleteAccountProvider>(
+      builder: (context, _, child) {
         return SafeArea(
           child: SingleChildScrollView(
             child: ConstrainedBox(
@@ -81,7 +96,7 @@ class DeleteAccount extends StatelessWidget {
                         )),
                     SpacingHeight.heightlistspacing5,
                     _.isOtpLoading
-                        ? Center(child: CircularProgressIndicator())
+                        ? const Center(child: CircularProgressIndicator())
                         : BorderButton(
                             btntxt: "Continue",
                             backEndColor: Colors.white,
@@ -119,7 +134,7 @@ class DeleteAccount extends StatelessWidget {
       appTitle: '',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAll(() =>  const AddManulOrder());
+        Get.offAll(() => const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

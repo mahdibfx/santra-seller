@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../utils/uidata.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
-import '/controllers/splash_controller.dart';
+import '../../../provider/splash_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

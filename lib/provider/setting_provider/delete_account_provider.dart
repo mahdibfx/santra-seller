@@ -5,14 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:santra_seller/ui/screens/settings/delete_account_confirmation.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:santra_seller/utils/api_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../utils/routes/app_routes.dart';
-import 'logout_controller.dart';
 
-class DeleteAccountController extends GetxController {
-  final logoutController = Get.put(LogoutController());
+class DeleteAccountProvider with ChangeNotifier {
   String? phoneNumber;
   TextEditingController explainationController = TextEditingController();
   TextEditingController otpController = TextEditingController();
@@ -28,19 +26,19 @@ class DeleteAccountController extends GetxController {
       type: MaskAutoCompletionType.lazy);
   updateOtpLoadingState(bool value) {
     isOtpLoading = value;
-    update();
+    notifyListeners();
   }
 
   updateDelAccState(bool value) {
     isdelAccLoading = value;
-    update();
+    notifyListeners();
   }
 
   getPhoneFromSp() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var phone = preferences.getString("phonenumber");
     phoneController.text = phone!;
-    update();
+    notifyListeners();
   }
 
   Future getOtp() async {
@@ -67,7 +65,8 @@ class DeleteAccountController extends GetxController {
           if (kDebugMode) {
             print(otpCode);
           }
-          Get.toNamed(Routes.deleteAccountConfirmation);
+          Get.to(() => DeleteAccountConfirmation());
+          //  Get.toNamed(Routes.deleteAccountConfirmation);
         } else {
           exceptionDialog(
               "Oops", "Something went wrong, you may try again in a while");
@@ -94,7 +93,6 @@ class DeleteAccountController extends GetxController {
         var response =
             await http.post(url, headers: ApiData.header, body: body);
         if (response.statusCode == 200) {
-          logoutController.logout();
         } else {
           print(response.body);
           generalException();
@@ -111,10 +109,8 @@ class DeleteAccountController extends GetxController {
     }
   }
 
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
+  void deleteAccountonInit() {
     getPhoneFromSp();
+    notifyListeners();
   }
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -6,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../ui/widgets/dialogs/custom_dialogs.dart';
 import '../../utils/api_data.dart';
-import 'package:intl/intl.dart';
 
 class AccountInfoProvider extends ChangeNotifier {
   var isUpdateAccInfoLoading = false;
@@ -25,6 +23,10 @@ class AccountInfoProvider extends ChangeNotifier {
     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$',
   );
   DateTime? userDob;
+  changeLoadingState(val) {
+    isUpdateAccInfoLoading = val;
+    notifyListeners();
+  }
 
   Future pickUserDob(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -74,7 +76,7 @@ class AccountInfoProvider extends ChangeNotifier {
   Future updateAccountInfo() async {
     if (form.currentState!.validate()) {
       try {
-        isUpdateAccInfoLoading = true;
+        changeLoadingState(true);
         SharedPreferences prefs = await SharedPreferences.getInstance();
         String? sellerCode = prefs.getString("sellercode");
         var url = Uri.parse(ApiData.updateaAccountInfoApi);
@@ -107,10 +109,9 @@ class AccountInfoProvider extends ChangeNotifier {
         generalException();
       }
     }
-    isUpdateAccInfoLoading = false;
+    changeLoadingState(false);
     notifyListeners();
   }
-
 
   void onInit() async {
     getAccountInfoFromSPAndSaveInController();

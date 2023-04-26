@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/provider/sign_up_provider.dart';
+import 'package:santra_seller/provider/auth_providers/sign_up_provider.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import 'package:santra_seller/ui/widgets/dropdown/common_dropdown.dart';
 
-import '../../../../provider/my_customer_provider.dart';
-import '../../../../utils/routes/app_routes.dart';
+import '../../../../provider/more_settings_provider/my_customer_provider.dart';
 import '../../../../utils/uidata.dart';
 import '../../../widgets/scaffold/common_scaffold.dart';
 import '../../../widgets/textfields/common_textfield.dart';
@@ -265,7 +264,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
       appTitle: 'My Customer',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAll(() =>  const AddManulOrder());
+        Get.offAll(() => const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 1.0,

@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import '../../../provider/notification_provider.dart';
-import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
@@ -13,7 +12,6 @@ import 'package:get/get.dart';
 import '../../../utils/uidata.dart';
 
 class NotificationScreen extends StatefulWidget {
-
   NotificationScreen({super.key});
 
   @override
@@ -40,7 +38,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         btntxt: "Notifications",
                         iconColor: UIDataColors.primaryColor,
                       ),
-                        ListView.builder(
+                      ListView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: _.notificationList.length,
@@ -127,6 +125,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     var outputDate = outputFormat.format(inputFormat);
     return outputDate;
   }
+
   hitAllApis() async {
     await Future.microtask(() => context.read<NotificationProvider>().onInit());
   }
@@ -136,6 +135,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     hitAllApis();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(
@@ -152,7 +152,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       appbarSvg: true,
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAll(() =>  const AddManulOrder());
+        Get.offAll(() => const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 1.0,

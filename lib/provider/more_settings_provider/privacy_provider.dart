@@ -1,22 +1,24 @@
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
-import 'package:santra_seller/utils/routes/app_routes.dart';
 import '../../utils/api_data.dart';
 
-class PrivacyController extends GetxController {
-  var isLoading = false.obs;
+class PrivacyProvider with ChangeNotifier {
+  bool isTnCLoading = false;
   bool hasError = false;
-  var terms = ''.obs;
+  String terms = "Loading T&Cs";
   bool isPrivacyLoading = false;
   bool hasPrivacyError = false;
-  var msg = "Loading...".obs;
+  String msg = "Loading...";
   updatePrivacyLoadingStatus(val) {
     isPrivacyLoading = val;
-    update();
+    notifyListeners();
+  }
+
+  updateTnCLoadingStatus(val) {
+    isTnCLoading = val;
+    notifyListeners();
   }
 
   Future privacyPolicy() async {
@@ -26,7 +28,7 @@ class PrivacyController extends GetxController {
       var response = await http.get(url, headers: ApiData.header);
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        msg.value = data['data'][0]['page_content'].toString();
+        msg = data['data'][0]['page_content'].toString();
         if (kDebugMode) {
           print(response.body);
           print(msg);
@@ -41,36 +43,28 @@ class PrivacyController extends GetxController {
       exceptionDialog("Oops", "Something went wrong!");
     }
     updatePrivacyLoadingStatus(false);
+    notifyListeners();
   }
 
   Future termsAndCondition() async {
     try {
-      isLoading(true);
+      updateTnCLoadingStatus(true);
+
       var url = Uri.parse(ApiData.termsAPi);
       final response = await http.get(url, headers: ApiData.header);
 
       if (response.statusCode == 200) {
+        hasError = false;
         final body = jsonDecode(response.body);
-        terms.value = body["data"][0]['page_content'].toString();
+        terms = body["data"][0]['page_content'].toString();
+        print(terms);
       } else {
         hasError = true;
       }
     } catch (e) {
       generalException();
     }
-    isLoading(false);
-  }
-
-  @override
-  void onInit() async {
-    super.onInit();
-    if (Get.currentRoute == Routes.signuproutes) {
-      termsAndCondition();
-    }
-
-    if (Get.currentRoute == Routes.privacy) {
-      privacyPolicy();
-    }
-    update();
+    updateTnCLoadingStatus(false);
+    notifyListeners();
   }
 }

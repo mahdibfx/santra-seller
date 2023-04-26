@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
-import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../screens/more_setting/my_customer/add_customer.dart';
 import '../../screens/more_setting/my_customer/my_customer_screen.dart';
-import '../../screens/more_setting/my_customer/view_customer_details.dart';
 import '../buttons/material_buttons/primaryButtonWithIcon.dart';
 
 class CustomDetailBottomSheet extends StatelessWidget {
@@ -25,14 +21,15 @@ class CustomDetailBottomSheet extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Add Customer Details:", style: UIDataTextStyles.textMedium),
+              const Text("Add Customer Details:",
+                  style: UIDataTextStyles.textMedium),
               SizedBox(
                 width: 32,
                 height: 32,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      shape: CircleBorder(),
-                      padding: EdgeInsets.all(5),
+                      shape: const CircleBorder(),
+                      padding: const EdgeInsets.all(5),
                       primary: UIDataColors.lightGrayColor),
                   onPressed: (() => Get.back()),
                   child: SvgPicture.asset(
@@ -53,7 +50,7 @@ class CustomDetailBottomSheet extends StatelessWidget {
               iconImage: UIDATAIcons.customersIcon,
               onPressed: () {
                 Get.back();
-                Get.to(() =>  MyCustomerScreen(comingFromCart: true));
+                Get.to(() => const MyCustomerScreen(comingFromCart: true));
                 // Get.toNamed(Routes.mycustomerscreen,
                 //     arguments: "commingFromCart");
               },

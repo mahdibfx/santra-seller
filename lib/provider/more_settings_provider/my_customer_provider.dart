@@ -11,9 +11,8 @@ import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:santra_seller/utils/api_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
-import '../../../models/customers/delivery_charges.dart';
-import '../ui/screens/more_setting/my_customer/view_customer_details.dart';
+import '../../../../models/customers/delivery_charges.dart';
+import '../../ui/screens/more_setting/my_customer/view_customer_details.dart';
 
 class MyCustomerProvider extends ChangeNotifier {
   // final cartdController = Get.put(CartController());
@@ -161,7 +160,6 @@ class MyCustomerProvider extends ChangeNotifier {
         var data = jsonDecode(response.body);
         var id = data['data']['user_id'];
 
-        print("add customer" + response.body.toString());
         updateAddLoadingState(false);
         if (isShowDetailScreen) {
           Get.off(() => ViewCustomerDetails(
@@ -392,14 +390,12 @@ class MyCustomerProvider extends ChangeNotifier {
   paymentMethodReceipt() {
     receiptPaymentMethord = true;
     onlinePayment = false;
-    print("Receipt");
     notifyListeners();
   }
 
   paymentMethodOnline() {
     receiptPaymentMethord = false;
     onlinePayment = true;
-    print("Online");
     notifyListeners();
   }
 

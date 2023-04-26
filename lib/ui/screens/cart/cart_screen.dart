@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/cart_provider.dart';
 import 'package:santra_seller/ui/widgets/add_manual_order_widgets/vouchers_section.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
-import '../../../../utils/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../utils/uidata.dart';
@@ -219,7 +218,7 @@ class _CartScreenState extends State<CartScreen> {
       appbarSvg: true,
       backarrow: UIDataColors.primaryColor,
       qrCallback: () {
-        Get.offAll(() =>  const AddManulOrder());
+        Get.offAll(() => const AddManulOrder());
       },
       floatingIcon: Icons.add,
       // elevation: 3.0,

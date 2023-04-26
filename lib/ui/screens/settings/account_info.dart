@@ -2,7 +2,6 @@ import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import '../../../provider/setting_provider/account_info_provider.dart';
-import '../../../utils/routes/app_routes.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import '../../widgets/textfields/common_textfield.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,6 @@ import 'package:get/get.dart';
 
 class AccountInfo extends StatefulWidget {
   const AccountInfo({super.key});
-  
 
   @override
   State<AccountInfo> createState() => _AccountInfoState();
@@ -34,7 +32,6 @@ class _AccountInfoState extends State<AccountInfo> {
   Widget bodyData(context) {
     return Consumer<AccountInfoProvider>(
       builder: (context, _, child) {
-
         return SafeArea(
           child: SingleChildScrollView(
             child: ConstrainedBox(
@@ -109,30 +106,15 @@ class _AccountInfoState extends State<AccountInfo> {
                     //       : "",
                     // ),
                     SpacingHeight.heightlistspacing20,
-                _.isUpdateAccInfoLoading
-                            ? const Center(child: CircularProgressIndicator())
-                            : PrimaryButtonWithIcon(
-                                btntxt: "Save",
-                                iconImage: UIDATAIcons.saveIcon,
-                                onPressed: () {
-                                  _.updateAccountInfo();
-                                },
-                              )
-
-                        // RaisedGradientButton(
-                        //     gradient: const LinearGradient(
-                        //       colors: <Color>[
-                        //         Color(0xff006EB8),
-                        //         Color(0xff006EB8),
-                        //       ],
-                        //     ),
-                        //     btntxt: "Save".tr,
-                        //     buttontxtColor: UIDataColors.whiteColor,
-                        //     onPressed: () {
-                        //       _.updateAccountInfo();
-                        //     },
-                        //   ),
-                        
+                    _.isUpdateAccInfoLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : PrimaryButtonWithIcon(
+                            btntxt: "Save",
+                            iconImage: UIDATAIcons.saveIcon,
+                            onPressed: () {
+                              _.updateAccountInfo();
+                            },
+                          )
                   ],
                 ).paddingSymmetric(horizontal: 20),
               ),
@@ -159,7 +141,7 @@ class _AccountInfoState extends State<AccountInfo> {
       appTitle: '',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAll(() =>  const AddManulOrder());
+        Get.offAll(() => const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

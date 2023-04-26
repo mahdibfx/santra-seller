@@ -2,13 +2,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/all_orders_manual.dart';
+import 'package:santra_seller/ui/screens/cart/cart_screen.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
 import '../../../provider/cart_provider.dart';
-import '../../../utils/routes/app_routes.dart';
 import '../../widgets/add_manual_order_widgets/rounded_close_button.dart';
 import '../../widgets/add_manual_order_widgets/pd_card_add_manual_order.dart';
 import '../../widgets/add_manual_order_widgets/product_name_and_price_on_sheet.dart';
@@ -428,7 +428,8 @@ class _AddManulOrderState extends State<AddManulOrder> {
                             child: Center(
                               child: BorderButton(
                                 onPressed: () {
-                                  Get.toNamed(Routes.cartroute);
+                                  Get.to(() => const CartScreen());
+                                  // Get.toNamed(Routes.cartroute);
                                 },
                                 btntxt: "View Cart",
                                 iconImage: UIDATAIcons.cartHallowIcon,
@@ -513,7 +514,8 @@ class _AddManulOrderState extends State<AddManulOrder> {
         IconButton(
           icon: const Icon(Icons.sports_basketball),
           onPressed: () {
-            Get.toNamed(Routes.cartroute);
+            Get.to(() => const CartScreen());
+            // Get.toNamed(Routes.cartroute);
           },
         )
       ],

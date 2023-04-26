@@ -1,18 +1,16 @@
 import 'dart:convert';
-
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import '../../ui/widgets/dialogs/custom_dialogs.dart';
 import '../../utils/api_data.dart';
 
-class AboutUsController extends GetxController {
+class AboutUsProvider with ChangeNotifier {
   bool isLoading = false;
   bool hasAboutUsError = false;
   String? aboutUsText;
   updateLoadingState(bool value) {
     isLoading = value;
-    update();
+    notifyListeners();
   }
 
   Future aboutUs() async {
@@ -27,9 +25,8 @@ class AboutUsController extends GetxController {
 
       if (response.statusCode == 200) {
         var data = await jsonDecode(response.body);
-        print(data);
+
         aboutUsText = data['data'][0]['page_content'].toString();
-        print(aboutUsText);
       } else {
         generalException();
       }
@@ -38,13 +35,11 @@ class AboutUsController extends GetxController {
     }
 
     updateLoadingState(false);
-    update();
+    notifyListeners();
   }
 
-  @override
-  void onInit() async {
-    super.onInit();
+  void aboutUsOnInit() async {
     aboutUs();
-    update();
+    notifyListeners();
   }
 }

@@ -1,11 +1,12 @@
 import 'package:flutter_svg/svg.dart';
-import 'package:santra_seller/controllers/auth_controller/forgot_password_controller.dart';
+import 'package:provider/provider.dart';
+import 'package:santra_seller/ui/screens/auth_screen/reset_password.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
-import '../../../utils/routes/app_routes.dart';
-import '../../ui/screens/add_manual_order/add_manual_order.dart';
-import '../../ui/widgets/scaffold/common_scaffold.dart';
+import '../../../provider/auth_providers/forgot_password_provider.dart';
+import '../add_manual_order/add_manual_order.dart';
+import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
 import '/utils/uidata.dart';
 import 'package:get/get.dart';
@@ -15,8 +16,8 @@ class ForgotPasswordConfirmation extends StatelessWidget {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   final form = GlobalKey<FormState>();
   Widget bodyData(context) {
-    return GetBuilder<ForgotPasswordController>(
-      builder: (_) {
+    return Consumer<ForgotPasswordProvider>(
+      builder: (context, _, child) {
         return SafeArea(
           child: SingleChildScrollView(
             child: ConstrainedBox(
@@ -91,7 +92,8 @@ class ForgotPasswordConfirmation extends StatelessWidget {
                     buttontxtColor: UIDataColors.primaryColor,
                     onPressed: () {
                       if (form.currentState!.validate()) {
-                        Get.toNamed(Routes.resetPasswordAfterConfirmation);
+                        Get.to(() => ResetPasswordAfterConfirmation());
+                        // Get.toNamed(Routes.resetPasswordAfterConfirmation);
                       }
                       //_.deleteAccount();
                     },
@@ -130,7 +132,7 @@ class ForgotPasswordConfirmation extends StatelessWidget {
       appTitle: '',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAll(() =>  const AddManulOrder());
+        Get.offAll(() => const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

@@ -1,21 +1,28 @@
-import 'package:santra_seller/controllers/settings_controller/change_password_controller.dart';
+import 'package:provider/provider.dart';
+import 'package:santra_seller/provider/setting_provider/change_password_provider.dart';
+import 'package:santra_seller/provider/setting_provider/reset_password_provider.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
-import '../../../utils/routes/app_routes.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
-import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/textfields/common_textfield.dart';
 import '/utils/uidata.dart';
 import 'package:get/get.dart';
 
-class ChangePassword extends StatelessWidget {
+class ChangePassword extends StatefulWidget {
   ChangePassword({super.key});
+
+  @override
+  State<ChangePassword> createState() => _ChangePasswordState();
+}
+
+class _ChangePasswordState extends State<ChangePassword> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+
   Widget bodyData(context) {
-    return GetBuilder<ChangePasswordController>(
-      builder: (_) {
+    return Consumer<ChangePasswordProvider>(
+      builder: (context, _, child) {
         return SafeArea(
           child: SingleChildScrollView(
             child: ConstrainedBox(
@@ -42,7 +49,7 @@ class ChangePassword extends StatelessWidget {
                       toggleFunction: () {
                         _.currentPasswordSecuretext =
                             !_.currentPasswordSecuretext;
-                        _.update();
+                        setState(() {});
                       },
                       isTextHidden: _.currentPasswordSecuretext,
                       validator: (val) {
@@ -67,7 +74,7 @@ class ChangePassword extends StatelessWidget {
                           : UIDATAIcons.viewIcon,
                       toggleFunction: () {
                         _.newPasswordSecuretext = !_.newPasswordSecuretext;
-                        _.update();
+                        setState(() {});
                       },
                       validator: (val) {
                         if (val.isEmpty) {
@@ -92,7 +99,7 @@ class ChangePassword extends StatelessWidget {
                       toggleFunction: () {
                         _.confirmPasswordSecuretext =
                             !_.confirmPasswordSecuretext;
-                        _.update();
+                        setState(() {});
                       },
                       validator: (val) {
                         if (val.isEmpty) {
@@ -103,29 +110,15 @@ class ChangePassword extends StatelessWidget {
                       },
                     ),
                     SpacingHeight.heightlistspacing10,
-                    Obx(() => _.isUpdatePassLoading.isTrue
-                            ? const Center(child: CircularProgressIndicator())
-                            : PrimaryButtonWithIcon(
-                                btntxt: "Submit",
-                                iconImage: UIDATAIcons.sendIcon,
-                                onPressed: () {
-                                  _.updatePassword();
-                                },
-                              )
-                        // RaisedGradientButton(
-                        //     gradient: const LinearGradient(
-                        //       colors: <Color>[
-                        //         Color(0xff006EB8),
-                        //         Color(0xff006EB8),
-                        //       ],
-                        //     ),
-                        //     btntxt: "Submit".tr,
-                        //     buttontxtColor: UIDataColors.whiteColor,
-                        //     onPressed: () {
-                        //       _.updatePassword();
-                        //     },
-                        //   ),
-                        ),
+                    _.isUpdatePassLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : PrimaryButtonWithIcon(
+                            btntxt: "Submit",
+                            iconImage: UIDATAIcons.sendIcon,
+                            onPressed: () {
+                              _.updatePassword();
+                            },
+                          )
                   ],
                 ).marginOnly(left: 20.0, right: 20.0),
               ),
@@ -152,7 +145,7 @@ class ChangePassword extends StatelessWidget {
       appTitle: '',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAll(() =>  const AddManulOrder());
+        Get.offAll(() => const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

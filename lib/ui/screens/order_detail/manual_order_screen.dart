@@ -6,7 +6,6 @@ import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart'
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/cards/manual_order_detail_card.dart';
 import '../../../provider/home_provider.dart';
-import '../../../utils/routes/app_routes.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
 import '../../widgets/cards/order_detail_card.dart';
@@ -19,7 +18,7 @@ import '../../widgets/textfields/common_textfield.dart';
 class ManualOrderScreen extends StatefulWidget {
   // final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
-  ManualOrderScreen({super.key});
+  const ManualOrderScreen({super.key});
 
   @override
   State<ManualOrderScreen> createState() => _ManualOrderScreenState();
@@ -322,7 +321,7 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                     btntxt: 'Showing ${_.filteredManualOrders.length} results',
                     buttontxtColor: UIDataColors.whiteColor,
                     onPressed: () {
-                       Get.back();
+                      Get.back();
                     },
                   ),
                 ],
@@ -348,7 +347,7 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
       appbarSvg: true,
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAll(() =>  const AddManulOrder());
+        Get.offAll(() => const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

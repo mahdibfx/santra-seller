@@ -1,7 +1,9 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:get/route_manager.dart';
-import 'package:santra_seller/utils/routes/app_routes.dart';
-
+import 'package:santra_seller/ui/screens/more_setting/about_us_screen.dart';
+import 'package:santra_seller/ui/screens/more_setting/contact_us/contact_us_screen.dart';
+import 'package:santra_seller/ui/screens/more_setting/privacy_policy_screen.dart';
+import 'package:santra_seller/ui/screens/settings/language_screen.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '/utils/uidata.dart';
 import 'package:flutter/material.dart';
@@ -61,25 +63,25 @@ class ClipDrawer extends StatelessWidget {
                 ),
                 SpacingHeight.heightlistspacing20,
                 itemList(() {
-                  Get.toNamed(Routes.aboutscreen);
+                  Get.to(() => AboutUsScreen());
                 }, UIDATAIcons.santraVectorIcon, "About Us"),
                 const Divider(
                   height: 30,
                 ),
                 itemList(() {
-                  Get.toNamed(Routes.contactscreen);
+                  Get.to(() => ContactUsScreen());
                 }, UIDATAIcons.whatsappIcon, "Contact Customer Service"),
                 const Divider(
                   height: 30,
                 ),
                 itemList(() {
-                  Get.toNamed(Routes.languageSettings);
+                  Get.to(() => const LanguageSettings());
                 }, UIDATAIcons.languageIcon, "Language"),
                 const Divider(
                   height: 30,
                 ),
                 itemList(() {
-                  Get.toNamed(Routes.privacy);
+                  Get.to(() => PrivacyScreen());
                 }, UIDATAIcons.securityIcon, "Privacy Policy"),
               ],
             ),

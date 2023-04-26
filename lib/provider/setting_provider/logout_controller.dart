@@ -4,14 +4,17 @@ import 'package:http/http.dart' as http;
 import 'package:santra_seller/ui/screens/auth_screen/login_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:santra_seller/utils/api_data.dart';
-import 'package:santra_seller/utils/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LogoutController extends GetxController {
-  var isLogoutLoading = false.obs;
+class LogoutProvider with ChangeNotifier {
+  bool isLogoutLoading = false;
+  updateLogoutLoadingState(val) {
+    isLogoutLoading = val;
+    notifyListeners();
+  }
 
   Future logout() async {
-    isLogoutLoading(true);
+    updateLogoutLoadingState(true);
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? sellerCode = prefs.getString('sellercode');
@@ -28,7 +31,7 @@ class LogoutController extends GetxController {
       if (response.statusCode == 200) {
         //@todo
         await prefs.clear();
-        update();
+
         Get.offAll(() => const LoginScreen());
       } else {
         generalException();
@@ -39,7 +42,7 @@ class LogoutController extends GetxController {
     } catch (e) {
       generalException();
     }
-    isLogoutLoading(false);
-    update();
+    updateLogoutLoadingState(false);
+    notifyListeners();
   }
 }

@@ -100,12 +100,11 @@ class SplashProvider extends ChangeNotifier {
           Platform.isIOS ? "Mobile_App_iOS" : "Mobile_App_Android";
       var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
-        print(body);
         setLoadingState(false);
         var data = jsonDecode(response.body);
 
         var msg = data['data'][0]['force_update'].toString();
-        print(response.body);
+
         if (msg == "no") {
           updateAvailable = false;
         } else if (msg == "yes") {
