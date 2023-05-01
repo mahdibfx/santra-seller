@@ -41,7 +41,7 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
                         children: [
                           HeadingWithIcon(
                               icon: UIDATAIcons.orderBascketBorder,
-                              btntxt: "All Orders"),
+                              btntxt: "all_orders_title".tr),
                           SpacingHeight.heightlistspacing10,
                           Row(
                             children: [
@@ -51,7 +51,7 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
                                   child: CommonTextField(
                                     prefixIcon: UIDATAIcons.searchIcon,
                                     isTextHidden: false,
-                                    hintText: 'Enter the order number',
+                                    hintText: 'orders_search'.tr,
                                     fillcolor: UIDataColors.whiteColor,
                                     keyboardType: TextInputType.text,
                                     controller: _.filterController,
@@ -190,7 +190,7 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
                         child: SizedBox(
                             child: Row(
                           children: [
-                            Text('reset'),
+                            Text('reset'.tr),
                             SpacingWidth.widthlistspacing5,
                             SvgPicture.asset(
                               UIDATAIcons.resetIcon,
@@ -199,7 +199,7 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
                           ],
                         ).marginAll(5)),
                       ),
-                      Text('Filter',
+                      Text('filter'.tr,
                           style: UIDataTextStyles.h2.copyWith(
                             color: UIDataColors.primaryColor,
                           )),
@@ -305,7 +305,7 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
                         UIDataColors.primaryColor,
                       ],
                     ),
-                    btntxt: 'Showing ${_.filteredAllOrders.length} results',
+                    btntxt: '${'filter_showing_button'.tr} ${_.filteredAllOrders.length} ${'filter_result_button'.tr}',
                     buttontxtColor: UIDataColors.whiteColor,
                     onPressed: () {
                       Get.back();

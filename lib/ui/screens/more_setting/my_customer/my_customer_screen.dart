@@ -42,7 +42,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                   children: [
                     HeadingWithIcon(
                         icon: UIDATAIcons.customersIcon,
-                        btntxt: "Customer List".tr),
+                        btntxt: "client_list_button".tr),
                     CommonTextField(
                       isTextHidden: false,
                       prefixIcon: UIDATAIcons.searchIcon,
@@ -55,7 +55,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                     SpacingHeight.heightlistspacing10,
                     PrimaryButtonWithIcon(
                       iconImage: UIDATAIcons.userIcon,
-                      btntxt: "Add New Customer".tr,
+                      btntxt: "new_customer_button".tr,
                       onPressed:
                           Provider.of<HomeProvider>(context).sellerStatusNew !=
                                   "done"

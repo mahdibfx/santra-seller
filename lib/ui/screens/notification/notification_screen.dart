@@ -35,7 +35,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     children: [
                       HeadingWithIcon(
                         icon: UIDATAIcons.bell,
-                        btntxt: "Notifications",
+                        btntxt: "notifications_title".tr,
                         iconColor: UIDataColors.primaryColor,
                       ),
                       ListView.builder(

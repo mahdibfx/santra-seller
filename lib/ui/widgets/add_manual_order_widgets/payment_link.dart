@@ -75,7 +75,7 @@ class PaymentLinkBottomSheet extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 0, top: 0),
                       child: PrimaryButtonWithIcon(
-                        btntxt: "Copy Link",
+                        btntxt: "payment_link_copy_button".tr,
                         iconImage: UIDATAIcons.copyLink,
                         onPressed: () {
                           Clipboard.setData(ClipboardData(text: _.link.text));
@@ -93,7 +93,7 @@ class PaymentLinkBottomSheet extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: PrimaryButtonWithIcon(
-                        btntxt: "Share",
+                        btntxt: "payment_link_share_button".tr,
                         backEndColor: UIDataColors.whiteColor,
                         buttontxtColor: UIDataColors.primaryColor,
                         iconImageColor: UIDataColors.primaryColor,

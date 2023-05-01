@@ -7,7 +7,7 @@ import 'package:santra_seller/ui/screens/settings/language_screen.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '/utils/uidata.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 class ClipDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -64,25 +64,25 @@ class ClipDrawer extends StatelessWidget {
                 SpacingHeight.heightlistspacing20,
                 itemList(() {
                   Get.to(() => AboutUsScreen());
-                }, UIDATAIcons.santraVectorIcon, "About Us"),
+                }, UIDATAIcons.santraVectorIcon,  "side_menu_about_signin".tr),
                 const Divider(
                   height: 30,
                 ),
                 itemList(() {
                   Get.to(() => ContactUsScreen());
-                }, UIDATAIcons.whatsappIcon, "Contact Customer Service"),
+                }, UIDATAIcons.whatsappIcon, "side_menu__contact_signin".tr),
                 const Divider(
                   height: 30,
                 ),
                 itemList(() {
                   Get.to(() => const LanguageSettings());
-                }, UIDATAIcons.languageIcon, "Language"),
+                }, UIDATAIcons.languageIcon, "side_menu_language_signin".tr),
                 const Divider(
                   height: 30,
                 ),
                 itemList(() {
                   Get.to(() => PrivacyScreen());
-                }, UIDATAIcons.securityIcon, "Privacy Policy"),
+                }, UIDATAIcons.securityIcon, "side_menu_privacy_signin".tr),
               ],
             ),
           ),

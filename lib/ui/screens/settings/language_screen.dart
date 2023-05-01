@@ -1,8 +1,10 @@
 import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../provider/setting_provider/language_settings_controller.dart';
 
+import '../../../utils/app_translation/app_translation.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -18,61 +20,75 @@ class LanguageSettings extends StatefulWidget {
 
 class _LanguageSettingsState extends State<LanguageSettings> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+  final localization = AppTranslations();
 
   Widget bodyData(context) {
     return Consumer<LangaugeSettingsProvider>(
       builder: (con, _, child) {
         return SafeArea(
-          child: SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: Get.height / 1.1,
-              ),
-              child: Form(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    HeadingWithIcon(
-                        icon: UIDATAIcons.languageIcon, btntxt: "Language"),
-
-                    BorderButton(
-                      onPressed: () {
-                        Get.updateLocale(const Locale('ar', 'AE'));
-                      },
-                      btntxt: "عربي",
-                      backEndColor: Colors.white,
-                      borderColor: Colors.transparent,
-                      buttontxtColor: UIDataColors.blackColor,
+          child: _.isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxHeight: Get.height / 1.1,
                     ),
-                    SpacingHeight.heightlistspacing15,
-                    BorderButton(
-                      onPressed: () {
-                        Get.updateLocale(const Locale('en', 'us'));
-                      },
-                      btntxt: "English",
-                      backEndColor: Colors.white,
-                      borderColor: UIDataColors.primaryColor,
-                      buttontxtColor: UIDataColors.primaryColor,
+                    child: Form(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          HeadingWithIcon(
+                              icon: UIDATAIcons.languageIcon,
+                              btntxt: "Language"),
+
+                          BorderButton(
+                            onPressed: () async {
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              Get.updateLocale(const Locale('ar', 'AE'));
+                              prefs.setString("selectedlanguage", "ar_AE");
+                              Get.back();
+                            },
+                            btntxt: "عربي",
+                            backEndColor: Colors.white,
+                            borderColor: Colors.transparent,
+                            buttontxtColor: UIDataColors.blackColor,
+                          ),
+                          SpacingHeight.heightlistspacing15,
+                          BorderButton(
+                            onPressed: () async {
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              prefs.setString("selectedlanguage", "en_us");
+                              Get.updateLocale(const Locale('en', 'us'));
+                              Get.back();
+                            },
+                            btntxt: "English",
+                            backEndColor: Colors.white,
+                            borderColor: UIDataColors.primaryColor,
+                            buttontxtColor: UIDataColors.primaryColor,
+                          ),
+
+                          SpacingHeight.heightlistspacing15,
+                          // Obx(() => _.isLoading
+                          //         ? const Center(
+                          //             child: CircularProgressIndicator(),
+                          //           )
+                          //         :
+                          // PrimaryButtonWithIcon(
+                          //   btntxt: "Save",
+                          //   iconImage: UIDATAIcons.saveIcon,
+                          //   onPressed: () {},
+                          // )
+
+                          //),
+                        ],
+                      ).marginOnly(left: 20.0, right: 20.0),
                     ),
-
-                    SpacingHeight.heightlistspacing15,
-                    // Obx(() => _.isLoading
-                    //         ? const Center(
-                    //             child: CircularProgressIndicator(),
-                    //           )
-                    //         :
-                    // PrimaryButtonWithIcon(
-                    //   btntxt: "Save",
-                    //   iconImage: UIDATAIcons.saveIcon,
-                    //   onPressed: () {},
-                    // )
-
-                    //),
-                  ],
-                ).marginOnly(left: 20.0, right: 20.0),
-              ),
-            ),
-          ),
+                  ),
+                ),
         );
       },
     );

@@ -48,7 +48,7 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                           children: [
                             HeadingWithIcon(
                                 icon: UIDATAIcons.orderBascketBorder,
-                                btntxt: "Manual Orders"),
+                                btntxt: "manual_orders_title".tr),
                             SpacingHeight.heightlistspacing10,
                             Row(
                               children: [
@@ -58,7 +58,7 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                                     child: CommonTextField(
                                       prefixIcon: UIDATAIcons.searchIcon,
                                       isTextHidden: false,
-                                      hintText: 'Enter the order number',
+                                      hintText: 'order_number'.tr,
                                       fillcolor: UIDataColors.whiteColor,
                                       keyboardType: TextInputType.text,
                                       controller: _.filterController,
@@ -203,7 +203,7 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                         child: SizedBox(
                             child: Row(
                           children: [
-                            const Text('reset'),
+                             Text('reset'.tr),
                             SpacingWidth.widthlistspacing5,
                             SvgPicture.asset(
                               UIDATAIcons.resetIcon,
@@ -212,7 +212,7 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                           ],
                         ).marginAll(5)),
                       ),
-                      Text('Filter',
+                      Text('filter'.tr,
                           style: UIDataTextStyles.h2.copyWith(
                             color: UIDataColors.primaryColor,
                           )),
@@ -318,7 +318,7 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                         UIDataColors.primaryColor,
                       ],
                     ),
-                    btntxt: 'Showing ${_.filteredManualOrders.length} results',
+                    btntxt: '${'filter_showing_button'.tr} ${_.filteredManualOrders.length} ${'filter_result_button'.tr}',
                     buttontxtColor: UIDataColors.whiteColor,
                     onPressed: () {
                       Get.back();

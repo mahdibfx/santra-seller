@@ -40,7 +40,7 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                         children: [
                           HeadingWithIcon(
                               icon: UIDATAIcons.orderBascketBorder,
-                              btntxt: "Santra Orders"),
+                              btntxt: "santra_orders_title".tr),
                           SpacingHeight.heightlistspacing10,
                           Row(
                             children: [
@@ -50,7 +50,7 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                                   child: CommonTextField(
                                     prefixIcon: UIDATAIcons.searchIcon,
                                     isTextHidden: false,
-                                    hintText: 'Enter the order number',
+                                    hintText: 'orders_search'.tr,
                                     fillcolor: UIDataColors.whiteColor,
                                     keyboardType: TextInputType.text,
                                     controller: _.filterController,
@@ -204,7 +204,7 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                         child: SizedBox(
                             child: Row(
                           children: [
-                            Text('reset'),
+                            Text('reset'.tr),
                             SpacingWidth.widthlistspacing5,
                             SvgPicture.asset(
                               UIDATAIcons.resetIcon,
@@ -213,7 +213,7 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                           ],
                         ).marginAll(5)),
                       ),
-                      Text('Filter',
+                      Text('filter'.tr,
                           style: UIDataTextStyles.h2.copyWith(
                             color: UIDataColors.primaryColor,
                           )),
@@ -319,7 +319,7 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                         UIDataColors.primaryColor,
                       ],
                     ),
-                    btntxt: 'Showing ${_.filteredSantraOrders.length} results',
+                    btntxt: '${'filter_showing_button'.tr} ${_.filteredSantraOrders.length} ${'filter_result_button'.tr}',
                     buttontxtColor: UIDataColors.whiteColor,
                     onPressed: () {
                       Get.back();

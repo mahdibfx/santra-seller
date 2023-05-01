@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:santra_seller/provider/language_provider/language_provider.dart';
 import 'package:santra_seller/provider/more_settings_provider/contact_us_provider.dart';
 import 'package:santra_seller/provider/more_settings_provider/privacy_provider.dart';
 import 'package:santra_seller/provider/more_settings_provider/customer_reviews_provider.dart';
@@ -29,7 +30,10 @@ import './utils/uidata.dart';
 import 'provider/setting_provider/language_settings_controller.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+    final AppTranslations localization;
+
+  const MyApp({super.key,required this.localization});
+   
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +75,8 @@ class MyApp extends StatelessWidget {
             create: (_) => PrivacyProvider()),
         ChangeNotifierProvider<ContactUsProvider>(
             create: (_) => ContactUsProvider()),
+        // ChangeNotifierProvider<LanguageProvider>(
+        //     create: (_) => LanguageProvider()),
       ],
       child: GetMaterialApp(
         title: UIData.appName,
@@ -79,12 +85,6 @@ class MyApp extends StatelessWidget {
           fontFamily: UIDataFonts.quickFont,
           primarySwatch: Colors.blue,
         ),
-        initialBinding: BindingsBuilder(() {
-          // Get.put(LoginController());
-
-          // Get.put(HomeController());
-          // Get.put(AddManualOrderController());
-        }),
         debugShowCheckedModeBanner: false,
         defaultTransition: Get.defaultTransition,
         showPerformanceOverlay: false,
@@ -93,10 +93,16 @@ class MyApp extends StatelessWidget {
         ],
         home: SplashScreen(),
         enableLog: true,
-        translations: AppTranslations(),
+        translations: localization,
+        fallbackLocale: const Locale('en', 'US'),
+        // locale:const Locale('en', 'us'),
         // logWriterCallback: Logger.write,
         // supportedLocales: [const Locale("en", "US")],
-        locale: const Locale('en', 'us'),
+      //   supportedLocales: const [
+      //   Locale('en'),
+      //   Locale('es'),
+      // ],
+        locale: localization.selectedLanguage == 'en_us' ? const Locale('en', 'us') :const Locale('ar', 'AE'),
         // initialRoute: AppPages.INITIAL,
         // getPages: AppPages.routes,
       ),

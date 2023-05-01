@@ -90,8 +90,8 @@ class _ProductEditCardState extends State<ProductEditCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                const Text(
-                  "Out Of Stock",
+                 Text(
+                  "products_out_of_stock".tr,
                   style: UIDataTextStyles.caption,
                 ),
                 SpacingWidth.widthlistspacing,
@@ -122,8 +122,8 @@ class _ProductEditCardState extends State<ProductEditCard> {
                   },
                 ),
                 SpacingWidth.widthlistspacing,
-                const Text(
-                  "Available",
+                 Text(
+                  "products_available".tr,
                   style: UIDataTextStyles.caption,
                 ),
               ],

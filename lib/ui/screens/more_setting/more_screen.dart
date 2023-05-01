@@ -26,35 +26,35 @@ class MoreSettingScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            HeadingWithIcon(icon: UIDATAIcons.moreHorizontal, btntxt: "More"),
+            HeadingWithIcon(icon: UIDATAIcons.moreHorizontal, btntxt: "more_title".tr),
             SpacingHeight.heightlistspacing15,
             ReusableIconSetting(
               icon: UIDATAIcons.settingsIcon,
               onPressed: () {
                 Get.to(() => Settings());
               },
-              btntxt: 'settings',
+              btntxt: 'more_setting'.tr,
             ),
             ReusableIconSetting(
               icon: UIDATAIcons.dashboardIcon,
               onPressed: () {
                 Get.to(() => ProductSettingScreen());
               },
-              btntxt: 'Products',
+              btntxt: 'more_products'.tr,
             ),
             ReusableIconSetting(
               icon: UIDATAIcons.customersIcon,
               onPressed: () {
                 Get.to(() => const MyCustomerScreen());
               },
-              btntxt: 'Customers List',
+              btntxt: 'more_customerlist'.tr,
             ),
             ReusableIconSetting(
               icon: UIDATAIcons.starIcon,
               onPressed: () {
                 Get.to(() => CustomerReviews());
               },
-              btntxt: 'Customer Reviews',
+              btntxt: 'more_reviews'.tr,
             ),
             // ReusableIconSetting(
             //   icon: UIDATAIcons.walletIcon,
@@ -68,21 +68,21 @@ class MoreSettingScreen extends StatelessWidget {
               onPressed: () {
                 Get.to(() => ContactUsScreen());
               },
-              btntxt: 'Contact Customer Service',
+              btntxt: 'more_contact'.tr,
             ),
             ReusableIconSetting(
               icon: UIDATAIcons.santraVectorIcon,
               onPressed: () {
                 Get.to(() => AboutUsScreen());
               },
-              btntxt: 'About Us',
+              btntxt: 'more_aboutus'.tr,
             ),
             ReusableIconSetting(
               icon: UIDATAIcons.securityIcon,
               onPressed: () {
                 Get.to(() => PrivacyScreen());
               },
-              btntxt: 'Privacy Policy',
+              btntxt: 'more_privacy'.tr,
             ),
             SpacingHeight.heightlistspacing50
           ],

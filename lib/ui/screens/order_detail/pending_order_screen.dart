@@ -40,7 +40,7 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
                         children: [
                           HeadingWithIcon(
                               icon: UIDATAIcons.orderBascketBorder,
-                              btntxt: "Pending Orders"),
+                              btntxt: "pending_orders_title".tr),
                           SpacingHeight.heightlistspacing10,
                           Row(
                             children: [
@@ -50,7 +50,7 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
                                   child: CommonTextField(
                                     prefixIcon: UIDATAIcons.searchIcon,
                                     isTextHidden: false,
-                                    hintText: 'Enter the order number',
+                                    hintText: 'order_number'.tr,
                                     fillcolor: UIDataColors.whiteColor,
                                     keyboardType: TextInputType.text,
                                     controller: _.filterController,
@@ -189,7 +189,7 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
                         child: SizedBox(
                             child: Row(
                           children: [
-                            Text('reset'),
+                            Text('reset'.tr),
                             SpacingWidth.widthlistspacing5,
                             SvgPicture.asset(
                               UIDATAIcons.resetIcon,
@@ -198,7 +198,7 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
                           ],
                         ).marginAll(5)),
                       ),
-                      Text('Filter',
+                      Text('filter'.tr,
                           style: UIDataTextStyles.h2.copyWith(
                             color: UIDataColors.primaryColor,
                           )),
@@ -304,7 +304,7 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
                         UIDataColors.primaryColor,
                       ],
                     ),
-                    btntxt: 'Showing ${_.filteredPendingOrders.length} results',
+                    btntxt: '${'filter_showing_button'.tr} ${_.filteredPendingOrders.length} ${'filter_result_button'.tr}',
                     buttontxtColor: UIDataColors.whiteColor,
                     onPressed: () {
                       Get.back();

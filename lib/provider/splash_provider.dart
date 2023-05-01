@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/screens/auth_screen/login_screen.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/utils/api_data.dart';
@@ -12,6 +13,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../ui/widgets/dialogs/custom_dialogs.dart';
 import '../ui/widgets/snackbar/common_snackbar.dart';
 import '../utils/uidata.dart';
+import 'language_provider/language_provider.dart';
 
 class SplashProvider extends ChangeNotifier {
   bool isLoading = false;
@@ -69,7 +71,8 @@ class SplashProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var checkemail = prefs.getString("email");
     sellerCode = prefs.getString("sellercode");
-
+  // var languageProvider = Provider.of<LanguageProvider>(context, listen: false);
+  // languageProvider.languageTextCall();
     print("SELLER $sellerCode");
     // var checkpassword = prefs.getString("password");
     if (checkemail != null) {

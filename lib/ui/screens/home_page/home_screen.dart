@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text('Orders Monthly',
+                                          Text('home_orders_monthly'.tr,
                                               style: UIDataTextStyles.h2
                                                   .copyWith(
                                                       color: Colors.white,
@@ -100,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text('Sales Monthly',
+                                          Text('home_sales_monthly'.tr,
                                               style: UIDataTextStyles.h2
                                                   .copyWith(
                                                       color: Colors.white,
@@ -140,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               onTap: () {
                                 Get.to(() => SantraOrderScreen());
                               },
-                              heading: 'Santra Orders',
+                              heading: 'home_santra_orders'.tr,
                               count: _.homeData == null
                                   ? ''
                                   : _.homeData!.santraOrders[0].orderCount
@@ -152,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               onTap: () {
                                 Get.to(() => ManualOrderScreen());
                               },
-                              heading: 'Manual Orders',
+                              heading: 'home_manual_orders'.tr,
                               count: _.homeData!.manualOrders[0].orderCount
                                   .toString(),
                               imageAsset: UIDataImage.manualOrderSVG,
@@ -166,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               onTap: () {
                                 Get.to(() => PendingOrderScreen());
                               },
-                              heading: 'Pending Orders',
+                              heading: 'home_pending_orders'.tr,
                               count: _.homeData!.pendingOrders[0].orderCount
                                   .toString(),
                               imageAsset: UIDataImage.pendingOrderSVG,
@@ -176,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               onTap: () {
                                 Get.to(() => AllOrderScreen());
                               },
-                              heading: 'All Orders',
+                              heading: 'home_all_orders'.tr,
                               count: _.filteredAllOrders.length.toString(),
                               imageAsset: UIDataImage.allOrderSVG,
                             ),

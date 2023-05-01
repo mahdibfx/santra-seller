@@ -99,8 +99,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       CommonTextField(
                         //
                         controller: _.email,
-                        hintText: 'Your Email or Mobile Number',
-                        labelText: "Email/Number",
+                        hintText: 'user_number_hint_signin'.tr,
+                        labelText: "emailpassword_hint_signin".tr,
                         prefixIcon: UIDATAIcons.userIcon,
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
@@ -118,12 +118,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       SpacingHeight.heightlistspacing10,
                       CommonTextField(
                         controller: _.password,
-                        hintText: 'Password',
+                        hintText: 'user_password_hint_signin'.tr,
                         //prefixIcon: Icons.lock_outline,
                         keyboardType: TextInputType.text,
                         fillcolor: UIDataColors.whiteColor,
                         togglePassword: true,
-                        labelText: "Password",
+                        labelText: "signup_password".tr,
                         prefixIcon: UIDATAIcons.lockIcon,
                         toggleIcon: _.securetext == true
                             ? UIDATAIcons.viewOffIcon
@@ -150,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               Get.to(() => const forgotPassowrd());
                               // Get.toNamed(Routes.forgotpasswordRoutes);
                             },
-                            child: const Text("Forgot your password?",
+                            child:  Text("forgot_password_text_signin".tr,
                                 style: UIDataTextStyles.title),
                           ),
                         ],
@@ -170,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     UIDataColors.primaryColor,
                                   ],
                                 ),
-                                btntxt: "Login",
+                                btntxt: "login_button_signin".tr,
                                 iconImage: SvgPicture.asset(
                                   UIDATAIcons.sendIcon,
                                   height: 25,
@@ -197,13 +197,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Don't have an account ? ",
+                           Text("signup_text_signin".tr,
                               style: UIDataTextStyles.title),
                           GestureDetector(
                               onTap: () {
                                 Get.to(() => SignUpScreen());
                               },
-                              child: Text("Sign Up",
+                              child: Text("signup_link_signin".tr,
                                   style: UIDataTextStyles.title.copyWith(
                                       color: UIDataColors.primaryColor)))
                         ],

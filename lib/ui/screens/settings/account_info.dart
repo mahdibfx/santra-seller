@@ -44,7 +44,7 @@ class _AccountInfoState extends State<AccountInfo> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     HeadingWithIcon(
-                        icon: UIDATAIcons.infoIcon, btntxt: "Account Info"),
+                        icon: UIDATAIcons.infoIcon, btntxt: "account_info_title".tr),
 
                     CommonTextField(
                       controller: _.emailController,
@@ -109,7 +109,7 @@ class _AccountInfoState extends State<AccountInfo> {
                     _.isUpdateAccInfoLoading
                         ? const Center(child: CircularProgressIndicator())
                         : PrimaryButtonWithIcon(
-                            btntxt: "Save",
+                            btntxt: "account_info_save_button".tr,
                             iconImage: UIDATAIcons.saveIcon,
                             onPressed: () {
                               _.updateAccountInfo();

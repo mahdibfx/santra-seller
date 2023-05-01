@@ -35,10 +35,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     HeadingWithIcon(
-                        icon: UIDATAIcons.lockIcon, btntxt: "Change Password"),
+                        icon: UIDATAIcons.lockIcon, btntxt: "change_password_title".tr),
                     CommonTextField(
                       controller: _.currentPasswordController,
-                      labelText: "Current Password",
+                      labelText: "change_password_current".tr,
                       fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
                       togglePassword: true,
@@ -63,7 +63,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     SpacingHeight.heightlistspacing5,
                     CommonTextField(
                       controller: _.newPasswordController,
-                      labelText: "New Password",
+                      labelText: "change_password_new".tr,
                       isTextHidden: _.newPasswordSecuretext,
                       fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
@@ -87,7 +87,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     SpacingHeight.heightlistspacing5,
                     CommonTextField(
                       controller: _.confirmNewPasswordController,
-                      labelText: "Confirm New Password",
+                      labelText: "change_password_new_confirm".tr,
                       isTextHidden: _.confirmPasswordSecuretext,
                       fillcolor: UIDataColors.whiteColor,
                       keyboardType: TextInputType.text,
@@ -113,7 +113,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     _.isUpdatePassLoading
                         ? const Center(child: CircularProgressIndicator())
                         : PrimaryButtonWithIcon(
-                            btntxt: "Submit",
+                            btntxt: "change_password_save_button".tr,
                             iconImage: UIDATAIcons.sendIcon,
                             onPressed: () {
                               _.updatePassword();

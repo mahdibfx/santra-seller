@@ -42,9 +42,9 @@ class _DeleteAccountState extends State<DeleteAccount> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     HeadingWithIcon(
-                        icon: UIDATAIcons.deleteIcon, btntxt: "Delete Account"),
-                    const Text(
-                      "Can you please share to us what was not working? We are fixing bugs as soon as we spot them. if somthing slipped though our fingers, we'd be so grateful to be aware of it and fix it.",
+                        icon: UIDATAIcons.deleteIcon, btntxt: "delete_account_title".tr),
+                     Text(
+                      "delete_account_reason".tr,
                       style: UIDataTextStyles.title,
                     ),
                     SpacingHeight.heightlistspacing15,
@@ -53,7 +53,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
                       isTextHidden: false,
                       fillcolor: Colors.white,
                       keyboardType: TextInputType.phone,
-                      hintText: "Your explanation is entirely optional",
+                      hintText: "delete_account_reason_field".tr,
                     ),
                     Form(
                         key: _.formDeleteAccScreen1,
@@ -64,7 +64,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
                             isTextHidden: false,
                             fillcolor: Colors.white,
                             keyboardType: TextInputType.phone,
-                            labelText: "Your Mobile Number",
+                            labelText: "delete_account_number".tr,
                             inputFormatters: [_.phoneMask],
                             hintText: "Ex: 501234567",
                             maxLength: 12,
@@ -98,7 +98,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
                     _.isOtpLoading
                         ? const Center(child: CircularProgressIndicator())
                         : BorderButton(
-                            btntxt: "Continue",
+                            btntxt: "delete_account_continue_button".tr,
                             backEndColor: Colors.white,
                             borderColor: UIDataColors.secondaryColor,
                             buttontxtColor: UIDataColors.secondaryColor,

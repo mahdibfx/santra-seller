@@ -45,7 +45,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                             children: [
                               HeadingWithIcon(
                                   icon: UIDATAIcons.santraVectorIcon,
-                                  btntxt: "Privacy Policy"),
+                                  btntxt: "more_privacy".tr),
                               Text(
                                 _.msg,
                                 style: UIDataTextStyles.title,

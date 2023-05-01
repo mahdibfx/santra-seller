@@ -49,14 +49,14 @@ class _SettingsState extends State<Settings> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   HeadingWithIcon(
-                      icon: UIDATAIcons.settingsIcon, btntxt: "Setting"),
+                      icon: UIDATAIcons.settingsIcon, btntxt: "more_setting".tr),
                   SpacingHeight.heightlistspacing15,
                   ReusableIconSetting(
                     icon: UIDATAIcons.infoIcon,
                     onPressed: () {
                       Get.to(() => const AccountInfo());
                     },
-                    btntxt: "Account info",
+                    btntxt: "setting_account".tr,
                   ),
                   ReusableIconSetting(
                     icon: UIDATAIcons.emailIcon,
@@ -64,7 +64,7 @@ class _SettingsState extends State<Settings> {
                     onPressed: () {
                       Get.to(() => const ChangeEmail());
                     },
-                    btntxt: "Change Email",
+                    btntxt: "setting_email".tr,
                   ),
                   ReusableIconSetting(
                     icon: UIDATAIcons.lockIcon,
@@ -72,14 +72,14 @@ class _SettingsState extends State<Settings> {
                       Get.to(() => ChangePassword());
                       // Get.toNamed(Routes.changePassword);
                     },
-                    btntxt: 'Change Password',
+                    btntxt: 'setting_password'.tr,
                   ),
                   ReusableIconSetting(
                     icon: UIDATAIcons.languageIcon,
                     onPressed: () {
                       Get.to(() => const LanguageSettings());
                     },
-                    btntxt: 'Language',
+                    btntxt: 'setting_language'.tr,
                   ),
                   // GetBuilder<LogoutController>(builder: (logoutController) {
                   //   return
@@ -107,7 +107,7 @@ class _SettingsState extends State<Settings> {
                         });
                       });
                     },
-                    btntxt: 'Logout',
+                    btntxt: 'setting_logout'.tr,
                   ),
                   //   ;
                   // }),
@@ -116,7 +116,7 @@ class _SettingsState extends State<Settings> {
                     onPressed: () {
                       Get.to(() => DeleteAccount());
                     },
-                    btntxt: 'Delete Account',
+                    btntxt: 'setting_delete'.tr,
                   ),
 
                   SpacingHeight.heightlistspacing50

@@ -48,12 +48,12 @@ class _AddManulOrderState extends State<AddManulOrder> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         HeadingWithIcon(
-                            icon: UIDATAIcons.addIcon, btntxt: "Add Order"),
+                            icon: UIDATAIcons.addIcon, btntxt: "add_order_title".tr),
                         CommonTextField(
                           isTextHidden: false,
                           prefixIcon: UIDATAIcons.searchIcon,
                           fillcolor: Colors.white,
-                          labelText: "Search For a Product",
+                          labelText: "add_order_search".tr,
                           onChanged: (value) {
                             print(value);
                             manualOrderController.filterList(value);
@@ -384,7 +384,7 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                         //     UIDataColors.primaryColor);
                                                                       },
                                                                       btntxt:
-                                                                          "Add To Cart",
+                                                                          "add_to_cart_button".tr,
                                                                       iconImage:
                                                                           UIDATAIcons
                                                                               .cartIcon,
@@ -431,7 +431,7 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                   Get.to(() => const CartScreen());
                                   // Get.toNamed(Routes.cartroute);
                                 },
-                                btntxt: "View Cart",
+                                btntxt: "add_order_view_cart".tr,
                                 iconImage: UIDATAIcons.cartHallowIcon,
                                 buttontxtColor: UIDataColors.primaryColor,
                                 width: size.width - 30,

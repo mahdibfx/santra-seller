@@ -27,13 +27,13 @@ class DeleteAccountConfirmation extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   HeadingWithIcon(
-                      icon: UIDATAIcons.deleteIcon, btntxt: "Delete Account"),
-                  const Text(
-                    "Enter OTP",
+                      icon: UIDATAIcons.deleteIcon, btntxt: "delete_account_title".tr),
+                   Text(
+                    "delete_account_otp".tr,
                     style: UIDataTextStyles.h1Heavy,
                   ),
                   SpacingHeight.heightlistspacing15,
-                  const Text("An 6 digit code has been sent to",
+                   Text("delete_account_sent_number".tr,
                       style: TextStyle(color: Colors.black, fontSize: 16)),
                   SpacingHeight.heightlistspacing5,
                   Text(_.phoneNumber ?? "",
@@ -65,7 +65,7 @@ class DeleteAccountConfirmation extends StatelessWidget {
                   _.isdelAccLoading
                       ? const Center(child: CircularProgressIndicator())
                       : BorderButton(
-                          btntxt: "Delete Account",
+                          btntxt: "delete_account_button".tr,
                           backEndColor: Colors.white,
                           borderColor: UIDataColors.redColor,
                           buttontxtColor: UIDataColors.redColor,

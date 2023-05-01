@@ -133,7 +133,7 @@ class CommonScaffold extends StatelessWidget {
                       icon: UIDATAIcons.homeIcon,
                       iconClr: UIDataColors.primaryColor,
                       btntxt: Text(
-                        "Home",
+                        "home_menu_button".tr,
                         style:
                             // Get.currentRoute == Routes.homeRoutes
                             //     ? UIDataTextStyles.title.copyWith(
@@ -155,7 +155,7 @@ class CommonScaffold extends StatelessWidget {
                     ),
                     Center(
                       child: Text(
-                        showFAB ? 'Add Order' : '',
+                        showFAB ? 'home_addorder_button'.tr : '',
                         style: UIDataTextStyles.h2,
                         textAlign: TextAlign.center,
                       ),
@@ -164,7 +164,7 @@ class CommonScaffold extends StatelessWidget {
                       iconClr: UIDataColors.primaryColor,
                       icon: UIDATAIcons.more2,
                       btntxt: Text(
-                        "More",
+                        "home_more_button".tr,
                         style:
                             //  Get.currentRoute == Routes.moreScreen
                             //     ?

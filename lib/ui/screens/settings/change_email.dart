@@ -43,7 +43,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     HeadingWithIcon(
-                        icon: UIDATAIcons.infoIcon, btntxt: "Change Email"),
+                        icon: UIDATAIcons.infoIcon, btntxt: "change_email_title".tr),
                     IgnorePointer(
                       ignoring: true,
                       child: CommonTextField(

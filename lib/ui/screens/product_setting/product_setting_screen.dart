@@ -34,12 +34,12 @@ class _ProductSettingScreenState extends State<ProductSettingScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 HeadingWithIcon(
-                    icon: UIDATAIcons.dashboardIcon, btntxt: "Products"),
+                    icon: UIDATAIcons.dashboardIcon, btntxt: "products_title".tr),
                 CommonTextField(
                   isTextHidden: false,
                   prefixIcon: UIDATAIcons.searchIcon,
                   fillcolor: Colors.white,
-                  labelText: "Search For a Product",
+                  labelText: "add_order_search".tr,
                   onChanged: (value) {
                     pSettings.filterList(value);
                   },

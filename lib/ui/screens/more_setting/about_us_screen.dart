@@ -18,14 +18,7 @@ class AboutUsScreen extends StatefulWidget {
 
 class _AboutUsScreenState extends State<AboutUsScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<AboutUsProvider>(context, listen: false).aboutUsOnInit();
-    });
-  }
-
+ 
   Widget bodyData() {
     return Consumer<AboutUsProvider>(
       builder: (con, _, child) {
@@ -44,9 +37,9 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                             children: [
                               HeadingWithIcon(
                                   icon: UIDATAIcons.santraVectorIcon,
-                                  btntxt: "About Us"),
+                                  btntxt: "side_menu_about_signin".tr),
                               Text(
-                                _.aboutUsText ?? "No Data To Show",
+                                "about_us".tr,
                                 style: UIDataTextStyles.title,
                                 textAlign: TextAlign.justify,
                               ),

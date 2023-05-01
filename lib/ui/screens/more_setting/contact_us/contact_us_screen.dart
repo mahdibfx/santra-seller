@@ -34,7 +34,7 @@ class ContactUsScreen extends StatelessWidget {
                     Column(children: [
                       CommonTextField(
                         controller: _.usernameController,
-                        labelText: "Name".tr,
+                        labelText: "conatct_us_name".tr,
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
                         keyboardType: TextInputType.emailAddress,
@@ -46,7 +46,7 @@ class ContactUsScreen extends StatelessWidget {
                       ),
                       CommonTextField(
                         controller: _.emailController,
-                        labelText: 'Email'.tr,
+                        labelText: 'conatct_us_email'.tr,
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
                         keyboardType: TextInputType.emailAddress,
@@ -61,7 +61,7 @@ class ContactUsScreen extends StatelessWidget {
                       ),
                       CommonTextField(
                         controller: _.phonenumberController,
-                        labelText: 'Phone Number'.tr,
+                        labelText: 'conatct_us_mobile'.tr,
                         isTextHidden: false,
                         inputFormatters: [_.phoneMask],
                         fillcolor: UIDataColors.whiteColor,
@@ -96,7 +96,7 @@ class ContactUsScreen extends StatelessWidget {
                       CommonTextField(
                         maxlines: 5,
                         controller: _.messageController,
-                        hintText: 'Message'.tr,
+                        hintText: 'conatct_us_message'.tr,
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
                         keyboardType: TextInputType.emailAddress,
@@ -115,7 +115,7 @@ class ContactUsScreen extends StatelessWidget {
                             child: CircularProgressIndicator(),
                           ))
                         : PrimaryButtonWithIcon(
-                            btntxt: "Send",
+                            btntxt: "conatct_us_send_button".tr,
                             iconImage: UIDATAIcons.sendIcon,
                             onPressed: () {
                               if (form.currentState!.validate()) {
@@ -127,8 +127,8 @@ class ContactUsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const Text(
-                'Get in Touch',
+               Text(
+                'conatct_us_keep'.tr,
                 style: UIDataTextStyles.h1,
               ),
               SpacingHeight.heightlistspacing5,
@@ -137,8 +137,8 @@ class ContactUsScreen extends StatelessWidget {
                 style: UIDataTextStyles.title,
               ),
               SpacingHeight.heightlistspacing5,
-              const Text(
-                'santra.ae',
+               Text(
+                'conatct_us_email_text'.tr,
                 style: UIDataTextStyles.title,
               ),
               SpacingHeight.heightlistspacing5,
@@ -175,7 +175,7 @@ class ContactUsScreen extends StatelessWidget {
       scaffoldKey: _key,
       showBottomNav: true,
       appbarcolor: UIDataColors.whiteColor,
-      appTitle: 'Contact Us',
+      appTitle: 'conatct_us_title'.tr,
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
         Get.offAll(() => const AddManulOrder());
