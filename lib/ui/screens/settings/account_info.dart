@@ -56,7 +56,7 @@ class _AccountInfoState extends State<AccountInfo> {
                       keyboardType: TextInputType.text,
                       validator: (val) {
                         if (val.isEmpty) {
-                          return "please enter your email";
+                          return "email_validation".tr;
                         } else {
                           return null;
                         }

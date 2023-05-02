@@ -90,7 +90,7 @@ class _SettingsState extends State<Settings> {
                           context,
                           "Logout",
                           "Are You Sure You Want To Logout?",
-                          "Cancel",
+                          "button_cancel".tr,
                           "Logout", () {
                         Get.back();
                       }, () {

@@ -108,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         validator: (val) {
                           // bool email = _.emailRegex.hasMatch(val);
                           if (val.isEmpty) {
-                            return "Please enter your email or phone";
+                            return "enter_email_phone".tr;
                           }
                           // else if (!email) {
                           //   return "Please enter valid email address";
@@ -135,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         isTextHidden: _.securetext,
                         validator: (val) {
                           if (val.isEmpty) {
-                            return "Password should not be blank";
+                            return "password_blank".tr;
                           }
                           // else if (val.length < 6) {
                           //   return "password should contains 6 chractors";

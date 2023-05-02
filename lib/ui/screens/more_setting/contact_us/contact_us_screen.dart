@@ -40,7 +40,7 @@ class ContactUsScreen extends StatelessWidget {
                         keyboardType: TextInputType.emailAddress,
                         validator: (val) {
                           if (val.isEmpty) {
-                            return "Please enter your name";
+                            return "full_name_validation".tr;
                           }
                         },
                       ),
@@ -53,9 +53,9 @@ class ContactUsScreen extends StatelessWidget {
                         validator: (val) {
                           bool email = _.emailRegex.hasMatch(val);
                           if (val.isEmpty) {
-                            return "Please enter your email";
+                            return "email_validation".tr;
                           } else if (!email) {
-                            return "Please enter valid email address";
+                            return "valid_email_validation".tr;
                           }
                         },
                       ),
@@ -81,12 +81,12 @@ class ContactUsScreen extends StatelessWidget {
                         validator: (val) {
                           String? name;
                           if (val.isEmpty || val.length < 12) {
-                            return "Please enter valid phone number";
+                            return "valid_phone".tr;
                           } else if (val.isNotEmpty && val.length > 3) {
                             name = val.substring(0, 3);
 
                             if (name != "971") {
-                              return "Phone number must start with 971";
+                              return "valid_phone_971".tr;
                             }
                           } else {
                             return null;

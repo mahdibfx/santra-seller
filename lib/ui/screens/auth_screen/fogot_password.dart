@@ -47,15 +47,15 @@ class forgotPassowrd extends StatelessWidget {
                     ],
                   ),
                   SpacingHeight.heightlistspacing15,
-                  const Center(
-                    child: Text("Forgot password?",
+                   Center(
+                    child: Text("forgot_password".tr,
                         textAlign: TextAlign.center,
                         style: UIDataTextStyles.h1),
                   ),
                   SpacingHeight.heightlistspacing15,
-                  const Center(
+                   Center(
                     child: Text(
-                        "Enter your recovery phone number or email address",
+                        "forgot_password_text".tr,
                         textAlign: TextAlign.center,
                         style: UIDataTextStyles.title),
                   ),
@@ -65,8 +65,8 @@ class forgotPassowrd extends StatelessWidget {
                     child: CommonTextField(
                       //
                       controller: _.phoneController,
-                      hintText: 'Your Email or Mobile Number',
-                      labelText: "Email or Phone",
+                      hintText: 'user_number_hint_signin'.tr,
+                      labelText: "emailpassword_hint_signin".tr,
                       prefixIcon: UIDATAIcons.userIcon,
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
@@ -74,7 +74,7 @@ class forgotPassowrd extends StatelessWidget {
                       validator: (val) {
                         // bool email = _.emailRegex.hasMatch(val);
                         if (val.isEmpty) {
-                          return "Please enter your email or phone";
+                          return "enter_email_phone".tr;
                         }
                         // else if (!email) {
                         //   return "Please enter valid email address";
@@ -89,7 +89,7 @@ class forgotPassowrd extends StatelessWidget {
                           child: CircularProgressIndicator(),
                         ))
                       : BorderButton(
-                          btntxt: "Reset password",
+                          btntxt: "forgot_password_button_reset".tr,
                           borderColor: UIDataColors.primaryColor,
                           backEndColor: Colors.white,
                           buttontxtColor: UIDataColors.primaryColor,
@@ -104,7 +104,7 @@ class forgotPassowrd extends StatelessWidget {
                       onTap: () {
                         Get.to(() => const LoginScreen());
                       },
-                      child: Text("Back To Login Page",
+                      child: Text("forgot_password_backtologin".tr,
                           style: UIDataTextStyles.title
                               .copyWith(color: UIDataColors.primaryColor))),
                   SpacingHeight.heightlistspacing15,

@@ -64,7 +64,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         keyboardType: TextInputType.text,
                         validator: (val) {
                           if (val.isEmpty) {
-                            return "Please enter your business name";
+                            return "business_name_validation".tr;
                           }
                         },
                       ),
@@ -77,7 +77,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         keyboardType: TextInputType.text,
                         validator: (val) {
                           if (val.isEmpty) {
-                            return "Please enter your full name";
+                            return "full_name_validation".tr;
                           }
                         },
                       ),
@@ -91,9 +91,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         validator: (val) {
                           bool email = _.emailRegex.hasMatch(val);
                           if (val.isEmpty) {
-                            return "Please enter your email";
+                            return "email_validation".tr;
                           } else if (!email) {
-                            return "Please enter valid email address";
+                            return "valid_email_validation".tr;
                           }
                         },
                       ),
@@ -120,12 +120,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         validator: (val) {
                           String? name;
                           if (val.isEmpty || val.length < 12) {
-                            return "Please enter valid phone number";
+                            return "valid_phone".tr;
                           } else if (val.isNotEmpty && val.length > 3) {
                             name = val.substring(0, 3);
 
                             if (name != "971") {
-                              return "Phone number must start with 971";
+                              return "valid_phone_971".tr;
                             }
                           } else {
                             return null;
@@ -149,7 +149,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         isTextHidden: _.passwordSecuretext,
                         validator: (val) {
                           if (val.isEmpty) {
-                            return "Password should not be blank";
+                            return "password_blank".tr;
                           }
                         },
                       ),
@@ -171,9 +171,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         isTextHidden: _.confirmPasswordSecuretext,
                         validator: (val) {
                           if (val.isEmpty) {
-                            return "Password should not be blank";
+                            return "password_blank".tr;
                           } else if (val != _.passwordController.text) {
-                            return "Both passwords should be same";
+                            return "password_confirmation_error".tr;
                           }
                         },
                       ),
@@ -181,7 +181,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           label: "signup_city".tr,
                           validator: (value) {
                             if (value == null) {
-                              return "Please select city";
+                              return "valid_city".tr;
                             }
                           },
                           prefixIcon: UIDATAIcons.location,
@@ -200,7 +200,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         keyboardType: TextInputType.emailAddress,
                         validator: (val) {
                           if (val.isEmpty) {
-                            return "Please enter your Address";
+                            return "valid_address".tr;
                           }
                         },
                       ),
@@ -320,8 +320,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               if (_.isAgree) {
                                 _.signupMethod();
                               } else {
-                                exceptionDialog("Alert",
-                                    "Please agree to Santra's terms and conditions before you signup");
+                                exceptionDialog("alert".tr,
+                                    "agree_terms".tr);
                               }
                             },
                           ),
@@ -335,7 +335,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             onTap: () {
                               Get.offAll(() => const LoginScreen());
                             },
-                            child: Text("Sign In",
+                            child: Text("sign_in".tr,
                                 style: UIDataTextStyles.title.copyWith(
                                     color: UIDataColors.primaryColor)))
                       ],

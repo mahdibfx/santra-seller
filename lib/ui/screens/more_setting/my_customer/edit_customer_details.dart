@@ -57,7 +57,7 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
                       keyboardType: TextInputType.text,
                       validator: (val) {
                         if (val.isEmpty) {
-                          return "Please enter full name";
+                          return "full_name_validation".tr;
                         } else if (val == null) {
                           return "Please enter valid name";
                         } else {
@@ -87,12 +87,12 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
                       validator: (val) {
                         String? name;
                         if (val.isEmpty || val.length < 12) {
-                          return "Please Enter Valid Phone Number";
+                          return "valid_phone".tr;
                         } else if (val.isNotEmpty && val.length > 3) {
                           name = val.substring(0, 3);
 
                           if (name != "971") {
-                            return "Phone Number Must Start With 971";
+                            return "valid_phone".tr;
                           }
                         } else {
                           return null;

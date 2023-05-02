@@ -209,7 +209,7 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
                         child: SizedBox(
                             child: Row(
                           children: [
-                            Text('Back'),
+                            Text('signup_back'.tr),
                             SpacingWidth.widthlistspacing5,
                             SvgPicture.asset(
                               UIDATAIcons.forwardArrow,

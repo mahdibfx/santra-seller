@@ -81,7 +81,7 @@ class VoucherCodeFormField extends StatelessWidget {
                                         cartController.promoDiscount();
                                       }
                                     },
-                                    child: const Text("Submit",
+                                    child:  Text("change_password_save_button".tr,
                                         style: TextStyle(
                                             color: UIDataColors.primaryColor,
                                             fontFamily: "Markpro")))),

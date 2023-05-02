@@ -46,12 +46,12 @@ class DeleteAccountConfirmation extends StatelessWidget {
                       isTextHidden: false,
                       fillcolor: Colors.white,
                       keyboardType: TextInputType.phone,
-                      labelText: "OTP",
+                      labelText: "otp".tr,
                       maxLength: 6,
                       controller: _.otpController,
                       validator: (val) {
                         if (val.isEmpty) {
-                          return "Please Enter 6 Digits OTP Code";
+                          return "otp_confirmation".tr;
                         } else if (_.otpController.text.toString() !=
                             _.otpCode.toString()) {
                           return "Incorrect OTP Code";

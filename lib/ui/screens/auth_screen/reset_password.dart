@@ -46,10 +46,10 @@ class _ResetPasswordAfterConfirmationState
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Santra",
+                      Text("santra".tr,
                           style: UIDataTextStyles.h1
                               .copyWith(fontSize: 30, letterSpacing: 2)),
-                      Text("Seller",
+                      Text("seller".tr,
                           style: UIDataTextStyles.h1.copyWith(
                               fontSize: 20,
                               letterSpacing: 2,
@@ -57,8 +57,8 @@ class _ResetPasswordAfterConfirmationState
                     ],
                   ),
                   SpacingHeight.heightlistspacing15,
-                  const Center(
-                    child: Text("Set a New Password",
+                   Center(
+                    child: Text("set_new_password".tr,
                         textAlign: TextAlign.center,
                         style: UIDataTextStyles.h1),
                   ),
@@ -70,7 +70,7 @@ class _ResetPasswordAfterConfirmationState
                       children: [
                         CommonTextField(
                           controller: _.newPasswordController,
-                          labelText: "New Password",
+                          labelText: "change_password_new".tr,
                           isTextHidden: _.newPasswordSecuretext,
                           fillcolor: UIDataColors.whiteColor,
                           keyboardType: TextInputType.text,
@@ -85,7 +85,7 @@ class _ResetPasswordAfterConfirmationState
                           },
                           validator: (val) {
                             if (val.isEmpty) {
-                              return "Please enter your new password";
+                              return "enter_password".tr;
                             } else {
                               return null;
                             }
@@ -94,7 +94,7 @@ class _ResetPasswordAfterConfirmationState
                         SpacingHeight.heightlistspacing5,
                         CommonTextField(
                           controller: _.confirmNewPasswordController,
-                          labelText: "Confirm New Password",
+                          labelText: "change_password_new_confirm".tr,
                           isTextHidden: _.confirmPasswordSecuretext,
                           fillcolor: UIDataColors.whiteColor,
                           keyboardType: TextInputType.text,
@@ -110,9 +110,9 @@ class _ResetPasswordAfterConfirmationState
                           },
                           validator: (val) {
                             if (val.isEmpty) {
-                              return "Please enter your new password";
+                              return "enter_password".tr;
                             } else if (val != _.newPasswordController.text) {
-                              return "Both passwords should be same";
+                              return "password_confirmation_error".tr;
                             }
                           },
                         ),
@@ -126,7 +126,7 @@ class _ResetPasswordAfterConfirmationState
                           child: CircularProgressIndicator(),
                         )
                       : BorderButton(
-                          btntxt: "Reset Password",
+                          btntxt: "reset_password".tr,
                           backEndColor: Colors.white,
                           borderColor: UIDataColors.primaryColor,
                           buttontxtColor: UIDataColors.primaryColor,

@@ -55,7 +55,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
                         keyboardType: TextInputType.text,
                         validator: (val) {
                           if (val.isEmpty) {
-                            return "Please enter your email";
+                            return "email_validation".tr;
                           } else {
                             return null;
                           }
@@ -72,9 +72,9 @@ class _ChangeEmailState extends State<ChangeEmail> {
                       validator: (val) {
                         bool email = _.emailRegex.hasMatch(val);
                         if (val.isEmpty) {
-                          return "Please enter your email";
+                          return "email_validation".tr;
                         } else if (!email) {
-                          return "Please enter valid email address";
+                          return "valid_email_validation".tr;
                         } else {
                           return null;
                         }
@@ -91,9 +91,9 @@ class _ChangeEmailState extends State<ChangeEmail> {
                       validator: (val) {
                         bool email = _.emailRegex.hasMatch(val);
                         if (val.isEmpty) {
-                          return "Please enter your email";
+                          return "email_validation".tr;
                         } else if (!email) {
-                          return "Please enter valid email address";
+                          return "valid_email_validation".tr;
                         } else {
                           return null;
                         }
@@ -117,7 +117,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
                       },
                       validator: (val) {
                         if (val.isEmpty) {
-                          return "Please enter your password";
+                          return "enter_password".tr;
                         } else {
                           return null;
                         }
@@ -129,7 +129,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
                             child: CircularProgressIndicator(),
                           )
                         : PrimaryButtonWithIcon(
-                            btntxt: "Submit",
+                            btntxt: "change_email_save_button".tr,
                             iconImage: UIDATAIcons.sendIcon,
                             onPressed: () {
                               _.updateEmail();

@@ -78,7 +78,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                       },
                       validator: (val) {
                         if (val.isEmpty) {
-                          return "please enter your new password";
+                          return "enter_password".tr;
                         } else {
                           return null;
                         }
@@ -103,7 +103,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                       },
                       validator: (val) {
                         if (val.isEmpty) {
-                          return "please enter new password again";
+                          return "password_confirmation_error".tr;
                         } else {
                           return null;
                         }

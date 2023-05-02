@@ -223,7 +223,7 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                         child: SizedBox(
                             child: Row(
                           children: [
-                            const Text('Back'),
+                             Text('signup_back'.tr),
                             SpacingWidth.widthlistspacing5,
                             SvgPicture.asset(
                               UIDATAIcons.forwardArrow,

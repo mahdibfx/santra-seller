@@ -37,10 +37,10 @@ class ForgotPasswordConfirmation extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Santra",
+                      Text("santra".tr,
                           style: UIDataTextStyles.h1
                               .copyWith(fontSize: 30, letterSpacing: 2)),
-                      Text("Seller",
+                      Text("seller".tr,
                           style: UIDataTextStyles.h1.copyWith(
                               fontSize: 20,
                               letterSpacing: 2,
@@ -48,15 +48,15 @@ class ForgotPasswordConfirmation extends StatelessWidget {
                     ],
                   ),
                   SpacingHeight.heightlistspacing15,
-                  const Center(
-                    child: Text("Check Your Email Or Phone",
+                   Center(
+                    child: Text("forgot_password_otp_text".tr,
                         textAlign: TextAlign.center,
                         style: UIDataTextStyles.h1),
                   ),
                   SpacingHeight.heightlistspacing15,
-                  const Center(
+                   Center(
                     child: Text(
-                        "Please enter 6 Digit OTP code we have just sent you",
+                        "forgot_password_otp_text2".tr,
                         textAlign: TextAlign.center,
                         style: UIDataTextStyles.title),
                   ),
@@ -68,12 +68,12 @@ class ForgotPasswordConfirmation extends StatelessWidget {
                       isTextHidden: false,
                       fillcolor: Colors.white,
                       keyboardType: TextInputType.phone,
-                      labelText: "OTP",
+                      labelText: "otp".tr,
                       maxLength: 6,
                       controller: _.otpController,
                       validator: (val) {
                         if (val.isEmpty) {
-                          return "Please Enter 6 Digits OTP Code";
+                          return "otp_confirmation".tr;
                         } else if (_.otpController.text.toString() !=
                             _.otpCode.toString()) {
                           return "Incorrect OTP Code";
@@ -86,7 +86,7 @@ class ForgotPasswordConfirmation extends StatelessWidget {
 
                   SpacingHeight.heightlistspacing5,
                   BorderButton(
-                    btntxt: "Verify",
+                    btntxt: "forgot_password_verify".tr,
                     backEndColor: Colors.white,
                     borderColor: UIDataColors.primaryColor,
                     buttontxtColor: UIDataColors.primaryColor,
