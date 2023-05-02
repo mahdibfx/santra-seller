@@ -48,7 +48,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
                       ignoring: true,
                       child: CommonTextField(
                         controller: _.currentEmailController,
-                        labelText: "Current Email",
+                        labelText: "setting_email".tr,
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
                         prefixIcon: UIDATAIcons.emailIcon,
@@ -64,7 +64,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
                     ),
                     CommonTextField(
                       controller: _.emailController,
-                      labelText: "New Email",
+                      labelText: "setting_new_email".tr,
                       prefixIcon: UIDATAIcons.emailIcon,
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
@@ -83,7 +83,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
                     SpacingHeight.heightlistspacing5,
                     CommonTextField(
                       controller: _.confirmeEmailController,
-                      labelText: "Confirm Email",
+                      labelText: "setting_confirm_email".tr,
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
                       prefixIcon: UIDATAIcons.emailIcon,

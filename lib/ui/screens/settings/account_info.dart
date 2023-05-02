@@ -48,7 +48,7 @@ class _AccountInfoState extends State<AccountInfo> {
 
                     CommonTextField(
                       controller: _.emailController,
-                      labelText: "Number",
+                      labelText: "setting_account_number".tr,
                       inputFormatters: [_.phoneMask],
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
@@ -65,7 +65,7 @@ class _AccountInfoState extends State<AccountInfo> {
                     SpacingHeight.heightlistspacing5,
                     CommonTextField(
                       controller: _.fNameController,
-                      labelText: "Business Name",
+                      labelText: "setting_account_business".tr,
                       isTextHidden: false,
                       prefixIcon: UIDATAIcons.businessIcon,
                       fillcolor: UIDataColors.whiteColor,
@@ -81,7 +81,7 @@ class _AccountInfoState extends State<AccountInfo> {
                     SpacingHeight.heightlistspacing5,
                     CommonTextField(
                       controller: _.lNameController,
-                      labelText: "Contact Person",
+                      labelText: "setting_account_contact".tr,
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
                       prefixIcon: UIDATAIcons.userIcon,

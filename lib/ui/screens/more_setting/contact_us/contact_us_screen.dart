@@ -26,7 +26,7 @@ class ContactUsScreen extends StatelessWidget {
             children: [
               HeadingWithIcon(
                   icon: UIDATAIcons.orderRemarks,
-                  btntxt: "Contact Customer Service"),
+                  btntxt: "side_menu__contact_signin".tr),
               Form(
                 key: form,
                 child: Column(
@@ -142,16 +142,16 @@ class ContactUsScreen extends StatelessWidget {
                 style: UIDataTextStyles.title,
               ),
               SpacingHeight.heightlistspacing5,
-              const Text(
-                'Office# 154 D-Tech',
+               Text(
+                'conatct_us_email_address_text_1'.tr,
                 style: UIDataTextStyles.title,
               ),
-              const Text(
-                'Dubai Silicon Oasis- Dubai',
+               Text(
+                'conatct_us_email_address_text_2'.tr,
                 style: UIDataTextStyles.title,
               ),
-              const Text(
-                'United Arab Emirates',
+               Text(
+                'conatct_us_email_address_text_3'.tr,
                 style: UIDataTextStyles.title,
               ),
               SpacingHeight.heightlistspacing50

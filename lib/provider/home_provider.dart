@@ -433,21 +433,21 @@ class HomeProvider extends ChangeNotifier {
   String getStatus(String status) {
     switch (status.toLowerCase()) {
       case 'new_order':
-        return 'New Order';
+        return 'status_new_order'.tr;
       case 'payment_pending':
-        return 'Pending Payment';
+        return 'status_pending_payment'.tr;
       case 'assigned_3pl':
-        return 'Pending Delivery';
+        return 'status_pending_delivery'.tr;
       case 'devliered':
-        return 'Delivered';
+        return 'status_delivered'.tr;
       case 'canceled':
-        return 'Cancelled';
+        return 'status_canceled_order'.tr;
       case 'rejected':
-        return 'Rejected';
+        return 'status_rejected'.tr;
       case 'accepted':
-        return 'Accepted';
+        return 'status_accepted'.tr;
       case 'order_ready':
-        return 'Order Ready';
+        return 'status_ready'.tr;
       default:
         return status;
     }

@@ -84,10 +84,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Santra",
+                          Text("santra".tr,
                               style: UIDataTextStyles.h1
                                   .copyWith(fontSize: 30, letterSpacing: 2)),
-                          Text("Seller",
+                          Text("seller".tr,
                               style: UIDataTextStyles.h1.copyWith(
                                   fontSize: 20,
                                   letterSpacing: 2,

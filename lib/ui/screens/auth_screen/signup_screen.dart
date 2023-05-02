@@ -53,11 +53,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     HeadingWithIcon(
                         icon: UIDATAIcons.userIcon,
                         iconColor: UIDataColors.primaryColor,
-                        btntxt: "Create a New Acccount"),
+                        btntxt: "signup_title".tr),
                     Column(children: [
                       CommonTextField(
                         controller: _.businessController,
-                        labelText: "Business Name",
+                        labelText: "signup_business".tr,
                         prefixIcon: UIDATAIcons.dashboardIcon,
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
@@ -71,7 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       CommonTextField(
                         controller: _.fullNameController,
                         prefixIcon: UIDATAIcons.userIcon,
-                        labelText: "Full Name",
+                        labelText: "signup_fullname".tr,
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
                         keyboardType: TextInputType.text,
@@ -83,7 +83,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       CommonTextField(
                         controller: _.emailController,
-                        labelText: "Email",
+                        labelText: "signup_email".tr,
                         prefixIcon: UIDATAIcons.emailIcon,
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
@@ -100,7 +100,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       CommonTextField(
                         controller: _.phoneController,
                         prefixIcon: UIDATAIcons.callIcon,
-                        labelText: "Mobile",
+                        labelText: "signup_mobile".tr,
                         inputFormatters: [_.phoneMask],
                         isTextHidden: false,
                         hintText: "Ex: 501234567",
@@ -134,7 +134,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       CommonTextField(
                         controller: _.passwordController,
-                        labelText: 'Password'.tr,
+                        labelText: 'signup_password'.tr,
                         prefixIcon: UIDATAIcons.lockIcon,
                         keyboardType: TextInputType.text,
                         fillcolor: UIDataColors.whiteColor,
@@ -155,7 +155,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       CommonTextField(
                         controller: _.conformPasswordController,
-                        labelText: 'Confirm Password'.tr,
+                        labelText: 'signup_cpassword'.tr,
                         prefixIcon: UIDATAIcons.lockIcon,
                         keyboardType: TextInputType.text,
                         fillcolor: UIDataColors.whiteColor,
@@ -178,7 +178,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         },
                       ),
                       MyDropdown(
-                          label: "City",
+                          label: "signup_city".tr,
                           validator: (value) {
                             if (value == null) {
                               return "Please select city";
@@ -193,7 +193,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       SpacingHeight.heightlistspacing5,
                       CommonTextField(
                         controller: _.addressController,
-                        labelText: 'Address'.tr,
+                        labelText: 'signup_address'.tr,
                         prefixIcon: UIDATAIcons.locationPin,
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
@@ -241,8 +241,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
-                                            const Text(
-                                              "Terms & Conditions",
+                                             Text(
+                                              "signup_agree_link".tr,
                                               style: TextStyle(
                                                   fontSize: 17,
                                                   fontWeight: FontWeight.bold),
@@ -259,7 +259,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               padding:
                                                   const EdgeInsets.all(8.0),
                                               child: PrimaryButtonWithIcon(
-                                                btntxt: "Accept",
+                                                btntxt: "button_accept".tr,
                                                 onPressed: () {
                                                   Get.back();
                                                   _.changeIsAgree(true);
@@ -273,7 +273,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 borderColor: Colors.red,
                                                 buttontxtColor: Colors.red,
                                                 backEndColor: Colors.white,
-                                                btntxt: "Reject",
+                                                btntxt: "button_reject".tr,
                                                 onPressed: () {
                                                   Get.back();
                                                   _.changeIsAgree(false);
@@ -288,14 +288,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 });
                           },
                           child: Row(
-                            children: const [
-                              Text("I agree ",
+                            children:  [
+                              Text("signup_agree".tr,
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontFamily: 'Markpro',
                                     fontWeight: FontWeight.w600,
                                   )),
-                              Text("Terms and Conditions ",
+                              Text("signup_agree_link".tr,
                                   style: TextStyle(
                                     fontSize: 15,
                                     color: UIDataColors.primaryColor,
@@ -314,7 +314,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             child: CircularProgressIndicator(),
                           ))
                         : PrimaryButtonWithIcon(
-                            btntxt: "Sign Up",
+                            btntxt: "button_signup".tr,
                             iconImage: UIDATAIcons.signupIcon,
                             onPressed: () {
                               if (_.isAgree) {
@@ -329,7 +329,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text("Already have an account ?",
+                         Text("question_signup".tr,
                             style: UIDataTextStyles.title),
                         GestureDetector(
                             onTap: () {
