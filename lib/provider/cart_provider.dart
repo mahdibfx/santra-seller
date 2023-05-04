@@ -212,7 +212,7 @@ class CartProvider extends ChangeNotifier {
         generalException();
       }
     } catch (e) {
-      exceptionDialog("Oops", "Something went wrong");
+      exceptionDialog("oops_message".tr, "went_wrong".tr);
     }
     changeCartLoadingState(false);
   }
@@ -252,14 +252,14 @@ class CartProvider extends ChangeNotifier {
         var data = jsonDecode(response.body);
         String msg = data['data']['message'].toString();
 
-        exceptionDialog("Oops", msg);
+        exceptionDialog("oops_message".tr, msg);
       }
     } catch (e) {
       if (kDebugMode) {
         print(e);
       }
 
-      Get.snackbar("Oops", "An unknown error occured");
+      Get.snackbar("oops_message".tr, "went_wrong".tr);
     }
     changeDiscountLoadingState(false);
     notifyListeners();

@@ -30,9 +30,9 @@ class SplashProvider extends ChangeNotifier {
     forceUpdate().then((value) {
       if (updateAvailable == true) {
         customOntapDialog(
-            "New Update",
-            "New critical update available, please update before you continue",
-            "Update", () {
+            "New Update".tr,
+            "update_message_popup".tr,
+            "update_message".tr, () {
           goToStore();
         });
       } else {
@@ -115,12 +115,12 @@ class SplashProvider extends ChangeNotifier {
         }
       } else {
         setLoadingState(false);
-        Get.snackbar("Oops", "Something went wrong!");
+        Get.snackbar("oops_message".tr, "something_wrong_message".tr);
       }
     } catch (e) {
       setLoadingState(false);
-      Get.snackbar("Oops",
-          "Something went wrong!, Please Check Your Internet Connection");
+      Get.snackbar("oops_message".tr,
+          "something_wrong_message".tr);
     }
     notifyListeners();
   }

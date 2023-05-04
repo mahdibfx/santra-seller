@@ -26,7 +26,7 @@ class PaymentLinkBottomSheet extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Create a payment link:",
+              Text("cart_payment_link".tr,
                   style: UIDataTextStyles.textMedium),
               SizedBox(
                 width: 32,

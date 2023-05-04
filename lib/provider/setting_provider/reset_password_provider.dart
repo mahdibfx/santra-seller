@@ -23,8 +23,8 @@ class ResetPasswordProvider with ChangeNotifier {
   Future updatePassword() async {
     if (form.currentState!.validate()) {
       if (newPasswordController.text != confirmNewPasswordController.text) {
-        exceptionDialog("No Match!",
-            "Please Enter Same Password in new password and confirm new password");
+        exceptionDialog("no_match".tr,
+            "enter_same_password".tr);
       } else {
         try {
           changeUpdatePassLoadingState(true);

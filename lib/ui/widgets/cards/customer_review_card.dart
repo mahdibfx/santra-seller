@@ -42,7 +42,7 @@ class CustomerReviewCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "Order No. $orderNumber",
+                      "${'order_number'.tr} $orderNumber",
                       style: UIDataTextStyles.h2.copyWith(fontSize: 13),
                       overflow: TextOverflow.ellipsis,
                     ),

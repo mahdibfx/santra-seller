@@ -70,12 +70,12 @@ class VoucherCodeFormField extends StatelessWidget {
                                 child: TextButton(
                                     onPressed: () {
                                       if (cartController.voucherCode == null) {
-                                        exceptionDialog("No Voucher Code",
-                                            "Please enter valid voucher code");
+                                        exceptionDialog("voucher_code".tr,
+                                            "valid_voucher".tr);
                                       } else if (cartController.promoValid) {
                                         exceptionDialog(
-                                            "Already Applied",
-                                            "Voucher Has Already Been Applied"
+                                            "already_applied".tr,
+                                            "voucher_applied".tr
                                                 .capitalize!);
                                       } else {
                                         cartController.promoDiscount();
@@ -89,7 +89,7 @@ class VoucherCodeFormField extends StatelessWidget {
                           fillColor: Colors.white,
                           filled: true,
                           // hintText: value.voucherCode,
-                          label: Text("Add Voucher Code",
+                          label: Text("add_voucher_code".tr,
                               style: TextStyle(
                                   color: Colors.grey.shade600, fontSize: 15)),
                           border: OutlineInputBorder(

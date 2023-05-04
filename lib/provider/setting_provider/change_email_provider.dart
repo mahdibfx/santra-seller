@@ -30,8 +30,8 @@ class ChangeEmailProvider extends ChangeNotifier {
   Future updateEmail() async {
     if (form.currentState!.validate()) {
       if (emailController.text != confirmeEmailController.text) {
-        exceptionDialog("No Match!",
-            "Please Enter Same Email in new email and confirm email fields");
+        exceptionDialog("no_match".tr,
+            "same_email_message".tr);
       } else {
         try {
           isUpdateEmailLoading = true;
@@ -50,14 +50,14 @@ class ChangeEmailProvider extends ChangeNotifier {
           var response = await http.Response.fromStream(streamedResponse);
           if (response.statusCode == 200) {
             customOntapDialog(
-                "Success", "You email Has Been Successfully Updated!", "Okay",
+                "success_message".tr, "Your email Has Been Successfully Updated!", "Okay",
                 () {
               Get.back();
               Get.back();
               // Get.offNamed(Routes.settings);
             });
           } else {
-            customOntapDialog("Failed", "Failed to update email", "Okay", () {
+            customOntapDialog("failed_message".tr, "Failed to update email", "Okay", () {
               Get.back();
             });
           }

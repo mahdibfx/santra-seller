@@ -69,7 +69,7 @@ class DeleteAccountProvider with ChangeNotifier {
           //  Get.toNamed(Routes.deleteAccountConfirmation);
         } else {
           exceptionDialog(
-              "Oops", "Something went wrong, you may try again in a while");
+              "oops_message".tr, "went_wrong_while".tr);
           print(response.body);
         }
       } catch (err) {

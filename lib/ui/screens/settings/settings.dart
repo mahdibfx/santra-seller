@@ -88,10 +88,10 @@ class _SettingsState extends State<Settings> {
                     onPressed: () {
                       customOntapDialogTwoButtons(
                           context,
-                          "Logout",
-                          "Are You Sure You Want To Logout?",
+                          "setting_logout".tr,
+                          "logout_message".tr,
                           "button_cancel".tr,
-                          "Logout", () {
+                          "setting_logout".tr, () {
                         Get.back();
                       }, () {
                         Get.back();

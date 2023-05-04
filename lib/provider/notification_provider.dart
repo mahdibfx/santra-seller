@@ -6,6 +6,7 @@ import '../../ui/widgets/snackbar/common_snackbar.dart';
 import '../../utils/api_data.dart';
 import '../../utils/uidata.dart';
 import '../models/notification/notification_model.dart';
+import 'package:get/get.dart';
 
 class NotificationProvider extends ChangeNotifier {
   bool isLoading = false;
@@ -48,15 +49,15 @@ class NotificationProvider extends ChangeNotifier {
         isLoading = false;
         notifyListeners();
         print(res.body);
-        CommonSnackbar.getSnackbar("Error", "Error ", UIDataColors.redColor);
+        CommonSnackbar.getSnackbar("error_message".tr, "error_message".tr, UIDataColors.redColor);
       }
     } catch (e) {
       isLoading = false;
       notifyListeners();
 
       CommonSnackbar.getSnackbar(
-          "Server Error",
-          "Server Error or Please Check your internet connection",
+          "serve_error".tr,
+          "something_wrong_message".tr,
           UIDataColors.redColor);
     }
 

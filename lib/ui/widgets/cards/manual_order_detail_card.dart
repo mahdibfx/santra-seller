@@ -111,7 +111,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                       ),
                       SpacingWidth.widthlistspacing,
                       Text(
-                        'Order No. ${widget.orderNumber}',
+                        '${'order_number'.tr} ${widget.orderNumber}',
                         style: UIDataTextStyles.h2.copyWith(fontSize: 12),
                       ),
                       const Spacer(),
@@ -290,7 +290,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                 UIDataColors.primaryColor,
                               ],
                             ),
-                            btntxt: "Ready Order",
+                            btntxt: "ready_order".tr,
                             iconImage: SvgPicture.asset(
                               UIDATAIcons.sendIcon,
                               height: 25,
@@ -299,7 +299,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                             ),
                             buttontxtColor: UIDataColors.whiteColor,
                             onPressed: () {
-                              confirmationPopup("Are you sure?", context, () {
+                              confirmationPopup("sure_message".tr, context, () {
                                 _.readyOrderMethod(widget.orderNumber);
                               });
                             },

@@ -96,11 +96,11 @@ class SignUpProvider extends ChangeNotifier {
         print(citiesList);
       } else {
         CommonSnackbar.getSnackbar(
-            "Failed", "Unable to load cities list", UIDataColors.redColor);
+            "oops_message".tr, "error_load_data".tr, UIDataColors.redColor);
       }
     } catch (e) {
-      CommonSnackbar.getSnackbar("Error",
-          "Error while loading data, Please try again", UIDataColors.redColor);
+      CommonSnackbar.getSnackbar("oops_message".tr,
+          "error_load_data".tr, UIDataColors.redColor);
     }
   }
 
@@ -135,12 +135,12 @@ class SignUpProvider extends ChangeNotifier {
           Get.offAll(() => const LoginScreen());
         } else if (response.statusCode == 430) {
           CommonSnackbar.getSnackbar(
-              "Error", "User already registered", UIDataColors.primaryColor);
+              "oops_message".tr, "alread_registered".tr, UIDataColors.primaryColor);
         } else {
           notifyListeners();
           CommonSnackbar.getSnackbar(
-              "Error",
-              "Error while signing up, Please try again",
+              "error_message".tr,
+              "something_wrong_message".tr,
               UIDataColors.redColor);
         }
       } catch (e) {
@@ -148,8 +148,8 @@ class SignUpProvider extends ChangeNotifier {
         notifyListeners();
 
         CommonSnackbar.getSnackbar(
-            "Server Error",
-            "Server Error or Please Check your internet connection",
+            "error_message".tr,
+            "something_wrong_message".tr,
             UIDataColors.redColor);
       }
     }

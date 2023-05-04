@@ -72,7 +72,7 @@ class _AccountInfoState extends State<AccountInfo> {
                       keyboardType: TextInputType.text,
                       validator: (val) {
                         if (val.isEmpty) {
-                          return "please enter your first name";
+                          return "enter_first_name".tr;
                         } else {
                           return null;
                         }
@@ -88,7 +88,7 @@ class _AccountInfoState extends State<AccountInfo> {
                       keyboardType: TextInputType.text,
                       validator: (val) {
                         if (val.isEmpty) {
-                          return "please enter your last name";
+                          return "enter_last_name".tr;
                         } else {
                           return null;
                         }

@@ -60,7 +60,7 @@ class _CartScreenState extends State<CartScreen> {
                               children: [
                                 HeadingWithIcon(
                                     icon: UIDATAIcons.cartHallowIcon,
-                                    btntxt: "Cart"),
+                                    btntxt: "cart_title".tr),
                                 Container(
                                     decoration: BoxDecoration(
                                       color: Colors.white,
@@ -127,7 +127,7 @@ class _CartScreenState extends State<CartScreen> {
                                     children: [
                                       HeadingWithIcon(
                                         icon: UIDATAIcons.calendarIcon,
-                                        btntxt: "Delivery Date",
+                                        btntxt: "cart_delivery_date".tr,
                                         iconColor: UIDataColors.primaryColor,
                                       ).paddingSymmetric(horizontal: 20),
                                       CalendarDatePicker2(

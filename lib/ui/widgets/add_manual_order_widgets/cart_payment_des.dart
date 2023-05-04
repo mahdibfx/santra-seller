@@ -41,7 +41,7 @@ class CartPayemntDescriptionCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Order Details", style: UIDataTextStyles.textMedium)
+           Text("cart_order_details_text".tr, style: UIDataTextStyles.textMedium)
               .paddingAll(10),
           Container(
             padding: const EdgeInsets.only(top: 0.0, left: 10, right: 10),
@@ -52,7 +52,7 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const Text("Subtotal"),
+                       Text("cart_order_subtotal".tr),
                       const Spacer(),
                       Text("$subtotal AED"),
                     ],
@@ -67,7 +67,7 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const Text("Delivery Charge"),
+                       Text("cart_order_delivery_charge".tr),
                       const Spacer(),
                       Text("$deliveryCharges AED"),
                     ],
@@ -98,7 +98,7 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const Text("Total",
+                       Text("cart_order_total".tr,
                           style: UIDataTextStyles.textMediumColoredBlue),
                       const Spacer(),
                       Text("$total AED",
@@ -164,7 +164,7 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                           });
                     }
                   },
-                  btntxt: "Add Customer Details",
+                  btntxt: "add_customer_title".tr,
                 ).paddingOnly(
                   top: 20,
                 ),

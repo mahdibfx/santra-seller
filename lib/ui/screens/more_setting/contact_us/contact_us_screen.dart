@@ -102,7 +102,7 @@ class ContactUsScreen extends StatelessWidget {
                         keyboardType: TextInputType.emailAddress,
                         validator: (val) {
                           if (val.isEmpty) {
-                            return "Please enter your query";
+                            return "your_query".tr;
                           }
                         },
                       ),

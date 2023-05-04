@@ -21,7 +21,7 @@ class CustomDetailBottomSheet extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text("Add Customer Details:",
+               Text("add_customer_title".tr,
                   style: UIDataTextStyles.textMedium),
               SizedBox(
                 width: 32,
@@ -59,7 +59,7 @@ class CustomDetailBottomSheet extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 10, bottom: 20.0, left: 10),
             child: PrimaryButtonWithIcon(
-              btntxt: "New Customer",
+              btntxt: "new_customer_button".tr,
               backEndColor: UIDataColors.whiteColor,
               buttontxtColor: UIDataColors.primaryColor,
               iconImageColor: UIDataColors.primaryColor,

@@ -5,14 +5,14 @@ import 'package:santra_seller/utils/uidata/textStyles.dart';
 
 generalException() {
   Get.dialog(CupertinoAlertDialog(
-      title: const Text(
-        "Oops",
+      title:  Text(
+        "oops_message".tr,
         style: UIDataTextStyles.dialogTitle,
       ),
       content: Column(
-        children: const [
+        children:  [
           Text(
-            "An Unknown Error Occured. Please Try Again In a While",
+            "unknown_error".tr,
             style: UIDataTextStyles.dialogMsg,
           )
         ],

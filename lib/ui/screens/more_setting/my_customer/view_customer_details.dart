@@ -62,7 +62,7 @@ class ViewCustomerDetails extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  const Text("Choose the payment method",
+                   Text("cart_payment_method".tr,
                           style: UIDataTextStyles.dialogMsg)
                       .paddingOnly(top: 40, bottom: 10),
                   // Row(

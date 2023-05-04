@@ -54,7 +54,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                       isTextHidden: _.currentPasswordSecuretext,
                       validator: (val) {
                         if (val.isEmpty) {
-                          return "please enter your current password";
+                          return "enter_current_password".tr;
                         } else {
                           return null;
                         }

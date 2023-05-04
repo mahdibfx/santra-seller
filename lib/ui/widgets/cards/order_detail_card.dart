@@ -309,7 +309,7 @@ class _CustomCardState extends State<CustomCard>
                                 backEndColor: Colors.white,
                                 onPressed: () {
                                   showpopup(
-                                      'Are you sure you want to cancel order',
+                                      'cancel_order_message'.tr,
                                       () {
                                     Get.back();
                                     _.cancelOrdermethod(widget.orderNumber);
@@ -357,7 +357,7 @@ class _CustomCardState extends State<CustomCard>
                                     backEndColor: Colors.white,
                                     onPressed: () {
                                       showpopup(
-                                          'Are you sure you want to cancel',
+                                          'cancel_message'.tr,
                                           () {
                                         Get.back();
                                         _.cancelOrdermethod(widget.orderNumber);
@@ -402,13 +402,13 @@ class _CustomCardState extends State<CustomCard>
                                   child: BorderButton(
                                     height: 40,
                                     width: 140,
-                                    btntxt: 'Reject',
+                                    btntxt: 'button_reject'.tr,
                                     borderColor: Colors.red,
                                     buttontxtColor: Colors.red,
                                     backEndColor: Colors.white,
                                     onPressed: () {
                                       showpopup(
-                                          'Are you sure you want to reject',
+                                          'reject_message'.tr,
                                           () {
                                         Get.back();
                                         _.rejectOrderMethod(widget.orderNumber);
@@ -421,13 +421,13 @@ class _CustomCardState extends State<CustomCard>
                                   child: BorderButton(
                                     height: 40,
                                     width: 140,
-                                    btntxt: 'Accept',
+                                    btntxt: 'button_accept'.tr,
                                     borderColor: Colors.blue,
                                     buttontxtColor: Colors.white,
                                     // backEndColor: Colors.blue,
                                     onPressed: () {
                                       showpopup(
-                                          'Are you sure you want to accept',
+                                          'accept_message'.tr,
                                           () {
                                         Get.back();
                                         _.acceptOrdermethod(widget.orderNumber);

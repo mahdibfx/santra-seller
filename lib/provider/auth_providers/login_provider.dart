@@ -99,8 +99,8 @@ class LoginProvider extends ChangeNotifier {
       notifyListeners();
 
       CommonSnackbar.getSnackbar(
-          "Server Error",
-          "Server Error or Please Check your internet connection",
+          "serve_error".tr,
+          "serve_error_internet".tr,
           UIDataColors.redColor);
     }
 

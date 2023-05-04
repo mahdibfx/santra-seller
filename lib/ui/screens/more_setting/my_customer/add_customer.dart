@@ -145,10 +145,10 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                         Expanded(child: Consumer<SignUpProvider>(
                             builder: (context, signUpController, child) {
                           return MyDropdown(
-                              label: "City",
+                              label: "signup_city".tr,
                               validator: (value) {
                                 if (value == null) {
-                                  return "Please select city";
+                                  return "select_city".tr;
                                 }
                               },
                               prefixIcon: UIDATAIcons.location,
@@ -185,7 +185,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       keyboardType: TextInputType.text,
                       validator: (val) {
                         if (val.isEmpty) {
-                          return "Please enter building type";
+                          return "enter_building".tr;
                         }
                       },
                     ),
@@ -198,7 +198,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       keyboardType: TextInputType.text,
                       validator: (val) {
                         if (val.isEmpty) {
-                          return "Please enter address link";
+                          return "enter_address".tr;
                         }
                       },
                     ),
@@ -216,7 +216,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                                     Get.back();
                                     _.disposeValues();
                                   },
-                                  btntxt: "Cancel",
+                                  btntxt: "button_cancel".tr,
                                   iconImage: UIDATAIcons.close,
                                   iconColor: UIDataColors.primaryColor,
                                   buttontxtColor: UIDataColors.primaryColor,
@@ -232,7 +232,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                                       _.addCustomer();
                                     }
                                   },
-                                  btntxt: "Save",
+                                  btntxt: "account_info_save_button".tr,
                                   iconImage: UIDATAIcons.saveIcon,
                                 ),
                               ),

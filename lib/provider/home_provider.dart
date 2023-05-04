@@ -139,7 +139,7 @@ class HomeProvider extends ChangeNotifier {
       }
     } catch (e) {
       CommonSnackbar.getSnackbar(
-          "Oops", "Something went wrong", UIDataColors.redColor);
+          "oops_message".tr, "went_wrong".tr, UIDataColors.redColor);
     }
   }
 
@@ -181,16 +181,16 @@ class HomeProvider extends ChangeNotifier {
           notifyListeners();
           print(newOrderSantraCount);
         } else {
-          CommonSnackbar.getSnackbar("Error",
-              "Something Went Wrong, Please Try Again ", UIDataColors.redColor);
+          CommonSnackbar.getSnackbar("error_message".tr,
+              "something_wrong_message".tr, UIDataColors.redColor);
         }
       } catch (e) {
         isLoading = false;
         notifyListeners();
 
         CommonSnackbar.getSnackbar(
-            "Server Error",
-            "Server Error or Please Check your internet connection",
+            "serve_error".tr,
+            "serve_error_internet".tr,
             UIDataColors.redColor);
       }
     }
@@ -220,7 +220,7 @@ class HomeProvider extends ChangeNotifier {
     } catch (e) {
       notifyListeners();
       CommonSnackbar.getSnackbar(
-          "Oops", "Something went wrong", UIDataColors.redColor);
+          "oops_message".tr, "went_wrong".tr, UIDataColors.redColor);
     }
     updateCancelOrderLoading(false);
   }
@@ -249,7 +249,7 @@ class HomeProvider extends ChangeNotifier {
     } catch (e) {
       notifyListeners();
       CommonSnackbar.getSnackbar(
-          "Oops", "Something went wrong", UIDataColors.redColor);
+          "oops_message".tr, "went_wrong".tr, UIDataColors.redColor);
     }
     updateAcceptOrderLoading(false);
   }
@@ -268,7 +268,7 @@ class HomeProvider extends ChangeNotifier {
         notifyListeners();
 
         CommonSnackbar.getSnackbar(
-            "Rejected", "Order has been Rejected ", UIDataColors.primaryColor);
+            "status_rejected".tr, "Order has been Rejected ", UIDataColors.primaryColor);
         // Get.offAllNamed(Routes.homeRoutes);
         Get.offAll(() => const HomeScreen());
       } else {
@@ -281,7 +281,7 @@ class HomeProvider extends ChangeNotifier {
       notifyListeners();
 
       CommonSnackbar.getSnackbar(
-          "Oops", "Something went wrong", UIDataColors.redColor);
+          "oops_message".tr, "went_wrong".tr, UIDataColors.redColor);
     }
     updateRejectOrderLoading(false);
   }
@@ -297,7 +297,7 @@ class HomeProvider extends ChangeNotifier {
       body['order_number'] = orderNumber.toString();
       var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
-        CommonSnackbar.getSnackbar("Success", "Order has been marked as ready",
+        CommonSnackbar.getSnackbar("success_message".tr, "Order has been marked as ready",
             UIDataColors.primaryColor);
         Get.offAll(() => const HomeScreen());
       } else {
@@ -308,7 +308,7 @@ class HomeProvider extends ChangeNotifier {
       }
     } catch (e) {
       CommonSnackbar.getSnackbar(
-          "Oops", "Something went wrong", UIDataColors.redColor);
+          "oops_message".tr, "went_wrong".tr, UIDataColors.redColor);
     }
     updateOrderReadyLoading(false);
     notifyListeners();

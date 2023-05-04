@@ -38,8 +38,8 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
             : SafeArea(
                 child: SingleChildScrollView(
                     child: _.hasPrivacyError
-                        ? const Text(
-                            "Something Went Wrong, Please Try Again In a While")
+                        ?  Text(
+                            "went_wrong_while".tr)
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

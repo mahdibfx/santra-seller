@@ -30,8 +30,8 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
             : SafeArea(
                 child: SingleChildScrollView(
                     child: _.hasAboutUsError
-                        ? const Text(
-                            "Something Went Wrong, Please Try Again In a While")
+                        ?  Text(
+                            "went_wrong_while".tr)
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

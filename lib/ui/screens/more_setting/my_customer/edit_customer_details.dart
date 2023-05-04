@@ -59,7 +59,7 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
                         if (val.isEmpty) {
                           return "full_name_validation".tr;
                         } else if (val == null) {
-                          return "Please enter valid name";
+                          return "enter_valid_name".tr;
                         } else {
                           return null;
                         }
@@ -122,10 +122,10 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
                       children: [
                         Expanded(
                             child: MyDropdown(
-                                label: "City",
+                                label: "signup_city".tr,
                                 validator: (value) {
                                   if (value == null) {
-                                    return "Please select city";
+                                    return "select_city".tr;
                                   }
                                 },
                                 prefixIcon: UIDATAIcons.location,
@@ -161,7 +161,7 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
                       keyboardType: TextInputType.text,
                       validator: (val) {
                         if (val.isEmpty) {
-                          return "Please enter building type";
+                          return "enter_building".tr;
                         }
                       },
                     ),
@@ -174,7 +174,7 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
                       keyboardType: TextInputType.text,
                       validator: (val) {
                         if (val.isEmpty) {
-                          return "Please enter address link";
+                          return "enter_address".tr;
                         }
                       },
                     ),
@@ -192,7 +192,7 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
                                     Get.back();
                                     _.disposeValues();
                                   },
-                                  btntxt: "Cancel",
+                                  btntxt: "button_cancel".tr,
                                   iconImage: UIDATAIcons.close,
                                   iconColor: UIDataColors.primaryColor,
                                   buttontxtColor: UIDataColors.primaryColor,
@@ -209,7 +209,7 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
                                     }
                                     //   _.addCustomer();
                                   },
-                                  btntxt: "Save",
+                                  btntxt: "account_info_save_button".tr,
                                   iconImage: UIDATAIcons.saveIcon,
                                 ),
                               ),
