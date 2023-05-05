@@ -252,7 +252,7 @@ class _CustomCardState extends State<CustomCard>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text('Total Price',
+                      Text("total_price".tr,
                           style:
                               UIDataTextStyles.textMediumColoredBlue.copyWith(
                             color: UIDataColors.blackColor,
@@ -465,7 +465,7 @@ class _CustomCardState extends State<CustomCard>
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Confirmation"),
+          title:  Text("confirmation".tr),
           content: Text(statement),
           actions: [
             Container(

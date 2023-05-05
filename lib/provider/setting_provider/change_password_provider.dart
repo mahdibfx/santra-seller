@@ -49,14 +49,14 @@ class ChangePasswordProvider with ChangeNotifier {
           var response = await http.Response.fromStream(streamedResponse);
           if (response.statusCode == 200) {
             customOntapDialog("Success",
-                "You Password Has Been Successfully Updated!", "Okay", () {
+                "password_updated".tr, "okay".tr, () {
               resetControllers();
               Get.back();
               Get.back();
               // Get.offNamed(Routes.settings);
             });
           } else {
-            customOntapDialog("Failed", "Failed to update password", "Okay",
+            customOntapDialog("Failed", "failed_update_password".tr, "okay".tr,
                 () {
               Get.back();
             });

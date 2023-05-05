@@ -106,7 +106,7 @@ class HomeProvider extends ChangeNotifier {
       }
     } on SocketException catch (_) {
       customOntapDialog(
-          "No Internet", "Looks like you are not connected to internet", "Okay",
+          "No Internet", "Looks like you are not connected to internet", "okay".tr,
           () {
         Get.back();
       });
@@ -210,7 +210,7 @@ class HomeProvider extends ChangeNotifier {
         notifyListeners();
         // Get.snackbar("Accepted", "Order has been accepted");
         CommonSnackbar.getSnackbar(
-            "Cancelled", "Order has been cancelled", UIDataColors.primaryColor);
+            "cancelled".tr, "order_cancelled".tr, UIDataColors.primaryColor);
         Get.offAll(() => const HomeScreen());
         // Get.offAllNamed(Routes.homeRoutes);
       } else {
@@ -268,7 +268,7 @@ class HomeProvider extends ChangeNotifier {
         notifyListeners();
 
         CommonSnackbar.getSnackbar(
-            "status_rejected".tr, "Order has been Rejected ", UIDataColors.primaryColor);
+            "status_rejected".tr, "rejected_order".tr, UIDataColors.primaryColor);
         // Get.offAllNamed(Routes.homeRoutes);
         Get.offAll(() => const HomeScreen());
       } else {

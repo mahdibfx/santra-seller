@@ -60,8 +60,8 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                           Provider.of<HomeProvider>(context).sellerStatusNew !=
                                   "done"
                               ? () {
-                                  exceptionDialog("Not Approved!",
-                                      "Your status is not approved");
+                                  exceptionDialog("not_approved".tr,
+                                      "status_approved".tr);
                                 }
                               : () {
                                   Get.to(() => const AddCustomerScreen());
@@ -96,10 +96,10 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                                   customer: _.allFilterCustomers![index],
                                   name: _.allFilterCustomers?[index]
                                           .customerName ??
-                                      "No Name",
+                                      "no_name".tr,
                                   number: _.allFilterCustomers?[index]
                                           .customerMobile ??
-                                      "No Contact Number",
+                                      "no_contact".tr,
                                   forView: widget.comingFromCart,
                                 ).marginOnly(bottom: 17),
                               );

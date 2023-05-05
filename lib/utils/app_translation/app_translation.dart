@@ -12,8 +12,13 @@ class AppTranslations extends Translations {
 
   Future<String> language() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var selectedlanguage = prefs.get("selectedlanguage") as String;
-    return selectedlanguage;
+    var oldLang = prefs.get("selectedlanguage") ;
+    if(oldLang != null){
+      var selectedlanguage = prefs.get("selectedlanguage") as String;
+      return selectedlanguage;
+    }
+    
+    return 'en_us';
   }
 
   Future<bool> fetchTranslations() async {

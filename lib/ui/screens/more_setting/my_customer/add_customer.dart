@@ -162,14 +162,14 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                         Expanded(
                           child: CommonTextField(
                             controller: _.buildingController,
-                            labelText: "Building No.",
+                            labelText: "building_no".tr,
                             prefixIcon: UIDATAIcons.building,
                             isTextHidden: false,
                             fillcolor: UIDataColors.whiteColor,
                             keyboardType: TextInputType.text,
                             validator: (val) {
                               if (val.isEmpty) {
-                                return "Enter building#";
+                                return "enter_building_number".tr;
                               }
                             },
                           ),
@@ -178,7 +178,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                     ),
                     CommonTextField(
                       controller: _.aptController,
-                      labelText: "Apt/Villa",
+                      labelText: "apt_villa".tr,
                       prefixIcon: UIDATAIcons.homeIcon,
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
@@ -191,7 +191,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                     ),
                     CommonTextField(
                       controller: _.addressController,
-                      labelText: "Address Link",
+                      labelText: "address_link".tr,
                       prefixIcon: UIDATAIcons.locationPin,
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,

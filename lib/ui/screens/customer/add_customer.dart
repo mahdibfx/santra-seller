@@ -32,13 +32,13 @@ class CustomerScreen extends StatelessWidget {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: const [
+                      children:  [
                         Icon(
                           Icons.add,
                           size: 40,
                         ),
                         Text(
-                          'Add Manual Order',
+                          "manual_orders".tr,
                           style: UIDataTextStyles.h1,
                         ),
                       ],
@@ -46,7 +46,7 @@ class CustomerScreen extends StatelessWidget {
                     CommonTextField(
                       isTextHidden: false,
                       fillcolor: Colors.white,
-                      labelText: "Search",
+                      labelText: "search".tr,
                     ),
                     SpacingHeight.heightlistspacing10,
                     // const Text(
@@ -116,7 +116,7 @@ class CustomerScreen extends StatelessWidget {
                                                   itemBuilder:
                                                       (context, index) {
                                                     return CheckBoxModifier(
-                                                      modName: "Small",
+                                                      modName: "small".tr,
                                                       price: "230",
                                                       isChecked: false,
                                                     );

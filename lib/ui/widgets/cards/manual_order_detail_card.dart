@@ -254,7 +254,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text('Total Price',
+                      Text("total_price".tr,
                           style:
                               UIDataTextStyles.textMediumColoredBlue.copyWith(
                             color: UIDataColors.blackColor,

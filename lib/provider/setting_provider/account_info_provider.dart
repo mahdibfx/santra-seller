@@ -94,13 +94,13 @@ class AccountInfoProvider extends ChangeNotifier {
         if (response.statusCode == 200) {
           setValuesAfterUpdating();
           customOntapDialog("Success",
-              "You Account Info Has Been Successfully Updated!", "Okay", () {
+              "account_updated".tr, "okay".tr, () {
             Get.back();
             Get.back();
             // Get.offNamed(Routes.settings);
           });
         } else {
-          customOntapDialog("Failed", "Failed to update account info", "Okay",
+          customOntapDialog("Failed", "failed_update_account".tr, "okay".tr,
               () {
             Get.back();
           });

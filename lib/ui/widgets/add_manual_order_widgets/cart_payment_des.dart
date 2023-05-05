@@ -83,7 +83,7 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Text("Discount"),
+                         Text("discount".tr),
                         const Spacer(),
                         Text("-$discount AED"),
                       ],
@@ -148,8 +148,8 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                     if (Provider.of<CartProvider>(context, listen: false)
                             .deliveryDate ==
                         null) {
-                      CommonSnackbar.getSnackbar("No Date Selected",
-                          "Please Select Delivery Date", UIDataColors.redColor);
+                      CommonSnackbar.getSnackbar("no_date".tr,
+                          "delivery_date".tr, UIDataColors.redColor);
                     } else {
                       showModalBottomSheet(
                           context: context,

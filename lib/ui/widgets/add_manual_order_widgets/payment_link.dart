@@ -51,12 +51,12 @@ class PaymentLinkBottomSheet extends StatelessWidget {
             height: 1,
             color: Colors.green.withOpacity(0.2),
           ).paddingOnly(top: 10, bottom: 0, left: 10, right: 10),
-          Text("Send this link to your customer so they can checkout. You will be notified by santra when it pays.")
+          Text("send_link".tr)
               .paddingAll(10),
           Consumer<MyCustomerProvider>(builder: (context, _, child) {
             return CommonTextField(
               readOnly: true,
-              labelText: "Link",
+              labelText: "link".tr,
               isTextHidden: false,
               fillcolor: Color.fromARGB(255, 255, 255, 255),
               keyboardType: TextInputType.text,

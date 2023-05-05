@@ -472,14 +472,14 @@ class CartProvider extends ChangeNotifier {
         // notifyListeners();
         //        Get.offAllNamed(Routes.homeRoutes);
         Get.offAll(() => const HomeScreen());
-        showToast("Success", 'Order Placed Successfully');
+        showToast("success_message".tr, 'Order Placed Successfully');
         flushCart();
       } else {
-        showToast("Failed", 'Unable to proceed');
+        showToast("failed_message".tr, 'went_wrong'.tr);
         // hasError = true;
       }
     } catch (e) {
-      showToast("Failed", 'Try again later, Unable to proceed');
+      showToast("oops_message".tr, 'error_load_data'.tr);
       // generalException();
       // hasError = true;
     }

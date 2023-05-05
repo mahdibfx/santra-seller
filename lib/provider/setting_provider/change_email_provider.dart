@@ -50,14 +50,14 @@ class ChangeEmailProvider extends ChangeNotifier {
           var response = await http.Response.fromStream(streamedResponse);
           if (response.statusCode == 200) {
             customOntapDialog(
-                "success_message".tr, "Your email Has Been Successfully Updated!", "Okay",
+                "success_message".tr, "updated_email".tr, "okay".tr,
                 () {
               Get.back();
               Get.back();
               // Get.offNamed(Routes.settings);
             });
           } else {
-            customOntapDialog("failed_message".tr, "Failed to update email", "Okay", () {
+            customOntapDialog("failed_message".tr, "failed_update_email".tr, "okay".tr, () {
               Get.back();
             });
           }

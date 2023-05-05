@@ -17,7 +17,7 @@ class AddToBasketButton extends StatelessWidget {
           color: UIDataColors.blackColor),
       child: Row(
         children: [
-          Text("Add To Basket",
+          Text("add_basket".tr,
               style:
                   UIDataTextStyles.h2.copyWith(color: UIDataColors.whiteColor)),
           Spacer(),

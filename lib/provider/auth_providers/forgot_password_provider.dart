@@ -100,7 +100,7 @@ class ForgotPasswordProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         print(response.body);
         customOntapDialog(
-            "success_message".tr, "You Password Has Been Successfully Updated!", "Okay",
+            "success_message".tr, "password_updated".tr, "okay".tr,
             () {
           disposeValues();
           Get.back();
@@ -108,7 +108,7 @@ class ForgotPasswordProvider extends ChangeNotifier {
           // Get.offNamed(Routes.loginRoutes);
         });
       } else {
-        customOntapDialog("Failed", "Failed to update password", "Okay", () {
+        customOntapDialog("failed_message".tr, "failed_update_password".tr, "okay".tr, () {
           Get.back();
         });
       }

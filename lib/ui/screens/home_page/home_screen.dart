@@ -248,7 +248,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Container(
                                     width: 10,
                                     child: MyDropdown(
-                                      label: "Year",
+                                      label: "year".tr,
                                       options: value.years,
                                       selectedOption: value.selectedYear,
                                       prefixIcon: UIDATAIcons.calendarIcon,
@@ -299,7 +299,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Column(
                                         children: [
                                           Text(
-                                            "Orders Monthly",
+                                            "orders_monthly".tr,
                                             style: UIDataTextStyles.title
                                                 .copyWith(
                                                     fontWeight:

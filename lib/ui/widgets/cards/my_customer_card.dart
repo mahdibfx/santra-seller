@@ -152,7 +152,7 @@ void showpopup(String statement, String customerID, context) {
     builder: (BuildContext context) {
       return Consumer<MyCustomerProvider>(builder: (context, _, child) {
         return AlertDialog(
-          title: const Text("Confirmation"),
+          title:  Text("confirmation".tr),
           content: Text(statement),
           actions: [
             Container(
@@ -211,7 +211,7 @@ void confirmationPopup(String statement, context, var onYes) {
     builder: (BuildContext context) {
       return Consumer<MyCustomerProvider>(builder: (context, _, child) {
         return AlertDialog(
-          title: const Text("Confirmation"),
+          title:  Text("confirmation".tr),
           content: Text(statement),
           actions: [
             Container(

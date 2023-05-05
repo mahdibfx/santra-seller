@@ -51,7 +51,7 @@ class _ProductSettingScreenState extends State<ProductSettingScreen> {
                         child: CircularProgressIndicator(),
                       ))
                     : pSettings.allProducts!.isEmpty
-                        ? const Center(child: Text("No Products To Show"))
+                        ?  Center(child: Text("no_products".tr))
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

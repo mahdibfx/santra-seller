@@ -22,8 +22,8 @@ generalException() {
             onPressed: () {
               Get.back();
             },
-            child: const Text(
-              "Okay",
+            child:  Text(
+              "okay".tr,
               style: UIDataTextStyles.dialogButton,
             )),
       ]));

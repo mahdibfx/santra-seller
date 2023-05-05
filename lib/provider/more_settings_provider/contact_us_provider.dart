@@ -52,7 +52,7 @@ class ContactUsProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         CommonSnackbar.getSnackbar(
             "Success",
-            "Your message has been delivered to Santra",
+            "message_delivered".tr,
             UIDataColors.primaryColor);
         clearFieldsAfterSend();
 

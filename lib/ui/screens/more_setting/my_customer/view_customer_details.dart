@@ -70,7 +70,7 @@ class ViewCustomerDetails extends StatelessWidget {
                   //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   //   children: [
                   //     Expanded(
-                  //         child: Text("Online payment",
+                  //         child: Text("online_payment".tr,
                   //             style: UIDataTextStyles.h3)),
                   //     Expanded(
                   //         child: FlutterSwitch(
@@ -107,7 +107,7 @@ class ViewCustomerDetails extends StatelessWidget {
                       checkboxShape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       contentPadding: EdgeInsets.zero,
-                      title: const Text("Online payment",
+                      title:  Text("online_payment".tr,
                           style: UIDataTextStyles.h3),
                       controlAffinity: ListTileControlAffinity.leading,
                       side: const BorderSide(

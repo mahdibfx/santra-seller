@@ -61,7 +61,7 @@ class _AddManulOrderState extends State<AddManulOrder> {
                         ),
                         SpacingHeight.heightlistspacing10,
                         manualOrderController.hasError
-                            ? const Center(child: Text("No Products To Show"))
+                            ?  Center(child: Text("no_products".tr))
                             : Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [

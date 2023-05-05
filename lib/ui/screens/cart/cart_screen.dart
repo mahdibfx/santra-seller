@@ -53,8 +53,8 @@ class _CartScreenState extends State<CartScreen> {
                       child: _.cartItems.isEmpty
                           ? SizedBox(
                               height: MediaQuery.of(context).size.height - 200,
-                              child: const Center(
-                                  child: Text("Nothing to show in cart")))
+                              child:  Center(
+                                  child: Text("empty_cart".tr)))
                           : Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -102,10 +102,10 @@ class _CartScreenState extends State<CartScreen> {
                                         })),
                                 // SpacingHeight.heightlistspacing10,
                                 _.isCartLoading
-                                    ? const Center(
+                                    ?  Center(
                                         child: Padding(
                                         padding: EdgeInsets.all(8.0),
-                                        child: Text("Loading Vouchers..."),
+                                        child: Text("voucher_loading".tr),
                                       ))
                                     : VouchersSection(),
                                 SpacingHeight.heightlistspacing20,
