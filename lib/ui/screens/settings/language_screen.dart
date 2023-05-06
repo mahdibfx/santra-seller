@@ -1,3 +1,4 @@
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
@@ -20,14 +21,14 @@ class LanguageSettings extends StatefulWidget {
 }
 
 class _LanguageSettingsState extends State<LanguageSettings> {
-  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
-  final localization = AppTranslations();
+  // final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+  // final localization = AppTranslations();
 
   Widget bodyData(context) {
     return Consumer<LangaugeSettingsProvider>(
       builder: (context, _, child) {
         return SafeArea(
-          child: _.isLoading
+          child: _.isLoadings
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
@@ -36,8 +37,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
                     constraints: BoxConstraints(
                       maxHeight: Get.height / 1.1,
                     ),
-                    child: Form(
-                      child: Column(
+                    child: _.isCheckLanguage ? Center(child: CircularProgressIndicator()) : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           HeadingWithIcon(
@@ -46,12 +46,23 @@ class _LanguageSettingsState extends State<LanguageSettings> {
 
                           Consumer<SplashProvider>(builder: (context, splashPro, child) {
                               return BorderButton(
-                                onPressed: ()  async{
-                                  await _.setTrue("ar_AE");
+                                onPressed: ()  {
+                                   setState(() {
+                                  _.isCheckLanguage = true;
+                                  print(_.isCheckLanguage);
+                                });
+                                   _.setTrue("ar_AE");
                                   splashPro.setLanguage("ar_AE");
                                 
                                   _.setFalseValue();
-                                  Get.back();
+                                   Future.delayed(const Duration(seconds: 2),
+          () {
+            setState(() {
+                                  _.isCheckLanguage = false;
+                                  print(_.isCheckLanguage);
+                                });
+                              Get.back();
+          });
                                
                                 },
                                 btntxt: "عربي",
@@ -65,11 +76,22 @@ class _LanguageSettingsState extends State<LanguageSettings> {
                           Consumer<SplashProvider>(builder: (context, splashPro, child) {
                               return BorderButton(
                                 
-                                onPressed: ()  async{
-                                 await _.setTrue("en_us");
+                                onPressed: ()  {
+                                setState(() {
+                                  _.isCheckLanguage = true;
+                                });
+                                  _.setTrue("en_us");
                                   splashPro.setLanguage("en_us");
                                   _.setFalseValue();
+                                  Future.delayed(const Duration(seconds: 2),
+          () {
+            setState(() {
+                                  _.isCheckLanguage = false;
+                                  print(_.isCheckLanguage);
+                                });
                               Get.back();
+          });
+                                   
                                 },
                                 btntxt: "English",
                                 backEndColor: Colors.white,
@@ -94,7 +116,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
                           //),
                         ],
                       ).marginOnly(left: 20.0, right: 20.0),
-                    ),
+                    
                   ),
                 ),
         );
@@ -112,7 +134,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
       showFAB: true,
       centerDocked: true,
       showAppBar: true,
-      scaffoldKey: _key,
+      // scaffoldKey: _key,
       showBottomNav: true,
       appbarcolor: UIDataColors.whiteColor,
       appTitle: '',

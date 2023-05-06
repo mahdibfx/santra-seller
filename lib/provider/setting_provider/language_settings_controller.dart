@@ -3,11 +3,12 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LangaugeSettingsProvider with ChangeNotifier {
-  bool isLoading = false;
+  bool isLoadings = false;
+ bool isCheckLanguage = false;
   setTrue( String language)async{
-    isLoading = true;
+    isLoadings = true;
       notifyListeners();
-      print(isLoading);
+      print(isLoadings);
     SharedPreferences prefs =
                                       await SharedPreferences.getInstance();
                                   prefs.setString("selectedlanguage", language);
@@ -21,7 +22,7 @@ class LangaugeSettingsProvider with ChangeNotifier {
 
   }
   setFalseValue(){
-    isLoading = false;
+    isLoadings = false;
     notifyListeners();
     // Get.back();
   }
