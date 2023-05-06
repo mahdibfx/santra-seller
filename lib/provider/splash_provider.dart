@@ -55,7 +55,7 @@ class SplashProvider extends ChangeNotifier {
       }
     } on SocketException catch (_) {
       CommonSnackbar.getSnackbar(
-          "Error", "Internet is not available ", UIDataColors.redColor);
+          "error_message".tr, "Internet is not available ", UIDataColors.redColor);
       return false;
     }
     return false;

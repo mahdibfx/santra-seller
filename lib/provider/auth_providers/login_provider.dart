@@ -93,7 +93,7 @@ class LoginProvider extends ChangeNotifier {
         notifyListeners();
         print(res.body);
         CommonSnackbar.getSnackbar(
-            "Error", "Error in login", UIDataColors.redColor);
+            "error_message".tr, "seller_terms".tr, UIDataColors.redColor);
       }
     } catch (e) {
       notifyListeners();
