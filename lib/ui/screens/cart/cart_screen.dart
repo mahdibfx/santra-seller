@@ -53,8 +53,7 @@ class _CartScreenState extends State<CartScreen> {
                       child: _.cartItems.isEmpty
                           ? SizedBox(
                               height: MediaQuery.of(context).size.height - 200,
-                              child:  Center(
-                                  child: Text("empty_cart".tr)))
+                              child: Center(child: Text("empty_cart".tr)))
                           : Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -102,7 +101,7 @@ class _CartScreenState extends State<CartScreen> {
                                         })),
                                 // SpacingHeight.heightlistspacing10,
                                 _.isCartLoading
-                                    ?  Center(
+                                    ? Center(
                                         child: Padding(
                                         padding: EdgeInsets.all(8.0),
                                         child: Text("voucher_loading".tr),
@@ -153,7 +152,7 @@ class _CartScreenState extends State<CartScreen> {
                                 CartPayemntDescriptionCard(
                                   subtotal: _.totalPrice.toStringAsFixed(1),
                                   total: _.grandTotal.toStringAsFixed(1),
-                                  deliveryCharges: _.deliveryCharges.toString(),
+                                  deliveryCharges: _.deliveryFee.toString(),
                                   discount: _.dis.toString(),
                                 ),
 
