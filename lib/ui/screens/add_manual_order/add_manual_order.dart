@@ -2,6 +2,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/all_orders_manual.dart';
+import 'package:santra_seller/provider/splash_provider.dart';
 import 'package:santra_seller/ui/screens/cart/cart_screen.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
@@ -501,33 +502,38 @@ class _AddManulOrderState extends State<AddManulOrder> {
 
   @override
   Widget build(BuildContext context) {
-    return CommonScaffold(
-      bodyData: bodyData(context),
-      backgroundcolor: UIDataColors.whiteColor,
-      backGroundImage: UIDataImage.backgroundImage,
-      isBackArrowShow: false,
-      showDrawer: false,
-      showFAB: showAdd,
-      centerDocked: true,
-      showAppBar: true,
-      appBarAction: [
-        IconButton(
-          icon: const Icon(Icons.sports_basketball),
-          onPressed: () {
-            Get.to(() => const CartScreen());
-            // Get.toNamed(Routes.cartroute);
+    return Consumer<SplashProvider>(
+      builder: (context, splashPro, child) {
+        return CommonScaffold(
+          bodyData: bodyData(context),
+          backgroundcolor: UIDataColors.whiteColor,
+          backGroundImage: UIDataImage.backgroundImage,
+          isBackArrowShow: false,
+          showDrawer: false,
+          showFAB: showAdd,
+          centerDocked: true,
+          showAppBar: true,
+          appBarAction: [
+            IconButton(
+              icon: const Icon(Icons.sports_basketball),
+              onPressed: () {
+                Get.to(() => const CartScreen());
+                // Get.toNamed(Routes.cartroute);
+              },
+            )
+          ],
+          showBottomNav: showAdd,
+          appbarcolor: UIDataColors.whiteColor,
+          appbarSvg: true,
+          backarrow: UIDataColors.primaryColor,
+          qrCallback: () {
+            splashPro.homeAndMoreScreenOff();
+            // Get.offAll(() =>  const AddManulOrder());
           },
-        )
-      ],
-      showBottomNav: showAdd,
-      appbarcolor: UIDataColors.whiteColor,
-      appbarSvg: true,
-      backarrow: UIDataColors.primaryColor,
-      qrCallback: () {
-        // Get.offAll(() =>  const AddManulOrder());
-      },
-      floatingIcon: Icons.add,
-      elevation: 0.0,
+          floatingIcon: Icons.add,
+          elevation: 0.0,
+        );
+      }
     );
   }
 }

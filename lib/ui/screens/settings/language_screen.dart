@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
@@ -37,86 +39,77 @@ class _LanguageSettingsState extends State<LanguageSettings> {
                     constraints: BoxConstraints(
                       maxHeight: Get.height / 1.1,
                     ),
-                    child: _.isCheckLanguage ? Center(child: CircularProgressIndicator()) : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          HeadingWithIcon(
-                              icon: UIDATAIcons.languageIcon,
-                              btntxt: "side_menu_language_signin".tr),
+                    child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              HeadingWithIcon(
+                                  icon: UIDATAIcons.languageIcon,
+                                  btntxt: "side_menu_language_signin".tr),
 
-                          Consumer<SplashProvider>(builder: (context, splashPro, child) {
-                              return BorderButton(
-                                onPressed: ()  {
-                                   setState(() {
-                                  _.isCheckLanguage = true;
-                                  print(_.isCheckLanguage);
-                                });
-                                   _.setTrue("ar_AE");
-                                  splashPro.setLanguage("ar_AE");
-                                
-                                  _.setFalseValue();
-                                   Future.delayed(const Duration(seconds: 2),
-          () {
-            setState(() {
-                                  _.isCheckLanguage = false;
-                                  print(_.isCheckLanguage);
-                                });
-                              Get.back();
-          });
-                               
-                                },
-                                btntxt: "عربي",
-                                backEndColor: Colors.white,
-                                borderColor: Colors.transparent,
-                                buttontxtColor: UIDataColors.blackColor,
-                              );
-                            }
-                          ),
-                          SpacingHeight.heightlistspacing15,
-                          Consumer<SplashProvider>(builder: (context, splashPro, child) {
-                              return BorderButton(
-                                
-                                onPressed: ()  {
-                                setState(() {
-                                  _.isCheckLanguage = true;
-                                });
-                                  _.setTrue("en_us");
-                                  splashPro.setLanguage("en_us");
-                                  _.setFalseValue();
-                                  Future.delayed(const Duration(seconds: 2),
-          () {
-            setState(() {
-                                  _.isCheckLanguage = false;
-                                  print(_.isCheckLanguage);
-                                });
-                              Get.back();
-          });
-                                   
-                                },
-                                btntxt: "English",
-                                backEndColor: Colors.white,
-                                borderColor: UIDataColors.primaryColor,
-                                buttontxtColor: UIDataColors.primaryColor,
-                              );
-                            }
-                          ),
+                              Consumer<SplashProvider>(
+                            builder: (context, splashPro, child) {
+                          return BorderButton(
+                            onPressed: () {
+                              setState(() {
+                                  _handleButtonTap(_, splashPro);
+                                _.isCheckLanguage = true;
+                              });
+                              _.setTrue("ar_AE");
+                              splashPro.setLanguage("ar_AE");
 
-                          SpacingHeight.heightlistspacing15,
-                          // Obx(() => _.isLoading
-                          //         ? const Center(
-                          //             child: CircularProgressIndicator(),
-                          //           )
-                          //         :
-                          // PrimaryButtonWithIcon(
-                          //   btntxt: "Save",
-                          //   iconImage: UIDATAIcons.saveIcon,
-                          //   onPressed: () {},
-                          // )
+                              _.setFalseValue();
+                            
+                            },
+                            btntxt: "عربي",
+                                  backEndColor: Colors.white,
+                                  borderColor: splashPro.language == 'ar_AE' ? UIDataColors.primaryColor : Colors.transparent,
+                                  buttontxtColor:splashPro.language == 'ar_AE' ? UIDataColors.primaryColor :  UIDataColors.blackColor,
+                                );
+                              }),
+                              SpacingHeight.heightlistspacing15,
+                              Consumer<SplashProvider>(
+                                  builder: (context, splashPro, child) {
+                                return BorderButton(
+                                  onPressed: () {
+                                    _handleButtonTap(_,splashPro);
+                                    setState(() {
+                                      _.isCheckLanguage = true;
+                                    });
+                                    _.setTrue("en_us");
+                                    splashPro.setLanguage("en_us");
+                                    _.setFalseValue();
+                                    Future.delayed(const Duration(seconds: 2),
+                                        () {
+                                      setState(() {
+                                        _.isCheckLanguage = false;
+                                        print(_.isCheckLanguage);
+                                      });
+                                      
+                                      // Get.back();
+                                    });
+                                  },
+                                  btntxt: "English",
+                                  backEndColor: Colors.white,
+                                  borderColor: splashPro.language == 'en_us' ? UIDataColors.primaryColor : Colors.transparent,
+                                  buttontxtColor:splashPro.language == 'en_us' ? UIDataColors.primaryColor : Colors.black,
+                                );
+                              }),
 
-                          //),
-                        ],
-                      ).marginOnly(left: 20.0, right: 20.0),
-                    
+                              SpacingHeight.heightlistspacing15,
+                              // Obx(() => _.isLoading
+                              //         ? const Center(
+                              //             child: CircularProgressIndicator(),
+                              //           )
+                              //         :
+                              // PrimaryButtonWithIcon(
+                              //   btntxt: "Save",
+                              //   iconImage: UIDATAIcons.saveIcon,
+                              //   onPressed: () {},
+                              // )
+
+                              //),
+                            ],
+                          ).marginOnly(left: 20.0, right: 20.0),
                   ),
                 ),
         );
@@ -124,7 +117,45 @@ class _LanguageSettingsState extends State<LanguageSettings> {
     );
   }
 
+  void _handleButtonTap(LangaugeSettingsProvider _, splashPro) {
+    Timer timer = Timer(Duration(milliseconds: 3000), () {
+      Navigator.of(context, rootNavigator: true).pop();
+    });
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.transparent,
+          content: Container(
+            height: 200,
+            width: 300,
+            color: Colors.white,
+            child: Center(
+            
+              child: CircularProgressIndicator())),
+        );
+      },
+    ).then((value) {
+      // dispose the timer in case something else has triggered the dismiss.
+      timer.cancel();
+      // timer = null;
+    });
+  }
   @override
+  void initState() {
+    super.initState();
+    checkLang();
+  }
+
+  String lang = 'en_us';
+  checkLang() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    lang = prefs.get("selectedlanguage") as String;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<SplashProvider>(context, listen: false).setLanguage(lang);
+    });
+  }
   Widget build(BuildContext context) {
     return CommonScaffold(
       bodyData: bodyData(context),

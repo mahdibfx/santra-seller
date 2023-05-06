@@ -130,29 +130,34 @@ class CommonScaffold extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    ReusableIconButton(
-                      icon: UIDATAIcons.homeIcon,
-                      iconClr: UIDataColors.primaryColor,
-                      btntxt: Text(
-                        "home_menu_button".tr,
-                        style:
-                            // Get.currentRoute == Routes.homeRoutes
-                            //     ? UIDataTextStyles.title.copyWith(
-                            //         fontSize: 14,
-                            //         fontWeight: FontWeight.w800,
-                            //         color: UIDataColors.primaryColor)
-                            //     :
-                            UIDataTextStyles.subTitle.copyWith(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
-                        ),
-                      ),
-                      onPressed: () {
-                        // if (Get.currentRoute != Routes.homeRoutes) {
-                        Get.offAll(() => const HomeScreen());
-                        // }
-                      },
+                    Consumer<SplashProvider>(
+      builder: (context, splashPro, child)  {
+                        return ReusableIconButton(
+                          icon: UIDATAIcons.homeIcon,
+                          iconClr: UIDataColors.primaryColor,
+                          btntxt: Text(
+                            "home_menu_button".tr,
+                            style:
+                                // Get.currentRoute == Routes.homeRoutes
+                                //     ? UIDataTextStyles.title.copyWith(
+                                //         fontSize: 14,
+                                //         fontWeight: FontWeight.w800,
+                                //         color: UIDataColors.primaryColor)
+                                //     :
+                                UIDataTextStyles.subTitle.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
+                          ),
+                          onPressed: splashPro.isHome ? null :() {
+                            splashPro.onHomeScreen();
+                            // if (Get.currentRoute != Routes.homeRoutes) {
+                            Get.offAll(() => const HomeScreen());
+                            // }
+                          },
+                        );
+                      }
                     ),
                     Center(
                       child: Text(
@@ -161,31 +166,37 @@ class CommonScaffold extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                     ).marginOnly(top: 20),
-                    ReusableIconButton(
-                      iconClr: UIDataColors.primaryColor,
-                      icon: UIDATAIcons.more2,
-                      btntxt: Text(
-                        "home_more_button".tr,
-                        style:
-                            //  Get.currentRoute == Routes.moreScreen
-                            //     ?
-                            // UIDataTextStyles.title.copyWith(
-                            //     fontSize: 14,
-                            //     fontWeight: FontWeight.w800,
-                            //     color: UIDataColors.primaryColor)
-                            //:
-                            UIDataTextStyles.subTitle.copyWith(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
-                        ),
-                      ),
-                      onPressed: () {
-                        Get.offAll(() => MoreSettingScreen());
-                        // if (Get.currentRoute != Routes.moreScreen) {
-                        //   Get.offAllNamed(Routes.moreScreen);
-                        // }
-                      },
+                    Consumer<SplashProvider>(
+      builder: (context, splashPro, child)  {
+                        return ReusableIconButton(
+                          iconClr: UIDataColors.primaryColor,
+                          icon: UIDATAIcons.more2,
+                          btntxt: Text(
+                            "home_more_button".tr,
+                            style:
+                                //  Get.currentRoute == Routes.moreScreen
+                                //     ?
+                                // UIDataTextStyles.title.copyWith(
+                                //     fontSize: 14,
+                                //     fontWeight: FontWeight.w800,
+                                //     color: UIDataColors.primaryColor)
+                                //:
+                                UIDataTextStyles.subTitle.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
+                          ),
+                          onPressed:splashPro.isMore ? null : () {
+                            splashPro.onMoreScreen();
+                            
+                            Get.offAll(() => MoreSettingScreen());
+                            // if (Get.currentRoute != Routes.moreScreen) {
+                            //   Get.offAllNamed(Routes.moreScreen);
+                            // }
+                          },
+                        );
+                      }
                     ),
                   ],
                 ),
@@ -343,8 +354,8 @@ class CommonScaffold extends StatelessWidget {
                       // ignore: unrelated_type_equality_checks
                       qrCallback: homeProvider.sellerStatusNew != "done"
                           ? () {
-                              customOntapDialog('Alert',
-                                  'Your status is not approved.', 'Okay', () {
+                              customOntapDialog('alert'.tr,
+                                  'status_approved'.tr, 'okay'.tr, () {
                                 print(homeProvider.sellerStatusNew);
                                 Get.back();
                               });

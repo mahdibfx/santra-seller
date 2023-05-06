@@ -7,6 +7,8 @@ import 'package:santra_seller/ui/screens/order_detail/manual_order_screen.dart';
 import 'package:santra_seller/ui/screens/order_detail/pending_order_screen.dart';
 import 'package:santra_seller/ui/screens/order_detail/santra_order_screen.dart';
 import 'package:santra_seller/ui/widgets/dropdown/common_dropdown.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../../provider/splash_provider.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/cards/home_card.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
@@ -357,9 +359,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     hitAllApis();
+    checkLang();
     super.initState();
   }
-
+String lang = 'en_us';
+  checkLang() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    lang = prefs.get("selectedlanguage") as String;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<SplashProvider>(context, listen: false).setLanguage(lang);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(

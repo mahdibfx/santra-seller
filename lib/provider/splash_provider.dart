@@ -19,6 +19,24 @@ class SplashProvider extends ChangeNotifier {
   bool isLoading = false;
   bool updateAvailable = false;
   String? sellerCode;
+  bool isHome = true;
+  bool isMore =  false;
+
+  onHomeScreen(){
+    isHome = true;
+    isMore = false;
+    notifyListeners();
+  }
+  onMoreScreen(){
+     isHome = false;
+    isMore = true;
+    notifyListeners();
+  }
+  homeAndMoreScreenOff(){
+    isHome = true;
+    isMore = true;
+    notifyListeners();
+  }
   String language = "en_us";
   final Uri link = Uri.parse('https://onelink.to/xbwv9t');
 
