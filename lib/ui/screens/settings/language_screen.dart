@@ -146,13 +146,14 @@ class _LanguageSettingsState extends State<LanguageSettings> {
   void initState() {
     super.initState();
     checkLang();
+   
   }
-
-  String lang = 'en_us';
-  checkLang() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    lang = prefs.get("selectedlanguage") as String;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+  
+  checkLang()async{
+    SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+              String   lang =                  prefs.get("selectedlanguage") as String;
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<SplashProvider>(context, listen: false).setLanguage(lang);
     });
   }

@@ -44,12 +44,19 @@ class SplashProvider extends ChangeNotifier {
     isLoading = value;
     notifyListeners();
   }
-  
+
+  setOldLang()async{
+    SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                 language =                  prefs.get("selectedlanguage") as String;
+                 notifyListeners();
+  }
 setLanguage(String languages){
   language = languages;
   notifyListeners();
 }
   void checkUpdateAndMakeDescision() async {
+    setOldLang();
     isInternetAvailable();
     forceUpdate().then((value) {
       if (updateAvailable == true) {
