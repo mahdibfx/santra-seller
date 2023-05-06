@@ -20,23 +20,26 @@ class SplashProvider extends ChangeNotifier {
   bool updateAvailable = false;
   String? sellerCode;
   bool isHome = true;
-  bool isMore =  false;
+  bool isMore = false;
 
-  onHomeScreen(){
+  onHomeScreen() {
     isHome = true;
     isMore = false;
     notifyListeners();
   }
-  onMoreScreen(){
-     isHome = false;
+
+  onMoreScreen() {
+    isHome = false;
     isMore = true;
     notifyListeners();
   }
-  homeAndMoreScreenOff(){
+
+  homeAndMoreScreenOff() {
     isHome = true;
     isMore = true;
     notifyListeners();
   }
+
   String language = "en_us";
   final Uri link = Uri.parse('https://onelink.to/xbwv9t');
 
@@ -45,25 +48,33 @@ class SplashProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  setOldLang()async{
-    SharedPreferences prefs =
-                                      await SharedPreferences.getInstance();
-                 language =                  prefs.get("selectedlanguage") as String;
-                 notifyListeners();
+  setOldLang() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var checkLang = prefs.get("selectedlanguage");
+    if (checkLang != null) {
+      language = prefs.get("selectedlanguage") as String;
+      notifyListeners();
+    } else {
+      language = 'en_us';
+      notifyListeners();
+    }
+
+    notifyListeners();
   }
-setLanguage(String languages){
-  language = languages;
-  notifyListeners();
-}
+
+  setLanguage(String languages) {
+    language = languages;
+    notifyListeners();
+  }
+
   void checkUpdateAndMakeDescision() async {
     setOldLang();
     isInternetAvailable();
     forceUpdate().then((value) {
       if (updateAvailable == true) {
         customOntapDialog(
-            "New Update".tr,
-            "update_message_popup".tr,
-            "update_message".tr, () {
+            "New Update".tr, "update_message_popup".tr, "update_message".tr,
+            () {
           goToStore();
         });
       } else {
@@ -85,8 +96,8 @@ setLanguage(String languages){
         return response.statusCode == HttpStatus.ok;
       }
     } on SocketException catch (_) {
-      CommonSnackbar.getSnackbar(
-          "error_message".tr, "Internet is not available ", UIDataColors.redColor);
+      CommonSnackbar.getSnackbar("error_message".tr,
+          "Internet is not available ", UIDataColors.redColor);
       return false;
     }
     return false;
@@ -102,8 +113,8 @@ setLanguage(String languages){
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var checkemail = prefs.getString("email");
     sellerCode = prefs.getString("sellercode");
-  // var languageProvider = Provider.of<LanguageProvider>(context, listen: false);
-  // languageProvider.languageTextCall();
+    // var languageProvider = Provider.of<LanguageProvider>(context, listen: false);
+    // languageProvider.languageTextCall();
     print("SELLER $sellerCode");
     // var checkpassword = prefs.getString("password");
     if (checkemail != null) {
@@ -150,8 +161,7 @@ setLanguage(String languages){
       }
     } catch (e) {
       setLoadingState(false);
-      Get.snackbar("oops_message".tr,
-          "something_wrong_message".tr);
+      Get.snackbar("oops_message".tr, "something_wrong_message".tr);
     }
     notifyListeners();
   }
