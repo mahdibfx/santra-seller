@@ -34,6 +34,8 @@ class CartProvider extends ChangeNotifier {
   bool isDiscountLoading = false;
   String? voucherAppliedMsg;
   String? voucherListVoucherCode;
+  double deliveryChargesCap = 0.0;
+  double deliveryChargesReal = 0.0;
   List<DateTime?> dates = [];
   bool equalLists = true;
   bool checkMods = false;
@@ -51,7 +53,8 @@ class CartProvider extends ChangeNotifier {
     isShowCartButton = false;
     receiptPaymentType = true;
     cartItems.clear();
-
+    deliveryChargesCap = 0.0;
+    deliveryChargesReal = 0.0;
     codCharges = 0.0;
     discount = 0.0;
     discountType = null;
@@ -100,13 +103,12 @@ class CartProvider extends ChangeNotifier {
 
   double get deliveryFee {
     double dFee = 0.0;
-    // if (preGrandTotal < deliveryChargesCap) {
-    //   dFee = deliveryChargesReal;
-    // } else {
-    //   dFee = deliveryCharges;
-    // }
-    dFee = deliveryCharges;
-    print("DELIVERY FEE$dFee");
+    if (preGrandTotal < deliveryChargesCap) {
+      dFee = deliveryChargesReal;
+    } else {
+      dFee = deliveryCharges;
+    }
+
     return dFee;
   }
 
@@ -116,7 +118,7 @@ class CartProvider extends ChangeNotifier {
     //   codCharges = 0.0;
     // }
     preAmount = totalPrice - dis + codCharges;
-    print("PRE GRAND$preAmount");
+
     return preAmount;
   }
 
@@ -205,6 +207,10 @@ class CartProvider extends ChangeNotifier {
         var voucherL = data['data'][0]['vouchers'] as List<dynamic>;
         deliveryCharges =
             double.parse(data['data'][0]['delivery_charges'].toString());
+        deliveryChargesCap =
+            double.parse(data['data'][0]['delivery_charges_cap'].toString());
+        deliveryChargesReal =
+            double.parse(data['data'][0]['delivery_charges_real'].toString());
         codCharges = double.parse(data['data'][0]['cash_charges'].toString());
         var vList = voucherL.map((e) => VoucherModel.fromJson(e)).toList();
         vouchersList = vList;
@@ -215,6 +221,7 @@ class CartProvider extends ChangeNotifier {
       exceptionDialog("oops_message".tr, "went_wrong".tr);
     }
     changeCartLoadingState(false);
+    notifyListeners();
   }
 
   /// *************************PROMO DISCOUNT API*******************************/

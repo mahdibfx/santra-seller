@@ -41,7 +41,7 @@ class CartPayemntDescriptionCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Text("cart_order_details_text".tr, style: UIDataTextStyles.textMedium)
+          Text("cart_order_details_text".tr, style: UIDataTextStyles.textMedium)
               .paddingAll(10),
           Container(
             padding: const EdgeInsets.only(top: 0.0, left: 10, right: 10),
@@ -52,7 +52,7 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                       Text("cart_order_subtotal".tr),
+                      Text("cart_order_subtotal".tr),
                       const Spacer(),
                       Text("$subtotal AED"),
                     ],
@@ -67,7 +67,7 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                       Text("cart_order_delivery_charge".tr),
+                      Text("cart_order_delivery_charge".tr),
                       const Spacer(),
                       Text("$deliveryCharges AED"),
                     ],
@@ -83,7 +83,7 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                         Text("discount".tr),
+                        Text("discount".tr),
                         const Spacer(),
                         Text("-$discount AED"),
                       ],
@@ -98,7 +98,7 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                       Text("cart_order_total".tr,
+                      Text("cart_order_total".tr,
                           style: UIDataTextStyles.textMediumColoredBlue),
                       const Spacer(),
                       Text("$total AED",
