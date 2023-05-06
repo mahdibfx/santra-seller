@@ -43,15 +43,15 @@ class _CustomerReviewsState extends State<CustomerReviews> {
             : SafeArea(
                 child: SingleChildScrollView(
                   child: _.hasReviewsError
-                      ? const SizedBox(
+                      ?  SizedBox(
                           height: 600,
-                          child: Center(child: Text("No Reviews To Show Yet!")))
+                          child: Center(child: Text("no_reviews".tr)))
                       : Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             HeadingWithIcon(
                                 icon: UIDATAIcons.starIcon,
-                                btntxt: "Customer Reviews"),
+                                btntxt: "customer_reviews_title".tr),
                             SpacingHeight.heightlistspacing10,
                             Container(
                                 decoration: BoxDecoration(

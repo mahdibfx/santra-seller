@@ -51,6 +51,7 @@ class UIDATAIcons {
   static const dollarCircle = "$iconsDir/dollar-circle.svg";
   static const more2 = "$iconsDir/more2.svg";
   static const back = "$iconsDir/arrow-left.svg";
+  static const forwardIcon = "$iconsDir/arrow_right.svg";
   static const bell = "$iconsDir/notification.svg";
   static const voucherStarIcon = "$iconsDir/voucher_star.svg";
   static const voucherTagIcon = "$iconsDir/voucher_tag.svg";

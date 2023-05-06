@@ -10,6 +10,7 @@ import 'package:santra_seller/provider/auth_providers/login_provider.dart';
 import 'package:santra_seller/ui/screens/cart/cart_screen.dart';
 import 'package:santra_seller/ui/screens/more_setting/more_screen.dart';
 // lib imports
+import '../../../utils/app_translation/app_translation.dart';
 import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../screens/home_page/home_screen.dart';
@@ -190,7 +191,7 @@ class CommonScaffold extends StatelessWidget {
                 ),
               ),
             );
-
+ final localization = AppTranslations();
   @override
   Widget build(BuildContext context) {
     // final LoginController loginController = Get.find<LoginController>();
@@ -218,7 +219,9 @@ class CommonScaffold extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 8.0),
                         child: Row(
                           children: [
-                            SvgPicture.asset(UIDATAIcons.back),
+                            SpacingWidth.widthlistspacing5,
+                            localization.selectedLanguage == 'en_us'?
+                            SvgPicture.asset(UIDATAIcons.back) : SvgPicture.asset(UIDATAIcons.forwardArrow,color: UIDataColors.primaryColor,) ,
                             SpacingWidth.widthlistspacing5,
                             const Text(
                               "",

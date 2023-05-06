@@ -164,7 +164,7 @@ void showpopup(String statement, String customerID, context) {
                     child: BorderButton(
                       // height: 35,
                       // width: 140,
-                      btntxt: 'Cancel',
+                      btntxt: "button_cancel".tr,
                       borderColor: Colors.red,
                       buttontxtColor: Colors.red,
                       backEndColor: Colors.white,
@@ -223,7 +223,7 @@ void confirmationPopup(String statement, context, var onYes) {
                     child: BorderButton(
                       // height: 35,
                       // width: 140,
-                      btntxt: 'Cancel',
+                      btntxt: "button_cancel".tr,
                       borderColor: Colors.red,
                       buttontxtColor: Colors.red,
                       backEndColor: Colors.white,

@@ -247,13 +247,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   fontSize: 17,
                                                   fontWeight: FontWeight.bold),
                                             ),
-                                            pValue.isTnCLoading
-                                                ? const CircularProgressIndicator()
-                                                : pValue.hasError
-                                                    ? const Text(
-                                                        "Error Loading T&Cs")
-                                                    : Text(pValue.terms
-                                                        .toString()),
+                                            Text("privacy_policy_data".tr),
                                             SpacingHeight.heightlistspacing15,
                                             Padding(
                                               padding:
@@ -291,13 +285,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             children:  [
                               Text("signup_agree".tr,
                                   style: TextStyle(
-                                    fontSize: 15,
+                                    fontSize: 12,
                                     fontFamily: 'Markpro',
                                     fontWeight: FontWeight.w600,
                                   )),
                               Text("signup_agree_link".tr,
                                   style: TextStyle(
-                                    fontSize: 15,
+                                    fontSize: 12,
                                     color: UIDataColors.primaryColor,
                                     fontFamily: 'Markpro',
                                     fontWeight: FontWeight.w500,

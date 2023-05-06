@@ -6,6 +6,7 @@ import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart'
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/cards/manual_order_detail_card.dart';
 import '../../../provider/home_provider.dart';
+import '../../../utils/app_translation/app_translation.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
 import '../../widgets/cards/order_detail_card.dart';
@@ -25,6 +26,7 @@ class ManualOrderScreen extends StatefulWidget {
 }
 
 class _ManualOrderScreenState extends State<ManualOrderScreen> {
+  final localization = AppTranslations();
   Widget bodyData() {
     return Consumer<HomeProvider>(
       builder: (context, _, child) {
@@ -225,8 +227,9 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                           children: [
                              Text('signup_back'.tr),
                             SpacingWidth.widthlistspacing5,
-                            SvgPicture.asset(
-                              UIDATAIcons.forwardArrow,
+                             SvgPicture.asset(
+                              localization.selectedLanguage == 'en_us'?
+                              UIDATAIcons.forwardArrow : UIDATAIcons.back,
                               color: Colors.black,
                             ),
                           ],

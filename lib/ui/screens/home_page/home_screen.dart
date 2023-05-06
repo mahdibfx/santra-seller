@@ -221,8 +221,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     UIDATAIcons.dollarCircle,
                                   ),
                                 ),
-                                const Text(
-                                  "Monthly Total Earnings",
+                                 Text(
+                                  "monthly_total_earning".tr,
                                   style: UIDataTextStyles.title,
                                 ),
                                 const Spacer(),
@@ -316,7 +316,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Column(
                                         children: [
                                           Text(
-                                            "Sales Monthly",
+                                            "sales_monthly".tr,
                                             style: UIDataTextStyles.title
                                                 .copyWith(
                                                     fontWeight:

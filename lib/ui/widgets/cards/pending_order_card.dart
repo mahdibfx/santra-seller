@@ -103,7 +103,7 @@ class _PendingCardState extends State<PendingCard>
                     ),
                     SpacingWidth.widthlistspacing,
                     Text(
-                      'Order No. ${widget.orderNumber}',
+                      '${'order_number'.tr} ${widget.orderNumber}',
                       style: UIDataTextStyles.h2.copyWith(fontSize: 12),
                     ),
                     const Spacer(),

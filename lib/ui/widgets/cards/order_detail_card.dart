@@ -109,7 +109,7 @@ class _CustomCardState extends State<CustomCard>
                       ),
                       SpacingWidth.widthlistspacing,
                       Text(
-                        'Order No. ${widget.orderNumber}',
+                        '${'order_number'.tr} ${widget.orderNumber}',
                         style: UIDataTextStyles.h2.copyWith(fontSize: 12),
                       ),
                       const Spacer(),
@@ -303,7 +303,7 @@ class _CustomCardState extends State<CustomCard>
                                 // height: 40,
                                 // width:
                                 //     widget.paymentLink == 'no_link' ? 330 : 140,
-                                btntxt: 'Cancel',
+                                btntxt: "button_cancel".tr,
                                 borderColor: Colors.red,
                                 buttontxtColor: Colors.red,
                                 backEndColor: Colors.white,
@@ -324,7 +324,7 @@ class _CustomCardState extends State<CustomCard>
                                     child: BorderButton(
                                       // height: 40,
                                       // width: 170,
-                                      btntxt: 'Copy payment link',
+                                      btntxt: 'button_copy_payment_link'.tr,
                                       borderColor: Colors.blue,
                                       buttontxtColor: Colors.white,
                                       // backEndColor: Colors.blue,
@@ -351,7 +351,7 @@ class _CustomCardState extends State<CustomCard>
                                   child: BorderButton(
                                     height: 40,
                                     width: 140,
-                                    btntxt: 'Cancel',
+                                    btntxt: "button_cancel".tr,
                                     borderColor: Colors.red,
                                     buttontxtColor: Colors.red,
                                     backEndColor: Colors.white,
@@ -477,7 +477,7 @@ class _CustomCardState extends State<CustomCard>
                     child: BorderButton(
                       // height: 35,
                       // width: 140,
-                      btntxt: 'Cancel',
+                      btntxt: "button_cancel".tr,
                       borderColor: Colors.red,
                       buttontxtColor: Colors.red,
                       backEndColor: Colors.white,
