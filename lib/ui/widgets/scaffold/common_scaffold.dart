@@ -192,6 +192,9 @@ class CommonScaffold extends StatelessWidget {
               ),
             );
  final localization = AppTranslations();
+ iconSet(){
+  
+ }
   @override
   Widget build(BuildContext context) {
     // final LoginController loginController = Get.find<LoginController>();
@@ -217,19 +220,22 @@ class CommonScaffold extends StatelessWidget {
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(left: 8.0),
-                        child: Row(
-                          children: [
-                            SpacingWidth.widthlistspacing5,
-                            localization.selectedLanguage == 'en_us'?
-                            SvgPicture.asset(UIDATAIcons.back) : SvgPicture.asset(UIDATAIcons.forwardArrow,color: UIDataColors.primaryColor,) ,
-                            SpacingWidth.widthlistspacing5,
-                            const Text(
-                              "",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500),
-                            )
-                          ],
+                        child: Consumer<SplashProvider>(builder: (context, splashPro, child) {
+                            return Row(
+                              children: [
+                                SpacingWidth.widthlistspacing5,
+                                splashPro.language == 'en_us'?
+                                SvgPicture.asset(UIDATAIcons.back) : SvgPicture.asset(UIDATAIcons.forwardArrow,color: UIDataColors.primaryColor,) ,
+                                SpacingWidth.widthlistspacing5,
+                                const Text(
+                                  "",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500),
+                                )
+                              ],
+                            );
+                          }
                         ),
                       ),
                     )

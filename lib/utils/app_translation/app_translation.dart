@@ -20,6 +20,13 @@ class AppTranslations extends Translations {
     
     return 'en_us';
   }
+   langNew()async{
+    String newLnag = 'en_us';
+ await language().then((value) {
+return value;
+});
+return newLnag;
+  }
 
   Future<bool> fetchTranslations() async {
     var url = Uri.parse(ApiData.languageSelection);

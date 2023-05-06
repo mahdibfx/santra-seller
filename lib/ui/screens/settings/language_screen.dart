@@ -4,6 +4,7 @@ import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../provider/setting_provider/language_settings_controller.dart';
 
+import '../../../provider/splash_provider.dart';
 import '../../../utils/app_translation/app_translation.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
@@ -24,7 +25,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
 
   Widget bodyData(context) {
     return Consumer<LangaugeSettingsProvider>(
-      builder: (con, _, child) {
+      builder: (context, _, child) {
         return SafeArea(
           child: _.isLoading
               ? const Center(
@@ -41,34 +42,41 @@ class _LanguageSettingsState extends State<LanguageSettings> {
                         children: [
                           HeadingWithIcon(
                               icon: UIDATAIcons.languageIcon,
-                              btntxt: "Language"),
+                              btntxt: "side_menu_language_signin".tr),
 
-                          BorderButton(
-                            onPressed: () async {
-                              SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
-                              Get.updateLocale(const Locale('ar', 'AE'));
-                              prefs.setString("selectedlanguage", "ar_AE");
-                              Get.back();
-                            },
-                            btntxt: "عربي",
-                            backEndColor: Colors.white,
-                            borderColor: Colors.transparent,
-                            buttontxtColor: UIDataColors.blackColor,
+                          Consumer<SplashProvider>(builder: (context, splashPro, child) {
+                              return BorderButton(
+                                onPressed: ()  async{
+                                  await _.setTrue("ar_AE");
+                                  splashPro.setLanguage("ar_AE");
+                                
+                                  _.setFalseValue();
+                                  Get.back();
+                               
+                                },
+                                btntxt: "عربي",
+                                backEndColor: Colors.white,
+                                borderColor: Colors.transparent,
+                                buttontxtColor: UIDataColors.blackColor,
+                              );
+                            }
                           ),
                           SpacingHeight.heightlistspacing15,
-                          BorderButton(
-                            onPressed: () async {
-                              SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
-                              prefs.setString("selectedlanguage", "en_us");
-                              Get.updateLocale(const Locale('en', 'us'));
+                          Consumer<SplashProvider>(builder: (context, splashPro, child) {
+                              return BorderButton(
+                                
+                                onPressed: ()  async{
+                                 await _.setTrue("en_us");
+                                  splashPro.setLanguage("en_us");
+                                  _.setFalseValue();
                               Get.back();
-                            },
-                            btntxt: "English",
-                            backEndColor: Colors.white,
-                            borderColor: UIDataColors.primaryColor,
-                            buttontxtColor: UIDataColors.primaryColor,
+                                },
+                                btntxt: "English",
+                                backEndColor: Colors.white,
+                                borderColor: UIDataColors.primaryColor,
+                                buttontxtColor: UIDataColors.primaryColor,
+                              );
+                            }
                           ),
 
                           SpacingHeight.heightlistspacing15,

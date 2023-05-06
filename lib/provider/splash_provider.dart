@@ -19,12 +19,18 @@ class SplashProvider extends ChangeNotifier {
   bool isLoading = false;
   bool updateAvailable = false;
   String? sellerCode;
+  String language = "en_us";
   final Uri link = Uri.parse('https://onelink.to/xbwv9t');
+
   setLoadingState(bool value) {
     isLoading = value;
     notifyListeners();
   }
-
+  
+setLanguage(String languages){
+  language = languages;
+  notifyListeners();
+}
   void checkUpdateAndMakeDescision() async {
     isInternetAvailable();
     forceUpdate().then((value) {
