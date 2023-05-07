@@ -26,19 +26,19 @@ class SplashProvider extends ChangeNotifier {
     isLoading = value;
     notifyListeners();
   }
-  
-setLanguage(String languages){
-  language = languages;
-  notifyListeners();
-}
+
+  setLanguage(String languages) {
+    language = languages;
+    notifyListeners();
+  }
+
   void checkUpdateAndMakeDescision() async {
     isInternetAvailable();
     forceUpdate().then((value) {
       if (updateAvailable == true) {
         customOntapDialog(
-            "New Update".tr,
-            "update_message_popup".tr,
-            "update_message".tr, () {
+            "New Update".tr, "update_message_popup".tr, "update_message".tr,
+            () {
           goToStore();
         });
       } else {
@@ -60,8 +60,8 @@ setLanguage(String languages){
         return response.statusCode == HttpStatus.ok;
       }
     } on SocketException catch (_) {
-      CommonSnackbar.getSnackbar(
-          "error_message".tr, "Internet is not available ", UIDataColors.redColor);
+      CommonSnackbar.getSnackbar("error_message".tr,
+          "Internet is not available ", UIDataColors.redColor);
       return false;
     }
     return false;
@@ -77,8 +77,8 @@ setLanguage(String languages){
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var checkemail = prefs.getString("email");
     sellerCode = prefs.getString("sellercode");
-  // var languageProvider = Provider.of<LanguageProvider>(context, listen: false);
-  // languageProvider.languageTextCall();
+    // var languageProvider = Provider.of<LanguageProvider>(context, listen: false);
+    // languageProvider.languageTextCall();
     print("SELLER $sellerCode");
     // var checkpassword = prefs.getString("password");
     if (checkemail != null) {
@@ -103,7 +103,7 @@ setLanguage(String languages){
       var url = Uri.parse(ApiData.forceUpdateApi);
       Map<String, dynamic> body = {};
       body['seller_code'] = "1";
-      body['version'] = "3.3.9";
+      body['version'] = "4.0.0";
       body['app_type'] = "seller";
       body['platform'] =
           Platform.isIOS ? "Mobile_App_iOS" : "Mobile_App_Android";
@@ -125,8 +125,7 @@ setLanguage(String languages){
       }
     } catch (e) {
       setLoadingState(false);
-      Get.snackbar("oops_message".tr,
-          "something_wrong_message".tr);
+      Get.snackbar("oops_message".tr, "something_wrong_message".tr);
     }
     notifyListeners();
   }
