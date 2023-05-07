@@ -19,13 +19,13 @@ class PrivacyScreen extends StatefulWidget {
 
 class _PrivacyScreenState extends State<PrivacyScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<PrivacyProvider>(context, listen: false).privacyPolicy();
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     Provider.of<PrivacyProvider>(context, listen: false).privacyPolicy();
+  //   });
+  // }
 
   Widget bodyData() {
     return Consumer<PrivacyProvider>(
@@ -47,7 +47,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                                   icon: UIDATAIcons.santraVectorIcon,
                                   btntxt: "more_privacy".tr),
                               Text(
-                                _.msg,
+                                "privacy_policy_data".tr,
                                 style: UIDataTextStyles.title,
                                 textAlign: TextAlign.justify,
                               ),

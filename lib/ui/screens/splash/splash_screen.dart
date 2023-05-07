@@ -23,6 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Provider.of<SplashProvider>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       splashProvider.checkUpdateAndMakeDescision();
+      splashProvider.setOldLang();
     });
 
     super.initState();

@@ -19,11 +19,46 @@ class SplashProvider extends ChangeNotifier {
   bool isLoading = false;
   bool updateAvailable = false;
   String? sellerCode;
+  bool isHome = true;
+  bool isMore = false;
+
+  onHomeScreen() {
+    isHome = true;
+    isMore = false;
+    notifyListeners();
+  }
+
+  onMoreScreen() {
+    isHome = false;
+    isMore = true;
+    notifyListeners();
+  }
+
+  homeAndMoreScreenOff() {
+    isHome = true;
+    isMore = true;
+    notifyListeners();
+  }
+
   String language = "en_us";
   final Uri link = Uri.parse('https://onelink.to/xbwv9t');
 
   setLoadingState(bool value) {
     isLoading = value;
+    notifyListeners();
+  }
+
+  setOldLang() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var checkLang = prefs.get("selectedlanguage");
+    if (checkLang != null) {
+      language = prefs.get("selectedlanguage") as String;
+      notifyListeners();
+    } else {
+      language = 'en_us';
+      notifyListeners();
+    }
+
     notifyListeners();
   }
 
@@ -33,6 +68,7 @@ class SplashProvider extends ChangeNotifier {
   }
 
   void checkUpdateAndMakeDescision() async {
+    setOldLang();
     isInternetAvailable();
     forceUpdate().then((value) {
       if (updateAvailable == true) {

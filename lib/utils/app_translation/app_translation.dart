@@ -43,7 +43,6 @@ return newLnag;
       Map<String, String> convertedDataArabic =
           languageDataArabicDynamic.cast<String, String>();
       _translations = {'en_us': convertedData, 'ar_AE': convertedDataArabic};
-      print(_translations);
       selectedLanguage = await language();
       if (selectedLanguage != 'en_us') {
         Get.updateLocale(const Locale('ar', 'AE'));
