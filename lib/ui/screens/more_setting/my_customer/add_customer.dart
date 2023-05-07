@@ -66,12 +66,12 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                   children: [
                     HeadingWithIcon(
                         icon: UIDATAIcons.customersIcon,
-                        btntxt: "Add Customer List".tr),
+                        btntxt: "add_customer_title".tr),
                     CommonTextField(
                       controller: _.fnController,
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,
-                      labelText: "Full Name".tr,
+                      labelText: "add_customer_name".tr,
                       prefixIcon: UIDATAIcons.userIcon,
                       keyboardType: TextInputType.text,
                       validator: (val) {
@@ -86,7 +86,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                     ),
                     CommonTextField(
                       controller: _.mobileController,
-                      labelText: "Mobile",
+                      labelText: "add_customer_mobile".tr,
                       inputFormatters: [_.phoneMask],
                       prefixIcon: UIDATAIcons.callIcon,
                       maxLength: 12,
@@ -123,7 +123,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                     CommonTextField(
                       controller: _.emailController,
                       // hintText: 'Email'.tr,
-                      labelText: "Email",
+                      labelText: "add_customer_email".tr,
                       prefixIcon: UIDATAIcons.emailIcon,
                       isTextHidden: false,
                       fillcolor: UIDataColors.whiteColor,

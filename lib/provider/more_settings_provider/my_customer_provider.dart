@@ -298,7 +298,7 @@ class MyCustomerProvider extends ChangeNotifier {
         link.text = decodedJson['data'].first['payment_link'];
         cartProvider.flushCart();
         disposeValues();
-        showToast("Success", 'Order Placed Successfully');
+        showToast("success_message".tr, 'order_placed_success'.tr);
         isSubmitOrder = false;
         popupPaymentlink = true;
         notifyListeners();

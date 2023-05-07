@@ -239,7 +239,8 @@ class HomeProvider extends ChangeNotifier {
         notifyListeners();
         // Get.snackbar("Accepted", "Order has been accepted");
         CommonSnackbar.getSnackbar(
-            "Accepted", "Order has been accepted", UIDataColors.primaryColor);
+          
+            "status_accepted".tr, "order_success_msg".tr, UIDataColors.primaryColor);
         // Get.offAllNamed(Routes.homeRoutes);
         Get.offAll(() => const HomeScreen());
       } else {

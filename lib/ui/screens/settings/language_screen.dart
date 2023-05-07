@@ -128,7 +128,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
         return AlertDialog(
           backgroundColor: Colors.transparent,
           content: Container(
-            height: 200,
+            height: 150,
             width: 300,
             color: Colors.white,
             child: Center(
@@ -150,12 +150,22 @@ class _LanguageSettingsState extends State<LanguageSettings> {
   }
   
   checkLang()async{
+
     SharedPreferences prefs =
                                       await SharedPreferences.getInstance();
-              String   lang =                  prefs.get("selectedlanguage") as String;
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                                      var checkLange = prefs.get("selectedlanguage");
+                                      if(checkLange != null){
+                                       String   lang = prefs.get("selectedlanguage") as String;
+                                                 WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<SplashProvider>(context, listen: false).setLanguage(lang);
     });
+                                      }else{
+                                               WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<SplashProvider>(context, listen: false).setLanguage('en_us');
+    });
+                                      }
+              
+           
   }
   Widget build(BuildContext context) {
     return CommonScaffold(

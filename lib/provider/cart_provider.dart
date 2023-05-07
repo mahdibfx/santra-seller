@@ -479,7 +479,7 @@ class CartProvider extends ChangeNotifier {
         // notifyListeners();
         //        Get.offAllNamed(Routes.homeRoutes);
         Get.offAll(() => const HomeScreen());
-        showToast("success_message".tr, 'Order Placed Successfully');
+        showToast("success_message".tr, 'order_placed_success'.tr);
         flushCart();
       } else {
         showToast("failed_message".tr, 'went_wrong'.tr);
