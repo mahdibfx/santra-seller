@@ -495,7 +495,7 @@ class _CustomCardState extends State<CustomCard>
                     child: BorderButton(
                       // height: 35,
                       // width: 140,
-                      btntxt: 'Ok',
+                      btntxt: "okay".tr,
                       borderColor: Colors.blue,
                       buttontxtColor: Colors.white,
                       // backEndColor: Colors.blue,

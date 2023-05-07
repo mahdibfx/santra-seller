@@ -182,7 +182,7 @@ void showpopup(String statement, String customerID, context) {
                     child: BorderButton(
                       // height: 35,
                       // width: 140,
-                      btntxt: 'Ok',
+                      btntxt: "okay".tr,
                       borderColor: Colors.blue,
                       buttontxtColor: Colors.white,
                       // backEndColor: Colors.blue,
@@ -241,7 +241,7 @@ void confirmationPopup(String statement, context, var onYes) {
                     child: BorderButton(
                       // height: 35,
                       // width: 140,
-                      btntxt: 'Ok',
+                      btntxt: "okay".tr,
                       borderColor: Colors.blue,
                       buttontxtColor: Colors.white,
                       // backEndColor: Colors.blue,
