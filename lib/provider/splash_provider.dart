@@ -139,7 +139,7 @@ class SplashProvider extends ChangeNotifier {
       var url = Uri.parse(ApiData.forceUpdateApi);
       Map<String, dynamic> body = {};
       body['seller_code'] = "1";
-      body['version'] = "3.3.9";
+      body['version'] = "4.0.0";
       body['app_type'] = "seller";
       body['platform'] =
           Platform.isIOS ? "Mobile_App_iOS" : "Mobile_App_Android";
