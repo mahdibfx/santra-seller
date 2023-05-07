@@ -35,8 +35,8 @@ class SplashProvider extends ChangeNotifier {
   }
 
   homeAndMoreScreenOff() {
-    isHome = true;
-    isMore = true;
+    isHome = false;
+    isMore = false;
     notifyListeners();
   }
 

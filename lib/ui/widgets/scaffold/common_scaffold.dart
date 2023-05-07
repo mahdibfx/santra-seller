@@ -253,28 +253,33 @@ class CommonScaffold extends StatelessWidget {
                   : const SizedBox(),
               //leading,
               backgroundColor: appbarcolor,
-              title: GestureDetector(
-                onTap: () {
-                  if (Provider.of<SplashProvider>(context, listen: false)
-                              .sellerCode ==
-                          null &&
-                      Provider.of<LoginProvider>(context, listen: false)
-                              .sellerCode ==
-                          null) {
-                    null;
-                  } else {
-                    // if (Get.currentRoute == Routes.homeRoutes) {
-                    // } else {
-                    Get.offAll(() => const HomeScreen());
-                    // }
-                  }
-                },
-                child: SvgPicture.asset(
-                  UIDataImage.sellerLogoIconSVG,
-                  height: 35,
-                  width: 35,
-                  // fit: BoxFit.fitWidth,
-                ),
+              title:  Consumer<SplashProvider>(builder: (context, splashPro, child)  {
+                  return GestureDetector(
+                    onTap: () {
+                      
+                      if (Provider.of<SplashProvider>(context, listen: false)
+                                  .sellerCode ==
+                              null &&
+                          Provider.of<LoginProvider>(context, listen: false)
+                                  .sellerCode ==
+                              null) {
+                        null;
+                      } else {
+                        // if (Get.currentRoute == Routes.homeRoutes) {
+                        // } else {
+                          splashPro.onHomeScreen();
+                        Get.offAll(() => const HomeScreen());
+                        // }
+                      }
+                    },
+                    child: SvgPicture.asset(
+                      UIDataImage.sellerLogoIconSVG,
+                      height: 35,
+                      width: 35,
+                      // fit: BoxFit.fitWidth,
+                    ),
+                  );
+                }
               ),
               actions: showActions == true
                   ? Provider.of<SplashProvider>(context, listen: false)
@@ -285,12 +290,16 @@ class CommonScaffold extends StatelessWidget {
                               null
                       ? []
                       : [
-                          CartIconWithBadge(
-                            onTap: () {
-                              Get.to(() => CartScreen());
-                              //Get.toNamed(Routes.cartroute);
-                            },
-                            showBadge: true,
+                          Consumer<SplashProvider>(builder: (context, splashPro, child){
+                              return CartIconWithBadge(
+                                onTap: () {
+                                  splashPro.homeAndMoreScreenOff();
+                                  Get.to(() => CartScreen());
+                                  //Get.toNamed(Routes.cartroute);
+                                },
+                                showBadge: true,
+                              );
+                            }
                           ),
                           SpacingWidth.widthlistspacing15,
                           NotificationIconWithBadge(),

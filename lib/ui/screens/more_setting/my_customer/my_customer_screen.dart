@@ -47,7 +47,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                       isTextHidden: false,
                       prefixIcon: UIDATAIcons.searchIcon,
                       fillcolor: Colors.white,
-                      labelText: 'Search by customer name'.tr,
+                      labelText: 'customer_list_search'.tr,
                       onChanged: (value) {
                         _.filterList(value);
                       },

@@ -46,7 +46,7 @@ class CustomDetailBottomSheet extends StatelessWidget {
             padding: const EdgeInsets.only(
                 right: 10, bottom: 20.0, left: 10, top: 20),
             child: PrimaryButtonWithIcon(
-              btntxt: "My Client List",
+              btntxt: "client_list_button".tr,
               iconImage: UIDATAIcons.customersIcon,
               onPressed: () {
                 Get.back();

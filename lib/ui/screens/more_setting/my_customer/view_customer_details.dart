@@ -55,7 +55,7 @@ class ViewCustomerDetails extends StatelessWidget {
               HeadingWithIcon(
                   icon: UIDATAIcons.userIcon,
                   iconColor: UIDataColors.primaryColor,
-                  btntxt: "Customer Info".tr),
+                  btntxt: "cart_customer_information".tr),
               SpacingHeight.heightlistspacing10,
               CardCustomerDetail(customerDetail: customerDetail),
               Column(
@@ -131,7 +131,7 @@ class ViewCustomerDetails extends StatelessWidget {
                       checkboxShape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       contentPadding: EdgeInsets.zero,
-                      title: const Text("Pay on receipt",
+                      title:  Text("pay_on_receipt".tr,
                           style: UIDataTextStyles.h3),
                       controlAffinity: ListTileControlAffinity.leading,
                       side: const BorderSide(
@@ -152,7 +152,7 @@ class ViewCustomerDetails extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
                     child: PrimaryButtonWithIcon(
-                      btntxt: "Submit Order",
+                      btntxt: "submit_order".tr,
                       backEndColor: UIDataColors.whiteColor,
                       buttontxtColor: UIDataColors.primaryColor,
                       iconImageColor: UIDataColors.primaryColor,
