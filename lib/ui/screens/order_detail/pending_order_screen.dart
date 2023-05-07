@@ -34,118 +34,121 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
                 child: Center(
                 child: CircularProgressIndicator(),
               ))
-            : SafeArea(
-                child: SingleChildScrollView(
-                  child: Stack(
-                    alignment: AlignmentDirectional.center,
+            : Stack(
+                    // alignment: AlignmentDirectional.center,
                     children: [
-                      Column(
-                        children: [
-                          HeadingWithIcon(
-                              icon: UIDATAIcons.orderBascketBorder,
-                              btntxt: "pending_orders_title".tr),
-                          SpacingHeight.heightlistspacing10,
-                          Row(
+                      SafeArea(
+                        child: SingleChildScrollView(
+                          child: Column(
                             children: [
-                              Expanded(
-                                child: SizedBox(
-                                  // width: 100,
-                                  child: CommonTextField(
-                                    prefixIcon: UIDATAIcons.searchIcon,
-                                    isTextHidden: false,
-                                    hintText: 'order_number'.tr,
-                                    fillcolor: UIDataColors.whiteColor,
-                                    keyboardType: TextInputType.text,
-                                    controller: _.filterController,
-                                    onChanged: (value) {
-                                      _.filterPendingOrders();
-                                    },
-                                  ),
-                                ),
-                              ),
-                              SpacingWidth.widthlistspacing,
-                              GestureDetector(
-                                onTap: () {
-                                  newShhet(context);
-                                },
-                                child: Container(
-                                  width: 45,
-                                  height: 45,
-                                  decoration: const BoxDecoration(
-                                    color: UIDataColors.primaryColor,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  child: Center(
-                                    child: SvgPicture.asset(
-                                      UIDATAIcons.filterIcon,
-                                      color: Colors.white,
+                              HeadingWithIcon(
+                                  icon: UIDATAIcons.orderBascketBorder,
+                                  btntxt: "pending_orders_title".tr),
+                              SpacingHeight.heightlistspacing10,
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: SizedBox(
+                                      // width: 100,
+                                      child: CommonTextField(
+                                        prefixIcon: UIDATAIcons.searchIcon,
+                                        isTextHidden: false,
+                                        hintText: 'order_number'.tr,
+                                        fillcolor: UIDataColors.whiteColor,
+                                        keyboardType: TextInputType.text,
+                                        controller: _.filterController,
+                                        onChanged: (value) {
+                                          _.filterPendingOrders();
+                                        },
+                                      ),
                                     ),
                                   ),
-                                ),
-                              )
+                                  SpacingWidth.widthlistspacing,
+                                  GestureDetector(
+                                    onTap: () {
+                                      newShhet(context);
+                                    },
+                                    child: Container(
+                                      width: 45,
+                                      height: 45,
+                                      decoration: const BoxDecoration(
+                                        color: UIDataColors.primaryColor,
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(10)),
+                                      ),
+                                      child: Center(
+                                        child: SvgPicture.asset(
+                                          UIDATAIcons.filterIcon,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SpacingHeight.heightlistspacing20,
+                              ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: _.filteredPendingOrders.length,
+                                  itemBuilder: (context, index) {
+                                    var santraList = _.filteredPendingOrders[index];
+                                    return santraList.orderStatus == 'new_order' ||
+                                            santraList.orderStatus ==
+                                                'assigned_3pl' ||
+                                            santraList.orderStatus ==
+                                                'payment_pending'
+                                        ? CustomCard(
+                                            title: 'Card',
+                                            orderStatus:
+                                                santraList.orderStatus.toString(),
+                                            totalPrice: santraList.totalOrderAmount
+                                                .toString(),
+                                            orderRemarks:
+                                                santraList.orderRemarks.toString(),
+                                            orderTime: santraList.orderDateStamp
+                                                .toString(),
+                                            deliveryTime:
+                                                santraList.advanceTime.toString(),
+                                            customerName:
+                                                santraList.customerName.toString(),
+                                            paymentMethod:
+                                                santraList.paymentMethod.toString(),
+                                            orderNumber:
+                                                santraList.orderNumber.toString(),
+                                            paymentLink:
+                                                santraList.paymentLink.toString(),
+                                            orderItemList: santraList.orderItems,
+                                          )
+                                        : ManualOrderCard(
+                                            orderStatus:
+                                                santraList.orderStatus.toString(),
+                                            totalPrice: santraList.totalOrderAmount
+                                                .toString(),
+                                            orderTime: santraList.orderDateStamp
+                                                .toString(),
+                                            deliveryTime:
+                                                santraList.advanceTime.toString(),
+                                            customerName:
+                                                santraList.customerName.toString(),
+                                            paymentMethod:
+                                                santraList.paymentMethod.toString(),
+                                            orderNumber:
+                                                santraList.orderNumber.toString(),
+                                            orderItemList: santraList.orderItems,
+                                            colorCode:
+                                                santraList.colorCode.toString(),
+                                          );
+                                  }),
+                              SpacingHeight.heightlistspacing50
                             ],
-                          ),
-                          SpacingHeight.heightlistspacing20,
-                          ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: _.filteredPendingOrders.length,
-                              itemBuilder: (context, index) {
-                                var santraList = _.filteredPendingOrders[index];
-                                return santraList.orderStatus == 'new_order' ||
-                                        santraList.orderStatus ==
-                                            'assigned_3pl' ||
-                                        santraList.orderStatus ==
-                                            'payment_pending'
-                                    ? CustomCard(
-                                        title: 'Card',
-                                        orderStatus:
-                                            santraList.orderStatus.toString(),
-                                        totalPrice: santraList.totalOrderAmount
-                                            .toString(),
-                                        orderRemarks:
-                                            santraList.orderRemarks.toString(),
-                                        orderTime: santraList.orderDateStamp
-                                            .toString(),
-                                        deliveryTime:
-                                            santraList.advanceTime.toString(),
-                                        customerName:
-                                            santraList.customerName.toString(),
-                                        paymentMethod:
-                                            santraList.paymentMethod.toString(),
-                                        orderNumber:
-                                            santraList.orderNumber.toString(),
-                                        paymentLink:
-                                            santraList.paymentLink.toString(),
-                                        orderItemList: santraList.orderItems,
-                                      )
-                                    : ManualOrderCard(
-                                        orderStatus:
-                                            santraList.orderStatus.toString(),
-                                        totalPrice: santraList.totalOrderAmount
-                                            .toString(),
-                                        orderTime: santraList.orderDateStamp
-                                            .toString(),
-                                        deliveryTime:
-                                            santraList.advanceTime.toString(),
-                                        customerName:
-                                            santraList.customerName.toString(),
-                                        paymentMethod:
-                                            santraList.paymentMethod.toString(),
-                                        orderNumber:
-                                            santraList.orderNumber.toString(),
-                                        orderItemList: santraList.orderItems,
-                                        colorCode:
-                                            santraList.colorCode.toString(),
-                                      );
-                              }),
-                          SpacingHeight.heightlistspacing50
-                        ],
-                      ).paddingSymmetric(horizontal: 15),
-                      _.isAcceptOrderLoading ||
+                          ).paddingSymmetric(horizontal: 15),
+                        ),
+                      ),
+                     _.isAcceptOrderLoading ||
                               _.isCancelOrderLoading ||
-                              _.isRejectOrderLoading
+                              _.isRejectOrderLoading ||
+                              _.isOrderReadyLoading
                           ? Opacity(
                               opacity: 0.8,
                               child: ModalBarrier(
@@ -162,9 +165,8 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
                             )
                           : Container()
                     ],
-                  ),
-                ),
-              );
+                  );
+                
       },
     );
   }

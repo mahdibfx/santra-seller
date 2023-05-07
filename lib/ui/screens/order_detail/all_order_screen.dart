@@ -157,9 +157,10 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
                               color: Colors.black.withOpacity(0.5)),
                         )
                       : Container(),
-                  _.isAcceptOrderLoading ||
+                    _.isAcceptOrderLoading ||
                           _.isCancelOrderLoading ||
-                          _.isRejectOrderLoading
+                          _.isRejectOrderLoading ||
+                          _.isOrderReadyLoading
                       ? const Center(
                           child: CircularProgressIndicator(),
                         )
