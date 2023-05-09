@@ -13,6 +13,7 @@ import 'package:santra_seller/ui/screens/settings/change_password.dart';
 import 'package:santra_seller/ui/screens/settings/delete_account.dart';
 import 'package:santra_seller/ui/screens/settings/language_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
+import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -39,106 +40,110 @@ class _SettingsState extends State<Settings> {
   }
 
   Widget bodyData(context) {
-    return Consumer<LogoutProvider>(
-      builder: (context, value, child) {
-        return Stack(
-          children: [
-            SafeArea(
-              child: SingleChildScrollView(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  HeadingWithIcon(
-                      icon: UIDATAIcons.settingsIcon, btntxt: "more_setting".tr),
-                  SpacingHeight.heightlistspacing15,
-                  ReusableIconSetting(
-                    icon: UIDATAIcons.infoIcon,
-                    onPressed: () {
-                      Get.to(() => const AccountInfo());
-                    },
-                    btntxt: "setting_account".tr,
-                  ),
-                  ReusableIconSetting(
-                    icon: UIDATAIcons.emailIcon,
-                    iconColor: UIDataColors.primaryColor,
-                    onPressed: () {
-                      Get.to(() => const ChangeEmail());
-                    },
-                    btntxt: "setting_email".tr,
-                  ),
-                  ReusableIconSetting(
-                    icon: UIDATAIcons.lockIcon,
-                    onPressed: () {
-                      Get.to(() => ChangePassword());
-                      // Get.toNamed(Routes.changePassword);
-                    },
-                    btntxt: 'setting_password'.tr,
-                  ),
-                  ReusableIconSetting(
-                    icon: UIDATAIcons.languageIcon,
-                    onPressed: () {
-                      Get.to(() => const LanguageSettings());
-                    },
-                    btntxt: 'setting_language'.tr,
-                  ),
-                  // GetBuilder<LogoutController>(builder: (logoutController) {
-                  //   return
-                  ReusableIconSetting(
-                    icon: UIDATAIcons.logoutIcon,
-                    onPressed: () {
-                      customOntapDialogTwoButtons(
-                          context,
-                          "setting_logout".tr,
-                          "logout_message".tr,
-                          "button_cancel".tr,
-                          "setting_logout".tr, () {
-                        Get.back();
-                      }, () {
-                        Get.back();
-                        Provider.of<LogoutProvider>(context, listen: false)
-                            .logout()
-                            .then((value) {
-                          Provider.of<SplashProvider>(context, listen: false)
-                              .flushSplashData();
-                          Provider.of<LoginProvider>(context, listen: false)
-                              .flushLoginDataData();
-                          Provider.of<CartProvider>(context, listen: false)
-                              .flushCart();
-                        });
-                      });
-                    },
-                    btntxt: 'setting_logout'.tr,
-                  ),
-                  //   ;
-                  // }),
-                  ReusableIconSetting(
-                    icon: UIDATAIcons.deleteIcon,
-                    onPressed: () {
-                      Get.to(() => DeleteAccount());
-                    },
-                    btntxt: 'setting_delete'.tr,
-                  ),
+    return Consumer<AppTranslations>(
+          builder: (context, tr, child) {
+        return Consumer<LogoutProvider>(
+          builder: (context, value, child) {
+            return Stack(
+              children: [
+                SafeArea(
+                  child: SingleChildScrollView(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      HeadingWithIcon(
+                          icon: UIDATAIcons.settingsIcon, btntxt: tr.translateData("more_setting")),
+                      SpacingHeight.heightlistspacing15,
+                      ReusableIconSetting(
+                        icon: UIDATAIcons.infoIcon,
+                        onPressed: () {
+                          Get.to(() => const AccountInfo());
+                        },
+                        btntxt: tr.translateData("setting_account"),
+                      ),
+                      ReusableIconSetting(
+                        icon: UIDATAIcons.emailIcon,
+                        iconColor: UIDataColors.primaryColor,
+                        onPressed: () {
+                          Get.to(() => const ChangeEmail());
+                        },
+                        btntxt: tr.translateData("setting_email"),
+                      ),
+                      ReusableIconSetting(
+                        icon: UIDATAIcons.lockIcon,
+                        onPressed: () {
+                          Get.to(() => ChangePassword());
+                          // Get.toNamed(Routes.changePassword);
+                        },
+                        btntxt: tr.translateData('setting_password'),
+                      ),
+                      ReusableIconSetting(
+                        icon: UIDATAIcons.languageIcon,
+                        onPressed: () {
+                          Get.to(() => const LanguageSettings());
+                        },
+                        btntxt: tr.translateData('setting_language'),
+                      ),
+                      // GetBuilder<LogoutController>(builder: (logoutController) {
+                      //   return
+                      ReusableIconSetting(
+                        icon: UIDATAIcons.logoutIcon,
+                        onPressed: () {
+                          customOntapDialogTwoButtons(
+                              context,
+                              tr.translateData("setting_logout"),
+                              tr.translateData("logout_message"),
+                              tr.translateData("button_cancel"),
+                              tr.translateData("setting_logout"), () {
+                            Get.back();
+                          }, () {
+                            Get.back();
+                            Provider.of<LogoutProvider>(context, listen: false)
+                                .logout()
+                                .then((value) {
+                              Provider.of<SplashProvider>(context, listen: false)
+                                  .flushSplashData();
+                              Provider.of<LoginProvider>(context, listen: false)
+                                  .flushLoginDataData();
+                              Provider.of<CartProvider>(context, listen: false)
+                                  .flushCart();
+                            });
+                          });
+                        },
+                        btntxt: tr.translateData('setting_logout'),
+                      ),
+                      //   ;
+                      // }),
+                      ReusableIconSetting(
+                        icon: UIDATAIcons.deleteIcon,
+                        onPressed: () {
+                          Get.to(() => DeleteAccount());
+                        },
+                        btntxt: tr.translateData('setting_delete'),
+                      ),
 
-                  SpacingHeight.heightlistspacing50
-                ],
-              ).paddingSymmetric(horizontal: 20)),
-            ),
-            value.isLogoutLoading
-                ? Opacity(
-                    opacity: 0.8,
-                    child: ModalBarrier(
-                        dismissible: false,
-                        color: Colors.black.withOpacity(0.5)),
-                  )
-                : Container(),
-            value.isLogoutLoading
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Container()
-          ],
+                      SpacingHeight.heightlistspacing50
+                    ],
+                  ).paddingSymmetric(horizontal: 20)),
+                ),
+                value.isLogoutLoading
+                    ? Opacity(
+                        opacity: 0.8,
+                        child: ModalBarrier(
+                            dismissible: false,
+                            color: Colors.black.withOpacity(0.5)),
+                      )
+                    : Container(),
+                value.isLogoutLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Container()
+              ],
+            );
+          },
         );
-      },
+      }
     );
   }
 

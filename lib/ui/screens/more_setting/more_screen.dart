@@ -1,5 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/ui/screens/more_setting/about_us_screen.dart';
 import 'package:santra_seller/ui/screens/more_setting/contact_us/contact_us_screen.dart';
@@ -7,6 +8,7 @@ import 'package:santra_seller/ui/screens/more_setting/customer_reviews.dart';
 import 'package:santra_seller/ui/screens/more_setting/my_customer/my_customer_screen.dart';
 import 'package:santra_seller/ui/screens/more_setting/privacy_policy_screen.dart';
 import 'package:santra_seller/ui/screens/product_setting/product_setting_screen.dart';
+import '../../../utils/app_translation/app_translation.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 
@@ -21,73 +23,77 @@ class MoreSettingScreen extends StatelessWidget {
   MoreSettingScreen({super.key});
 
   Widget bodyData() {
-    return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            HeadingWithIcon(icon: UIDATAIcons.moreHorizontal, btntxt: "more_title".tr),
-            SpacingHeight.heightlistspacing15,
-            ReusableIconSetting(
-              icon: UIDATAIcons.settingsIcon,
-              onPressed: () {
-                Get.to(() => Settings());
-              },
-              btntxt: 'more_setting'.tr,
-            ),
-            ReusableIconSetting(
-              icon: UIDATAIcons.dashboardIcon,
-              onPressed: () {
-                Get.to(() => ProductSettingScreen());
-              },
-              btntxt: 'more_products'.tr,
-            ),
-            ReusableIconSetting(
-              icon: UIDATAIcons.customersIcon,
-              onPressed: () {
-                Get.to(() => const MyCustomerScreen());
-              },
-              btntxt: 'more_customerlist'.tr,
-            ),
-            ReusableIconSetting(
-              icon: UIDATAIcons.starIcon,
-              onPressed: () {
-                Get.to(() => CustomerReviews());
-              },
-              btntxt: 'more_reviews'.tr,
-            ),
-            // ReusableIconSetting(
-            //   icon: UIDATAIcons.walletIcon,
-            //   onPressed: () {
-            //     Get.toNamed(Routes.walletscreen);
-            //   },
-            //   btntxt: 'Wallet',
-            // ),
-            ReusableIconSetting(
-              icon: UIDATAIcons.whatsappIcon,
-              onPressed: () {
-                Get.to(() => ContactUsScreen());
-              },
-              btntxt: 'more_contact'.tr,
-            ),
-            ReusableIconSetting(
-              icon: UIDATAIcons.santraVectorIcon,
-              onPressed: () {
-                Get.to(() => AboutUsScreen());
-              },
-              btntxt: 'more_aboutus'.tr,
-            ),
-            ReusableIconSetting(
-              icon: UIDATAIcons.securityIcon,
-              onPressed: () {
-                Get.to(() => PrivacyScreen());
-              },
-              btntxt: 'more_privacy'.tr,
-            ),
-            SpacingHeight.heightlistspacing50
-          ],
-        ).paddingSymmetric(horizontal: 20),
-      ),
+    return Consumer<AppTranslations>(
+          builder: (context, tr, child){
+        return SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                HeadingWithIcon(icon: UIDATAIcons.moreHorizontal, btntxt: tr.translateData("more_title")),
+                SpacingHeight.heightlistspacing15,
+                ReusableIconSetting(
+                  icon: UIDATAIcons.settingsIcon,
+                  onPressed: () {
+                    Get.to(() => Settings());
+                  },
+                  btntxt: tr.translateData('more_setting'),
+                ),
+                ReusableIconSetting(
+                  icon: UIDATAIcons.dashboardIcon,
+                  onPressed: () {
+                    Get.to(() => ProductSettingScreen());
+                  },
+                  btntxt: tr.translateData('more_products'),
+                ),
+                ReusableIconSetting(
+                  icon: UIDATAIcons.customersIcon,
+                  onPressed: () {
+                    Get.to(() => const MyCustomerScreen());
+                  },
+                  btntxt: tr.translateData('more_customerlist'),
+                ),
+                ReusableIconSetting(
+                  icon: UIDATAIcons.starIcon,
+                  onPressed: () {
+                    Get.to(() => CustomerReviews());
+                  },
+                  btntxt: tr.translateData('more_reviews'),
+                ),
+                // ReusableIconSetting(
+                //   icon: UIDATAIcons.walletIcon,
+                //   onPressed: () {
+                //     Get.toNamed(Routes.walletscreen);
+                //   },
+                //   btntxt: 'Wallet',
+                // ),
+                ReusableIconSetting(
+                  icon: UIDATAIcons.whatsappIcon,
+                  onPressed: () {
+                    Get.to(() => ContactUsScreen());
+                  },
+                  btntxt: tr.translateData('more_contact'),
+                ),
+                ReusableIconSetting(
+                  icon: UIDATAIcons.santraVectorIcon,
+                  onPressed: () {
+                    Get.to(() => AboutUsScreen());
+                  },
+                  btntxt: tr.translateData('more_aboutus'),
+                ),
+                ReusableIconSetting(
+                  icon: UIDATAIcons.securityIcon,
+                  onPressed: () {
+                    Get.to(() => PrivacyScreen());
+                  },
+                  btntxt: tr.translateData('more_privacy'),
+                ),
+                SpacingHeight.heightlistspacing50
+              ],
+            ).paddingSymmetric(horizontal: 20),
+          ),
+        );
+      }
     );
   }
 

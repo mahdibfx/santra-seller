@@ -1,4 +1,6 @@
+import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
+import '../../../utils/app_translation/app_translation.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -11,19 +13,23 @@ class WalletScreen extends StatelessWidget {
   WalletScreen({super.key});
 
   Widget bodyData() {
-    return SafeArea(
-      child: SingleChildScrollView(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          SpacingHeight.heightlistspacing20,
-          Text(
-            'Wallet',
-            style: UIDataTextStyles.h1,
-          ),
-          SpacingHeight.heightlistspacing20,
-        ],
-      ).marginAll(10)),
+    return Consumer<AppTranslations>(
+          builder: (con, tr, child) {
+        return SafeArea(
+          child: SingleChildScrollView(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children:  [
+              SpacingHeight.heightlistspacing20,
+              Text(
+                tr.translateData('more_wallet'),
+                style: UIDataTextStyles.h1,
+              ),
+              SpacingHeight.heightlistspacing20,
+            ],
+          ).marginAll(10)),
+        );
+      }
     );
   }
 

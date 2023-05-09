@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/more_settings_provider/privacy_provider.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
+import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 
@@ -28,34 +29,38 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
   // }
 
   Widget bodyData() {
-    return Consumer<PrivacyProvider>(
-      builder: (con, _, child) {
-        return _.isPrivacyLoading
-            ? const SizedBox(
-                child: Center(
-                child: CircularProgressIndicator(),
-              ))
-            : SafeArea(
-                child: SingleChildScrollView(
-                    child: _.hasPrivacyError
-                        ?  Text(
-                            "went_wrong_while".tr)
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              HeadingWithIcon(
-                                  icon: UIDATAIcons.santraVectorIcon,
-                                  btntxt: "more_privacy".tr),
-                              Text(
-                                "privacy_policy_data".tr,
-                                style: UIDataTextStyles.title,
-                                textAlign: TextAlign.justify,
-                              ),
-                              SpacingHeight.heightlistspacing50
-                            ],
-                          ).marginOnly(left: 20, right: 20)),
-              );
-      },
+    return Consumer<AppTranslations>(
+          builder: (con, tr, child) {
+        return Consumer<PrivacyProvider>(
+          builder: (con, _, child) {
+            return _.isPrivacyLoading
+                ? const SizedBox(
+                    child: Center(
+                    child: CircularProgressIndicator(),
+                  ))
+                : SafeArea(
+                    child: SingleChildScrollView(
+                        child: _.hasPrivacyError
+                            ?  Text(
+                                tr.translateData("went_wrong_while"))
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  HeadingWithIcon(
+                                      icon: UIDATAIcons.santraVectorIcon,
+                                      btntxt:tr.translateData( "more_privacy")),
+                                  Text(
+                                    tr.translateData("privacy_policy_data"),
+                                    style: UIDataTextStyles.title,
+                                    textAlign: TextAlign.justify,
+                                  ),
+                                  SpacingHeight.heightlistspacing50
+                                ],
+                              ).marginOnly(left: 20, right: 20)),
+                  );
+          },
+        );
+      }
     );
   }
 

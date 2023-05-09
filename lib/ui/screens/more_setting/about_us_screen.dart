@@ -2,6 +2,7 @@
 import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/more_settings_provider/about_us_provider.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
+import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -20,34 +21,38 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
  
   Widget bodyData() {
-    return Consumer<AboutUsProvider>(
-      builder: (con, _, child) {
-        return _.isLoading
-            ? const SizedBox(
-                child: Center(
-                child: CircularProgressIndicator(),
-              ))
-            : SafeArea(
-                child: SingleChildScrollView(
-                    child: _.hasAboutUsError
-                        ?  Text(
-                            "went_wrong_while".tr)
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              HeadingWithIcon(
-                                  icon: UIDATAIcons.santraVectorIcon,
-                                  btntxt: "side_menu_about_signin".tr),
-                              Text(
-                                "about_us".tr,
-                                style: UIDataTextStyles.title,
-                                textAlign: TextAlign.justify,
-                              ),
-                              SpacingHeight.heightlistspacing50
-                            ],
-                          ).marginOnly(left: 20, right: 20)),
-              );
-      },
+    return Consumer<AppTranslations>(
+          builder: (con, tr, child) {
+        return Consumer<AboutUsProvider>(
+          builder: (con, _, child) {
+            return _.isLoading
+                ? const SizedBox(
+                    child: Center(
+                    child: CircularProgressIndicator(),
+                  ))
+                : SafeArea(
+                    child: SingleChildScrollView(
+                        child: _.hasAboutUsError
+                            ?  Text(
+                                tr.translateData("went_wrong_while"))
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  HeadingWithIcon(
+                                      icon: UIDATAIcons.santraVectorIcon,
+                                      btntxt: tr.translateData("side_menu_about_signin")),
+                                  Text(
+                                    tr.translateData("about_us"),
+                                    style: UIDataTextStyles.title,
+                                    textAlign: TextAlign.justify,
+                                  ),
+                                  SpacingHeight.heightlistspacing50
+                                ],
+                              ).marginOnly(left: 20, right: 20)),
+                  );
+          },
+        );
+      }
     );
   }
 
