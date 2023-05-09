@@ -12,6 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import '../ui/widgets/dialogs/custom_dialogs.dart';
 import '../ui/widgets/snackbar/common_snackbar.dart';
+import '../utils/app_translation/app_translation.dart';
 import '../utils/uidata.dart';
 import 'language_provider/language_provider.dart';
 
@@ -68,7 +69,6 @@ class SplashProvider extends ChangeNotifier {
   }
 
   void checkUpdateAndMakeDescision() async {
-    setOldLang();
     isInternetAvailable();
     forceUpdate().then((value) {
       if (updateAvailable == true) {

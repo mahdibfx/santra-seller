@@ -5,6 +5,7 @@ import 'package:santra_seller/ui/widgets/add_manual_order_widgets/voucher_tile.d
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import '../../../provider/cart_provider.dart';
 import '../../../utils/uidata.dart';
+import 'package:get/get.dart';
 
 class VouchersSection extends StatelessWidget {
   // CartController cartController = Get.put(CartController());
@@ -36,7 +37,7 @@ class VouchersSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               HeadingWithIcon(
-                  icon: UIDATAIcons.voucherStarIcon, btntxt: "Vouchers"),
+                  icon: UIDATAIcons.voucherStarIcon, btntxt: "cart_voucher_title".tr),
               cartController.vouchersList.isNotEmpty
                   ? SizedBox(
                       height: 55,

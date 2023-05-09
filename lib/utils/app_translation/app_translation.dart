@@ -6,54 +6,75 @@ import 'package:get/get.dart';
 import '../api_data.dart';
 import 'package:flutter/material.dart';
 
-class AppTranslations extends Translations {
-  Map<String, Map<String, String>> _translations = {};
-  String? selectedLanguage;
+class AppTranslations extends ChangeNotifier {
+  static Map<String, Map<String, String>> _translations = {};
+  String selectedLanguage = 'en_us';
+  dynamic engLang;
+  dynamic arabLang;
 
-  Future<String> language() async {
+  @override
+  Map<String, Map<String, String>> get keys => _translations;
+
+   Future<String> language() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var oldLang = prefs.get("selectedlanguage") ;
-    if(oldLang != null){
-      var selectedlanguage = prefs.get("selectedlanguage") as String;
-      return selectedlanguage;
+    var oldLang = prefs.get("selectedlanguage");
+    if (oldLang != null) {
+       selectedLanguage = prefs.get("selectedlanguage") as String;
+       notifyListeners();
+      return selectedLanguage;
     }
-    
+
     return 'en_us';
   }
-   langNew()async{
-    String newLnag = 'en_us';
- await language().then((value) {
-return value;
-});
-return newLnag;
+
+  setNewLanguage(String lang){
+    selectedLanguage = lang;
+    notifyListeners();
+    
+  }
+  setShared(String lang)async{
+ SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("selectedlanguage",lang);
   }
 
-  Future<bool> fetchTranslations() async {
+  langNew() async {
+    String newLnag = 'en_us';
+    await language().then((value) {
+      return value;
+    });
+    return newLnag;
+  }
+
+  fetchTranslationsv() async {
     var url = Uri.parse(ApiData.languageSelection);
     var response = await http.post(url, headers: ApiData.header);
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
 
-      final languageDataEngDynamic = data['data'][0]['en_us'];
-      Map<String, String> convertedData =
-          languageDataEngDynamic.cast<String, String>();
-      _translations = {'en_us': convertedData};
+      engLang = data['data'][0]['en_us'];
+      Map<String, String> convertedData = engLang.cast<String, String>();
+      notifyListeners();
+      // _translations = {'en_us': convertedData};
 
-      final languageDataArabicDynamic = data['data'][0]['ar_AE'];
-      Map<String, String> convertedDataArabic =
-          languageDataArabicDynamic.cast<String, String>();
+      arabLang = data['data'][0]['ar_AE'];
+      Map<String, String> convertedDataArabic = arabLang.cast<String, String>();
       _translations = {'en_us': convertedData, 'ar_AE': convertedDataArabic};
       selectedLanguage = await language();
       if (selectedLanguage != 'en_us') {
         Get.updateLocale(const Locale('ar', 'AE'));
       }
 
-      return true;
+      return _translations;
     } else {
       throw Exception('Failed to fetch translations');
     }
   }
 
-  @override
-  Map<String, Map<String, String>> get keys => _translations;
+
+  String translateData(String tralate){
+    if(selectedLanguage == 'en_us'){
+      return engLang[tralate];
+    }
+  return   arabLang[tralate];
+  }
 }

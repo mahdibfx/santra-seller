@@ -68,8 +68,8 @@ void main() async {
   await GetStorage.init();
   // await initServices();
    final localization = AppTranslations();
-  await localization.fetchTranslations();
-  runApp(MyApp(localization: localization,),
+  // await localization.fetchTranslations();
+  runApp(MyApp(),
    
     );
 }

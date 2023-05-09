@@ -30,15 +30,15 @@ import './utils/uidata.dart';
 import 'provider/setting_provider/language_settings_controller.dart';
 
 class MyApp extends StatelessWidget {
-    final AppTranslations localization;
 
-  const MyApp({super.key,required this.localization});
+  const MyApp({super.key});
    
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<AppTranslations>(create: (_) => AppTranslations()),
         ChangeNotifierProvider<SplashProvider>(create: (_) => SplashProvider()),
         ChangeNotifierProvider<HomeProvider>(create: (_) => HomeProvider()),
         ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider()),
@@ -78,33 +78,37 @@ class MyApp extends StatelessWidget {
         // ChangeNotifierProvider<LanguageProvider>(
         //     create: (_) => LanguageProvider()),
       ],
-      child: GetMaterialApp(
-        title: UIData.appName,
-        theme: ThemeData(
-          primaryColor: Colors.black,
-          fontFamily: UIDataFonts.quickFont,
-          primarySwatch: Colors.blue,
-        ),
-        debugShowCheckedModeBanner: false,
-        defaultTransition: Get.defaultTransition,
-        showPerformanceOverlay: false,
-        localizationsDelegates: [
-          // const TranslationsDelegate(),
-        ],
-        home: SplashScreen(),
-        enableLog: true,
-        translations: localization,
-        fallbackLocale: const Locale('en', 'US'),
-        // locale:const Locale('en', 'us'),
-        // logWriterCallback: Logger.write,
-        // supportedLocales: [const Locale("en", "US")],
-      //   supportedLocales: const [
-      //   Locale('en'),
-      //   Locale('es'),
-      // ],
-        locale: localization.selectedLanguage == 'en_us' ? const Locale('en', 'us') :const Locale('ar', 'AE'),
-        // initialRoute: AppPages.INITIAL,
-        // getPages: AppPages.routes,
+      child:Consumer<AppTranslations>(
+      builder: (context, _, child){
+          return GetMaterialApp(
+            title: UIData.appName,
+            theme: ThemeData(
+              primaryColor: Colors.black,
+              fontFamily: UIDataFonts.quickFont,
+              primarySwatch: Colors.blue,
+            ),
+            debugShowCheckedModeBanner: false,
+            defaultTransition: Get.defaultTransition,
+            showPerformanceOverlay: false,
+            localizationsDelegates: [
+              // const TranslationsDelegate(),
+            ],
+            home: SplashScreen(),
+            enableLog: true,
+            // translations: localization,
+            fallbackLocale: const Locale('en', 'US'),
+            // locale:const Locale('en', 'us'),
+            // logWriterCallback: Logger.write,
+            supportedLocales: const [ Locale("en", "US"),],
+          //   supportedLocales: const [
+          //   Locale('en'),
+          //   Locale('es'),
+          // ],
+            locale: _.selectedLanguage == 'en_us' ? const Locale('en', 'us') :const Locale('ar', 'AE'),
+            // initialRoute: AppPages.INITIAL,
+            // getPages: AppPages.routes,
+          );
+        }
       ),
     );
   }

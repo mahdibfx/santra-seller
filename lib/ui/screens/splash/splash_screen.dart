@@ -1,6 +1,7 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
+import '../../../utils/app_translation/app_translation.dart';
 import '../../../utils/uidata.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import '../../../provider/splash_provider.dart';
@@ -21,9 +22,12 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     SplashProvider splashProvider =
         Provider.of<SplashProvider>(context, listen: false);
+        AppTranslations translationProvider =
+        Provider.of<AppTranslations>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       splashProvider.checkUpdateAndMakeDescision();
       splashProvider.setOldLang();
+      translationProvider.fetchTranslationsv();
     });
 
     super.initState();

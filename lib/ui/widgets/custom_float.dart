@@ -12,6 +12,7 @@ class CustomFloat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      elevation: 0,
       clipBehavior: Clip.antiAlias,
       mini: isMini,
       onPressed: qrCallback,

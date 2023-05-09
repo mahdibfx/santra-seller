@@ -46,37 +46,37 @@ class _LanguageSettingsState extends State<LanguageSettings> {
                                   icon: UIDATAIcons.languageIcon,
                                   btntxt: "side_menu_language_signin".tr),
 
-                              Consumer<SplashProvider>(
-                            builder: (context, splashPro, child) {
+                              Consumer<AppTranslations>(
+                            builder: (context, tr, child) {
                           return BorderButton(
                             onPressed: () {
                               setState(() {
-                                  _handleButtonTap(_, splashPro);
+                                  _handleButtonTap();
                                 _.isCheckLanguage = true;
                               });
                               _.setTrue("ar_AE");
-                              splashPro.setLanguage("ar_AE");
+                              tr.setNewLanguage("ar_AE");
 
                               _.setFalseValue();
                             
                             },
                             btntxt: "عربي",
                                   backEndColor: Colors.white,
-                                  borderColor: splashPro.language == 'ar_AE' ? UIDataColors.primaryColor : Colors.transparent,
-                                  buttontxtColor:splashPro.language == 'ar_AE' ? UIDataColors.primaryColor :  UIDataColors.blackColor,
+                                  borderColor: tr.selectedLanguage == 'ar_AE' ? UIDataColors.primaryColor : Colors.transparent,
+                                  buttontxtColor:tr.selectedLanguage == 'ar_AE' ? UIDataColors.primaryColor :  UIDataColors.blackColor,
                                 );
                               }),
                               SpacingHeight.heightlistspacing15,
-                              Consumer<SplashProvider>(
-                                  builder: (context, splashPro, child) {
+                              Consumer<AppTranslations>(
+                                  builder: (context, tr, child) {
                                 return BorderButton(
                                   onPressed: () {
-                                    _handleButtonTap(_,splashPro);
+                                    _handleButtonTap();
                                     setState(() {
                                       _.isCheckLanguage = true;
                                     });
                                     _.setTrue("en_us");
-                                    splashPro.setLanguage("en_us");
+                                    tr.setNewLanguage("en_us");
                                     _.setFalseValue();
                                     Future.delayed(const Duration(seconds: 2),
                                         () {
@@ -90,8 +90,8 @@ class _LanguageSettingsState extends State<LanguageSettings> {
                                   },
                                   btntxt: "English",
                                   backEndColor: Colors.white,
-                                  borderColor: splashPro.language == 'en_us' ? UIDataColors.primaryColor : Colors.transparent,
-                                  buttontxtColor:splashPro.language == 'en_us' ? UIDataColors.primaryColor : Colors.black,
+                                  borderColor: tr.selectedLanguage == 'en_us' ? UIDataColors.primaryColor : Colors.transparent,
+                                  buttontxtColor:tr.selectedLanguage == 'en_us' ? UIDataColors.primaryColor : Colors.black,
                                 );
                               }),
 
@@ -117,7 +117,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
     );
   }
 
-  void _handleButtonTap(LangaugeSettingsProvider _, splashPro) {
+  void _handleButtonTap() {
     Timer timer = Timer(Duration(milliseconds: 3000), () {
       Navigator.of(context, rootNavigator: true).pop();
     });
