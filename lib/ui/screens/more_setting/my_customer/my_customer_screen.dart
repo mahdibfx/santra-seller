@@ -7,6 +7,7 @@ import 'package:santra_seller/ui/screens/more_setting/my_customer/view_customer_
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
+import 'package:santra_seller/utils/app_translation/app_translation.dart';
 
 import '../../../../provider/more_settings_provider/my_customer_provider.dart';
 
@@ -28,87 +29,91 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
   Widget bodyData() {
-    return Consumer<MyCustomerProvider>(
-      builder: (context, _, child) {
-        return _.isViewCustomerLoading && _.isLoaderShowDeleteCustumer
-            ? const SizedBox(
-                child: Center(
-                child: CircularProgressIndicator(),
-              ))
-            : SafeArea(
-                child: SingleChildScrollView(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    HeadingWithIcon(
-                        icon: UIDATAIcons.customersIcon,
-                        btntxt: "client_list_button".tr),
-                    CommonTextField(
-                      isTextHidden: false,
-                      prefixIcon: UIDATAIcons.searchIcon,
-                      fillcolor: Colors.white,
-                      labelText: 'customer_list_search'.tr,
-                      onChanged: (value) {
-                        _.filterList(value);
-                      },
-                    ),
-                    SpacingHeight.heightlistspacing10,
-                    PrimaryButtonWithIcon(
-                      iconImage: UIDATAIcons.userIcon,
-                      btntxt: "new_customer_button".tr,
-                      onPressed:
-                          Provider.of<HomeProvider>(context).sellerStatusNew !=
-                                  "done"
-                              ? () {
-                                  exceptionDialog("not_approved".tr,
-                                      "status_approved".tr);
-                                }
-                              : () {
-                                  Get.to(() => const AddCustomerScreen());
-                                  // Get.offNamed(Routes.addNewcustomer);
-                                },
-                    ),
-                    SpacingHeight.heightlistspacing20,
-                    _.allFilterCustomers!.isEmpty
-                        ? const Center(child: Text("No Customers Found"))
-                        : ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: _.allFilterCustomers?.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  if (!widget.comingFromCart) {
-                                    // Get.to(() => EditCustomerDetails(
-                                    //       index: index,
-                                    //     ));
-                                  } else {
-                                    if (_.allFilterCustomers?[index] != null) {
-                                      Get.to(() => ViewCustomerDetails(
-                                            customerDetail:
-                                                _.allFilterCustomers![index],
-                                          ));
+    return Consumer<AppTranslations>(
+          builder: (context, tr, child) {
+        return Consumer<MyCustomerProvider>(
+          builder: (context, _, child) {
+            return _.isViewCustomerLoading && _.isLoaderShowDeleteCustumer
+                ? const SizedBox(
+                    child: Center(
+                    child: CircularProgressIndicator(),
+                  ))
+                : SafeArea(
+                    child: SingleChildScrollView(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        HeadingWithIcon(
+                            icon: UIDATAIcons.customersIcon,
+                            btntxt: tr.translateData("client_list_button")),
+                        CommonTextField(
+                          isTextHidden: false,
+                          prefixIcon: UIDATAIcons.searchIcon,
+                          fillcolor: Colors.white,
+                          labelText: tr.translateData('customer_list_search'),
+                          onChanged: (value) {
+                            _.filterList(value);
+                          },
+                        ),
+                        SpacingHeight.heightlistspacing10,
+                        PrimaryButtonWithIcon(
+                          iconImage: UIDATAIcons.userIcon,
+                          btntxt: tr.translateData("new_customer_button"),
+                          onPressed:
+                              Provider.of<HomeProvider>(context).sellerStatusNew !=
+                                      "done"
+                                  ? () {
+                                      exceptionDialog(tr.translateData("not_approved"),
+                                          tr.translateData("status_approved"));
                                     }
-                                  }
-                                },
-                                child: MyCustomerCard(
-                                  customerIndex: index,
-                                  customer: _.allFilterCustomers![index],
-                                  name: _.allFilterCustomers?[index]
-                                          .customerName ??
-                                      "no_name".tr,
-                                  number: _.allFilterCustomers?[index]
-                                          .customerMobile ??
-                                      "no_contact".tr,
-                                  forView: widget.comingFromCart,
-                                ).marginOnly(bottom: 17),
-                              );
-                            }),
-                    SpacingHeight.heightlistspacing50
-                  ],
-                ).paddingSymmetric(horizontal: 15)),
-              );
-      },
+                                  : () {
+                                      Get.to(() => const AddCustomerScreen());
+                                      // Get.offNamed(Routes.addNewcustomer);
+                                    },
+                        ),
+                        SpacingHeight.heightlistspacing20,
+                        _.allFilterCustomers!.isEmpty
+                            ?  Center(child: Text(tr.translateData("no_customer_found ")))
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: _.allFilterCustomers?.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      if (!widget.comingFromCart) {
+                                        // Get.to(() => EditCustomerDetails(
+                                        //       index: index,
+                                        //     ));
+                                      } else {
+                                        if (_.allFilterCustomers?[index] != null) {
+                                          Get.to(() => ViewCustomerDetails(
+                                                customerDetail:
+                                                    _.allFilterCustomers![index],
+                                              ));
+                                        }
+                                      }
+                                    },
+                                    child: MyCustomerCard(
+                                      customerIndex: index,
+                                      customer: _.allFilterCustomers![index],
+                                      name: _.allFilterCustomers?[index]
+                                              .customerName ??
+                                          tr.translateData("no_name"),
+                                      number: _.allFilterCustomers?[index]
+                                              .customerMobile ??
+                                          tr.translateData("no_contact"),
+                                      forView: widget.comingFromCart,
+                                    ).marginOnly(bottom: 17),
+                                  );
+                                }),
+                        SpacingHeight.heightlistspacing50
+                      ],
+                    ).paddingSymmetric(horizontal: 15)),
+                  );
+          },
+        );
+      }
     );
   }
 
