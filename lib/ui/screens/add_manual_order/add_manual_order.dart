@@ -8,6 +8,7 @@ import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
+import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
 import '../../../provider/cart_provider.dart';
 import '../../widgets/add_manual_order_widgets/rounded_close_button.dart';
@@ -33,420 +34,424 @@ class _AddManulOrderState extends State<AddManulOrder> {
 
   Widget bodyData(context) {
     Size size = MediaQuery.of(context).size;
-    return Consumer<AddManualOrderProvider>(
-      builder: (context, manualOrderController, child) {
-        return manualOrderController.isLoading
-            ? const SizedBox(
-                child: Center(
-                child: CircularProgressIndicator(),
-              ))
-            : Stack(
-                alignment: Alignment.topCenter,
-                children: [
-                  SafeArea(
-                    child: SingleChildScrollView(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        HeadingWithIcon(
-                            icon: UIDATAIcons.addIcon, btntxt: "add_order_title".tr),
-                        CommonTextField(
-                          isTextHidden: false,
-                          prefixIcon: UIDATAIcons.searchIcon,
-                          fillcolor: Colors.white,
-                          labelText: "add_order_search".tr,
-                          onChanged: (value) {
-                            print(value);
-                            manualOrderController.filterList(value);
-                          },
-                        ),
-                        SpacingHeight.heightlistspacing10,
-                        manualOrderController.hasError
-                            ?  Center(child: Text("no_products".tr))
-                            : Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  // const Text(
-                                  //   "Category Name",
-                                  //   style: UIDataTextStyles.h1,
-                                  // ).paddingOnly(left: 10),
-                                  SpacingHeight.heightlistspacing10,
-                                  ListView.builder(
-                                      physics: const BouncingScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount: manualOrderController
-                                          .filteredProducts.length,
-                                      itemBuilder: (context, index) {
-                                        return PDCardAddManualOrder(
-                                          manualOrderController:
-                                              manualOrderController,
-                                          index: index,
-                                          onTap: () {
-                                            setState(() {
-                                              showAdd = false;
-                                            });
-                                            showModalBottomSheet(
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                isScrollControlled: true,
-                                                context: context,
-                                                builder: (context) {
-                                                  return ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      20)),
-                                                      child: StatefulBuilder(
-                                                          builder: (context,
-                                                              setStatec) {
-                                                        return Container(
+    return Consumer<AppTranslations>(
+          builder: (context, tr, child){
+        return Consumer<AddManualOrderProvider>(
+          builder: (context, manualOrderController, child) {
+            return manualOrderController.isLoading
+                ? const SizedBox(
+                    child: Center(
+                    child: CircularProgressIndicator(),
+                  ))
+                : Stack(
+                    alignment: Alignment.topCenter,
+                    children: [
+                      SafeArea(
+                        child: SingleChildScrollView(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            HeadingWithIcon(
+                                icon: UIDATAIcons.addIcon, btntxt: tr.translateData("add_order_title")),
+                            CommonTextField(
+                              isTextHidden: false,
+                              prefixIcon: UIDATAIcons.searchIcon,
+                              fillcolor: Colors.white,
+                              labelText: tr.translateData("add_order_search"),
+                              onChanged: (value) {
+                                print(value);
+                                manualOrderController.filterList(value);
+                              },
+                            ),
+                            SpacingHeight.heightlistspacing10,
+                            manualOrderController.hasError
+                                ?  Center(child: Text(tr.translateData("no_products")))
+                                : Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      // const Text(
+                                      //   "Category Name",
+                                      //   style: UIDataTextStyles.h1,
+                                      // ).paddingOnly(left: 10),
+                                      SpacingHeight.heightlistspacing10,
+                                      ListView.builder(
+                                          physics: const BouncingScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount: manualOrderController
+                                              .filteredProducts.length,
+                                          itemBuilder: (context, index) {
+                                            return PDCardAddManualOrder(
+                                              manualOrderController:
+                                                  manualOrderController,
+                                              index: index,
+                                              onTap: () {
+                                                setState(() {
+                                                  showAdd = false;
+                                                });
+                                                showModalBottomSheet(
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    isScrollControlled: true,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                20),
+                                                        child: Container(
                                                           decoration: BoxDecoration(
+                                                              color: Colors.white,
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
-                                                                          10)),
-                                                          width:
-                                                              double.infinity,
-                                                          child:
-                                                              SingleChildScrollView(
-                                                            child: Column(
-                                                              children: [
-                                                                productImageOnSheet(
-                                                                    size,
-                                                                    manualOrderController,
-                                                                    index),
-                                                                Column(
+                                                                          20)),
+                                                          child: StatefulBuilder(
+                                                              builder: (context,
+                                                                  setStatec) {
+                                                            return Container(
+                                                              decoration: BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10)),
+                                                              width:
+                                                                  double.infinity,
+                                                              child:
+                                                                  SingleChildScrollView(
+                                                                child: Column(
                                                                   children: [
-                                                                    ProductNameAndPriceOnSheet(
-                                                                      product: manualOrderController
+                                                                    productImageOnSheet(
+                                                                        size,
+                                                                        manualOrderController,
+                                                                        index),
+                                                                    Column(
+                                                                      children: [
+                                                                        ProductNameAndPriceOnSheet(
+                                                                          product: manualOrderController
+                                                                                  .allProducts?[
+                                                                              index],
+                                                                          productName: manualOrderController
                                                                               .allProducts?[
-                                                                          index],
-                                                                      productName: manualOrderController
-                                                                          .allProducts?[
-                                                                              index]
-                                                                          .productName,
-                                                                      productPrice: manualOrderController
-                                                                          .allProducts?[
-                                                                              index]
-                                                                          .productPrice,
-                                                                    ),
-                                                                    SpacingHeight
-                                                                        .heightlistspacing20,
+                                                                                  index]
+                                                                              .productName,
+                                                                          productPrice: manualOrderController
+                                                                              .allProducts?[
+                                                                                  index]
+                                                                              .productPrice,
+                                                                        ),
+                                                                        SpacingHeight
+                                                                            .heightlistspacing20,
 
-                                                                    manualOrderController
-                                                                            .allProducts![
-                                                                                index]
-                                                                            .modifiers!
-                                                                            .isNotEmpty
-                                                                        ? ListView
-                                                                            .builder(
-                                                                            physics:
-                                                                                const NeverScrollableScrollPhysics(),
-                                                                            padding:
-                                                                                EdgeInsets.zero,
-                                                                            shrinkWrap:
-                                                                                true,
-                                                                            itemCount:
-                                                                                manualOrderController.allProducts![index].modifiers!.length,
-                                                                            itemBuilder:
-                                                                                (context, index2) {
-                                                                              return
-                                                                                  //manualOrderController.allProducts![index].modifiers![index2].selectionType.toString().toLowerCase() == "checkbox"
-                                                                                  // ?
-                                                                                  Padding(
-                                                                                padding: const EdgeInsets.symmetric(
-                                                                                  horizontal: 8,
-                                                                                ),
-                                                                                child: Column(
-                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                  children: [
-                                                                                    Text(
-                                                                                      "${manualOrderController.allProducts![index].modifiers![index2].name.toString()} :",
-                                                                                      style: UIDataTextStyles.title.copyWith(fontWeight: FontWeight.w600, color: UIDataColors.primaryColor),
+                                                                        manualOrderController
+                                                                                .allProducts![
+                                                                                    index]
+                                                                                .modifiers!
+                                                                                .isNotEmpty
+                                                                            ? ListView
+                                                                                .builder(
+                                                                                physics:
+                                                                                    const NeverScrollableScrollPhysics(),
+                                                                                padding:
+                                                                                    EdgeInsets.zero,
+                                                                                shrinkWrap:
+                                                                                    true,
+                                                                                itemCount:
+                                                                                    manualOrderController.allProducts![index].modifiers!.length,
+                                                                                itemBuilder:
+                                                                                    (context, index2) {
+                                                                                  return
+                                                                                      //manualOrderController.allProducts![index].modifiers![index2].selectionType.toString().toLowerCase() == "checkbox"
+                                                                                      // ?
+                                                                                      Padding(
+                                                                                    padding: const EdgeInsets.symmetric(
+                                                                                      horizontal: 8,
                                                                                     ),
-                                                                                    SpacingHeight.heightlistspacing5,
-                                                                                    ListView.builder(
-                                                                                        padding: EdgeInsets.zero,
-                                                                                        physics: const NeverScrollableScrollPhysics(),
-                                                                                        shrinkWrap: true,
-                                                                                        itemCount: manualOrderController.allProducts![index].modifiers![index2].subModifiers!.length,
-                                                                                        itemBuilder: (context, sebIndex) {
-                                                                                          var newData = manualOrderController.allProducts![index].modifiers![index2].subModifiers!;
-                                                                                          return Column(
-                                                                                            children: [
-                                                                                              Row(
+                                                                                    child: Column(
+                                                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                      children: [
+                                                                                        Text(
+                                                                                          "${manualOrderController.allProducts![index].modifiers![index2].name.toString()} :",
+                                                                                          style: UIDataTextStyles.title.copyWith(fontWeight: FontWeight.w600, color: UIDataColors.primaryColor),
+                                                                                        ),
+                                                                                        SpacingHeight.heightlistspacing5,
+                                                                                        ListView.builder(
+                                                                                            padding: EdgeInsets.zero,
+                                                                                            physics: const NeverScrollableScrollPhysics(),
+                                                                                            shrinkWrap: true,
+                                                                                            itemCount: manualOrderController.allProducts![index].modifiers![index2].subModifiers!.length,
+                                                                                            itemBuilder: (context, sebIndex) {
+                                                                                              var newData = manualOrderController.allProducts![index].modifiers![index2].subModifiers!;
+                                                                                              return Column(
                                                                                                 children: [
-                                                                                                  // manualOrderController.allProducts![index].modifiers![index2].selectionType.toString().toLowerCase() != "checkbox"
-                                                                                                  //     ? GestureDetector(
-                                                                                                  //         onTap: () {
-                                                                                                  //           for (var e in newData) {
-                                                                                                  //             if (e.byDefault.toString() == '1') {
-                                                                                                  //               setStatec(() {
-                                                                                                  //                 e.byDefault = '0';
-                                                                                                  //               });
-                                                                                                  //             }
-                                                                                                  //           }
-                                                                                                  //           setStatec(() {
-                                                                                                  //             if (newData[sebIndex].byDefault.toString() == '1') {
-                                                                                                  //               newData[sebIndex].byDefault = '0';
-                                                                                                  //             } else {
-                                                                                                  //               newData[sebIndex].byDefault = '1';
-                                                                                                  //             }
-                                                                                                  //           });
-                                                                                                  //         },
-                                                                                                  //         child: Container(
-                                                                                                  //           width: 28,
-                                                                                                  //           height: 28,
+                                                                                                  Row(
+                                                                                                    children: [
+                                                                                                      // manualOrderController.allProducts![index].modifiers![index2].selectionType.toString().toLowerCase() != "checkbox"
+                                                                                                      //     ? GestureDetector(
+                                                                                                      //         onTap: () {
+                                                                                                      //           for (var e in newData) {
+                                                                                                      //             if (e.byDefault.toString() == '1') {
+                                                                                                      //               setStatec(() {
+                                                                                                      //                 e.byDefault = '0';
+                                                                                                      //               });
+                                                                                                      //             }
+                                                                                                      //           }
+                                                                                                      //           setStatec(() {
+                                                                                                      //             if (newData[sebIndex].byDefault.toString() == '1') {
+                                                                                                      //               newData[sebIndex].byDefault = '0';
+                                                                                                      //             } else {
+                                                                                                      //               newData[sebIndex].byDefault = '1';
+                                                                                                      //             }
+                                                                                                      //           });
+                                                                                                      //         },
+                                                                                                      //         child: Container(
+                                                                                                      //           width: 28,
+                                                                                                      //           height: 28,
 
-                                                                                                  //           // decoration: BoxDecoration(
-                                                                                                  //           //   color: newData[sebIndex].byDefault.toString() == "1" ? Colors.black : Colors.white, // border color
-                                                                                                  //           //   shape: BoxShape.circle,
-                                                                                                  //           // ),
-                                                                                                  //           child: Padding(
-                                                                                                  //             padding: const EdgeInsets.all(2), // border width
-                                                                                                  //             child: Container(
-                                                                                                  //               // or ClipRRect if you need to clip the content
-                                                                                                  //               decoration: BoxDecoration(
-                                                                                                  //                 shape: BoxShape.circle,
-                                                                                                  //                 color: newData[sebIndex].byDefault.toString() == "1" ? UIDataColors.primaryColor : Colors.white, // inner circle color
-                                                                                                  //                 border: Border.all(
-                                                                                                  //                     width: 2, //                   <--- border width here5
-                                                                                                  //                     color: Colors.grey),
-                                                                                                  //               ),
-                                                                                                  //               child: Container(), // inner content
-                                                                                                  //             ),
-                                                                                                  //           ),
-                                                                                                  //         ),
-                                                                                                  //       )
-                                                                                                  //     :
+                                                                                                      //           // decoration: BoxDecoration(
+                                                                                                      //           //   color: newData[sebIndex].byDefault.toString() == "1" ? Colors.black : Colors.white, // border color
+                                                                                                      //           //   shape: BoxShape.circle,
+                                                                                                      //           // ),
+                                                                                                      //           child: Padding(
+                                                                                                      //             padding: const EdgeInsets.all(2), // border width
+                                                                                                      //             child: Container(
+                                                                                                      //               // or ClipRRect if you need to clip the content
+                                                                                                      //               decoration: BoxDecoration(
+                                                                                                      //                 shape: BoxShape.circle,
+                                                                                                      //                 color: newData[sebIndex].byDefault.toString() == "1" ? UIDataColors.primaryColor : Colors.white, // inner circle color
+                                                                                                      //                 border: Border.all(
+                                                                                                      //                     width: 2, //                   <--- border width here5
+                                                                                                      //                     color: Colors.grey),
+                                                                                                      //               ),
+                                                                                                      //               child: Container(), // inner content
+                                                                                                      //             ),
+                                                                                                      //           ),
+                                                                                                      //         ),
+                                                                                                      //       )
+                                                                                                      //     :
 
-                                                                                                  // SpacingWidth.widthlistspacing,
-                                                                                                  Text(newData[sebIndex].nameModifier.toString(), style: UIDataTextStyles.title.copyWith(fontWeight: FontWeight.w600)),
+                                                                                                      // SpacingWidth.widthlistspacing,
+                                                                                                      Text(newData[sebIndex].nameModifier.toString(), style: UIDataTextStyles.title.copyWith(fontWeight: FontWeight.w600)),
 
-                                                                                                  Text(
-                                                                                                    " (+AED ${newData[sebIndex].priceModifier})",
-                                                                                                    style: UIDataTextStyles.title.copyWith(fontWeight: FontWeight.w600),
-                                                                                                  ),
-                                                                                                  const Spacer(),
-                                                                                                  SizedBox(
-                                                                                                    width: 30,
-                                                                                                    child: Transform.scale(
-                                                                                                      scale: 1.15,
-                                                                                                      child: Checkbox(
-                                                                                                        side: const BorderSide(
-                                                                                                          width: 0.8,
-                                                                                                        ),
-                                                                                                        shape: RoundedRectangleBorder(
-                                                                                                          borderRadius: BorderRadius.circular(10.0),
-                                                                                                        ),
-                                                                                                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                                                                                        checkColor: UIDataColors.primaryColor,
-                                                                                                        fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
-                                                                                                          return UIDataColors.primaryColor;
-                                                                                                        }),
-                                                                                                        value: newData[sebIndex].byDefault.toString() == "1" ? true : false,
-                                                                                                        onChanged: (value) {
-                                                                                                          var minVals = manualOrderController.allProducts![index].modifiers![index2].limitModifiers.toString().split(",").first;
-                                                                                                          var maxVals = manualOrderController.allProducts![index].modifiers![index2].limitModifiers.toString().split(",").last;
-                                                                                                          var byDefList = [];
-                                                                                                          for (var e in newData) {
-                                                                                                            if (e.byDefault.toString() == "1") {
-                                                                                                              byDefList.add("bedfltt");
-                                                                                                            }
-                                                                                                          }
-
-                                                                                                          if (byDefList.length >= int.parse(maxVals) && newData[sebIndex].byDefault.toString() == "0") {
-                                                                                                            CommonSnackbar.getSnackbar("Error", "Your selection limit is $maxVals", UIDataColors.redColor);
-                                                                                                          } else {
-                                                                                                            if (value!) {
-                                                                                                              setStatec(() {
-                                                                                                                newData[sebIndex].byDefault = "1";
-                                                                                                              });
-                                                                                                              print(newData[sebIndex].byDefault.toString());
-                                                                                                            } else {
-                                                                                                              setStatec(() {
-                                                                                                                newData[sebIndex].byDefault = "0";
-                                                                                                              });
-                                                                                                              print(newData[sebIndex].byDefault.toString());
-                                                                                                            }
-                                                                                                          }
-                                                                                                          // @todo for updation
-
-                                                                                                          // manualOrderController.notifyListeners();
-                                                                                                          // manualOrderController.changeStatus(newData[sebIndex].byDefault.toString(),value!);
-                                                                                                        },
+                                                                                                      Text(
+                                                                                                        " (+AED ${newData[sebIndex].priceModifier})",
+                                                                                                        style: UIDataTextStyles.title.copyWith(fontWeight: FontWeight.w600),
                                                                                                       ),
-                                                                                                    ),
+                                                                                                      const Spacer(),
+                                                                                                      SizedBox(
+                                                                                                        width: 30,
+                                                                                                        child: Transform.scale(
+                                                                                                          scale: 1.15,
+                                                                                                          child: Checkbox(
+                                                                                                            side: const BorderSide(
+                                                                                                              width: 0.8,
+                                                                                                            ),
+                                                                                                            shape: RoundedRectangleBorder(
+                                                                                                              borderRadius: BorderRadius.circular(10.0),
+                                                                                                            ),
+                                                                                                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                                                                                            checkColor: UIDataColors.primaryColor,
+                                                                                                            fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+                                                                                                              return UIDataColors.primaryColor;
+                                                                                                            }),
+                                                                                                            value: newData[sebIndex].byDefault.toString() == "1" ? true : false,
+                                                                                                            onChanged: (value) {
+                                                                                                              var minVals = manualOrderController.allProducts![index].modifiers![index2].limitModifiers.toString().split(",").first;
+                                                                                                              var maxVals = manualOrderController.allProducts![index].modifiers![index2].limitModifiers.toString().split(",").last;
+                                                                                                              var byDefList = [];
+                                                                                                              for (var e in newData) {
+                                                                                                                if (e.byDefault.toString() == "1") {
+                                                                                                                  byDefList.add("bedfltt");
+                                                                                                                }
+                                                                                                              }
+
+                                                                                                              if (byDefList.length >= int.parse(maxVals) && newData[sebIndex].byDefault.toString() == "0") {
+                                                                                                                CommonSnackbar.getSnackbar("Error", "Your selection limit is $maxVals", UIDataColors.redColor);
+                                                                                                              } else {
+                                                                                                                if (value!) {
+                                                                                                                  setStatec(() {
+                                                                                                                    newData[sebIndex].byDefault = "1";
+                                                                                                                  });
+                                                                                                                  print(newData[sebIndex].byDefault.toString());
+                                                                                                                } else {
+                                                                                                                  setStatec(() {
+                                                                                                                    newData[sebIndex].byDefault = "0";
+                                                                                                                  });
+                                                                                                                  print(newData[sebIndex].byDefault.toString());
+                                                                                                                }
+                                                                                                              }
+                                                                                                              // @todo for updation
+
+                                                                                                              // manualOrderController.notifyListeners();
+                                                                                                              // manualOrderController.changeStatus(newData[sebIndex].byDefault.toString(),value!);
+                                                                                                            },
+                                                                                                          ),
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                    ],
+                                                                                                  ),
+                                                                                                  const Divider(
+                                                                                                    height: 5,
                                                                                                   ),
                                                                                                 ],
-                                                                                              ),
-                                                                                              const Divider(
-                                                                                                height: 5,
-                                                                                              ),
-                                                                                            ],
-                                                                                          );
-                                                                                        }),
-                                                                                  ],
-                                                                                ),
-                                                                              );
-                                                                              // : SizedBox();
-                                                                            },
-                                                                          )
-                                                                        : const SizedBox(),
+                                                                                              );
+                                                                                            }),
+                                                                                      ],
+                                                                                    ),
+                                                                                  );
+                                                                                  // : SizedBox();
+                                                                                },
+                                                                              )
+                                                                            : const SizedBox(),
 
-                                                                    // SpacingHeight
-                                                                    //     .heightlistspacing10,
-                                                                    // SizedBox(
-                                                                    //   height: MediaQuery.of(context)
-                                                                    //           .size
-                                                                    //           .height *
-                                                                    //       0.03,
-                                                                    // ),
-                                                                    PrimaryButtonWithIcon(
-                                                                      onPressed:
-                                                                          () {
-                                                                        for (var e in manualOrderController
-                                                                            .allProducts![index]
-                                                                            .modifiers!) {
-                                                                          var minLimits = e
-                                                                              .limitModifiers
-                                                                              .toString()
-                                                                              .split(",")
-                                                                              .first;
-                                                                          var listnew =
-                                                                              [];
-                                                                          for (var s
-                                                                              in e.subModifiers!) {
-                                                                            if (s.byDefault.toString() ==
-                                                                                '1') {
-                                                                              listnew.add('byDefault');
+                                                                        // SpacingHeight
+                                                                        //     .heightlistspacing10,
+                                                                        // SizedBox(
+                                                                        //   height: MediaQuery.of(context)
+                                                                        //           .size
+                                                                        //           .height *
+                                                                        //       0.03,
+                                                                        // ),
+                                                                        PrimaryButtonWithIcon(
+                                                                          onPressed:
+                                                                              () {
+                                                                            for (var e in manualOrderController
+                                                                                .allProducts![index]
+                                                                                .modifiers!) {
+                                                                              var minLimits = e
+                                                                                  .limitModifiers
+                                                                                  .toString()
+                                                                                  .split(",")
+                                                                                  .first;
+                                                                              var listnew =
+                                                                                  [];
+                                                                              for (var s
+                                                                                  in e.subModifiers!) {
+                                                                                if (s.byDefault.toString() ==
+                                                                                    '1') {
+                                                                                  listnew.add('byDefault');
+                                                                                }
+                                                                              }
+                                                                              if (listnew.length <
+                                                                                  int.parse(minLimits)) {
+                                                                                return CommonSnackbar.getSnackbar(
+                                                                                    "Error",
+                                                                                    "Your minimum limit is $minLimits",
+                                                                                    UIDataColors.redColor);
+                                                                              }
                                                                             }
-                                                                          }
-                                                                          if (listnew.length <
-                                                                              int.parse(minLimits)) {
-                                                                            return CommonSnackbar.getSnackbar(
-                                                                                "Error",
-                                                                                "Your minimum limit is $minLimits",
-                                                                                UIDataColors.redColor);
-                                                                          }
-                                                                        }
-                                                                        manualOrderController
-                                                                            .clearAddonPro();
+                                                                            manualOrderController
+                                                                                .clearAddonPro();
 
-                                                                        for (var f in manualOrderController
-                                                                            .allProducts![index]
-                                                                            .modifiers!) {
-                                                                          for (var c
-                                                                              in f.subModifiers!) {
-                                                                            if (c.byDefault ==
-                                                                                "1") {
-                                                                              manualOrderController.addOnProducts.add(c);
+                                                                            for (var f in manualOrderController
+                                                                                .allProducts![index]
+                                                                                .modifiers!) {
+                                                                              for (var c
+                                                                                  in f.subModifiers!) {
+                                                                                if (c.byDefault ==
+                                                                                    "1") {
+                                                                                  manualOrderController.addOnProducts.add(c);
+                                                                                }
+                                                                                print("add on length:" +
+                                                                                    manualOrderController.addOnProducts.length.toString());
+                                                                              }
                                                                             }
-                                                                            print("add on length:" +
-                                                                                manualOrderController.addOnProducts.length.toString());
-                                                                          }
-                                                                        }
 
-                                                                        Get.back();
-                                                                        var itemValue =
-                                                                            manualOrderController.allProducts![index];
+                                                                            Get.back();
+                                                                            var itemValue =
+                                                                                manualOrderController.allProducts![index];
 
-                                                                        var data = CartItem(
-                                                                            quantity:
-                                                                                itemValue.productQuantity,
-                                                                            imageString: itemValue.productImages.toString(),
-                                                                            name: itemValue.productName.toString(),
-                                                                            price: double.parse(itemValue.productPrice.toString()),
-                                                                            code: itemValue.productCode.toString(),
-                                                                            subModifiers: manualOrderController.addOnProducts);
+                                                                            var data = CartItem(
+                                                                                quantity:
+                                                                                    itemValue.productQuantity,
+                                                                                imageString: itemValue.productImages.toString(),
+                                                                                name: itemValue.productName.toString(),
+                                                                                price: double.parse(itemValue.productPrice.toString()),
+                                                                                code: itemValue.productCode.toString(),
+                                                                                subModifiers: manualOrderController.addOnProducts);
 
-                                                                        final cartProvider =
-                                                                            context.read<CartProvider>();
-                                                                        cartProvider
-                                                                            .addToCart(data);
-                                                                        manualOrderController
-                                                                            .addIntoCart();
-                                                                        manualOrderController
-                                                                            .resetDefaultQuanity(manualOrderController.allProducts![index]);
-                                                                        Get.back();
+                                                                            final cartProvider =
+                                                                                context.read<CartProvider>();
+                                                                            cartProvider
+                                                                                .addToCart(data);
+                                                                            manualOrderController
+                                                                                .addIntoCart();
+                                                                            manualOrderController
+                                                                                .resetDefaultQuanity(manualOrderController.allProducts![index]);
+                                                                            Get.back();
 
-                                                                        // Get.offAllNamed(
-                                                                        //     Routes
-                                                                        //         .cartroute);
-                                                                        // CommonSnackbar.getSnackbar(
-                                                                        //     "Added",
-                                                                        //     "${manualOrderController.allProducts?[index].productName} Successfully Added in Cart",
-                                                                        //     UIDataColors.primaryColor);
-                                                                      },
-                                                                      btntxt:
-                                                                          "add_to_cart_button".tr,
-                                                                      iconImage:
-                                                                          UIDATAIcons
-                                                                              .cartIcon,
-                                                                    ),
-                                                                    SpacingHeight
-                                                                        .heightlistspacing35
+                                                                            // Get.offAllNamed(
+                                                                            //     Routes
+                                                                            //         .cartroute);
+                                                                            // CommonSnackbar.getSnackbar(
+                                                                            //     "Added",
+                                                                            //     "${manualOrderController.allProducts?[index].productName} Successfully Added in Cart",
+                                                                            //     UIDataColors.primaryColor);
+                                                                          },
+                                                                          btntxt:
+                                                                              tr.translateData("add_to_cart_button"),
+                                                                          iconImage:
+                                                                              UIDATAIcons
+                                                                                  .cartIcon,
+                                                                        ),
+                                                                        SpacingHeight
+                                                                            .heightlistspacing35
+                                                                      ],
+                                                                    ).paddingOnly(
+                                                                        left: 12,
+                                                                        right: 12,
+                                                                        top: 18,
+                                                                        bottom: 0),
                                                                   ],
-                                                                ).paddingOnly(
-                                                                    left: 12,
-                                                                    right: 12,
-                                                                    top: 18,
-                                                                    bottom: 0),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        );
-                                                      }),
-                                                    ),
-                                                  );
-                                                }).then((value) {
-                                              setState(() {
-                                                showAdd = true;
-                                              });
-                                            });
-                                          },
-                                        );
-                                      }),
-                                  const SizedBox(
-                                    height: 100,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          }),
+                                                        ),
+                                                      );
+                                                    }).then((value) {
+                                                  setState(() {
+                                                    showAdd = true;
+                                                  });
+                                                });
+                                              },
+                                            );
+                                          }),
+                                      const SizedBox(
+                                        height: 100,
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                      ],
-                    ).paddingOnly(left: 15, right: 15)),
-                  ),
-                  Consumer<CartProvider>(
-                      builder: (context, cartProvider, child) {
-                    return cartProvider.isShowCartButton
-                        ? Positioned(
-                            bottom: 30,
-                            child: Center(
-                              child: BorderButton(
-                                onPressed: () {
-                                  Get.to(() => const CartScreen());
-                                  // Get.toNamed(Routes.cartroute);
-                                },
-                                btntxt: "add_order_view_cart".tr,
-                                iconImage: UIDATAIcons.cartHallowIcon,
-                                buttontxtColor: UIDataColors.primaryColor,
-                                width: size.width - 30,
-                                backEndColor: Colors.white,
-                                borderColor: UIDataColors.primaryColor,
-                                iconColor: UIDataColors.primaryColor,
-                              ),
-                            ),
-                          )
-                        : const SizedBox();
-                  })
-                ],
-              );
-      },
+                          ],
+                        ).paddingOnly(left: 15, right: 15)),
+                      ),
+                      Consumer<CartProvider>(
+                          builder: (context, cartProvider, child) {
+                        return cartProvider.isShowCartButton
+                            ? Positioned(
+                                bottom: 30,
+                                child: Center(
+                                  child: BorderButton(
+                                    onPressed: () {
+                                      Get.to(() => const CartScreen());
+                                      // Get.toNamed(Routes.cartroute);
+                                    },
+                                    btntxt: tr.translateData("add_order_view_cart"),
+                                    iconImage: UIDATAIcons.cartHallowIcon,
+                                    buttontxtColor: UIDataColors.primaryColor,
+                                    width: size.width - 30,
+                                    backEndColor: Colors.white,
+                                    borderColor: UIDataColors.primaryColor,
+                                    iconColor: UIDataColors.primaryColor,
+                                  ),
+                                ),
+                              )
+                            : const SizedBox();
+                      })
+                    ],
+                  );
+          },
+        );
+      }
     );
   }
 

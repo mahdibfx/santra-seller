@@ -2,6 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/screens/auth_screen/fogot_password.dart';
 import 'package:santra_seller/ui/screens/auth_screen/signup_screen.dart';
+import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import '../../../provider/auth_providers/login_provider.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
@@ -22,214 +23,218 @@ class _LoginScreenState extends State<LoginScreen> {
   final form = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Widget bodyData(context) {
-    return Consumer<LoginProvider>(
-      builder: (context, _, child) {
-        return SingleChildScrollView(
-          child: Form(
-            key: form,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Transform.translate(
-                  offset: const Offset(220, -170),
-                  child: Stack(
-                    alignment: Alignment.bottomLeft,
-                    children: [
-                      Container(
-                        height: 300,
-                        width: 300,
-                        decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: UIDataColors.secondaryColor),
-                      ),
-                      Positioned(
-                        bottom: 50,
-                        left: 60,
-                        child: SizedBox(
-                          height: 40,
-                          width: 40,
-                          child: GestureDetector(
-                            onTap: () {
-                              Scaffold.of(context).openEndDrawer();
-                            },
-                            child: Container(
-                              // height: 40,
-                              // width: 40,
-                              decoration: BoxDecoration(
-                                  color: UIDataColors.primaryColor,
-                                  borderRadius: BorderRadius.circular(12)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SvgPicture.asset(UIDATAIcons.menuIcon),
+    return Consumer<AppTranslations>(
+          builder: (context, tr, child) {
+        return Consumer<LoginProvider>(
+          builder: (context, _, child) {
+            return SingleChildScrollView(
+              child: Form(
+                key: form,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Transform.translate(
+                      offset: const Offset(220, -170),
+                      child: Stack(
+                        alignment: Alignment.bottomLeft,
+                        children: [
+                          Container(
+                            height: 300,
+                            width: 300,
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: UIDataColors.secondaryColor),
+                          ),
+                          Positioned(
+                            bottom: 50,
+                            left: 60,
+                            child: SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Scaffold.of(context).openEndDrawer();
+                                },
+                                child: Container(
+                                  // height: 40,
+                                  // width: 40,
+                                  decoration: BoxDecoration(
+                                      color: UIDataColors.primaryColor,
+                                      borderRadius: BorderRadius.circular(12)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: SvgPicture.asset(UIDATAIcons.menuIcon),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Transform.translate(
-                  offset: const Offset(0, -170),
-                  child: Column(
-                    children: [
-                      SvgPicture.asset(
-                        UIDataImage.sellerLogoIconSVG,
-                        height: 90,
-                        width: 90,
-                        fit: BoxFit.fitWidth,
-                      ),
-                      SpacingHeight.heightlistspacing10,
-
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("santra".tr,
-                              style: UIDataTextStyles.h1
-                                  .copyWith(fontSize: 30, letterSpacing: 2)),
-                          Text("seller".tr,
-                              style: UIDataTextStyles.h1.copyWith(
-                                  fontSize: 20,
-                                  letterSpacing: 2,
-                                  color: UIDataColors.secondaryColor)),
                         ],
                       ),
-
-                      SpacingHeight.heightlistspacing35,
-                      CommonTextField(
-                        //
-                        controller: _.email,
-                        hintText: 'user_number_hint_signin'.tr,
-                        labelText: "emailpassword_hint_signin".tr,
-                        prefixIcon: UIDATAIcons.userIcon,
-                        isTextHidden: false,
-                        fillcolor: UIDataColors.whiteColor,
-                        keyboardType: TextInputType.emailAddress,
-                        validator: (val) {
-                          // bool email = _.emailRegex.hasMatch(val);
-                          if (val.isEmpty) {
-                            return "enter_email_phone".tr;
-                          }
-                          // else if (!email) {
-                          //   return "Please enter valid email address";
-                          // }
-                        },
-                      ),
-                      SpacingHeight.heightlistspacing10,
-                      CommonTextField(
-                        controller: _.password,
-                        hintText: 'user_password_hint_signin'.tr,
-                        //prefixIcon: Icons.lock_outline,
-                        keyboardType: TextInputType.text,
-                        fillcolor: UIDataColors.whiteColor,
-                        togglePassword: true,
-                        labelText: "signup_password".tr,
-                        prefixIcon: UIDATAIcons.lockIcon,
-                        toggleIcon: _.securetext == true
-                            ? UIDATAIcons.viewOffIcon
-                            : UIDATAIcons.viewIcon,
-                        toggleFunction: () {
-                          _.securetext = !_.securetext;
-                          setState(() {});
-                        },
-                        isTextHidden: _.securetext,
-                        validator: (val) {
-                          if (val.isEmpty) {
-                            return "password_blank".tr;
-                          }
-                          // else if (val.length < 6) {
-                          //   return "password should contains 6 chractors";
-                          // }
-                        },
-                      ),
-                      SpacingHeight.heightlistspacing10,
-                      Row(
+                    ),
+                    Transform.translate(
+                      offset: const Offset(0, -170),
+                      child: Column(
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              Get.to(() => const forgotPassowrd());
-                              // Get.toNamed(Routes.forgotpasswordRoutes);
+                          SvgPicture.asset(
+                            UIDataImage.sellerLogoIconSVG,
+                            height: 90,
+                            width: 90,
+                            fit: BoxFit.fitWidth,
+                          ),
+                          SpacingHeight.heightlistspacing10,
+
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(tr.translateData("santra"),
+                                  style: UIDataTextStyles.h1
+                                      .copyWith(fontSize: 30, letterSpacing: 2)),
+                              Text(tr.translateData("seller"),
+                                  style: UIDataTextStyles.h1.copyWith(
+                                      fontSize: 20,
+                                      letterSpacing: 2,
+                                      color: UIDataColors.secondaryColor)),
+                            ],
+                          ),
+
+                          SpacingHeight.heightlistspacing35,
+                          CommonTextField(
+                            //
+                            controller: _.email,
+                            hintText: tr.translateData('user_number_hint_signin'),
+                            labelText: tr.translateData("emailpassword_hint_signin"),
+                            prefixIcon: UIDATAIcons.userIcon,
+                            isTextHidden: false,
+                            fillcolor: UIDataColors.whiteColor,
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (val) {
+                              // bool email = _.emailRegex.hasMatch(val);
+                              if (val.isEmpty) {
+                                return tr.translateData("enter_email_phone");
+                              }
+                              // else if (!email) {
+                              //   return "Please enter valid email address";
+                              // }
                             },
-                            child:  Text("forgot_password_text_signin".tr,
-                                style: UIDataTextStyles.title),
+                          ),
+                          SpacingHeight.heightlistspacing10,
+                          CommonTextField(
+                            controller: _.password,
+                            hintText: tr.translateData('user_password_hint_signin'),
+                            //prefixIcon: Icons.lock_outline,
+                            keyboardType: TextInputType.text,
+                            fillcolor: UIDataColors.whiteColor,
+                            togglePassword: true,
+                            labelText: tr.translateData("signup_password"),
+                            prefixIcon: UIDATAIcons.lockIcon,
+                            toggleIcon: _.securetext == true
+                                ? UIDATAIcons.viewOffIcon
+                                : UIDATAIcons.viewIcon,
+                            toggleFunction: () {
+                              _.securetext = !_.securetext;
+                              setState(() {});
+                            },
+                            isTextHidden: _.securetext,
+                            validator: (val) {
+                              if (val.isEmpty) {
+                                return tr.translateData("password_blank");
+                              }
+                              // else if (val.length < 6) {
+                              //   return "password should contains 6 chractors";
+                              // }
+                            },
+                          ),
+                          SpacingHeight.heightlistspacing10,
+                          Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Get.to(() => const forgotPassowrd());
+                                  // Get.toNamed(Routes.forgotpasswordRoutes);
+                                },
+                                child:  Text(tr.translateData("forgot_password_text_signin"),
+                                    style: UIDataTextStyles.title),
+                              ),
+                            ],
+                          ),
+                          SpacingHeight.heightlistspacing10,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: _.isLoading
+                                ? const SizedBox(
+                                    child: Center(
+                                    child: CircularProgressIndicator(),
+                                  ))
+                                : RaisedGradientButton(
+                                    gradient: const LinearGradient(
+                                      colors: <Color>[
+                                        UIDataColors.primaryColor,
+                                        UIDataColors.primaryColor,
+                                      ],
+                                    ),
+                                    btntxt: tr.translateData("login_button_signin"),
+                                    iconImage: SvgPicture.asset(
+                                      UIDATAIcons.sendIcon,
+                                      height: 25,
+                                      width: 25,
+                                      fit: BoxFit.fitWidth,
+                                    ),
+                                    buttontxtColor: UIDataColors.whiteColor,
+                                    onPressed: () {
+                                      if (form.currentState!.validate()) {
+                                        _.loginfunction();
+                                      }
+                                    },
+                                  ),
+                          ),
+                          // TextButton(
+                          //   onPressed: () {
+                          //     Get.updateLocale(const Locale('ar', 'AE'));
+                          //   },
+                          //   child: const Icon(Icons.add),
+                          // ),
+
+                          SpacingHeight.heightlistspacing25,
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                               Text(tr.translateData("signup_text_signin"),
+                                  style: UIDataTextStyles.title),
+                              GestureDetector(
+                                  onTap: () {
+                                    Get.to(() => SignUpScreen());
+                                  },
+                                  child: Text(tr.translateData("signup_link_signin"),
+                                      style: UIDataTextStyles.title.copyWith(
+                                          color: UIDataColors.primaryColor)))
+                            ],
                           ),
                         ],
                       ),
-                      SpacingHeight.heightlistspacing10,
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: _.isLoading
-                            ? const SizedBox(
-                                child: Center(
-                                child: CircularProgressIndicator(),
-                              ))
-                            : RaisedGradientButton(
-                                gradient: const LinearGradient(
-                                  colors: <Color>[
-                                    UIDataColors.primaryColor,
-                                    UIDataColors.primaryColor,
-                                  ],
-                                ),
-                                btntxt: "login_button_signin".tr,
-                                iconImage: SvgPicture.asset(
-                                  UIDATAIcons.sendIcon,
-                                  height: 25,
-                                  width: 25,
-                                  fit: BoxFit.fitWidth,
-                                ),
-                                buttontxtColor: UIDataColors.whiteColor,
-                                onPressed: () {
-                                  if (form.currentState!.validate()) {
-                                    _.loginfunction();
-                                  }
-                                },
-                              ),
-                      ),
-                      // TextButton(
-                      //   onPressed: () {
-                      //     Get.updateLocale(const Locale('ar', 'AE'));
-                      //   },
-                      //   child: const Icon(Icons.add),
-                      // ),
-
-                      SpacingHeight.heightlistspacing25,
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    ),
+                    Transform.translate(
+                      offset: const Offset(-220, 120),
+                      child: Stack(
+                        alignment: Alignment.bottomLeft,
                         children: [
-                           Text("signup_text_signin".tr,
-                              style: UIDataTextStyles.title),
-                          GestureDetector(
-                              onTap: () {
-                                Get.to(() => SignUpScreen());
-                              },
-                              child: Text("signup_link_signin".tr,
-                                  style: UIDataTextStyles.title.copyWith(
-                                      color: UIDataColors.primaryColor)))
+                          Container(
+                            height: 300,
+                            width: 300,
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle, color: Color(0xff78CDC8)),
+                          ),
                         ],
                       ),
-                    ],
-                  ),
-                ),
-                Transform.translate(
-                  offset: const Offset(-220, 120),
-                  child: Stack(
-                    alignment: Alignment.bottomLeft,
-                    children: [
-                      Container(
-                        height: 300,
-                        width: 300,
-                        decoration: const BoxDecoration(
-                            shape: BoxShape.circle, color: Color(0xff78CDC8)),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ).marginOnly(left: 20.0, right: 20.0),
-          ),
+                    ),
+                  ],
+                ).marginOnly(left: 20.0, right: 20.0),
+              ),
+            );
+          },
         );
-      },
+      }
     );
   }
 
