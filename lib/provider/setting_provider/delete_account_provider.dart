@@ -5,12 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/screens/settings/delete_account_confirmation.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:santra_seller/utils/api_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../utils/app_translation/app_translation.dart';
+
 class DeleteAccountProvider with ChangeNotifier {
+    final BuildContext context;
+
+  DeleteAccountProvider(this.context);
   String? phoneNumber;
   TextEditingController explainationController = TextEditingController();
   TextEditingController otpController = TextEditingController();
@@ -42,6 +48,7 @@ class DeleteAccountProvider with ChangeNotifier {
   }
 
   Future getOtp() async {
+        var tr = Provider.of<AppTranslations>(context, listen: false);
     if (formDeleteAccScreen1.currentState!.validate()) {
       try {
         updateOtpLoadingState(true);
@@ -69,7 +76,7 @@ class DeleteAccountProvider with ChangeNotifier {
           //  Get.toNamed(Routes.deleteAccountConfirmation);
         } else {
           exceptionDialog(
-              "oops_message".tr, "went_wrong_while".tr);
+              tr.translateData("oops_message"), tr.translateData("went_wrong_while"));
           print(response.body);
         }
       } catch (err) {

@@ -13,9 +13,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../../models/customers/delivery_charges.dart';
 import '../../ui/screens/more_setting/my_customer/view_customer_details.dart';
+import '../../utils/app_translation/app_translation.dart';
 
 class MyCustomerProvider extends ChangeNotifier {
-  // final cartdController = Get.put(CartController());
+  final BuildContext context;
+
+  MyCustomerProvider(this.context);
 
   TextEditingController link = TextEditingController();
   bool isViewCustomerLoading = false;
@@ -285,6 +288,7 @@ class MyCustomerProvider extends ChangeNotifier {
   }
 
   Future<bool> orderSubmitByLink(context) async {
+    var tr = Provider.of<AppTranslations>(context, listen: false);
     var cartProvider = Provider.of<CartProvider>(context, listen: false);
     isSubmitOrder = true;
     notifyListeners();
@@ -298,13 +302,13 @@ class MyCustomerProvider extends ChangeNotifier {
         link.text = decodedJson['data'].first['payment_link'];
         cartProvider.flushCart();
         disposeValues();
-        showToast("success_message".tr, 'order_placed_success'.tr);
+        showToast(tr.translateData("success_message"), tr.translateData('order_placed_success'));
         isSubmitOrder = false;
         popupPaymentlink = true;
         notifyListeners();
         return true;
       } else {
-        showToast("Failed", 'Unable to proceed');
+        showToast(tr.translateData("failed_message"), tr.translateData('went_wrong'));
         isSubmitOrder = false;
         notifyListeners();
         return false;

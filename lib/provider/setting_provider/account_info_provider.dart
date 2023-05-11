@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../ui/widgets/dialogs/custom_dialogs.dart';
 import '../../utils/api_data.dart';
+import '../../utils/app_translation/app_translation.dart';
 
 class AccountInfoProvider extends ChangeNotifier {
+    final BuildContext context;
+
+  AccountInfoProvider(this.context);
   var isUpdateAccInfoLoading = false;
   TextEditingController emailController = TextEditingController();
   TextEditingController fNameController = TextEditingController();
@@ -74,6 +79,7 @@ class AccountInfoProvider extends ChangeNotifier {
   }
 
   Future updateAccountInfo() async {
+        var tr = Provider.of<AppTranslations>(context, listen: false);
     if (form.currentState!.validate()) {
       try {
         changeLoadingState(true);
@@ -93,14 +99,14 @@ class AccountInfoProvider extends ChangeNotifier {
         var response = await http.Response.fromStream(streamedResponse);
         if (response.statusCode == 200) {
           setValuesAfterUpdating();
-          customOntapDialog("Success",
-              "account_updated".tr, "okay".tr, () {
+          customOntapDialog(tr.translateData("success_message"),
+              tr.translateData("account_updated"), tr.translateData("okay"), () {
             Get.back();
             Get.back();
             // Get.offNamed(Routes.settings);
           });
         } else {
-          customOntapDialog("Failed", "failed_update_account".tr, "okay".tr,
+          customOntapDialog(tr.translateData("failed_message"), tr.translateData("failed_update_account"), tr.translateData("okay"),
               () {
             Get.back();
           });

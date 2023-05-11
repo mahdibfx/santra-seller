@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<AddManualOrderProvider>(
             create: (_) => AddManualOrderProvider()),
         ChangeNotifierProvider<MyCustomerProvider>(
-            create: (_) => MyCustomerProvider()),
+            create: (_) => MyCustomerProvider(_)),
         ChangeNotifierProvider<CartProvider>(create: (_) => CartProvider(_)),
         ChangeNotifierProvider<SignUpProvider>(create: (_) => SignUpProvider(_)),
         ChangeNotifierProvider<ProductSettingsProvider>(
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<NotificationProvider>(
             create: (_) => NotificationProvider(_)),
         ChangeNotifierProvider<AccountInfoProvider>(
-            create: (_) => AccountInfoProvider()),
+            create: (_) => AccountInfoProvider(_)),
         ChangeNotifierProvider<ChangeEmailProvider>(
             create: (_) => ChangeEmailProvider(_)),
         ChangeNotifierProvider<ForgotPasswordProvider>(
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ChangePasswordProvider>(
             create: (_) => ChangePasswordProvider(_)),
         ChangeNotifierProvider<DeleteAccountProvider>(
-            create: (_) => DeleteAccountProvider()),
+            create: (_) => DeleteAccountProvider(_)),
         ChangeNotifierProvider<LogoutProvider>(create: (_) => LogoutProvider()),
         ChangeNotifierProvider<LangaugeSettingsProvider>(
             create: (_) => LangaugeSettingsProvider()),
@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<PrivacyProvider>(
             create: (_) => PrivacyProvider()),
         ChangeNotifierProvider<ContactUsProvider>(
-            create: (_) => ContactUsProvider()),
+            create: (_) => ContactUsProvider(_)),
         // ChangeNotifierProvider<LanguageProvider>(
         //     create: (_) => LanguageProvider()),
       ],
