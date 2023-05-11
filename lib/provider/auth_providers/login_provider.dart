@@ -4,14 +4,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../models/login_model.dart';
 import '../../../ui/screens/home_page/home_screen.dart';
 import '../../../ui/widgets/snackbar/common_snackbar.dart';
 import '../../../utils/api_data.dart';
 import '../../../utils/uidata.dart';
+import '../../utils/app_translation/app_translation.dart';
 
 class LoginProvider extends ChangeNotifier {
+    final BuildContext context;
+
+  LoginProvider(this.context);
   // bool isLoading = true;
   // SignUpController signUpController = Get.put(SignUpController());
   bool isLoading = false;
@@ -71,6 +76,7 @@ class LoginProvider extends ChangeNotifier {
   }
 
   void loginfunction() async {
+       var tr = Provider.of<AppTranslations>(context, listen: false);
     updateLoginLoadingStatus(true);
     notifyListeners();
     try {
@@ -93,14 +99,14 @@ class LoginProvider extends ChangeNotifier {
         notifyListeners();
         print(res.body);
         CommonSnackbar.getSnackbar(
-            "error_message".tr, "error_signin".tr, UIDataColors.redColor);
+            tr.translateData("error_message"), tr.translateData("error_signin"), UIDataColors.redColor);
       }
     } catch (e) {
       notifyListeners();
 
       CommonSnackbar.getSnackbar(
-          "serve_error".tr,
-          "serve_error_internet".tr,
+          tr.translateData("serve_error"),
+          tr.translateData("serve_error_internet"),
           UIDataColors.redColor);
     }
 

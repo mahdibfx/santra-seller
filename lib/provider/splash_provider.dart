@@ -17,6 +17,10 @@ import '../utils/uidata.dart';
 import 'language_provider/language_provider.dart';
 
 class SplashProvider extends ChangeNotifier {
+    final BuildContext context;
+
+  SplashProvider(this.context);
+
   bool isLoading = false;
   bool updateAvailable = false;
   String? sellerCode;
@@ -69,11 +73,12 @@ class SplashProvider extends ChangeNotifier {
   }
 
   void checkUpdateAndMakeDescision() async {
+     var tr = Provider.of<AppTranslations>(context, listen: false);
     isInternetAvailable();
     forceUpdate().then((value) {
       if (updateAvailable == true) {
         customOntapDialog(
-            "New Update".tr, "update_message_popup".tr, "update_message".tr,
+            tr.translateData("New Update"), tr.translateData("update_message_popup"), tr.translateData("update_message"),
             () {
           goToStore();
         });
@@ -89,6 +94,7 @@ class SplashProvider extends ChangeNotifier {
   }
 
   Future<bool> isInternetAvailable() async {
+    var tr = Provider.of<AppTranslations>(context, listen: false);
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -96,7 +102,7 @@ class SplashProvider extends ChangeNotifier {
         return response.statusCode == HttpStatus.ok;
       }
     } on SocketException catch (_) {
-      CommonSnackbar.getSnackbar("error_message".tr,
+      CommonSnackbar.getSnackbar(tr.translateData("error_message"),
           "Internet is not available ", UIDataColors.redColor);
       return false;
     }
@@ -133,6 +139,7 @@ class SplashProvider extends ChangeNotifier {
   }
 
   Future forceUpdate() async {
+    var tr = Provider.of<AppTranslations>(context, listen: false);
     try {
       setLoadingState(true);
 
@@ -157,11 +164,11 @@ class SplashProvider extends ChangeNotifier {
         }
       } else {
         setLoadingState(false);
-        Get.snackbar("oops_message".tr, "something_wrong_message".tr);
+        Get.snackbar(tr.translateData("oops_message"), tr.translateData("something_wrong_message"));
       }
     } catch (e) {
       setLoadingState(false);
-      Get.snackbar("oops_message".tr, "something_wrong_message".tr);
+      Get.snackbar(tr.translateData("oops_message"), tr.translateData("something_wrong_message"));
     }
     notifyListeners();
   }

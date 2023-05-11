@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/utils/api_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:http/http.dart' as http;
 
+import '../../utils/app_translation/app_translation.dart';
+
 class ChangeEmailProvider extends ChangeNotifier {
+    final BuildContext context;
+
+  ChangeEmailProvider(this.context);
+
   bool securetext = true;
   var isUpdateEmailLoading = false;
   TextEditingController currentEmailController = TextEditingController();
@@ -28,10 +35,11 @@ class ChangeEmailProvider extends ChangeNotifier {
   }
 
   Future updateEmail() async {
+       var tr = Provider.of<AppTranslations>(context, listen: false);
     if (form.currentState!.validate()) {
       if (emailController.text != confirmeEmailController.text) {
-        exceptionDialog("no_match".tr,
-            "same_email_message".tr);
+        exceptionDialog(tr.translateData("no_match"),
+            tr.translateData("same_email_message"));
       } else {
         try {
           isUpdateEmailLoading = true;
@@ -50,14 +58,14 @@ class ChangeEmailProvider extends ChangeNotifier {
           var response = await http.Response.fromStream(streamedResponse);
           if (response.statusCode == 200) {
             customOntapDialog(
-                "success_message".tr, "updated_email".tr, "okay".tr,
+                tr.translateData("success_message"), tr.translateData("updated_email"), tr.translateData("okay"),
                 () {
               Get.back();
               Get.back();
               // Get.offNamed(Routes.settings);
             });
           } else {
-            customOntapDialog("failed_message".tr, "failed_update_email".tr, "okay".tr, () {
+            customOntapDialog(tr.translateData("failed_message"), tr.translateData("failed_update_email"), tr.translateData("okay"), () {
               Get.back();
             });
           }

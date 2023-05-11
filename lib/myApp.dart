@@ -39,9 +39,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AppTranslations>(create: (_) => AppTranslations()),
-        ChangeNotifierProvider<SplashProvider>(create: (_) => SplashProvider()),
+        ChangeNotifierProvider<SplashProvider>(create: (_) => SplashProvider(_)),
         ChangeNotifierProvider<HomeProvider>(create: (_) => HomeProvider(_)),
-        ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider()),
+        ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider(_)),
         ChangeNotifierProvider<AddManualOrderProvider>(
             create: (_) => AddManualOrderProvider()),
         ChangeNotifierProvider<MyCustomerProvider>(
@@ -51,17 +51,17 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ProductSettingsProvider>(
             create: (_) => ProductSettingsProvider()),
         ChangeNotifierProvider<NotificationProvider>(
-            create: (_) => NotificationProvider()),
+            create: (_) => NotificationProvider(_)),
         ChangeNotifierProvider<AccountInfoProvider>(
             create: (_) => AccountInfoProvider()),
         ChangeNotifierProvider<ChangeEmailProvider>(
-            create: (_) => ChangeEmailProvider()),
+            create: (_) => ChangeEmailProvider(_)),
         ChangeNotifierProvider<ForgotPasswordProvider>(
             create: (_) => ForgotPasswordProvider(_)),
         ChangeNotifierProvider<ResetPasswordProvider>(
-            create: (_) => ResetPasswordProvider()),
+            create: (_) => ResetPasswordProvider(_)),
         ChangeNotifierProvider<ChangePasswordProvider>(
-            create: (_) => ChangePasswordProvider()),
+            create: (_) => ChangePasswordProvider(_)),
         ChangeNotifierProvider<DeleteAccountProvider>(
             create: (_) => DeleteAccountProvider()),
         ChangeNotifierProvider<LogoutProvider>(create: (_) => LogoutProvider()),

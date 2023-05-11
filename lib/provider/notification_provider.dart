@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../ui/widgets/snackbar/common_snackbar.dart';
 import '../../utils/api_data.dart';
@@ -8,7 +9,14 @@ import '../../utils/uidata.dart';
 import '../models/notification/notification_model.dart';
 import 'package:get/get.dart';
 
+import '../utils/app_translation/app_translation.dart';
+
 class NotificationProvider extends ChangeNotifier {
+  final BuildContext context;
+
+  NotificationProvider(this.context);
+
+
   bool isLoading = false;
   var sellerCode = '';
   List<Notifications> notificationList = [];
@@ -25,6 +33,7 @@ class NotificationProvider extends ChangeNotifier {
   }
 
   void loginfunction() async {
+    var tr = Provider.of<AppTranslations>(context, listen: false);
     isLoading = true;
     notifyListeners();
     try {
@@ -49,15 +58,15 @@ class NotificationProvider extends ChangeNotifier {
         isLoading = false;
         notifyListeners();
         print(res.body);
-        CommonSnackbar.getSnackbar("error_message".tr, "error_message".tr, UIDataColors.redColor);
+        CommonSnackbar.getSnackbar(tr.translateData("error_message"), tr.translateData("error_message"), UIDataColors.redColor);
       }
     } catch (e) {
       isLoading = false;
       notifyListeners();
 
       CommonSnackbar.getSnackbar(
-          "serve_error".tr,
-          "something_wrong_message".tr,
+          tr.translateData("serve_error"),
+          tr.translateData("something_wrong_message"),
           UIDataColors.redColor);
     }
 

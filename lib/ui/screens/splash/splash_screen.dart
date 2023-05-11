@@ -34,13 +34,16 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Widget bodyData() {
-    return Center(
-      child: SizedBox(
-        height: double.infinity,
-        width: double.infinity,
-        child: SvgPicture.asset(
-          UIDataImage.splashScreenImage,
-          fit: BoxFit.fitWidth,
+    return ChangeNotifierProvider(
+      create: (_) => SplashProvider(context),
+      child: Center(
+        child: SizedBox(
+          height: double.infinity,
+          width: double.infinity,
+          child: SvgPicture.asset(
+            UIDataImage.splashScreenImage,
+            fit: BoxFit.fitWidth,
+          ),
         ),
       ),
     );

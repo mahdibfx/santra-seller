@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:santra_seller/utils/api_data.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../utils/app_translation/app_translation.dart';
+
 class ChangePasswordProvider with ChangeNotifier {
+  final BuildContext context;
+  ChangePasswordProvider(this.context);
+
   bool isUpdatePassLoading = false;
   bool currentPasswordSecuretext = true;
   bool newPasswordSecuretext = true;
@@ -27,10 +33,11 @@ class ChangePasswordProvider with ChangeNotifier {
   }
 
   Future updatePassword() async {
+    var tr = Provider.of<AppTranslations>(context, listen: false);
     if (form.currentState!.validate()) {
       if (newPasswordController.text != confirmNewPasswordController.text) {
-        exceptionDialog("no_match".tr,
-            "enter_same_password".tr);
+        exceptionDialog(tr.translateData("no_match"),
+            tr.translateData("enter_same_password"));
       } else {
         try {
           changeUpdatePassLoadingState(true);
@@ -48,15 +55,15 @@ class ChangePasswordProvider with ChangeNotifier {
           var streamedResponse = await request.send();
           var response = await http.Response.fromStream(streamedResponse);
           if (response.statusCode == 200) {
-            customOntapDialog("Success",
-                "password_updated".tr, "okay".tr, () {
+            customOntapDialog(tr.translateData("success_message"),
+                tr.translateData("password_updated"), tr.translateData("okay"), () {
               resetControllers();
               Get.back();
               Get.back();
               // Get.offNamed(Routes.settings);
             });
           } else {
-            customOntapDialog("Failed", "failed_update_password".tr, "okay".tr,
+            customOntapDialog(tr.translateData("failed_message"), tr.translateData("failed_update_password"), tr.translateData("okay"),
                 () {
               Get.back();
             });
