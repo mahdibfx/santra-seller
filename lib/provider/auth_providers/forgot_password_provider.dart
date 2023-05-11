@@ -4,12 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/screens/auth_screen/login_screen.dart';
 import 'package:santra_seller/ui/screens/auth_screen/reset_password_confirmation.dart';
 import '../../ui/widgets/dialogs/custom_dialogs.dart';
 import '../../utils/api_data.dart';
+import '../../utils/app_translation/app_translation.dart';
 
 class ForgotPasswordProvider extends ChangeNotifier {
+  final BuildContext context;
+
+  ForgotPasswordProvider(this.context);
+
   bool isLoading = true;
   bool isOtpLoading = false;
   bool isResetPassLoading = false;
@@ -48,6 +54,7 @@ class ForgotPasswordProvider extends ChangeNotifier {
   }
 
   Future confirmSellerAndGetOtp() async {
+    var tr = Provider.of<AppTranslations>(context, listen: false);
     try {
       updateOtpLoadingState(true);
       var url = Uri.parse(ApiData.verifyResetPassword);
@@ -76,7 +83,7 @@ class ForgotPasswordProvider extends ChangeNotifier {
         var data = jsonDecode(response.body);
 
         String failedMsg = data['data']['message'].toString();
-        exceptionDialog("Failed", failedMsg);
+        exceptionDialog(tr.translateData("failed_message"), failedMsg);
       }
     } catch (err) {
       generalException();
@@ -85,6 +92,7 @@ class ForgotPasswordProvider extends ChangeNotifier {
   }
 
   Future resetPassword() async {
+    var tr = Provider.of<AppTranslations>(context, listen: false);
     try {
       updateResetPassLoadingState(true);
 
@@ -100,7 +108,7 @@ class ForgotPasswordProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         print(response.body);
         customOntapDialog(
-            "success_message".tr, "password_updated".tr, "okay".tr,
+            tr.translateData("success_message"), tr.translateData("password_updated"), tr.translateData("okay"),
             () {
           disposeValues();
           Get.back();
@@ -108,7 +116,7 @@ class ForgotPasswordProvider extends ChangeNotifier {
           // Get.offNamed(Routes.loginRoutes);
         });
       } else {
-        customOntapDialog("failed_message".tr, "failed_update_password".tr, "okay".tr, () {
+        customOntapDialog(tr.translateData("failed_message"), tr.translateData("failed_update_password"), tr.translateData("okay"), () {
           Get.back();
         });
       }

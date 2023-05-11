@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/screens/auth_screen/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,8 +13,12 @@ import '../../../ui/widgets/snackbar/common_snackbar.dart';
 import '../../../utils/api_data.dart';
 
 import '../../../utils/uidata.dart';
+import '../../utils/app_translation/app_translation.dart';
 
 class SignUpProvider extends ChangeNotifier {
+  final BuildContext context;
+  SignUpProvider(this.context);
+
   bool isLoading = false;
   String? firebaseMessagingToken;
   bool passwordSecuretext = true;
@@ -82,6 +87,7 @@ class SignUpProvider extends ChangeNotifier {
   }
 
   Future getCities() async {
+    var tr = Provider.of<AppTranslations>(context, listen: false);
     try {
       var url = Uri.parse(ApiData.getCities);
       final response = await http.get(url, headers: ApiData.header);
@@ -96,15 +102,16 @@ class SignUpProvider extends ChangeNotifier {
         print(citiesList);
       } else {
         CommonSnackbar.getSnackbar(
-            "oops_message".tr, "error_load_data".tr, UIDataColors.redColor);
+            tr.translateData("oops_message"), tr.translateData("error_load_data"), UIDataColors.redColor);
       }
     } catch (e) {
-      CommonSnackbar.getSnackbar("oops_message".tr,
-          "error_load_data".tr, UIDataColors.redColor);
+      CommonSnackbar.getSnackbar(tr.translateData("oops_message"),
+          tr.translateData("error_load_data"), UIDataColors.redColor);
     }
   }
 
   Future<void> signupMethod() async {
+     var tr = Provider.of<AppTranslations>(context, listen: false);
     if (form.currentState!.validate()) {
       updateLoginLoadingStatus(true);
 
@@ -129,18 +136,18 @@ class SignUpProvider extends ChangeNotifier {
         var data = jsonDecode(response.body);
 
         if (response.statusCode == 200) {
-          CommonSnackbar.getSnackbar("Success", "Account has been registered",
+          CommonSnackbar.getSnackbar(tr.translateData("success_message"), tr.translateData("account_registered"),
               UIDataColors.primaryColor);
           clearValuesAfterSignup();
           Get.offAll(() => const LoginScreen());
         } else if (response.statusCode == 430) {
           CommonSnackbar.getSnackbar(
-              "oops_message".tr, "alread_registered".tr, UIDataColors.primaryColor);
+              tr.translateData("oops_message"), tr.translateData("alread_registered"), UIDataColors.primaryColor);
         } else {
           notifyListeners();
           CommonSnackbar.getSnackbar(
-              "error_message".tr,
-              "something_wrong_message".tr,
+              tr.translateData("error_message"),
+              tr.translateData("something_wrong_message"),
               UIDataColors.redColor);
         }
       } catch (e) {
@@ -148,8 +155,8 @@ class SignUpProvider extends ChangeNotifier {
         notifyListeners();
 
         CommonSnackbar.getSnackbar(
-            "error_message".tr,
-            "something_wrong_message".tr,
+            tr.translateData("error_message"),
+            tr.translateData("something_wrong_message"),
             UIDataColors.redColor);
       }
     }

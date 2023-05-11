@@ -57,6 +57,7 @@ class AppTranslations extends ChangeNotifier {
       // _translations = {'en_us': convertedData};
 
       arabLang = data['data'][0]['ar_AE'];
+      notifyListeners();
       Map<String, String> convertedDataArabic = arabLang.cast<String, String>();
       _translations = {'en_us': convertedData, 'ar_AE': convertedDataArabic};
       selectedLanguage = await language();

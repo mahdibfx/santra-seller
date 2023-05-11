@@ -46,8 +46,8 @@ class MyApp extends StatelessWidget {
             create: (_) => AddManualOrderProvider()),
         ChangeNotifierProvider<MyCustomerProvider>(
             create: (_) => MyCustomerProvider()),
-        ChangeNotifierProvider<CartProvider>(create: (_) => CartProvider()),
-        ChangeNotifierProvider<SignUpProvider>(create: (_) => SignUpProvider()),
+        ChangeNotifierProvider<CartProvider>(create: (_) => CartProvider(_)),
+        ChangeNotifierProvider<SignUpProvider>(create: (_) => SignUpProvider(_)),
         ChangeNotifierProvider<ProductSettingsProvider>(
             create: (_) => ProductSettingsProvider()),
         ChangeNotifierProvider<NotificationProvider>(
@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ChangeEmailProvider>(
             create: (_) => ChangeEmailProvider()),
         ChangeNotifierProvider<ForgotPasswordProvider>(
-            create: (_) => ForgotPasswordProvider()),
+            create: (_) => ForgotPasswordProvider(_)),
         ChangeNotifierProvider<ResetPasswordProvider>(
             create: (_) => ResetPasswordProvider()),
         ChangeNotifierProvider<ChangePasswordProvider>(

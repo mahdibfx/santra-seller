@@ -6,6 +6,7 @@ import 'package:santra_seller/ui/screens/more_setting/my_customer/edit_customer_
 import 'package:santra_seller/utils/uidata/textStyles.dart';
 import '../../../models/customers/view_all_customers.dart';
 import '../../../provider/more_settings_provider/my_customer_provider.dart';
+import '../../../utils/app_translation/app_translation.dart';
 import '../../../utils/uidata.dart';
 import '../../screens/more_setting/my_customer/view_customer_details.dart';
 import '../buttons/border_button.dart';
@@ -150,57 +151,60 @@ void showpopup(String statement, String customerID, context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return Consumer<MyCustomerProvider>(builder: (context, _, child) {
-        return AlertDialog(
-          title:  Text("confirmation".tr),
-          content: Text(statement),
-          actions: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              height: 60,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: BorderButton(
-                      // height: 35,
-                      // width: 140,
-                      btntxt: "button_cancel".tr,
-                      borderColor: Colors.red,
-                      buttontxtColor: Colors.red,
-                      backEndColor: Colors.white,
-                      // backEndColor: Colors.blue,
-                      onPressed: () {
-                        Get.back();
-                      },
-                      //  () {
-                      //   _.acceptOrdermethod(widget.orderNumber);
-                      // },
-                    ),
+      return Consumer<AppTranslations>(builder: (context, tr, child) {
+          return Consumer<MyCustomerProvider>(builder: (context, _, child) {
+            return AlertDialog(
+              title:  Text(tr.translateData("confirmation")),
+              content: Text(statement),
+              actions: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  height: 60,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: BorderButton(
+                          // height: 35,
+                          // width: 140,
+                          btntxt: tr.translateData("button_cancel"),
+                          borderColor: Colors.red,
+                          buttontxtColor: Colors.red,
+                          backEndColor: Colors.white,
+                          // backEndColor: Colors.blue,
+                          onPressed: () {
+                            Get.back();
+                          },
+                          //  () {
+                          //   _.acceptOrdermethod(widget.orderNumber);
+                          // },
+                        ),
+                      ),
+                      SpacingWidth.widthlistspacing15,
+                      Expanded(
+                        child: BorderButton(
+                          // height: 35,
+                          // width: 140,
+                          btntxt: tr.translateData("okay"),
+                          borderColor: Colors.blue,
+                          buttontxtColor: Colors.white,
+                          // backEndColor: Colors.blue,
+                          onPressed: () {
+                            Get.back();
+                            _.deleteCustomers(customerID);
+                          },
+                          //  () {
+                          //   _.acceptOrdermethod(widget.orderNumber);
+                          // },
+                        ),
+                      ),
+                    ],
                   ),
-                  SpacingWidth.widthlistspacing15,
-                  Expanded(
-                    child: BorderButton(
-                      // height: 35,
-                      // width: 140,
-                      btntxt: "okay".tr,
-                      borderColor: Colors.blue,
-                      buttontxtColor: Colors.white,
-                      // backEndColor: Colors.blue,
-                      onPressed: () {
-                        Get.back();
-                        _.deleteCustomers(customerID);
-                      },
-                      //  () {
-                      //   _.acceptOrdermethod(widget.orderNumber);
-                      // },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        );
-      });
+                ),
+              ],
+            );
+          });
+        }
+      );
     },
   );
 }
@@ -209,57 +213,60 @@ void confirmationPopup(String statement, context, var onYes) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return Consumer<MyCustomerProvider>(builder: (context, _, child) {
-        return AlertDialog(
-          title:  Text("confirmation".tr),
-          content: Text(statement),
-          actions: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              height: 60,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: BorderButton(
-                      // height: 35,
-                      // width: 140,
-                      btntxt: "button_cancel".tr,
-                      borderColor: Colors.red,
-                      buttontxtColor: Colors.red,
-                      backEndColor: Colors.white,
-                      // backEndColor: Colors.blue,
-                      onPressed: () {
-                        Get.back();
-                      },
-                      //  () {
-                      //   _.acceptOrdermethod(widget.orderNumber);
-                      // },
-                    ),
+      return Consumer<AppTranslations>(builder: (context, tr, child) {
+          return Consumer<MyCustomerProvider>(builder: (context, _, child) {
+            return AlertDialog(
+              title:  Text(tr.translateData("confirmation")),
+              content: Text(statement),
+              actions: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  height: 60,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: BorderButton(
+                          // height: 35,
+                          // width: 140,
+                          btntxt: tr.translateData("button_cancel"),
+                          borderColor: Colors.red,
+                          buttontxtColor: Colors.red,
+                          backEndColor: Colors.white,
+                          // backEndColor: Colors.blue,
+                          onPressed: () {
+                            Get.back();
+                          },
+                          //  () {
+                          //   _.acceptOrdermethod(widget.orderNumber);
+                          // },
+                        ),
+                      ),
+                      SpacingWidth.widthlistspacing15,
+                      Expanded(
+                        child: BorderButton(
+                          // height: 35,
+                          // width: 140,
+                          btntxt: tr.translateData("okay"),
+                          borderColor: Colors.blue,
+                          buttontxtColor: Colors.white,
+                          // backEndColor: Colors.blue,
+                          onPressed: () {
+                            Get.back();
+                            onYes();
+                          },
+                          //  () {
+                          //   _.acceptOrdermethod(widget.orderNumber);
+                          // },
+                        ),
+                      ),
+                    ],
                   ),
-                  SpacingWidth.widthlistspacing15,
-                  Expanded(
-                    child: BorderButton(
-                      // height: 35,
-                      // width: 140,
-                      btntxt: "okay".tr,
-                      borderColor: Colors.blue,
-                      buttontxtColor: Colors.white,
-                      // backEndColor: Colors.blue,
-                      onPressed: () {
-                        Get.back();
-                        onYes();
-                      },
-                      //  () {
-                      //   _.acceptOrdermethod(widget.orderNumber);
-                      // },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        );
-      });
+                ),
+              ],
+            );
+          });
+        }
+      );
     },
   );
 }

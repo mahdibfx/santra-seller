@@ -258,7 +258,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Text("total_price".tr,
+                            Text(tr.translateData("total_price"),
                                 style:
                                     UIDataTextStyles.textMediumColoredBlue.copyWith(
                                   color: UIDataColors.blackColor,
@@ -294,7 +294,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                       UIDataColors.primaryColor,
                                     ],
                                   ),
-                                  btntxt: "ready_order".tr,
+                                  btntxt: tr.translateData("ready_order"),
                                   iconImage: SvgPicture.asset(
                                     UIDATAIcons.sendIcon,
                                     height: 25,
@@ -303,7 +303,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                   ),
                                   buttontxtColor: UIDataColors.whiteColor,
                                   onPressed: () {
-                                    confirmationPopup("sure_message".tr, context, () {
+                                    confirmationPopup(tr.translateData("sure_message"), context, () {
                                       _.readyOrderMethod(widget.orderNumber);
                                     });
                                   },

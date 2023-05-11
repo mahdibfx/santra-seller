@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,10 +14,15 @@ import '../../models/customers/view_all_customers.dart';
 import '../../models/seller_all_products_model.dart';
 import '../../models/voucher_model.dart';
 import '../../utils/api_data.dart';
+import '../utils/app_translation/app_translation.dart';
 
 class CartProvider extends ChangeNotifier {
-  bool isLoading = false;
+  final BuildContext context;
 
+  CartProvider(this.context);
+
+
+  bool isLoading = false;
   bool isShowCartButton = false;
   bool receiptPaymentType = true;
   List<CartItem> cartItems = <CartItem>[];
@@ -192,6 +198,7 @@ class CartProvider extends ChangeNotifier {
   }
 
   Future cartScreenData() async {
+    var tr = Provider.of<AppTranslations>(context, listen: false);
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? sellerCode = prefs.getString("sellercode");
@@ -218,7 +225,7 @@ class CartProvider extends ChangeNotifier {
         generalException();
       }
     } catch (e) {
-      exceptionDialog("oops_message".tr, "went_wrong".tr);
+      exceptionDialog(tr.translateData("oops_message"), tr.translateData("went_wrong"));
     }
     changeCartLoadingState(false);
     notifyListeners();
@@ -226,6 +233,7 @@ class CartProvider extends ChangeNotifier {
 
   /// *************************PROMO DISCOUNT API*******************************/
   Future promoDiscount() async {
+    var tr = Provider.of<AppTranslations>(context, listen: false);
     try {
       changeDiscountLoadingState(true);
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -259,14 +267,14 @@ class CartProvider extends ChangeNotifier {
         var data = jsonDecode(response.body);
         String msg = data['data']['message'].toString();
 
-        exceptionDialog("oops_message".tr, msg);
+        exceptionDialog(tr.translateData("oops_message"), msg);
       }
     } catch (e) {
       if (kDebugMode) {
         print(e);
       }
 
-      Get.snackbar("oops_message".tr, "went_wrong".tr);
+      Get.snackbar(tr.translateData("oops_message"), tr.translateData("went_wrong"));
     }
     changeDiscountLoadingState(false);
     notifyListeners();
@@ -463,6 +471,7 @@ class CartProvider extends ChangeNotifier {
   }
 
   Future orderSubmit() async {
+    var tr = Provider.of<AppTranslations>(context, listen: false);
     try {
       changeLoadingStatus(true);
       var url = Uri.parse(ApiData.orderSubmitCash);
@@ -479,14 +488,14 @@ class CartProvider extends ChangeNotifier {
         // notifyListeners();
         //        Get.offAllNamed(Routes.homeRoutes);
         Get.offAll(() => const HomeScreen());
-        showToast("success_message".tr, 'order_placed_success'.tr);
+        showToast(tr.translateData("success_message"), tr.translateData('order_placed_success'));
         flushCart();
       } else {
-        showToast("failed_message".tr, 'went_wrong'.tr);
+        showToast(tr.translateData("failed_message"), tr.translateData('went_wrong'));
         // hasError = true;
       }
     } catch (e) {
-      showToast("oops_message".tr, 'error_load_data'.tr);
+      showToast(tr.translateData("oops_message"), tr.translateData('error_load_data'));
       // generalException();
       // hasError = true;
     }

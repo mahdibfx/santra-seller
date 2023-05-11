@@ -254,7 +254,7 @@ class _CustomCardState extends State<CustomCard>
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text("total_price".tr,
+                          Text(tr.translateData("total_price"),
                               style:
                                   UIDataTextStyles.textMediumColoredBlue.copyWith(
                                 color: UIDataColors.blackColor,
@@ -305,13 +305,13 @@ class _CustomCardState extends State<CustomCard>
                                     // height: 40,
                                     // width:
                                     //     widget.paymentLink == 'no_link' ? 330 : 140,
-                                    btntxt: "button_cancel".tr,
+                                    btntxt: tr.translateData("button_cancel"),
                                     borderColor: Colors.red,
                                     buttontxtColor: Colors.red,
                                     backEndColor: Colors.white,
                                     onPressed: () {
                                       showpopup(
-                                          'cancel_order_message'.tr,
+                                          tr.translateData('cancel_order_message'),
                                           () {
                                         Get.back();
                                         _.cancelOrdermethod(widget.orderNumber);
@@ -326,7 +326,7 @@ class _CustomCardState extends State<CustomCard>
                                         child: BorderButton(
                                           // height: 40,
                                           // width: 170,
-                                          btntxt: 'button_copy_payment_link'.tr,
+                                          btntxt: tr.translateData('button_copy_payment_link'),
                                           borderColor: Colors.blue,
                                           buttontxtColor: Colors.white,
                                           // backEndColor: Colors.blue,
@@ -353,13 +353,13 @@ class _CustomCardState extends State<CustomCard>
                                       child: BorderButton(
                                         height: 40,
                                         width: 140,
-                                        btntxt: "button_cancel".tr,
+                                        btntxt: tr.translateData("button_cancel"),
                                         borderColor: Colors.red,
                                         buttontxtColor: Colors.red,
                                         backEndColor: Colors.white,
                                         onPressed: () {
                                           showpopup(
-                                              'cancel_message'.tr,
+                                              tr.translateData('cancel_message'),
                                               () {
                                             Get.back();
                                             _.cancelOrdermethod(widget.orderNumber);
@@ -404,13 +404,13 @@ class _CustomCardState extends State<CustomCard>
                                       child: BorderButton(
                                         height: 40,
                                         width: 140,
-                                        btntxt: 'button_reject'.tr,
+                                        btntxt: tr.translateData('button_reject'),
                                         borderColor: Colors.red,
                                         buttontxtColor: Colors.red,
                                         backEndColor: Colors.white,
                                         onPressed: () {
                                           showpopup(
-                                              'reject_message'.tr,
+                                              tr.translateData('reject_message'),
                                               () {
                                             Get.back();
                                             _.rejectOrderMethod(widget.orderNumber);
@@ -423,13 +423,13 @@ class _CustomCardState extends State<CustomCard>
                                       child: BorderButton(
                                         height: 40,
                                         width: 140,
-                                        btntxt: 'button_accept'.tr,
+                                        btntxt: tr.translateData('button_accept'),
                                         borderColor: Colors.blue,
                                         buttontxtColor: Colors.white,
                                         // backEndColor: Colors.blue,
                                         onPressed: () {
                                           showpopup(
-                                              'accept_message'.tr,
+                                              tr.translateData('accept_message'),
                                               () {
                                             Get.back();
                                             _.acceptOrdermethod(widget.orderNumber);
@@ -468,51 +468,54 @@ class _CustomCardState extends State<CustomCard>
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title:  Text("confirmation".tr),
-          content: Text(statement),
-          actions: [
-            Container(
-              padding: EdgeInsets.all(8),
-              height: 60,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: BorderButton(
-                      // height: 35,
-                      // width: 140,
-                      btntxt: "button_cancel".tr,
-                      borderColor: Colors.red,
-                      buttontxtColor: Colors.red,
-                      backEndColor: Colors.white,
-                      // backEndColor: Colors.blue,
-                      onPressed: () {
-                        Get.back();
-                      },
-                      //  () {
-                      //   _.acceptOrdermethod(widget.orderNumber);
-                      // },
-                    ),
+        return Consumer<AppTranslations>(builder: (context, tr, child)  {
+            return AlertDialog(
+              title:  Text(tr.translateData("confirmation")),
+              content: Text(statement),
+              actions: [
+                Container(
+                  padding: EdgeInsets.all(8),
+                  height: 60,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: BorderButton(
+                          // height: 35,
+                          // width: 140,
+                          btntxt: tr.translateData("button_cancel"),
+                          borderColor: Colors.red,
+                          buttontxtColor: Colors.red,
+                          backEndColor: Colors.white,
+                          // backEndColor: Colors.blue,
+                          onPressed: () {
+                            Get.back();
+                          },
+                          //  () {
+                          //   _.acceptOrdermethod(widget.orderNumber);
+                          // },
+                        ),
+                      ),
+                      SpacingWidth.widthlistspacing15,
+                      Expanded(
+                        child: BorderButton(
+                          // height: 35,
+                          // width: 140,
+                          btntxt: tr.translateData("okay"),
+                          borderColor: Colors.blue,
+                          buttontxtColor: Colors.white,
+                          // backEndColor: Colors.blue,
+                          onPressed: navigationFunction,
+                          //  () {
+                          //   _.acceptOrdermethod(widget.orderNumber);
+                          // },
+                        ),
+                      ),
+                    ],
                   ),
-                  SpacingWidth.widthlistspacing15,
-                  Expanded(
-                    child: BorderButton(
-                      // height: 35,
-                      // width: 140,
-                      btntxt: "okay".tr,
-                      borderColor: Colors.blue,
-                      buttontxtColor: Colors.white,
-                      // backEndColor: Colors.blue,
-                      onPressed: navigationFunction,
-                      //  () {
-                      //   _.acceptOrdermethod(widget.orderNumber);
-                      // },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+                ),
+              ],
+            );
+          }
         );
       },
     );
