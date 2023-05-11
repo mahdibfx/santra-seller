@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/widgets/add_manual_order_widgets/voucher_code_form_field.dart';
 import 'package:santra_seller/ui/widgets/add_manual_order_widgets/voucher_tile.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
+import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import '../../../provider/cart_provider.dart';
 import '../../../utils/uidata.dart';
 import 'package:get/get.dart';
@@ -15,58 +16,61 @@ class VouchersSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CartProvider>(builder: (context, cartController, child) {
-      return Padding(
-        padding: const EdgeInsets.only(top: 10),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.08),
-                spreadRadius: 1,
-                blurRadius: 10,
-                offset: const Offset(0, 0), // changes position of shadow
+    return Consumer<AppTranslations>(builder: (context, tr, child){
+        return Consumer<CartProvider>(builder: (context, cartController, child) {
+          return Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.08),
+                    spreadRadius: 1,
+                    blurRadius: 10,
+                    offset: const Offset(0, 0), // changes position of shadow
+                  ),
+                ],
               ),
-            ],
-          ),
-          padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              HeadingWithIcon(
-                  icon: UIDATAIcons.voucherStarIcon, btntxt: "cart_voucher_title".tr),
-              cartController.vouchersList.isNotEmpty
-                  ? SizedBox(
-                      height: 55,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        itemCount: cartController.vouchersList.length,
-                        itemBuilder: ((context, index) {
-                          return VoucherTile(
-                            index: index,
-                            title:
-                                cartController.vouchersList[index].offerTitle,
-                            subtitle: cartController.vouchersList[index].msg,
-                            buttonTitle:
-                                cartController.activeOffers.contains(index)
-                                    ? "Applied"
-                                    : "Apply",
-                          );
-                        }),
-                      ),
-                    )
-                  : const SizedBox(),
-              if (cartController.vouchersList.isNotEmpty)
-                SpacingHeight.heightlistspacing20,
-              VoucherCodeFormField()
-            ],
-          ),
-        ),
-      );
-    });
+              padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  HeadingWithIcon(
+                      icon: UIDATAIcons.voucherStarIcon, btntxt:tr. translateData("cart_voucher_title")),
+                  cartController.vouchersList.isNotEmpty
+                      ? SizedBox(
+                          height: 55,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemCount: cartController.vouchersList.length,
+                            itemBuilder: ((context, index) {
+                              return VoucherTile(
+                                index: index,
+                                title:
+                                    cartController.vouchersList[index].offerTitle,
+                                subtitle: cartController.vouchersList[index].msg,
+                                buttonTitle:
+                                    cartController.activeOffers.contains(index)
+                                        ? tr.translateData("applied")
+                                        : tr.translateData("apply"),
+                              );
+                            }),
+                          ),
+                        )
+                      : const SizedBox(),
+                  if (cartController.vouchersList.isNotEmpty)
+                    SpacingHeight.heightlistspacing20,
+                  VoucherCodeFormField()
+                ],
+              ),
+            ),
+          );
+        });
+      }
+    );
   }
 }

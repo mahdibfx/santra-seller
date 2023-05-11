@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<AppTranslations>(create: (_) => AppTranslations()),
         ChangeNotifierProvider<SplashProvider>(create: (_) => SplashProvider()),
-        ChangeNotifierProvider<HomeProvider>(create: (_) => HomeProvider()),
+        ChangeNotifierProvider<HomeProvider>(create: (_) => HomeProvider(_)),
         ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider()),
         ChangeNotifierProvider<AddManualOrderProvider>(
             create: (_) => AddManualOrderProvider()),

@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/models/home_model.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
+import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import '../../ui/widgets/snackbar/common_snackbar.dart';
@@ -12,7 +14,13 @@ import '../../utils/api_data.dart';
 import '../../utils/uidata.dart';
 import 'package:http/http.dart' as http;
 
+import 'cart_provider.dart';
+
 class HomeProvider extends ChangeNotifier {
+   final BuildContext context;
+
+  HomeProvider(this.context);
+
   TextEditingController filterController = TextEditingController();
   var isFilterOrderLoading = false;
   bool isLoading = true;
@@ -63,6 +71,7 @@ class HomeProvider extends ChangeNotifier {
   ];
   var selectedYear = 'Year';
   var selectedMonth = 'Month';
+  
   updateCancelOrderLoading(bool value) {
     isCancelOrderLoading = value;
     notifyListeners();
@@ -98,6 +107,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future<bool> isInternetAvailable() async {
+     var tr = Provider.of<AppTranslations>(context, listen: false);
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -106,7 +116,7 @@ class HomeProvider extends ChangeNotifier {
       }
     } on SocketException catch (_) {
       customOntapDialog(
-          "No Internet", "Looks like you are not connected to internet", "okay".tr,
+          tr.translateData("val_no_internet"), tr.translateData("no_internet_msg"), tr.translateData("okay"),
           () {
         Get.back();
       });
@@ -118,6 +128,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future filterOrder() async {
+    var tr = Provider.of<AppTranslations>(context, listen: false);
     try {
       isFilterOrderLoading = true;
       notifyListeners();
@@ -139,11 +150,12 @@ class HomeProvider extends ChangeNotifier {
       }
     } catch (e) {
       CommonSnackbar.getSnackbar(
-          "oops_message".tr, "went_wrong".tr, UIDataColors.redColor);
+          tr.translateData("oops_message"), tr.translateData("went_wrong"), UIDataColors.redColor);
     }
   }
 
   homeDataCall() async {
+    var tr = Provider.of<AppTranslations>(context, listen: false);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     allOrders = [];
     notifyListeners();
@@ -181,22 +193,23 @@ class HomeProvider extends ChangeNotifier {
           notifyListeners();
           print(newOrderSantraCount);
         } else {
-          CommonSnackbar.getSnackbar("error_message".tr,
-              "something_wrong_message".tr, UIDataColors.redColor);
+          CommonSnackbar.getSnackbar(tr.translateData("error_message"),
+              tr.translateData("something_wrong_message"), UIDataColors.redColor);
         }
       } catch (e) {
         isLoading = false;
         notifyListeners();
 
         CommonSnackbar.getSnackbar(
-            "serve_error".tr,
-            "serve_error_internet".tr,
+            tr.translateData("serve_error"),
+            tr.translateData("serve_error_internet"),
             UIDataColors.redColor);
       }
     }
   }
 
   Future cancelOrdermethod(String orderNumber) async {
+    var tr = Provider.of<AppTranslations>(context, listen: false);
     try {
       updateCancelOrderLoading(true);
       notifyListeners();
@@ -210,7 +223,7 @@ class HomeProvider extends ChangeNotifier {
         notifyListeners();
         // Get.snackbar("Accepted", "Order has been accepted");
         CommonSnackbar.getSnackbar(
-            "cancelled".tr, "order_cancelled".tr, UIDataColors.primaryColor);
+            tr.translateData("cancelled"), tr.translateData("order_cancelled"), UIDataColors.primaryColor);
         Get.offAll(() => const HomeScreen());
         // Get.offAllNamed(Routes.homeRoutes);
       } else {
@@ -220,12 +233,13 @@ class HomeProvider extends ChangeNotifier {
     } catch (e) {
       notifyListeners();
       CommonSnackbar.getSnackbar(
-          "oops_message".tr, "went_wrong".tr, UIDataColors.redColor);
+          tr.translateData("oops_message"), tr.translateData("went_wrong"), UIDataColors.redColor);
     }
     updateCancelOrderLoading(false);
   }
 
   Future acceptOrdermethod(String orderNumber) async {
+    var tr = Provider.of<AppTranslations>(context, listen: false);
     try {
       updateAcceptOrderLoading(true);
       notifyListeners();
@@ -240,7 +254,7 @@ class HomeProvider extends ChangeNotifier {
         // Get.snackbar("Accepted", "Order has been accepted");
         CommonSnackbar.getSnackbar(
           
-            "status_accepted".tr, "order_accepted_msg".tr, UIDataColors.primaryColor);
+            tr.translateData("status_accepted"), tr.translateData("order_accepted_msg"), UIDataColors.primaryColor);
         // Get.offAllNamed(Routes.homeRoutes);
         Get.offAll(() => const HomeScreen());
       } else {
@@ -250,12 +264,13 @@ class HomeProvider extends ChangeNotifier {
     } catch (e) {
       notifyListeners();
       CommonSnackbar.getSnackbar(
-          "oops_message".tr, "went_wrong".tr, UIDataColors.redColor);
+          tr.translateData("oops_message"), tr.translateData("went_wrong"), UIDataColors.redColor);
     }
     updateAcceptOrderLoading(false);
   }
 
   Future rejectOrderMethod(String orderNumber) async {
+    var tr = Provider.of<AppTranslations>(context, listen: false);
     updateRejectOrderLoading(true);
     notifyListeners();
     try {
@@ -269,7 +284,7 @@ class HomeProvider extends ChangeNotifier {
         notifyListeners();
 
         CommonSnackbar.getSnackbar(
-            "status_rejected".tr, "rejected_order".tr, UIDataColors.primaryColor);
+            tr.translateData("status_rejected"), tr.translateData("rejected_order"), UIDataColors.primaryColor);
         // Get.offAllNamed(Routes.homeRoutes);
         Get.offAll(() => const HomeScreen());
       } else {
@@ -282,14 +297,14 @@ class HomeProvider extends ChangeNotifier {
       notifyListeners();
 
       CommonSnackbar.getSnackbar(
-          "oops_message".tr, "went_wrong".tr, UIDataColors.redColor);
+          tr.translateData("oops_message"), tr.translateData("went_wrong"), UIDataColors.redColor);
     }
     updateRejectOrderLoading(false);
   }
 
   Future readyOrderMethod(String orderNumber) async {
     updateOrderReadyLoading(true);
-
+    var tr = Provider.of<AppTranslations>(context, listen: false);
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       var url = Uri.parse("${ApiData.mainurl}order_ready");
@@ -298,7 +313,7 @@ class HomeProvider extends ChangeNotifier {
       body['order_number'] = orderNumber.toString();
       var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
-        CommonSnackbar.getSnackbar("success_message".tr, "order_ready_msg".tr,
+        CommonSnackbar.getSnackbar(tr.translateData("success_message"), tr.translateData("order_ready_msg"),
             UIDataColors.primaryColor);
         Get.offAll(() => const HomeScreen());
       } else {
@@ -309,7 +324,7 @@ class HomeProvider extends ChangeNotifier {
       }
     } catch (e) {
       CommonSnackbar.getSnackbar(
-          "oops_message".tr, "went_wrong".tr, UIDataColors.redColor);
+          tr.translateData("oops_message"), tr.translateData("went_wrong"), UIDataColors.redColor);
     }
     updateOrderReadyLoading(false);
     notifyListeners();
@@ -432,23 +447,24 @@ class HomeProvider extends ChangeNotifier {
   }
 
   String getStatus(String status) {
+      var tr = Provider.of<AppTranslations>(context, listen: false);
     switch (status.toLowerCase()) {
       case 'new_order':
-        return 'status_new_order'.tr;
+        return tr.translateData('status_new_order');
       case 'payment_pending':
-        return 'status_pending_payment'.tr;
+        return tr.translateData('status_pending_payment');
       case 'assigned_3pl':
-        return 'status_pending_delivery'.tr;
+        return tr.translateData('status_pending_delivery');
       case 'devliered':
-        return 'status_delivered'.tr;
+        return tr.translateData('status_delivered');
       case 'canceled':
-        return 'status_canceled_order'.tr;
+        return tr.translateData('status_canceled_order');
       case 'rejected':
-        return 'status_rejected'.tr;
+        return tr.translateData('status_rejected');
       case 'accepted':
-        return 'status_accepted'.tr;
+        return tr.translateData('status_accepted');
       case 'order_ready':
-        return 'status_ready'.tr;
+        return tr.translateData('status_ready');
       default:
         return status;
     }

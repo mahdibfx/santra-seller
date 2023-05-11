@@ -73,7 +73,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                         ),
                         SpacingHeight.heightlistspacing20,
                         _.allFilterCustomers!.isEmpty
-                            ?  Center(child: Text(tr.translateData("no_customer_found ")))
+                            ?  Center(child: Text(tr.translateData("no_customer_found")))
                             : ListView.builder(
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
