@@ -54,7 +54,7 @@ class ForgotPasswordProvider extends ChangeNotifier {
   }
 
   Future confirmSellerAndGetOtp() async {
-    var tr = Provider.of<AppTranslations>(context, listen: false);
+    var tr = Get.put(AppTranslations());
     try {
       updateOtpLoadingState(true);
       var url = Uri.parse(ApiData.verifyResetPassword);
@@ -92,7 +92,7 @@ class ForgotPasswordProvider extends ChangeNotifier {
   }
 
   Future resetPassword() async {
-    var tr = Provider.of<AppTranslations>(context, listen: false);
+    var tr = Get.put(AppTranslations());
     try {
       updateResetPassLoadingState(true);
 

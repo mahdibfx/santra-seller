@@ -34,118 +34,114 @@ class _CustomerReviewsState extends State<CustomerReviews> {
   }
 
   Widget bodyData() {
-    return Consumer<AppTranslations>(
-          builder: (con, tr, child) {
-        return Consumer<CustomerReviewsProvider>(
-          builder: (con, _, child) {
-            return _.isReviewsLoading
-                ? const SizedBox(
-                    child: Center(
-                    child: CircularProgressIndicator(),
-                  ))
-                : SafeArea(
-                    child: SingleChildScrollView(
-                      child: _.hasReviewsError
-                          ?  SizedBox(
-                              height: 600,
-                              child: Center(child: Text(tr.translateData("no_reviews"))))
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                HeadingWithIcon(
-                                    icon: UIDATAIcons.starIcon,
-                                    btntxt: tr.translateData("customer_reviews_title")),
-                                SpacingHeight.heightlistspacing10,
-                                Container(
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.08),
-                                          spreadRadius: 1,
-                                          blurRadius: 10,
-                                          offset: const Offset(
-                                              0, 0), // changes position of shadow
-                                        ),
-                                      ],
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(15)),
-                                      color: Colors.white,
+    return Consumer<CustomerReviewsProvider>(
+      builder: (context, _, child) {
+        return _.isReviewsLoading
+            ? const SizedBox(
+                child: Center(
+                child: CircularProgressIndicator(),
+              ))
+            : SafeArea(
+                child: SingleChildScrollView(
+                  child: _.hasReviewsError
+                      ?  SizedBox(
+                          height: 600,
+                          child: Center(child: Text(tr.translateData("no_reviews"))))
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            HeadingWithIcon(
+                                icon: UIDATAIcons.starIcon,
+                                btntxt: tr.translateData("customer_reviews_title")),
+                            SpacingHeight.heightlistspacing10,
+                            Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.08),
+                                      spreadRadius: 1,
+                                      blurRadius: 10,
+                                      offset: const Offset(
+                                          0, 0), // changes position of shadow
                                     ),
-                                    child: Column(
-                                      children: [
-                                        if (_.customerReviews.data != null)
-                                          RatingOverview(
-                                            avgStars: _.customerReviews.data?[0]
-                                                .averageStars
+                                  ],
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(15)),
+                                  color: Colors.white,
+                                ),
+                                child: Column(
+                                  children: [
+                                    if (_.customerReviews.data != null)
+                                      RatingOverview(
+                                        avgStars: _.customerReviews.data?[0]
+                                            .averageStars
+                                            .toString(),
+                                        totalReviews: _.customerReviews.data?[0]
+                                            .averageStars
+                                            .toString(),
+                                      ),
+                                    SpacingHeight.heightlistspacing10,
+                                    if (_.customerReviews.data != null)
+                                      ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: _.customerReviews.data?[0]
+                                            .starsPercent?.length,
+                                        itemBuilder: (context, index) {
+                                          return RatingBarWithDetails(
+                                            barColor: _.barColors[index],
+                                            barPercentage: _.customerReviews
+                                                .data?[0].starsPercent?[index]
+                                                .toDouble(),
+                                            percenatageToShow: (_
+                                                        .customerReviews
+                                                        .data![0]
+                                                        .starsPercent![index] *
+                                                    100)
                                                 .toString(),
-                                            totalReviews: _.customerReviews.data?[0]
-                                                .averageStars
-                                                .toString(),
-                                          ),
-                                        SpacingHeight.heightlistspacing10,
-                                        if (_.customerReviews.data != null)
-                                          ListView.builder(
-                                            shrinkWrap: true,
-                                            itemCount: _.customerReviews.data?[0]
-                                                .starsPercent?.length,
-                                            itemBuilder: (context, index) {
-                                              return RatingBarWithDetails(
-                                                barColor: _.barColors[index],
-                                                barPercentage: _.customerReviews
-                                                    .data?[0].starsPercent?[index]
-                                                    .toDouble(),
-                                                percenatageToShow: (_
-                                                            .customerReviews
-                                                            .data![0]
-                                                            .starsPercent![index] *
-                                                        100)
-                                                    .toString(),
-                                                totalReviews: _.customerReviews
-                                                    .data?[0].stars?[index],
-                                                noOfStars:
-                                                    _.noOfStars[index].toString(),
-                                              );
-                                            },
-                                          ),
-                                      ],
-                                    ).paddingSymmetric(
-                                        horizontal: 30, vertical: 20)),
-                                SpacingHeight.heightlistspacing15,
-                                if (_.customerReviews.data != null)
-                                  ListView.builder(
-                                      physics: const BouncingScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount: _.customerReviews.data?[0]
-                                          .customerFeedback?.length,
-                                      itemBuilder: (contex, index) {
-                                        return CustomerReviewCard(
-                                          review: _
-                                              .customerReviews
-                                              .data?[0]
-                                              .customerFeedback?[index]
-                                              .feedbackMessage,
-                                          orderNumber: _.customerReviews.data?[0]
-                                              .customerFeedback?[index].orderNumber,
-                                          stars: _
-                                              .customerReviews
-                                              .data?[0]
-                                              .customerFeedback?[index]
-                                              .feedbackStarsInDouble,
-                                          rating: _
-                                              .customerReviews
-                                              .data?[0]
-                                              .customerFeedback?[index]
-                                              .feedbackStars,
-                                        );
-                                      }),
-                                SpacingHeight.heightlistspacing50
-                              ],
-                            ).paddingSymmetric(horizontal: 20),
-                    ),
-                  );
-          },
-        );
-      }
+                                            totalReviews: _.customerReviews
+                                                .data?[0].stars?[index],
+                                            noOfStars:
+                                                _.noOfStars[index].toString(),
+                                          );
+                                        },
+                                      ),
+                                  ],
+                                ).paddingSymmetric(
+                                    horizontal: 30, vertical: 20)),
+                            SpacingHeight.heightlistspacing15,
+                            if (_.customerReviews.data != null)
+                              ListView.builder(
+                                  physics: const BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: _.customerReviews.data?[0]
+                                      .customerFeedback?.length,
+                                  itemBuilder: (contex, index) {
+                                    return CustomerReviewCard(
+                                      review: _
+                                          .customerReviews
+                                          .data?[0]
+                                          .customerFeedback?[index]
+                                          .feedbackMessage,
+                                      orderNumber: _.customerReviews.data?[0]
+                                          .customerFeedback?[index].orderNumber,
+                                      stars: _
+                                          .customerReviews
+                                          .data?[0]
+                                          .customerFeedback?[index]
+                                          .feedbackStarsInDouble,
+                                      rating: _
+                                          .customerReviews
+                                          .data?[0]
+                                          .customerFeedback?[index]
+                                          .feedbackStars,
+                                    );
+                                  }),
+                            SpacingHeight.heightlistspacing50
+                          ],
+                        ).paddingSymmetric(horizontal: 20),
+                ),
+              );
+      },
     );
   }
 

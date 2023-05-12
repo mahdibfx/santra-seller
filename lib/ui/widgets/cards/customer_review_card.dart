@@ -22,7 +22,8 @@ class CustomerReviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppTranslations>(builder: (context, tr, child)  {
+    return GetBuilder<AppTranslations>(
+      builder: (tr)  {
         return Column(
           children: [
             Container(

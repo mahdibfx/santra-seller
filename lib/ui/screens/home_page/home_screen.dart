@@ -29,8 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
   Widget bodyData(context) {
-    return Consumer<AppTranslations>(
-          builder: (context, tr, child){
+    return GetBuilder<AppTranslations>(
+      builder: (tr){
         return Consumer<HomeProvider>(
           builder: (context, _, child) {
             return _.isLoading || _.homeData == null

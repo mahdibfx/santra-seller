@@ -18,32 +18,32 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+       var tr = Get.put(AppTranslations());
+    
   @override
   void initState() {
+    callTranslation();
     SplashProvider splashProvider =
         Provider.of<SplashProvider>(context, listen: false);
-        AppTranslations translationProvider =
-        Provider.of<AppTranslations>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((_) {
+     
       splashProvider.checkUpdateAndMakeDescision();
       splashProvider.setOldLang();
-      translationProvider.fetchTranslationsv();
     });
 
     super.initState();
   }
-
+callTranslation()async{
+ await tr.fetchTranslationsv();
+}
   Widget bodyData() {
-    return ChangeNotifierProvider(
-      create: (_) => SplashProvider(context),
-      child: Center(
-        child: SizedBox(
-          height: double.infinity,
-          width: double.infinity,
-          child: SvgPicture.asset(
-            UIDataImage.splashScreenImage,
-            fit: BoxFit.fitWidth,
-          ),
+    return Center(
+      child: SizedBox(
+        height: double.infinity,
+        width: double.infinity,
+        child: SvgPicture.asset(
+          UIDataImage.splashScreenImage,
+          fit: BoxFit.fitWidth,
         ),
       ),
     );

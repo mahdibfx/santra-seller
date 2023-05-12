@@ -14,7 +14,8 @@ class ClipDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final homecont = Get.find<HomeController>();
-    return Consumer<AppTranslations>(builder: (context, tr, child) {
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
         return Drawer(
           child: Container(
             padding: const EdgeInsets.only(left: 16.0, right: 40),

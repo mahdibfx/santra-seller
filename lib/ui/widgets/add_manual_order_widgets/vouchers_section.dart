@@ -16,7 +16,8 @@ class VouchersSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppTranslations>(builder: (context, tr, child){
+    return GetBuilder<AppTranslations>(
+      builder: (tr){
         return Consumer<CartProvider>(builder: (context, cartController, child) {
           return Padding(
             padding: const EdgeInsets.only(top: 10),

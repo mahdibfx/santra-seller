@@ -23,8 +23,8 @@ class _ProductSettingScreenState extends State<ProductSettingScreen> {
 
   Widget bodyData(context) {
     Size size = MediaQuery.of(context).size;
-    return Consumer<AppTranslations>(
-          builder: (context, tr, child) {
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
         return Consumer<ProductSettingsProvider>(
           builder: (context, pSettings, child) {
             return ModalProgressHUD(

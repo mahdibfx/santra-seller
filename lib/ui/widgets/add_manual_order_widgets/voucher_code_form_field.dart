@@ -17,7 +17,8 @@ class VoucherCodeFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Consumer<AppTranslations>(builder: (context, tr, child) {
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
         return Consumer<CartProvider>(builder: (context, cartController, child) {
           return Container(
             alignment: Alignment.centerLeft,

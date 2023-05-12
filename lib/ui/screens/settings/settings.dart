@@ -40,8 +40,8 @@ class _SettingsState extends State<Settings> {
   }
 
   Widget bodyData(context) {
-    return Consumer<AppTranslations>(
-          builder: (context, tr, child) {
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
         return Consumer<LogoutProvider>(
           builder: (context, value, child) {
             return Stack(

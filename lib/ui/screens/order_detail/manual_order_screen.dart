@@ -29,8 +29,8 @@ class ManualOrderScreen extends StatefulWidget {
 class _ManualOrderScreenState extends State<ManualOrderScreen> {
   final localization = AppTranslations();
   Widget bodyData() {
-    return Consumer<AppTranslations>(
-          builder: (context, tr, child) {
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
         return Consumer<HomeProvider>(
           builder: (context, _, child) {
             return _.isLoading
@@ -193,7 +193,8 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
         isScrollControlled: true,
         context: context,
         builder: (context) {
-          return Consumer<AppTranslations>(builder: (context, tr, child) {
+          return GetBuilder<AppTranslations>(
+      builder: (tr) {
               return Consumer<HomeProvider>(builder: (context, _, child) {
                 return Container(
                   height: 650,

@@ -36,8 +36,8 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
   }
 
   Widget bodyData() {
-    return Consumer<AppTranslations>(
-          builder: (context, tr, child) {
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
         return Consumer<MyCustomerProvider>(
           builder: (context, _, child) {
             return SafeArea(

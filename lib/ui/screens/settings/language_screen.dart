@@ -14,7 +14,7 @@ import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
 import '/utils/uidata.dart';
 import 'package:get/get.dart';
-
+var tr = Get.put(AppTranslations());
 class LanguageSettings extends StatefulWidget {
   const LanguageSettings({super.key});
 
@@ -27,7 +27,8 @@ class _LanguageSettingsState extends State<LanguageSettings> {
   // final localization = AppTranslations();
 
   Widget bodyData(context) {
-    return Consumer<AppTranslations>(builder: (context, tr, child) {
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
       return Consumer<LangaugeSettingsProvider>(
         builder: (context, _, child) {
           return SafeArea(
@@ -48,60 +49,54 @@ class _LanguageSettingsState extends State<LanguageSettings> {
                               btntxt: tr
                                   .translateData("side_menu_language_signin")),
 
-                          Consumer<AppTranslations>(
-                              builder: (context, tr, child) {
-                            return BorderButton(
-                              onPressed: () {
-                                setState(() {
-                                  _handleButtonTap();
-                                  _.isCheckLanguage = true;
-                                });
-                                _.setTrue("ar_AE");
-                                tr.setNewLanguage("ar_AE");
-
-                                _.setFalseValue();
-                              },
-                              btntxt: "عربي",
-                              backEndColor: Colors.white,
-                              borderColor: tr.selectedLanguage == 'ar_AE'
-                                  ? UIDataColors.primaryColor
-                                  : Colors.transparent,
-                              buttontxtColor: tr.selectedLanguage == 'ar_AE'
-                                  ? UIDataColors.primaryColor
-                                  : UIDataColors.blackColor,
-                            );
-                          }),
-                          SpacingHeight.heightlistspacing15,
-                          Consumer<AppTranslations>(
-                              builder: (context, tr, child) {
-                            return BorderButton(
-                              onPressed: () {
+                          BorderButton(
+                            onPressed: () {
+                              setState(() {
                                 _handleButtonTap();
-                                setState(() {
-                                  _.isCheckLanguage = true;
-                                });
-                                _.setTrue("en_us");
-                                tr.setNewLanguage("en_us");
-                                _.setFalseValue();
-                                Future.delayed(const Duration(seconds: 2), () {
-                                  setState(() {
-                                    _.isCheckLanguage = false;
-                                    print(_.isCheckLanguage);
-                                  });
+                                _.isCheckLanguage = true;
+                              });
+                              _.setTrue("ar_AE");
+                              tr.setNewLanguage("ar_AE");
 
-                                  // Get.back();
+                              _.setFalseValue();
+                            },
+                            btntxt: "عربي",
+                            backEndColor: Colors.white,
+                            borderColor: tr.selectedLanguage == 'ar_AE'
+                                ? UIDataColors.primaryColor
+                                : Colors.transparent,
+                            buttontxtColor: tr.selectedLanguage == 'ar_AE'
+                                ? UIDataColors.primaryColor
+                                : UIDataColors.blackColor,
+                          ),
+                          SpacingHeight.heightlistspacing15,
+                          BorderButton(
+                            onPressed: () {
+                              _handleButtonTap();
+                              setState(() {
+                                _.isCheckLanguage = true;
+                              });
+                              _.setTrue("en_us");
+                              tr.setNewLanguage("en_us");
+                              _.setFalseValue();
+                              Future.delayed(const Duration(seconds: 2), () {
+                                setState(() {
+                                  _.isCheckLanguage = false;
+                                  print(_.isCheckLanguage);
                                 });
-                              },
-                              btntxt: "English",
-                              backEndColor: Colors.white,
-                              borderColor: tr.selectedLanguage == 'en_us'
-                                  ? UIDataColors.primaryColor
-                                  : Colors.transparent,
-                              buttontxtColor: tr.selectedLanguage == 'en_us'
-                                  ? UIDataColors.primaryColor
-                                  : Colors.black,
-                            );
-                          }),
+
+                                // Get.back();
+                              });
+                            },
+                            btntxt: "English",
+                            backEndColor: Colors.white,
+                            borderColor: tr.selectedLanguage == 'en_us'
+                                ? UIDataColors.primaryColor
+                                : Colors.transparent,
+                            buttontxtColor: tr.selectedLanguage == 'en_us'
+                                ? UIDataColors.primaryColor
+                                : Colors.black,
+                          ),
 
                           SpacingHeight.heightlistspacing15,
                           // Obx(() => _.isLoading
@@ -162,13 +157,11 @@ class _LanguageSettingsState extends State<LanguageSettings> {
     if (checkLange != null) {
       String lang = prefs.get("selectedlanguage") as String;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Provider.of<AppTranslations>(context, listen: false)
-            .setNewLanguage(lang);
+        tr.setNewLanguage(lang);
       });
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Provider.of<AppTranslations>(context, listen: false)
-            .setNewLanguage('en_us');
+        tr.setNewLanguage('en_us');
       });
     }
   }

@@ -107,7 +107,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future<bool> isInternetAvailable() async {
-     var tr = Provider.of<AppTranslations>(context, listen: false);
+     var tr = Get.put(AppTranslations());
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -128,7 +128,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future filterOrder() async {
-    var tr = Provider.of<AppTranslations>(context, listen: false);
+    var tr = Get.put(AppTranslations());
     try {
       isFilterOrderLoading = true;
       notifyListeners();
@@ -155,7 +155,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
   homeDataCall() async {
-    var tr = Provider.of<AppTranslations>(context, listen: false);
+    var tr = Get.put(AppTranslations());
     SharedPreferences prefs = await SharedPreferences.getInstance();
     allOrders = [];
     notifyListeners();
@@ -209,7 +209,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future cancelOrdermethod(String orderNumber) async {
-    var tr = Provider.of<AppTranslations>(context, listen: false);
+    var tr = Get.put(AppTranslations());
     try {
       updateCancelOrderLoading(true);
       notifyListeners();
@@ -239,7 +239,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future acceptOrdermethod(String orderNumber) async {
-    var tr = Provider.of<AppTranslations>(context, listen: false);
+    var tr = Get.put(AppTranslations());
     try {
       updateAcceptOrderLoading(true);
       notifyListeners();
@@ -270,7 +270,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future rejectOrderMethod(String orderNumber) async {
-    var tr = Provider.of<AppTranslations>(context, listen: false);
+    var tr = Get.put(AppTranslations());
     updateRejectOrderLoading(true);
     notifyListeners();
     try {
@@ -304,7 +304,7 @@ class HomeProvider extends ChangeNotifier {
 
   Future readyOrderMethod(String orderNumber) async {
     updateOrderReadyLoading(true);
-    var tr = Provider.of<AppTranslations>(context, listen: false);
+    var tr = Get.put(AppTranslations());
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       var url = Uri.parse("${ApiData.mainurl}order_ready");
@@ -447,7 +447,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
   String getStatus(String status) {
-      var tr = Provider.of<AppTranslations>(context, listen: false);
+      var tr = Get.put(AppTranslations());
     switch (status.toLowerCase()) {
       case 'new_order':
         return tr.translateData('status_new_order');

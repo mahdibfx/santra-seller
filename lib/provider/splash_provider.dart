@@ -17,9 +17,8 @@ import '../utils/uidata.dart';
 import 'language_provider/language_provider.dart';
 
 class SplashProvider extends ChangeNotifier {
-    final BuildContext context;
-
-  SplashProvider(this.context);
+     var tr = Get.put(AppTranslations());
+  
 
   bool isLoading = false;
   bool updateAvailable = false;
@@ -35,7 +34,7 @@ class SplashProvider extends ChangeNotifier {
 
   onMoreScreen() {
     isHome = false;
-    isMore = true;
+    // isMore = true;
     notifyListeners();
   }
 
@@ -73,7 +72,7 @@ class SplashProvider extends ChangeNotifier {
   }
 
   void checkUpdateAndMakeDescision() async {
-     var tr = Provider.of<AppTranslations>(context, listen: false);
+
     isInternetAvailable();
     forceUpdate().then((value) {
       if (updateAvailable == true) {
@@ -94,7 +93,7 @@ class SplashProvider extends ChangeNotifier {
   }
 
   Future<bool> isInternetAvailable() async {
-    var tr = Provider.of<AppTranslations>(context, listen: false);
+    var tr = Get.put(AppTranslations());
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -139,7 +138,7 @@ class SplashProvider extends ChangeNotifier {
   }
 
   Future forceUpdate() async {
-    var tr = Provider.of<AppTranslations>(context, listen: false);
+    var tr = Get.put(AppTranslations());
     try {
       setLoadingState(true);
 

@@ -18,8 +18,8 @@ class PaymentLinkBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppTranslations>(
-            builder: (context, tr, child) {
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
         return SizedBox(
           height: 300,
           child: Column(

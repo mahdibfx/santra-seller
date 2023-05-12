@@ -14,7 +14,8 @@ class CustomDetailBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppTranslations>(builder: (context, tr, child) {
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
         return SizedBox(
           height: 230,
           child: Column(

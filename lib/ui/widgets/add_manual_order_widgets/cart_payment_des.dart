@@ -25,7 +25,8 @@ class CartPayemntDescriptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppTranslations>(builder: (context, tr, child)  {
+    return GetBuilder<AppTranslations>(
+      builder: (tr)  {
         return Container(
           decoration: BoxDecoration(
               color: Colors.white,

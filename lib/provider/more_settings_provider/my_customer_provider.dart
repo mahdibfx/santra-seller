@@ -6,6 +6,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/models/customers/view_all_customers.dart';
 import 'package:santra_seller/provider/cart_provider.dart';
+import 'package:santra_seller/provider/home_provider.dart';
 import 'package:santra_seller/ui/screens/more_setting/my_customer/my_customer_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:santra_seller/utils/api_data.dart';
@@ -13,12 +14,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../../models/customers/delivery_charges.dart';
 import '../../ui/screens/more_setting/my_customer/view_customer_details.dart';
+import '../../ui/screens/order_detail/all_order_screen.dart';
 import '../../utils/app_translation/app_translation.dart';
 
 class MyCustomerProvider extends ChangeNotifier {
-  final BuildContext context;
 
-  MyCustomerProvider(this.context);
 
   TextEditingController link = TextEditingController();
   bool isViewCustomerLoading = false;
@@ -240,6 +240,7 @@ class MyCustomerProvider extends ChangeNotifier {
 
   Future<bool> customerInfoSubmitedRequest(
       Customer customerDetail, context) async {
+         var tr = Get.put(AppTranslations());
     isSubmitOrder = true;
     notifyListeners();
     try {
@@ -253,47 +254,43 @@ class MyCustomerProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         var decodedJson = jsonDecode(response.body);
         var data = DeliveryChargesModel.fromJson(decodedJson);
-
-        // updateCustomerLoadingState(false);
         if (receiptPaymentMethord) {
-          // final cartProvider = context.read<CartProvider>();
           var cartProvider = Provider.of<CartProvider>(context, listen: false);
           cartProvider.addItemForCustomerCart(
               data, customerDetail, sellerCode, receiptPaymentMethord);
-          // showToast("Success",'Submitted Request');
           await cartProvider.orderSubmit();
-          // cartdController.flushCart();
           isSubmitOrder = false;
           notifyListeners();
           return false;
         } else {
           return await addItemForCustomerLink(
               data, customerDetail, sellerCode, context);
-          //  _.customerInfoSubmitedRequest(customerDetail!);
         }
       } else {
-        showToast("Failed", 'Unable to proceed');
-        hasViewCustomerError = true;
-        updateCustomerLoadingState(false);
+        showToast(tr.translateData("failed_message"), tr.translateData('went_wrong'));
         isSubmitOrder = false;
         notifyListeners();
         return false;
       }
     } catch (e) {
-      showToast("Failed", "Try again later, Unable to proceed");
+      showToast(tr.translateData("failed_message"), tr.translateData('went_wrong'));
       generalException();
       updateCustomerLoadingState(false);
+      isSubmitOrder = true;
+    notifyListeners();
       return false;
     }
   }
 
   Future<bool> orderSubmitByLink(context) async {
-    var tr = Provider.of<AppTranslations>(context, listen: false);
+    var tr = Get.put(AppTranslations());
     var cartProvider = Provider.of<CartProvider>(context, listen: false);
+    var homePro = Provider.of<HomeProvider>(context, listen: false);
+
     isSubmitOrder = true;
     notifyListeners();
     try {
-      updateCustomerLoadingState(true);
+      // updateCustomerLoadingState(true);
       var url = Uri.parse(ApiData.generateLink);
       var response =
           await http.post(url, headers: ApiData.header, body: finalSubmitData);
@@ -306,6 +303,8 @@ class MyCustomerProvider extends ChangeNotifier {
         isSubmitOrder = false;
         popupPaymentlink = true;
         notifyListeners();
+        homePro.homeDataCall();
+        Get.offAll(() => const AllOrderScreen());
         return true;
       } else {
         showToast(tr.translateData("failed_message"), tr.translateData('went_wrong'));

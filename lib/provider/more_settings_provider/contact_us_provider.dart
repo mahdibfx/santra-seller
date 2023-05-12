@@ -44,7 +44,7 @@ class ContactUsProvider with ChangeNotifier {
   }
 
   Future sendMessage() async {
-       var tr = Provider.of<AppTranslations>(context, listen: false);
+       var tr = Get.put(AppTranslations());
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       changeSendMsgLoadingState(true);

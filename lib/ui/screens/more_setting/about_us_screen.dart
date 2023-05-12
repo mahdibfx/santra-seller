@@ -21,8 +21,8 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
  
   Widget bodyData() {
-    return Consumer<AppTranslations>(
-          builder: (con, tr, child) {
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
         return Consumer<AboutUsProvider>(
           builder: (con, _, child) {
             return _.isLoading

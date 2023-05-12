@@ -17,8 +17,8 @@ class ForgotPasswordConfirmation extends StatelessWidget {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   final form = GlobalKey<FormState>();
   Widget bodyData(context) {
-    return Consumer<AppTranslations>(
-          builder: (context, tr, child) {
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
         return Consumer<ForgotPasswordProvider>(
           builder: (context, _, child) {
             return SafeArea(

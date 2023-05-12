@@ -19,8 +19,8 @@ class CustomerScreen extends StatelessWidget {
   CustomerScreen({super.key});
 
   Widget bodyData() {
-    return Consumer<AppTranslations>(
-          builder: (context, tr, child) {
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
         return Consumer<AddManualOrderProvider>(
           builder: (context, _, child) {
             return _.isLoading

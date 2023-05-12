@@ -21,6 +21,7 @@ import '../drawer/clip_drawer.dart';
 import 'cart_icon_with_badge.dart';
 import 'notification_icon_with_badge.dart';
 
+var tr = Get.put(AppTranslations());
 class CommonScaffold extends StatelessWidget {
   final resizeToAvoid;
   final appTitle;
@@ -132,8 +133,8 @@ class CommonScaffold extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    Consumer<AppTranslations>(builder: (context, tr, child) {
-                      return Consumer<SplashProvider>(
+                    
+                      Consumer<SplashProvider>(
                           builder: (context, splashPro, child) {
                         return ReusableIconButton(
                           icon: UIDATAIcons.homeIcon,
@@ -162,21 +163,19 @@ class CommonScaffold extends StatelessWidget {
                                   // }
                                 },
                         );
-                      });
+                      
                     }),
                     Center(
-                      child: Consumer<AppTranslations>(
-                          builder: (context, tr, child) {
-                        return Text(
+                      child:Text(
                           showFAB
                               ? tr.translateData('home_addorder_button')
                               : '',
                           style: UIDataTextStyles.h2,
                           textAlign: TextAlign.center,
-                        );
-                      }),
+                       ),
                     ).marginOnly(top: 20),
-                    Consumer<AppTranslations>(builder: (context, tr, child) {
+                    GetBuilder<AppTranslations>(
+      builder: (tr) {
                       return Consumer<SplashProvider>(
                           builder: (context, splashPro, child) {
                         return ReusableIconButton(
@@ -364,7 +363,8 @@ class CommonScaffold extends StatelessWidget {
               ? Visibility(
                   visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
                   child:
-                      Consumer<AppTranslations>(builder: (context, tr, child) {
+                      GetBuilder<AppTranslations>(
+      builder: (tr) {
                     return Consumer<HomeProvider>(
                         builder: (context, homeProvider, child) {
                       return CustomFloat(

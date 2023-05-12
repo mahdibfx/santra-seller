@@ -13,8 +13,8 @@ class WalletScreen extends StatelessWidget {
   WalletScreen({super.key});
 
   Widget bodyData() {
-    return Consumer<AppTranslations>(
-          builder: (con, tr, child) {
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
         return SafeArea(
           child: SingleChildScrollView(
               child: Column(

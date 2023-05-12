@@ -76,7 +76,8 @@ class _CustomCardState extends State<CustomCard>
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppTranslations>(builder: (context, tr, child) {
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
         return Consumer<HomeProvider>(builder: (context, _, child) {
           return Container(
             decoration: BoxDecoration(
@@ -468,7 +469,8 @@ class _CustomCardState extends State<CustomCard>
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Consumer<AppTranslations>(builder: (context, tr, child)  {
+        return GetBuilder<AppTranslations>(
+      builder: (tr)  {
             return AlertDialog(
               title:  Text(tr.translateData("confirmation")),
               content: Text(statement),

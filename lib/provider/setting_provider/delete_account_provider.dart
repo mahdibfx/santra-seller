@@ -48,7 +48,7 @@ class DeleteAccountProvider with ChangeNotifier {
   }
 
   Future getOtp() async {
-        var tr = Provider.of<AppTranslations>(context, listen: false);
+        var tr = Get.put(AppTranslations());
     if (formDeleteAccScreen1.currentState!.validate()) {
       try {
         updateOtpLoadingState(true);

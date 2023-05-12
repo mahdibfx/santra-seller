@@ -33,7 +33,7 @@ class NotificationProvider extends ChangeNotifier {
   }
 
   void loginfunction() async {
-    var tr = Provider.of<AppTranslations>(context, listen: false);
+    var tr = Get.put(AppTranslations());
     isLoading = true;
     notifyListeners();
     try {

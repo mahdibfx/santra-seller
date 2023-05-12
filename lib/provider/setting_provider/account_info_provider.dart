@@ -79,7 +79,7 @@ class AccountInfoProvider extends ChangeNotifier {
   }
 
   Future updateAccountInfo() async {
-        var tr = Provider.of<AppTranslations>(context, listen: false);
+        var tr = Get.put(AppTranslations());
     if (form.currentState!.validate()) {
       try {
         changeLoadingState(true);

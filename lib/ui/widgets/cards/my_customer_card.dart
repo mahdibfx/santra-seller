@@ -151,7 +151,8 @@ void showpopup(String statement, String customerID, context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return Consumer<AppTranslations>(builder: (context, tr, child) {
+      return GetBuilder<AppTranslations>(
+      builder: (tr) {
           return Consumer<MyCustomerProvider>(builder: (context, _, child) {
             return AlertDialog(
               title:  Text(tr.translateData("confirmation")),
@@ -213,7 +214,8 @@ void confirmationPopup(String statement, context, var onYes) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return Consumer<AppTranslations>(builder: (context, tr, child) {
+      return GetBuilder<AppTranslations>(
+      builder: (tr) {
           return Consumer<MyCustomerProvider>(builder: (context, _, child) {
             return AlertDialog(
               title:  Text(tr.translateData("confirmation")),

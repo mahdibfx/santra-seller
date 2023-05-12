@@ -47,8 +47,9 @@ class ViewCustomerDetails extends StatelessWidget {
           //     :
           ModalProgressHUD(
         inAsyncCall: _.isSubmitOrder,
-        progressIndicator: const CircularProgressIndicator(),
-        child: Consumer<AppTranslations>(builder: (context, tr, child) {
+        // progressIndicator: const CircularProgressIndicator(),
+        child: GetBuilder<AppTranslations>(
+      builder: (tr) {
             return SafeArea(
               child: SingleChildScrollView(
                   child: Column(

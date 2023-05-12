@@ -29,8 +29,8 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
   // }
 
   Widget bodyData() {
-    return Consumer<AppTranslations>(
-          builder: (con, tr, child) {
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
         return Consumer<PrivacyProvider>(
           builder: (con, _, child) {
             return _.isPrivacyLoading

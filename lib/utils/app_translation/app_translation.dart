@@ -6,21 +6,18 @@ import 'package:get/get.dart';
 import '../api_data.dart';
 import 'package:flutter/material.dart';
 
-class AppTranslations extends ChangeNotifier {
+class AppTranslations extends GetxController  {
   static Map<String, Map<String, String>> _translations = {};
   String selectedLanguage = 'en_us';
   dynamic engLang;
   dynamic arabLang;
-
-  @override
-  Map<String, Map<String, String>> get keys => _translations;
 
    Future<String> language() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var oldLang = prefs.get("selectedlanguage");
     if (oldLang != null) {
        selectedLanguage = prefs.get("selectedlanguage") as String;
-       notifyListeners();
+       update();
       return selectedLanguage;
     }
 
@@ -29,7 +26,7 @@ class AppTranslations extends ChangeNotifier {
 
   setNewLanguage(String lang){
     selectedLanguage = lang;
-    notifyListeners();
+    update();
     
   }
   setShared(String lang)async{
@@ -52,14 +49,14 @@ class AppTranslations extends ChangeNotifier {
       final data = jsonDecode(response.body);
 
       engLang = data['data'][0]['en_us'];
-      Map<String, String> convertedData = engLang.cast<String, String>();
-      notifyListeners();
+      // Map<String, String> convertedData = engLang.cast<String, String>();
+      update();
       // _translations = {'en_us': convertedData};
 
       arabLang = data['data'][0]['ar_AE'];
-      notifyListeners();
-      Map<String, String> convertedDataArabic = arabLang.cast<String, String>();
-      _translations = {'en_us': convertedData, 'ar_AE': convertedDataArabic};
+      update();
+      // Map<String, String> convertedDataArabic = arabLang.cast<String, String>();
+      // _translations = {'en_us': convertedData, 'ar_AE': convertedDataArabic};
       selectedLanguage = await language();
       if (selectedLanguage != 'en_us') {
         Get.updateLocale(const Locale('ar', 'AE'));

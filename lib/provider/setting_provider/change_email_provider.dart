@@ -35,7 +35,7 @@ class ChangeEmailProvider extends ChangeNotifier {
   }
 
   Future updateEmail() async {
-       var tr = Provider.of<AppTranslations>(context, listen: false);
+       var tr = Get.put(AppTranslations());
     if (form.currentState!.validate()) {
       if (emailController.text != confirmeEmailController.text) {
         exceptionDialog(tr.translateData("no_match"),

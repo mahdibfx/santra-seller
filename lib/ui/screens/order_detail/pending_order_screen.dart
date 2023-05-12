@@ -27,8 +27,8 @@ class PendingOrderScreen extends StatefulWidget {
 class _PendingOrderScreenState extends State<PendingOrderScreen> {
   final localization = AppTranslations();
   Widget bodyData() {
-    return Consumer<AppTranslations>(
-          builder: (context, tr, child) {
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
         return Consumer<HomeProvider>(
           builder: (context, _, child) {
             return _.isLoading
@@ -181,7 +181,8 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
         isScrollControlled: true,
         context: context,
         builder: (context) {
-          return Consumer<AppTranslations>(builder: (context, tr, child)  {
+          return GetBuilder<AppTranslations>(
+      builder: (tr)  {
               return Consumer<HomeProvider>(builder: (context, _, child) {
                 return Container(
                   height: 650,

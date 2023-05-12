@@ -30,126 +30,123 @@ class _ChangeEmailState extends State<ChangeEmail> {
   }
 
   Widget bodyData(context) {
-    return ChangeNotifierProvider(
-      create: (_) => ChangeEmailProvider(context),
-      child: Consumer<AppTranslations>(
-            builder: (context, tr, child) {
-          return Consumer<ChangeEmailProvider>(
-            builder: (context, _, child) {
-              return SafeArea(
-                child: SingleChildScrollView(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxHeight: Get.height / 1.1,
-                    ),
-                    child: Form(
-                      key: _.form,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          HeadingWithIcon(
-                              icon: UIDATAIcons.infoIcon, btntxt: tr.translateData("change_email_title")),
-                          IgnorePointer(
-                            ignoring: true,
-                            child: CommonTextField(
-                              controller: _.currentEmailController,
-                              labelText: tr.translateData("setting_email"),
-                              isTextHidden: false,
-                              fillcolor: UIDataColors.whiteColor,
-                              prefixIcon: UIDATAIcons.emailIcon,
-                              keyboardType: TextInputType.text,
-                              validator: (val) {
-                                if (val.isEmpty) {
-                                  return tr.translateData("email_validation");
-                                } else {
-                                  return null;
-                                }
-                              },
-                            ),
-                          ),
-                          CommonTextField(
-                            controller: _.emailController,
-                            labelText: tr.translateData("setting_new_email"),
-                            prefixIcon: UIDATAIcons.emailIcon,
-                            isTextHidden: false,
-                            fillcolor: UIDataColors.whiteColor,
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (val) {
-                              bool email = _.emailRegex.hasMatch(val);
-                              if (val.isEmpty) {
-                                return tr.translateData("email_validation");
-                              } else if (!email) {
-                                return tr.translateData("valid_email_validation");
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                          SpacingHeight.heightlistspacing5,
-                          CommonTextField(
-                            controller: _.confirmeEmailController,
-                            labelText: tr.translateData("setting_confirm_email"),
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
+        return Consumer<ChangeEmailProvider>(
+          builder: (context, _, child) {
+            return SafeArea(
+              child: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: Get.height / 1.1,
+                  ),
+                  child: Form(
+                    key: _.form,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        HeadingWithIcon(
+                            icon: UIDATAIcons.infoIcon, btntxt: tr.translateData("change_email_title")),
+                        IgnorePointer(
+                          ignoring: true,
+                          child: CommonTextField(
+                            controller: _.currentEmailController,
+                            labelText: tr.translateData("setting_email"),
                             isTextHidden: false,
                             fillcolor: UIDataColors.whiteColor,
                             prefixIcon: UIDATAIcons.emailIcon,
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (val) {
-                              bool email = _.emailRegex.hasMatch(val);
-                              if (val.isEmpty) {
-                                return tr.translateData("email_validation");
-                              } else if (!email) {
-                                return tr.translateData("valid_email_validation");
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                          SpacingHeight.heightlistspacing5,
-                          CommonTextField(
-                            controller: _.passwordController,
-                            labelText: tr.translateData("user_password_hint_signin"),
-                            isTextHidden: _.securetext,
-                            fillcolor: UIDataColors.whiteColor,
                             keyboardType: TextInputType.text,
-                            togglePassword: true,
-                            prefixIcon: UIDATAIcons.unlockIcon,
-                            toggleIcon: _.securetext == true
-                                ? UIDATAIcons.viewOffIcon
-                                : UIDATAIcons.viewIcon,
-                            toggleFunction: () {
-                              _.securetext = !_.securetext;
-                              setState(() {});
-                            },
                             validator: (val) {
                               if (val.isEmpty) {
-                                return tr.translateData("enter_password");
+                                return tr.translateData("email_validation");
                               } else {
                                 return null;
                               }
                             },
                           ),
-                          SpacingHeight.heightlistspacing10,
-                          _.isUpdateEmailLoading
-                              ? const Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                              : PrimaryButtonWithIcon(
-                                  btntxt: tr.translateData("change_email_save_button"),
-                                  iconImage: UIDATAIcons.sendIcon,
-                                  onPressed: () {
-                                    _.updateEmail();
-                                  },
-                                ),
-                        ],
-                      ).marginOnly(left: 20.0, right: 20.0),
-                    ),
+                        ),
+                        CommonTextField(
+                          controller: _.emailController,
+                          labelText: tr.translateData("setting_new_email"),
+                          prefixIcon: UIDATAIcons.emailIcon,
+                          isTextHidden: false,
+                          fillcolor: UIDataColors.whiteColor,
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (val) {
+                            bool email = _.emailRegex.hasMatch(val);
+                            if (val.isEmpty) {
+                              return tr.translateData("email_validation");
+                            } else if (!email) {
+                              return tr.translateData("valid_email_validation");
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        SpacingHeight.heightlistspacing5,
+                        CommonTextField(
+                          controller: _.confirmeEmailController,
+                          labelText: tr.translateData("setting_confirm_email"),
+                          isTextHidden: false,
+                          fillcolor: UIDataColors.whiteColor,
+                          prefixIcon: UIDATAIcons.emailIcon,
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (val) {
+                            bool email = _.emailRegex.hasMatch(val);
+                            if (val.isEmpty) {
+                              return tr.translateData("email_validation");
+                            } else if (!email) {
+                              return tr.translateData("valid_email_validation");
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        SpacingHeight.heightlistspacing5,
+                        CommonTextField(
+                          controller: _.passwordController,
+                          labelText: tr.translateData("user_password_hint_signin"),
+                          isTextHidden: _.securetext,
+                          fillcolor: UIDataColors.whiteColor,
+                          keyboardType: TextInputType.text,
+                          togglePassword: true,
+                          prefixIcon: UIDATAIcons.unlockIcon,
+                          toggleIcon: _.securetext == true
+                              ? UIDATAIcons.viewOffIcon
+                              : UIDATAIcons.viewIcon,
+                          toggleFunction: () {
+                            _.securetext = !_.securetext;
+                            setState(() {});
+                          },
+                          validator: (val) {
+                            if (val.isEmpty) {
+                              return tr.translateData("enter_password");
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        SpacingHeight.heightlistspacing10,
+                        _.isUpdateEmailLoading
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : PrimaryButtonWithIcon(
+                                btntxt: tr.translateData("change_email_save_button"),
+                                iconImage: UIDATAIcons.sendIcon,
+                                onPressed: () {
+                                  _.updateEmail();
+                                },
+                              ),
+                      ],
+                    ).marginOnly(left: 20.0, right: 20.0),
                   ),
                 ),
-              );
-            },
-          );
-        }
-      ),
+              ),
+            );
+          },
+        );
+      }
     );
   }
 

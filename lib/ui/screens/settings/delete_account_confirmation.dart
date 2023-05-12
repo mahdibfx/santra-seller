@@ -16,8 +16,8 @@ class DeleteAccountConfirmation extends StatelessWidget {
   DeleteAccountConfirmation({super.key});
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   Widget bodyData(context) {
-    return Consumer<AppTranslations>(
-          builder: (con, tr, child){
+    return GetBuilder<AppTranslations>(
+      builder: (tr){
         return Consumer<DeleteAccountProvider>(
           builder: (con, _, child) {
             return SafeArea(

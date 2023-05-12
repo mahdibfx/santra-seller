@@ -29,7 +29,8 @@ class _ProductEditCardState extends State<ProductEditCard> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Consumer<AppTranslations>(builder: (context, tr, child) {
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
         return Container(
             decoration: BoxDecoration(
                 boxShadow: [

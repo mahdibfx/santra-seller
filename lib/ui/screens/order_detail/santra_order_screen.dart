@@ -28,8 +28,8 @@ class SantraOrderScreen extends StatefulWidget {
 class _SantraOrderScreenState extends State<SantraOrderScreen> {
   final localization = AppTranslations();
   Widget bodyData() {
-    return Consumer<AppTranslations>(
-          builder: (context, tr, child) {
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
         return Consumer<HomeProvider>(
           builder: (context, _, child) {
             return _.isLoading
@@ -194,7 +194,8 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
         isScrollControlled: true,
         context: context,
         builder: (context) {
-          return Consumer<AppTranslations>(builder: (context, tr, child) {
+          return GetBuilder<AppTranslations>(
+      builder: (tr) {
               return Consumer<HomeProvider>(builder: (context, _, child) {
                 return Container(
                   height: 650,

@@ -87,7 +87,7 @@ class SignUpProvider extends ChangeNotifier {
   }
 
   Future getCities() async {
-    var tr = Provider.of<AppTranslations>(context, listen: false);
+    var tr = Get.put(AppTranslations());
     try {
       var url = Uri.parse(ApiData.getCities);
       final response = await http.get(url, headers: ApiData.header);
@@ -111,7 +111,7 @@ class SignUpProvider extends ChangeNotifier {
   }
 
   Future<void> signupMethod() async {
-     var tr = Provider.of<AppTranslations>(context, listen: false);
+     var tr = Get.put(AppTranslations());
     if (form.currentState!.validate()) {
       updateLoginLoadingStatus(true);
 

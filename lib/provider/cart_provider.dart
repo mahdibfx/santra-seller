@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:santra_seller/provider/home_provider.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,12 +15,13 @@ import '../../models/customers/view_all_customers.dart';
 import '../../models/seller_all_products_model.dart';
 import '../../models/voucher_model.dart';
 import '../../utils/api_data.dart';
+import '../ui/screens/order_detail/all_order_screen.dart';
 import '../utils/app_translation/app_translation.dart';
 
 class CartProvider extends ChangeNotifier {
-  final BuildContext context;
+  // final BuildContext context;
 
-  CartProvider(this.context);
+  // CartProvider(this.context);
 
 
   bool isLoading = false;
@@ -198,7 +200,7 @@ class CartProvider extends ChangeNotifier {
   }
 
   Future cartScreenData() async {
-    var tr = Provider.of<AppTranslations>(context, listen: false);
+    var tr = Get.put(AppTranslations());
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? sellerCode = prefs.getString("sellercode");
@@ -233,7 +235,7 @@ class CartProvider extends ChangeNotifier {
 
   /// *************************PROMO DISCOUNT API*******************************/
   Future promoDiscount() async {
-    var tr = Provider.of<AppTranslations>(context, listen: false);
+    var tr = Get.put(AppTranslations());
     try {
       changeDiscountLoadingState(true);
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -274,7 +276,7 @@ class CartProvider extends ChangeNotifier {
         print(e);
       }
 
-      Get.snackbar(tr.translateData("oops_message"), tr.translateData("went_wrong"));
+      // Get.snackbar(tr.translateData("oops_message"), tr.translateData("went_wrong"));
     }
     changeDiscountLoadingState(false);
     notifyListeners();
@@ -471,7 +473,8 @@ class CartProvider extends ChangeNotifier {
   }
 
   Future orderSubmit() async {
-    var tr = Provider.of<AppTranslations>(context, listen: false);
+    // var tr = Get.put(AppTranslations());
+    // var homePro = Provider.of<HomeProvider>(context, listen: false);
     try {
       changeLoadingStatus(true);
       var url = Uri.parse(ApiData.orderSubmitCash);
@@ -487,15 +490,16 @@ class CartProvider extends ChangeNotifier {
         //     selllerAllProductsModelFromJson(response.body);
         // notifyListeners();
         //        Get.offAllNamed(Routes.homeRoutes);
-        Get.offAll(() => const HomeScreen());
-        showToast(tr.translateData("success_message"), tr.translateData('order_placed_success'));
+        // homePro.homeDataCall();
+        Get.offAll(() => const AllOrderScreen());
+        // showToast(tr.translateData("success_message"), tr.translateData('order_placed_success'));
         flushCart();
       } else {
-        showToast(tr.translateData("failed_message"), tr.translateData('went_wrong'));
+        // showToast(tr.translateData("failed_message"), tr.translateData('went_wrong'));
         // hasError = true;
       }
     } catch (e) {
-      showToast(tr.translateData("oops_message"), tr.translateData('error_load_data'));
+      // showToast(tr.translateData("oops_message"), tr.translateData('error_load_data'));
       // generalException();
       // hasError = true;
     }

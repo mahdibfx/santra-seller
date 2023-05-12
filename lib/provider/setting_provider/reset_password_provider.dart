@@ -28,7 +28,7 @@ class ResetPasswordProvider with ChangeNotifier {
 
   resetControllers() {}
   Future updatePassword() async {
-     var tr = Provider.of<AppTranslations>(context, listen: false);
+     var tr = Get.put(AppTranslations());
     if (form.currentState!.validate()) {
       if (newPasswordController.text != confirmNewPasswordController.text) {
         exceptionDialog(tr.translateData("no_match"),

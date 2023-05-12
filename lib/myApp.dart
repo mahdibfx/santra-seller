@@ -36,17 +36,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var _ = Get.put(AppTranslations());
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AppTranslations>(create: (_) => AppTranslations()),
-        ChangeNotifierProvider<SplashProvider>(create: (_) => SplashProvider(_)),
+        ChangeNotifierProvider<SplashProvider>(create: (_) => SplashProvider()),
         ChangeNotifierProvider<HomeProvider>(create: (_) => HomeProvider(_)),
         ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider(_)),
         ChangeNotifierProvider<AddManualOrderProvider>(
             create: (_) => AddManualOrderProvider()),
         ChangeNotifierProvider<MyCustomerProvider>(
-            create: (_) => MyCustomerProvider(_)),
-        ChangeNotifierProvider<CartProvider>(create: (_) => CartProvider(_)),
+            create: (_) => MyCustomerProvider()),
+        ChangeNotifierProvider<CartProvider>(create: (_) => CartProvider()),
         ChangeNotifierProvider<SignUpProvider>(create: (_) => SignUpProvider(_)),
         ChangeNotifierProvider<ProductSettingsProvider>(
             create: (_) => ProductSettingsProvider()),
@@ -78,37 +78,33 @@ class MyApp extends StatelessWidget {
         // ChangeNotifierProvider<LanguageProvider>(
         //     create: (_) => LanguageProvider()),
       ],
-      child:Consumer<AppTranslations>(
-      builder: (context, _, child){
-          return GetMaterialApp(
-            title: UIData.appName,
-            theme: ThemeData(
-              primaryColor: Colors.black,
-              fontFamily: UIDataFonts.quickFont,
-              primarySwatch: Colors.blue,
-            ),
-            debugShowCheckedModeBanner: false,
-            defaultTransition: Get.defaultTransition,
-            showPerformanceOverlay: false,
-            localizationsDelegates: [
-              // const TranslationsDelegate(),
-            ],
-            home: SplashScreen(),
-            enableLog: true,
-            // translations: localization,
-            fallbackLocale: const Locale('en', 'US'),
-            // locale:const Locale('en', 'us'),
-            // logWriterCallback: Logger.write,
-            supportedLocales: const [ Locale("en", "US"),],
-          //   supportedLocales: const [
-          //   Locale('en'),
-          //   Locale('es'),
-          // ],
-            locale: _.selectedLanguage == 'en_us' ? const Locale('en', 'us') :const Locale('ar', 'AE'),
-            // initialRoute: AppPages.INITIAL,
-            // getPages: AppPages.routes,
-          );
-        }
+      child:GetMaterialApp(
+        title: UIData.appName,
+        theme: ThemeData(
+          primaryColor: Colors.black,
+          fontFamily: UIDataFonts.quickFont,
+          primarySwatch: Colors.blue,
+        ),
+        debugShowCheckedModeBanner: false,
+        defaultTransition: Get.defaultTransition,
+        showPerformanceOverlay: false,
+        localizationsDelegates: [
+          // const TranslationsDelegate(),
+        ],
+        home: SplashScreen(),
+        enableLog: true,
+        // translations: localization,
+        fallbackLocale: const Locale('en', 'US'),
+        // locale:const Locale('en', 'us'),
+        // logWriterCallback: Logger.write,
+        supportedLocales: const [ Locale("en", "US"),],
+      //   supportedLocales: const [
+      //   Locale('en'),
+      //   Locale('es'),
+      // ],
+        locale: _.selectedLanguage == 'en_us' ? const Locale('en', 'us') :const Locale('ar', 'AE'),
+        // initialRoute: AppPages.INITIAL,
+        // getPages: AppPages.routes,
       ),
     );
   }

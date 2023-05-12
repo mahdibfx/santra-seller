@@ -23,8 +23,8 @@ class MoreSettingScreen extends StatelessWidget {
   MoreSettingScreen({super.key});
 
   Widget bodyData() {
-    return Consumer<AppTranslations>(
-          builder: (context, tr, child){
+    return GetBuilder<AppTranslations>(
+      builder: (tr){
         return SafeArea(
           child: SingleChildScrollView(
             child: Column(

@@ -34,8 +34,8 @@ class _AddManulOrderState extends State<AddManulOrder> {
 
   Widget bodyData(context) {
     Size size = MediaQuery.of(context).size;
-    return Consumer<AppTranslations>(
-          builder: (context, tr, child){
+    return GetBuilder<AppTranslations>(
+      builder: (tr){
         return Consumer<AddManualOrderProvider>(
           builder: (context, manualOrderController, child) {
             return manualOrderController.isLoading

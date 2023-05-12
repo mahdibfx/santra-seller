@@ -31,105 +31,102 @@ class _AccountInfoState extends State<AccountInfo> {
   }
 
   Widget bodyData(context) {
-    return ChangeNotifierProvider(
-      create: (_) => AccountInfoProvider(context),
-      child: Consumer<AppTranslations>(
-            builder: (context, tr, child) {
-          return Consumer<AccountInfoProvider>(
-            builder: (context, _, child) {
-              return SafeArea(
-                child: SingleChildScrollView(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxHeight: Get.height / 1.1,
-                    ),
-                    child: Form(
-                      key: _.form,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          HeadingWithIcon(
-                              icon: UIDATAIcons.infoIcon, btntxt: tr.translateData("account_info_title")),
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
+        return Consumer<AccountInfoProvider>(
+          builder: (context, _, child) {
+            return SafeArea(
+              child: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: Get.height / 1.1,
+                  ),
+                  child: Form(
+                    key: _.form,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        HeadingWithIcon(
+                            icon: UIDATAIcons.infoIcon, btntxt: tr.translateData("account_info_title")),
     
-                          CommonTextField(
-                            controller: _.emailController,
-                            labelText: tr.translateData("setting_account_number"),
-                            inputFormatters: [_.phoneMask],
-                            isTextHidden: false,
-                            fillcolor: UIDataColors.whiteColor,
-                            prefixIcon: UIDATAIcons.callIcon,
-                            keyboardType: TextInputType.text,
-                            validator: (val) {
-                              if (val.isEmpty) {
-                                return tr.translateData("email_validation");
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                          SpacingHeight.heightlistspacing5,
-                          CommonTextField(
-                            controller: _.fNameController,
-                            labelText: tr.translateData("setting_account_business"),
-                            isTextHidden: false,
-                            prefixIcon: UIDATAIcons.businessIcon,
-                            fillcolor: UIDataColors.whiteColor,
-                            keyboardType: TextInputType.text,
-                            validator: (val) {
-                              if (val.isEmpty) {
-                                return tr.translateData("enter_first_name");
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                          SpacingHeight.heightlistspacing5,
-                          CommonTextField(
-                            controller: _.lNameController,
-                            labelText: tr.translateData("setting_account_contact"),
-                            isTextHidden: false,
-                            fillcolor: UIDataColors.whiteColor,
-                            prefixIcon: UIDATAIcons.userIcon,
-                            keyboardType: TextInputType.text,
-                            validator: (val) {
-                              if (val.isEmpty) {
-                                return tr.translateData("enter_last_name");
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                          // SpacingHeight.heightlistspacing5,
-                          // TappableTextField(
-                          //   ontap: () {
-                          //     _.pickUserDob(context);
-                          //   },
-                          //   prefixIcon: UIDATAIcons.calendarIcon,
-                          //   fieldHeight: 50,
-                          //   value: _.userDob != null
-                          //       ? DateFormat('yyyy-MM-dd').format(_.userDob!)
-                          //       : "",
-                          // ),
-                          SpacingHeight.heightlistspacing20,
-                          _.isUpdateAccInfoLoading
-                              ? const Center(child: CircularProgressIndicator())
-                              : PrimaryButtonWithIcon(
-                                  btntxt: tr.translateData("account_info_save_button"),
-                                  iconImage: UIDATAIcons.saveIcon,
-                                  onPressed: () {
-                                    _.updateAccountInfo();
-                                  },
-                                )
-                        ],
-                      ).paddingSymmetric(horizontal: 20),
-                    ),
+                        CommonTextField(
+                          controller: _.emailController,
+                          labelText: tr.translateData("setting_account_number"),
+                          inputFormatters: [_.phoneMask],
+                          isTextHidden: false,
+                          fillcolor: UIDataColors.whiteColor,
+                          prefixIcon: UIDATAIcons.callIcon,
+                          keyboardType: TextInputType.text,
+                          validator: (val) {
+                            if (val.isEmpty) {
+                              return tr.translateData("email_validation");
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        SpacingHeight.heightlistspacing5,
+                        CommonTextField(
+                          controller: _.fNameController,
+                          labelText: tr.translateData("setting_account_business"),
+                          isTextHidden: false,
+                          prefixIcon: UIDATAIcons.businessIcon,
+                          fillcolor: UIDataColors.whiteColor,
+                          keyboardType: TextInputType.text,
+                          validator: (val) {
+                            if (val.isEmpty) {
+                              return tr.translateData("enter_first_name");
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        SpacingHeight.heightlistspacing5,
+                        CommonTextField(
+                          controller: _.lNameController,
+                          labelText: tr.translateData("setting_account_contact"),
+                          isTextHidden: false,
+                          fillcolor: UIDataColors.whiteColor,
+                          prefixIcon: UIDATAIcons.userIcon,
+                          keyboardType: TextInputType.text,
+                          validator: (val) {
+                            if (val.isEmpty) {
+                              return tr.translateData("enter_last_name");
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        // SpacingHeight.heightlistspacing5,
+                        // TappableTextField(
+                        //   ontap: () {
+                        //     _.pickUserDob(context);
+                        //   },
+                        //   prefixIcon: UIDATAIcons.calendarIcon,
+                        //   fieldHeight: 50,
+                        //   value: _.userDob != null
+                        //       ? DateFormat('yyyy-MM-dd').format(_.userDob!)
+                        //       : "",
+                        // ),
+                        SpacingHeight.heightlistspacing20,
+                        _.isUpdateAccInfoLoading
+                            ? const Center(child: CircularProgressIndicator())
+                            : PrimaryButtonWithIcon(
+                                btntxt: tr.translateData("account_info_save_button"),
+                                iconImage: UIDATAIcons.saveIcon,
+                                onPressed: () {
+                                  _.updateAccountInfo();
+                                },
+                              )
+                      ],
+                    ).paddingSymmetric(horizontal: 20),
                   ),
                 ),
-              );
-            },
-          );
-        }
-      ),
+              ),
+            );
+          },
+        );
+      }
     );
   }
 

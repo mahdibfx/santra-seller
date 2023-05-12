@@ -55,8 +55,8 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
   // }
 
   Widget bodyData() {
-    return Consumer<AppTranslations>(
-          builder: (context, tr, child) {
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
         return Consumer<MyCustomerProvider>(
           builder: (context, _, child) {
             return SafeArea(

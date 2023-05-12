@@ -76,7 +76,7 @@ class LoginProvider extends ChangeNotifier {
   }
 
   void loginfunction() async {
-       var tr = Provider.of<AppTranslations>(context, listen: false);
+       var tr = Get.put(AppTranslations());
     updateLoginLoadingStatus(true);
     notifyListeners();
     try {
