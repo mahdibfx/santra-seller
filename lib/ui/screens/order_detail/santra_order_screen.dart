@@ -91,7 +91,17 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                               SpacingHeight.heightlistspacing20,
                               _.filteredSantraOrders.isEmpty
                                   ? Center(
-                                      child: Text(tr.translateData('no_order')),
+                                      child: Column(
+                                        children: [
+                                           SvgPicture.asset(
+                                           UIDataImage.waitingOrderImage,
+                                           ),
+                                           SpacingHeight.heightlistspacing15,
+                                          Text('Your Store is online'),
+                                          Text('Please check back later for new orders.'),
+
+                                        ],
+                                      ),
                                     )
                                   : ListView.builder(
                                       physics: const NeverScrollableScrollPhysics(),

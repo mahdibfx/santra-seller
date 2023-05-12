@@ -22,4 +22,6 @@ class UIDataImage {
   //static String bg = "$imageDir/camera_icon.png";
   //static String dummyImage = "$imageDir/dummy_image.jpg";
   static String backgroundImage = "$imageDir/bgsvgnew.png";
+  static String waitingOrderImage = "$imageDir/waiting_order.svg";
+
 }
