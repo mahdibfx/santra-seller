@@ -220,9 +220,9 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                   Container(
                     height: widget.orderStatus.toLowerCase() == 'accepted'
                         ? (_heightFactorAnimation.value *
-                            (Get.locale!.languageCode == 'en' ? 155 : 161 + _calculateContainerHeight()))
+                            (Get.locale!.languageCode == 'en' ? 155 + _calculateContainerHeight(): 161 + _calculateContainerHeight()))
                         : (_heightFactorAnimation.value *
-                            (Get.locale!.languageCode == 'en' ? 84 :91 +
+                            (Get.locale!.languageCode == 'en' ? 84 + _calculateContainerHeight():91 +
                                 _calculateContainerHeight())), //@todo repeat order button hide when unhide it change the height to 155
                     width: double.infinity,
                     decoration: const BoxDecoration(

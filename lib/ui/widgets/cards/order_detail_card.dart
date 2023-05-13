@@ -220,12 +220,12 @@ class _CustomCardState extends State<CustomCard>
                   Container(
                     height: widget.orderItemList.isEmpty ? 
                     (_heightFactorAnimation.value *
-                            (Get.locale!.languageCode == 'en' ? 173 : 179 + _calculateContainerHeight())) :
+                            (Get.locale!.languageCode == 'en' ? 173 + _calculateContainerHeight(): 179 + _calculateContainerHeight())) :
                     widget.orderRemarks.toString().isEmpty
                         ? (_heightFactorAnimation.value *
-                            (Get.locale!.languageCode == 'en' ? 130 :136 + _calculateContainerHeight()))
+                            (Get.locale!.languageCode == 'en' ? 130 + _calculateContainerHeight():136 + _calculateContainerHeight()))
                         : (_heightFactorAnimation.value *
-                            (Get.locale!.languageCode == 'en' ? 173 : 179  + _calculateContainerHeight())),
+                            (Get.locale!.languageCode == 'en' ? 173 + _calculateContainerHeight(): 179  + _calculateContainerHeight())),
                     width: double.infinity,
                     decoration: const BoxDecoration(
                       color: Colors.white,
