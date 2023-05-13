@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import '../../../utils/app_translation/app_translation.dart';
 import '../../../utils/uidata.dart';
-
+final tr = Get.put(AppTranslations());
 class MyDropdown extends StatefulWidget {
   final List<String> options;
   String? selectedOption;
@@ -37,11 +38,11 @@ class _MyDropdownState extends State<MyDropdown> {
                 value: selOption,
                 child: Text(
                   selOption,
-                  style: const TextStyle(
+                  style:  TextStyle(
                       color: Color.fromARGB(255, 0, 0, 0),
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Markpro',
+                      fontFamily: tr.getFont(),
                       letterSpacing: 0.0),
                 ));
           }).toList(),

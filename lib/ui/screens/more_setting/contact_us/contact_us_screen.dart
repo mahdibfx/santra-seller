@@ -135,7 +135,7 @@ class ContactUsScreen extends StatelessWidget {
                     style: UIDataTextStyles.h1,
                   ),
                   SpacingHeight.heightlistspacing5,
-                  const Text(
+                   Text(
                     '+971 50 188 6867',
                     style: UIDataTextStyles.title,
                   ),

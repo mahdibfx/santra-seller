@@ -289,14 +289,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   Text(tr.translateData("signup_agree"),
                                       style: TextStyle(
                                         fontSize: 12,
-                                        fontFamily: 'Markpro',
+                                        fontFamily: tr.getFont(),
                                         fontWeight: FontWeight.w600,
                                       )),
                                   Text(tr.translateData("signup_agree_link"),
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: UIDataColors.primaryColor,
-                                        fontFamily: 'Markpro',
+                                        fontFamily: tr.getFont(),
                                         fontWeight: FontWeight.w500,
                                       )),
                                 ],

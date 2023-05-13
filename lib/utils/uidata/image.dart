@@ -23,5 +23,8 @@ class UIDataImage {
   //static String dummyImage = "$imageDir/dummy_image.jpg";
   static String backgroundImage = "$imageDir/bgsvgnew.png";
   static String waitingOrderImage = "$imageDir/waiting_order.svg";
+  static String santraLogoEnglish = "$imageDir/santra_log_eng.png";
+  static String santraLogoArabic = "$imageDir/santra_log_arab.png";
+
 
 }

@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../utils/uidata.dart';
 import '../../widgets/textfields/common_textfield.dart';
-
+var tr = Get.put(AppTranslations());
 class AllOrderScreen extends StatefulWidget {
   // final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 

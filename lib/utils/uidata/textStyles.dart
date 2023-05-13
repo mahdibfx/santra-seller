@@ -1,138 +1,141 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../app_translation/app_translation.dart';
 import '../uidata.dart';
 
+var tr = Get.put(AppTranslations());
 class UIDataTextStyles {
-  static const counth1 = TextStyle(
+  static var counth1 = TextStyle(
     fontSize: 32,
-    fontFamily: 'Activ',
+    fontFamily: tr.getFont(),
     letterSpacing: 0.0,
   );
-  static const counth2 = TextStyle(
+  static var counth2 = TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.w500,
-      fontFamily: 'Activ',
+      fontFamily: tr.getFont(),
       letterSpacing: 0.0);
-  static const countTitle = TextStyle(
+  static var countTitle = TextStyle(
     fontSize: 16,
-    fontFamily: 'Activ',
+    fontFamily: tr.getFont(),
     letterSpacing: 0.0,
   );
-  static const h1Heavy = TextStyle(
+  static var h1Heavy = TextStyle(
       fontSize: 20,
       fontWeight: FontWeight.bold,
-      fontFamily: 'Markpro',
+      fontFamily: tr.getFont(),
       letterSpacing: 0.0);
-  static const h1 = TextStyle(
+  static var h1 = TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.bold,
-      fontFamily: 'Markpro',
+      fontFamily: tr.getFont(),
       letterSpacing: 0.0);
-  static const h2 = TextStyle(
+  static var h2 = TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.bold,
-      fontFamily: 'Markpro',
+      fontFamily: tr.getFont(),
       letterSpacing: 0.0);
-  static const title = TextStyle(
+  static var title = TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.normal,
-      fontFamily: 'Markpro',
+      fontFamily: tr.getFont(),
       letterSpacing: 0.0);
 
-  static const title13Normal = TextStyle(
+  static var title13Normal = TextStyle(
       fontSize: 13,
       fontWeight: FontWeight.w400,
-      fontFamily: 'Markpro',
+      fontFamily: tr.getFont(),
       letterSpacing: 0.0);
-  static const caption = TextStyle(
+  static var caption = TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w500,
-      fontFamily: 'Markpro',
+      fontFamily: tr.getFont(),
       letterSpacing: 0.0);
-  static const subTitle = TextStyle(
+  static var subTitle = TextStyle(
       fontSize: 13,
       fontWeight: FontWeight.normal,
-      fontFamily: 'Markpro',
+      fontFamily: tr.getFont(),
       letterSpacing: 0.0);
-  static const subTitleMedium = TextStyle(
+  static var subTitleMedium = TextStyle(
       fontSize: 13,
       fontWeight: FontWeight.w500,
-      fontFamily: 'Markpro',
+      fontFamily: tr.getFont(),
       letterSpacing: 0.0);
-  static const dialogTitle = TextStyle(
+  static var dialogTitle = TextStyle(
       color: Colors.black,
       fontSize: 18,
       fontWeight: FontWeight.bold,
-      fontFamily: 'Markpro',
+      fontFamily: tr.getFont(),
       letterSpacing: 0.0);
-  static const dialogMsg = TextStyle(
+  static var dialogMsg = TextStyle(
       color: Colors.black,
       fontSize: 14,
       fontWeight: FontWeight.normal,
-      fontFamily: 'Markpro',
+      fontFamily: tr.getFont(),
       letterSpacing: 0.0);
-  static const dialogButton = TextStyle(
+  static var dialogButton = TextStyle(
       color: Colors.black,
       fontSize: 15,
       fontWeight: FontWeight.bold,
-      fontFamily: 'Markpro',
+      fontFamily: tr.getFont(),
       letterSpacing: 0.0);
-  static const heading15Medium = TextStyle(
+  static var heading15Medium = TextStyle(
       color: Colors.black,
       fontSize: 15,
       fontWeight: FontWeight.w500,
-      fontFamily: 'Markpro',
+      fontFamily: tr.getFont(),
       letterSpacing: 0.0);
 
-  static const kHead = TextStyle(
-    fontFamily: 'MarkPro',
+  static var kHead = TextStyle(
+    fontFamily: tr.getFont(),
     fontSize: 25.0,
     color: Colors.black,
     fontWeight: FontWeight.bold,
   );
-  static const rating = TextStyle(
-    fontFamily: 'MarkPro',
+  static var rating = TextStyle(
+    fontFamily: tr.getFont(),
     fontSize: 32.0,
     color: Colors.black,
     fontWeight: FontWeight.bold,
   );
-  static const textMedium = TextStyle(
+  static var textMedium = TextStyle(
       color: Colors.black,
       fontSize: 15,
       fontWeight: FontWeight.w600,
-      fontFamily: 'Markpro',
+      fontFamily: tr.getFont(),
       letterSpacing: 0.0);
 
-  static const textMediumColoredBlue = TextStyle(
+  static var textMediumColoredBlue = TextStyle(
       color: UIDataColors.primaryColor,
       fontSize: 15,
       fontWeight: FontWeight.w600,
-      fontFamily: 'Markpro',
+      fontFamily: tr.getFont(),
       letterSpacing: 0.0);
-  static const dateStyle = TextStyle(
+  static var dateStyle = TextStyle(
       color: UIDataColors.primaryColor,
       fontSize: 15,
       fontWeight: FontWeight.bold,
-      // fontFamily: 'Markpro',
+      // fontFamily: tr.getFont(),
       letterSpacing: 0.0);
 
-  static const monthStyle = TextStyle(
+  static var monthStyle = TextStyle(
       color: UIDataColors.primaryColor,
       fontSize: 12,
       // fontWeight: FontWeight.bold,
-      // fontFamily: 'Markpro',
+      // fontFamily: tr.getFont(),
       letterSpacing: 0.0);
 
-  static const dayStyle = TextStyle(
+  static var dayStyle = TextStyle(
       color: UIDataColors.primaryColor,
       fontSize: 15,
       // fontWeight: FontWeight.bold,
-      // fontFamily: 'Markpro',
+      // fontFamily: tr.getFont(),
       letterSpacing: 0.0);
 
-  static const h3 = TextStyle(
+  static var h3 = TextStyle(
       fontSize: 13,
       fontWeight: FontWeight.bold,
-      fontFamily: 'Markpro',
+      fontFamily: tr.getFont(),
       letterSpacing: 0.0);
 }

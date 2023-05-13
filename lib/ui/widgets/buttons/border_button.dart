@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:santra_seller/utils/uidata.dart';
 
+import '../../../utils/app_translation/app_translation.dart';
+final tr = Get.put(AppTranslations());
 class BorderButton extends StatelessWidget {
   final String? btntxt;
   final String? iconImage;
@@ -66,7 +69,7 @@ class BorderButton extends StatelessWidget {
                     btntxt ?? "",
                     style: TextStyle(
                       fontSize: 14.0,
-                      fontFamily: 'Markpro',
+                      fontFamily: tr.getFont(),
                       fontWeight: FontWeight.bold,
                       color: buttontxtColor ?? Colors.white,
                     ),

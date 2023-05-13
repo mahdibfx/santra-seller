@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../api_data.dart';
 import 'package:flutter/material.dart';
 
+
 class AppTranslations extends GetxController  {
   static Map<String, Map<String, String>> _translations = {};
   String selectedLanguage = 'en_us';
@@ -74,5 +75,14 @@ class AppTranslations extends GetxController  {
       return engLang[tralate];
     }
   return   arabLang[tralate];
+  }
+
+   String getFont() {
+    final langCode = Get.locale!.languageCode;
+    if (langCode == 'en') {
+      return "Markpro";
+    } else {
+      return "AktivGrotesk-Medium";
+    }
   }
 }

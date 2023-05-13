@@ -26,7 +26,7 @@ class OrderDate extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text("Choose Delivery Date:",
+               Text("Choose Delivery Date:",
                   style: UIDataTextStyles.textMedium),
               SizedBox(
                 width: 32,

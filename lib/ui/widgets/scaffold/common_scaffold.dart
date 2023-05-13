@@ -62,6 +62,8 @@ class CommonScaffold extends StatelessWidget {
   final appBarSearchShow;
   final appBarAction;
   bool? showActions;
+  bool isHome;
+  bool isMore;
   final bool isBackArrowShow;
 
   CommonScaffold(
@@ -104,6 +106,8 @@ class CommonScaffold extends StatelessWidget {
       this.appBarSearchShow = false,
       this.isBackArrowShow = true,
       this.appBarAction,
+      this.isHome = false,
+      this.isMore = false,
       this.showActions = true});
 
   Widget myBottomBar(context) =>
@@ -154,7 +158,7 @@ class CommonScaffold extends StatelessWidget {
                               color: Colors.black,
                             ),
                           ),
-                          onPressed: splashPro.isHome
+                          onPressed: isHome
                               ? null
                               : () {
                                   splashPro.onHomeScreen();
@@ -197,7 +201,7 @@ class CommonScaffold extends StatelessWidget {
                               color: Colors.black,
                             ),
                           ),
-                          onPressed: splashPro.isMore
+                          onPressed: isMore
                               ? null
                               : () {
                                   splashPro.onMoreScreen();
@@ -246,7 +250,7 @@ class CommonScaffold extends StatelessWidget {
                           return Row(
                             children: [
                               SpacingWidth.widthlistspacing5,
-                              splashPro.language == 'en_us'
+                              Get.locale!.languageCode == 'en'
                                   ? SvgPicture.asset(UIDATAIcons.back)
                                   : SvgPicture.asset(
                                       UIDATAIcons.forwardArrow,

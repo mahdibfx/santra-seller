@@ -112,6 +112,7 @@ class MoreSettingScreen extends StatelessWidget {
       showBottomNav: true,
       appbarcolor: UIDataColors.whiteColor,
       appTitle: 'Add customer',
+      isMore: true,
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
         Get.offAll(() => const AddManulOrder());
