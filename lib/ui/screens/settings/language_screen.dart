@@ -14,7 +14,9 @@ import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
 import '/utils/uidata.dart';
 import 'package:get/get.dart';
+
 var tr = Get.put(AppTranslations());
+
 class LanguageSettings extends StatefulWidget {
   const LanguageSettings({super.key});
 
@@ -27,8 +29,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
   // final localization = AppTranslations();
 
   Widget bodyData(context) {
-    return GetBuilder<AppTranslations>(
-      builder: (tr) {
+    return GetBuilder<AppTranslations>(builder: (tr) {
       return Consumer<LangaugeSettingsProvider>(
         builder: (context, _, child) {
           return SafeArea(
@@ -130,12 +131,16 @@ class _LanguageSettingsState extends State<LanguageSettings> {
       barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
+          elevation: 0,
           backgroundColor: Colors.transparent,
           content: Container(
               height: 150,
               width: 300,
-              color: Colors.white,
-              child: Center(child: CircularProgressIndicator())),
+              color: Colors.transparent,
+              child: Center(
+                  child: CircularProgressIndicator(
+                color: UIDataColors.primaryColor,
+              ))),
         );
       },
     ).then((value) {

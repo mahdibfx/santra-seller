@@ -130,14 +130,6 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                           product: manualOrderController
                                                                                   .allProducts?[
                                                                               index],
-                                                                          productName: manualOrderController
-                                                                              .allProducts?[
-                                                                                  index]
-                                                                              .productName,
-                                                                          productPrice: manualOrderController
-                                                                              .allProducts?[
-                                                                                  index]
-                                                                              .productPrice,
                                                                         ),
                                                                         SpacingHeight
                                                                             .heightlistspacing20,
@@ -169,8 +161,12 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                                     child: Column(
                                                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                                                       children: [
+                                                                                        Get.locale!.languageCode == 'en' ?
                                                                                         Text(
                                                                                           "${manualOrderController.allProducts![index].modifiers![index2].name.toString()} :",
+                                                                                          style: UIDataTextStyles.title.copyWith(fontWeight: FontWeight.w600, color: UIDataColors.primaryColor),
+                                                                                        ) : Text(
+                                                                                          "${manualOrderController.allProducts![index].modifiers![index2].nameArabic.toString()} :",
                                                                                           style: UIDataTextStyles.title.copyWith(fontWeight: FontWeight.w600, color: UIDataColors.primaryColor),
                                                                                         ),
                                                                                         SpacingHeight.heightlistspacing5,
@@ -230,7 +226,10 @@ class _AddManulOrderState extends State<AddManulOrder> {
                                                                                                       //     :
 
                                                                                                       // SpacingWidth.widthlistspacing,
-                                                                                                      Text(newData[sebIndex].nameModifier.toString(), style: UIDataTextStyles.title.copyWith(fontWeight: FontWeight.w600)),
+                                                                                                      Get.locale!.languageCode == 'en' ?
+                                                                                                      Text(newData[sebIndex].nameModifier.toString(), style: UIDataTextStyles.title.copyWith(fontWeight: FontWeight.w600))
+                                                                                                      :
+                                                                                                      Text(newData[sebIndex].nameModifierArabic.toString(), style: UIDataTextStyles.title.copyWith(fontWeight: FontWeight.w600)),
 
                                                                                                       Text(
                                                                                                         " (+AED ${newData[sebIndex].priceModifier})",

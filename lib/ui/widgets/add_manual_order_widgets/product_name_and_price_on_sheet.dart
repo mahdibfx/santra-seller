@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/widgets/add_manual_order_widgets/price_on_selection.dart';
 
@@ -7,11 +8,11 @@ import '../../../provider/all_orders_manual.dart';
 import '../../../utils/uidata/textStyles.dart';
 
 class ProductNameAndPriceOnSheet extends StatelessWidget {
-  String? productName;
-  String? productPrice;
+  // String? productName;
+  // String? productPrice;
   Product? product;
   ProductNameAndPriceOnSheet(
-      {Key? key, required this.productName, required this.productPrice, required this.product})
+      {Key? key, required this.product})
       : super(key: key);
 
   @override
@@ -29,8 +30,8 @@ class ProductNameAndPriceOnSheet extends StatelessWidget {
                 children: [
                   SizedBox(
                     // width: 250,
-                    child: Text(
-                      product!.productName ?? "",
+                    child: Text(Get.locale!.languageCode == 'en' ?
+                      product!.productName ?? "" :product!.productNameArabic ??"",
                       style:
                           UIDataTextStyles.h2.copyWith(fontWeight: FontWeight.w600),
                       overflow: TextOverflow.ellipsis,

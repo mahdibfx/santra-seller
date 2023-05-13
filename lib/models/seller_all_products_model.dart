@@ -60,6 +60,7 @@ class Product {
   Product({
     this.productCode,
     this.productName,
+    this.productNameArabic,
     this.productPrice,
     this.productType,
     this.categoryCode,
@@ -72,6 +73,7 @@ class Product {
 
   String? productCode;
   String? productName;
+  String? productNameArabic;
   String? productPrice;
   String? productType;
   String? categoryCode;
@@ -84,6 +86,7 @@ class Product {
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         productCode: json["product_code"],
         productName: json["product_name"],
+        productNameArabic: json["product_name_ar"],
         productPrice: json["product_price"],
         productType: json["product_type"],
         categoryCode: json["category_code"],
@@ -116,28 +119,35 @@ class Modifier {
   Modifier({
     this.groupCode,
     this.name,
+    this.nameArabic,
     this.limitModifiers,
     this.numberModifiers,
     this.selectionType,
     this.modifierMessage,
+    this.modifierMessageArabic,
     this.subModifiers,
   });
 
   String? groupCode;
   String? name;
+  String? nameArabic;
   String? limitModifiers;
   String? numberModifiers;
   String? selectionType;
   String? modifierMessage;
+  String? modifierMessageArabic;
+
   List<SubModifier>? subModifiers;
 
   factory Modifier.fromJson(Map<String, dynamic> json) => Modifier(
         groupCode: json["group_code"],
         name: json["name"],
+        nameArabic: json["name_ar"],
         limitModifiers: json["limit_modifiers"],
         numberModifiers: json["number_modifiers"],
         selectionType: json["selection_type"],
         modifierMessage: json["modifier_message"],
+        modifierMessageArabic: json["modifier_message_ar"],
         subModifiers: json["sub_modifiers"] == null
             ? []
             : List<SubModifier>.from(
@@ -161,18 +171,23 @@ class SubModifier {
   SubModifier({
     this.modifierCode,
     this.nameModifier,
+    this.nameModifierArabic,
     this.priceModifier,
     this.byDefault,
   });
 
   String? modifierCode;
   String? nameModifier;
+  String? nameModifierArabic;
+
   String? priceModifier;
   String? byDefault;
 
   factory SubModifier.fromJson(Map<String, dynamic> json) => SubModifier(
         modifierCode: json["modifier_code"],
         nameModifier: json["name_modifier"],
+        nameModifierArabic: json["name_modifier_ar"],
+        
         priceModifier: json["price_modifier"],
         byDefault: json["by_default"],
       );

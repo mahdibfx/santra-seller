@@ -82,7 +82,7 @@ class _SettingsState extends State<Settings> {
                         onPressed: () {
                           Get.to(() => const LanguageSettings());
                         },
-                        btntxt: tr.translateData('setting_language'),
+                        btntxt: Get.locale!.languageCode == 'en' ? 'اللغة' : 'Language',
                       ),
                       // GetBuilder<LogoutController>(builder: (logoutController) {
                       //   return
