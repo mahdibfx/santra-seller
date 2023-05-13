@@ -245,7 +245,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                     imageString: widget.orderItemList[index].productImage,
                                     productQuantity:
                                         widget.orderItemList[index].productQuantity,
-                                    productName: widget.orderItemList[index].productName,
+                                    productName: Get.locale!.languageCode == 'en' ?  widget.orderItemList[index].productName : widget.orderItemList[index].productNameArabic,
                                     productPrice:
                                         widget.orderItemList[index].productTotal,
                                   );

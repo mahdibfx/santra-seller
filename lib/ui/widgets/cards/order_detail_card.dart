@@ -248,7 +248,7 @@ class _CustomCardState extends State<CustomCard>
                                   productQuantity:
                                       widget.orderItemList[index].productQuantity,
                                   productName:
-                                      widget.orderItemList[index].productName,
+                                  Get.locale!.languageCode == 'en' ?    widget.orderItemList[index].productName : widget.orderItemList[index].productNameArabic,
                                   productPrice:
                                       widget.orderItemList[index].productTotal,
                                 );

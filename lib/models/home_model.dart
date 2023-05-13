@@ -149,18 +149,21 @@ class Order {
 class OrderItem {
   OrderItem({
     required this.productName,
+    required this.productNameArabic,
     required this.productTotal,
     required this.productImage,
     required this.productQuantity,
   });
 
   String productName;
+  String productNameArabic;
   String productTotal;
   String productImage;
   String productQuantity;
 
   factory OrderItem.fromJson(Map<String, dynamic> json) => OrderItem(
         productName: json["product_name"],
+        productNameArabic: json["product_name_ar"],
         productTotal: json["product_total"],
         productImage: json["product_image"] ?? '',
         productQuantity: json["product_quantity"],

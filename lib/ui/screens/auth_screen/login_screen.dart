@@ -35,17 +35,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Stack(
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: Get.locale!.languageCode == 'en'? MainAxisAlignment.end :MainAxisAlignment.start,
+                        crossAxisAlignment: Get.locale!.languageCode == 'en'? CrossAxisAlignment.end:CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            width: 140,
-                            height: 140,
-                            decoration: const BoxDecoration(
-                              color: UIDataColors.secondaryColor,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(0),
-                                bottomLeft: Radius.circular(5000),
+                          Directionality(
+                            textDirection: TextDirection.ltr,
+                            child: Container(
+                              
+                              width: 140,
+                              height: 140,
+                              decoration: const BoxDecoration(
+                                color: UIDataColors.secondaryColor,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(0),
+                                  bottomLeft: Radius.circular(5000),
+                                ),
                               ),
                             ),
                           ),
@@ -211,8 +215,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ).marginOnly(left: 20.0, right: 20.0),
                 const Spacer(),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: Get.locale!.languageCode == 'en'? MainAxisAlignment.start :MainAxisAlignment.end,
+                        // crossAxisAlignment: Get.locale!.languageCode == 'en'? CrossAxisAlignment.end:CrossAxisAlignment.start,
                   children: [
                   Container(
                             width: 140,

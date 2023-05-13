@@ -27,45 +27,49 @@ class ClipDrawer extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Container(
-                        alignment: Alignment.centerLeft, child: const CloseButton()
-                        //  IconButton(
-                        //   icon: Icon(
-                        //     Icons.close,
-                        //     color: UIDataColors.whiteColor,
-                        //   ),
-                        //   onPressed: () async {
-                        //     Scaffold.of(context).closeEndDrawer();
-                        //   },
-                        // ),
-                        ),
+                    // Container(
+                        // alignment: Alignment.centerLeft, child: const CloseButton()
+                        Row(
+                          mainAxisAlignment: Get.locale!.languageCode == 'en' ?MainAxisAlignment.start : MainAxisAlignment.end,
+                          children: [
+                            GestureDetector(
+                               onTap: () async {
+                                  Scaffold.of(context).closeEndDrawer();
+                                },
+                              child: Container(height: 32,width: 32,
+                              decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.13),
+                                borderRadius: BorderRadius.all(Radius.circular(16))
+                              ),
+                                                   child:  Center(
+                              child: Icon(
+                                size:22,
+                                  Icons.close_sharp,
+                                  color: UIDataColors.blackColor,
+                                ),
+                               
+                                
+                                                   ),
+                              ),
+                            ),
+                          ],
+                        ).paddingOnly(top: 20),
                     Center(
                       child: Column(
                         children: [
-                          SvgPicture.asset(
-                            UIDataImage.sellerLogoIconSVG,
-                            height: 40,
-                            width: 40,
-                            fit: BoxFit.fitWidth,
-                          ),
-                          SpacingHeight.heightlistspacing10,
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(tr.translateData("santra"),
-                                  style: UIDataTextStyles.h1
-                                      .copyWith(fontSize: 20, letterSpacing: 2)),
-                              Text(tr.translateData("seller"),
-                                  style: UIDataTextStyles.h1.copyWith(
-                                      fontSize: 14,
-                                      letterSpacing: 2,
-                                      color: UIDataColors.secondaryColor)),
-                            ],
-                          ),
+                          Image.asset(
+                          Get.locale!.languageCode == 'en'
+                              ? UIDataImage.santraLogoEnglish
+                              : UIDataImage.santraLogoArabic,
+                          height: 79,
+                          width: 63,
+                          fit: BoxFit.fitWidth,
+                        ),
+                         
                         ],
                       ),
                     ),
-                    SpacingHeight.heightlistspacing20,
+                    SpacingHeight.heightlistspacing35,
                     itemList(() {
                       Get.to(() => AboutUsScreen());
                     }, UIDATAIcons.santraVectorIcon,  tr.translateData("side_menu_about_signin")),
@@ -80,7 +84,7 @@ class ClipDrawer extends StatelessWidget {
                     ),
                     itemList(() {
                       Get.to(() => const LanguageSettings());
-                    }, UIDATAIcons.languageIcon, tr.translateData("side_menu_language_signin")),
+                    }, UIDATAIcons.languageIcon, Get.locale!.languageCode == 'en' ? 'اللغة' : 'Language'),
                     const Divider(
                       height: 30,
                     ),
