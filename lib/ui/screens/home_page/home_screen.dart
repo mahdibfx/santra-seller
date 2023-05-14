@@ -278,7 +278,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               SpacingWidth.widthlistspacing15,
                               Expanded(
                                 child: MyDropdown(
-                                    label: "Month",
+                                    label: tr.translateData("month"),
                                     options: value.months,
                                     selectedOption: value.selectedMonth,
                                     prefixIcon: UIDATAIcons.calendarIcon,

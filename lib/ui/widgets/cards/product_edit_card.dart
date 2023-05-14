@@ -72,9 +72,16 @@ class _ProductEditCardState extends State<ProductEditCard> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Get.locale!.languageCode == 'en' ?
                             Text(
                               widget.productSettingsController
                                       .allProducts?[widget.index!].productName ??
+                                  "",
+                              style: UIDataTextStyles.h2,
+                              overflow: TextOverflow.ellipsis,
+                            ) : Text(
+                              widget.productSettingsController
+                                      .allProducts?[widget.index!].productNameArabic ??
                                   "",
                               style: UIDataTextStyles.h2,
                               overflow: TextOverflow.ellipsis,
