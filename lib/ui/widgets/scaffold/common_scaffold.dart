@@ -64,6 +64,7 @@ class CommonScaffold extends StatelessWidget {
   bool? showActions;
   bool isHome;
   bool isMore;
+  final isBackHomeScreen;
   final bool isBackArrowShow;
 
   CommonScaffold(
@@ -108,6 +109,7 @@ class CommonScaffold extends StatelessWidget {
       this.appBarAction,
       this.isHome = false,
       this.isMore = false,
+      this.isBackHomeScreen = false,
       this.showActions = true});
 
   Widget myBottomBar(context) =>
@@ -243,29 +245,32 @@ class CommonScaffold extends StatelessWidget {
                       onTap: () {
                         Get.back();
                       },
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Consumer<SplashProvider>(
-                            builder: (context, splashPro, child) {
-                          return Row(
-                            children: [
-                              SpacingWidth.widthlistspacing5,
-                              Get.locale!.languageCode == 'en'
-                                  ? SvgPicture.asset(UIDATAIcons.back)
-                                  : SvgPicture.asset(
-                                      UIDATAIcons.forwardArrow,
-                                      color: UIDataColors.primaryColor,
-                                    ),
-                              SpacingWidth.widthlistspacing5,
-                              const Text(
-                                "",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500),
-                              )
-                            ],
-                          );
-                        }),
+                      child: GestureDetector(
+                        onTap: isBackHomeScreen ? () {Get.to(HomeScreen()); } : (){},
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Consumer<SplashProvider>(
+                              builder: (context, splashPro, child) {
+                            return Row(
+                              children: [
+                                SpacingWidth.widthlistspacing5,
+                                Get.locale!.languageCode == 'en'
+                                    ? SvgPicture.asset(UIDATAIcons.back)
+                                    : SvgPicture.asset(
+                                        UIDATAIcons.forwardArrow,
+                                        color: UIDataColors.primaryColor,
+                                      ),
+                                SpacingWidth.widthlistspacing5,
+                                const Text(
+                                  "",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500),
+                                )
+                              ],
+                            );
+                          }),
+                        ),
                       ),
                     )
                   : const SizedBox(),

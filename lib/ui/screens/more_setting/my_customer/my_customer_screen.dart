@@ -56,6 +56,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                           },
                         ),
                         SpacingHeight.heightlistspacing10,
+                        widget.comingFromCart ? SizedBox( ):
                         PrimaryButtonWithIcon(
                           iconImage: UIDATAIcons.userIcon,
                           btntxt: tr.translateData("new_customer_button"),
