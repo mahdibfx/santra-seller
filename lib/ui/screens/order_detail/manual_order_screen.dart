@@ -129,9 +129,11 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                                                     santraList.advanceTime.toString(),
                                                 customerName: santraList.customerName
                                                     .toString(),
-                                                paymentMethod: santraList
+                                                paymentMethod: Get.locale!.languageCode == 'en' ? _.getEnglishPaymentMethod(santraList
                                                     .paymentMethod
-                                                    .toString(),
+                                                    .toString()) : _.getArabicPaymentMethod(santraList
+                                                    .paymentMethod
+                                                    .toString()),
                                                 orderNumber:
                                                     santraList.orderNumber.toString(),
                                                 paymentLink:
@@ -150,9 +152,11 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                                                     santraList.advanceTime.toString(),
                                                 customerName: santraList.customerName
                                                     .toString(),
-                                                paymentMethod: santraList
+                                                paymentMethod: Get.locale!.languageCode == 'en' ? _.getEnglishPaymentMethod(santraList
                                                     .paymentMethod
-                                                    .toString(),
+                                                    .toString()) : _.getArabicPaymentMethod(santraList
+                                                    .paymentMethod
+                                                    .toString()),
                                                 orderNumber:
                                                     santraList.orderNumber.toString(),
                                                 orderItemList: santraList.orderItems,

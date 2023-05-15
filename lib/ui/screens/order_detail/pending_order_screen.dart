@@ -115,7 +115,11 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
                                                 customerName:
                                                     santraList.customerName.toString(),
                                                 paymentMethod:
-                                                    santraList.paymentMethod.toString(),
+                                                    Get.locale!.languageCode == 'en' ? _.getEnglishPaymentMethod(santraList
+                                                    .paymentMethod
+                                                    .toString()) : _.getArabicPaymentMethod(santraList
+                                                    .paymentMethod
+                                                    .toString()),
                                                 orderNumber:
                                                     santraList.orderNumber.toString(),
                                                 paymentLink:
@@ -134,7 +138,11 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
                                                 customerName:
                                                     santraList.customerName.toString(),
                                                 paymentMethod:
-                                                    santraList.paymentMethod.toString(),
+                                                    Get.locale!.languageCode == 'en' ? _.getEnglishPaymentMethod(santraList
+                                                    .paymentMethod
+                                                    .toString()) : _.getArabicPaymentMethod(santraList
+                                                    .paymentMethod
+                                                    .toString()),
                                                 orderNumber:
                                                     santraList.orderNumber.toString(),
                                                 orderItemList: santraList.orderItems,

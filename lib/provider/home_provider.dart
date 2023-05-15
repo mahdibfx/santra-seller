@@ -445,6 +445,30 @@ class HomeProvider extends ChangeNotifier {
         return const Color(0xff0098B1);
     }
   }
+String getArabicPaymentMethod(String paymentName){
+  var tr = Get.put(AppTranslations());
+  switch (paymentName.toLowerCase()) {
+case 'online_paid':
+        return tr.translateData("payment_online_paid");
+      case 'cash':
+        return  tr.translateData("payment_cash");
+      default:
+       return tr.translateData("payment_card");
+}
+}
+
+String getEnglishPaymentMethod(String paymentName){
+  var tr = Get.put(AppTranslations());
+  switch (paymentName.toLowerCase()) {
+case 'online_paid':
+        return tr.translateData("payment_online_paid");
+      case 'cash':
+        return  tr.translateData("payment_cash");
+      default:
+       return tr.translateData("payment_card");
+}
+}
+
 
   String getStatus(String status) {
       var tr = Get.put(AppTranslations());

@@ -269,7 +269,7 @@ class _CustomCardState extends State<CustomCard>
                                   color: UIDataColors.primaryColor,
                                 )),
                           ],
-                        ).marginOnly(right:10),
+                        ).marginOnly(right:10, left: 10),
                         widget.orderRemarks.isEmpty ? SizedBox() :
                         Container(
                           color: Colors.grey.shade200,
