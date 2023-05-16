@@ -74,7 +74,7 @@ class SplashProvider extends ChangeNotifier {
   void checkUpdateAndMakeDescision() async {
 
     isInternetAvailable();
-    //  tr.fetchTranslationsv();
+    await tr.fetchTranslationsv();
     forceUpdate().then((value) {
       if (updateAvailable == true) {
         customOntapDialog(
@@ -116,7 +116,7 @@ class SplashProvider extends ChangeNotifier {
   }
 
   checkAlreadyLogin() async {
-     await tr.fetchTranslationsv();
+     
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var checkemail = prefs.getString("email");
     sellerCode = prefs.getString("sellercode");

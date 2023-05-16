@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Column(
                   children: [
                     CommonTextField(
-                      //
+                      textInputAction: TextInputAction.next,
                       controller: _.email,
                       hintText: tr.translateData('user_number_hint_signin'),
                       labelText: tr.translateData("emailpassword_hint_signin"),

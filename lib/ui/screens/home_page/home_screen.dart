@@ -378,26 +378,32 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CommonScaffold(
-      bodyData: bodyData(context),
-      backgroundcolor: UIDataColors.whiteColor,
-      backGroundImage: UIDataImage.backgroundImage,
-      isBackArrowShow: false,
-      showDrawer: false,
-      showFAB: true,
-      centerDocked: true,
-      showAppBar: true,
-      scaffoldKey: _key,
-      showBottomNav: true,
-      appbarcolor: UIDataColors.whiteColor,
-      appbarSvg: true,
-      backarrow: UIDataColors.blackColor,
-      isHome: true,
-      qrCallback: () {
-        Get.offAll(() => const AddManulOrder());
-      },
-      floatingIcon: Icons.add,
-      elevation: 0.0,
+    return Consumer<HomeProvider>(
+          builder: (context, _, child) {
+        return CommonScaffold(
+          bodyData: bodyData(context),
+          backgroundcolor: UIDataColors.whiteColor,
+          backGroundImage: UIDataImage.backgroundImage,
+          isBackArrowShow: false,
+          showDrawer: false,
+          isAddManual: _.isLoading,
+          isMore: _.isLoading,
+          showFAB: true,
+          centerDocked: true,
+          showAppBar: true,
+          scaffoldKey: _key,
+          showBottomNav: true,
+          appbarcolor: UIDataColors.whiteColor,
+          appbarSvg: true,
+          backarrow: UIDataColors.blackColor,
+          isHome: true,
+          qrCallback: () {
+            Get.offAll(() => const AddManulOrder());
+          },
+          floatingIcon: Icons.add,
+          elevation: 0.0,
+        );
+      }
     );
   }
 }

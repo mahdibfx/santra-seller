@@ -64,6 +64,7 @@ class CommonScaffold extends StatelessWidget {
   bool? showActions;
   bool isHome;
   bool isMore;
+  bool isAddManual;
   final isBackHomeScreen;
   final bool isBackArrowShow;
 
@@ -109,6 +110,7 @@ class CommonScaffold extends StatelessWidget {
       this.appBarAction,
       this.isHome = false,
       this.isMore = false,
+      this.isAddManual = false,
       this.isBackHomeScreen = false,
       this.showActions = true});
 
@@ -396,7 +398,7 @@ class CommonScaffold extends StatelessWidget {
                                   Get.back();
                                 });
                               }
-                            : qrCallback,
+                            : isAddManual ? null : qrCallback,
                       );
                     });
                   }),

@@ -32,6 +32,7 @@ class CommonTextField extends StatelessWidget {
   final onChanged;
   final List<TextInputFormatter>? inputFormatters;
   final FocusNode? focus;
+  final TextInputAction? textInputAction;
 
   CommonTextField(
       {this.controller,
@@ -57,6 +58,7 @@ class CommonTextField extends StatelessWidget {
       this.inputFormatters,
       this.prefixIconTap,
       this.fieldHeading,
+      this.textInputAction,
       this.focus});
 
   @override
@@ -82,7 +84,7 @@ class CommonTextField extends StatelessWidget {
           focusNode: focus != null ? focus : null,
           keyboardType:
               keyboardType == null ? TextInputType.text : keyboardType,
-          textInputAction: TextInputAction.done,
+          textInputAction: textInputAction?? TextInputAction.done,
           maxLines: maxlines,
           initialValue: initVal,
           decoration: InputDecoration(

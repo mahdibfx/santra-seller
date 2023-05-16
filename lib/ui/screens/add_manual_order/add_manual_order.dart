@@ -506,36 +506,42 @@ class _AddManulOrderState extends State<AddManulOrder> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<SplashProvider>(
-      builder: (context, splashPro, child) {
-        return CommonScaffold(
-          bodyData: bodyData(context),
-          backgroundcolor: UIDataColors.whiteColor,
-          backGroundImage: UIDataImage.backgroundImage,
-          isBackArrowShow: false,
-          showDrawer: false,
-          showFAB: showAdd,
-          centerDocked: true,
-          showAppBar: true,
-          appBarAction: [
-            IconButton(
-              icon: const Icon(Icons.sports_basketball),
-              onPressed: () {
-                Get.to(() => const CartScreen());
-                // Get.toNamed(Routes.cartroute);
+    return Consumer<AddManualOrderProvider>(
+          builder: (context, manualOrderController, child) {
+        return Consumer<SplashProvider>(
+          builder: (context, splashPro, child) {
+            return CommonScaffold(
+              bodyData: bodyData(context),
+              backgroundcolor: UIDataColors.whiteColor,
+              backGroundImage: UIDataImage.backgroundImage,
+              isBackArrowShow: false,
+              showDrawer: false,
+              showFAB: showAdd,
+              centerDocked: true,
+              showAppBar: true,
+              appBarAction: [
+                IconButton(
+                  icon: const Icon(Icons.sports_basketball),
+                  onPressed: () {
+                    Get.to(() => const CartScreen());
+                    // Get.toNamed(Routes.cartroute);
+                  },
+                )
+              ],
+              isHome: manualOrderController.isLoading,
+              isMore: manualOrderController.isLoading,
+              showBottomNav: showAdd,
+              appbarcolor: UIDataColors.whiteColor,
+              appbarSvg: true,
+              backarrow: UIDataColors.primaryColor,
+              qrCallback: () {
+                splashPro.homeAndMoreScreenOff();
+                // Get.offAll(() =>  const AddManulOrder());
               },
-            )
-          ],
-          showBottomNav: showAdd,
-          appbarcolor: UIDataColors.whiteColor,
-          appbarSvg: true,
-          backarrow: UIDataColors.primaryColor,
-          qrCallback: () {
-            splashPro.homeAndMoreScreenOff();
-            // Get.offAll(() =>  const AddManulOrder());
-          },
-          floatingIcon: Icons.add,
-          elevation: 0.0,
+              floatingIcon: Icons.add,
+              elevation: 0.0,
+            );
+          }
         );
       }
     );
