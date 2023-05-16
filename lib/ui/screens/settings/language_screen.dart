@@ -63,10 +63,10 @@ class _LanguageSettingsState extends State<LanguageSettings> {
                             },
                             btntxt: "عربي",
                             backEndColor: Colors.white,
-                            borderColor: tr.selectedLanguage == 'ar_AE'
+                            borderColor: Get.locale!.languageCode == 'ar'
                                 ? UIDataColors.primaryColor
                                 : Colors.transparent,
-                            buttontxtColor: tr.selectedLanguage == 'ar_AE'
+                            buttontxtColor: Get.locale!.languageCode == 'ar'
                                 ? UIDataColors.primaryColor
                                 : UIDataColors.blackColor,
                           ),
@@ -91,10 +91,10 @@ class _LanguageSettingsState extends State<LanguageSettings> {
                             },
                             btntxt: "English",
                             backEndColor: Colors.white,
-                            borderColor: tr.selectedLanguage == 'en_us'
+                            borderColor: Get.locale!.languageCode == 'en'
                                 ? UIDataColors.primaryColor
                                 : Colors.transparent,
-                            buttontxtColor: tr.selectedLanguage == 'en_us'
+                            buttontxtColor: Get.locale!.languageCode == 'en'
                                 ? UIDataColors.primaryColor
                                 : Colors.black,
                           ),

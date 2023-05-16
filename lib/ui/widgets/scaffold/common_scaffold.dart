@@ -246,7 +246,7 @@ class CommonScaffold extends StatelessWidget {
                         Get.back();
                       },
                       child: GestureDetector(
-                        onTap: isBackHomeScreen ? () {Get.to(HomeScreen()); } : (){},
+                        onTap: isBackHomeScreen ? () {Get.to(HomeScreen()); } : (){Get.back();},
                         child: Padding(
                           padding: const EdgeInsets.only(left: 8.0),
                           child: Consumer<SplashProvider>(

@@ -74,6 +74,7 @@ class SplashProvider extends ChangeNotifier {
   void checkUpdateAndMakeDescision() async {
 
     isInternetAvailable();
+    //  tr.fetchTranslationsv();
     forceUpdate().then((value) {
       if (updateAvailable == true) {
         customOntapDialog(
@@ -115,6 +116,7 @@ class SplashProvider extends ChangeNotifier {
   }
 
   checkAlreadyLogin() async {
+     await tr.fetchTranslationsv();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var checkemail = prefs.getString("email");
     sellerCode = prefs.getString("sellercode");
@@ -123,7 +125,7 @@ class SplashProvider extends ChangeNotifier {
     print("SELLER $sellerCode");
     // var checkpassword = prefs.getString("password");
     if (checkemail != null) {
-      Future.delayed(const Duration(seconds: 1),
+      Future.delayed(const Duration(seconds: 0),
           () => Get.offAll(() => const HomeScreen()));
       // Get.offAndToNamed(Routes.loginRoutes);
     } else {

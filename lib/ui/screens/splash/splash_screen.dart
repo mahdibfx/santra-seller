@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
     
   @override
   void initState() {
-    callTranslation();
+  //  tr.fetchTranslationsv();
     SplashProvider splashProvider =
         Provider.of<SplashProvider>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((_) {

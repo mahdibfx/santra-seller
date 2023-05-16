@@ -58,10 +58,10 @@ class AppTranslations extends GetxController  {
       update();
       // Map<String, String> convertedDataArabic = arabLang.cast<String, String>();
       // _translations = {'en_us': convertedData, 'ar_AE': convertedDataArabic};
-      selectedLanguage = await language();
-      if (selectedLanguage != 'en_us') {
-        Get.updateLocale(const Locale('ar', 'AE'));
-      }
+      // selectedLanguage = await language();
+      // if (selectedLanguage != 'en_us') {
+      //   Get.updateLocale(const Locale('ar', 'AE'));
+      // }
 
       return _translations;
     } else {
