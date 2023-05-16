@@ -102,7 +102,7 @@ class SplashProvider extends ChangeNotifier {
         return response.statusCode == HttpStatus.ok;
       }
     } on SocketException catch (_) {
-      CommonSnackbar.getSnackbar(tr.translateData("error_message"),
+      CommonSnackbar.getSnackbar("Error",
           "Internet is not available ", UIDataColors.redColor);
       return false;
     }
