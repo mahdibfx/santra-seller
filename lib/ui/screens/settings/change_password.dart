@@ -40,6 +40,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                         HeadingWithIcon(
                             icon: UIDATAIcons.lockIcon, btntxt: tr.translateData("change_password_title")),
                         CommonTextField(
+                          textInputAction: TextInputAction.next,
                           controller: _.currentPasswordController,
                           labelText: tr.translateData("change_password_current"),
                           fillcolor: UIDataColors.whiteColor,
@@ -65,6 +66,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                         ),
                         SpacingHeight.heightlistspacing5,
                         CommonTextField(
+                          textInputAction: TextInputAction.next,
                           controller: _.newPasswordController,
                           labelText: tr.translateData("change_password_new"),
                           isTextHidden: _.newPasswordSecuretext,

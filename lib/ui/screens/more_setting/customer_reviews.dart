@@ -147,24 +147,32 @@ class _CustomerReviewsState extends State<CustomerReviews> {
 
   @override
   Widget build(BuildContext context) {
-    return CommonScaffold(
-      bodyData: bodyData(),
-      backgroundcolor: UIDataColors.whiteColor,
-      backGroundImage: UIDataImage.backgroundImage,
-      showDrawer: false,
-      showFAB: true,
-      centerDocked: true,
-      showAppBar: true,
-      scaffoldKey: _key,
-      showBottomNav: true,
-      appbarcolor: UIDataColors.whiteColor,
-      appTitle: '',
-      backarrow: UIDataColors.blackColor,
-      qrCallback: () {
-        Get.offAll(() => const AddManulOrder());
-      },
-      floatingIcon: Icons.add,
-      elevation: 0.0,
+    return Consumer<CustomerReviewsProvider>(
+      builder: (context, _, child) {
+        return CommonScaffold(
+          bodyData: bodyData(),
+          backgroundcolor: UIDataColors.whiteColor,
+          backGroundImage: UIDataImage.backgroundImage,
+          showDrawer: false,
+          showFAB: true,
+          centerDocked: true,
+          isBackArrowShow: !_.isReviewsLoading,
+          isAddManual: _.isReviewsLoading,
+          isHome: _.isReviewsLoading,
+          isMore: _.isReviewsLoading,
+          showAppBar: true,
+          scaffoldKey: _key,
+          showBottomNav: true,
+          appbarcolor: UIDataColors.whiteColor,
+          appTitle: '',
+          backarrow: UIDataColors.blackColor,
+          qrCallback: () {
+            Get.offAll(() => const AddManulOrder());
+          },
+          floatingIcon: Icons.add,
+          elevation: 0.0,
+        );
+      }
     );
   }
 }

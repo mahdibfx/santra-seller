@@ -50,6 +50,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
                         IgnorePointer(
                           ignoring: true,
                           child: CommonTextField(
+                            textInputAction: TextInputAction.next,
                             controller: _.currentEmailController,
                             labelText: tr.translateData("setting_email"),
                             isTextHidden: false,
@@ -66,6 +67,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
                           ),
                         ),
                         CommonTextField(
+                          textInputAction: TextInputAction.next,
                           controller: _.emailController,
                           labelText: tr.translateData("setting_new_email"),
                           prefixIcon: UIDATAIcons.emailIcon,
@@ -85,6 +87,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
                         ),
                         SpacingHeight.heightlistspacing5,
                         CommonTextField(
+                          textInputAction: TextInputAction.next,
                           controller: _.confirmeEmailController,
                           labelText: tr.translateData("setting_confirm_email"),
                           isTextHidden: false,

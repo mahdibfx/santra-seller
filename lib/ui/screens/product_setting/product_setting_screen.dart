@@ -107,27 +107,35 @@ class _ProductSettingScreenState extends State<ProductSettingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CommonScaffold(
-      bodyData: bodyData(context),
-      backgroundcolor: UIDataColors.whiteColor,
-      backGroundImage: UIDataImage.backgroundImage,
-      showDrawer: false,
-      showFAB: true,
-      centerDocked: true,
-      showAppBar: true,
-      // appBarAction: [IconButton(icon:Icon(Icons.sports_basketball) ,
-      // onPressed: (){
-      //   Get.toNamed(Routes.cartroute);
-      // },)],
-      showBottomNav: true,
-      appbarcolor: UIDataColors.whiteColor,
-      appbarSvg: true,
-      backarrow: UIDataColors.primaryColor,
-      qrCallback: () {
-        Get.offAll(() => const AddManulOrder());
-      },
-      floatingIcon: Icons.add,
-      elevation: 0.0,
+    return Consumer<ProductSettingsProvider>(
+          builder: (context, pSettings, child) {
+        return CommonScaffold(
+          bodyData: bodyData(context),
+          backgroundcolor: UIDataColors.whiteColor,
+          backGroundImage: UIDataImage.backgroundImage,
+          showDrawer: false,
+          showFAB: true,
+          centerDocked: true,
+          showAppBar: true,
+          isBackArrowShow: !pSettings.isViewAllProductsLoading,
+          isHome: pSettings.isViewAllProductsLoading,
+          isAddManual: pSettings.isViewAllProductsLoading,
+          isMore: pSettings.isViewAllProductsLoading,
+          // appBarAction: [IconButton(icon:Icon(Icons.sports_basketball) ,
+          // onPressed: (){
+          //   Get.toNamed(Routes.cartroute);
+          // },)],
+          showBottomNav: true,
+          appbarcolor: UIDataColors.whiteColor,
+          appbarSvg: true,
+          backarrow: UIDataColors.primaryColor,
+          qrCallback: () {
+            Get.offAll(() => const AddManulOrder());
+          },
+          floatingIcon: Icons.add,
+          elevation: 0.0,
+        );
+      }
     );
   }
 }

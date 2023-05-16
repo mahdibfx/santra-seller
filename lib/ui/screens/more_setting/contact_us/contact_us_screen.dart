@@ -36,6 +36,7 @@ class ContactUsScreen extends StatelessWidget {
                       children: [
                         Column(children: [
                           CommonTextField(
+                            textInputAction: TextInputAction.next,
                             controller: _.usernameController,
                             labelText: tr.translateData("conatct_us_name"),
                             isTextHidden: false,
@@ -48,6 +49,7 @@ class ContactUsScreen extends StatelessWidget {
                             },
                           ),
                           CommonTextField(
+                            textInputAction: TextInputAction.next,
                             controller: _.emailController,
                             labelText: tr.translateData('conatct_us_email'),
                             isTextHidden: false,
@@ -63,6 +65,7 @@ class ContactUsScreen extends StatelessWidget {
                             },
                           ),
                           CommonTextField(
+                            textInputAction: TextInputAction.next,
                             controller: _.phonenumberController,
                             labelText: tr.translateData('conatct_us_mobile'),
                             isTextHidden: false,

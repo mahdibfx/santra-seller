@@ -130,24 +130,32 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CommonScaffold(
-      bodyData: bodyData(),
-      backgroundcolor: UIDataColors.whiteColor,
-      backGroundImage: UIDataImage.backgroundImage,
-      showDrawer: false,
-      showFAB: true,
-      centerDocked: true,
-      showAppBar: true,
-      scaffoldKey: _key,
-      showBottomNav: true,
-      appbarcolor: UIDataColors.whiteColor,
-      appTitle: 'My Customer',
-      backarrow: UIDataColors.blackColor,
-      qrCallback: () {
-        Get.offAll(() => const AddManulOrder());
-      },
-      floatingIcon: Icons.add,
-      elevation: 1.0,
+    return Consumer<MyCustomerProvider>(
+          builder: (context, _, child) {
+        return CommonScaffold(
+          bodyData: bodyData(),
+          backgroundcolor: UIDataColors.whiteColor,
+          backGroundImage: UIDataImage.backgroundImage,
+          showDrawer: false,
+          showFAB: true,
+          centerDocked: true,
+          showAppBar: true,
+          isBackArrowShow: !_.isLoaderShowDeleteCustumer,
+          isHome: _.isLoaderShowDeleteCustumer,
+          isAddManual:  _.isLoaderShowDeleteCustumer,
+          isMore:  _.isLoaderShowDeleteCustumer,
+          scaffoldKey: _key,
+          showBottomNav: true,
+          appbarcolor: UIDataColors.whiteColor,
+          appTitle: 'My Customer',
+          backarrow: UIDataColors.blackColor,
+          qrCallback: () {
+            Get.offAll(() => const AddManulOrder());
+          },
+          floatingIcon: Icons.add,
+          elevation: 1.0,
+        );
+      }
     );
   }
 }

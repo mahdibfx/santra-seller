@@ -71,6 +71,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                             icon: UIDATAIcons.customersIcon,
                             btntxt: tr.translateData("add_customer_title")),
                         CommonTextField(
+                          textInputAction: TextInputAction.next,
                           controller: _.fnController,
                           isTextHidden: false,
                           fillcolor: UIDataColors.whiteColor,
@@ -88,6 +89,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                           },
                         ),
                         CommonTextField(
+                          textInputAction: TextInputAction.next,
                           controller: _.mobileController,
                           labelText: tr.translateData("add_customer_mobile"),
                           inputFormatters: [_.phoneMask],
@@ -124,6 +126,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                           },
                         ),
                         CommonTextField(
+                          textInputAction: TextInputAction.next,
                           controller: _.emailController,
                           labelText: tr.translateData("add_customer_email"),
                           prefixIcon: UIDATAIcons.emailIcon,
@@ -163,6 +166,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                             SpacingWidth.widthlistspacing15,
                             Expanded(
                               child: CommonTextField(
+                                textInputAction: TextInputAction.next,
                                 controller: _.buildingController,
                                 labelText: tr.translateData("building_no"),
                                 prefixIcon: UIDATAIcons.building,
@@ -179,6 +183,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                           ],
                         ),
                         CommonTextField(
+                          textInputAction: TextInputAction.next,
                           controller: _.aptController,
                           labelText: tr.translateData("apt_villa"),
                           prefixIcon: UIDATAIcons.homeIcon,

@@ -59,6 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             btntxt: tr.translateData("signup_title")),
                         Column(children: [
                           CommonTextField(
+                            textInputAction: TextInputAction.next,
                             controller: _.businessController,
                             labelText: tr.translateData("signup_business"),
                             prefixIcon: UIDATAIcons.dashboardIcon,
@@ -72,6 +73,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             },
                           ),
                           CommonTextField(
+                            textInputAction: TextInputAction.next,
                             controller: _.fullNameController,
                             prefixIcon: UIDATAIcons.userIcon,
                             labelText: tr.translateData("signup_fullname"),
@@ -85,6 +87,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             },
                           ),
                           CommonTextField(
+                            textInputAction: TextInputAction.next,
                             controller: _.emailController,
                             labelText: tr.translateData("signup_email"),
                             prefixIcon: UIDATAIcons.emailIcon,
@@ -101,6 +104,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             },
                           ),
                           CommonTextField(
+                            textInputAction: TextInputAction.next,
                             controller: _.phoneController,
                             prefixIcon: UIDATAIcons.callIcon,
                             labelText: tr.translateData("signup_mobile"),
@@ -136,6 +140,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             },
                           ),
                           CommonTextField(
+                            textInputAction: TextInputAction.next,
                             controller: _.passwordController,
                             labelText: tr.translateData('signup_password'),
                             prefixIcon: UIDATAIcons.lockIcon,
@@ -157,6 +162,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             },
                           ),
                           CommonTextField(
+                            textInputAction: TextInputAction.next,
                             controller: _.conformPasswordController,
                             labelText: tr.translateData('signup_cpassword'),
                             prefixIcon: UIDATAIcons.lockIcon,
@@ -195,6 +201,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               selectedOption: _.sellerCity),
                           SpacingHeight.heightlistspacing5,
                           CommonTextField(
+                            
                             controller: _.addressController,
                             labelText: tr.translateData('signup_address'),
                             prefixIcon: UIDATAIcons.locationPin,
