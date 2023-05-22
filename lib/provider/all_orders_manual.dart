@@ -45,6 +45,7 @@ class AddManualOrderProvider extends ChangeNotifier {
       product.productQuantity += 1;
     }
     notifyListeners();
+      productPriceWithQuantityAndMods(product);
   }
 
   void decreaseDefaultQuanity(Product product) {
@@ -52,16 +53,36 @@ class AddManualOrderProvider extends ChangeNotifier {
       product.productQuantity -= 1;
     }
     notifyListeners();
+    productPriceWithQuantityAndMods(product);
   }
 
   void resetDefaultQuanity(Product product) {
     product.productQuantity = 1;
     notifyListeners();
+      productPriceWithQuantityAndMods(product);
   }
 
   showAddIcon() {
     showAddButton = true;
     notifyListeners();
+  }
+
+ String productPriceWithQuantityAndMods(Product product){
+  // var product =  filteredProducts[index];
+    double modsPrc = 0; 
+    for(var e in product.modifiers! ){
+      for(var j in e.subModifiers!){
+        if(j.byDefault == '1'){
+modsPrc += double.parse(j.priceModifier.toString());
+        }
+
+      }
+
+    }
+    var proPrice = ( double.parse(product.productPrice.toString()) + modsPrc ) * product.productQuantity;
+    print(proPrice);
+    return proPrice.toString() ;
+
   }
 
   hideAddButton() {
