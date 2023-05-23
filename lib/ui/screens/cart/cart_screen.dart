@@ -77,9 +77,9 @@ class _CartScreenState extends State<CartScreen> {
                                           //   ),
                                           // ],
                                         ),
-                                        height: _.cartItems.length > 3
-                                            ? 3 * 105
-                                            : _.cartItems.length * 105,
+                                        height: _.cartItems.length > 2
+                                            ? (2 * 145) +60
+                                            : _.cartItems.length * 145,
                                         child: ListView.builder(
                                             padding: EdgeInsets.zero,
                                             physics: const BouncingScrollPhysics(),

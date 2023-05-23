@@ -384,6 +384,7 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                                                                     .toString()
                                                                     .split(",")
                                                                     .last;
+                                                                    var modsModel = manualOrderController.filteredProducts[widget.index].modifiers![index2];
                                                                 var byDefList =
                                                                     [];
                                                                 for (var e
@@ -396,7 +397,28 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                                                                   }
                                                                 }
 
-                                                                if (byDefList
+                                                                if(maxVals == '1'){
+                                                                 for(var mod in modsModel.subModifiers!){
+
+                                                                  if(mod.byDefault =='1'){
+                                                                   setStatec(
+                                                                        () {
+                                                                      mod.byDefault =
+                                                                          "0";
+                                                                    });
+                                                                  }
+                                                                 }
+                                                                 setStatec(
+                                                                        () {
+                                                                      newData[sebIndex]
+                                                                              .byDefault =
+                                                                          "1";
+                                                                    });
+
+
+                                                                }
+
+                                                                else if (byDefList
                                                                             .length >=
                                                                         int.parse(
                                                                             maxVals) &&
@@ -409,7 +431,9 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                                                                       "Your selection limit is $maxVals",
                                                                       UIDataColors
                                                                           .redColor);
-                                                                } else {
+                                                                } 
+                                                                
+                                                                else {
                                                                   if (value!) {
                                                                     setStatec(
                                                                         () {
