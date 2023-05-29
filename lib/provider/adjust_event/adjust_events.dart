@@ -38,13 +38,15 @@ class AdjustAnalyticsController extends GetxController {
   }
 
   voucherCodeEvent(String voucherCode) {
-    Map<String, dynamic> body = {
-     "voucher_code": voucherCode,
-    };
-    _sendAnalyticsEvent(Platform.isIOS ? 'l9ve2z' : 'noy9rf', body);
+   Adjust.trackEvent(buildVoucher(voucherCode));
   }
 
-  // block_product_name - example - cakes, sweets, grape leaves
+  static AdjustEvent buildVoucher(String voucherCode) {
+    AdjustEvent event =  AdjustEvent(Platform.isIOS ? 'l9ve2z' : 'noy9rf');
+    event.addCallbackParameter('voucher_code', voucherCode);
+    return event;
+  }
+
 
   addCustomerEvent() {
     Map<String, dynamic> body = {
@@ -82,11 +84,14 @@ class AdjustAnalyticsController extends GetxController {
   }
 
   orderConfirmedEvent(String orderPrice, String orderType) {
-    Map<String, dynamic> body = {
-     "order_value": orderPrice,
-      "order_type" : orderType
-    };
-    _sendAnalyticsEvent(Platform.isIOS ? 'e1wx9b' : 'ab868g', body);
+   Adjust.trackEvent(buildRevenueEvent(orderPrice,orderType));
+  }
+
+  static AdjustEvent buildRevenueEvent(String orderPrice, String orderType) {
+    AdjustEvent event =  AdjustEvent(Platform.isIOS ? 'e1wx9b' : 'ab868g');
+    event.setRevenue(int.parse(orderPrice), 'AED');
+    event.transactionId = orderType;
+    return event;
   }
 
   cancelOrderEvent() {
