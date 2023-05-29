@@ -139,7 +139,7 @@ class AdjustAnalyticsController extends GetxController {
 
    initPlatformState() async {
     AdjustConfig config =
-        AdjustConfig(Platform.isIOS ? AppConstants.adjustIosKey : AppConstants.adjustAndroidKey, AdjustEnvironment.sandbox);
+        AdjustConfig(Platform.isIOS ? AppConstants.adjustIosKey : AppConstants.adjustAndroidKey, AdjustEnvironment.production);
     config.logLevel = AdjustLogLevel.verbose;
 
     config.attributionCallback = (AdjustAttribution attributionChangedData) {
