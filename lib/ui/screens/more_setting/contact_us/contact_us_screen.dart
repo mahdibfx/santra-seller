@@ -13,11 +13,19 @@ import 'package:get/get.dart';
 import '../../../widgets/textfields/common_textfield.dart';
 import '../../add_manual_order/add_manual_order.dart';
 
-class ContactUsScreen extends StatelessWidget {
-  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+class ContactUsScreen extends StatefulWidget {
 
   ContactUsScreen({super.key});
+
+  @override
+  State<ContactUsScreen> createState() => _ContactUsScreenState();
+}
+
+class _ContactUsScreenState extends State<ContactUsScreen> {
+  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+
   final form = GlobalKey<FormState>();
+
   Widget bodyData(context) {
     return GetBuilder<AppTranslations>(
       builder: (tr) {
@@ -169,7 +177,12 @@ class ContactUsScreen extends StatelessWidget {
       }
     );
   }
-
+  @override
+  void initState() {
+    appFlyerController.contactCustomerServiceEvent();
+    super.initState();
+  
+  }
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(

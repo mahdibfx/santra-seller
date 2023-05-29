@@ -14,11 +14,17 @@ import '../../../widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import '../../add_manual_order/add_manual_order.dart';
 import 'card_customer_detail.dart';
 
-class ViewCustomerDetails extends StatelessWidget {
-  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+class ViewCustomerDetails extends StatefulWidget {
   final Customer? customerDetail;
 
   ViewCustomerDetails({super.key, this.customerDetail});
+
+  @override
+  State<ViewCustomerDetails> createState() => _ViewCustomerDetailsState();
+}
+
+class _ViewCustomerDetailsState extends State<ViewCustomerDetails> {
+  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
   void popupPaymentlink(BuildContext context) {
     showModalBottomSheet(
@@ -60,7 +66,7 @@ class ViewCustomerDetails extends StatelessWidget {
                       iconColor: UIDataColors.primaryColor,
                       btntxt: tr.translateData("cart_customer_information")),
                   SpacingHeight.heightlistspacing10,
-                  CardCustomerDetail(customerDetail: customerDetail),
+                  CardCustomerDetail(customerDetail: widget.customerDetail),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
@@ -125,10 +131,11 @@ class ViewCustomerDetails extends StatelessWidget {
                           iconImageColor: UIDataColors.primaryColor,
                           iconImage: UIDATAIcons.sendIcon,
                           onPressed: () {
-                            if (customerDetail != null) {
+                            if (widget.customerDetail != null) {
+                              appFlyerController.submitOrderEvent();
                               _
                                   .customerInfoSubmitedRequest(
-                                      customerDetail!, context)
+                                      widget.customerDetail!, context)
                                   .then((value) {
                                 if (value) {
                                   popupPaymentlink(context);
@@ -149,7 +156,11 @@ class ViewCustomerDetails extends StatelessWidget {
       );
     });
   }
-
+ @override
+  void initState() {
+appFlyerController.customerInfoEvent();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(

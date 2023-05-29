@@ -24,6 +24,7 @@ class CustomCard extends StatefulWidget {
   final String totalPrice;
   final String orderStatus;
   final String paymentLink;
+   String orderType;   // manual order , santra order etc
   List<OrderItem> orderItemList;
 
   CustomCard({
@@ -38,6 +39,7 @@ class CustomCard extends StatefulWidget {
     required this.totalPrice,
     required this.orderStatus,
     required this.paymentLink,
+    this.orderType = "manual",
   });
 
   @override
@@ -436,7 +438,7 @@ class _CustomCardState extends State<CustomCard>
                                                 tr.translateData('accept_message'),
                                                 () {
                                               Get.back();
-                                              _.acceptOrdermethod(widget.orderNumber);
+                                              _.acceptOrdermethod(widget.orderNumber, widget.orderType, widget.totalPrice);
                                             });
                                           },
                                         ),

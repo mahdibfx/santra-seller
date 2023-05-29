@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import '../../../../utils/uidata.dart';
+import '../../../provider/apps_flyr/appflyer_provider.dart';
 import '../../widgets/add_manual_order_widgets/cart_card.dart';
 import '../../widgets/add_manual_order_widgets/cart_payment_des.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
@@ -22,7 +23,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  // CartController cartController = Get.put(CartController());
+  AppFlyerController appFlyerController = Get.put(AppFlyerController());
   hitAllApis() async {
     await Future.microtask(() {
       if (context.read<CartProvider>().cartItems.isNotEmpty) {
@@ -34,6 +35,7 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
     hitAllApis();
+    appFlyerController.viewCartEvent();
     super.initState();
   }
 

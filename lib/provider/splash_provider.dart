@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:santra_seller/provider/apps_flyr/appflyer_provider.dart';
 import 'package:santra_seller/ui/screens/auth_screen/login_screen.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/utils/api_data.dart';
@@ -18,6 +19,7 @@ import 'language_provider/language_provider.dart';
 
 class SplashProvider extends ChangeNotifier {
      var tr = Get.put(AppTranslations());
+     AppFlyerController appFlyerController = Get.put(AppFlyerController());
   
 
   bool isLoading = false;
@@ -62,8 +64,20 @@ class SplashProvider extends ChangeNotifier {
       language = 'en_us';
       notifyListeners();
     }
-
+await appFlyerController.appflyerLogs();
+await checkInstallFirsTime();
     notifyListeners();
+  }
+  checkInstallFirsTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? firstTime = prefs.getBool('first_time');
+
+
+    if (firstTime == null) {// first time
+    appFlyerController.openAppFirstEvent();
+     prefs.setBool('first_time', false);
+    } 
+    
   }
 
   setLanguage(String languages) {

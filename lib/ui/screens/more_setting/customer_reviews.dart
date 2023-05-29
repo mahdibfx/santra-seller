@@ -27,6 +27,7 @@ class _CustomerReviewsState extends State<CustomerReviews> {
   @override
   void initState() {
     super.initState();
+    appFlyerController.customerReviewsEvent();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<CustomerReviewsProvider>(context, listen: false)
           .viewCustomerReviews();
