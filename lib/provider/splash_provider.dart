@@ -18,9 +18,8 @@ import '../utils/uidata.dart';
 import 'language_provider/language_provider.dart';
 
 class SplashProvider extends ChangeNotifier {
-     var tr = Get.put(AppTranslations());
-     AppFlyerController appFlyerController = Get.put(AppFlyerController());
-  
+  var tr = Get.put(AppTranslations());
+  AppFlyerController appFlyerController = Get.put(AppFlyerController());
 
   bool isLoading = false;
   bool updateAvailable = false;
@@ -64,20 +63,20 @@ class SplashProvider extends ChangeNotifier {
       language = 'en_us';
       notifyListeners();
     }
-await appFlyerController.appflyerLogs();
-await checkInstallFirsTime();
+    await appFlyerController.appflyerLogs();
+    await checkInstallFirsTime();
     notifyListeners();
   }
+
   checkInstallFirsTime() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? firstTime = prefs.getBool('first_time');
 
-
-    if (firstTime == null) {// first time
-    appFlyerController.openAppFirstEvent();
-     prefs.setBool('first_time', false);
-    } 
-    
+    if (firstTime == null) {
+      // first time
+      appFlyerController.openAppFirstEvent();
+      prefs.setBool('first_time', false);
+    }
   }
 
   setLanguage(String languages) {
@@ -86,14 +85,14 @@ await checkInstallFirsTime();
   }
 
   void checkUpdateAndMakeDescision() async {
-
     isInternetAvailable();
     await tr.fetchTranslationsv();
     forceUpdate().then((value) {
       if (updateAvailable == true) {
         customOntapDialog(
-            tr.translateData("New Update"), tr.translateData("update_message_popup"), tr.translateData("update_message"),
-            () {
+            tr.translateData("New Update"),
+            tr.translateData("update_message_popup"),
+            tr.translateData("update_message"), () {
           goToStore();
         });
       } else {
@@ -116,8 +115,8 @@ await checkInstallFirsTime();
         return response.statusCode == HttpStatus.ok;
       }
     } on SocketException catch (_) {
-      CommonSnackbar.getSnackbar("Error",
-          "Internet is not available ", UIDataColors.redColor);
+      CommonSnackbar.getSnackbar(
+          "Error", "Internet is not available ", UIDataColors.redColor);
       return false;
     }
     return false;
@@ -130,7 +129,6 @@ await checkInstallFirsTime();
   }
 
   checkAlreadyLogin() async {
-     
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var checkemail = prefs.getString("email");
     sellerCode = prefs.getString("sellercode");
@@ -161,7 +159,7 @@ await checkInstallFirsTime();
       var url = Uri.parse(ApiData.forceUpdateApi);
       Map<String, dynamic> body = {};
       body['seller_code'] = "1";
-      body['version'] = "4.0.0";
+      body['version'] = "4.0.1";
       body['app_type'] = "seller";
       body['platform'] =
           Platform.isIOS ? "Mobile_App_iOS" : "Mobile_App_Android";
@@ -179,11 +177,13 @@ await checkInstallFirsTime();
         }
       } else {
         setLoadingState(false);
-        Get.snackbar(tr.translateData("oops_message"), tr.translateData("something_wrong_message"));
+        Get.snackbar(tr.translateData("oops_message"),
+            tr.translateData("something_wrong_message"));
       }
     } catch (e) {
       setLoadingState(false);
-      Get.snackbar(tr.translateData("oops_message"), tr.translateData("something_wrong_message"));
+      Get.snackbar(tr.translateData("oops_message"),
+          tr.translateData("something_wrong_message"));
     }
     notifyListeners();
   }
