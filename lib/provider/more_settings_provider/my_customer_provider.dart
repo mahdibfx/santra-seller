@@ -263,6 +263,7 @@ class MyCustomerProvider extends ChangeNotifier {
           await cartProvider.orderSubmit();
           isSubmitOrder = false;
           notifyListeners();
+          appFlyerController.codEvent();
           return false;
         } else {
           return await addItemForCustomerLink(
@@ -297,6 +298,7 @@ class MyCustomerProvider extends ChangeNotifier {
       var response =
           await http.post(url, headers: ApiData.header, body: finalSubmitData);
       if (response.statusCode == 200) {
+        appFlyerController.paymentLinkEvent();
         var decodedJson = jsonDecode(response.body);
         link.text = decodedJson['data'].first['payment_link'];
         cartProvider.flushCart();

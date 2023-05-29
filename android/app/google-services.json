@@ -1,37 +1,45 @@
 {
   "project_info": {
-    "project_number": "735066844046",
-    "project_id": "seller-home",
-    "storage_bucket": "seller-home.appspot.com"
+    "project_number": "973741523506",
+    "project_id": "santra-seller-new",
+    "storage_bucket": "santra-seller-new.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:735066844046:android:85685b4501463e3614d2df",
+        "mobilesdk_app_id": "1:973741523506:android:ec98e92153109a0d03b22b",
         "android_client_info": {
           "package_name": "com.hihome.seller"
         }
       },
       "oauth_client": [
         {
-          "client_id": "735066844046-5gvc1g18fl8lsgkpr05d6rdf8reo1duv.apps.googleusercontent.com",
+          "client_id": "973741523506-c5q04fq4idtqfu6t3i5nv9iphu6ipnn8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hihome.seller",
+            "certificate_hash": "622dfafda6ffb95d08ce895c15e5c988bcc2ffe5"
+          }
+        },
+        {
+          "client_id": "973741523506-5igs51r7v590b3ldv4njgsls7qt3shhb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDqaw4PshI0b6CuVRlZudG61ac17vOyapg"
+          "current_key": "AIzaSyBMiXb91pNQ1ShF8LK6m8FumX5zo32G2OQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "735066844046-5gvc1g18fl8lsgkpr05d6rdf8reo1duv.apps.googleusercontent.com",
+              "client_id": "973741523506-5igs51r7v590b3ldv4njgsls7qt3shhb.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "735066844046-melsohf5fn2lpcfc926m4m15p28l7710.apps.googleusercontent.com",
+              "client_id": "973741523506-jimvk7m62o2e8v87p0m5ef3bu8iap7nj.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.hihome.seller"

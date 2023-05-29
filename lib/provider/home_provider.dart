@@ -238,7 +238,7 @@ class HomeProvider extends ChangeNotifier {
     updateCancelOrderLoading(false);
   }
 
-  Future acceptOrdermethod(String orderNumber) async {
+  Future acceptOrdermethod(String orderNumber, String orderType, String orderPrice) async {
     var tr = Get.put(AppTranslations());
     try {
       updateAcceptOrderLoading(true);
@@ -250,6 +250,7 @@ class HomeProvider extends ChangeNotifier {
       body['order_number'] = orderNumber.toString();
       var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
+        appFlyerController.orderConfirmedEvent(orderPrice, orderType);
         notifyListeners();
         // Get.snackbar("Accepted", "Order has been accepted");
         CommonSnackbar.getSnackbar(
@@ -281,6 +282,7 @@ class HomeProvider extends ChangeNotifier {
       body['order_number'] = orderNumber.toString();
       var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
+        appFlyerController.cancelOrderEvent();
         notifyListeners();
 
         CommonSnackbar.getSnackbar(

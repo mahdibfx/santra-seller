@@ -10,6 +10,7 @@ import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonW
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
+import '../../../provider/apps_flyr/appflyer_provider.dart';
 import '../../../provider/cart_provider.dart';
 import '../../widgets/add_manual_order_widgets/rounded_close_button.dart';
 import '../../widgets/add_manual_order_widgets/pd_card_add_manual_order.dart';
@@ -19,7 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../utils/uidata.dart';
 import '../../widgets/snackbar/common_snackbar.dart';
-
+ AppFlyerController appFlyerController = Get.put(AppFlyerController());
 class AddManulOrder extends StatefulWidget {
   const AddManulOrder({super.key});
 
@@ -29,6 +30,8 @@ class AddManulOrder extends StatefulWidget {
 
 class _AddManulOrderState extends State<AddManulOrder> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+      
+
   bool showAdd = true;
   // CartController cartController = Get.put((CartController()));
 
@@ -149,6 +152,7 @@ class _AddManulOrderState extends State<AddManulOrder> {
   @override
   void initState() {
     hitAllApis();
+    appFlyerController.addOrderEvent();
     super.initState();
   }
 
@@ -534,6 +538,7 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                               manualOrderController.resetDefaultQuanity(
                                   manualOrderController
                                       .filteredProducts[widget.index]);
+                                      appFlyerController.addItemsEvent();
                               Get.back();
                             },
                             subBtntxt: 'AED',

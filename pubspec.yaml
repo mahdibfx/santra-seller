@@ -1,7 +1,7 @@
 name: santra_seller
 description: A new Flutter project.
 publish_to: 'none'
-version: 4.0.0+1
+version: 4.0.1+1
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
@@ -39,6 +39,9 @@ dependencies:
   get_storage: ^2.1.1
   calendar_date_picker2: ^0.4.9
   share_plus: ^6.3.0
+  appsflyer_sdk: ^6.10.3
+  adjust_sdk: ^4.33.1
+  firebase_analytics: ^10.4.1
   envify:
 
 

@@ -165,6 +165,7 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                               builder: (context) {
                                 return CustomDetailBottomSheet();
                               });
+                              appFlyerController.addCustomerEvent();
                         }
                       },
                       btntxt: tr.translateData("add_customer_title"),

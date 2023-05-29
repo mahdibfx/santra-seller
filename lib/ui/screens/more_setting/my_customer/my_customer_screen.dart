@@ -125,6 +125,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
   @override
   void initState() {
     hitAllApis();
+    appFlyerController.customerListEvent();
     super.initState();
   }
 

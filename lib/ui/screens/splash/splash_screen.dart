@@ -1,6 +1,7 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
+import '../../../provider/adjust_event/adjust_events.dart';
 import '../../../utils/app_translation/app_translation.dart';
 import '../../../utils/uidata.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
@@ -9,7 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-
+  AdjustAnalyticsController adjustEventController = Get.put(AdjustAnalyticsController());
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -30,12 +31,11 @@ class _SplashScreenState extends State<SplashScreen> {
       splashProvider.checkUpdateAndMakeDescision();
       splashProvider.setOldLang();
     });
+    adjustEventController.initPlatformState();
 
     super.initState();
   }
-callTranslation()async{
- await tr.fetchTranslationsv();
-}
+
   Widget bodyData() {
     return Center(
       child: SizedBox(

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
+import 'package:santra_seller/provider/cart_provider.dart';
 import 'package:santra_seller/ui/screens/auth_screen/login_screen.dart';
 import 'package:santra_seller/ui/screens/more_setting/more_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
@@ -57,6 +58,7 @@ class ContactUsProvider with ChangeNotifier {
       body['message'] = messageController.text;
       var response = await http.post(url, body: body, headers: ApiData.header);
       if (response.statusCode == 200) {
+        appFlyerController.contactServiceSubmitEvent();
         CommonSnackbar.getSnackbar(
             tr.translateData("success_message"),
             tr.translateData("message_delivered"),

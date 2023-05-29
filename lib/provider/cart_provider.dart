@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:santra_seller/provider/apps_flyr/appflyer_provider.dart';
 import 'package:santra_seller/provider/home_provider.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
@@ -17,6 +18,7 @@ import '../../models/voucher_model.dart';
 import '../../utils/api_data.dart';
 import '../ui/screens/order_detail/all_order_screen.dart';
 import '../utils/app_translation/app_translation.dart';
+  AppFlyerController appFlyerController = Get.put(AppFlyerController());
 
 class CartProvider extends ChangeNotifier {
   // final BuildContext context;
@@ -261,6 +263,7 @@ class CartProvider extends ChangeNotifier {
         voucherListVoucherCode = null;
         activeOffers.clear();
         promoValid = true;
+        appFlyerController.voucherCodeEvent(voucherCode.toString());
       } else {
         changeDiscountLoadingState(false);
         discount = 0.0;
