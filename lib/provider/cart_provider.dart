@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:santra_seller/provider/apps_flyr/appflyer_provider.dart';
+import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/customers/delivery_charges.dart';
@@ -27,6 +28,7 @@ class CartProvider extends ChangeNotifier {
   bool isShowCartButton = false;
   bool receiptPaymentType = true;
   List<CartItem> cartItems = <CartItem>[];
+  double deliverChargeForBackend = 0.0;
 
   double deliveryCharges = 0.0;
   double codCharges = 0.0;
@@ -112,9 +114,14 @@ class CartProvider extends ChangeNotifier {
     double dFee = 0.0;
     if (preGrandTotal < deliveryChargesCap) {
       dFee = deliveryChargesReal;
+      deliverChargeForBackend = dFee;
+ 
     } else {
       dFee = deliveryCharges;
+      deliverChargeForBackend = dFee;
+     
     }
+
 
     return dFee;
   }
@@ -417,6 +424,11 @@ class CartProvider extends ChangeNotifier {
     );
   }
 
+  String delivery(){
+    print(deliveryFee);
+    return deliveryFee.toString();
+  }
+
   addItemForCustomerCart(DeliveryChargesModel data, Customer customerDetail,
       String? sellerCode, bool receiptPaymentMethord) async {
     receiptPaymentType = receiptPaymentMethord;
@@ -426,7 +438,7 @@ class CartProvider extends ChangeNotifier {
           customerDetail.customerName, // This is the name of the customer
       "coupn_code": "0", // coupon code if any other wise send 0
       "sub_total": "$totalPrice", // This is the subtotal amount
-      "total_delivery_charges":deliveryCharges.toString(), //this is the delivery charges
+      "total_delivery_charges":delivery(), //this is the delivery charges
       "total_discount":
           dis.toString(), //this is the discount if any otherwise send 0
       "d_reason": voucherListVoucherCode ??
@@ -488,7 +500,7 @@ class CartProvider extends ChangeNotifier {
         // notifyListeners();
         //        Get.offAllNamed(Routes.homeRoutes);
         // homePro.homeDataCall();
-        Get.offAll(() => const AllOrderScreen());
+        Get.offAll(() => const HomeScreen());
         // showToast(tr.translateData("success_message"), tr.translateData('order_placed_success'));
         flushCart();
       } else {
