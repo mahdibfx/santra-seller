@@ -11,7 +11,7 @@ import firebase_core
 import firebase_messaging
 import flutter_local_notifications
 import modal_progress_hud_nsn
-import package_info_plus_macos
+import package_info_plus
 import path_provider_foundation
 import share_plus
 import shared_preferences_foundation
