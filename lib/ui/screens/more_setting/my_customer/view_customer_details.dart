@@ -42,7 +42,7 @@ class _ViewCustomerDetailsState extends State<ViewCustomerDetails> {
   }
 
   Widget bodyData(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+
     return Consumer<MyCustomerProvider>(builder: (context, _, child) {
       return
           // _.isViewCustomerLoading

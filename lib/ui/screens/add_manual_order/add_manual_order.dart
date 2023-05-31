@@ -29,7 +29,7 @@ class AddManulOrder extends StatefulWidget {
 }
 
 class _AddManulOrderState extends State<AddManulOrder> {
-  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+
       
 
   bool showAdd = true;
@@ -368,16 +368,6 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                                                                   : false,
                                                               onChanged:
                                                                   (value) {
-                                                                var minVals = manualOrderController
-                                                                    .filteredProducts[
-                                                                        widget
-                                                                            .index]
-                                                                    .modifiers![
-                                                                        index2]
-                                                                    .limitModifiers
-                                                                    .toString()
-                                                                    .split(",")
-                                                                    .first;
                                                                 var maxVals = manualOrderController
                                                                     .filteredProducts[
                                                                         widget

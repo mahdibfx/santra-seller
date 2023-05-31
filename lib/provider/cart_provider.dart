@@ -5,10 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/apps_flyr/appflyer_provider.dart';
-import 'package:santra_seller/provider/home_provider.dart';
-import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/customers/delivery_charges.dart';
@@ -156,12 +153,10 @@ class CartProvider extends ChangeNotifier {
 
     cartItems.fold(subAmount, (prevValue, element) {
       double modifierAmount = 0;
-      if (element.subModifiers != null) {
-        for (var j in element.subModifiers) {
-          modifierAmount =
-              (double.parse(j.priceModifier.toString()) * element.quantity) +
-                  modifierAmount;
-        }
+      for (var j in element.subModifiers) {
+        modifierAmount =
+            (double.parse(j.priceModifier.toString()) * element.quantity) +
+                modifierAmount;
       }
 
       subAmount += (double.parse(element.price.toString()) * element.quantity) +
@@ -321,7 +316,6 @@ class CartProvider extends ChangeNotifier {
             cartItem.code == item.code &&
             cartItem.subModifiers.length == item.subModifiers.length)
         .toList();
-    List listOfAdd = [];
 
     List<SubModifier> matchArray = item.subModifiers;
     notifyListeners();
@@ -432,8 +426,7 @@ class CartProvider extends ChangeNotifier {
           customerDetail.customerName, // This is the name of the customer
       "coupn_code": "0", // coupon code if any other wise send 0
       "sub_total": "$totalPrice", // This is the subtotal amount
-      "total_delivery_charges":
-          data.data?.first.deliveryCharges, //this is the delivery charges
+      "total_delivery_charges":deliveryCharges.toString(), //this is the delivery charges
       "total_discount":
           dis.toString(), //this is the discount if any otherwise send 0
       "d_reason": voucherListVoucherCode ??
@@ -481,6 +474,7 @@ class CartProvider extends ChangeNotifier {
     try {
       changeLoadingStatus(true);
       var url = Uri.parse(ApiData.orderSubmitCash);
+      print(finalSubmitData.toString());
       var response =
           await http.post(url, headers: ApiData.header, body: finalSubmitData);
       if (response.statusCode == 200) {

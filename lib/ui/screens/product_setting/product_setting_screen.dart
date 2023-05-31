@@ -19,10 +19,8 @@ class ProductSettingScreen extends StatefulWidget {
 }
 
 class _ProductSettingScreenState extends State<ProductSettingScreen> {
-  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
   Widget bodyData(context) {
-    Size size = MediaQuery.of(context).size;
     return GetBuilder<AppTranslations>(
       builder: (tr) {
         return Consumer<ProductSettingsProvider>(

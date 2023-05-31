@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/screens/auth_screen/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -116,7 +115,6 @@ class SignUpProvider extends ChangeNotifier {
       updateLoginLoadingStatus(true);
 
       try {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
         var url = Uri.parse(ApiData.registerSellerApi);
         var request = http.MultipartRequest('POST', url);
         var body = <String, String>{};
@@ -130,10 +128,8 @@ class SignUpProvider extends ChangeNotifier {
         body['gcms_code'] = firebaseMessagingToken.toString();
         request.fields.addAll(body);
         request.headers.addAll(ApiData.header);
-        print(body);
         var streamedResponse = await request.send();
         var response = await http.Response.fromStream(streamedResponse);
-        var data = jsonDecode(response.body);
 
         if (response.statusCode == 200) {
           CommonSnackbar.getSnackbar(tr.translateData("success_message"), tr.translateData("account_registered"),

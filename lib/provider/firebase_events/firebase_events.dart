@@ -1,7 +1,7 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:get/get.dart';
 import 'package:santra_seller/provider/adjust_event/adjust_events.dart';
-import 'dart:io' show Platform;
+
 
 class FirebaseAnalyticsController extends GetxController {
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;

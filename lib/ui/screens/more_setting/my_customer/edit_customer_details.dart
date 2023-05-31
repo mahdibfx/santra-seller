@@ -14,8 +14,8 @@ import '../../../widgets/textfields/common_textfield.dart';
 import '../../add_manual_order/add_manual_order.dart';
 
 class EditCustomerDetails extends StatefulWidget {
-  int? index;
-  EditCustomerDetails({super.key, this.index});
+  final int? index;
+  const EditCustomerDetails({super.key, this.index});
 
   @override
   State<EditCustomerDetails> createState() => _EditCustomerDetailsState();

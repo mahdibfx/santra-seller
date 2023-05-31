@@ -1,6 +1,3 @@
-// ignore_for_file: depend_on_referenced_packages
-
-import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/ui/screens/more_setting/about_us_screen.dart';
 import 'package:santra_seller/ui/screens/more_setting/contact_us/contact_us_screen.dart';

@@ -21,7 +21,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final form = GlobalKey<FormState>();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Widget bodyData(context) {
     return GetBuilder<AppTranslations>(builder: (tr) {
       return Consumer<LoginProvider>(

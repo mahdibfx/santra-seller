@@ -154,6 +154,8 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                           CommonSnackbar.getSnackbar(tr.translateData("no_date"),
                               tr.translateData("delivery_date"), UIDataColors.redColor);
                         } else {
+                          // Provider.of<CartProvider>(context, listen: false)
+                          //       .
                           showModalBottomSheet(
                               context: context,
                               shape: const RoundedRectangleBorder(

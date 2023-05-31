@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../ui/widgets/snackbar/common_snackbar.dart';
 import '../../utils/api_data.dart';
@@ -37,7 +36,6 @@ class NotificationProvider extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
     try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
       var body = <String, String>{};
       body['seller_code'] = sellerCode;
       var res = await http.post(

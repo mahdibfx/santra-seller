@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/models/customers/view_all_customers.dart';
-import 'package:santra_seller/models/home_model.dart';
 import 'package:santra_seller/provider/cart_provider.dart';
 import 'package:santra_seller/provider/home_provider.dart';
 import 'package:santra_seller/ui/screens/more_setting/my_customer/my_customer_screen.dart';
@@ -15,7 +14,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../../models/customers/delivery_charges.dart';
 import '../../ui/screens/more_setting/my_customer/view_customer_details.dart';
-import '../../ui/screens/order_detail/all_order_screen.dart';
 import '../../ui/screens/order_detail/manual_order_screen.dart';
 import '../../utils/app_translation/app_translation.dart';
 

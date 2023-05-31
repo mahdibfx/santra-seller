@@ -7,12 +7,12 @@ import '../../../provider/cart_provider.dart';
 import '../../../utils/uidata/textStyles.dart';
 
 class CartCardOrder extends StatelessWidget {
-  List<CartItem>? allProducts;
-  int? index;
+  final List<CartItem>? allProducts;
+  final int? index;
   final void Function()? onDecrese;
   final void Function()? onIncrese;
-  String quantity;
-  CartCardOrder(
+  final String quantity;
+  const CartCardOrder(
       {Key? key,
       required this.onDecrese,
       required this.onIncrese,

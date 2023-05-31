@@ -1,6 +1,5 @@
 import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/setting_provider/change_password_provider.dart';
-import 'package:santra_seller/provider/setting_provider/reset_password_provider.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import '../../widgets/buttons/icon_setting_button.dart';

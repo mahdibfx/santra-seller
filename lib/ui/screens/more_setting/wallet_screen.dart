@@ -1,4 +1,3 @@
-import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import '../../../utils/app_translation/app_translation.dart';
 import '../../../utils/uidata/textStyles.dart';

@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/apps_flyr/appflyer_provider.dart';
 import 'package:santra_seller/ui/screens/auth_screen/login_screen.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
@@ -15,7 +14,7 @@ import '../ui/widgets/dialogs/custom_dialogs.dart';
 import '../ui/widgets/snackbar/common_snackbar.dart';
 import '../utils/app_translation/app_translation.dart';
 import '../utils/uidata.dart';
-import 'language_provider/language_provider.dart';
+
 
 class SplashProvider extends ChangeNotifier {
      var tr = Get.put(AppTranslations());
@@ -108,7 +107,6 @@ await checkInstallFirsTime();
   }
 
   Future<bool> isInternetAvailable() async {
-    var tr = Get.put(AppTranslations());
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {

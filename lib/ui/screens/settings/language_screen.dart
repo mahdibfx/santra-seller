@@ -1,13 +1,9 @@
 import 'dart:async';
-
-import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../provider/setting_provider/language_settings_controller.dart';
-
-import '../../../provider/splash_provider.dart';
 import '../../../utils/app_translation/app_translation.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';

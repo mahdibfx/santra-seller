@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../models/seller_all_products_model.dart';
 import '../../../ui/widgets/dialogs/custom_dialogs.dart';
-import '../../../ui/widgets/snackbar/common_snackbar.dart';
 import '../../../utils/api_data.dart';
 
 class ProductSettingsProvider extends ChangeNotifier {

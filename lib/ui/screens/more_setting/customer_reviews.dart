@@ -1,11 +1,9 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/more_settings_provider/customer_reviews_provider.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/ui/widgets/cards/customer_review_card.dart';
-import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/customer_reviews_widgets.dart/rating_overView.dart';
 import '../../widgets/customer_reviews_widgets.dart/ratingbar_with_details.dart';
