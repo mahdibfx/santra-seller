@@ -256,6 +256,7 @@ class MyCustomerProvider extends ChangeNotifier {
         var data = DeliveryChargesModel.fromJson(decodedJson);
         if (receiptPaymentMethord) {
           var cartProvider = Provider.of<CartProvider>(context, listen: false);
+          
           cartProvider.addItemForCustomerCart(
               data, customerDetail, sellerCode, receiptPaymentMethord);
           await cartProvider.orderSubmit();
@@ -333,7 +334,7 @@ class MyCustomerProvider extends ChangeNotifier {
       "coupn_code": "0", // coupon code if any other wise send 0
       "sub_total": "${cartProvider.totalPrice}", // This is the subtotal amount
       "total_delivery_charges":
-          data.data?.first.deliveryCharges, //this is the delivery charges
+          cartProvider.delivery(), //this is the delivery charges
       "total_discount": cartProvider.dis
           .toString(), //this is the discount if any otherwise send 0
       "d_reason": cartProvider.voucherListVoucherCode ??
@@ -359,6 +360,7 @@ class MyCustomerProvider extends ChangeNotifier {
 // Field name: "", order_items and items in this array are as follows(id, name, price, quantity, item_remarks, modifiers_list(modifier_code,name_modifier,price_modifier))
       "order_items": jsonEncode(cartProvider.cartItems),
     };
+    print(finalSubmitData);
     return await orderSubmitByLink(context);
   }
 

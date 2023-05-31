@@ -2,6 +2,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/myApp.dart';
 import 'package:santra_seller/ui/widgets/snackbar/common_snackbar.dart';
@@ -22,9 +23,14 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('Handling a background message ${message.messageId}');
 }
 
+void _removeBadge() {
+  FlutterAppBadger.removeBadge();
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  _removeBadge();
   // RemoteMessage? initialMessage =
   //     await FirebaseMessaging.instance.getInitialMessage();
 
