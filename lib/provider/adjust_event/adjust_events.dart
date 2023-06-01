@@ -12,7 +12,6 @@ import 'dart:io' show Platform;
 import 'package:santra_seller/constants/app_constants.dart';
 
 class AdjustAnalyticsController extends GetxController {
-
   openAppFirstEvent() {
     Map<String, dynamic> body = {};
     _sendAnalyticsEvent(Platform.isIOS ? 'khkf2t' : 'cssae9', body);
@@ -38,15 +37,14 @@ class AdjustAnalyticsController extends GetxController {
   }
 
   voucherCodeEvent(String voucherCode) {
-   Adjust.trackEvent(buildVoucher(voucherCode));
+    Adjust.trackEvent(buildVoucher(voucherCode));
   }
 
   static AdjustEvent buildVoucher(String voucherCode) {
-    AdjustEvent event =  AdjustEvent(Platform.isIOS ? 'l9ve2z' : 'noy9rf');
+    AdjustEvent event = AdjustEvent(Platform.isIOS ? 'l9ve2z' : 'noy9rf');
     event.addCallbackParameter('voucher_code', voucherCode);
     return event;
   }
-
 
   addCustomerEvent() {
     Map<String, dynamic> body = {
@@ -84,11 +82,11 @@ class AdjustAnalyticsController extends GetxController {
   }
 
   orderConfirmedEvent(String orderPrice, String orderType) {
-   Adjust.trackEvent(buildRevenueEvent(orderPrice,orderType));
+    Adjust.trackEvent(buildRevenueEvent(orderPrice, orderType));
   }
 
   static AdjustEvent buildRevenueEvent(String orderPrice, String orderType) {
-    AdjustEvent event =  AdjustEvent(Platform.isIOS ? 'e1wx9b' : 'ab868g');
+    AdjustEvent event = AdjustEvent(Platform.isIOS ? 'e1wx9b' : 'ab868g');
     event.setRevenue(int.parse(orderPrice), 'AED');
     event.transactionId = orderType;
     return event;
@@ -136,10 +134,12 @@ class AdjustAnalyticsController extends GetxController {
     Adjust.trackEvent(myAdjustEvent);
   }
 
-
-   initPlatformState() async {
-    AdjustConfig config =
-        AdjustConfig(Platform.isIOS ? AppConstants.adjustIosKey : AppConstants.adjustAndroidKey, AdjustEnvironment.production);
+  initPlatformState() async {
+    AdjustConfig config = AdjustConfig(
+        Platform.isIOS
+            ? AppConstants.adjustIosKey
+            : AppConstants.adjustAndroidKey,
+        AdjustEnvironment.production);
     config.logLevel = AdjustLogLevel.verbose;
 
     config.attributionCallback = (AdjustAttribution attributionChangedData) {
