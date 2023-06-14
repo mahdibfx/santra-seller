@@ -333,7 +333,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
   }
 
   double _calculateContainerHeight() {
-    return (widget.orderItemList.length == 2 ? 140 : widget.orderItemList.length == 1 ?  70 :widget.orderItemList.length > 3 ? 210 :5)
+    return (widget.orderItemList.length == 2 ? 140 : widget.orderItemList.length == 1 ?  70 :widget.orderItemList.length > 2 ? 210 :5)
         .toDouble(); // 70 is the height of each ListTile
   }
 

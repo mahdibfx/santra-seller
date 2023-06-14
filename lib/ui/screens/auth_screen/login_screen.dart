@@ -93,8 +93,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ),
-                SpacingHeight.heightlistspacing35,
-                SpacingHeight.heightlistspacing15,
+                SpacingHeight.heightlistspacing20,
+                
                 Column(
                   children: [
                     CommonTextField(
@@ -193,9 +193,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     //   },
                     //   child: const Icon(Icons.add),
                     // ),
-
+            
                     SpacingHeight.heightlistspacing25,
-
+            
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -218,8 +218,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         // crossAxisAlignment: Get.locale!.languageCode == 'en'? CrossAxisAlignment.end:CrossAxisAlignment.start,
                   children: [
                   Container(
-                            width: 140,
-                            height: 140,
+                            width: 120,
+                            height: 120,
                             decoration: const BoxDecoration(
                               color: Color(0xff78CDC8),
                               borderRadius: BorderRadius.only(
