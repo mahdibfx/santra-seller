@@ -62,8 +62,8 @@ void main() async {
   });
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: UIDataColors.blackColor, // status bar color
-          systemNavigationBarColor: Color(0xFF222222),
+    statusBarColor: UIDataColors.whiteColor, // status bar color
+          systemNavigationBarColor: UIDataColors.whiteColor,
 
   ));
 
