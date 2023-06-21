@@ -1,21 +1,19 @@
 // flutter imports
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 // package imports
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/controllers/auth_controller/login_controller.dart';
-import 'package:santra_seller/controllers/home_controller/home_controller.dart';
-import 'package:santra_seller/controllers/splash_controller.dart';
+import 'package:santra_seller/provider/splash_provider.dart';
 import 'package:santra_seller/provider/home_provider.dart';
-import 'package:santra_seller/provider/login_provider.dart';
-
+import 'package:santra_seller/provider/auth_providers/login_provider.dart';
+import 'package:santra_seller/ui/screens/cart/cart_screen.dart';
+import 'package:santra_seller/ui/screens/more_setting/more_screen.dart';
 // lib imports
-import '../../../controllers/cart_controller/cart_controller.dart';
-import '../../../utils/routes/app_routes.dart';
+import '../../../utils/app_translation/app_translation.dart';
 import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';
+import '../../screens/home_page/home_screen.dart';
 import '../buttons/icon_button.dart';
 import '../custom_float.dart';
 import '../dialogs/custom_dialogs.dart';
@@ -23,12 +21,8 @@ import '../drawer/clip_drawer.dart';
 import 'cart_icon_with_badge.dart';
 import 'notification_icon_with_badge.dart';
 
-// LoginController loginController = Get.put(LoginController());
-// HomeController homeController = Get.put(HomeController());
-// CartController cartController = Get.put(CartController());
-
+var tr = Get.put(AppTranslations());
 class CommonScaffold extends StatelessWidget {
-  // final CartController cartController = Get.find<CartController>();
   final resizeToAvoid;
   final appTitle;
   final automaticallyImplyLeading;
@@ -68,6 +62,10 @@ class CommonScaffold extends StatelessWidget {
   final appBarSearchShow;
   final appBarAction;
   bool? showActions;
+  bool isHome;
+  bool isMore;
+  bool isAddManual;
+  final isBackHomeScreen;
   final bool isBackArrowShow;
 
   CommonScaffold(
@@ -110,6 +108,10 @@ class CommonScaffold extends StatelessWidget {
       this.appBarSearchShow = false,
       this.isBackArrowShow = true,
       this.appBarAction,
+      this.isHome = false,
+      this.isMore = false,
+      this.isAddManual = false,
+      this.isBackHomeScreen = false,
       this.showActions = true});
 
   Widget myBottomBar(context) =>
@@ -118,6 +120,8 @@ class CommonScaffold extends StatelessWidget {
                   null
           ? const SizedBox()
           : BottomAppBar(
+              // elevation: 0,
+
               shape: const CircularNotchedRectangle(),
               // color: UIDataColors.blue,//shape of notch
               notchMargin: 5, //
@@ -137,62 +141,89 @@ class CommonScaffold extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    ReusableIconButton(
-                      icon: UIDATAIcons.homeIcon,
-                      iconClr: UIDataColors.primaryColor,
-                      btntxt: Text(
-                        "Home",
-                        style: Get.currentRoute == Routes.homeRoutes
-                            ? UIDataTextStyles.title.copyWith(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w800,
-                                color: UIDataColors.primaryColor)
-                            : UIDataTextStyles.subTitle.copyWith(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                              ),
-                      ),
-                      onPressed: () {
-                        if (Get.currentRoute != Routes.homeRoutes) {
-                          Get.offAllNamed(Routes.homeRoutes);
-                        }
-                      },
-                    ),
+                    
+                      Consumer<SplashProvider>(
+                          builder: (context, splashPro, child) {
+                        return ReusableIconButton(
+                          icon: UIDATAIcons.homeIcon,
+                          iconClr: UIDataColors.primaryColor,
+                          btntxt: Text(
+                            tr.translateData("home_menu_button"),
+                            style:
+                                // Get.currentRoute == Routes.homeRoutes
+                                //     ? UIDataTextStyles.title.copyWith(
+                                //         fontSize: 14,
+                                //         fontWeight: FontWeight.w800,
+                                //         color: UIDataColors.primaryColor)
+                                //     :
+                                UIDataTextStyles.subTitle.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
+                          ),
+                          onPressed: isHome
+                              ? null
+                              : () {
+                                  splashPro.onHomeScreen();
+                                  // if (Get.currentRoute != Routes.homeRoutes) {
+                                  Get.offAll(() => const HomeScreen());
+                                  // }
+                                },
+                        );
+                      
+                    }),
                     Center(
-                      child: Text(
-                        showFAB ? 'Add Order' : '',
-                        style: UIDataTextStyles.h2,
-                        textAlign: TextAlign.center,
-                      ),
+                      child:Text(
+                          showFAB
+                              ? tr.translateData('home_addorder_button')
+                              : '',
+                          style: UIDataTextStyles.h2,
+                          textAlign: TextAlign.center,
+                       ),
                     ).marginOnly(top: 20),
-                    ReusableIconButton(
-                      iconClr: UIDataColors.primaryColor,
-                      icon: UIDATAIcons.more2,
-                      btntxt: Text(
-                        "More",
-                        style: Get.currentRoute == Routes.moreScreen
-                            ? UIDataTextStyles.title.copyWith(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w800,
-                                color: UIDataColors.primaryColor)
-                            : UIDataTextStyles.subTitle.copyWith(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                              ),
-                      ),
-                      onPressed: () {
-                        if (Get.currentRoute != Routes.moreScreen) {
-                          Get.offAllNamed(Routes.moreScreen);
-                        }
-                      },
-                    ),
+                    GetBuilder<AppTranslations>(
+      builder: (tr) {
+                      return Consumer<SplashProvider>(
+                          builder: (context, splashPro, child) {
+                        return ReusableIconButton(
+                          iconClr: UIDataColors.primaryColor,
+                          icon: UIDATAIcons.more2,
+                          btntxt: Text(
+                            tr.translateData("home_more_button"),
+                            style:
+                                //  Get.currentRoute == Routes.moreScreen
+                                //     ?
+                                // UIDataTextStyles.title.copyWith(
+                                //     fontSize: 14,
+                                //     fontWeight: FontWeight.w800,
+                                //     color: UIDataColors.primaryColor)
+                                //:
+                                UIDataTextStyles.subTitle.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
+                          ),
+                          onPressed: isMore
+                              ? null
+                              : () {
+                                  splashPro.onMoreScreen();
+
+                                  Get.offAll(() => MoreSettingScreen());
+                                  // if (Get.currentRoute != Routes.moreScreen) {
+                                  //   Get.offAllNamed(Routes.moreScreen);
+                                  // }
+                                },
+                        );
+                      });
+                    }),
                   ],
                 ),
               ),
             );
-
+  final localization = AppTranslations();
+  iconSet() {}
   @override
   Widget build(BuildContext context) {
     // final LoginController loginController = Get.find<LoginController>();
@@ -216,48 +247,64 @@ class CommonScaffold extends StatelessWidget {
                       onTap: () {
                         Get.back();
                       },
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(UIDATAIcons.back),
-                            SpacingWidth.widthlistspacing5,
-                            const Text(
-                              "",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500),
-                            )
-                          ],
+                      child: GestureDetector(
+                        onTap: isBackHomeScreen ? () {Get.to(HomeScreen()); } : (){Get.back();},
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Consumer<SplashProvider>(
+                              builder: (context, splashPro, child) {
+                            return Row(
+                              children: [
+                                SpacingWidth.widthlistspacing5,
+                                Get.locale!.languageCode == 'en'
+                                    ? SvgPicture.asset(UIDATAIcons.back)
+                                    : SvgPicture.asset(
+                                        UIDATAIcons.forwardArrow,
+                                        color: UIDataColors.primaryColor,
+                                      ),
+                                SpacingWidth.widthlistspacing5,
+                                const Text(
+                                  "",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500),
+                                )
+                              ],
+                            );
+                          }),
                         ),
                       ),
                     )
                   : const SizedBox(),
               //leading,
               backgroundColor: appbarcolor,
-              title: GestureDetector(
-                onTap: () {
-                  if (Provider.of<SplashProvider>(context, listen: false)
-                              .sellerCode ==
-                          null &&
-                      Provider.of<LoginProvider>(context, listen: false)
-                              .sellerCode ==
-                          null) {
-                    null;
-                  } else {
-                    if (Get.currentRoute == Routes.homeRoutes) {
+              title: Consumer<SplashProvider>(
+                  builder: (context, splashPro, child) {
+                return GestureDetector(
+                  onTap: () {
+                    if (Provider.of<SplashProvider>(context, listen: false)
+                                .sellerCode ==
+                            null &&
+                        Provider.of<LoginProvider>(context, listen: false)
+                                .sellerCode ==
+                            null) {
+                      null;
                     } else {
-                      Get.offAllNamed(Routes.homeRoutes);
+                      // if (Get.currentRoute == Routes.homeRoutes) {
+                      // } else {
+                      splashPro.onHomeScreen();
+                      Get.offAll(() => const HomeScreen());
+                      // }
                     }
-                  }
-                },
-                child: SvgPicture.asset(
-                  UIDataImage.sellerLogoIconSVG,
-                  height: 35,
-                  width: 35,
-                  // fit: BoxFit.fitWidth,
-                ),
-              ),
+                  },
+                  child: SvgPicture.asset(
+                    UIDataImage.sellerLogoIconSVG,
+                    height: 35,
+                    width: 35,
+                    // fit: BoxFit.fitWidth,
+                  ),
+                );
+              }),
               actions: showActions == true
                   ? Provider.of<SplashProvider>(context, listen: false)
                                   .sellerCode ==
@@ -267,12 +314,17 @@ class CommonScaffold extends StatelessWidget {
                               null
                       ? []
                       : [
-                          CartIconWithBadge(
-                            onTap: () {
-                              Get.toNamed(Routes.cartroute);
-                            },
-                            showBadge: true,
-                          ),
+                          Consumer<SplashProvider>(
+                              builder: (context, splashPro, child) {
+                            return CartIconWithBadge(
+                              onTap: () {
+                                splashPro.homeAndMoreScreenOff();
+                                Get.to(() => CartScreen());
+                                //Get.toNamed(Routes.cartroute);
+                              },
+                              showBadge: true,
+                            );
+                          }),
                           SpacingWidth.widthlistspacing15,
                           NotificationIconWithBadge(),
                           const SizedBox(
@@ -304,7 +356,7 @@ class CommonScaffold extends StatelessWidget {
                   image: DecorationImage(
                       image: backGroundImage != null
                           ? AssetImage(UIDataImage.backgroundImage)
-                          : const AssetImage(UIDataImage.splash),
+                          : AssetImage(UIDataImage.backgroundImage),
                       fit: BoxFit.cover),
                 ),
           width: (MediaQuery.of(context).size.width.ceil()).toDouble(),
@@ -321,28 +373,34 @@ class CommonScaffold extends StatelessWidget {
           : showFAB
               ? Visibility(
                   visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
-                  child: Consumer<HomeProvider>(
-                      builder: (context, homeProvider, child) {
-                    return CustomFloat(
-                      builder: centerDocked
-                          ? const Text(
-                              "5",
-                              style:
-                                  TextStyle(color: Colors.red, fontSize: 10.0),
-                            )
-                          : null,
-                      icon: floatingIcon,
-                      // ignore: unrelated_type_equality_checks
-                      qrCallback: homeProvider.sellerStatusNew != "done"
-                          ? () {
-                              customOntapDialog('Alert',
-                                  'Your status is not approved.', 'Okay', () {
-                                print(homeProvider.sellerStatusNew);
-                                Get.back();
-                              });
-                            }
-                          : qrCallback,
-                    );
+                  child:
+                      GetBuilder<AppTranslations>(
+      builder: (tr) {
+                    return Consumer<HomeProvider>(
+                        builder: (context, homeProvider, child) {
+                      return CustomFloat(
+                        builder: centerDocked
+                            ? const Text(
+                                "5",
+                                style: TextStyle(
+                                    color: Colors.red, fontSize: 10.0),
+                              )
+                            : null,
+                        icon: floatingIcon,
+                        // ignore: unrelated_type_equality_checks
+                        qrCallback: homeProvider.sellerStatusNew != "done"
+                            ? () {
+                                customOntapDialog(
+                                    tr.translateData('alert'),
+                                    tr.translateData('status_approved'),
+                                    tr.translateData('okay'), () {
+                                  print(homeProvider.sellerStatusNew);
+                                  Get.back();
+                                });
+                              }
+                            : isAddManual ? null : qrCallback,
+                      );
+                    });
                   }),
                 )
               : null,

@@ -6,8 +6,16 @@ import '../../ui/widgets/snackbar/common_snackbar.dart';
 import '../../utils/api_data.dart';
 import '../../utils/uidata.dart';
 import '../models/notification/notification_model.dart';
+import 'package:get/get.dart';
+
+import '../utils/app_translation/app_translation.dart';
 
 class NotificationProvider extends ChangeNotifier {
+  final BuildContext context;
+
+  NotificationProvider(this.context);
+
+
   bool isLoading = false;
   var sellerCode = '';
   List<Notifications> notificationList = [];
@@ -24,10 +32,10 @@ class NotificationProvider extends ChangeNotifier {
   }
 
   void loginfunction() async {
+    var tr = Get.put(AppTranslations());
     isLoading = true;
     notifyListeners();
     try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
       var body = <String, String>{};
       body['seller_code'] = sellerCode;
       var res = await http.post(
@@ -48,15 +56,15 @@ class NotificationProvider extends ChangeNotifier {
         isLoading = false;
         notifyListeners();
         print(res.body);
-        CommonSnackbar.getSnackbar("Error", "Error ", UIDataColors.redColor);
+        CommonSnackbar.getSnackbar(tr.translateData("error_message"), tr.translateData("error_message"), UIDataColors.redColor);
       }
     } catch (e) {
       isLoading = false;
       notifyListeners();
 
       CommonSnackbar.getSnackbar(
-          "Server Error",
-          "Server Error or Please Check your internet connection",
+          tr.translateData("serve_error"),
+          tr.translateData("something_wrong_message"),
           UIDataColors.redColor);
     }
 

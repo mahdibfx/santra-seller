@@ -8,14 +8,16 @@ import 'package:adjust_sdk/adjust_session_success.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
+import '../../../provider/adjust_event/adjust_events.dart';
+import '../../../utils/app_translation/app_translation.dart';
 import '../../../utils/uidata.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
-import '/controllers/splash_controller.dart';
+import '../../../provider/splash_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-
+  AdjustAnalyticsController adjustEventController = Get.put(AdjustAnalyticsController());
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -25,15 +27,19 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver {
   @override
+    var tr = Get.put(AppTranslations());
   void initState() {
         super.initState();
       WidgetsBinding.instance.addObserver(this);
     SplashProvider splashProvider =
         Provider.of<SplashProvider>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((_) {
+     
       splashProvider.checkUpdateAndMakeDescision();
+      splashProvider.setOldLang();
     });
    initPlatformState();
+    adjustEventController.initPlatformState();
 
   }
 

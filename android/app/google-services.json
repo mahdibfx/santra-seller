@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "735066844046-5oc5um74vrjvshof3rcnucn9218fa9fd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hihome.seller",
+            "certificate_hash": "55d4cd90d344e43b439565cec8ece3efd026aa22"
+          }
+        },
+        {
           "client_id": "735066844046-5gvc1g18fl8lsgkpr05d6rdf8reo1duv.apps.googleusercontent.com",
           "client_type": 3
         }

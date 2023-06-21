@@ -1,47 +1,52 @@
 name: santra_seller
 description: A new Flutter project.
 publish_to: 'none'
-version: 3.3.7+1
+version: 4.0.1+1
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
 dependencies:
   flutter:
     sdk: flutter
-  provider: ^6.0.3
-  shared_preferences: ^2.0.15
+  provider: ^6.0.5
+  shared_preferences: ^2.1.1
   intl: ^0.17.0
   cupertino_icons: ^1.0.2
   get: ^4.6.5
   flutter_rating_bar: ^4.0.1
-  flutter_svg: ^1.1.4
+  flutter_svg: ^2.0.6
   flutter_switch: ^0.3.2
-  image_picker: ^0.8.5+3
-  http: ^0.13.5
-  url_launcher: ^6.1.5
+  image_picker: ^0.8.7+5
+  http:
+  url_launcher: ^6.1.11
   # webview_flutter: ^3.0.4
   mask_text_input_formatter: ^2.4.0
-  modal_progress_hud_nsn: ^0.3.0
-  firebase_core: ^2.1.0
-  flutter_local_notifications: ^12.0.2
-  firebase_messaging: ^14.0.2
-  firebase_auth: ^4.0.2
+  modal_progress_hud_nsn: ^0.4.0
+  firebase_core: ^2.13.0
+  flutter_local_notifications: ^14.1.0
+  firebase_messaging: ^14.6.1
+  firebase_auth: ^4.6.1
   # google_sign_in: ^5.4.2
   # sign_in_with_apple: ^4.1.0
   toast: ^0.3.0
-  google_maps_flutter: ^2.2.1
+  # google_maps_flutter: ^2.2.1
   # geocoding: ^2.0.5
   # geolocator: ^9.0.2
-  package_info_plus: ^1.0.6
+  package_info_plus: ^4.0.0
   cached_network_image: ^3.2.3
   date_picker_timeline: ^1.2.3
   percent_indicator: ^4.2.3
   get_storage: ^2.1.1
-  calendar_date_picker2: ^0.4.9
-  share_plus: ^6.3.0
-  adjust_sdk: ^4.31.0
+  calendar_date_picker2: ^0.5.2
+  share_plus: ^7.0.1
+  appsflyer_sdk: ^6.10.3
+  adjust_sdk: ^4.33.1
+  firebase_analytics: ^10.4.1
+  flutter_app_badger: ^1.5.0
   envify:
 
+# dependency_overrides:
+#  package_info_plus: ^4.0.1
 
 dev_dependencies:
   flutter_test:
@@ -55,7 +60,6 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
-    - assets/images/splash_full_svg.svg
   fonts:
     - family: Markpro
       fonts:

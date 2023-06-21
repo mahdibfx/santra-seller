@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/controllers/auth_controller/signup_controller.dart';
-import 'package:santra_seller/controllers/more_screen_controller.dart/my_customer/my_customer_controller.dart';
-import 'package:santra_seller/provider/sign_up_provider.dart';
+import 'package:santra_seller/provider/auth_providers/sign_up_provider.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
 import 'package:santra_seller/ui/widgets/dropdown/common_dropdown.dart';
+import 'package:santra_seller/utils/app_translation/app_translation.dart';
 
-import '../../../../provider/my_customer_provider.dart';
-import '../../../../utils/routes/app_routes.dart';
+import '../../../../provider/more_settings_provider/my_customer_provider.dart';
 import '../../../../utils/uidata.dart';
 import '../../../widgets/scaffold/common_scaffold.dart';
 import '../../../widgets/textfields/common_textfield.dart';
+import '../../add_manual_order/add_manual_order.dart';
 
 class AddCustomerScreen extends StatefulWidget {
   final bool isComingFromCart;
@@ -56,196 +55,204 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
   // }
 
   Widget bodyData() {
-    return Consumer<MyCustomerProvider>(
-      builder: (context, _, child) {
-        return SafeArea(
-          child: SingleChildScrollView(
-              padding: EdgeInsets.zero,
-              child: Form(
-                key: form,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    HeadingWithIcon(
-                        icon: UIDATAIcons.customersIcon,
-                        btntxt: "Add Customer List".tr),
-                    CommonTextField(
-                      controller: _.fnController,
-                      isTextHidden: false,
-                      fillcolor: UIDataColors.whiteColor,
-                      labelText: "Full Name".tr,
-                      prefixIcon: UIDATAIcons.userIcon,
-                      keyboardType: TextInputType.text,
-                      validator: (val) {
-                        if (val.isEmpty) {
-                          return "Please enter full name";
-                        } else if (val == null) {
-                          return "Please enter valid name";
-                        } else {
-                          return null;
-                        }
-                      },
-                    ),
-                    CommonTextField(
-                      controller: _.mobileController,
-                      labelText: "Mobile",
-                      inputFormatters: [_.phoneMask],
-                      prefixIcon: UIDATAIcons.callIcon,
-                      maxLength: 12,
-                      isTextHidden: false,
-                      hintText: "Ex: 501234567",
-                      fillcolor: UIDataColors.whiteColor,
-                      keyboardType: TextInputType.text,
-                      onChanged: (val) {
-                        String? check0;
-
-                        if (val.isNotEmpty && val.length > 3) {
-                          check0 = val.substring(0, 4);
-                          if (check0 == "9710") {
-                            _.mobileController.clear();
-                          }
-                        }
-                      },
-                      validator: (val) {
-                        String? name;
-
-                        if (val.isEmpty || val.length < 12) {
-                          return "Please Enter Valid Phone Number";
-                        } else if (val.isNotEmpty && val.length > 3) {
-                          name = val.substring(0, 3);
-
-                          if (name != "971") {
-                            return "Phone Number Must Start With 971";
-                          }
-                        } else {
-                          return null;
-                        }
-                      },
-                    ),
-                    CommonTextField(
-                      controller: _.emailController,
-                      // hintText: 'Email'.tr,
-                      labelText: "Email",
-                      prefixIcon: UIDATAIcons.emailIcon,
-                      isTextHidden: false,
-                      fillcolor: UIDataColors.whiteColor,
-                      keyboardType: TextInputType.text,
-                      validator: (val) {
-                        bool email = _.emailRegex.hasMatch(val);
-                        if (val.isEmpty) {
-                          return "Please enter Email";
-                        } else if (!email) {
-                          return "Please Enter valid Email";
-                        } else {
-                          return null;
-                        }
-                      },
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
+        return Consumer<MyCustomerProvider>(
+          builder: (context, _, child) {
+            return SafeArea(
+              child: SingleChildScrollView(
+                  padding: EdgeInsets.zero,
+                  child: Form(
+                    key: form,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(child: Consumer<SignUpProvider>(
-                            builder: (context, signUpController, child) {
-                          return MyDropdown(
-                              label: "City",
-                              validator: (value) {
-                                if (value == null) {
-                                  return "Please select city";
-                                }
-                              },
-                              prefixIcon: UIDATAIcons.location,
-                              options: signUpController.citiesList,
-                              onChanged: (val) {
-                                _.city = val;
-                              },
-                              selectedOption: _.city);
-                        })),
-                        SpacingWidth.widthlistspacing15,
-                        Expanded(
-                          child: CommonTextField(
-                            controller: _.buildingController,
-                            labelText: "Building No.",
-                            prefixIcon: UIDATAIcons.building,
-                            isTextHidden: false,
-                            fillcolor: UIDataColors.whiteColor,
-                            keyboardType: TextInputType.text,
-                            validator: (val) {
-                              if (val.isEmpty) {
-                                return "Enter building#";
-                              }
-                            },
-                          ),
+                        HeadingWithIcon(
+                            icon: UIDATAIcons.customersIcon,
+                            btntxt: tr.translateData("add_customer_title")),
+                        CommonTextField(
+                          textInputAction: TextInputAction.next,
+                          controller: _.fnController,
+                          isTextHidden: false,
+                          fillcolor: UIDataColors.whiteColor,
+                          labelText: tr.translateData("add_customer_name"),
+                          prefixIcon: UIDATAIcons.userIcon,
+                          keyboardType: TextInputType.text,
+                          validator: (val) {
+                            if (val.isEmpty) {
+                              return tr.translateData("full_name_validation");
+                            } else if (val == null) {
+                              return tr.translateData("full_name_validation");
+                            } else {
+                              return null;
+                            }
+                          },
                         ),
-                      ],
-                    ),
-                    CommonTextField(
-                      controller: _.aptController,
-                      labelText: "Apt/Villa",
-                      prefixIcon: UIDATAIcons.homeIcon,
-                      isTextHidden: false,
-                      fillcolor: UIDataColors.whiteColor,
-                      keyboardType: TextInputType.text,
-                      validator: (val) {
-                        if (val.isEmpty) {
-                          return "Please enter building type";
-                        }
-                      },
-                    ),
-                    CommonTextField(
-                      controller: _.addressController,
-                      labelText: "Address Link",
-                      prefixIcon: UIDATAIcons.locationPin,
-                      isTextHidden: false,
-                      fillcolor: UIDataColors.whiteColor,
-                      keyboardType: TextInputType.text,
-                      validator: (val) {
-                        if (val.isEmpty) {
-                          return "Please enter address link";
-                        }
-                      },
-                    ),
-                    SpacingHeight.heightlistspacing10,
-                    _.isAddCustomerLoading
-                        ? const SizedBox(
-                            child: Center(
-                            child: CircularProgressIndicator(),
-                          ))
-                        : Row(
-                            children: [
-                              Expanded(
-                                child: BorderButton(
-                                  onPressed: () {
-                                    Get.back();
-                                    _.disposeValues();
-                                  },
-                                  btntxt: "Cancel",
-                                  iconImage: UIDATAIcons.close,
-                                  iconColor: UIDataColors.primaryColor,
-                                  buttontxtColor: UIDataColors.primaryColor,
-                                  borderColor: UIDataColors.primaryColor,
-                                  backEndColor: UIDataColors.whiteColor,
-                                ),
-                              ),
-                              SpacingWidth.widthlistspacing15,
-                              Expanded(
-                                child: PrimaryButtonWithIcon(
-                                  onPressed: () {
-                                    if (form.currentState!.validate()) {
-                                      _.addCustomer();
+                        CommonTextField(
+                          textInputAction: TextInputAction.next,
+                          controller: _.mobileController,
+                          labelText: tr.translateData("add_customer_mobile"),
+                          inputFormatters: [_.phoneMask],
+                          prefixIcon: UIDATAIcons.callIcon,
+                          maxLength: 12,
+                          isTextHidden: false,
+                          hintText: " 501234567",
+                          fillcolor: UIDataColors.whiteColor,
+                          keyboardType: TextInputType.text,
+                          onChanged: (val) {
+                            String? check0;
+
+                            if (val.isNotEmpty && val.length > 3) {
+                              check0 = val.substring(0, 4);
+                              if (check0 == "9710") {
+                                _.mobileController.clear();
+                              }
+                            }
+                          },
+                          validator: (val) {
+                            String? name;
+
+                            if (val.isEmpty || val.length < 12) {
+                              return tr.translateData("valid_phone");
+                            } else if (val.isNotEmpty && val.length > 3) {
+                              name = val.substring(0, 3);
+
+                              if (name != "971") {
+                                return tr.translateData("valid_phone_971");
+                              }
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        CommonTextField(
+                          textInputAction: TextInputAction.next,
+                          controller: _.emailController,
+                          labelText: tr.translateData("add_customer_email"),
+                          prefixIcon: UIDATAIcons.emailIcon,
+                          isTextHidden: false,
+                          fillcolor: UIDataColors.whiteColor,
+                          keyboardType: TextInputType.text,
+                          // validator: (val) {
+                          //   bool email = _.emailRegex.hasMatch(val);
+                          //   if (val.isEmpty) {
+                          //     return "Please enter Email";
+                          //   } else if (!email) {
+                          //     return "Please Enter valid Email";
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(child: Consumer<SignUpProvider>(
+                                builder: (context, signUpController, child) {
+                              return MyDropdown(
+                                  label: tr.translateData("signup_city"),
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return tr.translateData("select_city");
                                     }
                                   },
-                                  btntxt: "Save",
-                                  iconImage: UIDATAIcons.saveIcon,
-                                ),
+                                  prefixIcon: UIDATAIcons.location,
+                                  options: signUpController.citiesList,
+                                  onChanged: (val) {
+                                    _.city = val;
+                                  },
+                                  selectedOption: _.city);
+                            })),
+                            SpacingWidth.widthlistspacing15,
+                            Expanded(
+                              child: CommonTextField(
+                                textInputAction: TextInputAction.next,
+                                controller: _.buildingController,
+                                labelText: tr.translateData("building_no"),
+                                prefixIcon: UIDATAIcons.building,
+                                isTextHidden: false,
+                                fillcolor: UIDataColors.whiteColor,
+                                keyboardType: TextInputType.text,
+                                validator: (val) {
+                                  if (val.isEmpty) {
+                                    return tr.translateData("enter_building_number");
+                                  }
+                                },
                               ),
-                            ],
-                          ),
-                    SpacingHeight.heightlistspacing50
-                  ],
-                ).paddingSymmetric(horizontal: 15),
-              )),
+                            ),
+                          ],
+                        ),
+                        CommonTextField(
+                          textInputAction: TextInputAction.next,
+                          controller: _.aptController,
+                          labelText: tr.translateData("apt_villa"),
+                          prefixIcon: UIDATAIcons.homeIcon,
+                          isTextHidden: false,
+                          fillcolor: UIDataColors.whiteColor,
+                          keyboardType: TextInputType.text,
+                          validator: (val) {
+                            if (val.isEmpty) {
+                              return tr.translateData("enter_building");
+                            }
+                          },
+                        ),
+                        CommonTextField(
+                          controller: _.addressController,
+                          labelText: tr.translateData("address_link"),
+                          prefixIcon: UIDATAIcons.locationPin,
+                          isTextHidden: false,
+                          fillcolor: UIDataColors.whiteColor,
+                          keyboardType: TextInputType.text,
+                          validator: (val) {
+                            if (val.isEmpty) {
+                              return tr.translateData("enter_address");
+                            }
+                          },
+                        ),
+                        SpacingHeight.heightlistspacing10,
+                        _.isAddCustomerLoading
+                            ? const SizedBox(
+                                child: Center(
+                                child: CircularProgressIndicator(),
+                              ))
+                            : Row(
+                                children: [
+                                  Expanded(
+                                    child: BorderButton(
+                                      onPressed: () {
+                                        Get.back();
+                                        _.disposeValues();
+                                      },
+                                      btntxt: tr.translateData("button_cancel"),
+                                      iconImage: UIDATAIcons.close,
+                                      iconColor: UIDataColors.primaryColor,
+                                      buttontxtColor: UIDataColors.primaryColor,
+                                      borderColor: UIDataColors.primaryColor,
+                                      backEndColor: UIDataColors.whiteColor,
+                                    ),
+                                  ),
+                                  SpacingWidth.widthlistspacing15,
+                                  Expanded(
+                                    child: PrimaryButtonWithIcon(
+                                      onPressed: () {
+                                        if (form.currentState!.validate()) {
+                                          _.addCustomer();
+                                        }
+                                      },
+                                      btntxt: tr.translateData("account_info_save_button"),
+                                      iconImage: UIDATAIcons.saveIcon,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                        SpacingHeight.heightlistspacing50
+                      ],
+                    ).paddingSymmetric(horizontal: 15),
+                  )),
+            );
+          },
         );
-      },
+      }
     );
   }
 
@@ -266,7 +273,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
       appTitle: 'My Customer',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAllNamed(Routes.addManualOrder);
+        Get.offAll(() => const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 1.0,

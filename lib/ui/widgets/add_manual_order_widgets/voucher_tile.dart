@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/controllers/cart_controller/cart_controller.dart';
 import 'package:santra_seller/utils/uidata.dart';
 
 import '../../../provider/cart_provider.dart';

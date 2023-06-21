@@ -1,91 +1,103 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:get/route_manager.dart';
-import 'package:santra_seller/utils/routes/app_routes.dart';
-
+import 'package:provider/provider.dart';
+import 'package:santra_seller/ui/screens/more_setting/about_us_screen.dart';
+import 'package:santra_seller/ui/screens/more_setting/contact_us/contact_us_screen.dart';
+import 'package:santra_seller/ui/screens/more_setting/privacy_policy_screen.dart';
+import 'package:santra_seller/ui/screens/settings/language_screen.dart';
+import '../../../utils/app_translation/app_translation.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '/utils/uidata.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 class ClipDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final homecont = Get.find<HomeController>();
-    return Drawer(
-      child: Container(
-        padding: const EdgeInsets.only(left: 16.0, right: 40),
-        decoration: const BoxDecoration(
-          color: UIDataColors.whiteColor,
-        ),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                    alignment: Alignment.centerLeft, child: const CloseButton()
-                    //  IconButton(
-                    //   icon: Icon(
-                    //     Icons.close,
-                    //     color: UIDataColors.whiteColor,
-                    //   ),
-                    //   onPressed: () async {
-                    //     Scaffold.of(context).closeEndDrawer();
-                    //   },
-                    // ),
-                    ),
-                Center(
-                  child: Column(
-                    children: [
-                      SvgPicture.asset(
-                        UIDataImage.sellerLogoIconSVG,
-                        height: 40,
-                        width: 40,
-                        fit: BoxFit.fitWidth,
-                      ),
-                      SpacingHeight.heightlistspacing10,
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
+        return Drawer(
+          child: Container(
+            padding: const EdgeInsets.only(left: 16.0, right: 40),
+            decoration: const BoxDecoration(
+              color: UIDataColors.whiteColor,
+            ),
+            child: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    // Container(
+                        // alignment: Alignment.centerLeft, child: const CloseButton()
+                        Row(
+                          mainAxisAlignment: Get.locale!.languageCode == 'en' ?MainAxisAlignment.start : MainAxisAlignment.end,
+                          children: [
+                            GestureDetector(
+                               onTap: () async {
+                                  Scaffold.of(context).closeEndDrawer();
+                                },
+                              child: Container(height: 32,width: 32,
+                              decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.13),
+                                borderRadius: BorderRadius.all(Radius.circular(16))
+                              ),
+                                                   child:  Center(
+                              child: Icon(
+                                size:22,
+                                  Icons.close_sharp,
+                                  color: UIDataColors.blackColor,
+                                ),
+                               
+                                
+                                                   ),
+                              ),
+                            ),
+                          ],
+                        ).paddingOnly(top: 20),
+                    Center(
+                      child: Column(
                         children: [
-                          Text("Santra",
-                              style: UIDataTextStyles.h1
-                                  .copyWith(fontSize: 20, letterSpacing: 2)),
-                          Text("Seller",
-                              style: UIDataTextStyles.h1.copyWith(
-                                  fontSize: 14,
-                                  letterSpacing: 2,
-                                  color: UIDataColors.secondaryColor)),
+                          Image.asset(
+                          Get.locale!.languageCode == 'en'
+                              ? UIDataImage.santraLogoEnglish
+                              : UIDataImage.santraLogoArabic,
+                          height: 79,
+                          width: 63,
+                          fit: BoxFit.fitWidth,
+                        ),
+                         
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                    SpacingHeight.heightlistspacing35,
+                    itemList(() {
+                      Get.to(() => AboutUsScreen());
+                    }, UIDATAIcons.santraVectorIcon,  tr.translateData("side_menu_about_signin")),
+                    const Divider(
+                      height: 30,
+                    ),
+                    itemList(() {
+                      Get.to(() => ContactUsScreen());
+                    }, UIDATAIcons.whatsappIcon, tr.translateData("side_menu__contact_signin")),
+                    const Divider(
+                      height: 30,
+                    ),
+                    itemList(() {
+                      Get.to(() => const LanguageSettings());
+                    }, UIDATAIcons.languageIcon, Get.locale!.languageCode == 'en' ? 'اللغة' : 'Language'),
+                    const Divider(
+                      height: 30,
+                    ),
+                    itemList(() {
+                      Get.to(() => PrivacyScreen());
+                    }, UIDATAIcons.securityIcon, tr.translateData("side_menu_privacy_signin")),
+                  ],
                 ),
-                SpacingHeight.heightlistspacing20,
-                itemList(() {
-                  Get.toNamed(Routes.aboutscreen);
-                }, UIDATAIcons.santraVectorIcon, "About Us"),
-                const Divider(
-                  height: 30,
-                ),
-                itemList(() {
-                  Get.toNamed(Routes.contactscreen);
-                }, UIDATAIcons.whatsappIcon, "Contact Customer Service"),
-                const Divider(
-                  height: 30,
-                ),
-                itemList(() {
-                  Get.toNamed(Routes.languageSettings);
-                }, UIDATAIcons.languageIcon, "Language"),
-                const Divider(
-                  height: 30,
-                ),
-                itemList(() {
-                  Get.toNamed(Routes.privacy);
-                }, UIDATAIcons.securityIcon, "Privacy Policy"),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      }
     );
   }
 

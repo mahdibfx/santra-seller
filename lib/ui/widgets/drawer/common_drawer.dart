@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CommonDrawer extends StatelessWidget {
   @override
@@ -19,9 +20,9 @@ class CommonDrawer extends StatelessWidget {
             // ),
           ),
           Divider(),
-          new ListTile(
+           ListTile(
             title: Text(
-              "Logout",
+              "setting_logout".tr,
               style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
             ),
             leading: Icon(

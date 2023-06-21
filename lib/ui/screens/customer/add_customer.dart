@@ -1,15 +1,12 @@
 // ignore_for_file: depend_on_referenced_packages
-import 'dart:convert';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/controllers/add_manual_order_controller.dart/add_manual_order_controller.dart';
 import 'package:santra_seller/provider/all_orders_manual.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
+import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
 import '../../widgets/add_manual_order_widgets/checkbox_modifier_list.dart';
 import '../../widgets/add_manual_order_widgets/rounded_close_button.dart';
 import '../../widgets/add_manual_order_widgets/pd_card_add_manual_order.dart';
-import '../../widgets/add_manual_order_widgets/price_on_selection.dart';
-import '../../widgets/add_manual_order_widgets/product_name_and_price_on_sheet.dart';
 import '../../widgets/buttons/add_to_basket_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -22,134 +19,138 @@ class CustomerScreen extends StatelessWidget {
   CustomerScreen({super.key});
 
   Widget bodyData() {
-    return Consumer<AddManualOrderProvider>(
-      builder: (context, _, child) {
-        return _.isLoading
-            ? const SizedBox(
-                child: Center(
-                child: CircularProgressIndicator(),
-              ))
-            : SafeArea(
-                child: SingleChildScrollView(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: const [
-                        Icon(
-                          Icons.add,
-                          size: 40,
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
+        return Consumer<AddManualOrderProvider>(
+          builder: (context, _, child) {
+            return _.isLoading
+                ? const SizedBox(
+                    child: Center(
+                    child: CircularProgressIndicator(),
+                  ))
+                : SafeArea(
+                    child: SingleChildScrollView(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children:  [
+                            Icon(
+                              Icons.add,
+                              size: 40,
+                            ),
+                            Text(
+                              tr.translateData("manual_orders"),
+                              style: UIDataTextStyles.h1,
+                            ),
+                          ],
                         ),
-                        Text(
-                          'Add Manual Order',
-                          style: UIDataTextStyles.h1,
+                        CommonTextField(
+                          isTextHidden: false,
+                          fillcolor: Colors.white,
+                          labelText: tr.translateData("search"),
                         ),
-                      ],
-                    ),
-                    CommonTextField(
-                      isTextHidden: false,
-                      fillcolor: Colors.white,
-                      labelText: "Search",
-                    ),
-                    SpacingHeight.heightlistspacing10,
-                    // const Text(
-                    //   "Category Name",
-                    //   style: UIDataTextStyles.h1,
-                    // ),
-                    // SpacingHeight.heightlistspacing10,
-                    ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: 20,
-                        itemBuilder: (context, index) {
-                          return PDCardAddManualOrder(
-                            onTap: () {
-                              showBottomSheet(
-                                  context: context,
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(20),
-                                          topRight: Radius.circular(20))),
-                                  builder: (context) {
-                                    return SizedBox(
-                                      height: MediaQuery.of(context)
-                                              .size
-                                              .height -
-                                          MediaQuery.of(context).size.height *
-                                              0.25,
-                                      width: double.infinity,
-                                      child: Column(
-                                        children: [
-                                          Stack(
-                                            clipBehavior: Clip.none,
+                        SpacingHeight.heightlistspacing10,
+                        // const Text(
+                        //   "Category Name",
+                        //   style: UIDataTextStyles.h1,
+                        // ),
+                        // SpacingHeight.heightlistspacing10,
+                        ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: 20,
+                            itemBuilder: (context, index) {
+                              return PDCardAddManualOrder(
+                                onTap: () {
+                                  showBottomSheet(
+                                      context: context,
+                                      shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(20),
+                                              topRight: Radius.circular(20))),
+                                      builder: (context) {
+                                        return SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height -
+                                              MediaQuery.of(context).size.height *
+                                                  0.25,
+                                          width: double.infinity,
+                                          child: Column(
                                             children: [
-                                              SizedBox(
-                                                height: 250,
-                                                width: double.infinity,
-                                                child: Image.asset(
-                                                  UIDataImage.dummyImage,
-                                                  fit: BoxFit.cover,
-                                                ),
+                                              Stack(
+                                                clipBehavior: Clip.none,
+                                                children: [
+                                                  // SizedBox(
+                                                  //   height: 250,
+                                                  //   width: double.infinity,
+                                                  //   child: Image.asset(
+                                                  //     UIDataImage.dummyImage,
+                                                  //     fit: BoxFit.cover,
+                                                  //   ),
+                                                  // ),
+                                                  Positioned(
+                                                    left: 12,
+                                                    top: 12,
+                                                    child: RoundedCloseButton(
+                                                      onTap: () {
+                                                        Get.back();
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                              Positioned(
-                                                left: 12,
-                                                top: 12,
-                                                child: RoundedCloseButton(
-                                                  onTap: () {
-                                                    Get.back();
-                                                  },
-                                                ),
+                                              SingleChildScrollView(
+                                                child: Column(
+                                                  children: [
+                                                    //const ProductNameAndPriceOnSheet(),
+                                                    SpacingHeight
+                                                        .heightlistspacing5,
+                                                    // PriceOnSelection(onMinus: () {
+                                                    //   print("Minus");
+                                                    // }, onPlus: () {
+                                                    //   print("Plus");
+                                                    // }),
+                                                    ListView.builder(
+                                                      padding: EdgeInsets.zero,
+                                                      shrinkWrap: true,
+                                                      itemCount: 3,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        return CheckBoxModifier(
+                                                          modName: tr.translateData("small"),
+                                                          price: "230",
+                                                          isChecked: false,
+                                                        );
+                                                      },
+                                                    ),
+                                                    SpacingHeight
+                                                        .heightlistspacing10,
+                                                    SizedBox(
+                                                      height: MediaQuery.of(context)
+                                                              .size
+                                                              .height *
+                                                          0.03,
+                                                    ),
+                                                    const AddToBasketButton()
+                                                  ],
+                                                ).paddingOnly(
+                                                    left: 12, right: 12, top: 18),
                                               ),
                                             ],
                                           ),
-                                          SingleChildScrollView(
-                                            child: Column(
-                                              children: [
-                                                //const ProductNameAndPriceOnSheet(),
-                                                SpacingHeight
-                                                    .heightlistspacing5,
-                                                // PriceOnSelection(onMinus: () {
-                                                //   print("Minus");
-                                                // }, onPlus: () {
-                                                //   print("Plus");
-                                                // }),
-                                                ListView.builder(
-                                                  padding: EdgeInsets.zero,
-                                                  shrinkWrap: true,
-                                                  itemCount: 3,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return CheckBoxModifier(
-                                                      modName: "Small",
-                                                      price: "230",
-                                                      isChecked: false,
-                                                    );
-                                                  },
-                                                ),
-                                                SpacingHeight
-                                                    .heightlistspacing10,
-                                                SizedBox(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.03,
-                                                ),
-                                                const AddToBasketButton()
-                                              ],
-                                            ).paddingOnly(
-                                                left: 12, right: 12, top: 18),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  });
-                            },
-                          );
-                        })
-                  ],
-                ).marginOnly(left: 10, right: 10)),
-              );
-      },
+                                        );
+                                      });
+                                },
+                              );
+                            })
+                      ],
+                    ).marginOnly(left: 10, right: 10)),
+                  );
+          },
+        );
+      }
     );
   }
 

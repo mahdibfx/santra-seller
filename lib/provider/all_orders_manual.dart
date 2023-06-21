@@ -1,15 +1,11 @@
 import 'dart:convert';
-import "package:collection/collection.dart";
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
-import 'package:santra_seller/provider/cart_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/seller_all_products_model.dart';
 import '../../ui/widgets/dialogs/custom_dialogs.dart';
 import '../../utils/api_data.dart';
-import '../controllers/cart_controller/cart_controller.dart';
 
 class AddManualOrderProvider extends ChangeNotifier {
   late SelllerAllProductsModel selllerAllProductsModel;
@@ -46,6 +42,7 @@ class AddManualOrderProvider extends ChangeNotifier {
       product.productQuantity += 1;
     }
     notifyListeners();
+      productPriceWithQuantityAndMods(product);
   }
 
   void decreaseDefaultQuanity(Product product) {
@@ -53,16 +50,36 @@ class AddManualOrderProvider extends ChangeNotifier {
       product.productQuantity -= 1;
     }
     notifyListeners();
+    productPriceWithQuantityAndMods(product);
   }
 
   void resetDefaultQuanity(Product product) {
     product.productQuantity = 1;
     notifyListeners();
+      productPriceWithQuantityAndMods(product);
   }
 
   showAddIcon() {
     showAddButton = true;
     notifyListeners();
+  }
+
+ String productPriceWithQuantityAndMods(Product product){
+  // var product =  filteredProducts[index];
+    double modsPrc = 0; 
+    for(var e in product.modifiers! ){
+      for(var j in e.subModifiers!){
+        if(j.byDefault == '1'){
+modsPrc += double.parse(j.priceModifier.toString());
+        }
+
+      }
+
+    }
+    var proPrice = ( double.parse(product.productPrice.toString()) + modsPrc ) * product.productQuantity;
+    print(proPrice);
+    return proPrice.toString() ;
+
   }
 
   hideAddButton() {

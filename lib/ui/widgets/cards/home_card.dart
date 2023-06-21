@@ -37,7 +37,7 @@ class HomeCardWidget extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(15)),
                   color: Colors.white,
-                  border: Border.all(color:  isSantraCard ==  true && santraNewCount.toString() != '0' ? Color(0xffC32C4C) : Colors.blue)),
+                  border: Border.all(color:  isSantraCard ==  true && santraNewCount.toString() != '0' ? Color(0xffC32C4C) : Color(0xff0098B1))),
               child: Padding(
                 padding: const EdgeInsets.all(0.0),
                 child: Column(
@@ -62,7 +62,7 @@ class HomeCardWidget extends StatelessWidget {
                         // const Spacer(),
                         Text(
                           count,
-                          style: UIDataTextStyles.counth1.copyWith(fontSize: 18),
+                          style: UIDataTextStyles.counth1.copyWith(fontSize: 18, fontWeight: FontWeight.w600),
                         ),
                       ],
                     ).marginOnly(left: 10, right: 10, bottom: 0),

@@ -1,10 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:get/get_utils/get_utils.dart';
-import 'package:santra_seller/controllers/add_manual_order_controller.dart/add_manual_order_controller.dart';
 import 'package:santra_seller/provider/all_orders_manual.dart';
-
 import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';
 
@@ -61,10 +60,11 @@ class PDCardAddManualOrder extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        Text(Get.locale!.languageCode == 'en' ?
                           manualOrderController
                                   ?.filteredProducts[index!].productName ??
-                              "",
+                              "" : manualOrderController
+                                  ?.filteredProducts[index!].productNameArabic ??"",
                           style: UIDataTextStyles.h2,
                           overflow: TextOverflow.ellipsis,
                         ),

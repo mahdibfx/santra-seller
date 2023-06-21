@@ -30,5 +30,6 @@ class ApiData {
   static const cartApi = "${mainurl}cart_options";
   static const promoDiscountApi = "${mainurl}discount";
   static const forceUpdateApi = "${mainurl}force_update";
+  static const languageSelection = "${mainurl}seller_language";
   static const header = {Secret.api_key: Secret.client_secret};
 }

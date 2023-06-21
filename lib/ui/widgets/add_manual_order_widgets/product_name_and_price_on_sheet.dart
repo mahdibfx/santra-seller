@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/widgets/add_manual_order_widgets/price_on_selection.dart';
 
@@ -6,14 +7,19 @@ import '../../../models/seller_all_products_model.dart';
 import '../../../provider/all_orders_manual.dart';
 import '../../../utils/uidata/textStyles.dart';
 
-class ProductNameAndPriceOnSheet extends StatelessWidget {
-  String? productName;
-  String? productPrice;
+class ProductNameAndPriceOnSheet extends StatefulWidget {
+  // String? productName;
+  // String? productPrice;
   Product? product;
   ProductNameAndPriceOnSheet(
-      {Key? key, required this.productName, required this.productPrice, required this.product})
+      {Key? key, required this.product})
       : super(key: key);
 
+  @override
+  State<ProductNameAndPriceOnSheet> createState() => _ProductNameAndPriceOnSheetState();
+}
+
+class _ProductNameAndPriceOnSheetState extends State<ProductNameAndPriceOnSheet> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AddManualOrderProvider>(
@@ -29,15 +35,15 @@ class ProductNameAndPriceOnSheet extends StatelessWidget {
                 children: [
                   SizedBox(
                     // width: 250,
-                    child: Text(
-                      product!.productName ?? "",
+                    child: Text(Get.locale!.languageCode == 'en' ?
+                      widget.product!.productName ?? "" :widget.product!.productNameArabic ??"",
                       style:
                           UIDataTextStyles.h2.copyWith(fontWeight: FontWeight.w600),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   Text(
-                    "${product!.productPrice ?? ""} AED",
+                    "${widget.product!.productPrice ?? ""} AED",
                     style: UIDataTextStyles.h1Heavy,
                   ),
                 ],
@@ -49,10 +55,16 @@ class ProductNameAndPriceOnSheet extends StatelessWidget {
                   // width: 100,
                   child: PriceOnSelection(
                       onMinus: () {
-                        _.decreaseDefaultQuanity(product!);
+                        setState(() {
+                          
+                        });
+                        _.decreaseDefaultQuanity(widget.product!);
                       }, onPlus: () {
-                        _.increaseDefaultQuanity(product!);
-                      }, quantity: product!.productQuantity.toString())),
+                        setState(() {
+                          
+                        });
+                        _.increaseDefaultQuanity(widget.product!);
+                      }, quantity: widget.product!.productQuantity.toString())),
             )
           ],
         );

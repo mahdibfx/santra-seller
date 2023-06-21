@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:santra_seller/utils/uidata.dart';
 
+import '../../../../utils/app_translation/app_translation.dart';
+final tr = Get.put(AppTranslations());
 class PrimaryButtonWithIcon extends StatelessWidget {
   final String? btntxt;
+  final String? subBtntxt;
+  final String? moreBtntxt;
   final String? iconImage;
   final Color? buttontxtColor;
   final Gradient? gradient;
@@ -16,6 +21,8 @@ class PrimaryButtonWithIcon extends StatelessWidget {
 
   PrimaryButtonWithIcon({
     required this.btntxt,
+    this.subBtntxt,
+    this.moreBtntxt,
     this.iconImage,
     this.buttontxtColor = Colors.white,
     this.gradient,
@@ -65,11 +72,23 @@ class PrimaryButtonWithIcon extends StatelessWidget {
                     btntxt ?? "",
                     style: TextStyle(
                       fontSize: 16.0,
-                      fontFamily: 'Markpro',
+                      fontFamily: tr.getFont(),
                       fontWeight: FontWeight.bold,
                       color: buttontxtColor,
                     ),
                   ),
+                  subBtntxt == null? SizedBox(): Text(subBtntxt!,style: TextStyle(
+                      fontSize: 14.0,
+                      fontFamily: tr.getFont(),
+                      fontWeight: FontWeight.normal,
+                      color: buttontxtColor,
+                    ),).marginOnly(left: 10),
+                    moreBtntxt == null? SizedBox(): Text(moreBtntxt!,style: TextStyle(
+                      fontSize: 16.0,
+                      fontFamily: tr.getFont(),
+                      fontWeight: FontWeight.bold,
+                      color: buttontxtColor,
+                    ),),
                  iconImage != null ? SpacingWidth.widthlistspacing : Container(),
                   iconImage != null
                       ? SvgPicture.asset(

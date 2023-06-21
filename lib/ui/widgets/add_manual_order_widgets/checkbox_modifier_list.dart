@@ -3,10 +3,10 @@ import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';
 
 class CheckBoxModifier extends StatelessWidget {
-  String? modName;
-  String? price;
-  bool? isChecked;
-  CheckBoxModifier({Key? key, this.modName, this.price, this.isChecked})
+  final String? modName;
+  final String? price;
+  final bool? isChecked;
+  const CheckBoxModifier({Key? key, this.modName, this.price, this.isChecked})
       : super(key: key);
 
   @override

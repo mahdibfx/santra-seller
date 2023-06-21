@@ -1,137 +1,137 @@
-import 'package:santra_seller/controllers/settings_controller/change_password_controller.dart';
-import '../../../utils/routes/app_routes.dart';
+import 'package:provider/provider.dart';
+import 'package:santra_seller/provider/setting_provider/change_password_provider.dart';
+import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
+import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
-import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/textfields/common_textfield.dart';
 import '/utils/uidata.dart';
 import 'package:get/get.dart';
 
-class ChangePassword extends StatelessWidget {
+class ChangePassword extends StatefulWidget {
   ChangePassword({super.key});
+
+  @override
+  State<ChangePassword> createState() => _ChangePasswordState();
+}
+
+class _ChangePasswordState extends State<ChangePassword> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+
   Widget bodyData(context) {
-    return GetBuilder<ChangePasswordController>(
-      builder: (_) {
-        return SafeArea(
-          child: SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: Get.height / 1.1,
-              ),
-              child: Form(
-                key: _.form,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    HeadingWithIcon(
-                        icon: UIDATAIcons.lockIcon, btntxt: "Change Password"),
-                    CommonTextField(
-                      controller: _.currentPasswordController,
-                      labelText: "Current Password",
-                      fillcolor: UIDataColors.whiteColor,
-                      keyboardType: TextInputType.text,
-                      togglePassword: true,
-                      prefixIcon: UIDATAIcons.unlockIcon,
-                      toggleIcon: _.currentPasswordSecuretext == true
-                          ? UIDATAIcons.viewOffIcon
-                          : UIDATAIcons.viewIcon,
-                      toggleFunction: () {
-                        _.currentPasswordSecuretext =
-                            !_.currentPasswordSecuretext;
-                        _.update();
-                      },
-                      isTextHidden: _.currentPasswordSecuretext,
-                      validator: (val) {
-                        if (val.isEmpty) {
-                          return "please enter your current password";
-                        } else {
-                          return null;
-                        }
-                      },
-                    ),
-                    SpacingHeight.heightlistspacing5,
-                    CommonTextField(
-                      controller: _.newPasswordController,
-                      labelText: "New Password",
-                      isTextHidden: _.newPasswordSecuretext,
-                      fillcolor: UIDataColors.whiteColor,
-                      keyboardType: TextInputType.text,
-                      togglePassword: true,
-                      prefixIcon: UIDATAIcons.unlockIcon,
-                      toggleIcon: _.newPasswordSecuretext == true
-                          ? UIDATAIcons.viewOffIcon
-                          : UIDATAIcons.viewIcon,
-                      toggleFunction: () {
-                        _.newPasswordSecuretext = !_.newPasswordSecuretext;
-                        _.update();
-                      },
-                      validator: (val) {
-                        if (val.isEmpty) {
-                          return "please enter your new password";
-                        } else {
-                          return null;
-                        }
-                      },
-                    ),
-                    SpacingHeight.heightlistspacing5,
-                    CommonTextField(
-                      controller: _.confirmNewPasswordController,
-                      labelText: "Confirm New Password",
-                      isTextHidden: _.confirmPasswordSecuretext,
-                      fillcolor: UIDataColors.whiteColor,
-                      keyboardType: TextInputType.text,
-                      togglePassword: true,
-                      prefixIcon: UIDATAIcons.unlockIcon,
-                      toggleIcon: _.confirmPasswordSecuretext == true
-                          ? UIDATAIcons.viewOffIcon
-                          : UIDATAIcons.viewIcon,
-                      toggleFunction: () {
-                        _.confirmPasswordSecuretext =
-                            !_.confirmPasswordSecuretext;
-                        _.update();
-                      },
-                      validator: (val) {
-                        if (val.isEmpty) {
-                          return "please enter new password again";
-                        } else {
-                          return null;
-                        }
-                      },
-                    ),
-                    SpacingHeight.heightlistspacing10,
-                    Obx(() => _.isUpdatePassLoading.isTrue
+    return GetBuilder<AppTranslations>(
+      builder: (tr) {
+        return Consumer<ChangePasswordProvider>(
+          builder: (context, _, child) {
+            return SafeArea(
+              child: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: Get.height / 1.1,
+                  ),
+                  child: Form(
+                    key: _.form,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        HeadingWithIcon(
+                            icon: UIDATAIcons.lockIcon, btntxt: tr.translateData("change_password_title")),
+                        CommonTextField(
+                          textInputAction: TextInputAction.next,
+                          controller: _.currentPasswordController,
+                          labelText: tr.translateData("change_password_current"),
+                          fillcolor: UIDataColors.whiteColor,
+                          keyboardType: TextInputType.text,
+                          togglePassword: true,
+                          prefixIcon: UIDATAIcons.unlockIcon,
+                          toggleIcon: _.currentPasswordSecuretext == true
+                              ? UIDATAIcons.viewOffIcon
+                              : UIDATAIcons.viewIcon,
+                          toggleFunction: () {
+                            _.currentPasswordSecuretext =
+                                !_.currentPasswordSecuretext;
+                            setState(() {});
+                          },
+                          isTextHidden: _.currentPasswordSecuretext,
+                          validator: (val) {
+                            if (val.isEmpty) {
+                              return tr.translateData("enter_current_password");
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        SpacingHeight.heightlistspacing5,
+                        CommonTextField(
+                          textInputAction: TextInputAction.next,
+                          controller: _.newPasswordController,
+                          labelText: tr.translateData("change_password_new"),
+                          isTextHidden: _.newPasswordSecuretext,
+                          fillcolor: UIDataColors.whiteColor,
+                          keyboardType: TextInputType.text,
+                          togglePassword: true,
+                          prefixIcon: UIDATAIcons.unlockIcon,
+                          toggleIcon: _.newPasswordSecuretext == true
+                              ? UIDATAIcons.viewOffIcon
+                              : UIDATAIcons.viewIcon,
+                          toggleFunction: () {
+                            _.newPasswordSecuretext = !_.newPasswordSecuretext;
+                            setState(() {});
+                          },
+                          validator: (val) {
+                            if (val.isEmpty) {
+                              return tr.translateData("enter_password");
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        SpacingHeight.heightlistspacing5,
+                        CommonTextField(
+                          controller: _.confirmNewPasswordController,
+                          labelText: tr.translateData("change_password_new_confirm"),
+                          isTextHidden: _.confirmPasswordSecuretext,
+                          fillcolor: UIDataColors.whiteColor,
+                          keyboardType: TextInputType.text,
+                          togglePassword: true,
+                          prefixIcon: UIDATAIcons.unlockIcon,
+                          toggleIcon: _.confirmPasswordSecuretext == true
+                              ? UIDATAIcons.viewOffIcon
+                              : UIDATAIcons.viewIcon,
+                          toggleFunction: () {
+                            _.confirmPasswordSecuretext =
+                                !_.confirmPasswordSecuretext;
+                            setState(() {});
+                          },
+                          validator: (val) {
+                            if (val.isEmpty) {
+                              return tr.translateData("password_confirmation_error");
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        SpacingHeight.heightlistspacing10,
+                        _.isUpdatePassLoading
                             ? const Center(child: CircularProgressIndicator())
                             : PrimaryButtonWithIcon(
-                                btntxt: "Submit",
+                                btntxt: tr.translateData("change_password_save_button"),
                                 iconImage: UIDATAIcons.sendIcon,
                                 onPressed: () {
                                   _.updatePassword();
                                 },
                               )
-                        // RaisedGradientButton(
-                        //     gradient: const LinearGradient(
-                        //       colors: <Color>[
-                        //         Color(0xff006EB8),
-                        //         Color(0xff006EB8),
-                        //       ],
-                        //     ),
-                        //     btntxt: "Submit".tr,
-                        //     buttontxtColor: UIDataColors.whiteColor,
-                        //     onPressed: () {
-                        //       _.updatePassword();
-                        //     },
-                        //   ),
-                        ),
-                  ],
-                ).marginOnly(left: 20.0, right: 20.0),
+                      ],
+                    ).marginOnly(left: 20.0, right: 20.0),
+                  ),
+                ),
               ),
-            ),
-          ),
+            );
+          },
         );
-      },
+      }
     );
   }
 
@@ -151,7 +151,7 @@ class ChangePassword extends StatelessWidget {
       appTitle: '',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAllNamed(Routes.addManualOrder);
+        Get.offAll(() => const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

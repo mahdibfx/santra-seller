@@ -1,105 +1,125 @@
-import 'package:santra_seller/controllers/settings_controller/change_email_controller.dart';
-import 'package:santra_seller/controllers/settings_controller/delete_account_controller.dart';
-import 'package:santra_seller/controllers/settings_controller/language_settings_controller.dart';
+import 'package:provider/provider.dart';
+import 'package:santra_seller/provider/setting_provider/delete_account_provider.dart';
+import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
+import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
-import '../../../utils/routes/app_routes.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
-import '../../widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
-import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 import 'package:flutter/material.dart';
 import '/utils/uidata.dart';
 import 'package:get/get.dart';
 
-class DeleteAccount extends StatelessWidget {
+class DeleteAccount extends StatefulWidget {
   DeleteAccount({super.key});
+
+  @override
+  State<DeleteAccount> createState() => _DeleteAccountState();
+}
+
+class _DeleteAccountState extends State<DeleteAccount> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<DeleteAccountProvider>(context, listen: false)
+          .deleteAccountonInit();
+    });
+  }
+
   Widget bodyData(context) {
-    return GetBuilder<DeleteAccountController>(
-      builder: (_) {
-        return SafeArea(
-          child: SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: Get.height / 1.1,
-              ),
-              child: Form(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    HeadingWithIcon(
-                        icon: UIDATAIcons.deleteIcon, btntxt: "Delete Account"),
-                    const Text(
-                      "Can you please share to us what was not working? We are fixing bugs as soon as we spot them. if somthing slipped though our fingers, we'd be so grateful to be aware of it and fix it.",
-                      style: UIDataTextStyles.title,
-                    ),
-                    SpacingHeight.heightlistspacing15,
-                    CommonTextField(
-                      maxlines: 5,
-                      isTextHidden: false,
-                      fillcolor: Colors.white,
-                      keyboardType: TextInputType.phone,
-                      hintText: "Your explanation is entirely optional",
-                    ),
-                    Form(
-                        key: _.formDeleteAccScreen1,
-                        child: CommonTextField(
-                          controller: _.phoneController,
+    return GetBuilder<AppTranslations>(
+      builder: (tr)  {
+        return Consumer<DeleteAccountProvider>(
+          builder: (context, _, child) {
+            return SafeArea(
+              child: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: Get.height / 1.1,
+                  ),
+                  child: Form(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        HeadingWithIcon(
+                            icon: UIDATAIcons.deleteIcon, btntxt: tr.translateData("delete_account_title")),
+                         Text(
+                          tr.translateData("delete_account_reason"),
+                          style: UIDataTextStyles.title,
+                        ),
+                        SpacingHeight.heightlistspacing15,
+                        CommonTextField(
+                          maxlines: 5,
                           isTextHidden: false,
                           fillcolor: Colors.white,
                           keyboardType: TextInputType.phone,
-                          labelText: "Your Mobile Number",
-                          inputFormatters: [_.phoneMask],
-                          hintText: "Ex: 501234567",
-                          maxLength: 12,
-                          onChanged: (val) {
-                            String? check0;
-
-                            if (val.isNotEmpty && val.length > 3) {
-                              check0 = val.substring(0, 4);
-                              if (check0 == "9710") {
-                                _.phoneController.clear();
-                              }
-                            }
-                          },
-                          validator: (val) {
-                            String? name;
-                            if (val.isEmpty || val.length < 12) {
-                              return "Please Enter Valid Phone Number";
-                            } else if (val.isNotEmpty && val.length > 3) {
-                              name = val.substring(0, 3);
-
-                              if (name != "971") {
-                                return "Phone Number Must Start With 971";
-                              }
-                            } else {
-                              return null;
-                            }
-                          },
-                        )),
-                    SpacingHeight.heightlistspacing5,
-                    _.isOtpLoading
-                        ? Center(child: CircularProgressIndicator())
-                        : BorderButton(
-                            btntxt: "Continue",
-                            backEndColor: Colors.white,
-                            borderColor: UIDataColors.secondaryColor,
-                            buttontxtColor: UIDataColors.secondaryColor,
-                            onPressed: () {
-                              _.getOtp();
-                              // Get.toNamed(Routes.deleteAccountConfirmation);
-                            },
-                          ),
-                    SpacingHeight.heightlistspacing15,
-                  ],
-                ).marginOnly(left: 20.0, right: 20.0),
+                          hintText: tr.translateData("delete_account_reason_field"),
+                        ),
+                        Form(
+                            key: _.formDeleteAccScreen1,
+                            child: IgnorePointer(
+                              ignoring: true,
+                              child: CommonTextField(
+                                controller: _.phoneController,
+                                isTextHidden: false,
+                                fillcolor: Colors.white,
+                                keyboardType: TextInputType.phone,
+                                labelText: tr.translateData("delete_account_number"),
+                                inputFormatters: [_.phoneMask],
+                                hintText: "501234567",
+                                maxLength: 12,
+                                onChanged: (val) {
+                                  String? check0;
+    
+                                  if (val.isNotEmpty && val.length > 3) {
+                                    check0 = val.substring(0, 4);
+                                    if (check0 == "9710") {
+                                      _.phoneController.clear();
+                                    }
+                                  }
+                                },
+                                validator: (val) {
+                                  String? name;
+                                  if (val.isEmpty || val.length < 12) {
+                                    return tr.translateData("valid_phone");
+                                  } else if (val.isNotEmpty && val.length > 3) {
+                                    name = val.substring(0, 3);
+    
+                                    if (name != "971") {
+                                      return tr.translateData("valid_phone_971");
+                                    }
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                              ),
+                            )),
+                        SpacingHeight.heightlistspacing5,
+                        _.isOtpLoading
+                            ? const Center(child: CircularProgressIndicator())
+                            : BorderButton(
+                                btntxt: tr.translateData("delete_account_continue_button"),
+                                backEndColor: Colors.white,
+                                borderColor: UIDataColors.secondaryColor,
+                                buttontxtColor: UIDataColors.secondaryColor,
+                                onPressed: () {
+                                  _.getOtp();
+                                  // Get.toNamed(Routes.deleteAccountConfirmation);
+                                },
+                              ),
+                        SpacingHeight.heightlistspacing15,
+                      ],
+                    ).marginOnly(left: 20.0, right: 20.0),
+                  ),
+                ),
               ),
-            ),
-          ),
+            );
+          },
         );
-      },
+      }
     );
   }
 
@@ -119,7 +139,7 @@ class DeleteAccount extends StatelessWidget {
       appTitle: '',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
-        Get.offAllNamed(Routes.addManualOrder);
+        Get.offAll(() => const AddManulOrder());
       },
       floatingIcon: Icons.add,
       elevation: 0.0,

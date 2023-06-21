@@ -5,23 +5,30 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:santra_seller/provider/apps_flyr/appflyer_provider.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../models/customers/delivery_charges.dart';
 import '../../models/customers/view_all_customers.dart';
 import '../../models/seller_all_products_model.dart';
 import '../../models/voucher_model.dart';
 import '../../utils/api_data.dart';
-import '../../utils/routes/app_routes.dart';
+import '../ui/screens/order_detail/all_order_screen.dart';
+import '../utils/app_translation/app_translation.dart';
+  AppFlyerController appFlyerController = Get.put(AppFlyerController());
 
 class CartProvider extends ChangeNotifier {
-  bool isLoading = false;
+  // final BuildContext context;
 
+  // CartProvider(this.context);
+
+
+  bool isLoading = false;
   bool isShowCartButton = false;
   bool receiptPaymentType = true;
-  List<CartItem> cartItems = <CartItem>[].obs;
+  List<CartItem> cartItems = <CartItem>[];
+  double deliverChargeForBackend = 0.0;
 
   double deliveryCharges = 0.0;
   double codCharges = 0.0;
@@ -36,6 +43,8 @@ class CartProvider extends ChangeNotifier {
   bool isDiscountLoading = false;
   String? voucherAppliedMsg;
   String? voucherListVoucherCode;
+  double deliveryChargesCap = 0.0;
+  double deliveryChargesReal = 0.0;
   List<DateTime?> dates = [];
   bool equalLists = true;
   bool checkMods = false;
@@ -53,7 +62,8 @@ class CartProvider extends ChangeNotifier {
     isShowCartButton = false;
     receiptPaymentType = true;
     cartItems.clear();
-
+    deliveryChargesCap = 0.0;
+    deliveryChargesReal = 0.0;
     codCharges = 0.0;
     discount = 0.0;
     discountType = null;
@@ -102,13 +112,17 @@ class CartProvider extends ChangeNotifier {
 
   double get deliveryFee {
     double dFee = 0.0;
-    // if (preGrandTotal < deliveryChargesCap) {
-    //   dFee = deliveryChargesReal;
-    // } else {
-    //   dFee = deliveryCharges;
-    // }
-    dFee = deliveryCharges;
-    print("DELIVERY FEE$dFee");
+    if (preGrandTotal < deliveryChargesCap) {
+      dFee = deliveryChargesReal;
+      deliverChargeForBackend = dFee;
+ 
+    } else {
+      dFee = deliveryCharges;
+      deliverChargeForBackend = dFee;
+     
+    }
+
+
     return dFee;
   }
 
@@ -118,7 +132,7 @@ class CartProvider extends ChangeNotifier {
     //   codCharges = 0.0;
     // }
     preAmount = totalPrice - dis + codCharges;
-    print("PRE GRAND$preAmount");
+
     return preAmount;
   }
 
@@ -146,12 +160,10 @@ class CartProvider extends ChangeNotifier {
 
     cartItems.fold(subAmount, (prevValue, element) {
       double modifierAmount = 0;
-      if (element.subModifiers != null) {
-        for (var j in element.subModifiers) {
-          modifierAmount =
-              (double.parse(j.priceModifier.toString()) * element.quantity) +
-                  modifierAmount;
-        }
+      for (var j in element.subModifiers) {
+        modifierAmount =
+            (double.parse(j.priceModifier.toString()) * element.quantity) +
+                modifierAmount;
       }
 
       subAmount += (double.parse(element.price.toString()) * element.quantity) +
@@ -192,6 +204,7 @@ class CartProvider extends ChangeNotifier {
   }
 
   Future cartScreenData() async {
+    var tr = Get.put(AppTranslations());
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? sellerCode = prefs.getString("sellercode");
@@ -207,6 +220,10 @@ class CartProvider extends ChangeNotifier {
         var voucherL = data['data'][0]['vouchers'] as List<dynamic>;
         deliveryCharges =
             double.parse(data['data'][0]['delivery_charges'].toString());
+        deliveryChargesCap =
+            double.parse(data['data'][0]['delivery_charges_cap'].toString());
+        deliveryChargesReal =
+            double.parse(data['data'][0]['delivery_charges_real'].toString());
         codCharges = double.parse(data['data'][0]['cash_charges'].toString());
         var vList = voucherL.map((e) => VoucherModel.fromJson(e)).toList();
         vouchersList = vList;
@@ -214,13 +231,15 @@ class CartProvider extends ChangeNotifier {
         generalException();
       }
     } catch (e) {
-      exceptionDialog("Oops", "Something went wrong");
+      exceptionDialog(tr.translateData("oops_message"), tr.translateData("went_wrong"));
     }
     changeCartLoadingState(false);
+    notifyListeners();
   }
 
   /// *************************PROMO DISCOUNT API*******************************/
   Future promoDiscount() async {
+    var tr = Get.put(AppTranslations());
     try {
       changeDiscountLoadingState(true);
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -246,6 +265,7 @@ class CartProvider extends ChangeNotifier {
         voucherListVoucherCode = null;
         activeOffers.clear();
         promoValid = true;
+        appFlyerController.voucherCodeEvent(voucherCode.toString());
       } else {
         changeDiscountLoadingState(false);
         discount = 0.0;
@@ -254,14 +274,14 @@ class CartProvider extends ChangeNotifier {
         var data = jsonDecode(response.body);
         String msg = data['data']['message'].toString();
 
-        exceptionDialog("Oops", msg);
+        exceptionDialog(tr.translateData("oops_message"), msg);
       }
     } catch (e) {
       if (kDebugMode) {
         print(e);
       }
 
-      Get.snackbar("Oops", "An unknown error occured");
+      // Get.snackbar(tr.translateData("oops_message"), tr.translateData("went_wrong"));
     }
     changeDiscountLoadingState(false);
     notifyListeners();
@@ -303,7 +323,6 @@ class CartProvider extends ChangeNotifier {
             cartItem.code == item.code &&
             cartItem.subModifiers.length == item.subModifiers.length)
         .toList();
-    List listOfAdd = [];
 
     List<SubModifier> matchArray = item.subModifiers;
     notifyListeners();
@@ -405,6 +424,11 @@ class CartProvider extends ChangeNotifier {
     );
   }
 
+  String delivery(){
+    print(deliveryFee);
+    return deliveryFee.toString();
+  }
+
   addItemForCustomerCart(DeliveryChargesModel data, Customer customerDetail,
       String? sellerCode, bool receiptPaymentMethord) async {
     receiptPaymentType = receiptPaymentMethord;
@@ -414,8 +438,7 @@ class CartProvider extends ChangeNotifier {
           customerDetail.customerName, // This is the name of the customer
       "coupn_code": "0", // coupon code if any other wise send 0
       "sub_total": "$totalPrice", // This is the subtotal amount
-      "total_delivery_charges":
-          data.data?.first.deliveryCharges, //this is the delivery charges
+      "total_delivery_charges":delivery(), //this is the delivery charges
       "total_discount":
           dis.toString(), //this is the discount if any otherwise send 0
       "d_reason": voucherListVoucherCode ??
@@ -458,9 +481,12 @@ class CartProvider extends ChangeNotifier {
   }
 
   Future orderSubmit() async {
+    // var tr = Get.put(AppTranslations());
+    // var homePro = Provider.of<HomeProvider>(context, listen: false);
     try {
       changeLoadingStatus(true);
       var url = Uri.parse(ApiData.orderSubmitCash);
+      print(finalSubmitData.toString());
       var response =
           await http.post(url, headers: ApiData.header, body: finalSubmitData);
       if (response.statusCode == 200) {
@@ -473,15 +499,16 @@ class CartProvider extends ChangeNotifier {
         //     selllerAllProductsModelFromJson(response.body);
         // notifyListeners();
         //        Get.offAllNamed(Routes.homeRoutes);
+        // homePro.homeDataCall();
         Get.offAll(() => const HomeScreen());
-        showToast("Success", 'Order Placed Successfully');
+        // showToast(tr.translateData("success_message"), tr.translateData('order_placed_success'));
         flushCart();
       } else {
-        showToast("Failed", 'Unable to proceed');
+        // showToast(tr.translateData("failed_message"), tr.translateData('went_wrong'));
         // hasError = true;
       }
     } catch (e) {
-      showToast("Failed", 'Try again later, Unable to proceed');
+      // showToast(tr.translateData("oops_message"), tr.translateData('error_load_data'));
       // generalException();
       // hasError = true;
     }

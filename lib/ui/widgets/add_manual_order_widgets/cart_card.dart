@@ -1,20 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:santra_seller/controllers/cart_controller/cart_controller.dart';
 import 'package:santra_seller/ui/widgets/add_manual_order_widgets/price_on_selection.dart';
 import 'package:santra_seller/utils/uidata.dart';
-import '../../../models/seller_all_products_model.dart';
 import '../../../provider/cart_provider.dart';
 import '../../../utils/uidata/textStyles.dart';
 
 class CartCardOrder extends StatelessWidget {
-  List<CartItem>? allProducts;
-  int? index;
+  final List<CartItem>? allProducts;
+  final int? index;
   final void Function()? onDecrese;
   final void Function()? onIncrese;
-  String quantity;
-  CartCardOrder(
+  final String quantity;
+  const CartCardOrder(
       {Key? key,
       required this.onDecrese,
       required this.onIncrese,
@@ -43,7 +41,6 @@ class CartCardOrder extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 65,
               child: Row(
                 children: [
                   SizedBox(
@@ -68,17 +65,14 @@ class CartCardOrder extends StatelessWidget {
                   Expanded(
                     child: SizedBox(
                       child: Column(
-                        // mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            width: 100,
                             child: Text(
                               allProducts?[index!].name ?? "",
                               style: UIDataTextStyles.textMedium
                                   .copyWith(fontSize: 14),
-                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                           Text(
@@ -89,22 +83,24 @@ class CartCardOrder extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 50,
-                    width: 130,
-                    child: PriceOnSelection(
-                      onMinus: onDecrese,
-                      onPlus: onIncrese,
-                      quantity: quantity,
-                    ),
-                  ),
+                  Expanded(
+                    child: SizedBox(
+                      child: PriceOnSelection(
+                        onMinus: onDecrese,
+                        onPlus: onIncrese,
+                        quantity: quantity,
+                      ),
+                    ).paddingOnly(right: 12),
+                  )
                 ],
               ),
             ),
-            const Divider(
-              height: 30,
-            ),
+            if (allProducts![index!].subModifiers.isNotEmpty)
+              const Divider(
+                height: 30,
+              ),
             SingleChildScrollView(
+                padding: const EdgeInsets.all(0),
                 scrollDirection: Axis.horizontal,
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,

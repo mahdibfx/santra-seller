@@ -32,6 +32,7 @@ class CommonTextField extends StatelessWidget {
   final onChanged;
   final List<TextInputFormatter>? inputFormatters;
   final FocusNode? focus;
+  final TextInputAction? textInputAction;
 
   CommonTextField(
       {this.controller,
@@ -57,6 +58,7 @@ class CommonTextField extends StatelessWidget {
       this.inputFormatters,
       this.prefixIconTap,
       this.fieldHeading,
+      this.textInputAction,
       this.focus});
 
   @override
@@ -67,11 +69,11 @@ class CommonTextField extends StatelessWidget {
         fieldHeading == null ? const SizedBox() : Text(fieldHeading ?? ''),
         SpacingHeight.heightlistspacing5,
         TextFormField(
-          style: const TextStyle(
+          style:  TextStyle(
               color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 15,
               fontWeight: FontWeight.w400,
-              fontFamily: 'Markpro',
+              fontFamily: tr.getFont(),
               letterSpacing: 0.0),
           onChanged: onChanged,
           inputFormatters: inputFormatters,
@@ -82,7 +84,7 @@ class CommonTextField extends StatelessWidget {
           focusNode: focus != null ? focus : null,
           keyboardType:
               keyboardType == null ? TextInputType.text : keyboardType,
-          textInputAction: TextInputAction.done,
+          textInputAction: textInputAction?? TextInputAction.done,
           maxLines: maxlines,
           initialValue: initVal,
           decoration: InputDecoration(
@@ -129,11 +131,11 @@ class CommonTextField extends StatelessWidget {
             hintText: hintText,
             fillColor: fillcolor ?? const Color(0xff757575).withOpacity(0.7),
             filled: true,
-            hintStyle: const TextStyle(
+            hintStyle:  TextStyle(
                 color: Color.fromARGB(255, 0, 0, 0),
                 fontSize: 15,
                 fontWeight: FontWeight.w400,
-                fontFamily: 'Markpro',
+                fontFamily: tr.getFont(),
                 letterSpacing: 0.0),
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 11.0, horizontal: 18.0),
