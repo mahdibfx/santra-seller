@@ -48,6 +48,7 @@ class CartProvider extends ChangeNotifier {
   List<DateTime?> dates = [];
   bool equalLists = true;
   bool checkMods = false;
+  int toggleValue = 0;
   var deliveryDate;
   setDeliveryDate() {
     if (dates.isNotEmpty) {
@@ -463,7 +464,7 @@ class CartProvider extends ChangeNotifier {
 // Order Item array to be posted as follows
 // Field name: "", order_items and items in this array are as follows(id, name, price, quantity, item_remarks, modifiers_list(modifier_code,name_modifier,price_modifier))
       "order_items": jsonEncode(cartItems),
-
+"delivery_type": toggleValue == 0 ?  "Delivery" : "Pickup",
       // [
       //   {
       //     "id": "",
