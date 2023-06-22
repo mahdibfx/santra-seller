@@ -359,6 +359,8 @@ class MyCustomerProvider extends ChangeNotifier {
 // Order Item array to be posted as follows
 // Field name: "", order_items and items in this array are as follows(id, name, price, quantity, item_remarks, modifiers_list(modifier_code,name_modifier,price_modifier))
       "order_items": jsonEncode(cartProvider.cartItems),
+      "delivery_type": cartProvider.toggleValue == 0 ?  "Delivery" : "Pickup",
+
     };
     print(finalSubmitData);
     return await orderSubmitByLink(context);

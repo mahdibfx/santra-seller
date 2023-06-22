@@ -31,7 +31,7 @@ class AppTranslations extends GetxController  {
     
   }
   setShared(String lang)async{
- SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("selectedlanguage",lang);
   }
 
