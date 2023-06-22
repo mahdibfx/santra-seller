@@ -196,7 +196,7 @@ class _CustomCardState extends State<CustomCard>
                                   )),
                                 ],
                               ).marginOnly(left: 10, right: 10, top: 5, bottom: 5),
-                                                       !widget.orderType.contains(tr.translateData("delivery")) ?
+                                                       !widget.orderType.contains("delivery") ?
 
                               Row(
                                 children: [
