@@ -222,7 +222,7 @@ class _CustomCardState extends State<CustomCard>
                                         color: UIDataColors.primaryColor,
                                       ),
                                       SpacingWidth.widthlistspacing,
-                                      Text('${widget.orderType}'),
+                                      Text(tr.translateData("pickup")),
                                     ],
                                   )),
                                 ],

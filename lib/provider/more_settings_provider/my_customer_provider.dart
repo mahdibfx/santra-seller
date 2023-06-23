@@ -33,8 +33,8 @@ class MyCustomerProvider extends ChangeNotifier {
   List<Customer>? allFilterCustomers = [];
   bool isAddCustomerLoading = false;
   bool isUpdateCustomerLoading = false;
-  bool receiptPaymentMethord = true;
-  bool onlinePayment = false;
+  bool receiptPaymentMethord = false;
+  bool onlinePayment = true;
   dynamic finalSubmitData;
   String? cidForUpdate;
   bool popupPaymentlink = false;
@@ -69,8 +69,8 @@ class MyCustomerProvider extends ChangeNotifier {
   }
 
   void disposeValues() {
-    receiptPaymentMethord = true;
-    onlinePayment = false;
+    receiptPaymentMethord = false;
+    onlinePayment = true;
     city = "Dubai";
     phoneCon = null;
     fnController.clear();

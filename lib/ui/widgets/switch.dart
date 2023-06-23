@@ -25,18 +25,18 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-                                          borderRadius:  BorderRadius.all(
-                                              Radius.circular(Get.width * 0.1)),
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.black.withOpacity(0.08),
-                                              spreadRadius: 1,
-                                              blurRadius: 10,
-                                              offset: const Offset(0,
-                                                  0), // changes position of shadow
-                                            ),
-                                          ]),
+        borderRadius:  BorderRadius.all(
+            Radius.circular(Get.width * 0.1)),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            spreadRadius: 1,
+            blurRadius: 10,
+            offset: const Offset(0,
+                0), // changes position of shadow
+          ),
+        ]),
       width: Get.width,
       height: Get.width * 0.13,
       margin: EdgeInsets.only(top:10, left: 0, right: 0, bottom: 20),
@@ -50,7 +50,7 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
                 index = 1;
               }
               widget.onToggleCallback(index);
-              setState(() {});
+              // setState(() {});
             },
             child: Container(
               width: Get.width ,
@@ -85,7 +85,7 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
             duration: const Duration(milliseconds: 250),
             curve: Curves.decelerate,
             alignment:
-                initialPosition ? Alignment.centerLeft : Alignment.centerRight,
+             Get.locale!.languageCode == "en"  ? (initialPosition ? Alignment.centerLeft : Alignment.centerRight) : (initialPosition ?Alignment.centerRight : Alignment.centerLeft),
             child: Container(
               width: Get.width * 0.4,
               height: Get.width * 0.13,

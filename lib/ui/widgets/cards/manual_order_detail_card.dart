@@ -221,7 +221,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                         color: UIDataColors.primaryColor,
                                       ),
                                       SpacingWidth.widthlistspacing,
-                                      Text('${widget.orderType}'),
+                                      Text(tr.translateData("pickup")),
                                     ],
                                   )),
                                 ],

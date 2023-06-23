@@ -119,6 +119,7 @@ HeadingWithIcon(
                                         btntxt: tr.translateData("choose_delivery_method")),
                                     AnimatedToggle(
               values: [tr.translateData("delivery"), tr.translateData("pickup")],
+                // values: ["delivery", "pickup"],
               onToggleCallback: (value) {
                 setState(() {
                   _.toggleValue = value;
