@@ -125,6 +125,7 @@ HeadingWithIcon(
                   _.toggleValue = value;
                 });
               },
+              initialPosition: _.toggleValue == 0,
               buttonColor: UIDataColors.primaryColor,
               backgroundColor: const Color(0xFFFFFFFF),
               textColor: const Color(0xFFFFFFFF),

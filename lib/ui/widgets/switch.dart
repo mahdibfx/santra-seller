@@ -7,10 +7,12 @@ class AnimatedToggle extends StatefulWidget {
   final Color backgroundColor;
   final Color buttonColor;
   final Color textColor;
+  bool initialPosition;
 
   AnimatedToggle({
     required this.values,
     required this.onToggleCallback,
+    required this.initialPosition,
     this.backgroundColor = const Color(0xFFe7e7e8),
     this.buttonColor = const Color(0xFFFFFFFF),
     this.textColor = const Color(0xFF000000),
@@ -20,7 +22,6 @@ class AnimatedToggle extends StatefulWidget {
 }
 
 class _AnimatedToggleState extends State<AnimatedToggle> {
-  bool initialPosition = true;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,9 +45,9 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
         children: <Widget>[
           GestureDetector(
             onTap: () {
-              initialPosition = !initialPosition;
+              widget.initialPosition = !widget.initialPosition;
               var index = 0;
-              if (!initialPosition) {
+              if (!widget.initialPosition) {
                 index = 1;
               }
               widget.onToggleCallback(index);
@@ -85,7 +86,7 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
             duration: const Duration(milliseconds: 250),
             curve: Curves.decelerate,
             alignment:
-             Get.locale!.languageCode == "en"  ? (initialPosition ? Alignment.centerLeft : Alignment.centerRight) : (initialPosition ?Alignment.centerRight : Alignment.centerLeft),
+             Get.locale!.languageCode == "en"  ? (widget.initialPosition ? Alignment.centerLeft : Alignment.centerRight) : (widget.initialPosition ?Alignment.centerRight : Alignment.centerLeft),
             child: Container(
               width: Get.width * 0.4,
               height: Get.width * 0.13,
@@ -96,7 +97,7 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
                 ),
               ),
               child: Text(
-                initialPosition ? widget.values[0] : widget.values[1],
+                widget.initialPosition ? widget.values[0] : widget.values[1],
                 style: TextStyle(
                   fontFamily: 'Rubik',
                   fontSize: Get.width * 0.045,
