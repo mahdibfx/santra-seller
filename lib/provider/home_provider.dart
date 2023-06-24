@@ -246,15 +246,17 @@ class HomeProvider extends ChangeNotifier {
       var url = Uri.parse("${ApiData.mainurl}accept_order");
       Map<String, dynamic> body = {};
       body['seller_code'] = prefs.getString("sellercode");
-      body['order_number'] = orderNumber.toString();
+      body['order_number'] = orderNumber;
       var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
+                CommonSnackbar.getSnackbar(
+          
+            tr.translateData("status_accepted"), tr.translateData("order_accepted_msg"), UIDataColors.primaryColor);
+            
         appFlyerController.orderConfirmedEvent(orderPrice, orderType);
         notifyListeners();
         // Get.snackbar("Accepted", "Order has been accepted");
-        CommonSnackbar.getSnackbar(
-          
-            tr.translateData("status_accepted"), tr.translateData("order_accepted_msg"), UIDataColors.primaryColor);
+
         // Get.offAllNamed(Routes.homeRoutes);
         Get.offAll(() => const HomeScreen());
       } else {
