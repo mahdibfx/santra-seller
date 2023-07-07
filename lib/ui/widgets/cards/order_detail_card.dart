@@ -23,11 +23,13 @@ class CustomCard extends StatefulWidget {
   final String orderNumber;
   final String totalPrice;
   final String orderStatus;
+  final String customerPhone;
   final String paymentLink;
    String orderType;   // manual order , santra order etc
   List<OrderItem> orderItemList;
 
   CustomCard({
+    required this.customerPhone,
     required this.title,
     required this.orderRemarks,
     required this.orderTime,
@@ -193,7 +195,40 @@ class _CustomCardState extends State<CustomCard>
                                     ],
                                   )),
                                 ],
-                              ).marginOnly(left: 10, right: 10, top: 5, bottom: 10),
+                              ).marginOnly(left: 10, right: 10, top: 5, bottom: 5),
+                             !widget.orderType.contains("Delivery") ?
+
+                              Row(
+                                children: [
+                                  Container(
+                                      child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        height: 16,
+                                        UIDATAIcons.callIcon,
+                                        color: UIDataColors.primaryColor,
+                                      ),
+                                      SpacingWidth.widthlistspacing,
+                                      Text('${widget.customerPhone}'),
+                                    ],
+                                  )),
+                                  const Spacer(),
+                                  Container(
+                                      child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        height: 16,
+                                        UIDATAIcons.orderBascketBorder,
+                                        color: UIDataColors.primaryColor,
+                                      ),
+                                      SpacingWidth.widthlistspacing,
+                                      Text(tr.translateData("pickup")),
+                                    ],
+                                  )),
+                                ],
+                              ).marginOnly(left: 10, right: 10, top: 5, bottom: 10)
+                              :
+                              Container().marginOnly(bottom: 5)
                             ],
                           ),
                         ),

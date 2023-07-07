@@ -12,6 +12,7 @@ import '../../../provider/apps_flyr/appflyer_provider.dart';
 import '../../widgets/add_manual_order_widgets/cart_card.dart';
 import '../../widgets/add_manual_order_widgets/cart_payment_des.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
+import '../../widgets/switch.dart';
 import '../add_manual_order/add_manual_order.dart';
 
 class CartScreen extends StatefulWidget {
@@ -113,6 +114,22 @@ class _CartScreenState extends State<CartScreen> {
                                           ))
                                         : VouchersSection(),
                                     SpacingHeight.heightlistspacing20,
+HeadingWithIcon(
+                                        icon: UIDATAIcons.deliveryIcon,
+                                        btntxt: tr.translateData("choose_delivery_method")),
+                                    AnimatedToggle(
+              values: [tr.translateData("delivery"), tr.translateData("pickup")],
+                // values: ["delivery", "pickup"],
+              onToggleCallback: (value) {
+                setState(() {
+                  _.toggleValue = value;
+                });
+              },
+              initialPosition: _.toggleValue == 0,
+              buttonColor: UIDataColors.primaryColor,
+              backgroundColor: const Color(0xFFFFFFFF),
+              textColor: const Color(0xFFFFFFFF),
+            ),
                                     Container(
                                       decoration: BoxDecoration(
                                           borderRadius: const BorderRadius.all(

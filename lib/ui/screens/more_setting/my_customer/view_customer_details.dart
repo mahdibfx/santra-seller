@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
+import 'package:santra_seller/provider/cart_provider.dart' as cart;
 import 'package:santra_seller/ui/widgets/scaffold/common_scaffold.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import 'package:santra_seller/utils/uidata.dart';
@@ -42,7 +43,7 @@ class _ViewCustomerDetailsState extends State<ViewCustomerDetails> {
   }
 
   Widget bodyData(BuildContext context) {
-
+ var cartProvider = Provider.of<cart.CartProvider>(context, listen: false);
     return Consumer<MyCustomerProvider>(builder: (context, _, child) {
       return
           // _.isViewCustomerLoading
@@ -97,6 +98,9 @@ class _ViewCustomerDetailsState extends State<ViewCustomerDetails> {
                           },
                         ),
                       ),
+
+                      cartProvider.toggleValue == 1 ? Container() :
+                      
 
                       SizedBox(
                         height: 35,

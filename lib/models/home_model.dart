@@ -94,6 +94,7 @@ class ManualOrder {
 class Order {
   Order({
     required this.orderNumber,
+    required this.customerPhone,
     required this.orderStatus,
     required this.customerName,
     required this.totalOrderAmount,
@@ -101,6 +102,7 @@ class Order {
     required this.paymentMethod,
     required this.advanceTime,
     required this.orderRemarks,
+    required this.orderType,
     required this.orderItems,
     required this.paymentLink,
     required this.colorCode,
@@ -112,8 +114,10 @@ class Order {
   String totalOrderAmount;
   DateTime orderDateStamp;
   String paymentMethod;
+  String customerPhone;
   String advanceTime;
   String orderRemarks;
+  String orderType;
   String paymentLink;
   String colorCode;
   List<OrderItem> orderItems;
@@ -127,6 +131,8 @@ class Order {
         paymentMethod: json["payment_method"],
         advanceTime: json["advance_time"],
         orderRemarks: json["order_remarks"],
+        orderType: json["order_type"],
+        customerPhone: json['customer_phone'],
         paymentLink: json["payment_link"],
         colorCode: json["color_code"],
         orderItems: List<OrderItem>.from(
@@ -140,6 +146,8 @@ class Order {
         "total_order_amount": totalOrderAmount,
         "order_date_stamp": orderDateStamp.toIso8601String(),
         "payment_method": paymentMethod,
+         "order_type":  orderType,
+         'customer_phone':  customerPhone,
         "advance_time": advanceTime,
         "order_remarks": orderRemarks,
         "order_items": List<dynamic>.from(orderItems.map((x) => x.toJson())),

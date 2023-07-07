@@ -21,18 +21,21 @@ class ManualOrderCard extends StatefulWidget {
   final String deliveryTime;
   final String paymentMethod;
   final String colorCode;
-
+  final String orderType;
   final String orderNumber;
   final String totalPrice;
-
+  final String customerPhone;
   List<OrderItem> orderItemList;
 
   ManualOrderCard({
+    required this.customerPhone,
+    required this.orderType,
     required this.orderStatus,
     required this.orderTime,
     required this.deliveryTime,
     required this.customerName,
     required this.paymentMethod,
+    
     required this.orderNumber,
     required this.orderItemList,
     required this.totalPrice,
@@ -191,7 +194,40 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                     ],
                                   )),
                                 ],
-                              ).marginOnly(left: 10, right: 10, top: 5, bottom: 10),
+                              ).marginOnly(left: 10, right: 10, top: 5, bottom: 5),
+                             !widget.orderType.contains("Delivery") ?
+
+                              Row(
+                                children: [
+                                  Container(
+                                      child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        height: 16,
+                                        UIDATAIcons.callIcon,
+                                        color: UIDataColors.primaryColor,
+                                      ),
+                                      SpacingWidth.widthlistspacing,
+                                      Text('${widget.customerPhone}'),
+                                    ],
+                                  )),
+                                  const Spacer(),
+                                  Container(
+                                      child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                         height: 16,
+                                        UIDATAIcons.orderBascketBorder,
+                                        color: UIDataColors.primaryColor,
+                                      ),
+                                      SpacingWidth.widthlistspacing,
+                                      Text(tr.translateData("pickup")),
+                                    ],
+                                  )),
+                                ],
+                              ).marginOnly(left: 10, right: 10, top: 5, bottom: 10)
+                              :
+                              Container().marginOnly(bottom: 5)
                             ],
                           ),
                         ),

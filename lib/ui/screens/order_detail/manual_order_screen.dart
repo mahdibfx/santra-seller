@@ -115,6 +115,8 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                                                 santraList.orderStatus ==
                                                     'payment_pending'
                                             ? CustomCard(
+                                                   customerPhone: santraList.customerPhone,
+                                              orderType: santraList.orderType,
                                                 title: 'Card',
                                                 orderStatus:
                                                     santraList.orderStatus.toString(),
@@ -141,6 +143,8 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                                                 orderItemList: santraList.orderItems,
                                               )
                                             : ManualOrderCard(
+                                              customerPhone: santraList.customerPhone,
+                                              orderType: santraList.orderType,
                                                 orderStatus:
                                                     santraList.orderStatus.toString(),
                                                 totalPrice: santraList

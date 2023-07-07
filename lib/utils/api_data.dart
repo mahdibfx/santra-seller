@@ -1,4 +1,6 @@
-import 'package:santra_seller/config/env.dart';
+
+
+import 'config/env.dart';
 
 class ApiData {
   static const mainurl = Secret.api_key_url;
