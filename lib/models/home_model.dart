@@ -32,6 +32,8 @@ class HomeModel {
 class HomeData {
   HomeData({
     required this.totalNotifications,
+    required this.showContract,
+    required this.titleMessage,
     required this.ordersMonthly,
     required this.profitMonthly,
     required this.santraOrders,
@@ -40,6 +42,9 @@ class HomeData {
   });
 
   String totalNotifications;
+  String showContract;
+  String titleMessage;
+
   num ordersMonthly;
   num profitMonthly;
   List<SantraOrder> santraOrders;
@@ -48,6 +53,8 @@ class HomeData {
 
   factory HomeData.fromJson(Map<String, dynamic> json) => HomeData(
         totalNotifications: json["total_notifications"],
+        showContract: json["show_contract"],
+        titleMessage: json["title_message"],
         ordersMonthly: json["orders_monthly"],
         profitMonthly: json["profit_monthly"],
         santraOrders: List<SantraOrder>.from(
@@ -60,6 +67,8 @@ class HomeData {
 
   Map<String, dynamic> toJson() => {
         "total_notifications": totalNotifications,
+        "show_contract": showContract,
+        "title_message": titleMessage,
         "santra_orders":
             List<dynamic>.from(santraOrders.map((x) => x.toJson())),
         "manual_orders":
