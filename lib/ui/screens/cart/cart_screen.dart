@@ -95,9 +95,9 @@ class _CartScreenState extends State<CartScreen> {
                                                 child: CartCardOrder(
                                                   allProducts: _.cartItems,
                                                   index: index,
-                                                  onDecrese: () => _.removeFromCart(
+                                                  onDecrese: () => _.decreaseQuantity(
                                                       _.cartItems[index]),
-                                                  onIncrese: () => _.addToCart(
+                                                  onIncrese: () => _.increaseProductQuantity(
                                                       _.cartItems[index]),
                                                   quantity: _
                                                       .cartItems[index].quantity

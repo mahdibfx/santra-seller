@@ -312,7 +312,16 @@ class CartProvider extends ChangeNotifier {
 
     print(isexistsModsWithsameCode);
   }
+  increaseProductQuantity(CartItem item) {
+    isShowCartButton = true;
+     for(var e in cartItems){
+      if(e == item && item.quantity < 99){
+        item.quantity++;
+        notifyListeners();
+      }
+    }
 
+  }
   addToCart(CartItem item) {
     isShowCartButton = true;
     notifyListeners();
@@ -362,7 +371,7 @@ class CartProvider extends ChangeNotifier {
 
   int get itemCount => cartItems.length;
 
-  void removeFromCart(CartItem item) {
+  void decreaseQuantity(CartItem item) {
     final index =
         cartItems.indexWhere((cartItem) => cartItem.code == item.code);
     if (index != -1) {
