@@ -16,13 +16,13 @@ import '../../models/voucher_model.dart';
 import '../../utils/api_data.dart';
 import '../ui/screens/order_detail/all_order_screen.dart';
 import '../utils/app_translation/app_translation.dart';
-  AppFlyerController appFlyerController = Get.put(AppFlyerController());
+
+AppFlyerController appFlyerController = Get.put(AppFlyerController());
 
 class CartProvider extends ChangeNotifier {
   // final BuildContext context;
 
   // CartProvider(this.context);
-
 
   bool isLoading = false;
   bool isShowCartButton = false;
@@ -115,15 +115,13 @@ class CartProvider extends ChangeNotifier {
     double dFee = 0.0;
 
     if (toggleValue == 0) {
-    if (preGrandTotal < deliveryChargesCap) {
-      dFee = deliveryChargesReal;
-      deliverChargeForBackend = dFee;
- 
-    } else {
-      dFee = deliveryCharges;
-      deliverChargeForBackend = dFee;
-     
-    }
+      if (preGrandTotal < deliveryChargesCap) {
+        dFee = deliveryChargesReal;
+        deliverChargeForBackend = dFee;
+      } else {
+        dFee = deliveryCharges;
+        deliverChargeForBackend = dFee;
+      }
     }
 
     return dFee;
@@ -234,7 +232,8 @@ class CartProvider extends ChangeNotifier {
         generalException();
       }
     } catch (e) {
-      exceptionDialog(tr.translateData("oops_message"), tr.translateData("went_wrong"));
+      exceptionDialog(
+          tr.translateData("oops_message"), tr.translateData("went_wrong"));
     }
     changeCartLoadingState(false);
     notifyListeners();
@@ -314,16 +313,17 @@ class CartProvider extends ChangeNotifier {
 
     print(isexistsModsWithsameCode);
   }
+
   increaseProductQuantity(CartItem item) {
     isShowCartButton = true;
-     for(var e in cartItems){
-      if(e == item && item.quantity < 99){
+    for (var e in cartItems) {
+      if (e == item && item.quantity < 99) {
         item.quantity++;
         notifyListeners();
       }
     }
-
   }
+
   addToCart(CartItem item) {
     isShowCartButton = true;
     notifyListeners();
@@ -339,14 +339,6 @@ class CartProvider extends ChangeNotifier {
     List<SubModifier> matchArray = item.subModifiers;
     notifyListeners();
     bool newcheckVal() {
-      // for (var m in checkValue) {
-      //   if (item.subModifiers.every((element) =>  m.subModifiers.contains(element.modifierCode))) {
-      //     return true;
-      //   }
-      // }
-
-      // return false;
-
       bool containsExactMatch = checkValue.any((array) =>
           array.subModifiers.every((item) => matchArray.contains(item)));
       return containsExactMatch;
@@ -360,15 +352,10 @@ class CartProvider extends ChangeNotifier {
         cartItems[index].quantity += 1;
         notifyListeners();
       }
-
-      // showToast("Added", 'increased by one');
     } else {
       cartItems.add(item);
       notifyListeners();
     }
-    print(itemCount);
-    print('............,,mmmmmmmmmmmmm');
-    //  GetStorage().write('cart', cartItems);
   }
 
   int get itemCount => cartItems.length;
@@ -380,7 +367,6 @@ class CartProvider extends ChangeNotifier {
       if (cartItems[index].quantity > 1) {
         cartItems[index].quantity -= 1;
         notifyListeners();
-        // showToast("Added", 'decreased by one');
       } else {
         cartItems.removeAt(index);
         notifyListeners();
@@ -397,17 +383,7 @@ class CartProvider extends ChangeNotifier {
       activeOffers.clear();
     }
     notifyListeners();
-    //  GetStorage().write('cart', cartItems);
   }
-
-  // double get totalPrice => cartItems.fold(
-  //       0,
-  //       (previousValue, cartItem) => previousValue + (cartItem.price +)* cartItem.quantity,
-  //     );
-  //  double get grandTotal => cartItems.fold(
-  //   0,
-  //   (previousValue, cartItem) => (previousValue + cartItem.price * cartItem.quantity) + deliveryCharges,
-  // );
 
   double calculateTotalPrice() {
     double totalPrice = 0;
@@ -436,8 +412,7 @@ class CartProvider extends ChangeNotifier {
     );
   }
 
-  String delivery(){
-    print(deliveryFee);
+  String delivery() {
     return deliveryFee.toString();
   }
 
@@ -450,7 +425,7 @@ class CartProvider extends ChangeNotifier {
           customerDetail.customerName, // This is the name of the customer
       "coupn_code": "0", // coupon code if any other wise send 0
       "sub_total": "$totalPrice", // This is the subtotal amount
-      "total_delivery_charges":delivery(), //this is the delivery charges
+      "total_delivery_charges": delivery(), //this is the delivery charges
       "total_discount":
           dis.toString(), //this is the discount if any otherwise send 0
       "d_reason": voucherListVoucherCode ??
@@ -475,26 +450,12 @@ class CartProvider extends ChangeNotifier {
 // Order Item array to be posted as follows
 // Field name: "", order_items and items in this array are as follows(id, name, price, quantity, item_remarks, modifiers_list(modifier_code,name_modifier,price_modifier))
       "order_items": jsonEncode(cartItems),
-"delivery_type": toggleValue == 0 ?  "Delivery" : "Pickup",
-      // [
-      //   {
-      //     "id": "",
-      //     "name": "",
-      //     "price": "",
-      //     "quantity": "",
-      //     "item_remarks": "",
-      //     "modifiers_list": [
-      //       {"modifier_code": "", "name_modifier": "", "price_modifier ": ""}
-      //     ]
-      //   }
-      // ],
+      "delivery_type": toggleValue == 0 ? "Delivery" : "Pickup",
     };
     notifyListeners();
   }
 
   Future orderSubmit() async {
-    // var tr = Get.put(AppTranslations());
-    // var homePro = Provider.of<HomeProvider>(context, listen: false);
     try {
       changeLoadingStatus(true);
       var url = Uri.parse(ApiData.orderSubmitCash);
@@ -502,22 +463,8 @@ class CartProvider extends ChangeNotifier {
       var response =
           await http.post(url, headers: ApiData.header, body: finalSubmitData);
       if (response.statusCode == 200) {
-        // var decodedJson = jsonDecode(response.body);
-        // var data = SelllerAllProductsModel.fromJson(decodedJson);
-        // if (data.data![0].products!.isNotEmpty) {
-        //   allProducts = data.data?[0].products;
-        // }
-        // selllerAllProductsModel =
-        //     selllerAllProductsModelFromJson(response.body);
-        // notifyListeners();
-        //        Get.offAllNamed(Routes.homeRoutes);
-        // homePro.homeDataCall();
         Get.offAll(() => const HomeScreen());
-        // showToast(tr.translateData("success_message"), tr.translateData('order_placed_success'));
         flushCart();
-      } else {
-        // showToast(tr.translateData("failed_message"), tr.translateData('went_wrong'));
-        // hasError = true;
       }
     } catch (e) {
       // showToast(tr.translateData("oops_message"), tr.translateData('error_load_data'));
