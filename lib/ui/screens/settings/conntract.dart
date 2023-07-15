@@ -32,7 +32,7 @@ var date = DateTime.now();
               child: Container(
                 
                 width: MediaQuery.of(context).size.width - 50,
-                height: MediaQuery.of(context).size.height -  (MediaQuery.of(context).size.height * 0.4),
+                height: MediaQuery.of(context).size.height -  (MediaQuery.of(context).size.height * 0.3),
                 // padding: EdgeInsets.all(20),
                
                   decoration: BoxDecoration(
@@ -172,13 +172,13 @@ var date = DateTime.now();
                                                                                                                                       FontWeight.bold,
                                                                                                                                   color: const Color.fromARGB(255, 0, 0, 0)
                                                                                                                                       )),
-                                                                      TextSpan(text: ' ABCD'),
+                                                                      TextSpan(text: ' ${AppConstants.homeModel.data.first.titleMessage}'),
                                                                     ],
                                                                   ),
                                                                 ),
                                                           
                                                                  Padding(
-                                                                   padding: const EdgeInsets.only(top:20.0, bottom: 20),
+                                                                   padding: const EdgeInsets.only(top:20.0, bottom: 10),
                                                                    child: Text(
                                                                     'The parties hereby acknowledge and agree to the following terms and conditions:',
                                                                     style: UIDataTextStyles.textMedium
@@ -204,7 +204,7 @@ var date = DateTime.now();
                                                                  ),
     
                                                                                      Padding(
-                                                                   padding: const EdgeInsets.only(top:20.0, bottom: 20),
+                                                                   padding: const EdgeInsets.only(top:10.0, bottom: 10),
                                                                    child: Text(
                                                                     "⚈ The first party undertakes to deliver the orders belonging to the second party, which are received through the application, safely.",
                                                                     style: UIDataTextStyles.textMedium
@@ -217,7 +217,7 @@ var date = DateTime.now();
                                                                  ),
     
                                                                                          Padding(
-                                                                   padding: const EdgeInsets.only(top:20.0, bottom: 20),
+                                                                   padding: const EdgeInsets.only(top:10.0, bottom: 10),
                                                                    child: Text(
                                                                     "⚈ The first party agrees to deliver the orders and if the customer does not receive their order due to reasons caused by the second party or the customer, the first party is not responsible for any losses incurred in returning the order to the second party.",
                                                                     style: UIDataTextStyles.textMedium
@@ -230,7 +230,7 @@ var date = DateTime.now();
                                                                  ),
     
                                                                                        Padding(
-                                                                   padding: const EdgeInsets.only(top:20.0, bottom: 20),
+                                                                   padding: const EdgeInsets.only(top:10.0, bottom: 10),
                                                                    child: Text(
                                                                     "⚈ The first party undertakes to pay the debts or amounts received once a month by means of a bank transfer using the banking information provided to us by the second party unless the parties come to a different agreement.",
                                                                     style: UIDataTextStyles.textMedium
@@ -243,7 +243,7 @@ var date = DateTime.now();
                                                                  ),
     
                                                                                             Padding(
-                                                                   padding: const EdgeInsets.only(top:20.0, bottom: 20),
+                                                                   padding: const EdgeInsets.only(top:10.0, bottom: 10),
                                                                    child: Text(
                                                                     "⚈ The second party agrees to comply with all food safety.",
                                                                     style: UIDataTextStyles.textMedium
@@ -256,7 +256,7 @@ var date = DateTime.now();
                                                                  ),
     
                                                                                                Padding(
-                                                                   padding: const EdgeInsets.only(top:20.0, bottom: 20),
+                                                                   padding: const EdgeInsets.only(top:10.0, bottom: 10),
                                                                    child: Text(
                                                                     "⚈ The second party agrees to abide by the standards and conditions for food product photography, such as professional photography or adding the application's specific colors as a background for the pictures."
     ,
@@ -271,7 +271,7 @@ var date = DateTime.now();
     
     
                                                                                                    Padding(
-                                                                   padding: const EdgeInsets.only(top:20.0, bottom: 20),
+                                                                   padding: const EdgeInsets.only(top:10.0, bottom: 10),
                                                                    child: Text(
                                                                     "⚈ The contract is valid for 1 year from the start date and will be renewed Automatically and the second party have the freedom to break and cancel the subscription anytime."
     ,
@@ -285,7 +285,7 @@ var date = DateTime.now();
                                                                  ),
     
                                                                                                                      Padding(
-                                                                   padding: const EdgeInsets.only(top:20.0, bottom: 20),
+                                                                   padding: const EdgeInsets.only(top:10.0, bottom: 10),
                                                                    child: Text(
                                                                      "⚈ The second party acknowledges, by signing this contract, their agreement to the terms and conditions of the Sellers/Traders Application."
     ,
@@ -299,7 +299,7 @@ var date = DateTime.now();
                                                                  ),
     
                                                                                                                        Padding(
-                                                                   padding: const EdgeInsets.only(top:20.0, bottom: 20),
+                                                                   padding: const EdgeInsets.only(top:10.0, bottom: 10),
                                                                    child: Text(
                                                                      "⚈ The first party acknowledges the calculation of a commission from the second party on orders based on the percentages specified in the table below."
     ,
@@ -314,7 +314,7 @@ var date = DateTime.now();
     
     
                                                                                                                       Padding(
-                                                                   padding: const EdgeInsets.only(top:20.0, bottom: 20),
+                                                                   padding: const EdgeInsets.only(top:10.0, bottom: 10),
                                                                    child: Text(
                                                                      "⚈ The first party acknowledges that no registration fees will be charged from the second party."
     ,
@@ -328,7 +328,7 @@ var date = DateTime.now();
                                                                  ),
     
                                                                                                                                                              Padding(
-                                                                   padding: const EdgeInsets.only(top:20.0, bottom: 20),
+                                                                   padding: const EdgeInsets.only(top:10.0, bottom: 10),
                                                                    child: Text(
                                                                      "⚈ The first party acknowledges that the registration fees will be free"
     ,
@@ -340,17 +340,7 @@ var date = DateTime.now();
                                                                             ),
                                                                                                                              ),
                                                                  ),
-    
-    
-                                                                 
-    
-                                                                
-                                                                
-                                                                 
-    
-                                                                 
-    
-                                                          
+
                                                                     //  Markdown(data: _markDownData),
                                                              
                                                               ],
