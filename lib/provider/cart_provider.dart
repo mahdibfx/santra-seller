@@ -113,6 +113,8 @@ class CartProvider extends ChangeNotifier {
 
   double get deliveryFee {
     double dFee = 0.0;
+
+    if (toggleValue == 0) {
     if (preGrandTotal < deliveryChargesCap) {
       dFee = deliveryChargesReal;
       deliverChargeForBackend = dFee;
@@ -122,7 +124,7 @@ class CartProvider extends ChangeNotifier {
       deliverChargeForBackend = dFee;
      
     }
-
+    }
 
     return dFee;
   }
