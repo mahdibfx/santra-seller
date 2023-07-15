@@ -13,6 +13,7 @@ import '../../utils/api_data.dart';
 import '../../utils/uidata.dart';
 import 'package:http/http.dart' as http;
 
+import '../constants/app_constants.dart';
 import 'cart_provider.dart';
 
 class HomeProvider extends ChangeNotifier {
@@ -170,6 +171,7 @@ class HomeProvider extends ChangeNotifier {
         if (res.statusCode == 200) {
           var data = jsonDecode(res.body);
           var newdata = HomeModel.fromJson(data);
+          AppConstants.homeModel = newdata;
           sellerStatusNew = data['data'][0]['seller_status'];
           prefs.setString("sellerStatus", sellerStatusNew.toString());
           print("SEEEEEEE $sellerStatusNew");
@@ -331,6 +333,41 @@ class HomeProvider extends ChangeNotifier {
     }
     updateOrderReadyLoading(false);
     notifyListeners();
+  }
+
+    Future<bool> contract() async {
+    updateOrderReadyLoading(true);
+    var tr = Get.put(AppTranslations());
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      var url = Uri.parse("${ApiData.contract}");
+      Map<String, dynamic> body = {};
+      body['seller_code'] = prefs.getString("sellercode");
+      body['status_accepted'] = "yes";
+      var response = await http.post(url, headers: ApiData.header, body: body);
+      if (response.statusCode == 200) {
+        CommonSnackbar.getSnackbar(tr.translateData("success_message"), tr.translateData("order_ready_msg"),
+            UIDataColors.primaryColor);
+            AppConstants.homeModel.data.first.showContract = "no";
+                updateOrderReadyLoading(false);
+    notifyListeners();
+            return true;
+      } else {
+        generalException();
+        // print(response.statusCode);
+        // print("Unable to reject order");
+            updateOrderReadyLoading(false);
+    notifyListeners();
+        return false;
+      }
+    } catch (e) {
+      CommonSnackbar.getSnackbar(
+          tr.translateData("oops_message"), tr.translateData("went_wrong"), UIDataColors.redColor);
+              updateOrderReadyLoading(false);
+    notifyListeners();
+           return false;
+    }
+
   }
 
   //////////////////////////////--------Filteration START--------///////////

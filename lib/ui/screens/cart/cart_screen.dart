@@ -114,22 +114,22 @@ class _CartScreenState extends State<CartScreen> {
                                           ))
                                         : VouchersSection(),
                                     SpacingHeight.heightlistspacing20,
-HeadingWithIcon(
+                                      HeadingWithIcon(
                                         icon: UIDATAIcons.deliveryIcon,
                                         btntxt: tr.translateData("choose_delivery_method")),
                                     AnimatedToggle(
-              values: [tr.translateData("delivery"), tr.translateData("pickup")],
-                // values: ["delivery", "pickup"],
-              onToggleCallback: (value) {
-                setState(() {
-                  _.toggleValue = value;
-                });
-              },
-              initialPosition: _.toggleValue == 0,
-              buttonColor: UIDataColors.primaryColor,
-              backgroundColor: const Color(0xFFFFFFFF),
-              textColor: const Color(0xFFFFFFFF),
-            ),
+                                      values: [tr.translateData("delivery"), tr.translateData("pickup")],
+                                        // values: ["delivery", "pickup"],
+                                      onToggleCallback: (value) {
+                                        setState(() {
+                                          _.toggleValue = value;
+                                        });
+                                      },
+                                      initialPosition: _.toggleValue == 0,
+                                      buttonColor: UIDataColors.primaryColor,
+                                      backgroundColor: const Color(0xFFFFFFFF),
+                                      textColor: const Color(0xFFFFFFFF),
+                                    ),
                                     Container(
                                       decoration: BoxDecoration(
                                           borderRadius: const BorderRadius.all(

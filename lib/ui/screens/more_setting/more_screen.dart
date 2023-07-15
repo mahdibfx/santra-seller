@@ -5,6 +5,7 @@ import 'package:santra_seller/ui/screens/more_setting/customer_reviews.dart';
 import 'package:santra_seller/ui/screens/more_setting/my_customer/my_customer_screen.dart';
 import 'package:santra_seller/ui/screens/more_setting/privacy_policy_screen.dart';
 import 'package:santra_seller/ui/screens/product_setting/product_setting_screen.dart';
+import 'package:santra_seller/ui/screens/settings/conntract.dart';
 import '../../../utils/app_translation/app_translation.dart';
 import '../../widgets/buttons/icon_setting_button.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
@@ -19,7 +20,7 @@ class MoreSettingScreen extends StatelessWidget {
 
   MoreSettingScreen({super.key});
 
-  Widget bodyData() {
+  Widget bodyData(context) {
     return GetBuilder<AppTranslations>(
       builder: (tr){
         return SafeArea(
@@ -85,7 +86,14 @@ class MoreSettingScreen extends StatelessWidget {
                   },
                   btntxt: tr.translateData('more_privacy'),
                 ),
-                SpacingHeight.heightlistspacing50
+                SpacingHeight.heightlistspacing50,
+                   ReusableIconSetting(
+                  icon: UIDATAIcons.securityIcon,
+                  onPressed: () {
+                   _showDialog(context);
+                  },
+                  btntxt: tr.translateData('contract'),
+                ),
               ],
             ).paddingSymmetric(horizontal: 20),
           ),
@@ -97,7 +105,7 @@ class MoreSettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(
-      bodyData: bodyData(),
+      bodyData: bodyData(context),
       backgroundcolor: UIDataColors.whiteColor,
       backGroundImage: UIDataImage.backgroundImage,
       isBackArrowShow: false,
@@ -116,6 +124,24 @@ class MoreSettingScreen extends StatelessWidget {
       },
       floatingIcon: Icons.add,
       elevation: 0.0,
+    );
+  }
+
+     _showDialog(BuildContext context)
+  {
+    VoidCallback continueCallBack = ()  {
+
+       Navigator.of(context).pop();
+  
+      // code on continue comes here
+    };
+    BlurryDialog  alert = BlurryDialog(continueCallBack);
+    showDialog(
+      context: context,
+       barrierDismissible: false,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

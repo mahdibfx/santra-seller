@@ -6,7 +6,9 @@ import 'package:santra_seller/ui/screens/order_detail/all_order_screen.dart';
 import 'package:santra_seller/ui/screens/order_detail/manual_order_screen.dart';
 import 'package:santra_seller/ui/screens/order_detail/pending_order_screen.dart';
 import 'package:santra_seller/ui/screens/order_detail/santra_order_screen.dart';
+import 'package:santra_seller/ui/screens/settings/conntract.dart';
 import 'package:santra_seller/ui/widgets/dropdown/common_dropdown.dart';
+import '../../../constants/app_constants.dart';
 import '../../../utils/app_translation/app_translation.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/cards/home_card.dart';
@@ -26,12 +28,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
-
+  var notify = true;
   Widget bodyData(context) {
     return GetBuilder<AppTranslations>(
       builder: (tr){
         return Consumer<HomeProvider>(
           builder: (context, _, child) {
+            contractNotify(_);
             return _.isLoading || _.homeData == null
                 ? const SizedBox(
                     child: Center(
@@ -207,6 +210,40 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  void contractNotify(HomeProvider _) {
+                if(!_.isLoading && _.homeData != null)
+              if(AppConstants.homeModel != null && AppConstants.homeModel.data.first.showContract == "yes")
+                              Future.delayed(const Duration(milliseconds: 500), () {
+                                if (notify) {
+                  _showDialog(context, _);
+                  notify = false;
+                                }
+                  });
+  }
+
+   _showDialog(BuildContext context, HomeProvider _)
+  {
+    VoidCallback continueCallBack = ()  {
+
+      _.contract().then((value) {
+  Navigator.of(context).pop();
+
+
+
+      });
+  
+      // code on continue comes here
+    };
+    BlurryDialog  alert = BlurryDialog(continueCallBack);
+    showDialog(
+      context: context,
+       barrierDismissible: false,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   void  filterOrderBottomSheet(context, HomeProvider _) {
     
     //  GestureDetector(
@@ -371,6 +408,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     hitAllApis();
+
     super.initState();
   }
 

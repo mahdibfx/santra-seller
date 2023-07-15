@@ -1,3 +1,5 @@
+import '../models/home_model.dart';
+
 class AppConstants{
 
   static const appsFlyerAndroidKey = 'BXxrTiy2pPxTho3Fg25iWN';
@@ -7,6 +9,6 @@ class AppConstants{
 
   static const adjustIosKey = '5xikt3vg91mo';
 
-
+  static late final HomeModel homeModel;
 
 }
