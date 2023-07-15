@@ -86,9 +86,9 @@ class MoreSettingScreen extends StatelessWidget {
                   },
                   btntxt: tr.translateData('more_privacy'),
                 ),
-                SpacingHeight.heightlistspacing50,
+               
                    ReusableIconSetting(
-                  icon: UIDATAIcons.securityIcon,
+                  icon: UIDATAIcons.santraVectorIcon,
                   onPressed: () {
                    _showDialog(context);
                   },
@@ -135,7 +135,7 @@ class MoreSettingScreen extends StatelessWidget {
   
       // code on continue comes here
     };
-    BlurryDialog  alert = BlurryDialog(continueCallBack);
+    BlurryDialog  alert = BlurryDialog(null,continueCallBack);
     showDialog(
       context: context,
        barrierDismissible: false,

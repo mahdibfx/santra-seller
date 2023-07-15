@@ -9,6 +9,6 @@ class AppConstants{
 
   static const adjustIosKey = '5xikt3vg91mo';
 
-  static late final HomeModel homeModel;
+  static late  HomeModel homeModel;
 
 }

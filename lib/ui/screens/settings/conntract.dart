@@ -4,6 +4,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
 
 import '../../../constants/app_constants.dart';
+import '../../../provider/home_provider.dart';
 import '../../../utils/uidata.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
@@ -13,8 +14,8 @@ class BlurryDialog extends StatelessWidget {
 
 
   VoidCallback continueCallBack;
-
-  BlurryDialog(this.continueCallBack);
+  HomeProvider? _;
+  BlurryDialog(this._,this.continueCallBack);
   TextStyle textStyle = TextStyle (color: Colors.black);
 
 var date = DateTime.now();

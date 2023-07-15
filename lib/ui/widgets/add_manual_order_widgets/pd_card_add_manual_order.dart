@@ -76,7 +76,7 @@ class PDCardAddManualOrder extends StatelessWidget {
                       ],
                     ).marginOnly(top: 5, bottom: 5, left: 8, right: 8)),
                 const Spacer(),
-               manualOrderController?.filteredProducts[index!].productStatus != 'approved' ? GestureDetector(
+               manualOrderController?.filteredProducts[index!].productStatus == 'approved' ? GestureDetector(
                   onTap: onTap,
                   child: Container(
                       padding: const EdgeInsets.all(5),
