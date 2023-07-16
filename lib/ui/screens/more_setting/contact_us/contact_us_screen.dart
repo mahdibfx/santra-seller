@@ -14,7 +14,6 @@ import '../../../widgets/textfields/common_textfield.dart';
 import '../../add_manual_order/add_manual_order.dart';
 
 class ContactUsScreen extends StatefulWidget {
-
   ContactUsScreen({super.key});
 
   @override
@@ -27,162 +26,198 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   final form = GlobalKey<FormState>();
 
   Widget bodyData(context) {
-    return GetBuilder<AppTranslations>(
-      builder: (tr) {
-        return Consumer<ContactUsProvider>(
-          builder: (con, _, child) {
-            return SafeArea(
-              child: SingleChildScrollView(
+    return GetBuilder<AppTranslations>(builder: (tr) {
+      return Consumer<ContactUsProvider>(
+        builder: (con, _, child) {
+          return SafeArea(
+            child: SingleChildScrollView(
+                child: Column(
+              children: [
+                HeadingWithIcon(
+                    icon: UIDATAIcons.orderRemarks,
+                    btntxt: tr.translateData("side_menu__contact_signin")),
+                RichText(
+                  text: TextSpan(
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: "We're here to assist you! ",
+                          style: UIDataTextStyles.h1.copyWith(
+                            color: UIDataColors.blackColor,
+                          )),
+                      TextSpan(
+                          text:
+                              'Our support team is here to take care of your calls from',
+                          style: UIDataTextStyles.h1.copyWith(
+                              color: UIDataColors.blackColor,
+                              fontWeight: FontWeight.w500)),
+                      TextSpan(
+                          text: ' 9AM',
+                          style: UIDataTextStyles.h1.copyWith(
+                              color: UIDataColors.blackColor,
+                              fontWeight: FontWeight.bold)),
+                      TextSpan(
+                          text: " to ",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall!
+                              .copyWith(color: UIDataColors.blackColor)),
+                      TextSpan(
+                          text: '9PM',
+                          style: UIDataTextStyles.h1.copyWith(
+                              color: UIDataColors.blackColor,
+                              fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Form(
+                  key: form,
                   child: Column(
-                children: [
-                  HeadingWithIcon(
-                      icon: UIDATAIcons.orderRemarks,
-                      btntxt: tr.translateData("side_menu__contact_signin")),
-                  Form(
-                    key: form,
-                    child: Column(
-                      children: [
-                        Column(children: [
-                          CommonTextField(
-                            textInputAction: TextInputAction.next,
-                            controller: _.usernameController,
-                            labelText: tr.translateData("conatct_us_name"),
-                            isTextHidden: false,
-                            fillcolor: UIDataColors.whiteColor,
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (val) {
-                              if (val.isEmpty) {
-                                return tr.translateData("full_name_validation");
+                    children: [
+                      Column(children: [
+                        CommonTextField(
+                          textInputAction: TextInputAction.next,
+                          controller: _.usernameController,
+                          labelText: tr.translateData("conatct_us_name"),
+                          isTextHidden: false,
+                          fillcolor: UIDataColors.whiteColor,
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (val) {
+                            if (val.isEmpty) {
+                              return tr.translateData("full_name_validation");
+                            }
+                          },
+                        ),
+                        CommonTextField(
+                          textInputAction: TextInputAction.next,
+                          controller: _.emailController,
+                          labelText: tr.translateData('conatct_us_email'),
+                          isTextHidden: false,
+                          fillcolor: UIDataColors.whiteColor,
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (val) {
+                            bool email = _.emailRegex.hasMatch(val);
+                            if (val.isEmpty) {
+                              return tr.translateData("email_validation");
+                            } else if (!email) {
+                              return tr.translateData("valid_email_validation");
+                            }
+                          },
+                        ),
+                        CommonTextField(
+                          textInputAction: TextInputAction.next,
+                          controller: _.phonenumberController,
+                          labelText: tr.translateData('conatct_us_mobile'),
+                          isTextHidden: false,
+                          inputFormatters: [_.phoneMask],
+                          fillcolor: UIDataColors.whiteColor,
+                          keyboardType: TextInputType.number,
+                          maxLength: 12,
+                          hintText: " 501234567",
+                          onChanged: (val) {
+                            String? check0;
+
+                            if (val.isNotEmpty && val.length > 3) {
+                              check0 = val.substring(0, 4);
+                              if (check0 == "9710") {
+                                _.phonenumberController.clear();
                               }
-                            },
-                          ),
-                          CommonTextField(
-                            textInputAction: TextInputAction.next,
-                            controller: _.emailController,
-                            labelText: tr.translateData('conatct_us_email'),
-                            isTextHidden: false,
-                            fillcolor: UIDataColors.whiteColor,
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (val) {
-                              bool email = _.emailRegex.hasMatch(val);
-                              if (val.isEmpty) {
-                                return tr.translateData("email_validation");
-                              } else if (!email) {
-                                return tr.translateData("valid_email_validation");
+                            }
+                          },
+                          validator: (val) {
+                            String? name;
+                            if (val.isEmpty || val.length < 12) {
+                              return tr.translateData("valid_phone");
+                            } else if (val.isNotEmpty && val.length > 3) {
+                              name = val.substring(0, 3);
+
+                              if (name != "971") {
+                                return tr.translateData("valid_phone_971");
                               }
-                            },
-                          ),
-                          CommonTextField(
-                            textInputAction: TextInputAction.next,
-                            controller: _.phonenumberController,
-                            labelText: tr.translateData('conatct_us_mobile'),
-                            isTextHidden: false,
-                            inputFormatters: [_.phoneMask],
-                            fillcolor: UIDataColors.whiteColor,
-                            keyboardType: TextInputType.number,
-                            maxLength: 12,
-                            hintText: " 501234567",
-                            onChanged: (val) {
-                              String? check0;
-    
-                              if (val.isNotEmpty && val.length > 3) {
-                                check0 = val.substring(0, 4);
-                                if (check0 == "9710") {
-                                  _.phonenumberController.clear();
-                                }
-                              }
-                            },
-                            validator: (val) {
-                              String? name;
-                              if (val.isEmpty || val.length < 12) {
-                                return tr.translateData("valid_phone");
-                              } else if (val.isNotEmpty && val.length > 3) {
-                                name = val.substring(0, 3);
-    
-                                if (name != "971") {
-                                  return tr.translateData("valid_phone_971");
-                                }
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                          CommonTextField(
-                            maxlines: 5,
-                            controller: _.messageController,
-                            hintText: tr.translateData('conatct_us_message'),
-                            isTextHidden: false,
-                            fillcolor: UIDataColors.whiteColor,
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (val) {
-                              if (val.isEmpty) {
-                                return tr.translateData("your_query");
-                              }
-                            },
-                          ),
-                          SpacingHeight.heightlistspacing10,
-                        ]),
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        CommonTextField(
+                          maxlines: 5,
+                          controller: _.messageController,
+                          hintText: tr.translateData('conatct_us_message'),
+                          isTextHidden: false,
+                          fillcolor: UIDataColors.whiteColor,
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (val) {
+                            if (val.isEmpty) {
+                              return tr.translateData("your_query");
+                            }
+                          },
+                        ),
                         SpacingHeight.heightlistspacing10,
-                        _.isLoading
-                            ? const SizedBox(
-                                child: Center(
-                                child: CircularProgressIndicator(),
-                              ))
-                            : PrimaryButtonWithIcon(
-                                btntxt: tr.translateData("conatct_us_send_button"),
-                                iconImage: UIDATAIcons.sendIcon,
-                                onPressed: () {
-                                  if (form.currentState!.validate()) {
-                                    _.sendMessage();
-                                  }
-                                },
-                              ),
-                        SpacingHeight.heightlistspacing15,
-                      ],
-                    ),
+                      ]),
+                      SpacingHeight.heightlistspacing10,
+                      _.isLoading
+                          ? const SizedBox(
+                              child: Center(
+                              child: CircularProgressIndicator(),
+                            ))
+                          : PrimaryButtonWithIcon(
+                              btntxt:
+                                  tr.translateData("conatct_us_send_button"),
+                              iconImage: UIDATAIcons.sendIcon,
+                              onPressed: () {
+                                if (form.currentState!.validate()) {
+                                  _.sendMessage();
+                                }
+                              },
+                            ),
+                      SpacingHeight.heightlistspacing15,
+                    ],
                   ),
-                   Text(
-                    tr.translateData('conatct_us_keep'),
-                    style: UIDataTextStyles.h1,
-                  ),
-                  SpacingHeight.heightlistspacing5,
-                   Text(
-                    '+971 50 188 6867',
-                    style: UIDataTextStyles.title,
-                  ),
-                  SpacingHeight.heightlistspacing5,
-                   Text(
-                    tr.translateData('conatct_us_email_text'),
-                    style: UIDataTextStyles.title,
-                  ),
-                  SpacingHeight.heightlistspacing5,
-                   Text(
-                    tr.translateData('conatct_us_email_address_text_1'),
-                    style: UIDataTextStyles.title,
-                  ),
-                   Text(
-                   tr.translateData( 'conatct_us_email_address_text_2'),
-                    style: UIDataTextStyles.title,
-                  ),
-                   Text(
-                    tr.translateData('conatct_us_email_address_text_3'),
-                    style: UIDataTextStyles.title,
-                  ),
-                  SpacingHeight.heightlistspacing50
-                ],
-              ).paddingSymmetric(horizontal: 15)),
-            );
-          },
-        );
-      }
-    );
+                ),
+                Text(
+                  tr.translateData('conatct_us_keep'),
+                  style: UIDataTextStyles.h1,
+                ),
+                SpacingHeight.heightlistspacing5,
+                Text(
+                  '+971 50 188 6867',
+                  style: UIDataTextStyles.title,
+                ),
+                SpacingHeight.heightlistspacing5,
+                Text(
+                  tr.translateData('conatct_us_email_text'),
+                  style: UIDataTextStyles.title,
+                ),
+                SpacingHeight.heightlistspacing5,
+                Text(
+                  tr.translateData('conatct_us_email_address_text_1'),
+                  style: UIDataTextStyles.title,
+                ),
+                Text(
+                  tr.translateData('conatct_us_email_address_text_2'),
+                  style: UIDataTextStyles.title,
+                ),
+                Text(
+                  tr.translateData('conatct_us_email_address_text_3'),
+                  style: UIDataTextStyles.title,
+                ),
+                SpacingHeight.heightlistspacing50
+              ],
+            ).paddingSymmetric(horizontal: 15)),
+          );
+        },
+      );
+    });
   }
+
   @override
   void initState() {
     appFlyerController.contactCustomerServiceEvent();
     super.initState();
-  
   }
+
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(
@@ -196,7 +231,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
       scaffoldKey: _key,
       showBottomNav: true,
       appbarcolor: UIDataColors.whiteColor,
-      appTitle:'',
+      appTitle: '',
       backarrow: UIDataColors.blackColor,
       qrCallback: () {
         Get.offAll(() => const AddManulOrder());

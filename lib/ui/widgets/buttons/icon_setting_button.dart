@@ -73,7 +73,7 @@ class HeadingWithIcon extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: 50,
+          height: 40,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 0),
             child: Row(
