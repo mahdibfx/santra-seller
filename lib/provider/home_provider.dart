@@ -337,6 +337,7 @@ class HomeProvider extends ChangeNotifier {
 
     Future<bool> contract() async {
     updateOrderReadyLoading(true);
+    isLoading = true;
     var tr = Get.put(AppTranslations());
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -345,8 +346,9 @@ class HomeProvider extends ChangeNotifier {
       body['seller_code'] = prefs.getString("sellercode");
       body['status_accepted'] = "yes";
       var response = await http.post(url, headers: ApiData.header, body: body);
+       isLoading = false;
       if (response.statusCode == 200) {
-        CommonSnackbar.getSnackbar(tr.translateData("success_message"), tr.translateData("order_ready_msg"),
+        CommonSnackbar.getSnackbar(tr.translateData("success_message"), tr.translateData("okay"),
             UIDataColors.primaryColor);
             AppConstants.homeModel.data.first.showContract = "no";
                 updateOrderReadyLoading(false);
@@ -361,6 +363,7 @@ class HomeProvider extends ChangeNotifier {
         return false;
       }
     } catch (e) {
+      isLoading = false;
       CommonSnackbar.getSnackbar(
           tr.translateData("oops_message"), tr.translateData("went_wrong"), UIDataColors.redColor);
               updateOrderReadyLoading(false);

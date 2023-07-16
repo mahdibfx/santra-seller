@@ -15,7 +15,6 @@ import '../ui/widgets/snackbar/common_snackbar.dart';
 import '../utils/app_translation/app_translation.dart';
 import '../utils/uidata.dart';
 
-
 class SplashProvider extends ChangeNotifier {
   var tr = Get.put(AppTranslations());
   AppFlyerController appFlyerController = Get.put(AppFlyerController());
@@ -157,7 +156,7 @@ class SplashProvider extends ChangeNotifier {
       var url = Uri.parse(ApiData.forceUpdateApi);
       Map<String, dynamic> body = {};
       body['seller_code'] = "1";
-      body['version'] = "4.1.0";
+      body['version'] = "4.1.1";
       body['app_type'] = "seller";
       body['platform'] =
           Platform.isIOS ? "Mobile_App_iOS" : "Mobile_App_Android";

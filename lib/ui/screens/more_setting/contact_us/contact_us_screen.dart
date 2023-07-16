@@ -40,29 +40,32 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   text: TextSpan(
                     children: <TextSpan>[
                       TextSpan(
-                          text: "We're here to assist you! ",
+                          text: Get.locale!.languageCode == 'en'
+                              ? "We're here to assist you!"
+                              : " نحن هنا للمساعدة",
                           style: UIDataTextStyles.h1.copyWith(
                             color: UIDataColors.blackColor,
                           )),
                       TextSpan(
-                          text:
-                              'Our support team is here to take care of your calls from',
+                          text: Get.locale!.languageCode == 'en'
+                              ? "Our support team is here to take care of your calls from"
+                              : " ارسل هذا النموذج وسيتصل بك مستشار العملاء قريبا.",
                           style: UIDataTextStyles.h1.copyWith(
                               color: UIDataColors.blackColor,
                               fontWeight: FontWeight.w500)),
                       TextSpan(
-                          text: ' 9AM',
+                          text: Get.locale!.languageCode == 'en' ? ' 9AM' : "",
                           style: UIDataTextStyles.h1.copyWith(
                               color: UIDataColors.blackColor,
                               fontWeight: FontWeight.bold)),
                       TextSpan(
-                          text: " to ",
+                          text: Get.locale!.languageCode == 'en' ? " to " : "",
                           style: Theme.of(context)
                               .textTheme
                               .titleSmall!
                               .copyWith(color: UIDataColors.blackColor)),
                       TextSpan(
-                          text: '9PM',
+                          text: Get.locale!.languageCode == 'en' ? '9PM' : "",
                           style: UIDataTextStyles.h1.copyWith(
                               color: UIDataColors.blackColor,
                               fontWeight: FontWeight.bold)),

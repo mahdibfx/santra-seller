@@ -224,9 +224,9 @@ class _HomeScreenState extends State<HomeScreen> {
    _showDialog(BuildContext context, HomeProvider _)
   {
     VoidCallback continueCallBack = ()  {
-
-      _.contract().then((value) {
   Navigator.of(context).pop();
+      _.contract().then((value) {
+
 
 
 
@@ -234,12 +234,12 @@ class _HomeScreenState extends State<HomeScreen> {
   
       // code on continue comes here
     };
-    BlurryDialog  alert = BlurryDialog(continueCallBack);
+    BlurryDialog  alert = BlurryDialog(_,continueCallBack);
     showDialog(
       context: context,
        barrierDismissible: false,
       builder: (BuildContext context) {
-        return alert;
+        return  alert;
       },
     );
   }

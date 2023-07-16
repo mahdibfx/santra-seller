@@ -87,11 +87,11 @@ class MoreSettingScreen extends StatelessWidget {
                 },
                 btntxt: tr.translateData('more_privacy'),
               ),
-              // SpacingHeight.heightlistspacing50,
-              //    ReusableIconSetting(
-              //   icon: UIDATAIcons.securityIcon,
+
+              // ReusableIconSetting(
+              //   icon: UIDATAIcons.santraVectorIcon,
               //   onPressed: () {
-              //    _showDialog(context);
+              //     _showDialog(context);
               //   },
               //   btntxt: tr.translateData('contract'),
               // ),
@@ -133,7 +133,7 @@ class MoreSettingScreen extends StatelessWidget {
 
       // code on continue comes here
     };
-    BlurryDialog alert = BlurryDialog(continueCallBack);
+    BlurryDialog alert = BlurryDialog(null, continueCallBack);
     showDialog(
       context: context,
       barrierDismissible: false,
