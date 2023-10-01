@@ -18,8 +18,6 @@ import '../../ui/screens/order_detail/manual_order_screen.dart';
 import '../../utils/app_translation/app_translation.dart';
 
 class MyCustomerProvider extends ChangeNotifier {
-
-
   TextEditingController link = TextEditingController();
   bool isViewCustomerLoading = false;
   bool hasViewCustomerError = false;
@@ -240,7 +238,7 @@ class MyCustomerProvider extends ChangeNotifier {
 
   Future<bool> customerInfoSubmitedRequest(
       Customer customerDetail, context) async {
-         var tr = Get.put(AppTranslations());
+    var tr = Get.put(AppTranslations());
     isSubmitOrder = true;
     notifyListeners();
     try {
@@ -256,7 +254,7 @@ class MyCustomerProvider extends ChangeNotifier {
         var data = DeliveryChargesModel.fromJson(decodedJson);
         if (receiptPaymentMethord) {
           var cartProvider = Provider.of<CartProvider>(context, listen: false);
-          
+
           cartProvider.addItemForCustomerCart(
               data, customerDetail, sellerCode, receiptPaymentMethord);
           await cartProvider.orderSubmit();
@@ -269,17 +267,19 @@ class MyCustomerProvider extends ChangeNotifier {
               data, customerDetail, sellerCode, context);
         }
       } else {
-        showToast(tr.translateData("failed_message"), tr.translateData('went_wrong'));
+        showToast(
+            tr.translateData("failed_message"), tr.translateData('went_wrong'));
         isSubmitOrder = false;
         notifyListeners();
         return false;
       }
     } catch (e) {
-      showToast(tr.translateData("failed_message"), tr.translateData('went_wrong'));
+      showToast(
+          tr.translateData("failed_message"), tr.translateData('went_wrong'));
       generalException();
       updateCustomerLoadingState(false);
       isSubmitOrder = true;
-    notifyListeners();
+      notifyListeners();
       return false;
     }
   }
@@ -302,7 +302,8 @@ class MyCustomerProvider extends ChangeNotifier {
         link.text = decodedJson['data'].first['payment_link'];
         cartProvider.flushCart();
         disposeValues();
-        showToast(tr.translateData("success_message"), tr.translateData('order_placed_success'));
+        showToast(tr.translateData("success_message"),
+            tr.translateData('order_placed_success'));
         isSubmitOrder = false;
         popupPaymentlink = true;
         notifyListeners();
@@ -310,7 +311,8 @@ class MyCustomerProvider extends ChangeNotifier {
         Get.offAll(() => const ManualOrderScreen());
         return true;
       } else {
-        showToast(tr.translateData("failed_message"), tr.translateData('went_wrong'));
+        showToast(
+            tr.translateData("failed_message"), tr.translateData('went_wrong'));
         isSubmitOrder = false;
         notifyListeners();
         return false;
@@ -359,8 +361,8 @@ class MyCustomerProvider extends ChangeNotifier {
 // Order Item array to be posted as follows
 // Field name: "", order_items and items in this array are as follows(id, name, price, quantity, item_remarks, modifiers_list(modifier_code,name_modifier,price_modifier))
       "order_items": jsonEncode(cartProvider.cartItems),
-      "delivery_type": cartProvider.toggleValue == 0 ?  "Delivery" : "Pickup",
-
+      "delivery_type": cartProvider.toggleValue == 0 ? "Delivery" : "Pickup",
+      "tax_value": cartProvider.vatTax.toString()
     };
     print(finalSubmitData);
     return await orderSubmitByLink(context);

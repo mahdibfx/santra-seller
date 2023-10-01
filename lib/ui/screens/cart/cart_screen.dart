@@ -41,173 +41,185 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Widget bodyData(context) {
-    return GetBuilder<AppTranslations>(
-      builder: (tr){
-        return Consumer<CartProvider>(
-          builder: (context, _, child) {
-            return _.isLoading
-                ? const SizedBox(
-                    child: Center(
-                    child: CircularProgressIndicator(),
-                  ))
-                : ModalProgressHUD(
-                    inAsyncCall:
-                        _.isCartLoading || _.isDiscountLoading ? true : false,
-                    progressIndicator: const CircularProgressIndicator(),
-                    child: SafeArea(
-                      child: SingleChildScrollView(
-                          child: _.cartItems.isEmpty
-                              ? SizedBox(
-                                  height: MediaQuery.of(context).size.height - 200,
-                                  child: Center(child: Text(tr.translateData("empty_cart"))))
-                              : Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    HeadingWithIcon(
-                                        icon: UIDATAIcons.cartHallowIcon,
-                                        btntxt: tr.translateData("cart_title")),
-                                    Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(15),
-                                          // boxShadow: [
-                                          //   BoxShadow(
-                                          //     color: Colors.black.withOpacity(0.08),
-                                          //     spreadRadius: 1,
-                                          //     blurRadius: 10,
-                                          //     offset: const Offset(0,
-                                          //         0), // changes position of shadow
-                                          //   ),
-                                          // ],
-                                        ),
-                                        height: _.cartItems.length > 2
-                                            ? (2 * 145) +60
-                                            : _.cartItems.length * 145,
-                                        child: ListView.builder(
-                                            padding: EdgeInsets.zero,
-                                            physics: const BouncingScrollPhysics(),
-                                            shrinkWrap: true,
-                                            itemCount: _.cartItems.length,
-                                            itemBuilder: (context, index) {
-                                              return Padding(
-                                                padding: const EdgeInsets.only(
-                                                    bottom: 10),
-                                                child: CartCardOrder(
-                                                  allProducts: _.cartItems,
-                                                  index: index,
-                                                  onDecrese: () => _.decreaseQuantity(
-                                                      _.cartItems[index]),
-                                                  onIncrese: () => _.increaseProductQuantity(
-                                                      _.cartItems[index]),
-                                                  quantity: _
-                                                      .cartItems[index].quantity
-                                                      .toString(),
-                                                ),
-                                              );
-                                            })),
-                                    // SpacingHeight.heightlistspacing10,
-                                    _.isCartLoading
-                                        ? Center(
-                                            child: Padding(
-                                            padding: EdgeInsets.all(8.0),
-                                            child: Text(tr.translateData("voucher_loading")),
-                                          ))
-                                        : VouchersSection(),
-                                    SpacingHeight.heightlistspacing20,
-                                      HeadingWithIcon(
-                                        icon: UIDATAIcons.deliveryIcon,
-                                        btntxt: tr.translateData("choose_delivery_method")),
-                                    AnimatedToggle(
-                                      values: [tr.translateData("delivery"), tr.translateData("pickup")],
-                                        // values: ["delivery", "pickup"],
-                                      onToggleCallback: (value) {
-                                        setState(() {
-                                          _.toggleValue = value;
-                                        });
-                                      },
-                                      initialPosition: _.toggleValue == 0,
-                                      buttonColor: UIDataColors.primaryColor,
-                                      backgroundColor: const Color(0xFFFFFFFF),
-                                      textColor: const Color(0xFFFFFFFF),
-                                    ),
-                                    Container(
+    return GetBuilder<AppTranslations>(builder: (tr) {
+      return Consumer<CartProvider>(
+        builder: (context, _, child) {
+          return _.isLoading
+              ? const SizedBox(
+                  child: Center(
+                  child: CircularProgressIndicator(),
+                ))
+              : ModalProgressHUD(
+                  inAsyncCall:
+                      _.isCartLoading || _.isDiscountLoading ? true : false,
+                  progressIndicator: const CircularProgressIndicator(),
+                  child: SafeArea(
+                    child: SingleChildScrollView(
+                        child: _.cartItems.isEmpty
+                            ? SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height - 200,
+                                child: Center(
+                                    child:
+                                        Text(tr.translateData("empty_cart"))))
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  HeadingWithIcon(
+                                      icon: UIDATAIcons.cartHallowIcon,
+                                      btntxt: tr.translateData("cart_title")),
+                                  Container(
                                       decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(15)),
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.black.withOpacity(0.08),
-                                              spreadRadius: 1,
-                                              blurRadius: 10,
-                                              offset: const Offset(0,
-                                                  0), // changes position of shadow
-                                            ),
-                                          ]),
-                                      child: Column(
-                                        children: [
-                                          HeadingWithIcon(
-                                            icon: UIDATAIcons.calendarIcon,
-                                            btntxt: tr.translateData("cart_delivery_date"),
-                                            iconColor: UIDataColors.primaryColor,
-                                          ).paddingSymmetric(horizontal: 20),
-                                          CalendarDatePicker2(
-                                              config: CalendarDatePicker2Config(
-                                                  firstDate: DateTime.now(),
-                                                  currentDate: DateTime.now(),
-                                                  lastDate: DateTime.now().add(
-                                                      const Duration(days: 180)),
-                                                  weekdayLabelTextStyle:
-                                                      const TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 12),
-                                                  selectedDayHighlightColor:
-                                                      UIDataColors.primaryColor),
-                                              value: _.dates,
-                                              onValueChanged: (dates) {
-                                                _.dates = dates;
-                                                _.setDeliveryDate();
-                                              }),
-                                        ],
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(15),
+                                        // boxShadow: [
+                                        //   BoxShadow(
+                                        //     color: Colors.black.withOpacity(0.08),
+                                        //     spreadRadius: 1,
+                                        //     blurRadius: 10,
+                                        //     offset: const Offset(0,
+                                        //         0), // changes position of shadow
+                                        //   ),
+                                        // ],
                                       ),
-                                    ).paddingOnly(bottom: 20),
-                                    CartPayemntDescriptionCard(
-                                      subtotal: _.totalPrice.toStringAsFixed(1),
-                                      total: _.grandTotal.toStringAsFixed(1),
-                                      deliveryCharges: _.deliveryFee.toString(),
-                                      discount: _.dis.toString(),
+                                      height: _.cartItems.length > 2
+                                          ? (2 * 145) + 60
+                                          : _.cartItems.length * 145,
+                                      child: ListView.builder(
+                                          padding: EdgeInsets.zero,
+                                          physics:
+                                              const BouncingScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount: _.cartItems.length,
+                                          itemBuilder: (context, index) {
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 10),
+                                              child: CartCardOrder(
+                                                allProducts: _.cartItems,
+                                                index: index,
+                                                onDecrese: () =>
+                                                    _.decreaseQuantity(
+                                                        _.cartItems[index]),
+                                                onIncrese: () =>
+                                                    _.increaseProductQuantity(
+                                                        _.cartItems[index]),
+                                                quantity: _
+                                                    .cartItems[index].quantity
+                                                    .toString(),
+                                              ),
+                                            );
+                                          })),
+                                  // SpacingHeight.heightlistspacing10,
+                                  _.isCartLoading
+                                      ? Center(
+                                          child: Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text(tr.translateData(
+                                              "voucher_loading")),
+                                        ))
+                                      : VouchersSection(),
+                                  SpacingHeight.heightlistspacing20,
+                                  HeadingWithIcon(
+                                      icon: UIDATAIcons.deliveryIcon,
+                                      btntxt: tr.translateData(
+                                          "choose_delivery_method")),
+                                  AnimatedToggle(
+                                    values: [
+                                      tr.translateData("delivery"),
+                                      tr.translateData("pickup")
+                                    ],
+                                    // values: ["delivery", "pickup"],
+                                    onToggleCallback: (value) {
+                                      setState(() {
+                                        _.toggleValue = value;
+                                      });
+                                    },
+                                    initialPosition: _.toggleValue == 0,
+                                    buttonColor: UIDataColors.primaryColor,
+                                    backgroundColor: const Color(0xFFFFFFFF),
+                                    textColor: const Color(0xFFFFFFFF),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(15)),
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.08),
+                                            spreadRadius: 1,
+                                            blurRadius: 10,
+                                            offset: const Offset(0,
+                                                0), // changes position of shadow
+                                          ),
+                                        ]),
+                                    child: Column(
+                                      children: [
+                                        HeadingWithIcon(
+                                          icon: UIDATAIcons.calendarIcon,
+                                          btntxt: tr.translateData(
+                                              "cart_delivery_date"),
+                                          iconColor: UIDataColors.primaryColor,
+                                        ).paddingSymmetric(horizontal: 20),
+                                        CalendarDatePicker2(
+                                            config: CalendarDatePicker2Config(
+                                                firstDate: DateTime.now(),
+                                                currentDate: DateTime.now(),
+                                                lastDate: DateTime.now().add(
+                                                    const Duration(days: 180)),
+                                                weekdayLabelTextStyle:
+                                                    const TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 12),
+                                                selectedDayHighlightColor:
+                                                    UIDataColors.primaryColor),
+                                            value: _.dates,
+                                            onValueChanged: (dates) {
+                                              _.dates = dates;
+                                              _.setDeliveryDate();
+                                            }),
+                                      ],
                                     ),
-              
-                                    // Padding(
-                                    //   padding: const EdgeInsets.only(top: 20.0),
-                                    //   child: PrimaryButtonWithIcon(
-                                    //     btntxt: "Submit",
-                                    //     backEndColor: _.finalSubmitData != null
-                                    //         ? UIDataColors.primaryColor
-                                    //         : UIDataColors.whiteColor,
-                                    //     buttontxtColor: _.finalSubmitData != null
-                                    //         ? UIDataColors.whiteColor
-                                    //         : UIDataColors.primaryColor,
-                                    //     iconImageColor: _.finalSubmitData != null
-                                    //         ? UIDataColors.whiteColor
-                                    //         : UIDataColors.primaryColor,
-                                    //     iconImage: UIDATAIcons.sendIcon,
-                                    //     onPressed: () {
-                                    //       if (_.finalSubmitData != null) {
-                                    //         _.orderSubmit();
-                                    //       }
-                                    //     },
-                                    //   ),
-                                    // )
-                                    SpacingHeight.heightlistspacing50
-                                  ],
-                                ).paddingSymmetric(horizontal: 15)),
-                    ),
-                  );
-          },
-        );
-      }
-    );
+                                  ).paddingOnly(bottom: 20),
+                                  CartPayemntDescriptionCard(
+                                    subtotal: _.totalPrice.toStringAsFixed(2),
+                                    total: _.grandTotal.toStringAsFixed(2),
+                                    deliveryCharges: _.deliveryFee.toString(),
+                                    discount: _.dis.toString(),
+                                    tax: _.vatTax.toString(),
+                                  ),
+
+                                  // Padding(
+                                  //   padding: const EdgeInsets.only(top: 20.0),
+                                  //   child: PrimaryButtonWithIcon(
+                                  //     btntxt: "Submit",
+                                  //     backEndColor: _.finalSubmitData != null
+                                  //         ? UIDataColors.primaryColor
+                                  //         : UIDataColors.whiteColor,
+                                  //     buttontxtColor: _.finalSubmitData != null
+                                  //         ? UIDataColors.whiteColor
+                                  //         : UIDataColors.primaryColor,
+                                  //     iconImageColor: _.finalSubmitData != null
+                                  //         ? UIDataColors.whiteColor
+                                  //         : UIDataColors.primaryColor,
+                                  //     iconImage: UIDATAIcons.sendIcon,
+                                  //     onPressed: () {
+                                  //       if (_.finalSubmitData != null) {
+                                  //         _.orderSubmit();
+                                  //       }
+                                  //     },
+                                  //   ),
+                                  // )
+                                  SpacingHeight.heightlistspacing50
+                                ],
+                              ).paddingSymmetric(horizontal: 15)),
+                  ),
+                );
+        },
+      );
+    });
   }
 
   @override

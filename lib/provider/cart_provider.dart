@@ -48,6 +48,7 @@ class CartProvider extends ChangeNotifier {
   List<DateTime?> dates = [];
   bool equalLists = true;
   bool checkMods = false;
+  int taxFeePercantage = 0;
   int toggleValue = 0;
   var deliveryDate;
   setDeliveryDate() {
@@ -78,6 +79,7 @@ class CartProvider extends ChangeNotifier {
     finalSubmitData = null;
     dates.clear();
     deliveryDate = null;
+    taxFeePercantage = 0;
 
     notifyListeners();
   }
@@ -113,7 +115,6 @@ class CartProvider extends ChangeNotifier {
 
   double get deliveryFee {
     double dFee = 0.0;
-
     if (toggleValue == 0) {
       if (preGrandTotal < deliveryChargesCap) {
         dFee = deliveryChargesReal;
@@ -125,6 +126,15 @@ class CartProvider extends ChangeNotifier {
     }
 
     return dFee;
+  }
+
+  double get vatTax {
+    double vat = 0.0;
+    double v = totalPrice + deliveryFee - dis;
+    double c = (v * taxFeePercantage) / 100;
+    vat = c;
+    print("VAT $vat");
+    return vat;
   }
 
   get preGrandTotal {
@@ -177,7 +187,7 @@ class CartProvider extends ChangeNotifier {
 
   get grandTotal {
     double amount = 0;
-    amount = preGrandTotal + deliveryFee;
+    amount = preGrandTotal + deliveryFee + vatTax;
 
     return amount;
   }
@@ -225,6 +235,7 @@ class CartProvider extends ChangeNotifier {
             double.parse(data['data'][0]['delivery_charges_cap'].toString());
         deliveryChargesReal =
             double.parse(data['data'][0]['delivery_charges_real'].toString());
+        taxFeePercantage = data['data'][0]['tax_fee'] ?? 0;
         codCharges = double.parse(data['data'][0]['cash_charges'].toString());
         var vList = voucherL.map((e) => VoucherModel.fromJson(e)).toList();
         vouchersList = vList;
@@ -451,6 +462,7 @@ class CartProvider extends ChangeNotifier {
 // Field name: "", order_items and items in this array are as follows(id, name, price, quantity, item_remarks, modifiers_list(modifier_code,name_modifier,price_modifier))
       "order_items": jsonEncode(cartItems),
       "delivery_type": toggleValue == 0 ? "Delivery" : "Pickup",
+      "tax_value": vatTax.toString()
     };
     notifyListeners();
   }
