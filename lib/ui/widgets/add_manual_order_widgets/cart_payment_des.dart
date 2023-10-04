@@ -78,21 +78,23 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Divider(
-                    height: 1,
-                    color: Colors.green.withOpacity(0.2),
-                  ).paddingOnly(top: 5),
-                  Container(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(tr.translateData("vat")),
-                        const Spacer(),
-                        Text("$tax AED"),
-                      ],
+                  if (tax != "0.0")
+                    Divider(
+                      height: 1,
+                      color: Colors.green.withOpacity(0.2),
+                    ).paddingOnly(top: 5),
+                  if (tax != "0.0")
+                    Container(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(tr.translateData("vat")),
+                          const Spacer(),
+                          Text("$tax AED"),
+                        ],
+                      ),
                     ),
-                  ),
                   Divider(
                     height: 1,
                     color: Colors.green.withOpacity(0.2),
