@@ -19,6 +19,41 @@ import '../../utils/app_translation/app_translation.dart';
 
 class MyCustomerProvider extends ChangeNotifier {
   TextEditingController link = TextEditingController();
+  Map<String, List<String>> cityAreas = {
+    'Dubai': ['Dubai 1.1', 'Dubai 1.2', 'Dubai 1.3'],
+    'Sharjah': ['Sharjah 2.1', 'ArSharjahea 2.2', 'Sharjah 2.3'],
+    'Ajman': ['Ajman 3.1', 'Ajman 3.2', 'Ajman 3.3'],
+    'Umm Ul Quwain': [
+      'Umm Ul Quwain 4.1',
+      'Umm Ul Quwain 4.2',
+      'Umm Ul Quwain 4.3'
+    ],
+    'Fujairah': ['Fujairah 5.1', 'Fujairah 5.2', 'Fujairah 5.3'],
+    'Al Ain': ['Al Ain 6.1', 'Al Ain 6.2', 'Al Ain 6.3'],
+    'Abu Dhabi': ['Abu Dhabi 7.1', 'Abu Dhabi 7.2', 'Abu Dhabi 7.3']
+  };
+  List<String> cityList = [];
+  setCities() {
+    cityList.clear();
+
+    cityAreas.forEach((key, value) {
+      cityList.add(key);
+    });
+
+    notifyListeners();
+  }
+
+  List<String> areas = ['Area 1.1', 'Area 1.2', 'Area 1.3'];
+  getAreas(String? city) {
+    area = null;
+    areas.clear();
+    List<String>? a = cityAreas[city?.trim()]?.toList();
+    areas = a ?? [];
+    area = areas[0];
+    print("AREA $area");
+    notifyListeners();
+  }
+
   bool isViewCustomerLoading = false;
   bool hasViewCustomerError = false;
   bool isShowDetailScreen = false;
@@ -27,6 +62,7 @@ class MyCustomerProvider extends ChangeNotifier {
   late ViewAllCustomers viewAllCustomers;
   List<String>? citiesList = [];
   String? city = 'Dubai';
+  String? area = 'Area 1.1';
   List<Customer> allNewCustomers = [];
   List<Customer>? allFilterCustomers = [];
   bool isAddCustomerLoading = false;

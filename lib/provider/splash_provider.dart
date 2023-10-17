@@ -88,7 +88,7 @@ class SplashProvider extends ChangeNotifier {
     forceUpdate().then((value) {
       if (updateAvailable == true) {
         customOntapDialog(
-            tr.translateData("New Update"),
+            tr.translateData("new_update"),
             tr.translateData("update_message_popup"),
             tr.translateData("update_message"), () {
           goToStore();
@@ -156,7 +156,7 @@ class SplashProvider extends ChangeNotifier {
       var url = Uri.parse(ApiData.forceUpdateApi);
       Map<String, dynamic> body = {};
       body['seller_code'] = "1";
-      body['version'] = "4.1.3";
+      body['version'] = "4.1.4";
       body['app_type'] = "seller";
       body['platform'] =
           Platform.isIOS ? "Mobile_App_iOS" : "Mobile_App_Android";

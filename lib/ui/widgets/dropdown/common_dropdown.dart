@@ -3,13 +3,16 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../../utils/app_translation/app_translation.dart';
 import '../../../utils/uidata.dart';
+
 final tr = Get.put(AppTranslations());
+
 class MyDropdown extends StatefulWidget {
   final List<String> options;
   String? selectedOption;
   var validator;
   String? prefixIcon;
   String? label;
+  double? iconSize;
 
   var onChanged;
   MyDropdown(
@@ -19,6 +22,7 @@ class MyDropdown extends StatefulWidget {
       required this.prefixIcon,
       this.label,
       this.validator,
+      this.iconSize,
       this.onChanged});
 
   @override
@@ -38,7 +42,7 @@ class _MyDropdownState extends State<MyDropdown> {
                 value: selOption,
                 child: Text(
                   selOption,
-                  style:  TextStyle(
+                  style: TextStyle(
                       color: Color.fromARGB(255, 0, 0, 0),
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
@@ -61,8 +65,9 @@ class _MyDropdownState extends State<MyDropdown> {
                 ? GestureDetector(
                     child: SvgPicture.asset(
                     widget.prefixIcon!,
+                    height: widget.iconSize,
                     color: UIDataColors.blackText,
-                  ).paddingSymmetric(vertical: 11))
+                  ).paddingSymmetric(vertical: widget.iconSize ?? 11))
                 : null,
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
