@@ -34,11 +34,6 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
     await Future.microtask(() => context
         .read<MyCustomerProvider>()
         .isComingFromCart(widget.isComingFromCart));
-
-    //     final provider = Provider.of<SignUpProvider>(context);
-    // provider.getCities();
-
-    // Provider.of<MyCustomerProvider>(context, listen: false).isComingFromCart(widget.isComingFromCart);
   }
 
   @override
@@ -49,10 +44,9 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
         Provider.of<MyCustomerProvider>(context, listen: false);
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       customerProvider.setCities();
+      customerProvider.clearCityAndArea();
     });
-
     hitAllApis();
-
     super.initState();
   }
 
@@ -145,118 +139,110 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                         //   }
                         // },
                       ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(child: Consumer<SignUpProvider>(
-                              builder: (context, signUpController, child) {
-                            return MyDropdown(
-                                label: tr.translateData("signup_city"),
-                                validator: (value) {
-                                  if (value == null) {
-                                    return tr.translateData("select_city");
-                                  }
-                                },
-                                prefixIcon: UIDATAIcons.location,
-                                options: _.cityList,
-                                onChanged: (val) {
-                                  _.city = val;
-                                  print("'${_.city}'");
-                                  _.getAreas(_.city);
-                                },
-                                selectedOption: _.city);
-                          })),
-                          SpacingWidth.widthlistspacing15,
-                          if (_.areas.isNotEmpty)
-                            Expanded(
-                              child: DropdownSearch<String>(
-                                dropdownButtonProps: DropdownButtonProps(
-                                    icon: Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child:
-                                      SvgPicture.asset(UIDATAIcons.arrowDown),
-                                )),
-                                popupProps:
-                                    const PopupProps.menu(showSearchBox: true),
-                                items: _.areas,
-                                dropdownDecoratorProps: DropDownDecoratorProps(
-                                  dropdownSearchDecoration: InputDecoration(
-                                    label: Text(
-                                      tr.translateData("area"),
-                                      style:
-                                          const TextStyle(color: Colors.black),
-                                    ),
-                                    prefixIcon: GestureDetector(
-                                        child: SvgPicture.asset(
-                                      UIDATAIcons.areaIcon,
-                                      height: 14,
-                                      color: UIDataColors.blackText,
-                                    ).paddingSymmetric(vertical: 14)),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: const Color(0xff757575)
-                                            .withOpacity(0.7),
-                                      ),
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(15),
-                                      ),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: const Color(0xff757575)
-                                            .withOpacity(0.7),
-                                      ),
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(15),
-                                      ),
-                                    ),
-                                    contentPadding:
-                                        const EdgeInsets.only(left: 10),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                  ),
-                                ),
-                                onChanged: (val) {
-                                  _.area = val;
-                                  print("'${_.area}'");
-                                },
-                                selectedItem: _.area,
+                      SpacingHeight.heightlistspacing5,
+                      MyDropdown(
+                          label: tr.translateData("signup_city"),
+                          validator: (value) {
+                            if (value == null) {
+                              return tr.translateData("select_city");
+                            }
+                          },
+                          prefixIcon: UIDATAIcons.location,
+                          options: _.cityList,
+                          onChanged: (val) {
+                            _.city = val;
+                            _.getAreas(_.city);
+                          },
+                          selectedOption: _.city),
+                      SpacingHeight.heightlistspacing15,
+
+                      if (_.areas.isNotEmpty)
+                        DropdownSearch<String>(
+                          dropdownButtonProps: DropdownButtonProps(
+                              icon: Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: SvgPicture.asset(UIDATAIcons.arrowDown),
+                          )),
+                          popupProps: areaFiledProps(tr),
+                          items: _.areas,
+                          dropdownDecoratorProps: DropDownDecoratorProps(
+                            dropdownSearchDecoration: InputDecoration(
+                              label: Text(
+                                tr.translateData("area"),
+                                style: const TextStyle(color: Colors.black),
                               ),
+                              prefixIcon: GestureDetector(
+                                  child: SvgPicture.asset(
+                                UIDATAIcons.areaIcon,
+                                height: 14,
+                                color: UIDataColors.blackText,
+                              ).paddingSymmetric(vertical: 14)),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color:
+                                      const Color(0xff757575).withOpacity(0.7),
+                                ),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(15),
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color:
+                                      const Color(0xff757575).withOpacity(0.7),
+                                ),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(15),
+                                ),
+                              ),
+                              contentPadding: const EdgeInsets.only(left: 10),
+                              filled: true,
+                              fillColor: Colors.white,
                             ),
-                        ],
-                      ),
-                      CommonTextField(
-                        textInputAction: TextInputAction.next,
-                        controller: _.buildingController,
-                        labelText: tr.translateData("building_no"),
-                        prefixIcon: UIDATAIcons.building,
-                        isTextHidden: false,
-                        fillcolor: UIDataColors.whiteColor,
-                        keyboardType: TextInputType.text,
-                        validator: (val) {
-                          if (val.isEmpty) {
-                            return tr.translateData("enter_building_number");
-                          }
-                        },
-                      ),
-                      CommonTextField(
-                        textInputAction: TextInputAction.next,
-                        controller: _.aptController,
-                        labelText: tr.translateData("apt_villa"),
-                        prefixIcon: UIDATAIcons.homeIcon,
-                        isTextHidden: false,
-                        fillcolor: UIDataColors.whiteColor,
-                        keyboardType: TextInputType.text,
-                        validator: (val) {
-                          if (val.isEmpty) {
-                            return tr.translateData("enter_building");
-                          }
-                        },
-                      ),
+                          ),
+                          onChanged: (val) {
+                            _.area = val;
+                          },
+                          validator: (value) {
+                            if (value == null) {
+                              return tr.translateData("select_city");
+                            }
+                          },
+                          selectedItem: _.area,
+                        ),
+                      SpacingHeight.heightlistspacing10,
+                      // CommonTextField(
+                      //   textInputAction: TextInputAction.next,
+                      //   controller: _.buildingController,
+                      //   labelText: tr.translateData("building_no"),
+                      //   prefixIcon: UIDATAIcons.building,
+                      //   isTextHidden: false,
+                      //   fillcolor: UIDataColors.whiteColor,
+                      //   keyboardType: TextInputType.text,
+                      //   validator: (val) {
+                      //     if (val.isEmpty) {
+                      //       return tr.translateData("enter_building_number");
+                      //     }
+                      //   },
+                      // ),
+                      // CommonTextField(
+                      //   textInputAction: TextInputAction.next,
+                      //   controller: _.aptController,
+                      //   labelText: tr.translateData("apt_villa"),
+                      //   prefixIcon: UIDATAIcons.homeIcon,
+                      //   isTextHidden: false,
+                      //   fillcolor: UIDataColors.whiteColor,
+                      //   keyboardType: TextInputType.text,
+                      //   validator: (val) {
+                      //     if (val.isEmpty) {
+                      //       return tr.translateData("enter_building");
+                      //     }
+                      //   },
+                      // ),
                       CommonTextField(
                         controller: _.addressController,
                         labelText: tr.translateData("address_link"),
-                        prefixIcon: UIDATAIcons.locationPin,
+                        prefixIcon: UIDATAIcons.homeIcon,
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
                         keyboardType: TextInputType.text,
@@ -311,6 +297,53 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
         },
       );
     });
+  }
+
+  PopupProps<String> areaFiledProps(AppTranslations tr) {
+    return PopupProps.menu(
+        showSearchBox: true,
+        searchFieldProps: TextFieldProps(
+            autofocus: true,
+            decoration: InputDecoration(
+              counterText: "",
+              prefixIcon: SvgPicture.asset(
+                UIDATAIcons.searchIcon,
+                color: const Color.fromARGB(255, 55, 63, 68),
+              ).paddingSymmetric(vertical: 11),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: const Color(0xff757575).withOpacity(0.7),
+                ),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              label: Text(tr.translateData("search")),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: const Color(0xff757575).withOpacity(0.7),
+                ),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              fillColor: Colors.white,
+              filled: true,
+              hintStyle: TextStyle(
+                  color: const Color.fromARGB(255, 0, 0, 0),
+                  fontSize: 15,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: tr.getFont(),
+                  letterSpacing: 0.0),
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 11.0, horizontal: 18.0),
+              labelStyle: const TextStyle(color: Colors.black, fontSize: 15.0),
+              border: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15.0),
+                ),
+              ),
+            )));
   }
 
   @override

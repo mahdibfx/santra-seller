@@ -71,6 +71,7 @@ class Customer {
     this.customerMobile,
     this.customerEmail,
     this.customerCity,
+    this.customerArea,
     this.buildingNumber,
     this.buildingType,
     this.addressLink,
@@ -81,6 +82,7 @@ class Customer {
   String? customerMobile;
   String? customerEmail;
   String? customerCity;
+  String? customerArea;
   String? buildingNumber;
   String? buildingType;
   String? addressLink;
@@ -91,6 +93,7 @@ class Customer {
         customerMobile: json["customer_mobile"],
         customerEmail: json["customer_email"],
         customerCity: json["customer_city"],
+        customerArea: json["customer_area"],
         buildingNumber: json["building_number"],
         buildingType: json["building_type"],
         addressLink: json["address_link"],
@@ -102,6 +105,7 @@ class Customer {
         "customer_mobile": customerMobile,
         "customer_email": customerEmail,
         "customer_city": customerCity,
+        "customer_area": customerArea,
         "building_number": buildingNumber,
         "building_type": buildingType,
         "address_link": addressLink,
