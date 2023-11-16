@@ -120,25 +120,25 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                           }
                         },
                       ),
-                      CommonTextField(
-                        textInputAction: TextInputAction.next,
-                        controller: _.emailController,
-                        labelText: tr.translateData("add_customer_email"),
-                        prefixIcon: UIDATAIcons.emailIcon,
-                        isTextHidden: false,
-                        fillcolor: UIDataColors.whiteColor,
-                        keyboardType: TextInputType.text,
-                        // validator: (val) {
-                        //   bool email = _.emailRegex.hasMatch(val);
-                        //   if (val.isEmpty) {
-                        //     return "Please enter Email";
-                        //   } else if (!email) {
-                        //     return "Please Enter valid Email";
-                        //   } else {
-                        //     return null;
-                        //   }
-                        // },
-                      ),
+                      // CommonTextField(
+                      //   textInputAction: TextInputAction.next,
+                      //   controller: _.emailController,
+                      //   labelText: tr.translateData("add_customer_email"),
+                      //   prefixIcon: UIDATAIcons.emailIcon,
+                      //   isTextHidden: false,
+                      //   fillcolor: UIDataColors.whiteColor,
+                      //   keyboardType: TextInputType.text,
+                      //   // validator: (val) {
+                      //   //   bool email = _.emailRegex.hasMatch(val);
+                      //   //   if (val.isEmpty) {
+                      //   //     return "Please enter Email";
+                      //   //   } else if (!email) {
+                      //   //     return "Please Enter valid Email";
+                      //   //   } else {
+                      //   //     return null;
+                      //   //   }
+                      //   // },
+                      // ),
                       SpacingHeight.heightlistspacing5,
                       MyDropdown(
                           label: tr.translateData("signup_city"),
@@ -160,7 +160,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                         DropdownSearch<String>(
                           dropdownButtonProps: DropdownButtonProps(
                               icon: Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
+                            padding: const EdgeInsets.only(right: 0.0),
                             child: SvgPicture.asset(UIDATAIcons.arrowDown),
                           )),
                           popupProps: areaFiledProps(tr),
@@ -171,12 +171,10 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                                 tr.translateData("area"),
                                 style: const TextStyle(color: Colors.black),
                               ),
-                              prefixIcon: GestureDetector(
-                                  child: SvgPicture.asset(
+                              prefixIcon: SvgPicture.asset(
                                 UIDATAIcons.areaIcon,
-                                height: 14,
                                 color: UIDataColors.blackText,
-                              ).paddingSymmetric(vertical: 14)),
+                              ).paddingSymmetric(vertical: 14),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:

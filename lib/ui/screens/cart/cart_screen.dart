@@ -114,7 +114,7 @@ class _CartScreenState extends State<CartScreen> {
                                   _.isCartLoading
                                       ? Center(
                                           child: Padding(
-                                          padding: EdgeInsets.all(8.0),
+                                          padding: const EdgeInsets.all(8.0),
                                           child: Text(tr.translateData(
                                               "voucher_loading")),
                                         ))
@@ -124,22 +124,83 @@ class _CartScreenState extends State<CartScreen> {
                                       icon: UIDATAIcons.deliveryIcon,
                                       btntxt: tr.translateData(
                                           "choose_delivery_method")),
-                                  AnimatedToggle(
-                                    values: [
-                                      tr.translateData("delivery"),
-                                      tr.translateData("pickup")
-                                    ],
-                                    // values: ["delivery", "pickup"],
-                                    onToggleCallback: (value) {
-                                      setState(() {
-                                        _.toggleValue = value;
-                                      });
-                                    },
-                                    initialPosition: _.toggleValue == 0,
-                                    buttonColor: UIDataColors.primaryColor,
-                                    backgroundColor: const Color(0xFFFFFFFF),
-                                    textColor: const Color(0xFFFFFFFF),
+                                  SpacingHeight.heightlistspacing10,
+                                  Container(
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(50)),
+                                        color: Colors.white),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                            child: RoundedButton(
+                                          onTap: () {
+                                            _.setDeliveryMethod("delivery");
+                                          },
+                                          title: tr.translateData("delivery"),
+                                          bgColor:
+                                              _.deliveryMethod == "delivery"
+                                                  ? UIDataColors.primaryColor
+                                                  : Colors.white,
+                                          textColor:
+                                              _.deliveryMethod == "delivery"
+                                                  ? UIDataColors.whiteColor
+                                                  : Colors.black,
+                                        )),
+                                        if (_.showExpress == "yes")
+                                          Expanded(
+                                              child: RoundedButton(
+                                            onTap: () {
+                                              _.setDeliveryMethod("express");
+                                            },
+                                            title: "Express",
+                                            bgColor:
+                                                _.deliveryMethod == "express"
+                                                    ? UIDataColors.primaryColor
+                                                    : Colors.white,
+                                            textColor:
+                                                _.deliveryMethod == "express"
+                                                    ? UIDataColors.whiteColor
+                                                    : Colors.black,
+                                          )),
+                                        if (_.showPickup == "yes")
+                                          Expanded(
+                                              child: RoundedButton(
+                                            onTap: () {
+                                              _.setDeliveryMethod("pickup");
+                                            },
+                                            title: tr.translateData("pickup"),
+                                            bgColor:
+                                                _.deliveryMethod == "pickup"
+                                                    ? UIDataColors.primaryColor
+                                                    : Colors.white,
+                                            textColor:
+                                                _.deliveryMethod == "pickup"
+                                                    ? UIDataColors.whiteColor
+                                                    : Colors.black,
+                                          )),
+                                      ],
+                                    ),
                                   ),
+                                  SpacingHeight.heightlistspacing20,
+                                  // AnimatedToggle(
+                                  //   values: [
+                                  //     tr.translateData("delivery"),
+                                  //     // "Express",
+                                  //     tr.translateData("pickup")
+                                  //   ],
+                                  //   // values: ["delivery", "pickup"],
+                                  //   onToggleCallback: (value) {
+                                  //     setState(() {
+                                  //       _.toggleValue = value;
+                                  //       print("DDDDDDDD${_.toggleValue}");
+                                  //     });
+                                  //   },
+                                  //   initialPosition: _.toggleValue == 0,
+                                  //   buttonColor: UIDataColors.primaryColor,
+                                  //   backgroundColor: const Color(0xFFFFFFFF),
+                                  //   textColor: const Color(0xFFFFFFFF),
+                                  // ),
                                   Container(
                                     decoration: BoxDecoration(
                                         borderRadius: const BorderRadius.all(
@@ -257,6 +318,47 @@ class _CartScreenState extends State<CartScreen> {
       },
       floatingIcon: Icons.add,
       // elevation: 3.0,
+    );
+  }
+}
+
+class RoundedButton extends StatelessWidget {
+  final Color? bgColor;
+  final Color? textColor;
+  final String? title;
+  var onTap;
+  RoundedButton(
+      {super.key,
+      required this.bgColor,
+      required this.onTap,
+      required this.textColor,
+      required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        alignment: Alignment.center,
+        height: 50,
+        decoration: ShapeDecoration(
+          color: bgColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            title ?? "",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: textColor,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

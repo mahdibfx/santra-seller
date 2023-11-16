@@ -14,7 +14,6 @@ import '../../models/customers/view_all_customers.dart';
 import '../../models/seller_all_products_model.dart';
 import '../../models/voucher_model.dart';
 import '../../utils/api_data.dart';
-import '../ui/screens/order_detail/all_order_screen.dart';
 import '../utils/app_translation/app_translation.dart';
 
 AppFlyerController appFlyerController = Get.put(AppFlyerController());
@@ -29,8 +28,10 @@ class CartProvider extends ChangeNotifier {
   bool receiptPaymentType = true;
   List<CartItem> cartItems = <CartItem>[];
   double deliverChargeForBackend = 0.0;
-
+  String? showPickup;
+  String? showExpress;
   double deliveryCharges = 0.0;
+  double maxDiscount = 0.0;
   double codCharges = 0.0;
   double discount = 0.0;
   dynamic finalSubmitData;
@@ -51,6 +52,12 @@ class CartProvider extends ChangeNotifier {
   int taxFeePercantage = 0;
   int toggleValue = 0;
   var deliveryDate;
+  String deliveryMethod = "delivery";
+  setDeliveryMethod(String dMethod) {
+    deliveryMethod = dMethod;
+    notifyListeners();
+  }
+
   setDeliveryDate() {
     if (dates.isNotEmpty) {
       deliveryDate = DateFormat('yyyy-MM-dd').format(dates[0]!);
@@ -60,7 +67,11 @@ class CartProvider extends ChangeNotifier {
   }
 
   flushCart() {
+    deliveryMethod = "delivery";
+    showExpress = null;
+    showPickup = null;
     deliveryCharges = 0.0;
+    maxDiscount = 0.0;
     isShowCartButton = false;
     receiptPaymentType = true;
     cartItems.clear();
@@ -133,18 +144,7 @@ class CartProvider extends ChangeNotifier {
     double v = totalPrice + deliveryFee - dis;
     double c = (v * taxFeePercantage) / 100;
     vat = c;
-    print("VAT $vat");
     return vat;
-  }
-
-  get preGrandTotal {
-    double preAmount = 0;
-    // if (paymentType != "COD") {
-    //   codCharges = 0.0;
-    // }
-    preAmount = totalPrice - dis + codCharges;
-
-    return preAmount;
   }
 
   double get dis {
@@ -162,8 +162,11 @@ class CartProvider extends ChangeNotifier {
       voucherCode = null;
       promoValid = false;
     }
-    print("DISCOUNT$disAmount");
-    return disAmount;
+    if (disAmount > maxDiscount) {
+      return maxDiscount;
+    } else {
+      return disAmount;
+    }
   }
 
   double get totalPrice {
@@ -181,8 +184,17 @@ class CartProvider extends ChangeNotifier {
           modifierAmount;
       return subAmount;
     });
-    print("TOTAL PRICE$subAmount");
     return subAmount;
+  }
+
+  get preGrandTotal {
+    double preAmount = 0;
+    // if (paymentType != "COD") {
+    //   codCharges = 0.0;
+    // }
+    preAmount = totalPrice - dis + codCharges;
+
+    return preAmount;
   }
 
   get grandTotal {
@@ -198,6 +210,7 @@ class CartProvider extends ChangeNotifier {
     discount = double.parse(vouchersList[index].discountApplied.toString());
     discountType = vouchersList[index].disType;
     voucherListVoucherCode = vouchersList[index].offerTitle;
+    maxDiscount = double.parse(vouchersList[index].maxDiscount.toString());
     voucherCode = null;
     promoValid = false;
     notifyListeners();
@@ -207,7 +220,7 @@ class CartProvider extends ChangeNotifier {
   void toggleApplied(index) {
     activeOffers.clear();
     activeOffers.contains(index)
-        ? activeOffers.remove(index)
+        ? {activeOffers.remove(index), discount = 0.0}
         : activeOffers.add(index);
     voucherCode = null;
     promoValid = false;
@@ -227,7 +240,7 @@ class CartProvider extends ChangeNotifier {
           await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        print(data);
+
         var voucherL = data['data'][0]['vouchers'] as List<dynamic>;
         deliveryCharges =
             double.parse(data['data'][0]['delivery_charges'].toString());
@@ -239,6 +252,8 @@ class CartProvider extends ChangeNotifier {
         codCharges = double.parse(data['data'][0]['cash_charges'].toString());
         var vList = voucherL.map((e) => VoucherModel.fromJson(e)).toList();
         vouchersList = vList;
+        showExpress = data['data'][0]['check_flags'][0]['express_flag'];
+        showPickup = data['data'][0]['check_flags'][0]['pickup_allowed'];
       } else {
         generalException();
       }
@@ -272,6 +287,7 @@ class CartProvider extends ChangeNotifier {
         }
         var data = jsonDecode(response.body);
         discount = double.parse(data['data'][0]['discount_applied'].toString());
+        maxDiscount = double.parse(data['data'][0]['max_discount'].toString());
         discountType = data['data'][0]['discount_type'].toString();
         capAmount = double.parse(data['data'][0]['cap_amount'].toString());
         voucherAppliedMsg = data['data'][0]['message'].toString();
@@ -453,7 +469,7 @@ class CartProvider extends ChangeNotifier {
           '${customerDetail.buildingType} ${customerDetail.buildingNumber} ${customerDetail.customerCity}', //Address of the customer
       "area_customer": customerDetail.customerCity, // area of the customer
       "building_number":
-          customerDetail.buildingNumber, // building  of the customer
+          customerDetail.customerArea, // building  of the customer
       "order_remarks":
           "no_remarks", // order comments if any otherwise send no_remarks
       "user_tips": "0", // if any otherwise send 0
@@ -461,7 +477,7 @@ class CartProvider extends ChangeNotifier {
 // Order Item array to be posted as follows
 // Field name: "", order_items and items in this array are as follows(id, name, price, quantity, item_remarks, modifiers_list(modifier_code,name_modifier,price_modifier))
       "order_items": jsonEncode(cartItems),
-      "delivery_type": toggleValue == 0 ? "Delivery" : "Pickup",
+      "delivery_type": deliveryMethod,
       "tax_value": vatTax.toString()
     };
     notifyListeners();
@@ -479,6 +495,7 @@ class CartProvider extends ChangeNotifier {
         flushCart();
       }
     } catch (e) {
+      print(e);
       // showToast(tr.translateData("oops_message"), tr.translateData('error_load_data'));
       // generalException();
       // hasError = true;

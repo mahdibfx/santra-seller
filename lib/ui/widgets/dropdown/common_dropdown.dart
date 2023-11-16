@@ -33,7 +33,7 @@ class _MyDropdownState extends State<MyDropdown> {
   @override
   Widget build(BuildContext context) {
     return ButtonTheme(
-      alignedDropdown: true,
+      alignedDropdown: false,
       child: DropdownButtonFormField(
           isExpanded: true,
           validator: widget.validator,
@@ -43,7 +43,7 @@ class _MyDropdownState extends State<MyDropdown> {
                 child: Text(
                   selOption,
                   style: TextStyle(
-                      color: Color.fromARGB(255, 0, 0, 0),
+                      color: const Color.fromARGB(255, 0, 0, 0),
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
                       fontFamily: tr.getFont(),
@@ -52,7 +52,7 @@ class _MyDropdownState extends State<MyDropdown> {
           }).toList(),
           onChanged: widget.onChanged,
           icon: Padding(
-            padding: const EdgeInsets.only(right: 8.0),
+            padding: const EdgeInsets.only(right: 18.0),
             child: SvgPicture.asset(UIDATAIcons.arrowDown),
           ),
           value: widget.selectedOption ?? "",

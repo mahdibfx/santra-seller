@@ -577,12 +577,20 @@ class MyCustomerProvider extends ChangeNotifier {
                 customerDetail: Customer(
                   id: id,
                   customerCity: city ?? "",
-                  customerEmail: emailController.text,
-                  customerMobile: mobileController.text,
-                  customerName: fnController.text,
-                  buildingNumber: buildingController.text,
-                  buildingType: aptController.text,
-                  addressLink: addressController.text,
+                  customerEmail: emailController.text.isNotEmpty
+                      ? emailController.text
+                      : "",
+                  customerMobile: mobileController.text.isNotEmpty
+                      ? mobileController.text
+                      : "",
+                  customerName:
+                      fnController.text.isNotEmpty ? fnController.text : "",
+                  customerArea: area ?? "",
+                  buildingType:
+                      aptController.text.isNotEmpty ? aptController.text : "",
+                  addressLink: addressController.text.isNotEmpty
+                      ? addressController.text
+                      : "",
                 ),
               ));
         } else {
@@ -763,7 +771,7 @@ class MyCustomerProvider extends ChangeNotifier {
           '${customerDetail.buildingType} ${customerDetail.buildingNumber} ${customerDetail.customerCity}', //Address of the customer
       "area_customer": customerDetail.customerCity, // area of the customer
       "building_number":
-          customerDetail.buildingNumber, // building  of the customer
+          customerDetail.customerArea, // building  of the customer
       "order_remarks":
           "no_remarks", // order comments if any otherwise send no_remarks
       "user_tips": "0", // if any otherwise send 0
@@ -771,7 +779,7 @@ class MyCustomerProvider extends ChangeNotifier {
 // Order Item array to be posted as follows
 // Field name: "", order_items and items in this array are as follows(id, name, price, quantity, item_remarks, modifiers_list(modifier_code,name_modifier,price_modifier))
       "order_items": jsonEncode(cartProvider.cartItems),
-      "delivery_type": cartProvider.toggleValue == 0 ? "Delivery" : "Pickup",
+      "delivery_type": cartProvider.deliveryMethod,
       "tax_value": cartProvider.vatTax.toString()
     };
     print(finalSubmitData);

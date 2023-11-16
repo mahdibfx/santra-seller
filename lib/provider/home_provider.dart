@@ -7,6 +7,7 @@ import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:io';
 import '../../ui/widgets/snackbar/common_snackbar.dart';
 import '../../utils/api_data.dart';
@@ -17,7 +18,7 @@ import '../constants/app_constants.dart';
 import 'cart_provider.dart';
 
 class HomeProvider extends ChangeNotifier {
-   final BuildContext context;
+  final BuildContext context;
 
   HomeProvider(this.context);
 
@@ -71,7 +72,7 @@ class HomeProvider extends ChangeNotifier {
   ];
   var selectedYear = 'Year';
   var selectedMonth = 'Month';
-  
+
   updateCancelOrderLoading(bool value) {
     isCancelOrderLoading = value;
     notifyListeners();
@@ -107,7 +108,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future<bool> isInternetAvailable() async {
-     var tr = Get.put(AppTranslations());
+    var tr = Get.put(AppTranslations());
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -115,9 +116,8 @@ class HomeProvider extends ChangeNotifier {
         return response.statusCode == HttpStatus.ok;
       }
     } on SocketException catch (_) {
-      customOntapDialog(
-          tr.translateData("val_no_internet"), tr.translateData("no_internet_msg"), tr.translateData("okay"),
-          () {
+      customOntapDialog(tr.translateData("val_no_internet"),
+          tr.translateData("no_internet_msg"), tr.translateData("okay"), () {
         Get.back();
       });
       // CommonSnackbar.getSnackbar(
@@ -149,8 +149,8 @@ class HomeProvider extends ChangeNotifier {
         generalException();
       }
     } catch (e) {
-      CommonSnackbar.getSnackbar(
-          tr.translateData("oops_message"), tr.translateData("went_wrong"), UIDataColors.redColor);
+      CommonSnackbar.getSnackbar(tr.translateData("oops_message"),
+          tr.translateData("went_wrong"), UIDataColors.redColor);
     }
   }
 
@@ -194,17 +194,17 @@ class HomeProvider extends ChangeNotifier {
           notifyListeners();
           print(newOrderSantraCount);
         } else {
-          CommonSnackbar.getSnackbar(tr.translateData("error_message"),
-              tr.translateData("something_wrong_message"), UIDataColors.redColor);
+          CommonSnackbar.getSnackbar(
+              tr.translateData("error_message"),
+              tr.translateData("something_wrong_message"),
+              UIDataColors.redColor);
         }
       } catch (e) {
         isLoading = false;
         notifyListeners();
 
-        CommonSnackbar.getSnackbar(
-            tr.translateData("serve_error"),
-            tr.translateData("serve_error_internet"),
-            UIDataColors.redColor);
+        CommonSnackbar.getSnackbar(tr.translateData("serve_error"),
+            tr.translateData("serve_error_internet"), UIDataColors.redColor);
       }
     }
   }
@@ -223,8 +223,8 @@ class HomeProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         notifyListeners();
         // Get.snackbar("Accepted", "Order has been accepted");
-        CommonSnackbar.getSnackbar(
-            tr.translateData("cancelled"), tr.translateData("order_cancelled"), UIDataColors.primaryColor);
+        CommonSnackbar.getSnackbar(tr.translateData("cancelled"),
+            tr.translateData("order_cancelled"), UIDataColors.primaryColor);
         Get.offAll(() => const HomeScreen());
         // Get.offAllNamed(Routes.homeRoutes);
       } else {
@@ -233,13 +233,14 @@ class HomeProvider extends ChangeNotifier {
       }
     } catch (e) {
       notifyListeners();
-      CommonSnackbar.getSnackbar(
-          tr.translateData("oops_message"), tr.translateData("went_wrong"), UIDataColors.redColor);
+      CommonSnackbar.getSnackbar(tr.translateData("oops_message"),
+          tr.translateData("went_wrong"), UIDataColors.redColor);
     }
     updateCancelOrderLoading(false);
   }
 
-  Future acceptOrdermethod(String orderNumber, String orderType, String orderPrice) async {
+  Future acceptOrdermethod(
+      String orderNumber, String orderType, String orderPrice) async {
     var tr = Get.put(AppTranslations());
     try {
       updateAcceptOrderLoading(true);
@@ -251,10 +252,9 @@ class HomeProvider extends ChangeNotifier {
       body['order_number'] = orderNumber;
       var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
-                CommonSnackbar.getSnackbar(
-          
-            tr.translateData("status_accepted"), tr.translateData("order_accepted_msg"), UIDataColors.primaryColor);
-            
+        CommonSnackbar.getSnackbar(tr.translateData("status_accepted"),
+            tr.translateData("order_accepted_msg"), UIDataColors.primaryColor);
+
         appFlyerController.orderConfirmedEvent(orderPrice, orderType);
         notifyListeners();
         // Get.snackbar("Accepted", "Order has been accepted");
@@ -267,8 +267,8 @@ class HomeProvider extends ChangeNotifier {
       }
     } catch (e) {
       notifyListeners();
-      CommonSnackbar.getSnackbar(
-          tr.translateData("oops_message"), tr.translateData("went_wrong"), UIDataColors.redColor);
+      CommonSnackbar.getSnackbar(tr.translateData("oops_message"),
+          tr.translateData("went_wrong"), UIDataColors.redColor);
     }
     updateAcceptOrderLoading(false);
   }
@@ -288,8 +288,8 @@ class HomeProvider extends ChangeNotifier {
         appFlyerController.cancelOrderEvent();
         notifyListeners();
 
-        CommonSnackbar.getSnackbar(
-            tr.translateData("status_rejected"), tr.translateData("rejected_order"), UIDataColors.primaryColor);
+        CommonSnackbar.getSnackbar(tr.translateData("status_rejected"),
+            tr.translateData("rejected_order"), UIDataColors.primaryColor);
         // Get.offAllNamed(Routes.homeRoutes);
         Get.offAll(() => const HomeScreen());
       } else {
@@ -301,8 +301,8 @@ class HomeProvider extends ChangeNotifier {
     } catch (e) {
       notifyListeners();
 
-      CommonSnackbar.getSnackbar(
-          tr.translateData("oops_message"), tr.translateData("went_wrong"), UIDataColors.redColor);
+      CommonSnackbar.getSnackbar(tr.translateData("oops_message"),
+          tr.translateData("went_wrong"), UIDataColors.redColor);
     }
     updateRejectOrderLoading(false);
   }
@@ -318,8 +318,8 @@ class HomeProvider extends ChangeNotifier {
       body['order_number'] = orderNumber.toString();
       var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
-        CommonSnackbar.getSnackbar(tr.translateData("success_message"), tr.translateData("order_ready_msg"),
-            UIDataColors.primaryColor);
+        CommonSnackbar.getSnackbar(tr.translateData("success_message"),
+            tr.translateData("order_ready_msg"), UIDataColors.primaryColor);
         Get.offAll(() => const HomeScreen());
       } else {
         generalException();
@@ -328,14 +328,14 @@ class HomeProvider extends ChangeNotifier {
         // print("Unable to reject order");
       }
     } catch (e) {
-      CommonSnackbar.getSnackbar(
-          tr.translateData("oops_message"), tr.translateData("went_wrong"), UIDataColors.redColor);
+      CommonSnackbar.getSnackbar(tr.translateData("oops_message"),
+          tr.translateData("went_wrong"), UIDataColors.redColor);
     }
     updateOrderReadyLoading(false);
     notifyListeners();
   }
 
-    Future<bool> contract() async {
+  Future<bool> contract() async {
     updateOrderReadyLoading(true);
     isLoading = true;
     var tr = Get.put(AppTranslations());
@@ -346,31 +346,30 @@ class HomeProvider extends ChangeNotifier {
       body['seller_code'] = prefs.getString("sellercode");
       body['status_accepted'] = "yes";
       var response = await http.post(url, headers: ApiData.header, body: body);
-       isLoading = false;
+      isLoading = false;
       if (response.statusCode == 200) {
-        CommonSnackbar.getSnackbar(tr.translateData("success_message"), tr.translateData("okay"),
-            UIDataColors.primaryColor);
-            AppConstants.homeModel.data.first.showContract = "no";
-                updateOrderReadyLoading(false);
-    notifyListeners();
-            return true;
+        CommonSnackbar.getSnackbar(tr.translateData("success_message"),
+            tr.translateData("okay"), UIDataColors.primaryColor);
+        AppConstants.homeModel.data.first.showContract = "no";
+        updateOrderReadyLoading(false);
+        notifyListeners();
+        return true;
       } else {
         generalException();
         // print(response.statusCode);
         // print("Unable to reject order");
-            updateOrderReadyLoading(false);
-    notifyListeners();
+        updateOrderReadyLoading(false);
+        notifyListeners();
         return false;
       }
     } catch (e) {
       isLoading = false;
-      CommonSnackbar.getSnackbar(
-          tr.translateData("oops_message"), tr.translateData("went_wrong"), UIDataColors.redColor);
-              updateOrderReadyLoading(false);
-    notifyListeners();
-           return false;
+      CommonSnackbar.getSnackbar(tr.translateData("oops_message"),
+          tr.translateData("went_wrong"), UIDataColors.redColor);
+      updateOrderReadyLoading(false);
+      notifyListeners();
+      return false;
     }
-
   }
 
   //////////////////////////////--------Filteration START--------///////////
@@ -488,33 +487,33 @@ class HomeProvider extends ChangeNotifier {
         return const Color(0xff0098B1);
     }
   }
-String getArabicPaymentMethod(String paymentName){
-  var tr = Get.put(AppTranslations());
-  switch (paymentName.toLowerCase()) {
-case 'online_paid':
+
+  String getArabicPaymentMethod(String paymentName) {
+    var tr = Get.put(AppTranslations());
+    switch (paymentName.toLowerCase()) {
+      case 'online_paid':
         return tr.translateData("payment_online_paid");
       case 'cash':
-        return  tr.translateData("payment_cash");
+        return tr.translateData("payment_cash");
       default:
-       return tr.translateData("payment_card");
-}
-}
+        return tr.translateData("payment_card");
+    }
+  }
 
-String getEnglishPaymentMethod(String paymentName){
-  var tr = Get.put(AppTranslations());
-  switch (paymentName.toLowerCase()) {
-case 'online_paid':
+  String getEnglishPaymentMethod(String paymentName) {
+    var tr = Get.put(AppTranslations());
+    switch (paymentName.toLowerCase()) {
+      case 'online_paid':
         return tr.translateData("payment_online_paid");
       case 'cash':
-        return  tr.translateData("payment_cash");
+        return tr.translateData("payment_cash");
       default:
-       return tr.translateData("payment_card");
-}
-}
-
+        return tr.translateData("payment_card");
+    }
+  }
 
   String getStatus(String status) {
-      var tr = Get.put(AppTranslations());
+    var tr = Get.put(AppTranslations());
     switch (status.toLowerCase()) {
       case 'new_order':
         return tr.translateData('status_new_order');
@@ -542,5 +541,13 @@ case 'online_paid':
     sellerStatusNew = prefs.getString('sellerStatus');
     notifyListeners();
     print(sellerStatusNew);
+  }
+
+  Future<void> makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
   }
 }

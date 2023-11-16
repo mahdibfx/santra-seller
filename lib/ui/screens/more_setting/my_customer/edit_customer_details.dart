@@ -141,7 +141,7 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
                       DropdownSearch<String>(
                         dropdownButtonProps: DropdownButtonProps(
                             icon: Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
+                          padding: const EdgeInsets.only(right: 0.0),
                           child: SvgPicture.asset(UIDATAIcons.arrowDown),
                         )),
                         popupProps: areaFiledProps(tr),
