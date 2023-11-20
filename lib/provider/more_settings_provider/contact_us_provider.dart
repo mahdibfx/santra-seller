@@ -44,7 +44,7 @@ class ContactUsProvider with ChangeNotifier {
   }
 
   Future sendMessage() async {
-       var tr = Get.put(AppTranslations());
+    var tr = Get.put(AppTranslations());
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       changeSendMsgLoadingState(true);
@@ -57,11 +57,8 @@ class ContactUsProvider with ChangeNotifier {
       body['message'] = messageController.text;
       var response = await http.post(url, body: body, headers: ApiData.header);
       if (response.statusCode == 200) {
-        appFlyerController.contactServiceSubmitEvent();
-        CommonSnackbar.getSnackbar(
-            tr.translateData("success_message"),
-            tr.translateData("message_delivered"),
-            UIDataColors.primaryColor);
+        CommonSnackbar.getSnackbar(tr.translateData("success_message"),
+            tr.translateData("message_delivered"), UIDataColors.primaryColor);
         clearFieldsAfterSend();
 
         if (prefs.getString("sellercode") == null) {

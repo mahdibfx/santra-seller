@@ -1,7 +1,9 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/all_orders_manual.dart';
+import 'package:santra_seller/provider/firebase_events/firebase_events.dart';
 import 'package:santra_seller/provider/splash_provider.dart';
 import 'package:santra_seller/ui/screens/cart/cart_screen.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
@@ -10,7 +12,7 @@ import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonW
 import 'package:santra_seller/ui/widgets/textfields/common_textfield.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
-import '../../../provider/apps_flyr/appflyer_provider.dart';
+
 import '../../../provider/cart_provider.dart';
 import '../../widgets/add_manual_order_widgets/rounded_close_button.dart';
 import '../../widgets/add_manual_order_widgets/pd_card_add_manual_order.dart';
@@ -20,7 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../utils/uidata.dart';
 import '../../widgets/snackbar/common_snackbar.dart';
- AppFlyerController appFlyerController = Get.put(AppFlyerController());
+
 class AddManulOrder extends StatefulWidget {
   const AddManulOrder({super.key});
 
@@ -29,9 +31,6 @@ class AddManulOrder extends StatefulWidget {
 }
 
 class _AddManulOrderState extends State<AddManulOrder> {
-
-      
-
   bool showAdd = true;
   // CartController cartController = Get.put((CartController()));
 
@@ -152,7 +151,6 @@ class _AddManulOrderState extends State<AddManulOrder> {
   @override
   void initState() {
     hitAllApis();
-    appFlyerController.addOrderEvent();
     super.initState();
   }
 
@@ -206,6 +204,8 @@ class ProductSheetContent extends StatefulWidget {
 }
 
 class _ProductSheetContentState extends State<ProductSheetContent> {
+  FirebaseAnalyticsController firebaseEvents =
+      Get.put(FirebaseAnalyticsController());
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -378,7 +378,11 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                                                                     .toString()
                                                                     .split(",")
                                                                     .last;
-                                                                    var modsModel = manualOrderController.filteredProducts[widget.index].modifiers![index2];
+                                                                var modsModel = manualOrderController
+                                                                    .filteredProducts[
+                                                                        widget
+                                                                            .index]
+                                                                    .modifiers![index2];
                                                                 var byDefList =
                                                                     [];
                                                                 for (var e
@@ -391,28 +395,26 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                                                                   }
                                                                 }
 
-                                                                if(maxVals == '1'){
-                                                                 for(var mod in modsModel.subModifiers!){
-
-                                                                  if(mod.byDefault =='1'){
-                                                                   setStatec(
-                                                                        () {
-                                                                      mod.byDefault =
-                                                                          "0";
-                                                                    });
+                                                                if (maxVals ==
+                                                                    '1') {
+                                                                  for (var mod
+                                                                      in modsModel
+                                                                          .subModifiers!) {
+                                                                    if (mod.byDefault ==
+                                                                        '1') {
+                                                                      setStatec(
+                                                                          () {
+                                                                        mod.byDefault =
+                                                                            "0";
+                                                                      });
+                                                                    }
                                                                   }
-                                                                 }
-                                                                 setStatec(
-                                                                        () {
-                                                                      newData[sebIndex]
-                                                                              .byDefault =
-                                                                          "1";
-                                                                    });
-
-
-                                                                }
-
-                                                                else if (byDefList
+                                                                  setStatec(() {
+                                                                    newData[sebIndex]
+                                                                            .byDefault =
+                                                                        "1";
+                                                                  });
+                                                                } else if (byDefList
                                                                             .length >=
                                                                         int.parse(
                                                                             maxVals) &&
@@ -425,9 +427,7 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                                                                       "Your selection limit is $maxVals",
                                                                       UIDataColors
                                                                           .redColor);
-                                                                } 
-                                                                
-                                                                else {
+                                                                } else {
                                                                   if (value!) {
                                                                     setStatec(
                                                                         () {
@@ -473,7 +473,7 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                                 )
                               : const SizedBox(),
                           PrimaryButtonWithIcon(
-                            onPressed: () {
+                            onPressed: () async {
                               for (var e in manualOrderController
                                   .filteredProducts[widget.index].modifiers!) {
                                 var minLimits = e.limitModifiers
@@ -501,16 +501,22 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                                   if (c.byDefault == "1") {
                                     manualOrderController.addOnProducts.add(c);
                                   }
-                                  print("add on length:" +
-                                      manualOrderController.addOnProducts.length
-                                          .toString());
                                 }
                               }
 
                               Get.back();
                               var itemValue = manualOrderController
                                   .filteredProducts[widget.index];
-
+                              await firebaseEvents.firebaseAddToCartEvent(
+                                  itemValue.productName ?? "",
+                                  double.parse(
+                                    manualOrderController
+                                        .productPriceWithQuantityAndMods(
+                                            manualOrderController
+                                                    .filteredProducts[
+                                                widget.index]),
+                                  ),
+                                  itemValue.productQuantity.toString());
                               var data = CartItem(
                                   quantity: itemValue.productQuantity,
                                   imageString:
@@ -522,24 +528,23 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                                   subModifiers:
                                       manualOrderController.addOnProducts);
 
+                              Get.back();
                               final cartProvider = context.read<CartProvider>();
                               cartProvider.addToCart(data);
                               manualOrderController.addIntoCart();
                               manualOrderController.resetDefaultQuanity(
                                   manualOrderController
                                       .filteredProducts[widget.index]);
-                                      appFlyerController.addItemsEvent();
-                              Get.back();
+                              // Get.back();
                             },
                             subBtntxt: 'AED',
                             btntxt: tr.translateData("add_to_cart_button"),
-                                            moreBtntxt: manualOrderController
-                                    .productPriceWithQuantityAndMods(
-                                        manualOrderController
-                                            .filteredProducts[widget.index]),
+                            moreBtntxt: manualOrderController
+                                .productPriceWithQuantityAndMods(
+                                    manualOrderController
+                                        .filteredProducts[widget.index]),
                             iconImage: UIDATAIcons.cartIcon,
                           ),
-                          
                           SpacingHeight.heightlistspacing35
                         ],
                       ).paddingOnly(left: 12, right: 12, top: 18, bottom: 0),

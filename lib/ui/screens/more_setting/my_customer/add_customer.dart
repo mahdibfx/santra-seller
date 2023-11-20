@@ -5,6 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/auth_providers/sign_up_provider.dart';
+import 'package:santra_seller/provider/cart_provider.dart';
+import 'package:santra_seller/ui/widgets/add_manual_order_widgets/cart_card.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
@@ -29,7 +31,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
   // final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   GlobalKey<FormState> form = GlobalKey<FormState>();
   // SignUpController signUpController = Get.put(SignUpController());
-
+  late CartProvider cartProvider;
   hitAllApis() async {
     await Future.microtask(() => context
         .read<MyCustomerProvider>()
@@ -39,6 +41,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
   @override
   void initState() {
     final provider = Provider.of<SignUpProvider>(context, listen: false);
+    cartProvider = Provider.of(context, listen: false);
     provider.getCities();
     final customerProvider =
         Provider.of<MyCustomerProvider>(context, listen: false);
@@ -277,7 +280,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                                   child: PrimaryButtonWithIcon(
                                     onPressed: () {
                                       if (form.currentState!.validate()) {
-                                        _.addCustomer();
+                                        _.addCustomer(cartProvider!);
                                       }
                                     },
                                     btntxt: tr.translateData(

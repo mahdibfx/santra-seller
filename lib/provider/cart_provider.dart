@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:santra_seller/provider/apps_flyr/appflyer_provider.dart';
+import 'package:santra_seller/provider/firebase_events/firebase_events.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,13 +17,12 @@ import '../../models/voucher_model.dart';
 import '../../utils/api_data.dart';
 import '../utils/app_translation/app_translation.dart';
 
-AppFlyerController appFlyerController = Get.put(AppFlyerController());
-
 class CartProvider extends ChangeNotifier {
   // final BuildContext context;
 
   // CartProvider(this.context);
-
+  FirebaseAnalyticsController firebaseAnalyticsController =
+      Get.put(FirebaseAnalyticsController());
   bool isLoading = false;
   bool isShowCartButton = false;
   bool receiptPaymentType = true;
@@ -35,6 +35,7 @@ class CartProvider extends ChangeNotifier {
   double codCharges = 0.0;
   double discount = 0.0;
   dynamic finalSubmitData;
+  String? sellerCity;
   List<VoucherModel> vouchersList = [];
   String? discountType;
   double capAmount = 0.0;
@@ -126,7 +127,7 @@ class CartProvider extends ChangeNotifier {
 
   double get deliveryFee {
     double dFee = 0.0;
-    if (toggleValue == 0) {
+    if (deliveryMethod != "pickup") {
       if (preGrandTotal < deliveryChargesCap) {
         dFee = deliveryChargesReal;
         deliverChargeForBackend = dFee;
@@ -149,7 +150,6 @@ class CartProvider extends ChangeNotifier {
 
   double get dis {
     double disAmount = 0.0;
-
     if (totalPrice >= capAmount) {
       if (discountType == "AED") {
         disAmount = discount;
@@ -251,6 +251,9 @@ class CartProvider extends ChangeNotifier {
         taxFeePercantage = data['data'][0]['tax_fee'] ?? 0;
         codCharges = double.parse(data['data'][0]['cash_charges'].toString());
         var vList = voucherL.map((e) => VoucherModel.fromJson(e)).toList();
+        sellerCity = data['data'][0]['seller_city'];
+        prefs.setString("sellercity", sellerCity ?? "");
+
         vouchersList = vList;
         showExpress = data['data'][0]['check_flags'][0]['express_flag'];
         showPickup = data['data'][0]['check_flags'][0]['pickup_allowed'];
@@ -294,7 +297,6 @@ class CartProvider extends ChangeNotifier {
         voucherListVoucherCode = null;
         activeOffers.clear();
         promoValid = true;
-        appFlyerController.voucherCodeEvent(voucherCode.toString());
       } else {
         changeDiscountLoadingState(false);
         discount = 0.0;
@@ -490,12 +492,17 @@ class CartProvider extends ChangeNotifier {
       print(finalSubmitData.toString());
       var response =
           await http.post(url, headers: ApiData.header, body: finalSubmitData);
+      var body = jsonDecode(response.body);
+      print("Body$body");
+
+      String id = body['data']['order_number'].toString();
+
       if (response.statusCode == 200) {
+        await firebaseAnalyticsController.firebasePurchaseEvent(id, grandTotal);
         Get.offAll(() => const HomeScreen());
         flushCart();
       }
     } catch (e) {
-      print(e);
       // showToast(tr.translateData("oops_message"), tr.translateData('error_load_data'));
       // generalException();
       // hasError = true;

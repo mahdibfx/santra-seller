@@ -255,7 +255,6 @@ class HomeProvider extends ChangeNotifier {
         CommonSnackbar.getSnackbar(tr.translateData("status_accepted"),
             tr.translateData("order_accepted_msg"), UIDataColors.primaryColor);
 
-        appFlyerController.orderConfirmedEvent(orderPrice, orderType);
         notifyListeners();
         // Get.snackbar("Accepted", "Order has been accepted");
 
@@ -285,7 +284,6 @@ class HomeProvider extends ChangeNotifier {
       body['order_number'] = orderNumber.toString();
       var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
-        appFlyerController.cancelOrderEvent();
         notifyListeners();
 
         CommonSnackbar.getSnackbar(tr.translateData("status_rejected"),

@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:santra_seller/constants/areas_lists.dart';
 import 'package:santra_seller/models/customers/view_all_customers.dart';
 import 'package:santra_seller/provider/cart_provider.dart';
+import 'package:santra_seller/provider/firebase_events/firebase_events.dart';
 import 'package:santra_seller/provider/home_provider.dart';
 import 'package:santra_seller/ui/screens/more_setting/my_customer/my_customer_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
@@ -20,7 +21,9 @@ import '../../utils/app_translation/app_translation.dart';
 
 class MyCustomerProvider extends ChangeNotifier {
   TextEditingController link = TextEditingController();
-
+  FirebaseAnalyticsController firebaseAnalyticsController =
+      Get.put(FirebaseAnalyticsController());
+  AppTranslations tr = Get.put(AppTranslations());
   Map<String, List<String>> cityAreas = {
     'Dubai': AreasList.dubaiAreas,
     'Sharjah': AreasList.sharjahAreas,
@@ -544,62 +547,69 @@ class MyCustomerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future addCustomer() async {
+  Future addCustomer(CartProvider cart) async {
     try {
       updateAddLoadingState(true);
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? sellerCode = prefs.getString("sellercode");
-      var url = Uri.parse(ApiData.addCustomer);
-      var request = http.MultipartRequest('POST', url);
-      var body = <String, String>{};
-      body['seller_code'] = sellerCode ?? "";
-      body['customer_name'] = fnController.text;
-      body['customer_mobile'] = mobileController.text;
-      body['customer_email'] =
-          emailController.text.isEmpty ? "" : emailController.text;
-      body['customer_city'] = city ?? "";
-      body['customer_area'] = area ?? "";
-      body['building_number'] = buildingController.text;
-      body['building_type'] = aptController.text;
-      body['address_link'] = addressController.text;
-      request.fields.addAll(body);
-      request.headers.addAll(ApiData.header);
-      var streamedResponse = await request.send();
-      var response = await http.Response.fromStream(streamedResponse);
-
-      if (response.statusCode == 200) {
-        var data = jsonDecode(response.body);
-        var id = data['data']['user_id'];
-
-        updateAddLoadingState(false);
-        if (isShowDetailScreen) {
-          Get.off(() => ViewCustomerDetails(
-                customerDetail: Customer(
-                  id: id,
-                  customerCity: city ?? "",
-                  customerEmail: emailController.text.isNotEmpty
-                      ? emailController.text
-                      : "",
-                  customerMobile: mobileController.text.isNotEmpty
-                      ? mobileController.text
-                      : "",
-                  customerName:
-                      fnController.text.isNotEmpty ? fnController.text : "",
-                  customerArea: area ?? "",
-                  buildingType:
-                      aptController.text.isNotEmpty ? aptController.text : "",
-                  addressLink: addressController.text.isNotEmpty
-                      ? addressController.text
-                      : "",
-                ),
-              ));
-        } else {
-          disposeValues();
-          Get.off(() => const MyCustomerScreen());
-          viewCustomers();
-        }
+      String? sellerCity = prefs.getString("sellercity");
+      if (isShowDetailScreen &&
+          (city != sellerCity && cart.deliveryMethod == "express")) {
+        exceptionDialog(tr.translateData("not_allowed"),
+            tr.translateData("express_not_allowed"));
       } else {
-        generalException();
+        String? sellerCode = prefs.getString("sellercode");
+        var url = Uri.parse(ApiData.addCustomer);
+        var request = http.MultipartRequest('POST', url);
+        var body = <String, String>{};
+        body['seller_code'] = sellerCode ?? "";
+        body['customer_name'] = fnController.text;
+        body['customer_mobile'] = mobileController.text;
+        body['customer_email'] =
+            emailController.text.isEmpty ? "" : emailController.text;
+        body['customer_city'] = city ?? "";
+        body['customer_area'] = area ?? "";
+        body['building_number'] = buildingController.text;
+        body['building_type'] = aptController.text;
+        body['address_link'] = addressController.text;
+        request.fields.addAll(body);
+        request.headers.addAll(ApiData.header);
+        var streamedResponse = await request.send();
+        var response = await http.Response.fromStream(streamedResponse);
+
+        if (response.statusCode == 200) {
+          var data = jsonDecode(response.body);
+          var id = data['data']['user_id'];
+
+          updateAddLoadingState(false);
+          if (isShowDetailScreen) {
+            Get.off(() => ViewCustomerDetails(
+                  customerDetail: Customer(
+                    id: id,
+                    customerCity: city ?? "",
+                    customerEmail: emailController.text.isNotEmpty
+                        ? emailController.text
+                        : "",
+                    customerMobile: mobileController.text.isNotEmpty
+                        ? mobileController.text
+                        : "",
+                    customerName:
+                        fnController.text.isNotEmpty ? fnController.text : "",
+                    customerArea: area ?? "",
+                    buildingType:
+                        aptController.text.isNotEmpty ? aptController.text : "",
+                    addressLink: addressController.text.isNotEmpty
+                        ? addressController.text
+                        : "",
+                  ),
+                ));
+          } else {
+            disposeValues();
+            Get.off(() => const MyCustomerScreen());
+            viewCustomers();
+          }
+        } else {
+          generalException();
+        }
       }
     } catch (err) {
       generalException();
@@ -678,7 +688,6 @@ class MyCustomerProvider extends ChangeNotifier {
           await cartProvider.orderSubmit();
           isSubmitOrder = false;
           notifyListeners();
-          appFlyerController.codEvent();
           return false;
         } else {
           return await addItemForCustomerLink(
@@ -715,9 +724,11 @@ class MyCustomerProvider extends ChangeNotifier {
       var response =
           await http.post(url, headers: ApiData.header, body: finalSubmitData);
       if (response.statusCode == 200) {
-        appFlyerController.paymentLinkEvent();
         var decodedJson = jsonDecode(response.body);
+        String id = decodedJson['data'][0]['order_number'].toString();
         link.text = decodedJson['data'].first['payment_link'];
+        await firebaseAnalyticsController.firebasePurchaseEvent(
+            id, cartProvider.grandTotal);
         cartProvider.flushCart();
         disposeValues();
         showToast(tr.translateData("success_message"),

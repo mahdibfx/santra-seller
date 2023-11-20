@@ -217,7 +217,6 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
 
   @override
   void initState() {
-    appFlyerController.contactCustomerServiceEvent();
     super.initState();
   }
 

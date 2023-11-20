@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:santra_seller/provider/firebase_events/firebase_events.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/seller_all_products_model.dart';
 import '../../ui/widgets/dialogs/custom_dialogs.dart';
@@ -9,6 +10,8 @@ import '../../utils/api_data.dart';
 
 class AddManualOrderProvider extends ChangeNotifier {
   late SelllerAllProductsModel selllerAllProductsModel;
+  FirebaseAnalyticsController firebaseAnalyticsController =
+      Get.put(FirebaseAnalyticsController());
   // var cartController = Get.put(CartController());
   bool showAddButton = true;
 
@@ -42,7 +45,7 @@ class AddManualOrderProvider extends ChangeNotifier {
       product.productQuantity += 1;
     }
     notifyListeners();
-      productPriceWithQuantityAndMods(product);
+    productPriceWithQuantityAndMods(product);
   }
 
   void decreaseDefaultQuanity(Product product) {
@@ -56,7 +59,7 @@ class AddManualOrderProvider extends ChangeNotifier {
   void resetDefaultQuanity(Product product) {
     product.productQuantity = 1;
     notifyListeners();
-      productPriceWithQuantityAndMods(product);
+    productPriceWithQuantityAndMods(product);
   }
 
   showAddIcon() {
@@ -64,22 +67,29 @@ class AddManualOrderProvider extends ChangeNotifier {
     notifyListeners();
   }
 
- String productPriceWithQuantityAndMods(Product product){
-  // var product =  filteredProducts[index];
-    double modsPrc = 0; 
-    for(var e in product.modifiers! ){
-      for(var j in e.subModifiers!){
-        if(j.byDefault == '1'){
-modsPrc += double.parse(j.priceModifier.toString());
+  int defaultQty([int? q]) {
+    int qty = 0;
+    qty = q ?? qty;
+    return qty;
+  }
+
+  String productPriceWithQuantityAndMods(Product product) {
+    // var product =  filteredProducts[index];
+    double modsPrc = 0;
+    for (var e in product.modifiers!) {
+      for (var j in e.subModifiers!) {
+        if (j.byDefault == '1') {
+          modsPrc += double.parse(j.priceModifier.toString());
         }
-
       }
-
     }
-    var proPrice = ( double.parse(product.productPrice.toString()) + modsPrc ) * product.productQuantity;
-    print(proPrice);
-    return proPrice.toString() ;
+    var proPrice = (double.parse(product.productPrice.toString()) + modsPrc) *
+        product.productQuantity;
+    print(product.productQuantity);
 
+    defaultQty(product.productQuantity);
+
+    return proPrice.toString();
   }
 
   hideAddButton() {

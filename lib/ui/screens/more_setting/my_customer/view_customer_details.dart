@@ -133,7 +133,6 @@ class _ViewCustomerDetailsState extends State<ViewCustomerDetails> {
                         iconImage: UIDATAIcons.sendIcon,
                         onPressed: () {
                           if (widget.customerDetail != null) {
-                            appFlyerController.submitOrderEvent();
                             _
                                 .customerInfoSubmitedRequest(
                                     widget.customerDetail!, context)
@@ -159,7 +158,6 @@ class _ViewCustomerDetailsState extends State<ViewCustomerDetails> {
 
   @override
   void initState() {
-    appFlyerController.customerInfoEvent();
     super.initState();
   }
 
