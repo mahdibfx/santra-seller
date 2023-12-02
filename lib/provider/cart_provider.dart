@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:santra_seller/provider/apps_flyr/appflyer_provider.dart';
+import 'package:santra_seller/provider/apps_flyr/appflyer_controller.dart';
 import 'package:santra_seller/provider/firebase_events/firebase_events.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
@@ -47,6 +47,7 @@ class CartProvider extends ChangeNotifier {
   String? voucherListVoucherCode;
   double deliveryChargesCap = 0.0;
   double deliveryChargesReal = 0.0;
+  double deliveryChargesExpress = 0.0;
   List<DateTime?> dates = [];
   bool equalLists = true;
   bool checkMods = false;
@@ -56,6 +57,12 @@ class CartProvider extends ChangeNotifier {
   String deliveryMethod = "delivery";
   setDeliveryMethod(String dMethod) {
     deliveryMethod = dMethod;
+    if (deliveryMethod == "express") {
+      setDateToday();
+    } else {
+      deliveryDate = null;
+      dates.clear();
+    }
     notifyListeners();
   }
 
@@ -67,6 +74,11 @@ class CartProvider extends ChangeNotifier {
     }
   }
 
+  setDateToday() {
+    deliveryDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    notifyListeners();
+  }
+
   flushCart() {
     deliveryMethod = "delivery";
     showExpress = null;
@@ -75,6 +87,7 @@ class CartProvider extends ChangeNotifier {
     maxDiscount = 0.0;
     isShowCartButton = false;
     receiptPaymentType = true;
+    deliveryChargesExpress = 0.0;
     cartItems.clear();
     deliveryChargesCap = 0.0;
     deliveryChargesReal = 0.0;
@@ -128,7 +141,11 @@ class CartProvider extends ChangeNotifier {
   double get deliveryFee {
     double dFee = 0.0;
     if (deliveryMethod != "pickup") {
-      if (preGrandTotal < deliveryChargesCap) {
+      if (preGrandTotal < deliveryChargesCap && deliveryMethod == "express") {
+        dFee = deliveryChargesExpress;
+        deliverChargeForBackend = dFee;
+      } else if (preGrandTotal < deliveryChargesCap &&
+          deliveryMethod != "express") {
         dFee = deliveryChargesReal;
         deliverChargeForBackend = dFee;
       } else {
@@ -136,7 +153,6 @@ class CartProvider extends ChangeNotifier {
         deliverChargeForBackend = dFee;
       }
     }
-
     return dFee;
   }
 
@@ -240,7 +256,6 @@ class CartProvider extends ChangeNotifier {
           await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-
         var voucherL = data['data'][0]['vouchers'] as List<dynamic>;
         deliveryCharges =
             double.parse(data['data'][0]['delivery_charges'].toString());
@@ -248,12 +263,13 @@ class CartProvider extends ChangeNotifier {
             double.parse(data['data'][0]['delivery_charges_cap'].toString());
         deliveryChargesReal =
             double.parse(data['data'][0]['delivery_charges_real'].toString());
+        deliveryChargesExpress = double.parse(
+            data['data'][0]['delivery_charges_express'].toString());
         taxFeePercantage = data['data'][0]['tax_fee'] ?? 0;
         codCharges = double.parse(data['data'][0]['cash_charges'].toString());
         var vList = voucherL.map((e) => VoucherModel.fromJson(e)).toList();
         sellerCity = data['data'][0]['seller_city'];
         prefs.setString("sellercity", sellerCity ?? "");
-
         vouchersList = vList;
         showExpress = data['data'][0]['check_flags'][0]['express_flag'];
         showPickup = data['data'][0]['check_flags'][0]['pickup_allowed'];

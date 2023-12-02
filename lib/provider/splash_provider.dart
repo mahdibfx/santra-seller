@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:santra_seller/provider/apps_flyr/appflyer_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:santra_seller/provider/apps_flyr/appflyer_controller.dart';
 import 'package:santra_seller/provider/firebase_events/firebase_events.dart';
 import 'package:santra_seller/ui/screens/auth_screen/login_screen.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
@@ -17,6 +19,7 @@ class SplashProvider extends ChangeNotifier {
   var tr = Get.put(AppTranslations());
   FirebaseAnalyticsController firebaseAnalytics =
       Get.put(FirebaseAnalyticsController());
+  AppFlyerController afController = Get.put(AppFlyerController());
 
   bool isLoading = false;
 
@@ -50,6 +53,24 @@ class SplashProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  String _authStatus = 'Unknown';
+
+  Future<void> initPlugin() async {
+    final TrackingStatus status =
+        await AppTrackingTransparency.trackingAuthorizationStatus;
+    _authStatus = '$status';
+    // If the system can show an authorization request dialog
+    if (status == TrackingStatus.notDetermined) {
+      await Future.delayed(const Duration(milliseconds: 200));
+      // Request system's tracking authorization dialog
+      final TrackingStatus status =
+          await AppTrackingTransparency.requestTrackingAuthorization();
+      _authStatus = '$status';
+    }
+    //final uuid = await AppTrackingTransparency.getAdvertisingIdentifier();
+    notifyListeners();
+  }
+
   setOldLang() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var checkLang = prefs.get("selectedlanguage");
@@ -66,9 +87,12 @@ class SplashProvider extends ChangeNotifier {
   }
 
   checkInstallFirsTime() async {
+    await Future.delayed(const Duration(seconds: 3), () => initPlugin());
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? firstTime = prefs.getBool('first_time');
 
+    afController.appflyerLogs();
     if (firstTime == null) {
       // first time
       await firebaseAnalytics.firebaseAppInstallEvent();

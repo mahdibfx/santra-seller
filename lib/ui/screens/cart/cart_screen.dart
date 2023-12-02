@@ -197,49 +197,53 @@ class _CartScreenState extends State<CartScreen> {
                                   //   backgroundColor: const Color(0xFFFFFFFF),
                                   //   textColor: const Color(0xFFFFFFFF),
                                   // ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(15)),
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color:
-                                                Colors.black.withOpacity(0.08),
-                                            spreadRadius: 1,
-                                            blurRadius: 10,
-                                            offset: const Offset(0,
-                                                0), // changes position of shadow
-                                          ),
-                                        ]),
-                                    child: Column(
-                                      children: [
-                                        HeadingWithIcon(
-                                          icon: UIDATAIcons.calendarIcon,
-                                          btntxt: tr.translateData(
-                                              "cart_delivery_date"),
-                                          iconColor: UIDataColors.primaryColor,
-                                        ).paddingSymmetric(horizontal: 20),
-                                        CalendarDatePicker2(
-                                            config: CalendarDatePicker2Config(
-                                                firstDate: DateTime.now(),
-                                                currentDate: DateTime.now(),
-                                                lastDate: DateTime.now().add(
-                                                    const Duration(days: 180)),
-                                                weekdayLabelTextStyle:
-                                                    const TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 12),
-                                                selectedDayHighlightColor:
-                                                    UIDataColors.primaryColor),
-                                            value: _.dates,
-                                            onValueChanged: (dates) {
-                                              _.dates = dates;
-                                              _.setDeliveryDate();
-                                            }),
-                                      ],
-                                    ),
-                                  ).paddingOnly(bottom: 20),
+                                  if (_.deliveryMethod != "express")
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(15)),
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black
+                                                  .withOpacity(0.08),
+                                              spreadRadius: 1,
+                                              blurRadius: 10,
+                                              offset: const Offset(0,
+                                                  0), // changes position of shadow
+                                            ),
+                                          ]),
+                                      child: Column(
+                                        children: [
+                                          HeadingWithIcon(
+                                            icon: UIDATAIcons.calendarIcon,
+                                            btntxt: tr.translateData(
+                                                "cart_delivery_date"),
+                                            iconColor:
+                                                UIDataColors.primaryColor,
+                                          ).paddingSymmetric(horizontal: 20),
+                                          CalendarDatePicker2(
+                                              config: CalendarDatePicker2Config(
+                                                  firstDate: DateTime.now(),
+                                                  currentDate: DateTime.now(),
+                                                  lastDate: DateTime.now().add(
+                                                      const Duration(
+                                                          days: 180)),
+                                                  weekdayLabelTextStyle:
+                                                      const TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 12),
+                                                  selectedDayHighlightColor:
+                                                      UIDataColors
+                                                          .primaryColor),
+                                              value: _.dates,
+                                              onValueChanged: (dates) {
+                                                _.dates = dates;
+                                                _.setDeliveryDate();
+                                              }),
+                                        ],
+                                      ),
+                                    ).paddingOnly(bottom: 20),
                                   CartPayemntDescriptionCard(
                                     subtotal: _.totalPrice.toStringAsFixed(2),
                                     total: _.grandTotal.toStringAsFixed(2),

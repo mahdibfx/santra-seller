@@ -1,7 +1,7 @@
 name: santra_seller
 description: A new Flutter project.
 publish_to: 'none'
-version: 4.1.9+1
+version: 4.2.0+1
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
@@ -45,6 +45,8 @@ dependencies:
   envify:
   flutter_markdown: ^0.6.17
   dropdown_search: ^5.0.6
+  app_tracking_transparency: ^2.0.4
+  permission_handler: ^10.2.0
 
 # dependency_overrides:
 #  package_info_plus: ^4.0.1

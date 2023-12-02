@@ -1,3 +1,4 @@
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import '../../../utils/app_translation/app_translation.dart';
@@ -19,10 +20,12 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with WidgetsBindingObserver {
   var tr = Get.put(AppTranslations());
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+
     SplashProvider splashProvider =
         Provider.of<SplashProvider>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((_) {
