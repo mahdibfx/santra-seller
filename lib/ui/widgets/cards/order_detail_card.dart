@@ -25,7 +25,7 @@ class CustomCard extends StatefulWidget {
   final String orderStatus;
   final String customerPhone;
   final String paymentLink;
-   String orderType;   // manual order , santra order etc
+  String orderType; // manual order , santra order etc
   List<OrderItem> orderItemList;
 
   CustomCard({
@@ -80,416 +80,429 @@ class _CustomCardState extends State<CustomCard>
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AppTranslations>(
-      builder: (tr) {
-        return Consumer<HomeProvider>(builder: (context, _, child) {
-          return GestureDetector(
-            onTap: _toggleCard,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    spreadRadius: 1,
-                    blurRadius: 1,
-                    offset: const Offset(-1, 1), // changes position of shadow
+    return GetBuilder<AppTranslations>(builder: (tr) {
+      return Consumer<HomeProvider>(builder: (context, _, child) {
+        return GestureDetector(
+          onTap: _toggleCard,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 1,
+                  blurRadius: 1,
+                  offset: const Offset(-1, 1), // changes position of shadow
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(10.0),
+                        bottomRight: Radius.circular(10.0),
+                        topLeft: Radius.circular(10.0),
+                        bottomLeft: Radius.circular(10.0)),
                   ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(10.0),
-                          bottomRight: Radius.circular(10.0),
-                          topLeft: Radius.circular(10.0),
-                          bottomLeft: Radius.circular(10.0)),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            SvgPicture.asset(
-                              UIDATAIcons.ordeBascketFull,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            UIDATAIcons.ordeBascketFull,
+                            color: UIDataColors.primaryColor,
+                          ),
+                          SpacingWidth.widthlistspacing,
+                          Text(
+                            '${widget.orderType.toLowerCase() == "express" ? tr.translateData("express") : widget.orderType.toLowerCase() == "pickup" ? tr.translateData("pickup") : widget.orderType.toLowerCase() == "delivery" ? tr.translateData("delivery") : ""} ${tr.translateData('order_number')}${widget.orderNumber}',
+                            style: UIDataTextStyles.h2.copyWith(fontSize: 12),
+                          ),
+                          const Spacer(),
+                          Container(
+                            decoration: BoxDecoration(
                               color: UIDataColors.primaryColor,
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
-                            SpacingWidth.widthlistspacing,
-                            Text(
-                              '${tr.translateData('order_number')} ${widget.orderNumber}',
-                              style: UIDataTextStyles.h2.copyWith(fontSize: 12),
-                            ),
-                            const Spacer(),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: UIDataColors.primaryColor,
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Center(
-                                child: SvgPicture.asset(
-                                  _isOpen
-                                      ? UIDATAIcons.cardOpen
-                                      : UIDATAIcons.cardClose,
-                                ),
+                            child: Center(
+                              child: SvgPicture.asset(
+                                _isOpen
+                                    ? UIDATAIcons.cardOpen
+                                    : UIDATAIcons.cardClose,
                               ),
                             ),
-                          ],
-                        ).marginOnly(left: 10, right: 10, top: 10, bottom: 10),
-                        Container(
-                          color: Colors.grey.shade200,
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                      child: Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        UIDATAIcons.orderTime,
-                                        color: UIDataColors.primaryColor,
-                                      ),
-                                      SpacingWidth.widthlistspacing,
-                                      Text(dateFormat(widget.orderTime)),
-                                    ],
-                                  )),
-                                  const Spacer(),
-                                  Container(
-                                      child: Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        UIDATAIcons.deliveryIcon,
-                                        color: UIDataColors.primaryColor,
-                                      ),
-                                      SpacingWidth.widthlistspacing,
-                                      Text('${widget.deliveryTime}'),
-                                    ],
-                                  )),
-                                ],
-                              ).marginOnly(left: 10, right: 10, top: 10, bottom: 5),
-                              Row(
-                                children: [
-                                  Container(
-                                      child: Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        height: 16,
-                                        UIDATAIcons.userIcon,
-                                        color: UIDataColors.primaryColor,
-                                      ),
-                                      SpacingWidth.widthlistspacing,
-                                      Text('${widget.customerName}'),
-                                    ],
-                                  )),
-                                  const Spacer(),
-                                  Container(
-                                      child: Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        UIDATAIcons.paymentMethod,
-                                        color: UIDataColors.primaryColor,
-                                      ),
-                                      SpacingWidth.widthlistspacing,
-                                      Text('${widget.paymentMethod}'),
-                                    ],
-                                  )),
-                                ],
-                              ).marginOnly(left: 10, right: 10, top: 5, bottom: 5),
-                             !widget.orderType.contains("Delivery") ?
-
-                              Row(
-                                children: [
-                                  Container(
-                                      child: Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        height: 16,
-                                        UIDATAIcons.callIcon,
-                                        color: UIDataColors.primaryColor,
-                                      ),
-                                      SpacingWidth.widthlistspacing,
-                                      Text('${widget.customerPhone}'),
-                                    ],
-                                  )),
-                                  const Spacer(),
-                                  Container(
-                                      child: Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        height: 16,
-                                        UIDATAIcons.orderBascketBorder,
-                                        color: UIDataColors.primaryColor,
-                                      ),
-                                      SpacingWidth.widthlistspacing,
-                                      Text(tr.translateData("pickup")),
-                                    ],
-                                  )),
-                                ],
-                              ).marginOnly(left: 10, right: 10, top: 5, bottom: 10)
-                              :
-                              Container().marginOnly(bottom: 5)
-                            ],
                           ),
-                        ),
-                        _isOpen
-                            ? const SizedBox()
-                            : Container(
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  color: _.getColor(widget.orderStatus),
-                                  borderRadius: const BorderRadius.only(
-                                      // topRight: Radius.circular(10.0),
-                                      bottomRight: Radius.circular(10.0),
-                                      // topLeft: Radius.circular(10.0),
-                                      bottomLeft: Radius.circular(10.0)),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    _.getStatus(widget.orderStatus),
-                                    style: const TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: widget.orderItemList.isEmpty ? 
-                    (_heightFactorAnimation.value *
-                            (Get.locale!.languageCode == 'en' ? 173 + _calculateContainerHeight(): 179 + _calculateContainerHeight())) :
-                    widget.orderRemarks.toString().isEmpty
-                        ? (_heightFactorAnimation.value *
-                            (Get.locale!.languageCode == 'en' ? 130 + _calculateContainerHeight():136 + _calculateContainerHeight()))
-                        : (_heightFactorAnimation.value *
-                            (Get.locale!.languageCode == 'en' ? 173 + _calculateContainerHeight(): 179  + _calculateContainerHeight())),
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(10.0),
-                          bottomLeft: Radius.circular(10.0)),
-                    ),
-                    child: Column(
-                      children: [
-                        SpacingHeight.heightlistspacing10,
-                        SizedBox(
-                          height: _calculateContainerHeight(),
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: widget.orderItemList.length,
-                              itemBuilder: (context, index) {
-                                return OrderItemWidget(
-                                  imageString:
-                                      widget.orderItemList[index].productImage,
-                                  productQuantity:
-                                      widget.orderItemList[index].productQuantity,
-                                  productName:
-                                  Get.locale!.languageCode == 'en' ?    widget.orderItemList[index].productName : widget.orderItemList[index].productNameArabic,
-                                  productPrice:
-                                      widget.orderItemList[index].productTotal,
-                                );
-                              }),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                        ],
+                      ).marginOnly(left: 10, right: 10, top: 10, bottom: 10),
+                      Container(
+                        color: Colors.grey.shade200,
+                        child: Column(
                           children: [
-                            Text(tr.translateData("total_price"),
-                                style:
-                                    UIDataTextStyles.textMediumColoredBlue.copyWith(
-                                  color: UIDataColors.blackColor,
-                                )),
-                            SpacingWidth.widthlistspacing,
-                            Text('${widget.totalPrice} AED',
-                                style:
-                                    UIDataTextStyles.textMediumColoredBlue.copyWith(
-                                  color: UIDataColors.primaryColor,
-                                )),
-                          ],
-                        ).marginOnly(right:10, left: 10),
-                        widget.orderRemarks.isEmpty ? SizedBox() :
-                        Container(
-                          color: Colors.grey.shade200,
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                UIDATAIcons.orderRemarks,
-                                color: UIDataColors.primaryColor,
-                              ),
-                              Expanded(
-                                child: Text(
-                                  widget.orderRemarks,
-                                  maxLines: 2,
-                                ).marginOnly(left:10, top: 4, bottom: 4),
-                              ),
-                            ],
-                          ).marginOnly(left: 10, right: 10),
-                        ),
-                        Container(
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: _.getColor(widget.orderStatus),
-                          ),
-                          child: Center(
-                            child: Text(
-                              _.getStatus(widget.orderStatus),
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        SpacingHeight.heightlistspacing10,
-                        // const Spacer(),
-                        widget.orderStatus == 'payment_pending'
-                            ? Row(
-                                children: [
-                                  Expanded(
-                                    child: BorderButton(
-                                      height: 40,
-                                          width: 140,
-                                      btntxt: tr.translateData("button_cancel"),
-                                      borderColor: Colors.red,
-                                      buttontxtColor: Colors.red,
-                                      backEndColor: Colors.white,
-                                      onPressed: () {
-                                        showpopup(
-                                            tr.translateData('cancel_order_message'),
-                                            () {
-                                          Get.back();
-                                          _.cancelOrdermethod(widget.orderNumber);
-                                        });
-                                      },
+                            Row(
+                              children: [
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      UIDATAIcons.orderTime,
+                                      color: UIDataColors.primaryColor,
                                     ),
-                                  ),
-                                  SpacingWidth.widthlistspacing,
-                                  widget.paymentLink == 'no_link'
-                                      ? Container()
-                                      : Expanded(
-                                          child: BorderButton(
-                                            height: 40,
-                                          width: 140,
-                                            btntxt: tr.translateData('button_copy_payment_link'),
-                                            // borderColor: Colors.blue,
-                                            buttontxtColor: Colors.white,
-                                            // backEndColor: Colors.blue,
-                                            onPressed: () async {
-                                              await Clipboard.setData(ClipboardData(
-                                                      text: widget.paymentLink))
-                                                  .then((value) {
-                                                CommonSnackbar.getSnackbar(
-                                                    "Copied",
-                                                    "Payment link has been copied in to clipbaord",
-                                                    UIDataColors.primaryColor);
-                                              });
-          
-                                              // copied successfully
-                                            },
-                                          ),
-                                        ),
-                                ],
-                              ).marginOnly(left:15, right: 15, bottom: 10)
-                            : widget.orderStatus == 'assigned_3pl'
+                                    SpacingWidth.widthlistspacing,
+                                    Text(dateFormat(widget.orderTime)),
+                                  ],
+                                ),
+                                const Spacer(),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      UIDATAIcons.deliveryIcon,
+                                      color: UIDataColors.primaryColor,
+                                    ),
+                                    SpacingWidth.widthlistspacing,
+                                    Text(widget.deliveryTime),
+                                  ],
+                                ),
+                              ],
+                            ).marginOnly(
+                                left: 10, right: 10, top: 10, bottom: 5),
+                            Row(
+                              children: [
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      height: 16,
+                                      UIDATAIcons.userIcon,
+                                      color: UIDataColors.primaryColor,
+                                    ),
+                                    SpacingWidth.widthlistspacing,
+                                    Text(widget.customerName),
+                                  ],
+                                ),
+                                const Spacer(),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      UIDATAIcons.paymentMethod,
+                                      color: UIDataColors.primaryColor,
+                                    ),
+                                    SpacingWidth.widthlistspacing,
+                                    Text(widget.paymentMethod),
+                                  ],
+                                ),
+                              ],
+                            ).marginOnly(
+                                left: 10, right: 10, top: 5, bottom: 5),
+                            !widget.orderType.contains("Delivery")
                                 ? Row(
                                     children: [
-                                      Expanded(
-                                        child: BorderButton(
-                                          height: 40,
-                                          width: 140,
-                                          btntxt: tr.translateData("button_cancel"),
-                                          borderColor: Colors.red,
-                                          buttontxtColor: Colors.red,
-                                          backEndColor: Colors.white,
-                                          onPressed: () {
-                                            showpopup(
-                                                tr.translateData('cancel_message'),
-                                                () {
-                                              Get.back();
-                                              _.cancelOrdermethod(widget.orderNumber);
-                                            });
-                                          },
-                                        ),
+                                      Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            height: 16,
+                                            UIDATAIcons.callIcon,
+                                            color: UIDataColors.primaryColor,
+                                          ),
+                                          SpacingWidth.widthlistspacing,
+                                          Text(widget.customerPhone),
+                                        ],
                                       ),
-                                      SpacingWidth.widthlistspacing15,
-                                      // Expanded(
-                                      //   child: Consumer<CartProvider>(
-                                      //       builder: (context, cartProvider, child) {
-                                      //     return BorderButton(
-                                      //       height: 40,
-                                      //       width: 140,
-                                      //       btntxt: 'Repeat Order',
-                                      //       borderColor: Colors.blue,
-                                      //       buttontxtColor: Colors.white,
-                                      //       // backEndColor: Colors.blue,
-                                      //       onPressed: () {
-                                      //         for (var e in widget.orderItemList) {
-                                      //           var data = CartItem(
-                                      //               quantity:
-                                      //                   int.parse(e.productQuantity),
-                                      //               imageString:
-                                      //                   e.productImage.toString(),
-                                      //               name: e.productName.toString(),
-                                      //               price: double.parse(e.productTotal
-                                      //                   .toString()), //@todo confirm what is total price backend
-                                      //               code: '', //@todo add code backend
-                                      //               subModifiers: []); //@todo add modifiers from backend
-                                      //           cartProvider.addToCart(data);
-                                      //         }
-                                      //       },
-                                      //     );
-                                      //   }),
-                                      // ),
+                                      const Spacer(),
+                                      Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            height: 16,
+                                            UIDATAIcons.orderBascketBorder,
+                                            color: UIDataColors.primaryColor,
+                                          ),
+                                          SpacingWidth.widthlistspacing,
+                                          Text(tr.translateData("pickup")),
+                                        ],
+                                      ),
                                     ],
-                                  ).marginOnly(left:15, right: 15, bottom: 10)
-                                : Row(
-                                    children: [
-                                      Expanded(
+                                  ).marginOnly(
+                                    left: 10, right: 10, top: 5, bottom: 10)
+                                : Container().marginOnly(bottom: 5)
+                          ],
+                        ),
+                      ),
+                      _isOpen
+                          ? const SizedBox()
+                          : Container(
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: _.getColor(widget.orderStatus),
+                                borderRadius: const BorderRadius.only(
+                                    // topRight: Radius.circular(10.0),
+                                    bottomRight: Radius.circular(10.0),
+                                    // topLeft: Radius.circular(10.0),
+                                    bottomLeft: Radius.circular(10.0)),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  _.getStatus(widget.orderStatus),
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: widget.orderItemList.isEmpty
+                      ? (_heightFactorAnimation.value *
+                          (Get.locale!.languageCode == 'en'
+                              ? 173 + _calculateContainerHeight()
+                              : 179 + _calculateContainerHeight()))
+                      : widget.orderRemarks.toString().isEmpty
+                          ? (_heightFactorAnimation.value *
+                              (Get.locale!.languageCode == 'en'
+                                  ? 130 + _calculateContainerHeight()
+                                  : 136 + _calculateContainerHeight()))
+                          : (_heightFactorAnimation.value *
+                              (Get.locale!.languageCode == 'en'
+                                  ? 173 + _calculateContainerHeight()
+                                  : 179 + _calculateContainerHeight())),
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(10.0),
+                        bottomLeft: Radius.circular(10.0)),
+                  ),
+                  child: Column(
+                    children: [
+                      SpacingHeight.heightlistspacing10,
+                      SizedBox(
+                        height: _calculateContainerHeight(),
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: widget.orderItemList.length,
+                            itemBuilder: (context, index) {
+                              return OrderItemWidget(
+                                imageString:
+                                    widget.orderItemList[index].productImage,
+                                productQuantity:
+                                    widget.orderItemList[index].productQuantity,
+                                productName: Get.locale!.languageCode == 'en'
+                                    ? widget.orderItemList[index].productName
+                                    : widget
+                                        .orderItemList[index].productNameArabic,
+                                productPrice:
+                                    widget.orderItemList[index].productTotal,
+                              );
+                            }),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(tr.translateData("total_price"),
+                              style: UIDataTextStyles.textMediumColoredBlue
+                                  .copyWith(
+                                color: UIDataColors.blackColor,
+                              )),
+                          SpacingWidth.widthlistspacing,
+                          Text('${widget.totalPrice} AED',
+                              style: UIDataTextStyles.textMediumColoredBlue
+                                  .copyWith(
+                                color: UIDataColors.primaryColor,
+                              )),
+                        ],
+                      ).marginOnly(right: 10, left: 10),
+                      widget.orderRemarks.isEmpty
+                          ? const SizedBox()
+                          : Container(
+                              color: Colors.grey.shade200,
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    UIDATAIcons.orderRemarks,
+                                    color: UIDataColors.primaryColor,
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      widget.orderRemarks,
+                                      maxLines: 2,
+                                    ).marginOnly(left: 10, top: 4, bottom: 4),
+                                  ),
+                                ],
+                              ).marginOnly(left: 10, right: 10),
+                            ),
+                      Container(
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: _.getColor(widget.orderStatus),
+                        ),
+                        child: Center(
+                          child: Text(
+                            _.getStatus(widget.orderStatus),
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      SpacingHeight.heightlistspacing10,
+                      // const Spacer(),
+                      widget.orderStatus == 'payment_pending'
+                          ? Row(
+                              children: [
+                                Expanded(
+                                  child: BorderButton(
+                                    height: 40,
+                                    width: 140,
+                                    btntxt: tr.translateData("button_cancel"),
+                                    borderColor: Colors.red,
+                                    buttontxtColor: Colors.red,
+                                    backEndColor: Colors.white,
+                                    onPressed: () {
+                                      showpopup(
+                                          tr.translateData(
+                                              'cancel_order_message'), () {
+                                        Get.back();
+                                        _.cancelOrdermethod(widget.orderNumber);
+                                      });
+                                    },
+                                  ),
+                                ),
+                                SpacingWidth.widthlistspacing,
+                                widget.paymentLink == 'no_link'
+                                    ? Container()
+                                    : Expanded(
                                         child: BorderButton(
                                           height: 40,
                                           width: 140,
-                                          btntxt: tr.translateData('button_reject'),
-                                          borderColor: Colors.red,
-                                          buttontxtColor: Colors.red,
-                                          backEndColor: Colors.white,
-                                          onPressed: () {
-                                            showpopup(
-                                                tr.translateData('reject_message'),
-                                                () {
-                                              Get.back();
-                                              _.rejectOrderMethod(widget.orderNumber);
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                      SpacingWidth.widthlistspacing15,
-                                      Expanded(
-                                        child: BorderButton(
-                                          height: 40,
-                                          width: 140,
-                                          btntxt: tr.translateData('button_accept'),
+                                          btntxt: tr.translateData(
+                                              'button_copy_payment_link'),
                                           // borderColor: Colors.blue,
                                           buttontxtColor: Colors.white,
                                           // backEndColor: Colors.blue,
-                                          onPressed: () {
-                                            showpopup(
-                                                tr.translateData('accept_message'),
-                                                () {
-                                              Get.back();
-                                              _.acceptOrdermethod(widget.orderNumber, widget.orderType, widget.totalPrice);
+                                          onPressed: () async {
+                                            await Clipboard.setData(
+                                                    ClipboardData(
+                                                        text:
+                                                            widget.paymentLink))
+                                                .then((value) {
+                                              CommonSnackbar.getSnackbar(
+                                                  "Copied",
+                                                  "Payment link has been copied in to clipbaord",
+                                                  UIDataColors.primaryColor);
                                             });
+
+                                            // copied successfully
                                           },
                                         ),
                                       ),
-                                    ],
-                                  ).marginOnly(left:15, right: 15, bottom: 10),
-                      ],
-                    ),
+                              ],
+                            ).marginOnly(left: 15, right: 15, bottom: 10)
+                          : widget.orderStatus == 'assigned_3pl'
+                              ? Row(
+                                  children: [
+                                    Expanded(
+                                      child: BorderButton(
+                                        height: 40,
+                                        width: 140,
+                                        btntxt:
+                                            tr.translateData("button_cancel"),
+                                        borderColor: Colors.red,
+                                        buttontxtColor: Colors.red,
+                                        backEndColor: Colors.white,
+                                        onPressed: () {
+                                          showpopup(
+                                              tr.translateData(
+                                                  'cancel_message'), () {
+                                            Get.back();
+                                            _.cancelOrdermethod(
+                                                widget.orderNumber);
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    SpacingWidth.widthlistspacing15,
+                                    // Expanded(
+                                    //   child: Consumer<CartProvider>(
+                                    //       builder: (context, cartProvider, child) {
+                                    //     return BorderButton(
+                                    //       height: 40,
+                                    //       width: 140,
+                                    //       btntxt: 'Repeat Order',
+                                    //       borderColor: Colors.blue,
+                                    //       buttontxtColor: Colors.white,
+                                    //       // backEndColor: Colors.blue,
+                                    //       onPressed: () {
+                                    //         for (var e in widget.orderItemList) {
+                                    //           var data = CartItem(
+                                    //               quantity:
+                                    //                   int.parse(e.productQuantity),
+                                    //               imageString:
+                                    //                   e.productImage.toString(),
+                                    //               name: e.productName.toString(),
+                                    //               price: double.parse(e.productTotal
+                                    //                   .toString()), //@todo confirm what is total price backend
+                                    //               code: '', //@todo add code backend
+                                    //               subModifiers: []); //@todo add modifiers from backend
+                                    //           cartProvider.addToCart(data);
+                                    //         }
+                                    //       },
+                                    //     );
+                                    //   }),
+                                    // ),
+                                  ],
+                                ).marginOnly(left: 15, right: 15, bottom: 10)
+                              : Row(
+                                  children: [
+                                    Expanded(
+                                      child: BorderButton(
+                                        height: 40,
+                                        width: 140,
+                                        btntxt:
+                                            tr.translateData('button_reject'),
+                                        borderColor: Colors.red,
+                                        buttontxtColor: Colors.red,
+                                        backEndColor: Colors.white,
+                                        onPressed: () {
+                                          showpopup(
+                                              tr.translateData(
+                                                  'reject_message'), () {
+                                            Get.back();
+                                            _.rejectOrderMethod(
+                                                widget.orderNumber);
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    SpacingWidth.widthlistspacing15,
+                                    Expanded(
+                                      child: BorderButton(
+                                        height: 40,
+                                        width: 140,
+                                        btntxt:
+                                            tr.translateData('button_accept'),
+                                        // borderColor: Colors.blue,
+                                        buttontxtColor: Colors.white,
+                                        // backEndColor: Colors.blue,
+                                        onPressed: () {
+                                          showpopup(
+                                              tr.translateData(
+                                                  'accept_message'), () {
+                                            Get.back();
+                                            _.acceptOrdermethod(
+                                                widget.orderNumber,
+                                                widget.orderType,
+                                                widget.totalPrice);
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ).marginOnly(left: 15, right: 15, bottom: 10),
+                    ],
                   ),
-                ],
-              ),
-            ).marginOnly(bottom: 20),
-          );
-        });
-      }
-    );
+                ),
+              ],
+            ),
+          ).marginOnly(bottom: 20),
+        );
+      });
+    });
   }
 
   String dateFormat(String date) {
@@ -500,7 +513,13 @@ class _CustomCardState extends State<CustomCard>
   }
 
   double _calculateContainerHeight() {
-    return (widget.orderItemList.length == 2 ? 140 : widget.orderItemList.length == 1 ?  70 :widget.orderItemList.isEmpty ? 0 :210)
+    return (widget.orderItemList.length == 2
+            ? 140
+            : widget.orderItemList.length == 1
+                ? 70
+                : widget.orderItemList.isEmpty
+                    ? 0
+                    : 210)
         .toDouble(); // 70 is the height of each ListTile
   }
 
@@ -508,56 +527,54 @@ class _CustomCardState extends State<CustomCard>
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return GetBuilder<AppTranslations>(
-      builder: (tr)  {
-            return AlertDialog(
-              title:  Text(tr.translateData("confirmation")),
-              content: Text(statement),
-              actions: [
-                Container(
-                  padding: EdgeInsets.all(8),
-                  height: 60,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: BorderButton(
-                          // height: 35,
-                          // width: 140,
-                          btntxt: tr.translateData("button_cancel"),
-                          borderColor: Colors.red,
-                          buttontxtColor: Colors.red,
-                          backEndColor: Colors.white,
-                          // backEndColor: Colors.blue,
-                          onPressed: () {
-                            Get.back();
-                          },
-                          //  () {
-                          //   _.acceptOrdermethod(widget.orderNumber);
-                          // },
-                        ),
+        return GetBuilder<AppTranslations>(builder: (tr) {
+          return AlertDialog(
+            title: Text(tr.translateData("confirmation")),
+            content: Text(statement),
+            actions: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                height: 60,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: BorderButton(
+                        // height: 35,
+                        // width: 140,
+                        btntxt: tr.translateData("button_cancel"),
+                        borderColor: Colors.red,
+                        buttontxtColor: Colors.red,
+                        backEndColor: Colors.white,
+                        // backEndColor: Colors.blue,
+                        onPressed: () {
+                          Get.back();
+                        },
+                        //  () {
+                        //   _.acceptOrdermethod(widget.orderNumber);
+                        // },
                       ),
-                      SpacingWidth.widthlistspacing15,
-                      Expanded(
-                        child: BorderButton(
-                          // height: 35,
-                          // width: 140,
-                          btntxt: tr.translateData("okay"),
-                          // borderColor: Colors.blue,
-                          buttontxtColor: Colors.white,
-                          // backEndColor: Colors.blue,
-                          onPressed: navigationFunction,
-                          //  () {
-                          //   _.acceptOrdermethod(widget.orderNumber);
-                          // },
-                        ),
+                    ),
+                    SpacingWidth.widthlistspacing15,
+                    Expanded(
+                      child: BorderButton(
+                        // height: 35,
+                        // width: 140,
+                        btntxt: tr.translateData("okay"),
+                        // borderColor: Colors.blue,
+                        buttontxtColor: Colors.white,
+                        // backEndColor: Colors.blue,
+                        onPressed: navigationFunction,
+                        //  () {
+                        //   _.acceptOrdermethod(widget.orderNumber);
+                        // },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            );
-          }
-        );
+              ),
+            ],
+          );
+        });
       },
     );
   }

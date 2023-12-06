@@ -5,7 +5,8 @@ class VoucherModel {
       this.disType,
       this.capAmount,
       this.discountApplied,
-      this.msgToShow});
+      this.msgToShow,
+      this.maxDiscount});
 
   String? msg;
   String? offerTitle;
@@ -13,15 +14,16 @@ class VoucherModel {
   String? capAmount;
   String? discountApplied;
   String? msgToShow;
+  String? maxDiscount;
 
   factory VoucherModel.fromJson(Map<String, dynamic> json) => VoucherModel(
-        msg: json["message"],
-        offerTitle: json["promotion_name"],
-        disType: json["discount_type"],
-        capAmount: json["cap_amount"],
-        discountApplied: json["discount_applied"],
-        msgToShow: json["msg_to_show"],
-      );
+      msg: json["message"],
+      offerTitle: json["promotion_name"],
+      disType: json["discount_type"],
+      capAmount: json["cap_amount"],
+      discountApplied: json["discount_applied"],
+      msgToShow: json["msg_to_show"],
+      maxDiscount: json["max_discount"]);
 
   Map<String, dynamic> toJson() => {
         "message": msg,

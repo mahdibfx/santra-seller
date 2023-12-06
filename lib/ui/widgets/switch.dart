@@ -26,21 +26,19 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius:  BorderRadius.all(
-            Radius.circular(Get.width * 0.1)),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.08),
-            spreadRadius: 1,
-            blurRadius: 10,
-            offset: const Offset(0,
-                0), // changes position of shadow
-          ),
-        ]),
+          borderRadius: BorderRadius.all(Radius.circular(Get.width * 0.1)),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.08),
+              spreadRadius: 1,
+              blurRadius: 10,
+              offset: const Offset(0, 0), // changes position of shadow
+            ),
+          ]),
       width: Get.width,
       height: Get.width * 0.13,
-      margin: EdgeInsets.only(top:10, left: 0, right: 0, bottom: 20),
+      margin: EdgeInsets.only(top: 10, left: 0, right: 0, bottom: 20),
       child: Stack(
         children: <Widget>[
           GestureDetector(
@@ -54,7 +52,7 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
               // setState(() {});
             },
             child: Container(
-              width: Get.width ,
+              width: Get.width,
               height: Get.width * 0.13,
               decoration: ShapeDecoration(
                 color: widget.backgroundColor,
@@ -71,7 +69,6 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
                     child: Text(
                       widget.values[index],
                       style: TextStyle(
-                        fontFamily: 'Rubik',
                         fontSize: Get.width * 0.045,
                         fontWeight: FontWeight.bold,
                         color: const Color(0xAA000000),
@@ -85,8 +82,13 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
           AnimatedAlign(
             duration: const Duration(milliseconds: 250),
             curve: Curves.decelerate,
-            alignment:
-             Get.locale!.languageCode == "en"  ? (widget.initialPosition ? Alignment.centerLeft : Alignment.centerRight) : (widget.initialPosition ?Alignment.centerRight : Alignment.centerLeft),
+            alignment: Get.locale!.languageCode == "en"
+                ? (widget.initialPosition
+                    ? Alignment.centerLeft
+                    : Alignment.centerRight)
+                : (widget.initialPosition
+                    ? Alignment.centerRight
+                    : Alignment.centerLeft),
             child: Container(
               width: Get.width * 0.4,
               height: Get.width * 0.13,
@@ -96,16 +98,15 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
                   borderRadius: BorderRadius.circular(Get.width * 0.1),
                 ),
               ),
+              alignment: Alignment.center,
               child: Text(
                 widget.initialPosition ? widget.values[0] : widget.values[1],
                 style: TextStyle(
-                  fontFamily: 'Rubik',
                   fontSize: Get.width * 0.045,
                   color: widget.textColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              alignment: Alignment.center,
             ),
           ),
         ],

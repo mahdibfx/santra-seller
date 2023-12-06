@@ -25,7 +25,6 @@ class _CustomerReviewsState extends State<CustomerReviews> {
   @override
   void initState() {
     super.initState();
-    appFlyerController.customerReviewsEvent();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<CustomerReviewsProvider>(context, listen: false)
           .viewCustomerReviews();
@@ -43,15 +42,17 @@ class _CustomerReviewsState extends State<CustomerReviews> {
             : SafeArea(
                 child: SingleChildScrollView(
                   child: _.hasReviewsError
-                      ?  SizedBox(
+                      ? SizedBox(
                           height: 600,
-                          child: Center(child: Text(tr.translateData("no_reviews"))))
+                          child: Center(
+                              child: Text(tr.translateData("no_reviews"))))
                       : Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             HeadingWithIcon(
                                 icon: UIDATAIcons.starIcon,
-                                btntxt: tr.translateData("customer_reviews_title")),
+                                btntxt:
+                                    tr.translateData("customer_reviews_title")),
                             SpacingHeight.heightlistspacing10,
                             Container(
                                 decoration: BoxDecoration(
@@ -146,32 +147,30 @@ class _CustomerReviewsState extends State<CustomerReviews> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CustomerReviewsProvider>(
-      builder: (context, _, child) {
-        return CommonScaffold(
-          bodyData: bodyData(),
-          backgroundcolor: UIDataColors.whiteColor,
-          backGroundImage: UIDataImage.backgroundImage,
-          showDrawer: false,
-          showFAB: true,
-          centerDocked: true,
-          isBackArrowShow: !_.isReviewsLoading,
-          isAddManual: _.isReviewsLoading,
-          isHome: _.isReviewsLoading,
-          isMore: _.isReviewsLoading,
-          showAppBar: true,
-          scaffoldKey: _key,
-          showBottomNav: true,
-          appbarcolor: UIDataColors.whiteColor,
-          appTitle: '',
-          backarrow: UIDataColors.blackColor,
-          qrCallback: () {
-            Get.offAll(() => const AddManulOrder());
-          },
-          floatingIcon: Icons.add,
-          elevation: 0.0,
-        );
-      }
-    );
+    return Consumer<CustomerReviewsProvider>(builder: (context, _, child) {
+      return CommonScaffold(
+        bodyData: bodyData(),
+        backgroundcolor: UIDataColors.whiteColor,
+        backGroundImage: UIDataImage.backgroundImage,
+        showDrawer: false,
+        showFAB: true,
+        centerDocked: true,
+        isBackArrowShow: !_.isReviewsLoading,
+        isAddManual: _.isReviewsLoading,
+        isHome: _.isReviewsLoading,
+        isMore: _.isReviewsLoading,
+        showAppBar: true,
+        scaffoldKey: _key,
+        showBottomNav: true,
+        appbarcolor: UIDataColors.whiteColor,
+        appTitle: '',
+        backarrow: UIDataColors.blackColor,
+        qrCallback: () {
+          Get.offAll(() => const AddManulOrder());
+        },
+        floatingIcon: Icons.add,
+        elevation: 0.0,
+      );
+    });
   }
 }

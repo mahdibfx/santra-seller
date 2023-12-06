@@ -21,85 +21,85 @@ class MoreSettingScreen extends StatelessWidget {
   MoreSettingScreen({super.key});
 
   Widget bodyData(context) {
-    return GetBuilder<AppTranslations>(
-      builder: (tr){
-        return SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                HeadingWithIcon(icon: UIDATAIcons.moreHorizontal, btntxt: tr.translateData("more_title")),
-                SpacingHeight.heightlistspacing15,
-                ReusableIconSetting(
-                  icon: UIDATAIcons.settingsIcon,
-                  onPressed: () {
-                    Get.to(() => Settings());
-                  },
-                  btntxt: tr.translateData('more_setting'),
-                ),
-                ReusableIconSetting(
-                  icon: UIDATAIcons.dashboardIcon,
-                  onPressed: () {
-                    Get.to(() => ProductSettingScreen());
-                  },
-                  btntxt: tr.translateData('more_products'),
-                ),
-                ReusableIconSetting(
-                  icon: UIDATAIcons.customersIcon,
-                  onPressed: () {
-                    Get.to(() => const MyCustomerScreen());
-                  },
-                  btntxt: tr.translateData('more_customerlist'),
-                ),
-                ReusableIconSetting(
-                  icon: UIDATAIcons.starIcon,
-                  onPressed: () {
-                    Get.to(() => CustomerReviews());
-                  },
-                  btntxt: tr.translateData('more_reviews'),
-                ),
-                // ReusableIconSetting(
-                //   icon: UIDATAIcons.walletIcon,
-                //   onPressed: () {
-                //     Get.toNamed(Routes.walletscreen);
-                //   },
-                //   btntxt: 'Wallet',
-                // ),
-                ReusableIconSetting(
-                  icon: UIDATAIcons.whatsappIcon,
-                  onPressed: () {
-                    Get.to(() => ContactUsScreen());
-                  },
-                  btntxt: tr.translateData('more_contact'),
-                ),
-                ReusableIconSetting(
-                  icon: UIDATAIcons.santraVectorIcon,
-                  onPressed: () {
-                    Get.to(() => AboutUsScreen());
-                  },
-                  btntxt: tr.translateData('more_aboutus'),
-                ),
-                ReusableIconSetting(
-                  icon: UIDATAIcons.securityIcon,
-                  onPressed: () {
-                    Get.to(() => PrivacyScreen());
-                  },
-                  btntxt: tr.translateData('more_privacy'),
-                ),
-                SpacingHeight.heightlistspacing50,
-                   ReusableIconSetting(
-                  icon: UIDATAIcons.securityIcon,
-                  onPressed: () {
-                   _showDialog(context);
-                  },
-                  btntxt: tr.translateData('contract'),
-                ),
-              ],
-            ).paddingSymmetric(horizontal: 20),
-          ),
-        );
-      }
-    );
+    return GetBuilder<AppTranslations>(builder: (tr) {
+      return SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              HeadingWithIcon(
+                  icon: UIDATAIcons.moreHorizontal,
+                  btntxt: tr.translateData("more_title")),
+              SpacingHeight.heightlistspacing15,
+              ReusableIconSetting(
+                icon: UIDATAIcons.settingsIcon,
+                onPressed: () {
+                  Get.to(() => Settings());
+                },
+                btntxt: tr.translateData('more_setting'),
+              ),
+              ReusableIconSetting(
+                icon: UIDATAIcons.dashboardIcon,
+                onPressed: () {
+                  Get.to(() => ProductSettingScreen());
+                },
+                btntxt: tr.translateData('more_products'),
+              ),
+              ReusableIconSetting(
+                icon: UIDATAIcons.customersIcon,
+                onPressed: () {
+                  Get.to(() => const MyCustomerScreen());
+                },
+                btntxt: tr.translateData('more_customerlist'),
+              ),
+              ReusableIconSetting(
+                icon: UIDATAIcons.starIcon,
+                onPressed: () {
+                  Get.to(() => CustomerReviews());
+                },
+                btntxt: tr.translateData('more_reviews'),
+              ),
+              // ReusableIconSetting(
+              //   icon: UIDATAIcons.walletIcon,
+              //   onPressed: () {
+              //     Get.toNamed(Routes.walletscreen);
+              //   },
+              //   btntxt: 'Wallet',
+              // ),
+              ReusableIconSetting(
+                icon: UIDATAIcons.whatsappIcon,
+                onPressed: () {
+                  Get.to(() => ContactUsScreen());
+                },
+                btntxt: tr.translateData('more_contact'),
+              ),
+              ReusableIconSetting(
+                icon: UIDATAIcons.santraVectorIcon,
+                onPressed: () {
+                  Get.to(() => AboutUsScreen());
+                },
+                btntxt: tr.translateData('more_aboutus'),
+              ),
+              ReusableIconSetting(
+                icon: UIDATAIcons.securityIcon,
+                onPressed: () {
+                  Get.to(() => PrivacyScreen());
+                },
+                btntxt: tr.translateData('more_privacy'),
+              ),
+
+              // ReusableIconSetting(
+              //   icon: UIDATAIcons.santraVectorIcon,
+              //   onPressed: () {
+              //     _showDialog(context);
+              //   },
+              //   btntxt: tr.translateData('contract'),
+              // ),
+            ],
+          ).paddingSymmetric(horizontal: 20),
+        ),
+      );
+    });
   }
 
   @override
@@ -127,18 +127,16 @@ class MoreSettingScreen extends StatelessWidget {
     );
   }
 
-     _showDialog(BuildContext context)
-  {
-    VoidCallback continueCallBack = ()  {
+  _showDialog(BuildContext context) {
+    VoidCallback continueCallBack = () {
+      Navigator.of(context).pop();
 
-       Navigator.of(context).pop();
-  
       // code on continue comes here
     };
-    BlurryDialog  alert = BlurryDialog(continueCallBack);
+    BlurryDialog alert = BlurryDialog(null, continueCallBack);
     showDialog(
       context: context,
-       barrierDismissible: false,
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return alert;
       },

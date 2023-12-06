@@ -5,12 +5,12 @@ import 'package:santra_seller/utils/uidata/textStyles.dart';
 
 generalException() {
   Get.dialog(CupertinoAlertDialog(
-      title:  Text(
+      title: Text(
         "oops_message".tr,
         style: UIDataTextStyles.dialogTitle,
       ),
       content: Column(
-        children:  [
+        children: [
           Text(
             "unknown_error".tr,
             style: UIDataTextStyles.dialogMsg,
@@ -22,7 +22,7 @@ generalException() {
             onPressed: () {
               Get.back();
             },
-            child:  Text(
+            child: Text(
               "okay".tr,
               style: UIDataTextStyles.dialogButton,
             )),
@@ -44,7 +44,7 @@ exceptionDialog(String title, String msg) {
             onPressed: () {
               Get.back();
             },
-            child:  Text("okay".tr, style: UIDataTextStyles.dialogButton))
+            child: Text("okay".tr, style: UIDataTextStyles.dialogButton))
       ]);
 }
 

@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -100,8 +102,8 @@ class SignUpProvider extends ChangeNotifier {
         notifyListeners();
         print(citiesList);
       } else {
-        CommonSnackbar.getSnackbar(
-            tr.translateData("oops_message"), tr.translateData("error_load_data"), UIDataColors.redColor);
+        CommonSnackbar.getSnackbar(tr.translateData("oops_message"),
+            tr.translateData("error_load_data"), UIDataColors.redColor);
       }
     } catch (e) {
       CommonSnackbar.getSnackbar(tr.translateData("oops_message"),
@@ -110,7 +112,7 @@ class SignUpProvider extends ChangeNotifier {
   }
 
   Future<void> signupMethod() async {
-     var tr = Get.put(AppTranslations());
+    var tr = Get.put(AppTranslations());
     if (form.currentState!.validate()) {
       updateLoginLoadingStatus(true);
 
@@ -132,13 +134,15 @@ class SignUpProvider extends ChangeNotifier {
         var response = await http.Response.fromStream(streamedResponse);
 
         if (response.statusCode == 200) {
-          CommonSnackbar.getSnackbar(tr.translateData("success_message"), tr.translateData("account_registered"),
+          CommonSnackbar.getSnackbar(
+              tr.translateData("success_message"),
+              tr.translateData("account_registered"),
               UIDataColors.primaryColor);
           clearValuesAfterSignup();
           Get.offAll(() => const LoginScreen());
         } else if (response.statusCode == 430) {
-          CommonSnackbar.getSnackbar(
-              tr.translateData("oops_message"), tr.translateData("alread_registered"), UIDataColors.primaryColor);
+          CommonSnackbar.getSnackbar(tr.translateData("oops_message"),
+              tr.translateData("alread_registered"), UIDataColors.primaryColor);
         } else {
           notifyListeners();
           CommonSnackbar.getSnackbar(
@@ -150,10 +154,8 @@ class SignUpProvider extends ChangeNotifier {
         isLoading = false;
         notifyListeners();
 
-        CommonSnackbar.getSnackbar(
-            tr.translateData("error_message"),
-            tr.translateData("something_wrong_message"),
-            UIDataColors.redColor);
+        CommonSnackbar.getSnackbar(tr.translateData("error_message"),
+            tr.translateData("something_wrong_message"), UIDataColors.redColor);
       }
     }
     updateLoginLoadingStatus(false);

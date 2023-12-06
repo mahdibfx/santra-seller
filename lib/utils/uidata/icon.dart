@@ -64,4 +64,5 @@ class UIDATAIcons {
   static const forwardArrow = "$iconsDir/arrow_forward.svg";
   static const backgroundSVG = "$iconsDir/bgnew.svg";
   static const businessIcon = "$iconsDir/briefcase.svg";
+  static const areaIcon = "$iconsDir/area.svg";
 }

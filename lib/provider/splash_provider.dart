@@ -1,12 +1,12 @@
-import 'dart:convert';
 import 'dart:io';
-
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:santra_seller/provider/apps_flyr/appflyer_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:santra_seller/provider/apps_flyr/appflyer_controller.dart';
+import 'package:santra_seller/provider/firebase_events/firebase_events.dart';
 import 'package:santra_seller/ui/screens/auth_screen/login_screen.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
-import 'package:santra_seller/utils/api_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
@@ -15,13 +15,14 @@ import '../ui/widgets/snackbar/common_snackbar.dart';
 import '../utils/app_translation/app_translation.dart';
 import '../utils/uidata.dart';
 
-
 class SplashProvider extends ChangeNotifier {
   var tr = Get.put(AppTranslations());
-  AppFlyerController appFlyerController = Get.put(AppFlyerController());
+  FirebaseAnalyticsController firebaseAnalytics =
+      Get.put(FirebaseAnalyticsController());
+  AppFlyerController afController = Get.put(AppFlyerController());
 
   bool isLoading = false;
-  bool updateAvailable = false;
+
   String? sellerCode;
   bool isHome = true;
   bool isMore = false;
@@ -52,6 +53,24 @@ class SplashProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  String _authStatus = 'Unknown';
+
+  Future<void> initPlugin() async {
+    final TrackingStatus status =
+        await AppTrackingTransparency.trackingAuthorizationStatus;
+    _authStatus = '$status';
+    // If the system can show an authorization request dialog
+    if (status == TrackingStatus.notDetermined) {
+      await Future.delayed(const Duration(milliseconds: 200));
+      // Request system's tracking authorization dialog
+      final TrackingStatus status =
+          await AppTrackingTransparency.requestTrackingAuthorization();
+      _authStatus = '$status';
+    }
+    //final uuid = await AppTrackingTransparency.getAdvertisingIdentifier();
+    notifyListeners();
+  }
+
   setOldLang() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var checkLang = prefs.get("selectedlanguage");
@@ -62,18 +81,22 @@ class SplashProvider extends ChangeNotifier {
       language = 'en_us';
       notifyListeners();
     }
-    await appFlyerController.appflyerLogs();
+    // await appFlyerController.appflyerLogs();
     await checkInstallFirsTime();
     notifyListeners();
   }
 
   checkInstallFirsTime() async {
+    await Future.delayed(const Duration(seconds: 3), () => initPlugin());
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? firstTime = prefs.getBool('first_time');
 
+    afController.appflyerLogs();
     if (firstTime == null) {
       // first time
-      appFlyerController.openAppFirstEvent();
+      await firebaseAnalytics.firebaseAppInstallEvent();
+      await firebaseAnalytics.firebaseFirstAppOpenEvent();
       prefs.setBool('first_time', false);
     }
   }
@@ -86,18 +109,28 @@ class SplashProvider extends ChangeNotifier {
   void checkUpdateAndMakeDescision() async {
     isInternetAvailable();
     await tr.fetchTranslationsv();
-    forceUpdate().then((value) {
-      if (updateAvailable == true) {
-        customOntapDialog(
-            tr.translateData("New Update"),
-            tr.translateData("update_message_popup"),
-            tr.translateData("update_message"), () {
-          goToStore();
-        });
-      } else {
-        checkAlreadyLogin();
-      }
-    });
+    if (tr.updateAvailable == true) {
+      customOntapDialog(
+          tr.translateData("new_update"),
+          tr.translateData("update_message_popup"),
+          tr.translateData("update_message"), () {
+        goToStore();
+      });
+    } else {
+      checkAlreadyLogin();
+    }
+    // forceUpdate().then((value) {
+    //   if (updateAvailable == true) {
+    //     customOntapDialog(
+    //         tr.translateData("new_update"),
+    //         tr.translateData("update_message_popup"),
+    //         tr.translateData("update_message"), () {
+    //       goToStore();
+    //     });
+    //   } else {
+    //     checkAlreadyLogin();
+    //   }
+    // });
     // Future.delayed(const Duration(seconds: 3), () {
     //   checkAlreadyLogin();
     // });
@@ -149,40 +182,35 @@ class SplashProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future forceUpdate() async {
-    var tr = Get.put(AppTranslations());
-    try {
-      setLoadingState(true);
-
-      var url = Uri.parse(ApiData.forceUpdateApi);
-      Map<String, dynamic> body = {};
-      body['seller_code'] = "1";
-      body['version'] = "4.1.0";
-      body['app_type'] = "seller";
-      body['platform'] =
-          Platform.isIOS ? "Mobile_App_iOS" : "Mobile_App_Android";
-      var response = await http.post(url, headers: ApiData.header, body: body);
-      if (response.statusCode == 200) {
-        setLoadingState(false);
-        var data = jsonDecode(response.body);
-
-        var msg = data['data'][0]['force_update'].toString();
-
-        if (msg == "no") {
-          updateAvailable = false;
-        } else if (msg == "yes") {
-          updateAvailable = true;
-        }
-      } else {
-        setLoadingState(false);
-        Get.snackbar(tr.translateData("oops_message"),
-            tr.translateData("something_wrong_message"));
-      }
-    } catch (e) {
-      setLoadingState(false);
-      Get.snackbar(tr.translateData("oops_message"),
-          tr.translateData("something_wrong_message"));
-    }
-    notifyListeners();
-  }
+  // Future forceUpdate() async {
+  //   var tr = Get.put(AppTranslations());
+  //   try {
+  //     setLoadingState(true);
+  //     var url = Uri.parse(ApiData.splashNew);
+  //     Map<String, dynamic> body = {};
+  //     body['version'] = "4.1.7";
+  //     body['platform'] =
+  //         Platform.isIOS ? "Mobile_App_iOS" : "Mobile_App_Android";
+  //     var response = await http.post(url, headers: ApiData.header, body: body);
+  //     if (response.statusCode == 200) {
+  //       setLoadingState(false);
+  //       var data = jsonDecode(response.body);
+  // var msg = data['data'][0]['force_update'].toString();
+  // if (msg == "no") {
+  //   updateAvailable = false;
+  // } else if (msg == "yes") {
+  //   updateAvailable = true;
+  // }
+  //     } else {
+  //       setLoadingState(false);
+  //       Get.snackbar(tr.translateData("oops_message"),
+  //           tr.translateData("something_wrong_message"));
+  //     }
+  //   } catch (e) {
+  //     setLoadingState(false);
+  //     Get.snackbar(tr.translateData("oops_message"),
+  //         tr.translateData("something_wrong_message"));
+  //   }
+  //   notifyListeners();
+  // }
 }

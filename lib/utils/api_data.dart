@@ -1,5 +1,3 @@
-
-
 import 'config/env.dart';
 
 class ApiData {
@@ -34,6 +32,7 @@ class ApiData {
   static const forceUpdateApi = "${mainurl}force_update";
   static const languageSelection = "${mainurl}seller_language";
   static const contract = "${mainurl}seller_contract";
-  
+  static const splashNew = "${mainurl}new_seller_splash";
+
   static const header = {Secret.api_key: Secret.client_secret};
 }

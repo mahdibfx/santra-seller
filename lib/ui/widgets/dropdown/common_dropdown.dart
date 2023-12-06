@@ -3,13 +3,16 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../../utils/app_translation/app_translation.dart';
 import '../../../utils/uidata.dart';
+
 final tr = Get.put(AppTranslations());
+
 class MyDropdown extends StatefulWidget {
   final List<String> options;
   String? selectedOption;
   var validator;
   String? prefixIcon;
   String? label;
+  double? iconSize;
 
   var onChanged;
   MyDropdown(
@@ -19,6 +22,7 @@ class MyDropdown extends StatefulWidget {
       required this.prefixIcon,
       this.label,
       this.validator,
+      this.iconSize,
       this.onChanged});
 
   @override
@@ -29,7 +33,7 @@ class _MyDropdownState extends State<MyDropdown> {
   @override
   Widget build(BuildContext context) {
     return ButtonTheme(
-      alignedDropdown: true,
+      alignedDropdown: false,
       child: DropdownButtonFormField(
           isExpanded: true,
           validator: widget.validator,
@@ -38,8 +42,8 @@ class _MyDropdownState extends State<MyDropdown> {
                 value: selOption,
                 child: Text(
                   selOption,
-                  style:  TextStyle(
-                      color: Color.fromARGB(255, 0, 0, 0),
+                  style: TextStyle(
+                      color: const Color.fromARGB(255, 0, 0, 0),
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
                       fontFamily: tr.getFont(),
@@ -48,7 +52,7 @@ class _MyDropdownState extends State<MyDropdown> {
           }).toList(),
           onChanged: widget.onChanged,
           icon: Padding(
-            padding: const EdgeInsets.only(right: 8.0),
+            padding: const EdgeInsets.only(right: 18.0),
             child: SvgPicture.asset(UIDATAIcons.arrowDown),
           ),
           value: widget.selectedOption ?? "",
@@ -61,8 +65,9 @@ class _MyDropdownState extends State<MyDropdown> {
                 ? GestureDetector(
                     child: SvgPicture.asset(
                     widget.prefixIcon!,
+                    height: widget.iconSize,
                     color: UIDataColors.blackText,
-                  ).paddingSymmetric(vertical: 11))
+                  ).paddingSymmetric(vertical: widget.iconSize ?? 11))
                 : null,
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(

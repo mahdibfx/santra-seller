@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -6,33 +7,33 @@ import 'package:get/get.dart';
 import '../api_data.dart';
 import 'package:flutter/material.dart';
 
-
-class AppTranslations extends GetxController  {
+class AppTranslations extends GetxController {
   static Map<String, Map<String, String>> _translations = {};
   String selectedLanguage = 'en_us';
   dynamic engLang;
   dynamic arabLang;
+  bool updateAvailable = false;
 
-   Future<String> language() async {
+  Future<String> language() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var oldLang = prefs.get("selectedlanguage");
     if (oldLang != null) {
-       selectedLanguage = prefs.get("selectedlanguage") as String;
-       update();
+      selectedLanguage = prefs.get("selectedlanguage") as String;
+      update();
       return selectedLanguage;
     }
 
     return 'en_us';
   }
 
-  setNewLanguage(String lang){
+  setNewLanguage(String lang) {
     selectedLanguage = lang;
     update();
-    
   }
-  setShared(String lang)async{
+
+  setShared(String lang) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("selectedlanguage",lang);
+    prefs.setString("selectedlanguage", lang);
   }
 
   langNew() async {
@@ -44,40 +45,38 @@ class AppTranslations extends GetxController  {
   }
 
   fetchTranslationsv() async {
-    var url = Uri.parse(ApiData.languageSelection);
-    var response = await http.post(url, headers: ApiData.header);
+    // var url = Uri.parse(ApiData.languageSelection);
+    var url = Uri.parse(ApiData.splashNew);
+    Map<String, dynamic> body = {};
+    body['version'] = "4.2.0";
+    body['platform'] = Platform.isIOS ? "Mobile_App_iOS" : "Mobile_App_Android";
+    var response = await http.post(url, headers: ApiData.header, body: body);
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-
       engLang = data['data'][0]['en_us'];
-      // Map<String, String> convertedData = engLang.cast<String, String>();
-      update();
-      // _translations = {'en_us': convertedData};
-
       arabLang = data['data'][0]['ar_AE'];
+      String msg = data['data'][0]['update_force'][0]['force_update'];
       update();
-      // Map<String, String> convertedDataArabic = arabLang.cast<String, String>();
-      // _translations = {'en_us': convertedData, 'ar_AE': convertedDataArabic};
-      // selectedLanguage = await language();
-      // if (selectedLanguage != 'en_us') {
-      //   Get.updateLocale(const Locale('ar', 'AE'));
-      // }
-
+      if (msg == "no") {
+        updateAvailable = false;
+      } else if (msg == "yes") {
+        updateAvailable = true;
+      }
+      update();
       return _translations;
     } else {
       throw Exception('Failed to fetch translations');
     }
   }
 
-
-  String translateData(String tralate){
-    if(selectedLanguage == 'en_us'){
+  String translateData(String tralate) {
+    if (selectedLanguage == 'en_us') {
       return engLang[tralate];
     }
-  return   arabLang[tralate];
+    return arabLang[tralate];
   }
 
-   String getFont() {
+  String getFont() {
     final langCode = Get.locale!.languageCode;
     if (langCode == 'en') {
       return "Markpro";
