@@ -50,7 +50,7 @@ class CartCardOrder extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                       child: CachedNetworkImage(
                         imageUrl:
-                            "https://api.santra.ae/${allProducts?[index!].imageString}",
+                            "https://api.santra.qa/${allProducts?[index!].imageString}",
                         fit: BoxFit.cover,
                         memCacheHeight: 300,
                         memCacheWidth: 400,

@@ -619,7 +619,7 @@ class OrderItemWidget extends StatelessWidget {
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: CachedNetworkImage(
-                              imageUrl: "https://api.santra.ae/$imageString",
+                              imageUrl: "https://api.santra.qa/$imageString",
                               fit: BoxFit.fill,
                               // memCacheHeight: 500,
                               // memCacheWidth: 400,

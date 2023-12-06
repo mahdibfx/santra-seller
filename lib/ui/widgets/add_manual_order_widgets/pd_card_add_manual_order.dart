@@ -43,7 +43,7 @@ class PDCardAddManualOrder extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                         child: CachedNetworkImage(
                           imageUrl:
-                              "https://api.santra.ae/${manualOrderController?.filteredProducts[index!].productImages}",
+                              "https://api.santra.qa/${manualOrderController?.filteredProducts[index!].productImages}",
                           fit: BoxFit.cover,
                           memCacheHeight: 300,
                           memCacheWidth: 400,
@@ -60,11 +60,14 @@ class PDCardAddManualOrder extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(Get.locale!.languageCode == 'en' ?
-                          manualOrderController
-                                  ?.filteredProducts[index!].productName ??
-                              "" : manualOrderController
-                                  ?.filteredProducts[index!].productNameArabic ??"",
+                        Text(
+                          Get.locale!.languageCode == 'en'
+                              ? manualOrderController
+                                      ?.filteredProducts[index!].productName ??
+                                  ""
+                              : manualOrderController?.filteredProducts[index!]
+                                      .productNameArabic ??
+                                  "",
                           style: UIDataTextStyles.h2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -76,26 +79,29 @@ class PDCardAddManualOrder extends StatelessWidget {
                       ],
                     ).marginOnly(top: 5, bottom: 5, left: 8, right: 8)),
                 const Spacer(),
-               manualOrderController?.filteredProducts[index!].productStatus == 'approved' ? GestureDetector(
-                  onTap: onTap,
-                  child: Container(
-                      padding: const EdgeInsets.all(5),
-                      height: 48,
-                      width: 48,
-                      child: Container(
-                          decoration: BoxDecoration(
-                              border:
-                                  Border.all(color: UIDataColors.primaryColor),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(13)),
-                              color: Colors.transparent),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: SvgPicture.asset(
-                              UIDATAIcons.addIcon,
-                            ),
-                          ))),
-                ):const SizedBox(),
+                manualOrderController?.filteredProducts[index!].productStatus ==
+                        'approved'
+                    ? GestureDetector(
+                        onTap: onTap,
+                        child: Container(
+                            padding: const EdgeInsets.all(5),
+                            height: 48,
+                            width: 48,
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: UIDataColors.primaryColor),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(13)),
+                                    color: Colors.transparent),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: SvgPicture.asset(
+                                    UIDATAIcons.addIcon,
+                                  ),
+                                ))),
+                      )
+                    : const SizedBox(),
               ],
             ).paddingOnly(left: 8, right: 8, top: 8, bottom: 8)),
         const SizedBox(
