@@ -43,7 +43,7 @@ class PDCardAddManualOrder extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                         child: CachedNetworkImage(
                           imageUrl:
-                              "https://api.santra.qa/${manualOrderController?.filteredProducts[index!].productImages}",
+                              "${manualOrderController?.filteredProducts[index!].productImages}",
                           fit: BoxFit.cover,
                           memCacheHeight: 300,
                           memCacheWidth: 400,

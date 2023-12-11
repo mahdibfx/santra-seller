@@ -175,6 +175,7 @@ class HomeProvider extends ChangeNotifier {
           sellerStatusNew = data['data'][0]['seller_status'];
           prefs.setString("sellerStatus", sellerStatusNew.toString());
           print("SEEEEEEE $sellerStatusNew");
+          debugPrint(res.body);
           print(res.body);
           homeData = newdata.data[0];
           allOrders.addAll(homeData!.santraOrders[0].santraOrders);

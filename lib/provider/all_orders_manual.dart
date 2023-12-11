@@ -121,6 +121,7 @@ class AddManualOrderProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         var decodedJson = jsonDecode(response.body);
         var data = SelllerAllProductsModel.fromJson(decodedJson);
+        print(decodedJson);
         if (data.data![0].products!.isNotEmpty) {
           allProducts = data.data?[0].products;
           filteredProducts = allProducts ?? [];

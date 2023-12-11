@@ -54,7 +54,7 @@ class _ProductEditCardState extends State<ProductEditCard> {
                           borderRadius: BorderRadius.circular(15),
                           child: CachedNetworkImage(
                             imageUrl:
-                                "https://api.santra.qa/${widget.productSettingsController.allProducts?[widget.index!].productImages}",
+                                "${widget.productSettingsController.allProducts?[widget.index!].productImages}",
                             fit: BoxFit.cover,
                             memCacheHeight: 300,
                             memCacheWidth: 400,

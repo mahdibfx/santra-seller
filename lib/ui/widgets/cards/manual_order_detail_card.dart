@@ -157,7 +157,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                     SpacingWidth.widthlistspacing,
                                     widget.deliveryTime.toString().isEmpty
                                         ? const Text('---')
-                                        : Text('${widget.deliveryTime}'),
+                                        : Text(widget.deliveryTime),
                                   ],
                                 )),
                               ],
@@ -174,7 +174,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                       color: UIDataColors.primaryColor,
                                     ),
                                     SpacingWidth.widthlistspacing,
-                                    Text('${widget.customerName}'),
+                                    Text(widget.customerName),
                                   ],
                                 )),
                                 const Spacer(),
@@ -186,7 +186,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                       color: UIDataColors.primaryColor,
                                     ),
                                     SpacingWidth.widthlistspacing,
-                                    Text('${widget.paymentMethod}'),
+                                    Text(widget.paymentMethod),
                                   ],
                                 )),
                               ],
@@ -204,7 +204,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                             color: UIDataColors.primaryColor,
                                           ),
                                           SpacingWidth.widthlistspacing,
-                                          Text('${widget.customerPhone}'),
+                                          Text(widget.customerPhone),
                                         ],
                                       )),
                                       const Spacer(),
@@ -424,7 +424,7 @@ class OrderItemWidget extends StatelessWidget {
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: CachedNetworkImage(
-                              imageUrl: "https://api.santra.qa/$imageString",
+                              imageUrl: imageString,
                               fit: BoxFit.cover,
                               memCacheHeight: 300,
                               memCacheWidth: 400,

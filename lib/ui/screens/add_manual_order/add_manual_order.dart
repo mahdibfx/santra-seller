@@ -535,7 +535,7 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                               manualOrderController.resetDefaultQuanity(
                                   manualOrderController
                                       .filteredProducts[widget.index]);
-                              // Get.back();
+                              Get.back();
                             },
                             subBtntxt: 'AED',
                             btntxt: tr.translateData("add_to_cart_button"),
@@ -572,7 +572,7 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                   topLeft: Radius.circular(16), topRight: Radius.circular(16)),
               child: CachedNetworkImage(
                 imageUrl:
-                    "https://api.santra.qa/${manualOrderController.filteredProducts[index].productImages}",
+                    "${manualOrderController.filteredProducts[index].productImages}",
                 fit: BoxFit.cover,
                 memCacheHeight: 300,
                 memCacheWidth: 400,
