@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/auth_providers/sign_up_provider.dart';
 import 'package:santra_seller/provider/cart_provider.dart';
-import 'package:santra_seller/ui/widgets/add_manual_order_widgets/cart_card.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/primaryButtonWithIcon.dart';
@@ -143,89 +142,103 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       //   // },
                       // ),
                       SpacingHeight.heightlistspacing5,
-                      MyDropdown(
-                          label: tr.translateData("signup_city"),
-                          validator: (value) {
-                            if (value == null) {
-                              return tr.translateData("select_city");
-                            }
-                          },
-                          prefixIcon: UIDATAIcons.location,
-                          options: _.cityList,
-                          onChanged: (val) {
-                            _.city = val;
-                            _.getAreas(_.city);
-                          },
-                          selectedOption: _.city),
-                      SpacingHeight.heightlistspacing15,
-
-                      if (_.areas.isNotEmpty)
-                        DropdownSearch<String>(
-                          dropdownButtonProps: DropdownButtonProps(
-                              icon: Padding(
-                            padding: const EdgeInsets.only(right: 0.0),
-                            child: SvgPicture.asset(UIDATAIcons.arrowDown),
-                          )),
-                          popupProps: areaFiledProps(tr),
-                          items: _.areas,
-                          dropdownDecoratorProps: DropDownDecoratorProps(
-                            dropdownSearchDecoration: InputDecoration(
-                              label: Text(
-                                tr.translateData("area"),
-                                style: const TextStyle(color: Colors.black),
-                              ),
-                              prefixIcon: SvgPicture.asset(
-                                UIDATAIcons.areaIcon,
-                                color: UIDataColors.blackText,
-                              ).paddingSymmetric(vertical: 14),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color:
-                                      const Color(0xff757575).withOpacity(0.7),
-                                ),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(15),
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color:
-                                      const Color(0xff757575).withOpacity(0.7),
-                                ),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(15),
-                                ),
-                              ),
-                              contentPadding: const EdgeInsets.only(left: 10),
-                              filled: true,
-                              fillColor: Colors.white,
-                            ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: MyDropdown(
+                                label: tr.translateData("signup_city"),
+                                validator: (value) {
+                                  if (value == null) {
+                                    return tr.translateData("select_city");
+                                  }
+                                },
+                                prefixIcon: UIDATAIcons.areaIcon,
+                                iconSize: 13,
+                                options: _.cityList,
+                                onChanged: (val) {
+                                  _.city = val;
+                                  _.getAreas(_.city);
+                                },
+                                selectedOption: _.city),
                           ),
-                          onChanged: (val) {
-                            _.area = val;
-                          },
-                          validator: (value) {
-                            if (value == null) {
-                              return tr.translateData("select_city");
-                            }
-                          },
-                          selectedItem: _.area,
-                        ),
+                          SpacingWidth.widthlistspacing15,
+                          if (_.areas.isNotEmpty)
+                            Expanded(
+                              child: DropdownSearch<String>(
+                                dropdownButtonProps: DropdownButtonProps(
+                                    icon: Padding(
+                                  padding: const EdgeInsets.only(right: 0.0),
+                                  child:
+                                      SvgPicture.asset(UIDATAIcons.arrowDown),
+                                )),
+                                popupProps: areaFiledProps(tr),
+                                items: _.areas,
+                                dropdownDecoratorProps: DropDownDecoratorProps(
+                                  dropdownSearchDecoration: InputDecoration(
+                                    label: Text(
+                                      tr.translateData("area"),
+                                      style:
+                                          const TextStyle(color: Colors.black),
+                                    ),
+                                    prefixIcon: SvgPicture.asset(
+                                      UIDATAIcons.location,
+                                      color: UIDataColors.blackText,
+                                    ).paddingSymmetric(vertical: 12),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: const Color(0xff757575)
+                                            .withOpacity(0.7),
+                                      ),
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(15),
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: const Color(0xff757575)
+                                            .withOpacity(0.7),
+                                      ),
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(15),
+                                      ),
+                                    ),
+                                    contentPadding:
+                                        const EdgeInsets.only(left: 10),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                  ),
+                                ),
+                                onChanged: (val) {
+                                  _.area = val;
+                                },
+                                validator: (value) {
+                                  if (value == null) {
+                                    return tr.translateData("select_city");
+                                  }
+                                },
+                                selectedItem: _.area,
+                              ),
+                            )
+                        ],
+                      ),
+
+                      // SpacingHeight.heightlistspacing15,
+
                       SpacingHeight.heightlistspacing10,
-                      // CommonTextField(
-                      //   textInputAction: TextInputAction.next,
-                      //   controller: _.buildingController,
-                      //   labelText: tr.translateData("building_no"),
-                      //   prefixIcon: UIDATAIcons.building,
-                      //   isTextHidden: false,
-                      //   fillcolor: UIDataColors.whiteColor,
-                      //   keyboardType: TextInputType.text,
-                      //   validator: (val) {
-                      //     if (val.isEmpty) {
-                      //       return tr.translateData("enter_building_number");
-                      //     }
-                      //   },
-                      // ),
+                      CommonTextField(
+                        textInputAction: TextInputAction.next,
+                        controller: _.buildingController,
+                        labelText: tr.translateData("building_no"),
+                        prefixIcon: UIDATAIcons.homeIcon,
+                        isTextHidden: false,
+                        fillcolor: UIDataColors.whiteColor,
+                        keyboardType: TextInputType.text,
+                        validator: (val) {
+                          if (val.isEmpty) {
+                            return tr.translateData("enter_building_number");
+                          }
+                        },
+                      ),
                       // CommonTextField(
                       //   textInputAction: TextInputAction.next,
                       //   controller: _.aptController,
@@ -243,7 +256,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       CommonTextField(
                         controller: _.addressController,
                         labelText: tr.translateData("address_link"),
-                        prefixIcon: UIDATAIcons.homeIcon,
+                        prefixIcon: UIDATAIcons.locationPin,
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
                         keyboardType: TextInputType.text,
@@ -280,7 +293,7 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                                   child: PrimaryButtonWithIcon(
                                     onPressed: () {
                                       if (form.currentState!.validate()) {
-                                        _.addCustomer(cartProvider!);
+                                        _.addCustomer(cartProvider);
                                       }
                                     },
                                     btntxt: tr.translateData(

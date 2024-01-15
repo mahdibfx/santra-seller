@@ -315,9 +315,14 @@ class _CustomCardState extends State<CustomCard>
                               color: Colors.grey.shade200,
                               child: Row(
                                 children: [
-                                  SvgPicture.asset(
-                                    UIDATAIcons.orderRemarks,
-                                    color: UIDataColors.primaryColor,
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 5),
+                                    child: SvgPicture.asset(
+                                      UIDATAIcons.orderRemarks,
+                                      // height: 12,
+                                      color: UIDataColors.primaryColor,
+                                    ),
                                   ),
                                   Expanded(
                                     child: Text(

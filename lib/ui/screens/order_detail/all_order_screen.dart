@@ -17,7 +17,9 @@ import 'package:get/get.dart';
 import '../../../utils/uidata.dart';
 import '../../widgets/textfields/common_textfield.dart';
 import '../home_page/home_screen.dart';
+
 var tr = Get.put(AppTranslations());
+
 class AllOrderScreen extends StatefulWidget {
   // final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
@@ -28,11 +30,13 @@ class AllOrderScreen extends StatefulWidget {
 }
 
 class _AllOrderScreenState extends State<AllOrderScreen> {
-   final localization = AppTranslations();
+  final localization = AppTranslations();
   Widget bodyData() {
     return WillPopScope(
-    onWillPop: ()  { Get.offAll(const HomeScreen());
-    return Future.value(false);},
+      onWillPop: () {
+        Get.offAll(const HomeScreen());
+        return Future.value(false);
+      },
       child: Consumer<HomeProvider>(
         builder: (context, _, child) {
           return _.isLoading
@@ -58,7 +62,8 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
                                     child: CommonTextField(
                                       prefixIcon: UIDATAIcons.searchIcon,
                                       isTextHidden: false,
-                                      hintText: tr.translateData('orders_search'),
+                                      hintText:
+                                          tr.translateData('orders_search'),
                                       fillcolor: UIDataColors.whiteColor,
                                       keyboardType: TextInputType.text,
                                       controller: _.filterController,
@@ -98,33 +103,38 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
                                 itemCount: _.filteredAllOrders.length,
                                 itemBuilder: (context, index) {
                                   var santraList = _.filteredAllOrders[index];
-                                  return santraList.orderStatus == 'new_order' ||
+                                  return santraList.orderStatus ==
+                                              'new_order' ||
                                           santraList.orderStatus ==
                                               'assigned_3pl' ||
                                           santraList.orderStatus ==
                                               'payment_pending'
                                       ? CustomCard(
-                                        customerPhone: santraList.customerPhone,
-                                              orderType: santraList.orderType,
+                                          customerPhone:
+                                              santraList.customerPhone,
+                                          orderType: santraList.orderType,
                                           title: 'Card',
                                           orderStatus:
                                               santraList.orderStatus.toString(),
-                                          totalPrice: santraList.totalOrderAmount
+                                          totalPrice: santraList
+                                              .totalOrderAmount
                                               .toString(),
-                                          orderRemarks:
-                                              santraList.orderRemarks.toString(),
+                                          orderRemarks: santraList.orderRemarks
+                                              .toString(),
                                           orderTime: santraList.orderDateStamp
                                               .toString(),
                                           deliveryTime:
                                               santraList.advanceTime.toString(),
-                                          customerName:
-                                              santraList.customerName.toString(),
+                                          customerName: santraList.customerName
+                                              .toString(),
                                           paymentMethod:
-                                              Get.locale!.languageCode == 'en' ? _.getEnglishPaymentMethod(santraList
-                                                    .paymentMethod
-                                                    .toString()) : _.getArabicPaymentMethod(santraList
-                                                    .paymentMethod
-                                                    .toString()),
+                                              Get.locale!.languageCode == 'en'
+                                                  ? _.getEnglishPaymentMethod(
+                                                      santraList.paymentMethod
+                                                          .toString())
+                                                  : _.getArabicPaymentMethod(
+                                                      santraList.paymentMethod
+                                                          .toString()),
                                           orderNumber:
                                               santraList.orderNumber.toString(),
                                           paymentLink:
@@ -132,27 +142,32 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
                                           orderItemList: santraList.orderItems,
                                         )
                                       : ManualOrderCard(
-                                        customerPhone: santraList.customerPhone,
-                                              orderType: santraList.orderType,
+                                          customerPhone:
+                                              santraList.customerPhone,
+                                          orderType: santraList.orderType,
                                           orderStatus:
                                               santraList.orderStatus.toString(),
-                                          totalPrice: santraList.totalOrderAmount
+                                          totalPrice: santraList
+                                              .totalOrderAmount
                                               .toString(),
                                           orderTime: santraList.orderDateStamp
                                               .toString(),
                                           deliveryTime:
                                               santraList.advanceTime.toString(),
-                                          customerName:
-                                              santraList.customerName.toString(),
+                                          customerName: santraList.customerName
+                                              .toString(),
                                           paymentMethod:
-                                              Get.locale!.languageCode == 'en' ? _.getEnglishPaymentMethod(santraList
-                                                    .paymentMethod
-                                                    .toString()) : _.getArabicPaymentMethod(santraList
-                                                    .paymentMethod
-                                                    .toString()),
+                                              Get.locale!.languageCode == 'en'
+                                                  ? _.getEnglishPaymentMethod(
+                                                      santraList.paymentMethod
+                                                          .toString())
+                                                  : _.getArabicPaymentMethod(
+                                                      santraList.paymentMethod
+                                                          .toString()),
                                           orderNumber:
                                               santraList.orderNumber.toString(),
                                           orderItemList: santraList.orderItems,
+                                          orderRemarks: santraList.orderRemarks,
                                           colorCode:
                                               santraList.colorCode.toString(),
                                         );
@@ -173,7 +188,7 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
                                 color: Colors.black.withOpacity(0.5)),
                           )
                         : Container(),
-                      _.isAcceptOrderLoading ||
+                    _.isAcceptOrderLoading ||
                             _.isCancelOrderLoading ||
                             _.isRejectOrderLoading ||
                             _.isOrderReadyLoading
@@ -194,156 +209,156 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
         isScrollControlled: true,
         context: context,
         builder: (context) {
-          return GetBuilder<AppTranslations>(
-      builder: (tr) {
-              return Consumer<HomeProvider>(builder: (context, _, child) {
-                return Container(
-                  height: 650,
-                  color: Colors.white,
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              _.resetOrderGroupValue();
-                              Get.back();
-                            },
-                            child: SizedBox(
-                                child: Row(
-                              children: [
-                                Text(tr.translateData('reset')),
-                                SpacingWidth.widthlistspacing5,
-                                SvgPicture.asset(
-                                  UIDATAIcons.resetIcon,
+          return GetBuilder<AppTranslations>(builder: (tr) {
+            return Consumer<HomeProvider>(builder: (context, _, child) {
+              return Container(
+                height: 650,
+                color: Colors.white,
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            _.resetOrderGroupValue();
+                            Get.back();
+                          },
+                          child: SizedBox(
+                              child: Row(
+                            children: [
+                              Text(tr.translateData('reset')),
+                              SpacingWidth.widthlistspacing5,
+                              SvgPicture.asset(
+                                UIDATAIcons.resetIcon,
+                                color: Colors.black,
+                              ),
+                            ],
+                          ).marginAll(5)),
+                        ),
+                        Text(tr.translateData('filter'),
+                            style: UIDataTextStyles.h2.copyWith(
+                              color: UIDataColors.primaryColor,
+                            )),
+                        GestureDetector(
+                          onTap: () {
+                            Get.back();
+                          },
+                          child: SizedBox(
+                              child: Row(
+                            children: [
+                              Text(tr.translateData('signup_back')),
+                              SpacingWidth.widthlistspacing5,
+                              Consumer<SplashProvider>(
+                                  builder: (context, splashPro, child) {
+                                return SvgPicture.asset(
+                                  tr.selectedLanguage == 'en_us'
+                                      ? UIDATAIcons.forwardArrow
+                                      : UIDATAIcons.back,
                                   color: Colors.black,
-                                ),
-                              ],
-                            ).marginAll(5)),
-                          ),
-                          Text(tr.translateData('filter'),
-                              style: UIDataTextStyles.h2.copyWith(
-                                color: UIDataColors.primaryColor,
-                              )),
-                          GestureDetector(
-                            onTap: () {
-                              Get.back();
-                            },
-                            child: SizedBox(
-                                child: Row(
-                              children: [
-                                Text(tr.translateData('signup_back')),
-                                SpacingWidth.widthlistspacing5,
-                                 Consumer<SplashProvider>(builder: (context, splashPro, child) {
-                                    return SvgPicture.asset(
-                                      tr.selectedLanguage == 'en_us'?
-                                      UIDATAIcons.forwardArrow : UIDATAIcons.back,
-                                      color: Colors.black,
-                                    );
-                                  }
-                                ),
-                              ],
-                            ).marginAll(5)),
-                          ),
+                                );
+                              }),
+                            ],
+                          ).marginAll(5)),
+                        ),
+                      ],
+                    ),
+                    RadioListTile(
+                      title: Text(_.getStatus('new_order')),
+                      value: 'new_order',
+                      groupValue: _.selectedOrderOption,
+                      onChanged: (value) {
+                        if (mounted) {
+                          _.changeOrderGroupValue(value);
+                        }
+                      },
+                    ),
+                    const Divider(thickness: 2),
+                    RadioListTile(
+                      title: Text(_.getStatus('payment_pending')),
+                      value: 'payment_pending',
+                      groupValue: _.selectedOrderOption,
+                      onChanged: (value) {
+                        if (mounted) {
+                          _.changeOrderGroupValue(value);
+                        }
+                      },
+                    ),
+                    const Divider(thickness: 2),
+                    RadioListTile(
+                      title: Text(_.getStatus('assigned_3pl')),
+                      value: 'assigned_3pl',
+                      groupValue: _.selectedOrderOption,
+                      onChanged: (value) {
+                        if (mounted) {
+                          _.changeOrderGroupValue(value);
+                        }
+                      },
+                    ),
+                    const Divider(thickness: 2),
+                    RadioListTile(
+                      title: Text(_.getStatus('canceled')),
+                      value: 'canceled',
+                      groupValue: _.selectedOrderOption,
+                      onChanged: (value) {
+                        if (mounted) {
+                          _.changeOrderGroupValue(value);
+                        }
+                      },
+                    ),
+                    const Divider(thickness: 2),
+                    RadioListTile(
+                      title: Text(_.getStatus('rejected')),
+                      value: 'rejected',
+                      groupValue: _.selectedOrderOption,
+                      onChanged: (value) {
+                        if (mounted) {
+                          _.changeOrderGroupValue(value);
+                        }
+                      },
+                    ),
+                    const Divider(thickness: 2),
+                    RadioListTile(
+                      title: Text(_.getStatus('accepted')),
+                      value: 'accepted',
+                      groupValue: _.selectedOrderOption,
+                      onChanged: (value) {
+                        if (mounted) {
+                          _.changeOrderGroupValue(value);
+                        }
+                      },
+                    ),
+                    const Divider(thickness: 2),
+                    RadioListTile(
+                      title: Text(_.getStatus('order_ready')),
+                      value: 'order_ready',
+                      groupValue: _.selectedOrderOption,
+                      onChanged: (value) {
+                        if (mounted) {
+                          _.changeOrderGroupValue(value);
+                        }
+                      },
+                    ),
+                    SpacingHeight.heightlistspacing10,
+                    RaisedGradientButton(
+                      gradient: const LinearGradient(
+                        colors: <Color>[
+                          UIDataColors.primaryColor,
+                          UIDataColors.primaryColor,
                         ],
                       ),
-                      RadioListTile(
-                        title: Text(_.getStatus('new_order')),
-                        value: 'new_order',
-                        groupValue: _.selectedOrderOption,
-                        onChanged: (value) {
-                          if (mounted) {
-                            _.changeOrderGroupValue(value);
-                          }
-                        },
-                      ),
-                      const Divider(thickness: 2),
-                      RadioListTile(
-                        title: Text(_.getStatus('payment_pending')),
-                        value: 'payment_pending',
-                        groupValue: _.selectedOrderOption,
-                        onChanged: (value) {
-                          if (mounted) {
-                            _.changeOrderGroupValue(value);
-                          }
-                        },
-                      ),
-                      const Divider(thickness: 2),
-                      RadioListTile(
-                        title: Text(_.getStatus('assigned_3pl')),
-                        value: 'assigned_3pl',
-                        groupValue: _.selectedOrderOption,
-                        onChanged: (value) {
-                          if (mounted) {
-                            _.changeOrderGroupValue(value);
-                          }
-                        },
-                      ),
-                      const Divider(thickness: 2),
-                      RadioListTile(
-                        title: Text(_.getStatus('canceled')),
-                        value: 'canceled',
-                        groupValue: _.selectedOrderOption,
-                        onChanged: (value) {
-                          if (mounted) {
-                            _.changeOrderGroupValue(value);
-                          }
-                        },
-                      ),
-                      const Divider(thickness: 2),
-                      RadioListTile(
-                        title: Text(_.getStatus('rejected')),
-                        value: 'rejected',
-                        groupValue: _.selectedOrderOption,
-                        onChanged: (value) {
-                          if (mounted) {
-                            _.changeOrderGroupValue(value);
-                          }
-                        },
-                      ),
-                      const Divider(thickness: 2),
-                      RadioListTile(
-                        title: Text(_.getStatus('accepted')),
-                        value: 'accepted',
-                        groupValue: _.selectedOrderOption,
-                        onChanged: (value) {
-                          if (mounted) {
-                            _.changeOrderGroupValue(value);
-                          }
-                        },
-                      ),
-                      const Divider(thickness: 2),
-                      RadioListTile(
-                        title: Text(_.getStatus('order_ready')),
-                        value: 'order_ready',
-                        groupValue: _.selectedOrderOption,
-                        onChanged: (value) {
-                          if (mounted) {
-                            _.changeOrderGroupValue(value);
-                          }
-                        },
-                      ),
-                      SpacingHeight.heightlistspacing10,
-                      RaisedGradientButton(
-                        gradient: const LinearGradient(
-                          colors: <Color>[
-                            UIDataColors.primaryColor,
-                            UIDataColors.primaryColor,
-                          ],
-                        ),
-                        btntxt: '${tr.translateData('filter_showing_button')} ${_.filteredAllOrders.length} ${tr.translateData('filter_result_button')}',
-                        buttontxtColor: UIDataColors.whiteColor,
-                        onPressed: () {
-                          Get.back();
-                        },
-                      ),
-                    ],
-                  ).marginAll(10),
-                );
-              });
-            }
-          );
+                      btntxt:
+                          '${tr.translateData('filter_showing_button')} ${_.filteredAllOrders.length} ${tr.translateData('filter_result_button')}',
+                      buttontxtColor: UIDataColors.whiteColor,
+                      onPressed: () {
+                        Get.back();
+                      },
+                    ),
+                  ],
+                ).marginAll(10),
+              );
+            });
+          });
         });
   }
 

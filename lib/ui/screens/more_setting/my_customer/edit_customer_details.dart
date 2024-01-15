@@ -122,87 +122,99 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
                       //   //   }
                       //   // },
                       // ),
-
-                      MyDropdown(
-                          label: tr.translateData("signup_city"),
-                          validator: (value) {
-                            if (value == null) {
-                              return tr.translateData("select_city");
-                            }
-                          },
-                          prefixIcon: UIDATAIcons.location,
-                          options: _.citiesList!,
-                          onChanged: (val) {
-                            _.city = val;
-                            _.getAreas(_.city);
-                          },
-                          selectedOption: _.city),
-                      SpacingHeight.heightlistspacing15,
-                      DropdownSearch<String>(
-                        dropdownButtonProps: DropdownButtonProps(
-                            icon: Padding(
-                          padding: const EdgeInsets.only(right: 0.0),
-                          child: SvgPicture.asset(UIDATAIcons.arrowDown),
-                        )),
-                        popupProps: areaFiledProps(tr),
-                        items: _.areas,
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                            label: Text(
-                              tr.translateData("area"),
-                              style: const TextStyle(color: Colors.black),
-                            ),
-                            prefixIcon: GestureDetector(
-                                child: SvgPicture.asset(
-                              UIDATAIcons.areaIcon,
-                              height: 14,
-                              color: UIDataColors.blackText,
-                            ).paddingSymmetric(vertical: 14)),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: const Color(0xff757575).withOpacity(0.7),
-                              ),
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(15),
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: const Color(0xff757575).withOpacity(0.7),
-                              ),
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(15),
-                              ),
-                            ),
-                            contentPadding: const EdgeInsets.only(left: 10),
-                            filled: true,
-                            fillColor: Colors.white,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: MyDropdown(
+                                label: tr.translateData("signup_city"),
+                                validator: (value) {
+                                  if (value == null) {
+                                    return tr.translateData("select_city");
+                                  }
+                                },
+                                prefixIcon: UIDATAIcons.areaIcon,
+                                iconSize: 13,
+                                options: _.citiesList!,
+                                onChanged: (val) {
+                                  _.city = val;
+                                  _.getAreas(_.city);
+                                },
+                                selectedOption: _.city),
                           ),
-                        ),
-                        onChanged: (val) {
-                          _.area = val;
-                        },
-                        validator: (value) {
-                          if (value == null) {
-                            return tr.translateData("select_city");
+                          SpacingWidth.widthlistspacing15,
+                          Expanded(
+                            child: DropdownSearch<String>(
+                              dropdownButtonProps: DropdownButtonProps(
+                                  icon: Padding(
+                                padding: const EdgeInsets.only(right: 0.0),
+                                child: SvgPicture.asset(UIDATAIcons.arrowDown),
+                              )),
+                              popupProps: areaFiledProps(tr),
+                              items: _.areas,
+                              dropdownDecoratorProps: DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  label: Text(
+                                    tr.translateData("area"),
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                  prefixIcon: GestureDetector(
+                                      child: SvgPicture.asset(
+                                    UIDATAIcons.location,
+                                    height: 14,
+                                    color: UIDataColors.blackText,
+                                  ).paddingSymmetric(vertical: 12)),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: const Color(0xff757575)
+                                          .withOpacity(0.7),
+                                    ),
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(15),
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: const Color(0xff757575)
+                                          .withOpacity(0.7),
+                                    ),
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(15),
+                                    ),
+                                  ),
+                                  contentPadding:
+                                      const EdgeInsets.only(left: 10),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                ),
+                              ),
+                              onChanged: (val) {
+                                _.area = val;
+                              },
+                              validator: (value) {
+                                if (value == null) {
+                                  return tr.translateData("select_city");
+                                }
+                              },
+                              selectedItem: _.area,
+                            ),
+                          )
+                        ],
+                      ),
+
+                      SpacingHeight.heightlistspacing10,
+                      CommonTextField(
+                        controller: _.buildingController,
+                        labelText: tr.translateData("building_no"),
+                        prefixIcon: UIDATAIcons.homeIcon,
+                        isTextHidden: false,
+                        fillcolor: UIDataColors.whiteColor,
+                        keyboardType: TextInputType.text,
+                        validator: (val) {
+                          if (val.isEmpty) {
+                            return tr.translateData("enter_building_number");
                           }
                         },
-                        selectedItem: _.area,
                       ),
-                      SpacingHeight.heightlistspacing10,
-                      // CommonTextField(
-                      //   controller: _.buildingController,
-                      //   labelText: tr.translateData("building_no"),
-                      //   prefixIcon: UIDATAIcons.building,
-                      //   isTextHidden: false,
-                      //   fillcolor: UIDataColors.whiteColor,
-                      //   keyboardType: TextInputType.text,
-                      //   validator: (val) {
-                      //     if (val.isEmpty) {
-                      //       return tr.translateData("enter_building_number");
-                      //     }
-                      //   },
-                      // ),
                       // CommonTextField(
                       //   controller: _.aptController,
                       //   labelText: tr.translateData("apt_villa"),
@@ -219,7 +231,7 @@ class _EditCustomerDetailsState extends State<EditCustomerDetails> {
                       CommonTextField(
                         controller: _.addressController,
                         labelText: tr.translateData("address_link"),
-                        prefixIcon: UIDATAIcons.homeIcon,
+                        prefixIcon: UIDATAIcons.locationPin,
                         isTextHidden: false,
                         fillcolor: UIDataColors.whiteColor,
                         keyboardType: TextInputType.text,

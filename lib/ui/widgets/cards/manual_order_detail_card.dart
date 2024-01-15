@@ -25,6 +25,7 @@ class ManualOrderCard extends StatefulWidget {
   final String orderNumber;
   final String totalPrice;
   final String customerPhone;
+  final String orderRemarks;
   List<OrderItem> orderItemList;
 
   ManualOrderCard({
@@ -38,6 +39,7 @@ class ManualOrderCard extends StatefulWidget {
     required this.orderNumber,
     required this.orderItemList,
     required this.totalPrice,
+    required this.orderRemarks,
     required this.colorCode,
   });
 
@@ -135,8 +137,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                           children: [
                             Row(
                               children: [
-                                Container(
-                                    child: Row(
+                                Row(
                                   children: [
                                     SvgPicture.asset(
                                       UIDATAIcons.orderTime,
@@ -145,10 +146,9 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                     SpacingWidth.widthlistspacing,
                                     Text(dateFormat(widget.orderTime)),
                                   ],
-                                )),
+                                ),
                                 const Spacer(),
-                                Container(
-                                    child: Row(
+                                Row(
                                   children: [
                                     SvgPicture.asset(
                                       UIDATAIcons.deliveryIcon,
@@ -159,14 +159,13 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                         ? const Text('---')
                                         : Text(widget.deliveryTime),
                                   ],
-                                )),
+                                ),
                               ],
                             ).marginOnly(
                                 left: 10, right: 10, top: 10, bottom: 5),
                             Row(
                               children: [
-                                Container(
-                                    child: Row(
+                                Row(
                                   children: [
                                     SvgPicture.asset(
                                       height: 16,
@@ -176,10 +175,9 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                     SpacingWidth.widthlistspacing,
                                     Text(widget.customerName),
                                   ],
-                                )),
+                                ),
                                 const Spacer(),
-                                Container(
-                                    child: Row(
+                                Row(
                                   children: [
                                     SvgPicture.asset(
                                       UIDATAIcons.paymentMethod,
@@ -188,15 +186,14 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                     SpacingWidth.widthlistspacing,
                                     Text(widget.paymentMethod),
                                   ],
-                                )),
+                                ),
                               ],
                             ).marginOnly(
                                 left: 10, right: 10, top: 5, bottom: 5),
                             !widget.orderType.contains("Delivery")
                                 ? Row(
                                     children: [
-                                      Container(
-                                          child: Row(
+                                      Row(
                                         children: [
                                           SvgPicture.asset(
                                             height: 16,
@@ -206,10 +203,9 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                           SpacingWidth.widthlistspacing,
                                           Text(widget.customerPhone),
                                         ],
-                                      )),
+                                      ),
                                       const Spacer(),
-                                      Container(
-                                          child: Row(
+                                      Row(
                                         children: [
                                           SvgPicture.asset(
                                             height: 16,
@@ -219,7 +215,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                           SpacingWidth.widthlistspacing,
                                           Text(tr.translateData("pickup")),
                                         ],
-                                      )),
+                                      ),
                                     ],
                                   ).marginOnly(
                                     left: 10, right: 10, top: 5, bottom: 10)
@@ -250,16 +246,36 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                   ),
                 ),
                 Container(
-                  height: widget.orderStatus.toLowerCase() == 'accepted'
+                  height: widget.orderItemList.isEmpty
                       ? (_heightFactorAnimation.value *
                           (Get.locale!.languageCode == 'en'
-                              ? 155 + _calculateContainerHeight()
-                              : 161 + _calculateContainerHeight()))
-                      : (_heightFactorAnimation.value *
-                          (Get.locale!.languageCode == 'en'
-                              ? 84 + _calculateContainerHeight()
-                              : 91 +
-                                  _calculateContainerHeight())), //@todo repeat order button hide when unhide it change the height to 155
+                              ? 173 + _calculateContainerHeight()
+                              : 179 + _calculateContainerHeight()))
+                      : widget.orderRemarks.toString().isEmpty
+                          ? (_heightFactorAnimation.value *
+                              (Get.locale!.languageCode == 'en'
+                                  ? 130 + _calculateContainerHeight()
+                                  : 136 + _calculateContainerHeight()))
+                          : widget.orderStatus.toLowerCase() == 'accepted'
+                              ? (_heightFactorAnimation.value *
+                                  (Get.locale!.languageCode == 'en'
+                                      ? 190 + _calculateContainerHeight()
+                                      : 161 + _calculateContainerHeight()))
+                              : (_heightFactorAnimation.value *
+                                  (Get.locale!.languageCode == 'en'
+                                      ? 120 + _calculateContainerHeight()
+                                      : 179 + _calculateContainerHeight())),
+                  //  widget.orderStatus.toLowerCase() == 'accepted'
+                  //     ? (_heightFactorAnimation.value *
+                  //         (Get.locale!.languageCode == 'en'
+                  //             ? 155 + _calculateContainerHeight()
+                  //             : 161 + _calculateContainerHeight()))
+                  //     :  (_heightFactorAnimation.value *
+                  //             (Get.locale!.languageCode == 'en'
+                  //                 ? 84 + _calculateContainerHeight()
+                  //                 : 91 +
+                  //                     _calculateContainerHeight())),
+                  //@todo repeat order button hide when unhide it change the height to 155
                   width: double.infinity,
                   decoration: const BoxDecoration(
                     color: Colors.white,
@@ -307,6 +323,29 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                         ],
                       ).marginOnly(left: 10, right: 10),
                       SpacingHeight.heightlistspacing10,
+                      widget.orderRemarks.isEmpty
+                          ? const SizedBox()
+                          : Container(
+                              color: Colors.grey.shade200,
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 5),
+                                    child: SvgPicture.asset(
+                                      UIDATAIcons.orderRemarks,
+                                      color: UIDataColors.primaryColor,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      widget.orderRemarks,
+                                      maxLines: 2,
+                                    ).marginOnly(left: 10, top: 4, bottom: 4),
+                                  ),
+                                ],
+                              ).marginOnly(left: 10, right: 10),
+                            ),
                       Container(
                         height: 40,
                         decoration: BoxDecoration(
