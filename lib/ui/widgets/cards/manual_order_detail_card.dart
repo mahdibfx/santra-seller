@@ -338,10 +338,13 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                     ),
                                   ),
                                   Expanded(
-                                    child: Text(
-                                      widget.orderRemarks,
-                                      maxLines: 2,
-                                    ).marginOnly(left: 10, top: 4, bottom: 4),
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Text(
+                                        widget.orderRemarks,
+                                        maxLines: 2,
+                                      ).marginOnly(left: 10, top: 4, bottom: 4),
+                                    ),
                                   ),
                                 ],
                               ).marginOnly(left: 10, right: 10),
