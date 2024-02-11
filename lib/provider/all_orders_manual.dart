@@ -172,7 +172,6 @@ class AddManualOrderProvider extends ChangeNotifier {
     //// @todo after change in provider, need to add param
     if (Get.arguments != null) {
       arguments = (Get.arguments);
-      print("arguments:" + arguments);
       notifyListeners();
       // await gettingdata(name!);
     } else {

@@ -13,6 +13,7 @@ import '../../../provider/cart_provider.dart';
 import '../../../provider/home_provider.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../buttons/material_buttons/raised_gradient_button.dart';
+import '../dialogs/full_screen_image.dart';
 
 class ManualOrderCard extends StatefulWidget {
   final String orderStatus;
@@ -26,9 +27,11 @@ class ManualOrderCard extends StatefulWidget {
   final String totalPrice;
   final String customerPhone;
   final String orderRemarks;
+  final String? requestImage;
   List<OrderItem> orderItemList;
 
   ManualOrderCard({
+    super.key,
     required this.customerPhone,
     required this.orderType,
     required this.orderStatus,
@@ -40,6 +43,7 @@ class ManualOrderCard extends StatefulWidget {
     required this.orderItemList,
     required this.totalPrice,
     required this.orderRemarks,
+    required this.requestImage,
     required this.colorCode,
   });
 
@@ -223,58 +227,62 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                           ],
                         ),
                       ),
-                      _isOpen
-                          ? const SizedBox()
-                          : Container(
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: _.getColor(widget.orderStatus),
-                                borderRadius: const BorderRadius.only(
-                                    // topRight: Radius.circular(15.0),
-                                    bottomRight: Radius.circular(15.0),
-                                    // topLeft: Radius.circular(15.0),
-                                    bottomLeft: Radius.circular(15.0)),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  _.getStatus(widget.orderStatus),
-                                  style: const TextStyle(color: Colors.white),
-                                ),
-                              ),
+                      // !_isOpen
+                      //     ? const SizedBox()
+                      //     :
+
+                      if (!_isOpen)
+                        Container(
+                          alignment: Alignment.center,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: _.getColor(widget.orderStatus),
+                            borderRadius: const BorderRadius.only(
+                                // topRight: Radius.circular(15.0),
+                                bottomRight: Radius.circular(15.0),
+                                // topLeft: Radius.circular(15.0),
+                                bottomLeft: Radius.circular(15.0)),
+                          ),
+                          child: Center(
+                            child: Text(
+                              _.getStatus(widget.orderStatus),
+                              style: const TextStyle(color: Colors.white),
                             ),
+                          ),
+                        ),
                     ],
                   ),
                 ),
                 Container(
-                  height: widget.orderItemList.isEmpty
-                      ? (_heightFactorAnimation.value *
-                          (Get.locale!.languageCode == 'en'
-                              ? 173 + _calculateContainerHeight()
-                              : 179 + _calculateContainerHeight()))
-                      : widget.orderRemarks.toString().isEmpty
-                          ? (_heightFactorAnimation.value *
-                              (Get.locale!.languageCode == 'en'
-                                  ? 130 + _calculateContainerHeight()
-                                  : 136 + _calculateContainerHeight()))
-                          : widget.orderStatus.toLowerCase() == 'accepted'
-                              ? (_heightFactorAnimation.value *
-                                  (Get.locale!.languageCode == 'en'
-                                      ? 190 + _calculateContainerHeight()
-                                      : 161 + _calculateContainerHeight()))
-                              : (_heightFactorAnimation.value *
-                                  (Get.locale!.languageCode == 'en'
-                                      ? 120 + _calculateContainerHeight()
-                                      : 179 + _calculateContainerHeight())),
-                  //  widget.orderStatus.toLowerCase() == 'accepted'
+                  // height: widget.orderItemList.isEmpty
                   //     ? (_heightFactorAnimation.value *
                   //         (Get.locale!.languageCode == 'en'
-                  //             ? 155 + _calculateContainerHeight()
-                  //             : 161 + _calculateContainerHeight()))
-                  //     :  (_heightFactorAnimation.value *
+                  //             ? 173 + _calculateContainerHeight()
+                  //             : 179 + _calculateContainerHeight()))
+                  //     : widget.orderStatus.toLowerCase() == 'accepted'
+                  //         ? (_heightFactorAnimation.value *
                   //             (Get.locale!.languageCode == 'en'
-                  //                 ? 84 + _calculateContainerHeight()
-                  //                 : 91 +
-                  //                     _calculateContainerHeight())),
+                  //                 ? 190 + _calculateContainerHeight()
+                  //                 : 196 + _calculateContainerHeight()))
+                  //         : widget.orderRemarks.toString().isEmpty &&
+                  //                 widget.requestImage != ""
+                  //             ? (_heightFactorAnimation.value *
+                  //                 (Get.locale!.languageCode == 'en'
+                  //                     ? 230 + _calculateContainerHeight()
+                  //                     : 236 + _calculateContainerHeight()))
+                  //             : widget.orderRemarks.toString().isNotEmpty &&
+                  //                     widget.requestImage != ""
+                  //                 ? (_heightFactorAnimation.value *
+                  //                     (Get.locale!.languageCode == 'en'
+                  //                         ? 190 + _calculateContainerHeight()
+                  //                         : 196 + _calculateContainerHeight()))
+                  //                 : (_heightFactorAnimation.value *
+                  //                     (Get.locale!.languageCode == 'en'
+                  //                         //120
+                  //                         ? 173 + _calculateContainerHeight()
+                  //                         : 179 + _calculateContainerHeight())),
+                  //179
+
                   //@todo repeat order button hide when unhide it change the height to 155
                   width: double.infinity,
                   decoration: const BoxDecoration(
@@ -284,91 +292,142 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                         bottomLeft: Radius.circular(15.0)),
                   ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SpacingHeight.heightlistspacing15,
-                      SizedBox(
-                        height: _calculateContainerHeight(),
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: widget.orderItemList.length,
-                            itemBuilder: (context, index) {
-                              return OrderItemWidget(
-                                imageString:
-                                    widget.orderItemList[index].productImage,
-                                productQuantity:
-                                    widget.orderItemList[index].productQuantity,
-                                productName: Get.locale!.languageCode == 'en'
-                                    ? widget.orderItemList[index].productName
-                                    : widget
-                                        .orderItemList[index].productNameArabic,
-                                productPrice:
-                                    widget.orderItemList[index].productTotal,
-                              );
-                            }),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(tr.translateData("total_price"),
-                              style: UIDataTextStyles.textMediumColoredBlue
-                                  .copyWith(
-                                color: UIDataColors.blackColor,
-                              )),
-                          SpacingWidth.widthlistspacing,
-                          Text('${widget.totalPrice} AED',
-                              style: UIDataTextStyles.textMediumColoredBlue
-                                  .copyWith(
-                                color: UIDataColors.primaryColor,
-                              )),
-                        ],
-                      ).marginOnly(left: 10, right: 10),
-                      SpacingHeight.heightlistspacing10,
-                      widget.orderRemarks.isEmpty
-                          ? const SizedBox()
-                          : Container(
-                              color: Colors.grey.shade200,
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 5),
-                                    child: SvgPicture.asset(
-                                      UIDATAIcons.orderRemarks,
-                                      color: UIDataColors.primaryColor,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Text(
-                                        widget.orderRemarks,
-                                        maxLines: 2,
-                                      ).marginOnly(left: 10, top: 4, bottom: 4),
-                                    ),
-                                  ),
-                                ],
-                              ).marginOnly(left: 10, right: 10),
-                            ),
-                      Container(
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: _.getColor(widget.orderStatus),
-                          borderRadius:
-                              widget.orderStatus.toLowerCase() == 'accepted'
-                                  ? const BorderRadius.all(Radius.zero)
-                                  : const BorderRadius.only(
-                                      // topRight: Radius.circular(15.0),
-                                      bottomRight: Radius.circular(15.0),
-                                      // topLeft: Radius.circular(15.0),
-                                      bottomLeft: Radius.circular(15.0)),
+                      if (_isOpen) SpacingHeight.heightlistspacing15,
+                      if (_isOpen)
+                        SizedBox(
+                          height: _calculateContainerHeight(),
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: widget.orderItemList.length,
+                              itemBuilder: (context, index) {
+                                return OrderItemWidget(
+                                  imageString:
+                                      widget.orderItemList[index].productImage,
+                                  productQuantity: widget
+                                      .orderItemList[index].productQuantity,
+                                  productName: Get.locale!.languageCode == 'en'
+                                      ? widget.orderItemList[index].productName
+                                      : widget.orderItemList[index]
+                                          .productNameArabic,
+                                  productPrice:
+                                      widget.orderItemList[index].productTotal,
+                                );
+                              }),
                         ),
-                        child: Center(
-                          child: Text(
-                            _.getStatus(widget.orderStatus),
-                            style: const TextStyle(color: Colors.white),
+                      if (_isOpen)
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(tr.translateData("total_price"),
+                                style: UIDataTextStyles.textMediumColoredBlue
+                                    .copyWith(
+                                  color: UIDataColors.blackColor,
+                                )),
+                            SpacingWidth.widthlistspacing,
+                            Text('${widget.totalPrice} AED',
+                                style: UIDataTextStyles.textMediumColoredBlue
+                                    .copyWith(
+                                  color: UIDataColors.primaryColor,
+                                )),
+                          ],
+                        ).marginAll(10),
+                      if (_isOpen)
+                        Column(
+                          children: [
+                            // SpacingHeight.heightlistspacing10,
+                            if ((widget.orderRemarks.isNotEmpty ||
+                                widget.requestImage != null))
+                              Container(
+                                width: double.infinity,
+                                color: Colors.grey.shade200,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    if (widget.orderRemarks.isNotEmpty)
+                                      Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 5),
+                                            child: SvgPicture.asset(
+                                              UIDATAIcons.orderRemarks,
+                                              color: UIDataColors.primaryColor,
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              child: Text(
+                                                widget.orderRemarks,
+                                                maxLines: 2,
+                                              ).marginOnly(
+                                                  left: 10, top: 4, bottom: 4),
+                                            ),
+                                          ),
+                                        ],
+                                      ).marginOnly(left: 10, right: 10),
+                                    if (widget.requestImage != "")
+                                      GestureDetector(
+                                        onTap: () => Get.to(() =>
+                                            FullScreenImage(
+                                                image:
+                                                    widget.requestImage ?? "")),
+                                        child: Container(
+                                          height: 50,
+                                          width: 50,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: Center(
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    widget.requestImage ?? "",
+                                                fit: BoxFit.cover,
+                                                memCacheHeight: 400,
+                                                memCacheWidth: 400,
+                                                placeholder: (context, url) =>
+                                                    const Padding(
+                                                  padding: EdgeInsets.all(12.0),
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ).paddingAll(10),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                          ],
+                        ),
+                      if (_isOpen)
+                        Container(
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: _.getColor(widget.orderStatus),
+                            borderRadius:
+                                widget.orderStatus.toLowerCase() == 'accepted'
+                                    ? const BorderRadius.all(Radius.zero)
+                                    : const BorderRadius.only(
+                                        // topRight: Radius.circular(15.0),
+                                        bottomRight: Radius.circular(15.0),
+                                        // topLeft: Radius.circular(15.0),
+                                        bottomLeft: Radius.circular(15.0)),
+                          ),
+                          child: Center(
+                            child: Text(
+                              _.getStatus(widget.orderStatus),
+                              style: const TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
-                      ),
                       widget.orderStatus.toLowerCase() == 'accepted'
                           ? Consumer<CartProvider>(
                               builder: (context, cartProvider, child) {

@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:santra_seller/ui/widgets/dialogs/full_screen_image.dart';
 import 'package:santra_seller/ui/widgets/snackbar/common_snackbar.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import 'package:santra_seller/utils/uidata.dart';
@@ -25,10 +26,12 @@ class CustomCard extends StatefulWidget {
   final String orderStatus;
   final String customerPhone;
   final String paymentLink;
+  final String? requestImage;
   String orderType; // manual order , santra order etc
   List<OrderItem> orderItemList;
 
   CustomCard({
+    super.key,
     required this.customerPhone,
     required this.title,
     required this.orderRemarks,
@@ -41,6 +44,7 @@ class CustomCard extends StatefulWidget {
     required this.totalPrice,
     required this.orderStatus,
     required this.paymentLink,
+    required this.requestImage,
     this.orderType = "manual",
   });
 
@@ -254,15 +258,28 @@ class _CustomCardState extends State<CustomCard>
                           (Get.locale!.languageCode == 'en'
                               ? 173 + _calculateContainerHeight()
                               : 179 + _calculateContainerHeight()))
-                      : widget.orderRemarks.toString().isEmpty
+                      : widget.orderRemarks.toString().isEmpty &&
+                              widget.requestImage == ""
                           ? (_heightFactorAnimation.value *
                               (Get.locale!.languageCode == 'en'
                                   ? 130 + _calculateContainerHeight()
                                   : 136 + _calculateContainerHeight()))
-                          : (_heightFactorAnimation.value *
-                              (Get.locale!.languageCode == 'en'
-                                  ? 173 + _calculateContainerHeight()
-                                  : 179 + _calculateContainerHeight())),
+                          : widget.orderRemarks.toString().isNotEmpty &&
+                                  widget.requestImage != ""
+                              ? (_heightFactorAnimation.value *
+                                  (Get.locale!.languageCode == 'en'
+                                      ? 240 + _calculateContainerHeight()
+                                      : 246 + _calculateContainerHeight()))
+                              : widget.orderRemarks.toString().isEmpty &&
+                                      widget.requestImage != ""
+                                  ? (_heightFactorAnimation.value *
+                                      (Get.locale!.languageCode == 'en'
+                                          ? 210 + _calculateContainerHeight()
+                                          : 216 + _calculateContainerHeight()))
+                                  : (_heightFactorAnimation.value *
+                                      (Get.locale!.languageCode == 'en'
+                                          ? 173 + _calculateContainerHeight()
+                                          : 179 + _calculateContainerHeight())),
                   width: double.infinity,
                   decoration: const BoxDecoration(
                     color: Colors.white,
@@ -309,32 +326,71 @@ class _CustomCardState extends State<CustomCard>
                               )),
                         ],
                       ).marginOnly(right: 10, left: 10),
-                      widget.orderRemarks.isEmpty
+                      widget.orderRemarks.isEmpty && widget.requestImage == ""
                           ? const SizedBox()
                           : Container(
+                              width: double.infinity,
                               color: Colors.grey.shade200,
-                              child: Row(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 5),
-                                    child: SvgPicture.asset(
-                                      UIDATAIcons.orderRemarks,
-                                      // height: 12,
-                                      color: UIDataColors.primaryColor,
+                                  if (widget.orderRemarks.isNotEmpty)
+                                    Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 5),
+                                          child: SvgPicture.asset(
+                                            UIDATAIcons.orderRemarks,
+                                            // height: 12,
+                                            color: UIDataColors.primaryColor,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: SingleChildScrollView(
+                                            scrollDirection: Axis.horizontal,
+                                            child: Text(
+                                              widget.orderRemarks,
+                                              maxLines: 2,
+                                            ).marginOnly(
+                                                left: 10, top: 4, bottom: 4),
+                                          ),
+                                        ),
+                                      ],
+                                    ).marginOnly(left: 10, right: 10),
+                                  if (widget.requestImage != "")
+                                    GestureDetector(
+                                      onTap: () => Get.to(() => FullScreenImage(
+                                          image: widget.requestImage ?? "")),
+                                      child: Container(
+                                        height: 50,
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Center(
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                                  widget.requestImage ?? "",
+                                              fit: BoxFit.cover,
+                                              memCacheHeight: 400,
+                                              memCacheWidth: 400,
+                                              placeholder: (context, url) =>
+                                                  const Padding(
+                                                padding: EdgeInsets.all(12.0),
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ).paddingAll(10),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Text(
-                                        widget.orderRemarks,
-                                        maxLines: 2,
-                                      ).marginOnly(left: 10, top: 4, bottom: 4),
-                                    ),
-                                  ),
                                 ],
-                              ).marginOnly(left: 10, right: 10),
+                              ),
                             ),
                       Container(
                         height: 40,
@@ -424,7 +480,7 @@ class _CustomCardState extends State<CustomCard>
                                         },
                                       ),
                                     ),
-                                    SpacingWidth.widthlistspacing15,
+                                    //SpacingWidth.widthlistspacing15,
                                     // Expanded(
                                     //   child: Consumer<CartProvider>(
                                     //       builder: (context, cartProvider, child) {

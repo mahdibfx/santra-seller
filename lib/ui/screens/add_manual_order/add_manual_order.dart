@@ -435,10 +435,6 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                                                                               .byDefault =
                                                                           "1";
                                                                     });
-                                                                    print(newData[
-                                                                            sebIndex]
-                                                                        .byDefault
-                                                                        .toString());
                                                                   } else {
                                                                     setStatec(
                                                                         () {
@@ -446,13 +442,8 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                                                                               .byDefault =
                                                                           "0";
                                                                     });
-                                                                    print(newData[
-                                                                            sebIndex]
-                                                                        .byDefault
-                                                                        .toString());
                                                                   }
                                                                 }
-                                                                // @todo for updation
                                                               },
                                                             ),
                                                           ),

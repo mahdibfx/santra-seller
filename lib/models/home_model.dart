@@ -101,21 +101,21 @@ class ManualOrder {
 }
 
 class Order {
-  Order({
-    required this.orderNumber,
-    required this.customerPhone,
-    required this.orderStatus,
-    required this.customerName,
-    required this.totalOrderAmount,
-    required this.orderDateStamp,
-    required this.paymentMethod,
-    required this.advanceTime,
-    required this.orderRemarks,
-    required this.orderType,
-    required this.orderItems,
-    required this.paymentLink,
-    required this.colorCode,
-  });
+  Order(
+      {required this.orderNumber,
+      required this.customerPhone,
+      required this.orderStatus,
+      required this.customerName,
+      required this.totalOrderAmount,
+      required this.orderDateStamp,
+      required this.paymentMethod,
+      required this.advanceTime,
+      required this.orderRemarks,
+      required this.orderType,
+      required this.orderItems,
+      required this.paymentLink,
+      required this.colorCode,
+      this.requestImage});
 
   String orderNumber;
   String orderStatus;
@@ -129,6 +129,7 @@ class Order {
   String orderType;
   String paymentLink;
   String colorCode;
+  String? requestImage;
   List<OrderItem> orderItems;
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
@@ -144,6 +145,7 @@ class Order {
         customerPhone: json['customer_phone'],
         paymentLink: json["payment_link"],
         colorCode: json["color_code"],
+        requestImage: json["request_image"],
         orderItems: List<OrderItem>.from(
             json["order_items"].map((x) => OrderItem.fromJson(x))),
       );
@@ -155,8 +157,8 @@ class Order {
         "total_order_amount": totalOrderAmount,
         "order_date_stamp": orderDateStamp.toIso8601String(),
         "payment_method": paymentMethod,
-         "order_type":  orderType,
-         'customer_phone':  customerPhone,
+        "order_type": orderType,
+        'customer_phone': customerPhone,
         "advance_time": advanceTime,
         "order_remarks": orderRemarks,
         "order_items": List<dynamic>.from(orderItems.map((x) => x.toJson())),

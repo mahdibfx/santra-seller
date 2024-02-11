@@ -134,6 +134,7 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
                                           paymentLink:
                                               santraList.paymentLink.toString(),
                                           orderItemList: santraList.orderItems,
+                                          requestImage: santraList.requestImage,
                                         )
                                       : ManualOrderCard(
                                           customerPhone:
@@ -164,6 +165,7 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
                                           orderItemList: santraList.orderItems,
                                           colorCode:
                                               santraList.colorCode.toString(),
+                                          requestImage: santraList.requestImage,
                                         );
                                 }),
                             SpacingHeight.heightlistspacing50

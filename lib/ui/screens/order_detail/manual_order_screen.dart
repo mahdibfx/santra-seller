@@ -158,6 +158,8 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                                                   .toString(),
                                               orderItemList:
                                                   santraList.orderItems,
+                                              requestImage:
+                                                  santraList.requestImage,
                                             )
                                           : ManualOrderCard(
                                               customerPhone:
@@ -196,6 +198,8 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                                                   santraList.orderItems,
                                               colorCode: santraList.colorCode
                                                   .toString(),
+                                              requestImage:
+                                                  santraList.requestImage,
                                             );
                                     }),
                                 SpacingHeight.heightlistspacing50
