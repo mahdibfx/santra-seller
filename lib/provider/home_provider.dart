@@ -6,6 +6,7 @@ import 'package:santra_seller/models/home_model.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
+import 'package:santra_seller/utils/ext.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:io';
@@ -13,15 +14,11 @@ import '../../ui/widgets/snackbar/common_snackbar.dart';
 import '../../utils/api_data.dart';
 import '../../utils/uidata.dart';
 import 'package:http/http.dart' as http;
-
 import '../constants/app_constants.dart';
-import 'cart_provider.dart';
 
 class HomeProvider extends ChangeNotifier {
   final BuildContext context;
-
   HomeProvider(this.context);
-
   TextEditingController filterController = TextEditingController();
   var isFilterOrderLoading = false;
   bool isLoading = true;
@@ -30,6 +27,9 @@ class HomeProvider extends ChangeNotifier {
   bool isOrderReadyLoading = false;
   bool isCancelOrderLoading = false;
   List<Order> santraOrders = [];
+  List<MultiBranchData> multiBranches = [];
+  List<String> branchesNameEn = [];
+  List<String> branchesNameAr = [];
   List<Order> filteredSantraOrders = [];
   List<Order> pendingOrders = [];
   List<Order> filteredPendingOrders = [];
@@ -37,6 +37,8 @@ class HomeProvider extends ChangeNotifier {
   List<Order> filteredManualOrders = [];
   List<Order> allOrders = [];
   List<Order> filteredAllOrders = [];
+  String? selectedBranch;
+  String? branchSellerCode;
 
   String selectedOrderOption = '';
 
@@ -78,6 +80,15 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  setBranchSellerCode(val) {
+    int index = branchesNameEn.indexOf(val);
+    branchSellerCode = multiBranches[index].sellerCode;
+    selectedBranch = val;
+    print(branchSellerCode);
+    print(selectedBranch);
+    notifyListeners();
+  }
+
   updateAcceptOrderLoading(bool value) {
     isAcceptOrderLoading = value;
     notifyListeners();
@@ -93,6 +104,14 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  getBranchName() {
+    if (multiBranches.isNotEmpty) {
+      branchesNameEn = multiBranches.map((data) => data.sellerTitle).toList();
+      branchesNameAr = multiBranches.map((data) => data.sellerTitleAr).toList();
+      selectedBranch = branchesNameEn.elementAt(0);
+    }
+  }
+
   void onInit() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var sellercode = prefs.getString("sellercode");
@@ -104,7 +123,13 @@ class HomeProvider extends ChangeNotifier {
     isInternetAvailable();
     sellerSt();
     await homeDataCall();
+    getBranchName();
     notifyListeners();
+  }
+
+  void onDispose() {
+    branchSellerCode = null;
+    selectedBranch = null;
   }
 
   Future<bool> isInternetAvailable() async {
@@ -165,8 +190,10 @@ class HomeProvider extends ChangeNotifier {
       try {
         var body = <String, String>{};
         body['seller_code'] = sellerCode!;
-        var res = await http.post(Uri.parse("${ApiData.mainurl}seller_home"),
-            headers: ApiData.header, body: body);
+        var res = await http.post(
+            Uri.parse("${ApiData.mainurl}seller_home_new"),
+            headers: ApiData.header,
+            body: body);
 
         if (res.statusCode == 200) {
           var data = jsonDecode(res.body);
@@ -174,9 +201,8 @@ class HomeProvider extends ChangeNotifier {
           AppConstants.homeModel = newdata;
           sellerStatusNew = data['data'][0]['seller_status'];
           prefs.setString("sellerStatus", sellerStatusNew.toString());
-          print("SEEEEEEE $sellerStatusNew");
+          res.body.debugPrint();
           debugPrint(res.body);
-          print(res.body);
           homeData = newdata.data[0];
           allOrders.addAll(homeData!.santraOrders[0].santraOrders);
           allOrders.addAll(homeData!.manualOrders[0].manualOrders);
@@ -190,10 +216,10 @@ class HomeProvider extends ChangeNotifier {
           filteredPendingOrders = pendingOrders;
           manualOrders = homeData!.manualOrders[0].manualOrders;
           filteredManualOrders = manualOrders;
+          multiBranches = homeData?.multiBranch ?? [];
           filteredAllOrders = allOrders;
           isLoading = false;
           notifyListeners();
-          print(newOrderSantraCount);
         } else {
           CommonSnackbar.getSnackbar(
               tr.translateData("error_message"),
@@ -247,10 +273,13 @@ class HomeProvider extends ChangeNotifier {
       updateAcceptOrderLoading(true);
       notifyListeners();
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      var url = Uri.parse("${ApiData.mainurl}accept_order");
+      var url = Uri.parse("${ApiData.mainurl}accept_order_new");
       Map<String, dynamic> body = {};
       body['seller_code'] = prefs.getString("sellercode");
+      body['seller_code_accepted'] =
+          branchSellerCode ?? prefs.getString("sellercode");
       body['order_number'] = orderNumber;
+
       var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
         CommonSnackbar.getSnackbar(tr.translateData("status_accepted"),
@@ -281,7 +310,7 @@ class HomeProvider extends ChangeNotifier {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       var url = Uri.parse("${ApiData.mainurl}reject_order");
       Map<String, dynamic> body = {};
-      body['seller_code'] = prefs.getString("sellercode");
+      body['seller_code'] = branchSellerCode ?? prefs.getString("sellercode");
       body['order_number'] = orderNumber.toString();
       var response = await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
@@ -340,7 +369,7 @@ class HomeProvider extends ChangeNotifier {
     var tr = Get.put(AppTranslations());
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      var url = Uri.parse("${ApiData.contract}");
+      var url = Uri.parse(ApiData.contract);
       Map<String, dynamic> body = {};
       body['seller_code'] = prefs.getString("sellercode");
       body['status_accepted'] = "yes";

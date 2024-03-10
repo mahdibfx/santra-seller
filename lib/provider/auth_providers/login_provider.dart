@@ -13,7 +13,7 @@ import '../../../utils/uidata.dart';
 import '../../utils/app_translation/app_translation.dart';
 
 class LoginProvider extends ChangeNotifier {
-    final BuildContext context;
+  final BuildContext context;
 
   LoginProvider(this.context);
   // bool isLoading = true;
@@ -75,7 +75,7 @@ class LoginProvider extends ChangeNotifier {
   }
 
   void loginfunction() async {
-       var tr = Get.put(AppTranslations());
+    var tr = Get.put(AppTranslations());
     updateLoginLoadingStatus(true);
     notifyListeners();
     try {
@@ -97,16 +97,14 @@ class LoginProvider extends ChangeNotifier {
       } else {
         notifyListeners();
         print(res.body);
-        CommonSnackbar.getSnackbar(
-            tr.translateData("error_message"), tr.translateData("error_signin"), UIDataColors.redColor);
+        CommonSnackbar.getSnackbar(tr.translateData("error_message"),
+            tr.translateData("error_signin"), UIDataColors.redColor);
       }
     } catch (e) {
       notifyListeners();
 
-      CommonSnackbar.getSnackbar(
-          tr.translateData("serve_error"),
-          tr.translateData("serve_error_internet"),
-          UIDataColors.redColor);
+      CommonSnackbar.getSnackbar(tr.translateData("serve_error"),
+          tr.translateData("serve_error_internet"), UIDataColors.redColor);
     }
 
     updateLoginLoadingStatus(false);
@@ -126,6 +124,7 @@ class LoginProvider extends ChangeNotifier {
     prefs.setString("dob", data.dateOfBirth.toString());
     prefs.setString("password", password.text);
     prefs.setString("sellerStatus", data.message);
+
     sellerCode = prefs.getString('sellercode');
     sellerStatus = prefs.getString('sellerStatus');
     notifyListeners();

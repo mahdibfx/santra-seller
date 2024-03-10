@@ -123,6 +123,7 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
                                               .toString(),
                                           orderTime: santraList.orderDateStamp
                                               .toString(),
+                                          area: santraList.areaCustomer,
                                           deliveryTime:
                                               santraList.advanceTime.toString(),
                                           customerName: santraList.customerName
@@ -143,6 +144,7 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
                                           requestImage: santraList.requestImage,
                                         )
                                       : ManualOrderCard(
+                                          area: santraList.areaCustomer,
                                           customerPhone:
                                               santraList.customerPhone,
                                           orderType: santraList.orderType,

@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:santra_seller/utils/uidata.dart';
 
 import '../../../utils/app_translation/app_translation.dart';
+
 final tr = Get.put(AppTranslations());
+
 class BorderButton extends StatelessWidget {
   final String? btntxt;
   final String? iconImage;
@@ -74,7 +76,7 @@ class BorderButton extends StatelessWidget {
                       color: buttontxtColor ?? Colors.white,
                     ),
                   ),
-                  SpacingWidth.widthlistspacing,
+                  if (iconImage != null) SpacingWidth.widthlistspacing,
                   iconImage != null
                       ? SvgPicture.asset(
                           iconImage!,

@@ -124,11 +124,12 @@ class _CustomerReviewsState extends State<CustomerReviews> {
                                           .feedbackMessage,
                                       orderNumber: _.customerReviews.data?[0]
                                           .customerFeedback?[index].orderNumber,
-                                      stars: _
-                                          .customerReviews
-                                          .data?[0]
-                                          .customerFeedback?[index]
-                                          .feedbackStarsInDouble,
+                                      stars: double.tryParse((_
+                                              .customerReviews
+                                              .data?[0]
+                                              .customerFeedback?[index]
+                                              .feedbackStars)
+                                          .toString()),
                                       rating: _
                                           .customerReviews
                                           .data?[0]

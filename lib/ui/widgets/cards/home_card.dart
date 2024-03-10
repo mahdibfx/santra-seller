@@ -11,15 +11,15 @@ class HomeCardWidget extends StatelessWidget {
   final String? santraNewCount;
   final bool isSantraCard;
   final void Function() onTap;
-  const HomeCardWidget(
-      {super.key,
-      required this.heading,
-      required this.count,
-      required this.onTap,
-      required this.imageAsset,
-       this.santraNewCount,
-       this.isSantraCard = false,
-      });
+  const HomeCardWidget({
+    super.key,
+    required this.heading,
+    required this.count,
+    required this.onTap,
+    required this.imageAsset,
+    this.santraNewCount,
+    this.isSantraCard = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +28,19 @@ class HomeCardWidget extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Stack(
-             clipBehavior: Clip.none,
-            alignment: Alignment.topCenter,
+          clipBehavior: Clip.none,
+          alignment: Alignment.topCenter,
           children: [
-           
             Container(
               height: size.height * 0.25,
               decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(15)),
                   color: Colors.white,
-                  border: Border.all(color:  isSantraCard ==  true && santraNewCount.toString() != '0' ? Color(0xffC32C4C) : Color(0xff0098B1))),
+                  border: Border.all(
+                      color: isSantraCard == true &&
+                              santraNewCount.toString() != '0'
+                          ? const Color(0xffC32C4C)
+                          : const Color(0xff0098B1))),
               child: Padding(
                 padding: const EdgeInsets.all(0.0),
                 child: Column(
@@ -62,7 +65,8 @@ class HomeCardWidget extends StatelessWidget {
                         // const Spacer(),
                         Text(
                           count,
-                          style: UIDataTextStyles.counth1.copyWith(fontSize: 18, fontWeight: FontWeight.w600),
+                          style: UIDataTextStyles.counth1.copyWith(
+                              fontSize: 18, fontWeight: FontWeight.w600),
                         ),
                       ],
                     ).marginOnly(left: 10, right: 10, bottom: 0),
@@ -70,20 +74,26 @@ class HomeCardWidget extends StatelessWidget {
                 ),
               ),
             ),
-            isSantraCard ==  true && santraNewCount.toString() != '0' ?
-              Positioned(
-                right: 15,
+            isSantraCard == true && santraNewCount.toString() != '0'
+                ? Positioned(
+                    right: 15,
                     top: -10,
-               child: Container(
-                                      height: 24,
-                                      width: 24,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xffC32C4C),
-                                        borderRadius: BorderRadius.all(Radius.circular(100))
-                                      ),
-                                      child: Center(child: Text(santraNewCount.toString(), style: UIDataTextStyles.countTitle.copyWith(fontSize: 12,color: Colors.white),),),
-                                    ),
-             ) :SizedBox(),
+                    child: Container(
+                      height: 24,
+                      width: 24,
+                      decoration: const BoxDecoration(
+                          color: Color(0xffC32C4C),
+                          borderRadius: BorderRadius.all(Radius.circular(100))),
+                      child: Center(
+                        child: Text(
+                          santraNewCount.toString(),
+                          style: UIDataTextStyles.countTitle
+                              .copyWith(fontSize: 12, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
           ],
         ),
       ),

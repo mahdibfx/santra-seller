@@ -28,6 +28,7 @@ class ManualOrderCard extends StatefulWidget {
   final String customerPhone;
   final String orderRemarks;
   final String? requestImage;
+  final String? area;
   List<OrderItem> orderItemList;
 
   ManualOrderCard({
@@ -44,6 +45,7 @@ class ManualOrderCard extends StatefulWidget {
     required this.totalPrice,
     required this.orderRemarks,
     required this.requestImage,
+    required this.area,
     required this.colorCode,
   });
 
@@ -87,43 +89,48 @@ class _ManualOrderCardState extends State<ManualOrderCard>
   Widget build(BuildContext context) {
     return GetBuilder<AppTranslations>(builder: (tr) {
       return Consumer<HomeProvider>(builder: (context, _, child) {
-        return InkWell(
-          onTap: _toggleCard,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
-                  spreadRadius: 1,
-                  blurRadius: 1,
-                  offset: const Offset(-1, 1), // changes position of shadow
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 1,
+                blurRadius: 1,
+                offset: const Offset(-1, 1), // changes position of shadow
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(15.0),
+                      bottomRight: Radius.circular(15.0),
+                      topLeft: Radius.circular(15.0),
+                      bottomLeft: Radius.circular(15.0)),
                 ),
-              ],
-            ),
-            child: Column(
-              children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(15.0),
-                        bottomRight: Radius.circular(15.0),
-                        topLeft: Radius.circular(15.0),
-                        bottomLeft: Radius.circular(15.0)),
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: _toggleCard,
+                      behavior: HitTestBehavior.opaque,
+                      child: Row(
                         children: [
                           SvgPicture.asset(
                             UIDATAIcons.ordeBascketFull,
                             color: UIDataColors.primaryColor,
                           ),
                           SpacingWidth.widthlistspacing,
-                          Text(
-                            ' ${widget.orderType.toLowerCase() == "express" ? tr.translateData("express") : widget.orderType.toLowerCase() == "pickup" ? tr.translateData("pickup") : widget.orderType.toLowerCase() == "delivery" ? tr.translateData("delivery") : ""} ${tr.translateData('order_number')} ${widget.orderNumber}',
-                            style: UIDataTextStyles.h2.copyWith(fontSize: 12),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.65,
+                            child: Text(
+                              ' ${widget.orderType.toLowerCase() == "express" ? tr.translateData("express") : widget.orderType.toLowerCase() == "pickup" ? tr.translateData("pickup") : widget.orderType.toLowerCase() == "delivery" ? tr.translateData("delivery") : ""} ${tr.translateData('order_number')} ${widget.orderNumber} - ${widget.area}',
+                              style: UIDataTextStyles.h2.copyWith(fontSize: 12),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                           const Spacer(),
                           Center(
@@ -135,334 +142,341 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                           ),
                         ],
                       ).marginOnly(left: 10, right: 10, top: 10, bottom: 10),
+                    ),
+                    Container(
+                      color: Colors.grey.shade200,
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    UIDATAIcons.orderTime,
+                                    color: UIDataColors.primaryColor,
+                                  ),
+                                  SpacingWidth.widthlistspacing,
+                                  Text(dateFormat(widget.orderTime)),
+                                ],
+                              ),
+                              const Spacer(),
+                              Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    UIDATAIcons.deliveryIcon,
+                                    color: UIDataColors.primaryColor,
+                                  ),
+                                  SpacingWidth.widthlistspacing,
+                                  widget.deliveryTime.toString().isEmpty
+                                      ? const Text('---')
+                                      : Text(widget.deliveryTime),
+                                ],
+                              ),
+                            ],
+                          ).marginOnly(left: 10, right: 10, top: 10, bottom: 5),
+                          Row(
+                            children: [
+                              Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    height: 16,
+                                    UIDATAIcons.userIcon,
+                                    color: UIDataColors.primaryColor,
+                                  ),
+                                  SpacingWidth.widthlistspacing,
+                                  Text(widget.customerName),
+                                ],
+                              ),
+                              const Spacer(),
+                              Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    UIDATAIcons.paymentMethod,
+                                    color: UIDataColors.primaryColor,
+                                  ),
+                                  SpacingWidth.widthlistspacing,
+                                  Text(widget.paymentMethod),
+                                ],
+                              ),
+                            ],
+                          ).marginOnly(left: 10, right: 10, top: 5, bottom: 5),
+                          !widget.orderType.contains("Delivery")
+                              ? Row(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          height: 16,
+                                          UIDATAIcons.callIcon,
+                                          color: UIDataColors.primaryColor,
+                                        ),
+                                        SpacingWidth.widthlistspacing,
+                                        Text(widget.customerPhone),
+                                      ],
+                                    ),
+                                    const Spacer(),
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          height: 16,
+                                          UIDATAIcons.orderBascketBorder,
+                                          color: UIDataColors.primaryColor,
+                                        ),
+                                        SpacingWidth.widthlistspacing,
+                                        Text(widget.orderType.toLowerCase() ==
+                                                "express"
+                                            ? tr.translateData("express")
+                                            : widget.orderType.toLowerCase() ==
+                                                    "pickup"
+                                                ? tr.translateData("pickup")
+                                                : widget.orderType
+                                                            .toLowerCase() ==
+                                                        "delivery"
+                                                    ? tr.translateData(
+                                                        "delivery")
+                                                    : ""),
+                                      ],
+                                    ),
+                                  ],
+                                ).marginOnly(
+                                  left: 10, right: 10, top: 5, bottom: 10)
+                              : Container().marginOnly(bottom: 5),
+                        ],
+                      ),
+                    ),
+                    // !_isOpen
+                    //     ? const SizedBox()
+                    //     :
+
+                    if (!_isOpen)
                       Container(
-                        color: Colors.grey.shade200,
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      UIDATAIcons.orderTime,
-                                      color: UIDataColors.primaryColor,
-                                    ),
-                                    SpacingWidth.widthlistspacing,
-                                    Text(dateFormat(widget.orderTime)),
-                                  ],
-                                ),
-                                const Spacer(),
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      UIDATAIcons.deliveryIcon,
-                                      color: UIDataColors.primaryColor,
-                                    ),
-                                    SpacingWidth.widthlistspacing,
-                                    widget.deliveryTime.toString().isEmpty
-                                        ? const Text('---')
-                                        : Text(widget.deliveryTime),
-                                  ],
-                                ),
-                              ],
-                            ).marginOnly(
-                                left: 10, right: 10, top: 10, bottom: 5),
-                            Row(
-                              children: [
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      height: 16,
-                                      UIDATAIcons.userIcon,
-                                      color: UIDataColors.primaryColor,
-                                    ),
-                                    SpacingWidth.widthlistspacing,
-                                    Text(widget.customerName),
-                                  ],
-                                ),
-                                const Spacer(),
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      UIDATAIcons.paymentMethod,
-                                      color: UIDataColors.primaryColor,
-                                    ),
-                                    SpacingWidth.widthlistspacing,
-                                    Text(widget.paymentMethod),
-                                  ],
-                                ),
-                              ],
-                            ).marginOnly(
-                                left: 10, right: 10, top: 5, bottom: 5),
-                            !widget.orderType.contains("Delivery")
-                                ? Row(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            height: 16,
-                                            UIDATAIcons.callIcon,
-                                            color: UIDataColors.primaryColor,
-                                          ),
-                                          SpacingWidth.widthlistspacing,
-                                          Text(widget.customerPhone),
-                                        ],
-                                      ),
-                                      const Spacer(),
-                                      Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            height: 16,
-                                            UIDATAIcons.orderBascketBorder,
-                                            color: UIDataColors.primaryColor,
-                                          ),
-                                          SpacingWidth.widthlistspacing,
-                                          Text(tr.translateData("pickup")),
-                                        ],
-                                      ),
-                                    ],
-                                  ).marginOnly(
-                                    left: 10, right: 10, top: 5, bottom: 10)
-                                : Container().marginOnly(bottom: 5)
-                          ],
+                        alignment: Alignment.center,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: _.getColor(widget.orderStatus),
+                          borderRadius: const BorderRadius.only(
+                              // topRight: Radius.circular(15.0),
+                              bottomRight: Radius.circular(15.0),
+                              // topLeft: Radius.circular(15.0),
+                              bottomLeft: Radius.circular(15.0)),
+                        ),
+                        child: Center(
+                          child: Text(
+                            _.getStatus(widget.orderStatus),
+                            style: const TextStyle(color: Colors.white),
+                          ),
                         ),
                       ),
-                      // !_isOpen
-                      //     ? const SizedBox()
-                      //     :
-
-                      if (!_isOpen)
-                        Container(
-                          alignment: Alignment.center,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: _.getColor(widget.orderStatus),
-                            borderRadius: const BorderRadius.only(
-                                // topRight: Radius.circular(15.0),
-                                bottomRight: Radius.circular(15.0),
-                                // topLeft: Radius.circular(15.0),
-                                bottomLeft: Radius.circular(15.0)),
-                          ),
-                          child: Center(
-                            child: Text(
-                              _.getStatus(widget.orderStatus),
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
+                  ],
                 ),
-                Container(
-                  // height: widget.orderItemList.isEmpty
-                  //     ? (_heightFactorAnimation.value *
-                  //         (Get.locale!.languageCode == 'en'
-                  //             ? 173 + _calculateContainerHeight()
-                  //             : 179 + _calculateContainerHeight()))
-                  //     : widget.orderStatus.toLowerCase() == 'accepted'
-                  //         ? (_heightFactorAnimation.value *
-                  //             (Get.locale!.languageCode == 'en'
-                  //                 ? 190 + _calculateContainerHeight()
-                  //                 : 196 + _calculateContainerHeight()))
-                  //         : widget.orderRemarks.toString().isEmpty &&
-                  //                 widget.requestImage != ""
-                  //             ? (_heightFactorAnimation.value *
-                  //                 (Get.locale!.languageCode == 'en'
-                  //                     ? 230 + _calculateContainerHeight()
-                  //                     : 236 + _calculateContainerHeight()))
-                  //             : widget.orderRemarks.toString().isNotEmpty &&
-                  //                     widget.requestImage != ""
-                  //                 ? (_heightFactorAnimation.value *
-                  //                     (Get.locale!.languageCode == 'en'
-                  //                         ? 190 + _calculateContainerHeight()
-                  //                         : 196 + _calculateContainerHeight()))
-                  //                 : (_heightFactorAnimation.value *
-                  //                     (Get.locale!.languageCode == 'en'
-                  //                         //120
-                  //                         ? 173 + _calculateContainerHeight()
-                  //                         : 179 + _calculateContainerHeight())),
-                  //179
+              ),
+              Container(
+                // height: widget.orderItemList.isEmpty
+                //     ? (_heightFactorAnimation.value *
+                //         (Get.locale!.languageCode == 'en'
+                //             ? 173 + _calculateContainerHeight()
+                //             : 179 + _calculateContainerHeight()))
+                //     : widget.orderStatus.toLowerCase() == 'accepted'
+                //         ? (_heightFactorAnimation.value *
+                //             (Get.locale!.languageCode == 'en'
+                //                 ? 190 + _calculateContainerHeight()
+                //                 : 196 + _calculateContainerHeight()))
+                //         : widget.orderRemarks.toString().isEmpty &&
+                //                 widget.requestImage != ""
+                //             ? (_heightFactorAnimation.value *
+                //                 (Get.locale!.languageCode == 'en'
+                //                     ? 230 + _calculateContainerHeight()
+                //                     : 236 + _calculateContainerHeight()))
+                //             : widget.orderRemarks.toString().isNotEmpty &&
+                //                     widget.requestImage != ""
+                //                 ? (_heightFactorAnimation.value *
+                //                     (Get.locale!.languageCode == 'en'
+                //                         ? 190 + _calculateContainerHeight()
+                //                         : 196 + _calculateContainerHeight()))
+                //                 : (_heightFactorAnimation.value *
+                //                     (Get.locale!.languageCode == 'en'
+                //                         //120
+                //                         ? 173 + _calculateContainerHeight()
+                //                         : 179 + _calculateContainerHeight())),
+                //179
 
-                  //@todo repeat order button hide when unhide it change the height to 155
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(15.0),
-                        bottomLeft: Radius.circular(15.0)),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (_isOpen) SpacingHeight.heightlistspacing15,
-                      if (_isOpen)
-                        SizedBox(
-                          height: _calculateContainerHeight(),
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: widget.orderItemList.length,
-                              itemBuilder: (context, index) {
-                                return OrderItemWidget(
-                                  imageString:
-                                      widget.orderItemList[index].productImage,
-                                  productQuantity: widget
-                                      .orderItemList[index].productQuantity,
-                                  productName: Get.locale!.languageCode == 'en'
-                                      ? widget.orderItemList[index].productName
-                                      : widget.orderItemList[index]
-                                          .productNameArabic,
-                                  productPrice:
-                                      widget.orderItemList[index].productTotal,
-                                );
-                              }),
-                        ),
-                      if (_isOpen)
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(tr.translateData("total_price"),
-                                style: UIDataTextStyles.textMediumColoredBlue
-                                    .copyWith(
-                                  color: UIDataColors.blackColor,
-                                )),
-                            SpacingWidth.widthlistspacing,
-                            Text('${widget.totalPrice} AED',
-                                style: UIDataTextStyles.textMediumColoredBlue
-                                    .copyWith(
-                                  color: UIDataColors.primaryColor,
-                                )),
-                          ],
-                        ).marginAll(10),
-                      if (_isOpen)
-                        Column(
-                          children: [
-                            // SpacingHeight.heightlistspacing10,
-                            if ((widget.orderRemarks.isNotEmpty ||
-                                widget.requestImage != null))
-                              Container(
-                                width: double.infinity,
-                                color: Colors.grey.shade200,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    if (widget.orderRemarks.isNotEmpty)
-                                      Row(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 5),
-                                            child: SvgPicture.asset(
-                                              UIDATAIcons.orderRemarks,
-                                              color: UIDataColors.primaryColor,
-                                            ),
+                //@todo repeat order button hide when unhide it change the height to 155
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(15.0),
+                      bottomLeft: Radius.circular(15.0)),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (_isOpen) SpacingHeight.heightlistspacing15,
+                    if (_isOpen)
+                      SizedBox(
+                        height: _calculateContainerHeight(),
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: widget.orderItemList.length,
+                            itemBuilder: (context, index) {
+                              return OrderItemWidget(
+                                imageString:
+                                    widget.orderItemList[index].productImage,
+                                productQuantity:
+                                    widget.orderItemList[index].productQuantity,
+                                productName: Get.locale!.languageCode == 'en'
+                                    ? widget.orderItemList[index].productName
+                                    : widget
+                                        .orderItemList[index].productNameArabic,
+                                productPrice:
+                                    widget.orderItemList[index].productTotal,
+                              );
+                            }),
+                      ),
+                    if (_isOpen)
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(tr.translateData("total_price"),
+                              style: UIDataTextStyles.textMediumColoredBlue
+                                  .copyWith(
+                                color: UIDataColors.blackColor,
+                              )),
+                          SpacingWidth.widthlistspacing,
+                          Text('${widget.totalPrice} AED',
+                              style: UIDataTextStyles.textMediumColoredBlue
+                                  .copyWith(
+                                color: UIDataColors.primaryColor,
+                              )),
+                        ],
+                      ).marginAll(10),
+                    if (_isOpen)
+                      Column(
+                        children: [
+                          // SpacingHeight.heightlistspacing10,
+                          if ((widget.orderRemarks.isNotEmpty ||
+                              widget.requestImage != null))
+                            Container(
+                              width: double.infinity,
+                              color: Colors.grey.shade200,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  if (widget.orderRemarks.isNotEmpty)
+                                    Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 5),
+                                          child: SvgPicture.asset(
+                                            UIDATAIcons.orderRemarks,
+                                            color: UIDataColors.primaryColor,
                                           ),
-                                          Expanded(
-                                            child: SingleChildScrollView(
-                                              scrollDirection: Axis.horizontal,
-                                              child: Text(
-                                                widget.orderRemarks,
-                                                maxLines: 2,
-                                              ).marginOnly(
-                                                  left: 10, top: 4, bottom: 4),
-                                            ),
+                                        ),
+                                        Expanded(
+                                          child: SingleChildScrollView(
+                                            scrollDirection: Axis.horizontal,
+                                            child: Text(
+                                              widget.orderRemarks,
+                                              maxLines: 2,
+                                            ).marginOnly(
+                                                left: 10, top: 4, bottom: 4),
                                           ),
-                                        ],
-                                      ).marginOnly(left: 10, right: 10),
-                                    if (widget.requestImage != "")
-                                      GestureDetector(
-                                        onTap: () => Get.to(() =>
-                                            FullScreenImage(
-                                                image:
-                                                    widget.requestImage ?? "")),
-                                        child: Container(
-                                          height: 50,
-                                          width: 50,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          child: Center(
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    widget.requestImage ?? "",
-                                                fit: BoxFit.cover,
-                                                memCacheHeight: 400,
-                                                memCacheWidth: 400,
-                                                placeholder: (context, url) =>
-                                                    const Padding(
-                                                  padding: EdgeInsets.all(12.0),
-                                                  child:
-                                                      CircularProgressIndicator(),
-                                                ),
+                                        ),
+                                      ],
+                                    ).marginOnly(left: 10, right: 10),
+                                  if (widget.requestImage != "")
+                                    GestureDetector(
+                                      onTap: () => Get.to(() => FullScreenImage(
+                                          image: widget.requestImage ?? "")),
+                                      child: Container(
+                                        height: 50,
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Center(
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                                  widget.requestImage ?? "",
+                                              fit: BoxFit.cover,
+                                              memCacheHeight: 400,
+                                              memCacheWidth: 400,
+                                              placeholder: (context, url) =>
+                                                  const Padding(
+                                                padding: EdgeInsets.all(12.0),
+                                                child:
+                                                    CircularProgressIndicator(),
                                               ),
                                             ),
                                           ),
-                                        ).paddingAll(10),
-                                      ),
-                                  ],
-                                ),
+                                        ),
+                                      ).paddingAll(10),
+                                    ),
+                                ],
                               ),
-                          ],
-                        ),
-                      if (_isOpen)
-                        Container(
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: _.getColor(widget.orderStatus),
-                            borderRadius:
-                                widget.orderStatus.toLowerCase() == 'accepted'
-                                    ? const BorderRadius.all(Radius.zero)
-                                    : const BorderRadius.only(
-                                        // topRight: Radius.circular(15.0),
-                                        bottomRight: Radius.circular(15.0),
-                                        // topLeft: Radius.circular(15.0),
-                                        bottomLeft: Radius.circular(15.0)),
-                          ),
-                          child: Center(
-                            child: Text(
-                              _.getStatus(widget.orderStatus),
-                              style: const TextStyle(color: Colors.white),
                             ),
+                        ],
+                      ),
+                    if (_isOpen)
+                      Container(
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: _.getColor(widget.orderStatus),
+                          borderRadius:
+                              widget.orderStatus.toLowerCase() == 'accepted'
+                                  ? const BorderRadius.all(Radius.zero)
+                                  : const BorderRadius.only(
+                                      // topRight: Radius.circular(15.0),
+                                      bottomRight: Radius.circular(15.0),
+                                      // topLeft: Radius.circular(15.0),
+                                      bottomLeft: Radius.circular(15.0)),
+                        ),
+                        child: Center(
+                          child: Text(
+                            _.getStatus(widget.orderStatus),
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ),
-                      widget.orderStatus.toLowerCase() == 'accepted'
-                          ? Consumer<CartProvider>(
-                              builder: (context, cartProvider, child) {
-                              return RaisedGradientButton(
-                                gradient: const LinearGradient(
-                                  colors: <Color>[
-                                    UIDataColors.primaryColor,
-                                    UIDataColors.primaryColor,
-                                  ],
-                                ),
-                                btntxt: tr.translateData("ready_order"),
-                                iconImage: SvgPicture.asset(
-                                  UIDATAIcons.sendIcon,
-                                  height: 25,
-                                  width: 25,
-                                  fit: BoxFit.fitWidth,
-                                ),
-                                buttontxtColor: UIDataColors.whiteColor,
-                                onPressed: () {
-                                  confirmationPopup(
-                                      tr.translateData("sure_message"), context,
-                                      () {
-                                    _.readyOrderMethod(widget.orderNumber);
-                                  });
-                                },
-                              ).marginAll(10);
-                            })
-                          : SizedBox(),
-                    ],
-                  ),
+                      ),
+                    widget.orderStatus.toLowerCase() == 'accepted'
+                        ? Consumer<CartProvider>(
+                            builder: (context, cartProvider, child) {
+                            return RaisedGradientButton(
+                              gradient: const LinearGradient(
+                                colors: <Color>[
+                                  UIDataColors.primaryColor,
+                                  UIDataColors.primaryColor,
+                                ],
+                              ),
+                              btntxt: tr.translateData("ready_order"),
+                              iconImage: SvgPicture.asset(
+                                UIDATAIcons.sendIcon,
+                                height: 25,
+                                width: 25,
+                                fit: BoxFit.fitWidth,
+                              ),
+                              buttontxtColor: UIDataColors.whiteColor,
+                              onPressed: () {
+                                confirmationPopup(
+                                    tr.translateData("sure_message"), context,
+                                    () {
+                                  _.readyOrderMethod(widget.orderNumber);
+                                });
+                              },
+                            ).marginAll(10);
+                          })
+                        : const SizedBox(),
+                  ],
                 ),
-              ],
-            ),
-          ).paddingOnly(bottom: 20),
-        );
+              ),
+            ],
+          ),
+        ).paddingOnly(bottom: 20);
       });
     });
   }

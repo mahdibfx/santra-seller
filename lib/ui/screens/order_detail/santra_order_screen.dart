@@ -98,8 +98,8 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                                           UIDataImage.waitingOrderImage,
                                         ),
                                         SpacingHeight.heightlistspacing15,
-                                        Text('Your Store is online'),
-                                        Text(
+                                        const Text('Your Store is online'),
+                                        const Text(
                                             'Please check back later for new orders.'),
                                       ],
                                     ),
@@ -141,6 +141,7 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                                               customerName: santraList
                                                   .customerName
                                                   .toString(),
+                                              area: santraList.areaCustomer,
                                               paymentMethod: Get.locale!
                                                           .languageCode ==
                                                       'en'
@@ -162,6 +163,7 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                                                   santraList.requestImage,
                                             )
                                           : ManualOrderCard(
+                                              area: santraList.areaCustomer,
                                               customerPhone:
                                                   santraList.customerPhone,
                                               orderType: santraList.orderType,

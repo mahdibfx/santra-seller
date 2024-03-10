@@ -22,6 +22,7 @@ import 'cart_icon_with_badge.dart';
 import 'notification_icon_with_badge.dart';
 
 var tr = Get.put(AppTranslations());
+
 class CommonScaffold extends StatelessWidget {
   final resizeToAvoid;
   final appTitle;
@@ -141,49 +142,44 @@ class CommonScaffold extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    
-                      Consumer<SplashProvider>(
-                          builder: (context, splashPro, child) {
-                        return ReusableIconButton(
-                          icon: UIDATAIcons.homeIcon,
-                          iconClr: UIDataColors.primaryColor,
-                          btntxt: Text(
-                            tr.translateData("home_menu_button"),
-                            style:
-                                // Get.currentRoute == Routes.homeRoutes
-                                //     ? UIDataTextStyles.title.copyWith(
-                                //         fontSize: 14,
-                                //         fontWeight: FontWeight.w800,
-                                //         color: UIDataColors.primaryColor)
-                                //     :
-                                UIDataTextStyles.subTitle.copyWith(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black,
-                            ),
+                    Consumer<SplashProvider>(
+                        builder: (context, splashPro, child) {
+                      return ReusableIconButton(
+                        icon: UIDATAIcons.homeIcon,
+                        iconClr: UIDataColors.primaryColor,
+                        btntxt: Text(
+                          tr.translateData("home_menu_button"),
+                          style:
+                              // Get.currentRoute == Routes.homeRoutes
+                              //     ? UIDataTextStyles.title.copyWith(
+                              //         fontSize: 14,
+                              //         fontWeight: FontWeight.w800,
+                              //         color: UIDataColors.primaryColor)
+                              //     :
+                              UIDataTextStyles.subTitle.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
                           ),
-                          onPressed: isHome
-                              ? null
-                              : () {
-                                  splashPro.onHomeScreen();
-                                  // if (Get.currentRoute != Routes.homeRoutes) {
-                                  Get.offAll(() => const HomeScreen());
-                                  // }
-                                },
-                        );
-                      
+                        ),
+                        onPressed: isHome
+                            ? null
+                            : () {
+                                splashPro.onHomeScreen();
+                                // if (Get.currentRoute != Routes.homeRoutes) {
+                                Get.offAll(() => const HomeScreen());
+                                // }
+                              },
+                      );
                     }),
                     Center(
-                      child:Text(
-                          showFAB
-                              ? tr.translateData('home_addorder_button')
-                              : '',
-                          style: UIDataTextStyles.h2,
-                          textAlign: TextAlign.center,
-                       ),
+                      child: Text(
+                        showFAB ? tr.translateData('home_addorder_button') : '',
+                        style: UIDataTextStyles.h2,
+                        textAlign: TextAlign.center,
+                      ),
                     ).marginOnly(top: 20),
-                    GetBuilder<AppTranslations>(
-      builder: (tr) {
+                    GetBuilder<AppTranslations>(builder: (tr) {
                       return Consumer<SplashProvider>(
                           builder: (context, splashPro, child) {
                         return ReusableIconButton(
@@ -248,7 +244,13 @@ class CommonScaffold extends StatelessWidget {
                         Get.back();
                       },
                       child: GestureDetector(
-                        onTap: isBackHomeScreen ? () {Get.to(HomeScreen()); } : (){Get.back();},
+                        onTap: isBackHomeScreen
+                            ? () {
+                                Get.to(const HomeScreen());
+                              }
+                            : () {
+                                Get.back();
+                              },
                         child: Padding(
                           padding: const EdgeInsets.only(left: 8.0),
                           child: Consumer<SplashProvider>(
@@ -319,7 +321,7 @@ class CommonScaffold extends StatelessWidget {
                             return CartIconWithBadge(
                               onTap: () {
                                 splashPro.homeAndMoreScreenOff();
-                                Get.to(() => CartScreen());
+                                Get.to(() => const CartScreen());
                                 //Get.toNamed(Routes.cartroute);
                               },
                               showBadge: true,
@@ -373,9 +375,7 @@ class CommonScaffold extends StatelessWidget {
           : showFAB
               ? Visibility(
                   visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
-                  child:
-                      GetBuilder<AppTranslations>(
-      builder: (tr) {
+                  child: GetBuilder<AppTranslations>(builder: (tr) {
                     return Consumer<HomeProvider>(
                         builder: (context, homeProvider, child) {
                       return CustomFloat(
@@ -398,7 +398,9 @@ class CommonScaffold extends StatelessWidget {
                                   Get.back();
                                 });
                               }
-                            : isAddManual ? null : qrCallback,
+                            : isAddManual
+                                ? null
+                                : qrCallback,
                       );
                     });
                   }),

@@ -39,17 +39,18 @@ class HomeData {
     required this.santraOrders,
     required this.manualOrders,
     required this.pendingOrders,
+    this.multiBranch,
   });
 
   String totalNotifications;
   String showContract;
   String titleMessage;
-
   num ordersMonthly;
   num profitMonthly;
   List<SantraOrder> santraOrders;
   List<ManualOrder> manualOrders;
   List<PendingOrder> pendingOrders;
+  List<MultiBranchData>? multiBranch;
 
   factory HomeData.fromJson(Map<String, dynamic> json) => HomeData(
         totalNotifications: json["total_notifications"],
@@ -63,6 +64,8 @@ class HomeData {
             json["manual_orders"].map((x) => ManualOrder.fromJson(x))),
         pendingOrders: List<PendingOrder>.from(
             json["pending_orders"].map((x) => PendingOrder.fromJson(x))),
+        multiBranch: List<MultiBranchData>.from(
+            json["multi_branches"].map((x) => MultiBranchData.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -106,6 +109,7 @@ class Order {
       required this.customerPhone,
       required this.orderStatus,
       required this.customerName,
+      required this.areaCustomer,
       required this.totalOrderAmount,
       required this.orderDateStamp,
       required this.paymentMethod,
@@ -120,6 +124,7 @@ class Order {
   String orderNumber;
   String orderStatus;
   String customerName;
+  String areaCustomer;
   String totalOrderAmount;
   DateTime orderDateStamp;
   String paymentMethod;
@@ -136,6 +141,7 @@ class Order {
         orderNumber: json["order_number"],
         orderStatus: json["order_status"],
         customerName: json["customer_name"],
+        areaCustomer: json["area_customer"],
         totalOrderAmount: json["total_order_amount"],
         orderDateStamp: DateTime.parse(json["order_date_stamp"]),
         paymentMethod: json["payment_method"],
@@ -238,4 +244,22 @@ class SantraOrder {
         "santra_orders":
             List<dynamic>.from(santraOrders.map((x) => x.toJson())),
       };
+}
+
+class MultiBranchData {
+  MultiBranchData(
+      {required this.sellerCode,
+      required this.sellerTitle,
+      required this.sellerTitleAr});
+
+  String sellerCode;
+  String sellerTitle;
+  String sellerTitleAr;
+
+  factory MultiBranchData.fromJson(Map<String, dynamic> json) =>
+      MultiBranchData(
+        sellerCode: json["seller_code"],
+        sellerTitle: json["seller_title"],
+        sellerTitleAr: json["seller_title_ar"],
+      );
 }

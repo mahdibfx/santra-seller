@@ -11,13 +11,13 @@ String customerReviewsModelToJson(CustomerReviewsModel data) =>
     json.encode(data.toJson());
 
 class CustomerReviewsModel {
+  bool? status;
+  List<Datum>? data;
+
   CustomerReviewsModel({
     this.status,
     this.data,
   });
-
-  bool? status;
-  List<Datum>? data;
 
   factory CustomerReviewsModel.fromJson(Map<String, dynamic> json) =>
       CustomerReviewsModel(
@@ -36,6 +36,12 @@ class CustomerReviewsModel {
 }
 
 class Datum {
+  String? totalReviews;
+  String? averageStars;
+  List<String>? stars;
+  List<int>? starsPercent;
+  List<CustomerFeedback>? customerFeedback;
+
   Datum({
     this.totalReviews,
     this.averageStars,
@@ -43,12 +49,6 @@ class Datum {
     this.starsPercent,
     this.customerFeedback,
   });
-
-  String? totalReviews;
-  int? averageStars;
-  List<String>? stars;
-  List<int>? starsPercent;
-  List<CustomerFeedback>? customerFeedback;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         totalReviews: json["total_reviews"],
@@ -58,7 +58,9 @@ class Datum {
             : List<String>.from(json["stars"]!.map((x) => x)),
         starsPercent: json["stars_percent"] == null
             ? []
-            : List<int>.from(json["stars_percent"]!.map((x) => x)),
+            : List<int>.from(json["stars_percent"]!.map((x) => x))
+                .reversed
+                .toList(),
         customerFeedback: json["customer_feedback"] == null
             ? []
             : List<CustomerFeedback>.from(json["customer_feedback"]!
@@ -79,23 +81,22 @@ class Datum {
 }
 
 class CustomerFeedback {
-  CustomerFeedback(
-      {this.orderNumber,
-      this.feedbackStars,
-      this.feedbackMessage,
-      this.feedbackStarsInDouble});
-
   String? orderNumber;
   String? feedbackStars;
   String? feedbackMessage;
-  double? feedbackStarsInDouble;
+
+  CustomerFeedback({
+    this.orderNumber,
+    this.feedbackStars,
+    this.feedbackMessage,
+  });
 
   factory CustomerFeedback.fromJson(Map<String, dynamic> json) =>
       CustomerFeedback(
-          orderNumber: json["order_number"],
-          feedbackStars: double.parse(json["feedback_stars"]).toString(),
-          feedbackMessage: json["feedback_message"],
-          feedbackStarsInDouble: double.parse(json["feedback_stars"]));
+        orderNumber: json["order_number"],
+        feedbackStars: json["feedback_stars"],
+        feedbackMessage: json["feedback_message"],
+      );
 
   Map<String, dynamic> toJson() => {
         "order_number": orderNumber,

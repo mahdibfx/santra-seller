@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:santra_seller/models/customers/customer_reviews_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,10 +35,14 @@ class CustomerReviewsProvider with ChangeNotifier {
       body['seller_code'] = sellerCode ?? "";
       var response = await http.post(url, body: body, headers: ApiData.header);
       if (response.statusCode == 200) {
+        updateCustomerLoadingState(false);
         hasReviewsError = false;
-        // var data = jsonDecode(response.body);
+
         customerReviews = customerReviewsModelFromJson(response.body);
+
+        print(response.body);
       } else {
+        updateCustomerLoadingState(false);
         hasReviewsError = true;
       }
     } catch (e) {

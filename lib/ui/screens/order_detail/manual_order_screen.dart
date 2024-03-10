@@ -119,6 +119,7 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                                               santraList.orderStatus ==
                                                   'payment_pending'
                                           ? CustomCard(
+                                              area: santraList.areaCustomer,
                                               customerPhone:
                                                   santraList.customerPhone,
                                               orderType: santraList.orderType,
@@ -162,6 +163,7 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                                                   santraList.requestImage,
                                             )
                                           : ManualOrderCard(
+                                              area: santraList.areaCustomer,
                                               customerPhone:
                                                   santraList.customerPhone,
                                               orderType: santraList.orderType,
