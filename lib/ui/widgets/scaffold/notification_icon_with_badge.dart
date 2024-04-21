@@ -20,51 +20,44 @@ class NotificationIconWithBadge extends StatelessWidget {
     // final HomeController homeController = Get.find<HomeController>();
 
     return Consumer<HomeProvider>(builder: (context, _, child) {
-        return Consumer<SplashProvider>(builder: (context, splashPro, child) {
-            return GestureDetector(
-              onTap: () {
-                splashPro.homeAndMoreScreenOff();
-                Get.to(()=> NotificationScreen());
-              },
-              child: Stack(
-                clipBehavior: Clip.none,
-                alignment: Alignment.center,
-                children: [
-                  SvgPicture.asset(
-                    UIDATAIcons.bell,
-                    height: 30,
-                    color: Colors.black,
-                  ),
-                  if (_.homeData != null)
-                    if (_.homeData!.totalNotifications != "0")
-                      Positioned(
-                          right: -7,
-                          bottom: 25,
-                          child: Container(
-                            height: 20,
-                            // width: 20,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: const Color(0xffC32C4C),
-                                borderRadius: BorderRadius.circular(50)),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 5.0, vertical: 2),
-                              child: Text(
-                                _.homeData == null
-                                    ? '0'
-                                    : _.homeData!.totalNotifications
-                                        .toString(),
-                                style: UIDataTextStyles.caption,
-                              ),
-                            ),
-                          ))
-                ],
+      return Consumer<SplashProvider>(builder: (context, splashPro, child) {
+        return GestureDetector(
+          onTap: () {
+            splashPro.homeAndMoreScreenOff();
+            Get.to(() => NotificationScreen());
+          },
+          child: Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.center,
+            children: [
+              SvgPicture.asset(
+                UIDATAIcons.bell,
+                height: 30,
+                color: Colors.black,
               ),
-            );
-          }
+              if (_.homeData != null)
+                if (_.homeData!.totalNotifications != "0")
+                  Positioned(
+                      right: -7,
+                      bottom: 20,
+                      child: Container(
+                        height: 20,
+                        width: 20,
+                        alignment: Alignment.center,
+                        decoration: const BoxDecoration(
+                            color: Colors.red, shape: BoxShape.circle),
+                        child: Text(
+                          _.homeData == null
+                              ? '0'
+                              : _.homeData!.totalNotifications.toString(),
+                          style: UIDataTextStyles.caption
+                              .copyWith(color: Colors.white),
+                        ),
+                      ))
+            ],
+          ),
         );
-      }
-    );
+      });
+    });
   }
 }

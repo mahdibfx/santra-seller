@@ -65,4 +65,5 @@ class UIDATAIcons {
   static const backgroundSVG = "$iconsDir/bgnew.svg";
   static const businessIcon = "$iconsDir/briefcase.svg";
   static const areaIcon = "$iconsDir/area.svg";
+  static const truck = "$iconsDir/truck.svg";
 }

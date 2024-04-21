@@ -31,7 +31,7 @@ class AppTranslations extends GetxController {
 
   setShared(String lang) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("selectedlanguage", lang);
+    await prefs.setString("selectedlanguage", lang);
   }
 
   langNew() async {
@@ -46,7 +46,7 @@ class AppTranslations extends GetxController {
     // var url = Uri.parse(ApiData.languageSelection);
     var url = Uri.parse(ApiData.splashNew);
     Map<String, dynamic> body = {};
-    body['version'] = "4.3.2";
+    body['version'] = "4.3.3";
     body['platform'] = Platform.isIOS ? "Mobile_App_iOS" : "Mobile_App_Android";
     var response = await http.post(url, headers: ApiData.header, body: body);
     if (response.statusCode == 200) {

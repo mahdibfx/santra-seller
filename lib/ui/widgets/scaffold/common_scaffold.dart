@@ -9,6 +9,7 @@ import 'package:santra_seller/provider/home_provider.dart';
 import 'package:santra_seller/provider/auth_providers/login_provider.dart';
 import 'package:santra_seller/ui/screens/cart/cart_screen.dart';
 import 'package:santra_seller/ui/screens/more_setting/more_screen.dart';
+import 'package:santra_seller/utils/ext.dart';
 // lib imports
 import '../../../utils/app_translation/app_translation.dart';
 import '../../../utils/uidata.dart';
@@ -121,20 +122,19 @@ class CommonScaffold extends StatelessWidget {
                   null
           ? const SizedBox()
           : BottomAppBar(
-              // elevation: 0,
-
+              surfaceTintColor: Colors.white,
+              elevation: 0,
+              color: Colors.white,
               shape: const CircularNotchedRectangle(),
-              // color: UIDataColors.blue,//shape of notch
+              // color: UIDataColors.blue, //shape of notch
               notchMargin: 5, //
-              // shape:
-              // AutomaticNotchedShape(RoundedRectangleBorder(
-              //     borderRadius:
-              //     BorderRadius.only(
-              //       topLeft: Radius.circular(30.0),
-              //       topRight: Radius.circular(30.0),
-              //       // bottomLeft: Radius.circular(20.0),
-              //       // bottomRight: Radius.circular(20.0),
-              //     ),
+              // shape: AutomaticNotchedShape(RoundedRectangleBorder(
+              //   borderRadius: BorderRadius.only(
+              //     topLeft: Radius.circular(30.0),
+              //     topRight: Radius.circular(30.0),
+              //     // bottomLeft: Radius.circular(20.0),
+              //     // bottomRight: Radius.circular(20.0),
+              //   ),
               // )),
               clipBehavior: Clip.antiAlias,
               child: SizedBox(
@@ -227,10 +227,11 @@ class CommonScaffold extends StatelessWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: resizeToAvoid,
-      key: scaffoldKey ?? null,
+      key: scaffoldKey,
       backgroundColor: backgroundcolor,
       appBar: showAppBar
           ? AppBar(
+              surfaceTintColor: appbarcolor,
               iconTheme: IconThemeData(
                 color: backarrow ?? const Color(0xffF9F9F9),
               ),
@@ -394,7 +395,7 @@ class CommonScaffold extends StatelessWidget {
                                     tr.translateData('alert'),
                                     tr.translateData('status_approved'),
                                     tr.translateData('okay'), () {
-                                  print(homeProvider.sellerStatusNew);
+                                  homeProvider.sellerStatusNew.debugPrint();
                                   Get.back();
                                 });
                               }

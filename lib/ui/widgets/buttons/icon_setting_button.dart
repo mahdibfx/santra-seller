@@ -65,8 +65,13 @@ class HeadingWithIcon extends StatelessWidget {
 
   final String? btntxt;
   Color? iconColor;
+  bool isBold;
   HeadingWithIcon(
-      {super.key, required this.icon, required this.btntxt, this.iconColor});
+      {super.key,
+      required this.icon,
+      required this.btntxt,
+      this.iconColor,
+      this.isBold = false});
 
   @override
   Widget build(BuildContext context) {
@@ -86,15 +91,47 @@ class HeadingWithIcon extends StatelessWidget {
                 SpacingWidth.widthlistspacing,
                 Text(
                   btntxt!,
-                  style: const TextStyle(
+                  style: TextStyle(
                       color: Colors.black,
-                      fontWeight: FontWeight.w400,
+                      fontWeight: isBold ? FontWeight.bold : FontWeight.w400,
                       fontSize: 16),
                 )
               ],
             ),
           ),
         ),
+      ],
+    );
+  }
+}
+
+class ButtonIcon extends StatelessWidget {
+  String icon;
+  final void Function()? onPressed;
+
+  Color? iconColor;
+  ButtonIcon(
+      {super.key, required this.icon, required this.onPressed, this.iconColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        InkWell(
+            onTap: onPressed,
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  boxShadow: [],
+                  borderRadius: BorderRadius.circular(16)),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: SvgPicture.asset(
+                  icon,
+                  color: iconColor,
+                ),
+              ),
+            )),
       ],
     );
   }

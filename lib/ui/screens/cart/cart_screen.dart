@@ -2,11 +2,17 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/cart_provider.dart';
+import 'package:santra_seller/ui/screens/more_setting/my_customer/view_customer_details.dart';
+
 import 'package:santra_seller/ui/widgets/add_manual_order_widgets/vouchers_section.dart';
+import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:santra_seller/ui/widgets/buttons/rounded_button.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
+import 'package:santra_seller/utils/uidata/textStyles.dart';
+import 'package:table_calendar/table_calendar.dart';
 import '../../../../utils/uidata.dart';
 import '../../widgets/add_manual_order_widgets/cart_card.dart';
 import '../../widgets/add_manual_order_widgets/cart_payment_des.dart';
@@ -37,6 +43,7 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Widget bodyData(context) {
+    var sizedBoxHeight = const SizedBox(height: 10);
     return GetBuilder<AppTranslations>(builder: (tr) {
       return Consumer<CartProvider>(
         builder: (context, _, child) {
@@ -133,6 +140,7 @@ class _CartScreenState extends State<CartScreen> {
                                           onTap: () {
                                             _.setDeliveryMethod("delivery");
                                           },
+                                          fontSize: 14,
                                           title: tr.translateData("delivery"),
                                           bgColor:
                                               _.deliveryMethod == "delivery"
@@ -149,6 +157,7 @@ class _CartScreenState extends State<CartScreen> {
                                             onTap: () {
                                               _.setDeliveryMethod("express");
                                             },
+                                            fontSize: 14,
                                             title: "Express",
                                             bgColor:
                                                 _.deliveryMethod == "express"
@@ -165,6 +174,7 @@ class _CartScreenState extends State<CartScreen> {
                                             onTap: () {
                                               _.setDeliveryMethod("pickup");
                                             },
+                                            fontSize: 14,
                                             title: tr.translateData("pickup"),
                                             bgColor:
                                                 _.deliveryMethod == "pickup"
@@ -175,75 +185,49 @@ class _CartScreenState extends State<CartScreen> {
                                                     ? UIDataColors.whiteColor
                                                     : Colors.black,
                                           )),
+                                        if (_.showVip == "yes")
+                                          Expanded(
+                                              child: RoundedButton(
+                                            onTap: () {
+                                              _.setDeliveryMethod("vip");
+                                              // showModalBottomSheet(
+                                              //     backgroundColor: Colors.white,
+                                              //     isScrollControlled: true,
+                                              //     context: context,
+                                              //     builder: (context) {
+                                              //       return StatefulBuilder(
+                                              //           builder: (context,
+                                              //               stateSetter) {
+                                              //         return ;
+                                              //       });
+                                              //     });
+                                            },
+                                            fontSize: 14,
+                                            title: "VIP",
+                                            bgColor: _.deliveryMethod == "vip"
+                                                ? UIDataColors.primaryColor
+                                                : Colors.white,
+                                            textColor: _.deliveryMethod == "vip"
+                                                ? UIDataColors.whiteColor
+                                                : Colors.black,
+                                          )),
                                       ],
                                     ),
                                   ),
-                                  SpacingHeight.heightlistspacing20,
-                                  // AnimatedToggle(
-                                  //   values: [
-                                  //     tr.translateData("delivery"),
-                                  //     // "Express",
-                                  //     tr.translateData("pickup")
-                                  //   ],
-                                  //   // values: ["delivery", "pickup"],
-                                  //   onToggleCallback: (value) {
-                                  //     setState(() {
-                                  //       _.toggleValue = value;
-                                  //       print("DDDDDDDD${_.toggleValue}");
-                                  //     });
-                                  //   },
-                                  //   initialPosition: _.toggleValue == 0,
-                                  //   buttonColor: UIDataColors.primaryColor,
-                                  //   backgroundColor: const Color(0xFFFFFFFF),
-                                  //   textColor: const Color(0xFFFFFFFF),
-                                  // ),
-                                  if (_.deliveryMethod != "express")
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(15)),
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.black
-                                                  .withOpacity(0.08),
-                                              spreadRadius: 1,
-                                              blurRadius: 10,
-                                              offset: const Offset(0,
-                                                  0), // changes position of shadow
-                                            ),
-                                          ]),
-                                      child: Column(
-                                        children: [
-                                          HeadingWithIcon(
-                                            icon: UIDATAIcons.calendarIcon,
-                                            btntxt: tr.translateData(
-                                                "cart_delivery_date"),
-                                            iconColor:
-                                                UIDataColors.primaryColor,
-                                          ).paddingSymmetric(horizontal: 20),
-                                          CalendarDatePicker2(
-                                              config: CalendarDatePicker2Config(
-                                                  firstDate: DateTime.now(),
-                                                  currentDate: DateTime.now(),
-                                                  lastDate: DateTime.now().add(
-                                                      const Duration(
-                                                          days: 180)),
-                                                  weekdayLabelTextStyle:
-                                                      const TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 12),
-                                                  selectedDayHighlightColor:
-                                                      UIDataColors
-                                                          .primaryColor),
-                                              value: _.dates,
-                                              onValueChanged: (dates) {
-                                                _.dates = dates;
-                                                _.setDeliveryDate();
-                                              }),
-                                        ],
-                                      ),
-                                    ).paddingOnly(bottom: 20),
+                                  if (_.deliveryMethod != "vip")
+                                    SpacingHeight.heightlistspacing20,
+
+                                  (_.deliveryMethod == "delivery" ||
+                                          _.deliveryMethod == "pickup")
+                                      ? DatePickerOnCart(
+                                          tr: tr,
+                                          cart: _,
+                                        ).paddingOnly(bottom: 20)
+                                      : _.deliveryMethod == "vip"
+                                          ? VIPDeliveryWithTimeSlotsAndCalendar(
+                                              sizedBoxHeight: sizedBoxHeight,
+                                              cart: _)
+                                          : const SizedBox(),
                                   CartPayemntDescriptionCard(
                                     subtotal: _.totalPrice.toStringAsFixed(2),
                                     total: _.grandTotal.toStringAsFixed(2),
@@ -251,28 +235,6 @@ class _CartScreenState extends State<CartScreen> {
                                     discount: _.dis.toString(),
                                     tax: _.vatTax.toString(),
                                   ),
-
-                                  // Padding(
-                                  //   padding: const EdgeInsets.only(top: 20.0),
-                                  //   child: PrimaryButtonWithIcon(
-                                  //     btntxt: "Submit",
-                                  //     backEndColor: _.finalSubmitData != null
-                                  //         ? UIDataColors.primaryColor
-                                  //         : UIDataColors.whiteColor,
-                                  //     buttontxtColor: _.finalSubmitData != null
-                                  //         ? UIDataColors.whiteColor
-                                  //         : UIDataColors.primaryColor,
-                                  //     iconImageColor: _.finalSubmitData != null
-                                  //         ? UIDataColors.whiteColor
-                                  //         : UIDataColors.primaryColor,
-                                  //     iconImage: UIDATAIcons.sendIcon,
-                                  //     onPressed: () {
-                                  //       if (_.finalSubmitData != null) {
-                                  //         _.orderSubmit();
-                                  //       }
-                                  //     },
-                                  //   ),
-                                  // )
                                   SpacingHeight.heightlistspacing50
                                 ],
                               ).paddingSymmetric(horizontal: 15)),
@@ -287,133 +249,168 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return CommonScaffold(
       bodyData: bodyData(context),
-      //backgroundcolor: UIDataColors.whiteColor,
       backGroundImage: UIDataImage.backgroundImage,
       showDrawer: false,
       showFAB: true,
       centerDocked: true,
       showAppBar: true,
-      // leading: Row(
-      //   children: [
-      //     GestureDetector(
-      //       child: Icon(
-      //         Icons.arrow_back,
-      //         color: Colors.black,
-      //       ),
-      //       onTap: () => Navigator.of(context).pop(),
-      //     ),
-      //     Text(
-      //       'Back',
-      //       style: TextStyle(color: Colors.black, fontSize: 10),
-      //     )
-      //   ],
-      // ),
       showBottomNav: true,
       showActions: false,
       appbarcolor: UIDataColors.whiteColor,
       appbarSvg: true,
-      backarrow: UIDataColors.primaryColor,
+      backarrow: UIDataColors.whiteColor,
       qrCallback: () {
         Get.offAll(() => const AddManulOrder());
       },
       floatingIcon: Icons.add,
-      // elevation: 3.0,
     );
   }
 }
 
-class RoundedButton extends StatelessWidget {
-  final Color? bgColor;
-  final Color? textColor;
-  final String? title;
-  var onTap;
-  RoundedButton(
-      {super.key,
-      required this.bgColor,
-      required this.onTap,
-      required this.textColor,
-      required this.title});
+class DatePickerOnCart extends StatelessWidget {
+  final CartProvider cart;
+  final AppTranslations tr;
+  const DatePickerOnCart({super.key, required this.cart, required this.tr});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        alignment: Alignment.center,
-        height: 50,
-        decoration: ShapeDecoration(
-          color: bgColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            title ?? "",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: textColor,
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.08),
+              spreadRadius: 1,
+              blurRadius: 10,
+              offset: const Offset(0, 0), // changes position of shadow
             ),
-          ),
-        ),
+          ]),
+      child: Column(
+        children: [
+          HeadingWithIcon(
+            icon: UIDATAIcons.calendarIcon,
+            btntxt: tr.translateData("cart_delivery_date"),
+            iconColor: UIDataColors.primaryColor,
+          ).paddingSymmetric(horizontal: 20),
+          CalendarDatePicker2(
+              config: CalendarDatePicker2Config(
+                  firstDate: DateTime.now(),
+                  currentDate: DateTime.now(),
+                  lastDate: DateTime.now().add(const Duration(days: 180)),
+                  weekdayLabelTextStyle:
+                      const TextStyle(color: Colors.black, fontSize: 12),
+                  selectedDayHighlightColor: UIDataColors.primaryColor),
+              value: cart.dates,
+              onValueChanged: (dates) {
+                cart.dates = dates;
+                cart.setDeliveryDate();
+              }),
+        ],
       ),
     );
   }
 }
 
-// class CartScreen extends StatelessWidget {
-//   final cartController = Get.put(CartController());
+class VIPDeliveryWithTimeSlotsAndCalendar extends StatefulWidget {
+  final CartProvider cart;
+  const VIPDeliveryWithTimeSlotsAndCalendar(
+      {super.key, required this.sizedBoxHeight, required this.cart});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Cart'),
-//       ),
-//       body: Obx(
-//         () => ListView.builder(
-//           itemCount: cartController.cartItems.length,
-//           itemBuilder: (context, index) {
-//             final cartItem = cartController.cartItems[index];
-//             return ListTile(
-//               title: Text(cartItem.name),
-//               subtitle: Text('\$${cartItem.price.toStringAsFixed(2)}'),
-//               trailing: Row(
-//                 mainAxisSize: MainAxisSize.min,
-//                 children: [
-//                   IconButton(
-//                     onPressed: () => cartController.removeFromCart(cartItem),
-//                     icon: Icon(Icons.remove),
-//                   ),
-//                   Text(cartItem.quantity.toString()),
-//                   IconButton(
-//                     onPressed: () => cartController.addToCart(cartItem),
-//                     icon: Icon(Icons.add),
-//                   ),
-//                 ],
-//               ),
-//             );
-//           },
-//         ),
-//       ),
-//       bottomNavigationBar: Obx(
-//         () => BottomAppBar(
-//           child: Container(
-//             height: 50,
-//             child: Center(
-//               child: Text(
-//                 'Total: \$${cartController.totalPrice.toStringAsFixed(2)}',
-//                 style: TextStyle(
-//                   fontSize: 20,
-//                   fontWeight: FontWeight.bold,
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+  final SizedBox sizedBoxHeight;
+
+  @override
+  State<VIPDeliveryWithTimeSlotsAndCalendar> createState() =>
+      _VIPDeliveryWithTimeSlotsAndCalendarState();
+}
+
+class _VIPDeliveryWithTimeSlotsAndCalendarState
+    extends State<VIPDeliveryWithTimeSlotsAndCalendar> {
+  @override
+  Widget build(BuildContext context) {
+    var _ = Get.put(AppTranslations());
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          children: [
+            HeadingWithIcon(
+              icon: UIDATAIcons.locationPin,
+              btntxt: _.translateData("vip_delivery"),
+              iconColor: UIDataColors.primaryColor,
+            ),
+            // const Spacer(),
+            // ButtonIcon(
+            //     icon: UIDATAIcons.close,
+            //     onPressed: () {
+            //       Get.back();
+            //     })
+          ],
+        ),
+        // Image.asset(UIDataImage.vip),
+        // sizedBoxHeight,
+        Wrap(
+          children: [
+            RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(
+                      text: "${_.translateData('book_vip')} ",
+                      style: UIDataTextStyles.h3
+                          .copyWith(color: UIDataColors.blackColor)),
+                  TextSpan(
+                      text: _.translateData("vip_description"),
+                      style: UIDataTextStyles.subTitle.copyWith(
+                          color: UIDataColors.blackColor.withOpacity(0.8))),
+                ],
+              ),
+            ),
+          ],
+        ),
+        widget.sizedBoxHeight,
+        Text(_.translateData("choose_delivery_date"),
+            style: UIDataTextStyles.title
+                .copyWith(color: UIDataColors.primaryColor)),
+        widget.sizedBoxHeight,
+        TableCalendar(
+          daysOfWeekStyle: const DaysOfWeekStyle(),
+          calendarStyle: const CalendarStyle(
+              isTodayHighlighted: false,
+              selectedDecoration: BoxDecoration(
+                  shape: BoxShape.circle, color: UIDataColors.primaryColor)),
+          selectedDayPredicate: (day) {
+            return isSameDay(widget.cart.selectedVipDay, day);
+          },
+          onDaySelected: (selectedDay, focusedDay) {
+            widget.cart.onVipDaySelected(selectedDay, focusedDay);
+          },
+          onPageChanged: (focusedDay) {
+            widget.cart.focusedVipDay = focusedDay;
+          },
+          startingDayOfWeek: StartingDayOfWeek.friday,
+          firstDay: widget.cart.vipStart!,
+          lastDay: widget.cart.vipEnd!,
+          focusedDay: widget.cart.focusedVipDay,
+          calendarFormat: CalendarFormat.week,
+          headerVisible: false,
+        ),
+        Text(_.translateData("choose_delivery_time"),
+            style: UIDataTextStyles.title
+                .copyWith(color: UIDataColors.primaryColor)),
+        widget.sizedBoxHeight,
+        HourSelectorForVipDelivery(
+          cartProvider: widget.cart,
+          // stateSetter: stateSetter,
+        ),
+        // BorderButton(
+        //   btntxt: "Save",
+        //   onPressed: () {
+        //     Get.back();
+        //   },
+        // ),
+
+        widget.sizedBoxHeight
+      ],
+    );
+  }
+}

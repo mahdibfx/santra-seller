@@ -25,7 +25,6 @@ class UIDataImage {
   static String waitingOrderImage = "$imageDir/waiting_order.svg";
   static String santraLogoEnglish = "$imageDir/santra_log_eng.png";
   static String santraLogoArabic = "$imageDir/santra_log_arab.png";
-   static String contractLogo = "$imageDir/contract.png";
-
-
+  static String contractLogo = "$imageDir/contract.png";
+  static String vip = "$imageDir/vip.png";
 }

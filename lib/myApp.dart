@@ -30,9 +30,7 @@ import './utils/uidata.dart';
 import 'provider/setting_provider/language_settings_controller.dart';
 
 class MyApp extends StatelessWidget {
-
   const MyApp({super.key});
-   
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +45,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<MyCustomerProvider>(
             create: (_) => MyCustomerProvider()),
         ChangeNotifierProvider<CartProvider>(create: (_) => CartProvider()),
-        ChangeNotifierProvider<SignUpProvider>(create: (_) => SignUpProvider(_)),
+        ChangeNotifierProvider<SignUpProvider>(
+            create: (_) => SignUpProvider(_)),
         ChangeNotifierProvider<ProductSettingsProvider>(
             create: (_) => ProductSettingsProvider()),
         ChangeNotifierProvider<NotificationProvider>(
@@ -78,10 +77,11 @@ class MyApp extends StatelessWidget {
         // ChangeNotifierProvider<LanguageProvider>(
         //     create: (_) => LanguageProvider()),
       ],
-      child:GetMaterialApp(
+      child: GetMaterialApp(
         title: UIData.appName,
+
         theme: ThemeData(
-          primaryColor: Colors.black,
+          primaryColor: UIDataColors.primaryColor,
           fontFamily: UIDataFonts.quickFont,
           primarySwatch: Colors.blue,
         ),
@@ -91,7 +91,9 @@ class MyApp extends StatelessWidget {
         home: const SplashScreen(),
         enableLog: true,
         fallbackLocale: const Locale('en', 'US'),
-        locale: _.selectedLanguage == 'en_us' ? const Locale('en', 'us') :const Locale('ar', 'AE'),
+        locale: _.selectedLanguage == 'en_us'
+            ? const Locale('en', 'us')
+            : const Locale('ar', 'AE'),
         // initialRoute: AppPages.INITIAL,
         // getPages: AppPages.routes,
       ),

@@ -127,7 +127,7 @@ class _CustomCardState extends State<CustomCard>
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.65,
                             child: Text(
-                              '${widget.orderType.toLowerCase() == "express" ? tr.translateData("express") : widget.orderType.toLowerCase() == "pickup" ? tr.translateData("pickup") : widget.orderType.toLowerCase() == "delivery" ? tr.translateData("delivery") : ""} ${tr.translateData('order_number')}${widget.orderNumber} - ${widget.area}',
+                              '${widget.orderType.toLowerCase() == "express" ? tr.translateData("express") : widget.orderType.toLowerCase() == "pickup" ? tr.translateData("pickup") : widget.orderType.toLowerCase() == "delivery" ? tr.translateData("delivery") : widget.orderType.toLowerCase() == "vip" ? tr.translateData("vip") : ""} ${tr.translateData('order_number')}${widget.orderNumber} - ${widget.area}',
                               style: UIDataTextStyles.h2.copyWith(fontSize: 12),
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -238,7 +238,12 @@ class _CustomCardState extends State<CustomCard>
                                                         "delivery"
                                                     ? tr.translateData(
                                                         "delivery")
-                                                    : ""),
+                                                    : widget.orderType
+                                                                .toLowerCase() ==
+                                                            "vip"
+                                                        ? tr.translateData(
+                                                            "vip")
+                                                        : ""),
                                       ],
                                     ),
                                   ],

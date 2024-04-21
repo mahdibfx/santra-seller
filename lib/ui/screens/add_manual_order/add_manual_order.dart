@@ -61,7 +61,6 @@ class _AddManulOrderState extends State<AddManulOrder> {
                             fillcolor: Colors.white,
                             labelText: tr.translateData("add_order_search"),
                             onChanged: (value) {
-                              print(value);
                               manualOrderController.filterList(value);
                             },
                           ),
@@ -335,10 +334,10 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                                                               Transform.scale(
                                                             scale: 1.15,
                                                             child: Checkbox(
-                                                              side:
-                                                                  const BorderSide(
-                                                                width: 0.8,
-                                                              ),
+                                                              side: const BorderSide(
+                                                                  width: 0.8,
+                                                                  color: Colors
+                                                                      .black),
                                                               shape:
                                                                   RoundedRectangleBorder(
                                                                 borderRadius:
@@ -357,8 +356,15 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                                                                       Color>((Set<
                                                                           MaterialState>
                                                                       states) {
-                                                                return UIDataColors
-                                                                    .primaryColor;
+                                                                return newData[
+                                                                                sebIndex]
+                                                                            .byDefault
+                                                                            .toString() ==
+                                                                        "1"
+                                                                    ? UIDataColors
+                                                                        .primaryColor
+                                                                    : Colors
+                                                                        .white;
                                                               }),
                                                               value: newData[sebIndex]
                                                                           .byDefault
@@ -528,7 +534,7 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                                       .filteredProducts[widget.index]);
                               Get.back();
                             },
-                            subBtntxt: 'AED',
+                            subBtntxt: 'AED ',
                             btntxt: tr.translateData("add_to_cart_button"),
                             moreBtntxt: manualOrderController
                                 .productPriceWithQuantityAndMods(

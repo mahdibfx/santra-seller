@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:santra_seller/utils/uidata.dart';
-
 import '../../../utils/app_translation/app_translation.dart';
 
 final tr = Get.put(AppTranslations());
@@ -18,9 +16,11 @@ class BorderButton extends StatelessWidget {
   final Color? backEndColor;
   final Color? borderColor;
   final Color? iconColor;
-  final onPressed;
+  final bool? isBold;
+  final void Function()? onPressed;
 
-  BorderButton({
+  const BorderButton({
+    super.key,
     required this.btntxt,
     this.iconImage,
     this.buttontxtColor,
@@ -29,6 +29,7 @@ class BorderButton extends StatelessWidget {
     this.backEndColor = UIDataColors.primaryColor,
     this.borderColor,
     this.iconColor,
+    this.isBold = true,
     this.onPressed,
   });
 
@@ -72,7 +73,8 @@ class BorderButton extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 14.0,
                       fontFamily: tr.getFont(),
-                      fontWeight: FontWeight.bold,
+                      fontWeight:
+                          isBold == true ? FontWeight.bold : FontWeight.w400,
                       color: buttontxtColor ?? Colors.white,
                     ),
                   ),

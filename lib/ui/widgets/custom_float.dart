@@ -7,7 +7,12 @@ class CustomFloat extends StatelessWidget {
   final VoidCallback? qrCallback;
   final isMini;
 
-  CustomFloat({this.icon, this.builder, this.qrCallback, this.isMini = false});
+  const CustomFloat(
+      {super.key,
+      this.icon,
+      this.builder,
+      this.qrCallback,
+      this.isMini = false});
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +21,19 @@ class CustomFloat extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       mini: isMini,
       onPressed: qrCallback,
+      shape: const RoundedRectangleBorder(
+        // <= Change BeveledRectangleBorder to RoundedRectangularBorder
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30.0),
+          topRight: Radius.circular(30.0),
+          bottomLeft: Radius.circular(30.0),
+          bottomRight: Radius.circular(30.0),
+        ),
+      ),
       backgroundColor: UIDataColors.primaryColor,
       child: Ink(
-        // decoration: new BoxDecoration(
-        // gradient: new LinearGradient(colors: UIData.kitGradients)
+        // decoration: new BoxDecoration(shape: BoxShape.circle
+        // gradient: new LinearGradient(colors: Colors.black)
         // ),
         child: Stack(
           fit: StackFit.expand,
@@ -30,7 +44,7 @@ class CustomFloat extends StatelessWidget {
               size: 40,
             ),
             builder != null
-                ? Positioned(right: 7.0, top: 7.0, child: Text("")
+                ? const Positioned(right: 7.0, top: 7.0, child: Text("")
                     // CircleAvatar(
                     //   backgroundColor: Colors.red,
                     //   child: builder,

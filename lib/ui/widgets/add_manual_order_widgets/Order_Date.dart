@@ -26,16 +26,15 @@ class OrderDate extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-               Text("Choose Delivery Date:",
-                  style: UIDataTextStyles.textMedium),
+              Text("Choose Delivery Date:", style: UIDataTextStyles.textMedium),
               SizedBox(
                 width: 32,
                 height: 32,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       shape: const CircleBorder(),
-                      padding: const EdgeInsets.all(5),
-                      primary: UIDataColors.lightGrayColor),
+                      backgroundColor: UIDataColors.lightGrayColor,
+                      padding: const EdgeInsets.all(5)),
                   onPressed: (() => Get.back()),
                   child: SvgPicture.asset(
                     width: 20,
