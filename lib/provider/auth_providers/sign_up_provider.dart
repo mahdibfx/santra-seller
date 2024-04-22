@@ -8,6 +8,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:santra_seller/ui/screens/auth_screen/login_screen.dart';
+import 'package:santra_seller/utils/ext.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../ui/widgets/snackbar/common_snackbar.dart';
@@ -40,7 +41,7 @@ class SignUpProvider extends ChangeNotifier {
     firebaseMessagingToken = await FirebaseMessaging.instance.getToken();
     notifyListeners();
     prefs.setString('fcmtoken', firebaseMessagingToken.toString());
-    print("token: $firebaseMessagingToken");
+    firebaseMessagingToken.debugPrint();
   }
 
   bool securetext = true;

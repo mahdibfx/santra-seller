@@ -103,7 +103,8 @@ class SplashProvider extends ChangeNotifier {
   }
 
   checkInstallFirsTime() async {
-    await Future.delayed(const Duration(seconds: 3), () => initPlugin());
+    await initPlugin();
+    //  Future.delayed(const Duration(seconds: 3), () => );
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? firstTime = prefs.getBool('first_time');
