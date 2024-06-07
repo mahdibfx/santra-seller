@@ -522,6 +522,7 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                                   price: double.parse(
                                       itemValue.productPrice.toString()),
                                   code: itemValue.productCode.toString(),
+                                  pTime: itemValue.preparationTime,
                                   subModifiers:
                                       manualOrderController.addOnProducts);
 

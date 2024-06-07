@@ -578,4 +578,16 @@ class HomeProvider extends ChangeNotifier {
     );
     await launchUrl(launchUri);
   }
+
+  Future<void> launchAttachedPdf(String link) async {
+    String l = link.substring(7);
+    final Uri launchUri = Uri(
+      scheme: 'https',
+      path: l,
+    );
+    await launchUrl(
+      launchUri,
+      mode: LaunchMode.externalApplication,
+    );
+  }
 }

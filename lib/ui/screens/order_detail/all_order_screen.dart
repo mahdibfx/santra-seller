@@ -142,6 +142,11 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
                                               santraList.paymentLink.toString(),
                                           orderItemList: santraList.orderItems,
                                           requestImage: santraList.requestImage,
+                                          attachedPdf: santraList.pdfLink,
+                                          cashCharge: santraList.cashCharges,
+                                          deliveryCharge:
+                                              santraList.deliveryCharges,
+                                          discount: santraList.orderDiscount,
                                         )
                                       : ManualOrderCard(
                                           area: santraList.areaCustomer,
@@ -174,6 +179,11 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
                                           colorCode:
                                               santraList.colorCode.toString(),
                                           requestImage: santraList.requestImage,
+                                          attachedPdf: santraList.pdfLink,
+                                          cashCharge: santraList.cashCharges,
+                                          deliveryCharge:
+                                              santraList.deliveryCharges,
+                                          discount: santraList.orderDiscount,
                                         );
                                 }),
                             SpacingHeight.heightlistspacing50

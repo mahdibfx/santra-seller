@@ -3,9 +3,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/cart_provider.dart';
 import 'package:santra_seller/ui/screens/more_setting/my_customer/view_customer_details.dart';
-
 import 'package:santra_seller/ui/widgets/add_manual_order_widgets/vouchers_section.dart';
-import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,7 +19,11 @@ import '../add_manual_order/add_manual_order.dart';
 
 class CartScreen extends StatefulWidget {
   final bool isOrderReady;
-  const CartScreen({super.key, this.isOrderReady = false});
+
+  const CartScreen({
+    super.key,
+    this.isOrderReady = false,
+  });
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -387,10 +389,15 @@ class _VIPDeliveryWithTimeSlotsAndCalendarState
           onPageChanged: (focusedDay) {
             widget.cart.focusedVipDay = focusedDay;
           },
-          startingDayOfWeek: StartingDayOfWeek.friday,
+          // startingDayOfWeek: StartingDayOfWeek.friday,
+
           firstDay: widget.cart.vipStart!,
           lastDay: widget.cart.vipEnd!,
-          focusedDay: widget.cart.focusedVipDay,
+          focusedDay:
+          widget.cart.selectedVipDay == null
+                ? widget.cart.vipStart!
+                : widget.cart.selectedVipDay!,
+          //  widget.cart.vipStart!,
           calendarFormat: CalendarFormat.week,
           headerVisible: false,
         ),

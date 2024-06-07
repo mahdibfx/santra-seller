@@ -25,8 +25,12 @@ class ManualOrderCard extends StatefulWidget {
   final String orderType;
   final String orderNumber;
   final String totalPrice;
+  final String? cashCharge;
+  final String? discount;
+  final String? deliveryCharge;
   final String customerPhone;
   final String orderRemarks;
+  final String? attachedPdf;
   final String? requestImage;
   final String? area;
   List<OrderItem> orderItemList;
@@ -38,12 +42,16 @@ class ManualOrderCard extends StatefulWidget {
     required this.orderStatus,
     required this.orderTime,
     required this.deliveryTime,
+    this.cashCharge,
+    this.deliveryCharge,
+    this.discount,
     required this.customerName,
     required this.paymentMethod,
     required this.orderNumber,
     required this.orderItemList,
     required this.totalPrice,
     required this.orderRemarks,
+    this.attachedPdf,
     required this.requestImage,
     required this.area,
     required this.colorCode,
@@ -339,23 +347,33 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                             }),
                       ),
                     if (_isOpen)
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.end,
+                      Column(
                         children: [
-                          Text(tr.translateData("total_price"),
-                              style: UIDataTextStyles.textMediumColoredBlue
-                                  .copyWith(
-                                color: UIDataColors.blackColor,
-                              )),
-                          SpacingWidth.widthlistspacing,
-                          Text('${widget.totalPrice} AED',
-                              style: UIDataTextStyles.textMediumColoredBlue
-                                  .copyWith(
-                                color: UIDataColors.primaryColor,
-                              )),
+                          if (widget.deliveryCharge != "0")
+                            OrderCalculations(
+                              tr: tr,
+                              title: "cart_order_delivery_charge",
+                              amount: widget.deliveryCharge,
+                            ),
+                          if (widget.cashCharge != "0")
+                            OrderCalculations(
+                              tr: tr,
+                              title: "cash_charges",
+                              amount: widget.cashCharge,
+                            ),
+                          if (widget.discount != "0")
+                            OrderCalculations(
+                              tr: tr,
+                              title: "discount",
+                              amount: widget.discount,
+                            ),
+                          OrderCalculations(
+                            tr: tr,
+                            title: "total_price",
+                            amount: widget.totalPrice,
+                          ),
                         ],
-                      ).marginAll(10),
+                      ),
                     if (_isOpen)
                       Column(
                         children: [
@@ -364,7 +382,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                               widget.requestImage != null))
                             Container(
                               width: double.infinity,
-                              color: Colors.grey.shade200,
+                              color: const Color(0xffF5F5F5),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -391,37 +409,66 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                         ),
                                       ],
                                     ).marginOnly(left: 10, right: 10),
-                                  if (widget.requestImage != "")
-                                    GestureDetector(
-                                      onTap: () => Get.to(() => FullScreenImage(
-                                          image: widget.requestImage ?? "")),
-                                      child: Container(
-                                        height: 50,
-                                        width: 50,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        child: Center(
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: CachedNetworkImage(
-                                              imageUrl:
-                                                  widget.requestImage ?? "",
-                                              fit: BoxFit.cover,
-                                              memCacheHeight: 400,
-                                              memCacheWidth: 400,
-                                              placeholder: (context, url) =>
-                                                  const Padding(
-                                                padding: EdgeInsets.all(12.0),
-                                                child:
-                                                    CircularProgressIndicator(),
+                                  Row(
+                                    children: [
+                                      if (widget.requestImage != "")
+                                        GestureDetector(
+                                          onTap: () => Get.to(() =>
+                                              FullScreenImage(
+                                                  image: widget.requestImage ??
+                                                      "")),
+                                          child: Container(
+                                            height: 50,
+                                            width: 50,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            child: Center(
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: CachedNetworkImage(
+                                                  imageUrl:
+                                                      widget.requestImage ?? "",
+                                                  fit: BoxFit.cover,
+                                                  memCacheHeight: 400,
+                                                  memCacheWidth: 400,
+                                                  placeholder: (context, url) =>
+                                                      const Padding(
+                                                    padding:
+                                                        EdgeInsets.all(12.0),
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ).paddingAll(10),
+                                        ),
+                                      if (widget.attachedPdf != "")
+                                        GestureDetector(
+                                          onTap: () => _.launchAttachedPdf(
+                                              widget.attachedPdf!),
+                                          child: Container(
+                                            height: 50,
+                                            width: 50,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            child: Center(
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: Image.asset(
+                                                  UIDATAIcons.pdfIcon,
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ).paddingAll(10),
-                                    ),
+                                        )
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),
@@ -511,6 +558,41 @@ class _ManualOrderCardState extends State<ManualOrderCard>
   }
 }
 
+class OrderCalculations extends StatelessWidget {
+  final AppTranslations tr;
+  final String? title;
+  final String? amount;
+  const OrderCalculations({
+    super.key,
+    required this.tr,
+    this.amount,
+    this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Text(tr.translateData(title ?? ""),
+            style: UIDataTextStyles.textMediumColoredBlue.copyWith(
+              color: UIDataColors.blackColor,
+            )),
+        SpacingWidth.widthlistspacing,
+        Text('$amount AED',
+            style: UIDataTextStyles.textMediumColoredBlue.copyWith(
+              color: UIDataColors.primaryColor,
+            )),
+      ],
+    ).paddingOnly(
+      right: Get.locale?.languageCode == "ar" ? 0 : 10,
+      bottom: 8,
+      left: Get.locale?.languageCode == "ar" ? 10 : 0,
+    );
+  }
+}
+
 class OrderItemWidget extends StatelessWidget {
   final String imageString;
   final String productName;
@@ -574,8 +656,9 @@ class OrderItemWidget extends StatelessWidget {
                 children: [
                   Text(
                     '$productPrice AED',
-                    style: UIDataTextStyles.heading15Medium.copyWith(
-                        color: UIDataColors.primaryColor, fontSize: 12),
+                    style: UIDataTextStyles.textMediumColoredBlue.copyWith(
+                      color: UIDataColors.primaryColor,
+                    ),
                   ),
                 ],
               )

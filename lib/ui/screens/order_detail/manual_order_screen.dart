@@ -161,6 +161,13 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                                                   santraList.orderItems,
                                               requestImage:
                                                   santraList.requestImage,
+                                              attachedPdf: santraList.pdfLink,
+                                              cashCharge:
+                                                  santraList.cashCharges,
+                                              deliveryCharge:
+                                                  santraList.deliveryCharges,
+                                              discount:
+                                                  santraList.orderDiscount,
                                             )
                                           : ManualOrderCard(
                                               area: santraList.areaCustomer,
@@ -202,6 +209,13 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                                                   .toString(),
                                               requestImage:
                                                   santraList.requestImage,
+                                              attachedPdf: santraList.pdfLink,
+                                              cashCharge:
+                                                  santraList.cashCharges,
+                                              deliveryCharge:
+                                                  santraList.deliveryCharges,
+                                              discount:
+                                                  santraList.orderDiscount,
                                             );
                                     }),
                                 SpacingHeight.heightlistspacing50

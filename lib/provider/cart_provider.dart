@@ -63,8 +63,9 @@ class CartProvider extends ChangeNotifier {
   String deliveryMethod = "delivery";
   String? selectedVipHour;
   DateTime? selectedVipDay;
-  DateTime focusedVipDay = DateTime.now();
+  DateTime? focusedVipDay;
   List<String> hoursList = [];
+  int deliveryTime = 0;
   selectHour(String hour) {
     selectedVipHour = hour;
     notifyListeners();
@@ -84,7 +85,6 @@ class CartProvider extends ChangeNotifier {
       deliveryDate = null;
       dates.clear();
     }
-    print(deliveryMethod);
     notifyListeners();
   }
 
@@ -117,7 +117,11 @@ class CartProvider extends ChangeNotifier {
     isShowCartButton = false;
     receiptPaymentType = true;
     deliveryChargesExpress = 0.0;
+    deliveryChargesVip = 0.0;
+    selectedVipDay = null;
+    selectedVipHour = null;
     cartItems.clear();
+    deliveryTime = 0;
     deliveryChargesCap = 0.0;
     deliveryChargesReal = 0.0;
     deliveryChargesVip = 0.0;
@@ -175,8 +179,7 @@ class CartProvider extends ChangeNotifier {
       if (preGrandTotal < deliveryChargesCap && deliveryMethod == "express") {
         dFee = deliveryChargesExpress;
         deliverChargeForBackend = dFee;
-      } else if (preGrandTotal < deliveryChargesCap &&
-          deliveryMethod == "vip") {
+      } else if (deliveryMethod == "vip") {
         dFee = deliveryChargesVip;
         deliverChargeForBackend = dFee;
       } else if (preGrandTotal < deliveryChargesCap &&
@@ -278,6 +281,14 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // int get totalDeliverytime {
+  //   deliveryTime = cartItems.fold(
+  //       0,
+  //       (previousValue, element) =>
+  //           element.pTime! > previousValue ? element.pTime! : previousValue);
+  //   return deliveryTime;
+  // }
+
   Future cartScreenData() async {
     var tr = Get.put(AppTranslations());
     try {
@@ -287,6 +298,9 @@ class CartProvider extends ChangeNotifier {
       var url = Uri.parse(ApiData.cartApi);
       Map<String, dynamic> body = {};
       body['seller_code'] = sellerCode ?? "";
+      // body['preparation_time'] = totalDeliverytime.toString();
+      //body['user_area_check'] = customerDetail.customerArea ?? "";
+
       final response =
           await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
@@ -576,6 +590,7 @@ class CartItem {
   final String code;
   final double price;
   final String imageString;
+  int? pTime;
   List<SubModifier> subModifiers = [];
   int quantity;
 
@@ -585,6 +600,7 @@ class CartItem {
       required this.code,
       required this.imageString,
       required this.quantity,
+      required this.pTime,
       required this.subModifiers});
 
   Map toJson() => {

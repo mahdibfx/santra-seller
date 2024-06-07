@@ -24,7 +24,8 @@ class SelllerAllProductsModel {
         status: json["status"],
         data: json["data"] == null
             ? []
-            : List<SellerProductData>.from(json["data"]!.map((x) => SellerProductData.fromJson(x))),
+            : List<SellerProductData>.from(
+                json["data"]!.map((x) => SellerProductData.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -42,7 +43,8 @@ class SellerProductData {
 
   List<Product>? products;
 
-  factory SellerProductData.fromJson(Map<String, dynamic> json) => SellerProductData(
+  factory SellerProductData.fromJson(Map<String, dynamic> json) =>
+      SellerProductData(
         products: json["products"] == null
             ? []
             : List<Product>.from(
@@ -68,6 +70,7 @@ class Product {
     this.productImages,
     this.productStatus,
     this.productQuantity = 1,
+    this.preparationTime,
     this.modifiers,
   });
 
@@ -81,6 +84,7 @@ class Product {
   String? productImages;
   String? productStatus;
   int productQuantity;
+  int? preparationTime;
   List<Modifier>? modifiers;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
@@ -94,6 +98,7 @@ class Product {
         productImages: json["product_images"],
         productStatus: json["product_status"],
         productQuantity: 1,
+        preparationTime: json["preparation_time"],
         modifiers: json["modifiers"] == null
             ? []
             : List<Modifier>.from(
@@ -187,7 +192,6 @@ class SubModifier {
         modifierCode: json["modifier_code"],
         nameModifier: json["name_modifier"],
         nameModifierArabic: json["name_modifier_ar"],
-        
         priceModifier: json["price_modifier"],
         byDefault: json["by_default"],
       );

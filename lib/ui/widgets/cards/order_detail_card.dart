@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:santra_seller/ui/widgets/cards/manual_order_detail_card.dart';
 import 'package:santra_seller/ui/widgets/dialogs/full_screen_image.dart';
 import 'package:santra_seller/ui/widgets/snackbar/common_snackbar.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
@@ -24,10 +26,14 @@ class CustomCard extends StatefulWidget {
   final String orderRemarks;
   final String orderNumber;
   final String totalPrice;
+  final String? cashCharge;
+  final String? discount;
+  final String? deliveryCharge;
   final String orderStatus;
   final String customerPhone;
   final String paymentLink;
   final String? requestImage;
+  final String? attachedPdf;
   final String? area;
   String orderType; // manual order , santra order etc
   List<OrderItem> orderItemList;
@@ -47,7 +53,11 @@ class CustomCard extends StatefulWidget {
     required this.orderStatus,
     required this.paymentLink,
     required this.requestImage,
+    this.attachedPdf,
     required this.area,
+    this.cashCharge,
+    this.deliveryCharge,
+    this.discount,
     this.orderType = "manual",
   });
 
@@ -334,27 +344,38 @@ class _CustomCardState extends State<CustomCard>
                               );
                             }),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                      Column(
                         children: [
-                          Text(tr.translateData("total_price"),
-                              style: UIDataTextStyles.textMediumColoredBlue
-                                  .copyWith(
-                                color: UIDataColors.blackColor,
-                              )),
-                          SpacingWidth.widthlistspacing,
-                          Text('${widget.totalPrice} AED',
-                              style: UIDataTextStyles.textMediumColoredBlue
-                                  .copyWith(
-                                color: UIDataColors.primaryColor,
-                              )),
+                          if (widget.deliveryCharge != "0")
+                            OrderCalculations(
+                              tr: tr,
+                              title: "cart_order_delivery_charge",
+                              amount: widget.deliveryCharge,
+                            ),
+                          if (widget.cashCharge != "0")
+                            OrderCalculations(
+                              tr: tr,
+                              title: "cash_charges",
+                              amount: widget.cashCharge,
+                            ),
+                          if (widget.discount != "0")
+                            OrderCalculations(
+                              tr: tr,
+                              title: "discount",
+                              amount: widget.discount,
+                            ),
+                          OrderCalculations(
+                            tr: tr,
+                            title: "total_price",
+                            amount: widget.totalPrice,
+                          ),
                         ],
-                      ).marginOnly(right: 10, left: 10),
+                      ),
                       widget.orderRemarks.isEmpty && widget.requestImage == ""
                           ? const SizedBox()
                           : Container(
                               width: double.infinity,
-                              color: Colors.grey.shade200,
+                              color: const Color(0xffF5F5F5),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -382,37 +403,66 @@ class _CustomCardState extends State<CustomCard>
                                         ),
                                       ],
                                     ).marginOnly(left: 10, right: 10),
-                                  if (widget.requestImage != "")
-                                    GestureDetector(
-                                      onTap: () => Get.to(() => FullScreenImage(
-                                          image: widget.requestImage ?? "")),
-                                      child: Container(
-                                        height: 50,
-                                        width: 50,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        child: Center(
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: CachedNetworkImage(
-                                              imageUrl:
-                                                  widget.requestImage ?? "",
-                                              fit: BoxFit.cover,
-                                              memCacheHeight: 400,
-                                              memCacheWidth: 400,
-                                              placeholder: (context, url) =>
-                                                  const Padding(
-                                                padding: EdgeInsets.all(12.0),
-                                                child:
-                                                    CircularProgressIndicator(),
+                                  Row(
+                                    children: [
+                                      if (widget.requestImage != "")
+                                        GestureDetector(
+                                          onTap: () => Get.to(() =>
+                                              FullScreenImage(
+                                                  image: widget.requestImage ??
+                                                      "")),
+                                          child: Container(
+                                            height: 50,
+                                            width: 50,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            child: Center(
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: CachedNetworkImage(
+                                                  imageUrl:
+                                                      widget.requestImage ?? "",
+                                                  fit: BoxFit.cover,
+                                                  memCacheHeight: 400,
+                                                  memCacheWidth: 400,
+                                                  placeholder: (context, url) =>
+                                                      const Padding(
+                                                    padding:
+                                                        EdgeInsets.all(12.0),
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ).paddingAll(10),
+                                        ),
+                                      if (widget.attachedPdf != "")
+                                        GestureDetector(
+                                          onTap: () => _.launchAttachedPdf(
+                                              widget.attachedPdf!),
+                                          child: Container(
+                                            height: 50,
+                                            width: 50,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            child: Center(
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: Image.asset(
+                                                  UIDATAIcons.pdfIcon,
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ).paddingAll(10),
-                                    ),
+                                        )
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),
@@ -789,8 +839,9 @@ class OrderItemWidget extends StatelessWidget {
                 children: [
                   Text(
                     '$productPrice AED',
-                    style: UIDataTextStyles.heading15Medium.copyWith(
-                        color: UIDataColors.primaryColor, fontSize: 12),
+                    style: UIDataTextStyles.textMediumColoredBlue.copyWith(
+                      color: UIDataColors.primaryColor,
+                    ),
                   ),
                 ],
               )

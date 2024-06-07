@@ -111,6 +111,9 @@ class Order {
       required this.customerName,
       required this.areaCustomer,
       required this.totalOrderAmount,
+      this.cashCharges,
+      this.deliveryCharges,
+      this.orderDiscount,
       required this.orderDateStamp,
       required this.paymentMethod,
       required this.advanceTime,
@@ -119,6 +122,7 @@ class Order {
       required this.orderItems,
       required this.paymentLink,
       required this.colorCode,
+      this.pdfLink,
       this.requestImage});
 
   String orderNumber;
@@ -126,6 +130,9 @@ class Order {
   String customerName;
   String areaCustomer;
   String totalOrderAmount;
+  String? cashCharges;
+  String? deliveryCharges;
+  String? orderDiscount;
   DateTime orderDateStamp;
   String paymentMethod;
   String customerPhone;
@@ -135,6 +142,7 @@ class Order {
   String paymentLink;
   String colorCode;
   String? requestImage;
+  String? pdfLink;
   List<OrderItem> orderItems;
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
@@ -143,6 +151,9 @@ class Order {
         customerName: json["customer_name"],
         areaCustomer: json["area_customer"],
         totalOrderAmount: json["total_order_amount"],
+        cashCharges: json["cash_charges"],
+        deliveryCharges: json["delivery_charges"],
+        orderDiscount: json["order_discount"],
         orderDateStamp: DateTime.parse(json["order_date_stamp"]),
         paymentMethod: json["payment_method"],
         advanceTime: json["advance_time"],
@@ -152,6 +163,7 @@ class Order {
         paymentLink: json["payment_link"],
         colorCode: json["color_code"],
         requestImage: json["request_image"],
+        pdfLink: json["request_pdf"],
         orderItems: List<OrderItem>.from(
             json["order_items"].map((x) => OrderItem.fromJson(x))),
       );
