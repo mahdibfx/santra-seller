@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
@@ -93,7 +92,7 @@ class _ViewCustomerDetailsState extends State<ViewCustomerDetails> {
                     ),
                     if (cartProvider.deliveryMethod != "pickup" &&
                         cartProvider.deliveryMethod != "express" &&
-                        cartProvider.grandTotal < 300 &&
+                        cartProvider.grandTotal < 10000 &&
                         cartProvider.showCOD == "yes")
                       SizedBox(
                         height: 35,

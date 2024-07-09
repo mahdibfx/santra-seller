@@ -167,6 +167,14 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                   // ).paddingOnly(top: 20),
                   PrimaryButtonWithIcon(
                     onPressed: () {
+                      // if (Provider.of<CartProvider>(context, listen: false)
+                      //         .grandTotal <
+                      //     300) {
+                      //   CommonSnackbar.getSnackbar(
+                      //       "Increase order value",
+                      //       "Please add atleast AED 300 to place an order",
+                      //       UIDataColors.redColor);
+                      // } else
                       if (Provider.of<CartProvider>(context, listen: false)
                                   .deliveryDate ==
                               null &&
