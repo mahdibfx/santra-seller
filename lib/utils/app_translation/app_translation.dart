@@ -3,9 +3,7 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:get/get.dart';
 import '../api_data.dart';
-import 'package:flutter/material.dart';
 
 class AppTranslations extends GetxController {
   static Map<String, Map<String, String>> _translations = {};
@@ -33,7 +31,7 @@ class AppTranslations extends GetxController {
 
   setShared(String lang) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("selectedlanguage", lang);
+    await prefs.setString("selectedlanguage", lang);
   }
 
   langNew() async {
@@ -48,7 +46,7 @@ class AppTranslations extends GetxController {
     // var url = Uri.parse(ApiData.languageSelection);
     var url = Uri.parse(ApiData.splashNew);
     Map<String, dynamic> body = {};
-    body['version'] = "4.2.0";
+    body['version'] = "4.3.8";
     body['platform'] = Platform.isIOS ? "Mobile_App_iOS" : "Mobile_App_Android";
     var response = await http.post(url, headers: ApiData.header, body: body);
     if (response.statusCode == 200) {

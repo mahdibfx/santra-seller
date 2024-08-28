@@ -3,11 +3,15 @@ import 'package:flutter_svg/svg.dart';
 
 class ReusableIconButton extends StatelessWidget {
   final String? icon;
-  final onPressed;
+  final void Function()? onPressed;
   Color? iconClr;
   final Text? btntxt;
   ReusableIconButton(
-      {required this.icon, required this.onPressed, this.iconClr, this.btntxt});
+      {super.key,
+      required this.icon,
+      required this.onPressed,
+      this.iconClr,
+      this.btntxt});
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +24,10 @@ class ReusableIconButton extends StatelessWidget {
           SvgPicture.asset(
             icon!,
             color: iconClr,
-            height: 22,
+            height: 20,
             //height: 20,
           ),
-          btntxt ?? SizedBox(),
+          btntxt ?? const SizedBox(),
         ],
       ),
     );

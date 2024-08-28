@@ -29,7 +29,6 @@ class LogoutProvider with ChangeNotifier {
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
       if (response.statusCode == 200) {
-        //@todo
         await prefs.clear();
 
         Get.offAll(() => const LoginScreen());

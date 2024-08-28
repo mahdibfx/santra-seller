@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:santra_seller/utils/ext.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../models/login_model.dart';
 import '../../../ui/screens/home_page/home_screen.dart';
@@ -13,7 +14,7 @@ import '../../../utils/uidata.dart';
 import '../../utils/app_translation/app_translation.dart';
 
 class LoginProvider extends ChangeNotifier {
-    final BuildContext context;
+  final BuildContext context;
 
   LoginProvider(this.context);
   // bool isLoading = true;
@@ -45,7 +46,7 @@ class LoginProvider extends ChangeNotifier {
 
   void onInit() async {
     clearFields();
-    getFcmToken();
+    await getFcmToken();
     setLoginValues();
     notifyListeners();
   }
@@ -71,11 +72,11 @@ class LoginProvider extends ChangeNotifier {
     firebaseMessagingToken = await FirebaseMessaging.instance.getToken();
     notifyListeners();
     prefs.setString('fcmtoken', firebaseMessagingToken.toString());
-    print("token: $firebaseMessagingToken");
+    firebaseMessagingToken.debugPrint();
   }
 
   void loginfunction() async {
-       var tr = Get.put(AppTranslations());
+    var tr = Get.put(AppTranslations());
     updateLoginLoadingStatus(true);
     notifyListeners();
     try {
@@ -91,22 +92,20 @@ class LoginProvider extends ChangeNotifier {
         var newdata = LoginModel.fromJson(data);
         sellerStatus = newdata.data[0].message.toString();
         GetStorage().write('sellerStatus', sellerStatus);
-        print(res.body);
+
         await saveSharedPrefData(newdata.data[0], prefs);
-        Get.offAll(() => HomeScreen());
+        Get.offAll(() => const HomeScreen());
       } else {
         notifyListeners();
-        print(res.body);
-        CommonSnackbar.getSnackbar(
-            tr.translateData("error_message"), tr.translateData("error_signin"), UIDataColors.redColor);
+
+        CommonSnackbar.getSnackbar(tr.translateData("error_message"),
+            tr.translateData("error_signin"), UIDataColors.redColor);
       }
     } catch (e) {
       notifyListeners();
 
-      CommonSnackbar.getSnackbar(
-          tr.translateData("serve_error"),
-          tr.translateData("serve_error_internet"),
-          UIDataColors.redColor);
+      CommonSnackbar.getSnackbar(tr.translateData("serve_error"),
+          tr.translateData("serve_error_internet"), UIDataColors.redColor);
     }
 
     updateLoginLoadingStatus(false);
@@ -126,6 +125,7 @@ class LoginProvider extends ChangeNotifier {
     prefs.setString("dob", data.dateOfBirth.toString());
     prefs.setString("password", password.text);
     prefs.setString("sellerStatus", data.message);
+
     sellerCode = prefs.getString('sellercode');
     sellerStatus = prefs.getString('sellerStatus');
     notifyListeners();

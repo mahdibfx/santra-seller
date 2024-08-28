@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/cart_provider.dart' as cart;
+import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/scaffold/common_scaffold.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import 'package:santra_seller/utils/uidata.dart';
@@ -18,7 +19,7 @@ import 'card_customer_detail.dart';
 class ViewCustomerDetails extends StatefulWidget {
   final Customer? customerDetail;
 
-  ViewCustomerDetails({super.key, this.customerDetail});
+  const ViewCustomerDetails({super.key, this.customerDetail});
 
   @override
   State<ViewCustomerDetails> createState() => _ViewCustomerDetailsState();
@@ -45,16 +46,8 @@ class _ViewCustomerDetailsState extends State<ViewCustomerDetails> {
   Widget bodyData(BuildContext context) {
     var cartProvider = Provider.of<cart.CartProvider>(context, listen: false);
     return Consumer<MyCustomerProvider>(builder: (context, _, child) {
-      return
-          // _.isViewCustomerLoading
-          //     ? const SizedBox(
-          //         child: Center(
-          //         child: CircularProgressIndicator(),
-          //       ))
-          //     :
-          ModalProgressHUD(
+      return ModalProgressHUD(
         inAsyncCall: _.isSubmitOrder,
-        // progressIndicator: const CircularProgressIndicator(),
         child: GetBuilder<AppTranslations>(builder: (tr) {
           return SafeArea(
             child: SingleChildScrollView(
@@ -99,7 +92,8 @@ class _ViewCustomerDetailsState extends State<ViewCustomerDetails> {
                     ),
                     if (cartProvider.deliveryMethod != "pickup" &&
                         cartProvider.deliveryMethod != "express" &&
-                        cartProvider.grandTotal < 300)
+                        cartProvider.grandTotal < 10000 &&
+                        cartProvider.showCOD == "yes")
                       SizedBox(
                         height: 35,
                         child: CheckboxListTile(
@@ -182,6 +176,49 @@ class _ViewCustomerDetailsState extends State<ViewCustomerDetails> {
       },
       floatingIcon: Icons.add,
       elevation: 1.0,
+    );
+  }
+}
+
+class HourSelectorForVipDelivery extends StatelessWidget {
+  const HourSelectorForVipDelivery({
+    super.key,
+    required this.cartProvider,
+  });
+
+  final cart.CartProvider cartProvider;
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      physics: const BouncingScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: cartProvider.hoursList.length,
+      padding: EdgeInsets.zero,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          childAspectRatio: 2.5,
+          mainAxisSpacing: 16,
+          crossAxisSpacing: 8,
+          crossAxisCount: 3),
+      itemBuilder: (BuildContext context, int index) {
+        return BorderButton(
+          btntxt: cartProvider.hoursList[index],
+          buttontxtColor:
+              cartProvider.hoursList[index] == cartProvider.selectedVipHour
+                  ? UIDataColors.whiteColor
+                  : UIDataColors.blackColor,
+          backEndColor:
+              cartProvider.hoursList[index] == cartProvider.selectedVipHour
+                  ? UIDataColors.primaryColor
+                  : UIDataColors.whiteColor,
+          onPressed: () {
+            cartProvider.selectHour(cartProvider.hoursList[index]);
+          },
+          isBold: cartProvider.hoursList[index] == cartProvider.selectedVipHour
+              ? true
+              : false,
+        );
+      },
     );
   }
 }

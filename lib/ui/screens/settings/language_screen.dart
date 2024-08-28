@@ -45,24 +45,20 @@ class _LanguageSettingsState extends State<LanguageSettings> {
                               icon: UIDATAIcons.languageIcon,
                               btntxt: tr
                                   .translateData("side_menu_language_signin")),
-
                           BorderButton(
                             onPressed: () {
                               setState(() {
                                 _handleButtonTap();
-                                _.isCheckLanguage = true;
                               });
-                              _.setTrue("ar_AE");
+                              _.setLanguage("ar_AE");
                               tr.setNewLanguage("ar_AE");
-
-                              _.setFalseValue();
                             },
                             btntxt: "عربي",
                             backEndColor: Colors.white,
-                            borderColor: Get.locale!.languageCode == 'ar'
+                            borderColor: tr.selectedLanguage == 'ar_AE'
                                 ? UIDataColors.primaryColor
                                 : Colors.transparent,
-                            buttontxtColor: Get.locale!.languageCode == 'ar'
+                            buttontxtColor: tr.selectedLanguage == 'ar_AE'
                                 ? UIDataColors.primaryColor
                                 : UIDataColors.blackColor,
                           ),
@@ -70,44 +66,19 @@ class _LanguageSettingsState extends State<LanguageSettings> {
                           BorderButton(
                             onPressed: () {
                               _handleButtonTap();
-                              setState(() {
-                                _.isCheckLanguage = true;
-                              });
-                              _.setTrue("en_us");
+                              _.setLanguage("en_us");
                               tr.setNewLanguage("en_us");
-                              _.setFalseValue();
-                              Future.delayed(const Duration(seconds: 2), () {
-                                setState(() {
-                                  _.isCheckLanguage = false;
-                                  print(_.isCheckLanguage);
-                                });
-
-                                // Get.back();
-                              });
                             },
                             btntxt: "English",
                             backEndColor: Colors.white,
-                            borderColor: Get.locale!.languageCode == 'en'
+                            borderColor: tr.selectedLanguage == 'en_us'
                                 ? UIDataColors.primaryColor
                                 : Colors.transparent,
-                            buttontxtColor: Get.locale!.languageCode == 'en'
+                            buttontxtColor: tr.selectedLanguage == 'en_us'
                                 ? UIDataColors.primaryColor
                                 : Colors.black,
                           ),
-
                           SpacingHeight.heightlistspacing15,
-                          // Obx(() => _.isLoading
-                          //         ? const Center(
-                          //             child: CircularProgressIndicator(),
-                          //           )
-                          //         :
-                          // PrimaryButtonWithIcon(
-                          //   btntxt: "Save",
-                          //   iconImage: UIDATAIcons.saveIcon,
-                          //   onPressed: () {},
-                          // )
-
-                          //),
                         ],
                       ).marginOnly(left: 20.0, right: 20.0),
                     ),
@@ -119,7 +90,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
   }
 
   void _handleButtonTap() {
-    Timer timer = Timer(Duration(milliseconds: 3000), () {
+    Timer timer = Timer(const Duration(milliseconds: 1000), () {
       Navigator.of(context, rootNavigator: true).pop();
     });
     showDialog(
@@ -133,7 +104,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
               height: 150,
               width: 300,
               color: Colors.transparent,
-              child: Center(
+              child: const Center(
                   child: CircularProgressIndicator(
                 color: UIDataColors.primaryColor,
               ))),

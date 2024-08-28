@@ -61,7 +61,6 @@ class _AddManulOrderState extends State<AddManulOrder> {
                             fillcolor: Colors.white,
                             labelText: tr.translateData("add_order_search"),
                             onChanged: (value) {
-                              print(value);
                               manualOrderController.filterList(value);
                             },
                           ),
@@ -335,10 +334,10 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                                                               Transform.scale(
                                                             scale: 1.15,
                                                             child: Checkbox(
-                                                              side:
-                                                                  const BorderSide(
-                                                                width: 0.8,
-                                                              ),
+                                                              side: const BorderSide(
+                                                                  width: 0.8,
+                                                                  color: Colors
+                                                                      .black),
                                                               shape:
                                                                   RoundedRectangleBorder(
                                                                 borderRadius:
@@ -357,8 +356,15 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                                                                       Color>((Set<
                                                                           MaterialState>
                                                                       states) {
-                                                                return UIDataColors
-                                                                    .primaryColor;
+                                                                return newData[
+                                                                                sebIndex]
+                                                                            .byDefault
+                                                                            .toString() ==
+                                                                        "1"
+                                                                    ? UIDataColors
+                                                                        .primaryColor
+                                                                    : Colors
+                                                                        .white;
                                                               }),
                                                               value: newData[sebIndex]
                                                                           .byDefault
@@ -435,10 +441,6 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                                                                               .byDefault =
                                                                           "1";
                                                                     });
-                                                                    print(newData[
-                                                                            sebIndex]
-                                                                        .byDefault
-                                                                        .toString());
                                                                   } else {
                                                                     setStatec(
                                                                         () {
@@ -446,13 +448,8 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                                                                               .byDefault =
                                                                           "0";
                                                                     });
-                                                                    print(newData[
-                                                                            sebIndex]
-                                                                        .byDefault
-                                                                        .toString());
                                                                   }
                                                                 }
-                                                                // @todo for updation
                                                               },
                                                             ),
                                                           ),
@@ -525,6 +522,7 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                                   price: double.parse(
                                       itemValue.productPrice.toString()),
                                   code: itemValue.productCode.toString(),
+                                  pTime: itemValue.preparationTime,
                                   subModifiers:
                                       manualOrderController.addOnProducts);
 
@@ -535,9 +533,9 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                               manualOrderController.resetDefaultQuanity(
                                   manualOrderController
                                       .filteredProducts[widget.index]);
-                              // Get.back();
+                              Get.back();
                             },
-                            subBtntxt: 'AED',
+                            subBtntxt: 'AED ',
                             btntxt: tr.translateData("add_to_cart_button"),
                             moreBtntxt: manualOrderController
                                 .productPriceWithQuantityAndMods(
@@ -572,7 +570,7 @@ class _ProductSheetContentState extends State<ProductSheetContent> {
                   topLeft: Radius.circular(16), topRight: Radius.circular(16)),
               child: CachedNetworkImage(
                 imageUrl:
-                    "https://api.santra.ae/${manualOrderController.filteredProducts[index].productImages}",
+                    "${manualOrderController.filteredProducts[index].productImages}",
                 fit: BoxFit.cover,
                 memCacheHeight: 300,
                 memCacheWidth: 400,

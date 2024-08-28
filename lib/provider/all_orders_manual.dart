@@ -121,6 +121,7 @@ class AddManualOrderProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         var decodedJson = jsonDecode(response.body);
         var data = SelllerAllProductsModel.fromJson(decodedJson);
+        print(decodedJson);
         if (data.data![0].products!.isNotEmpty) {
           allProducts = data.data?[0].products;
           filteredProducts = allProducts ?? [];
@@ -171,7 +172,6 @@ class AddManualOrderProvider extends ChangeNotifier {
     //// @todo after change in provider, need to add param
     if (Get.arguments != null) {
       arguments = (Get.arguments);
-      print("arguments:" + arguments);
       notifyListeners();
       // await gettingdata(name!);
     } else {

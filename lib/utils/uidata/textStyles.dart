@@ -5,6 +5,7 @@ import '../app_translation/app_translation.dart';
 import '../uidata.dart';
 
 var tr = Get.put(AppTranslations());
+
 class UIDataTextStyles {
   static var counth1 = TextStyle(
     fontSize: 32,
@@ -112,21 +113,21 @@ class UIDataTextStyles {
       fontWeight: FontWeight.w600,
       fontFamily: tr.getFont(),
       letterSpacing: 0.0);
-  static var dateStyle = TextStyle(
+  static var dateStyle = const TextStyle(
       color: UIDataColors.primaryColor,
       fontSize: 15,
       fontWeight: FontWeight.bold,
       // fontFamily: tr.getFont(),
       letterSpacing: 0.0);
 
-  static var monthStyle = TextStyle(
+  static var monthStyle = const TextStyle(
       color: UIDataColors.primaryColor,
       fontSize: 12,
       // fontWeight: FontWeight.bold,
       // fontFamily: tr.getFont(),
       letterSpacing: 0.0);
 
-  static var dayStyle = TextStyle(
+  static var dayStyle = const TextStyle(
       color: UIDataColors.primaryColor,
       fontSize: 15,
       // fontWeight: FontWeight.bold,

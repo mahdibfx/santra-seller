@@ -5,10 +5,11 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:santra_seller/provider/apps_flyr/appflyer_controller.dart';
+import 'package:santra_seller/models/cart_model.dart';
 import 'package:santra_seller/provider/firebase_events/firebase_events.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
+import 'package:santra_seller/utils/ext.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/customers/delivery_charges.dart';
 import '../../models/customers/view_all_customers.dart';
@@ -29,6 +30,10 @@ class CartProvider extends ChangeNotifier {
   List<CartItem> cartItems = <CartItem>[];
   double deliverChargeForBackend = 0.0;
   String? showPickup;
+  String? showCOD;
+  String? showVip;
+  DateTime? vipStart;
+  DateTime? vipEnd;
   String? showExpress;
   double deliveryCharges = 0.0;
   double maxDiscount = 0.0;
@@ -47,6 +52,7 @@ class CartProvider extends ChangeNotifier {
   String? voucherListVoucherCode;
   double deliveryChargesCap = 0.0;
   double deliveryChargesReal = 0.0;
+  double deliveryChargesVip = 0.0;
   double deliveryChargesExpress = 0.0;
   List<DateTime?> dates = [];
   bool equalLists = true;
@@ -55,14 +61,37 @@ class CartProvider extends ChangeNotifier {
   int toggleValue = 0;
   var deliveryDate;
   String deliveryMethod = "delivery";
+  String? selectedVipHour;
+  DateTime? selectedVipDay;
+  DateTime? focusedVipDay;
+  List<String> hoursList = [];
+  int deliveryTime = 0;
+  selectHour(String hour) {
+    selectedVipHour = hour;
+    notifyListeners();
+  }
+
   setDeliveryMethod(String dMethod) {
     deliveryMethod = dMethod;
     if (deliveryMethod == "express") {
       setDateToday();
+    } else if (deliveryMethod == "vip") {
+      deliveryDate = null;
+      dates.clear();
     } else {
+      selectedVipDay = null;
+      focusedVipDay = DateTime.now();
+      selectedVipHour = null;
       deliveryDate = null;
       dates.clear();
     }
+    notifyListeners();
+  }
+
+  onVipDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    selectedVipDay = selectedDay;
+    focusedVipDay = focusedDay; // update `cartfocusedDay` here as well
+
     notifyListeners();
   }
 
@@ -88,9 +117,14 @@ class CartProvider extends ChangeNotifier {
     isShowCartButton = false;
     receiptPaymentType = true;
     deliveryChargesExpress = 0.0;
+    deliveryChargesVip = 0.0;
+    selectedVipDay = null;
+    selectedVipHour = null;
     cartItems.clear();
+    deliveryTime = 0;
     deliveryChargesCap = 0.0;
     deliveryChargesReal = 0.0;
+    deliveryChargesVip = 0.0;
     codCharges = 0.0;
     discount = 0.0;
     discountType = null;
@@ -105,7 +139,8 @@ class CartProvider extends ChangeNotifier {
     dates.clear();
     deliveryDate = null;
     taxFeePercantage = 0;
-
+    selectedVipDay = null;
+    selectedVipHour = null;
     notifyListeners();
   }
 
@@ -143,6 +178,9 @@ class CartProvider extends ChangeNotifier {
     if (deliveryMethod != "pickup") {
       if (preGrandTotal < deliveryChargesCap && deliveryMethod == "express") {
         dFee = deliveryChargesExpress;
+        deliverChargeForBackend = dFee;
+      } else if (deliveryMethod == "vip") {
+        dFee = deliveryChargesVip;
         deliverChargeForBackend = dFee;
       } else if (preGrandTotal < deliveryChargesCap &&
           deliveryMethod != "express") {
@@ -243,6 +281,14 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // int get totalDeliverytime {
+  //   deliveryTime = cartItems.fold(
+  //       0,
+  //       (previousValue, element) =>
+  //           element.pTime! > previousValue ? element.pTime! : previousValue);
+  //   return deliveryTime;
+  // }
+
   Future cartScreenData() async {
     var tr = Get.put(AppTranslations());
     try {
@@ -252,27 +298,40 @@ class CartProvider extends ChangeNotifier {
       var url = Uri.parse(ApiData.cartApi);
       Map<String, dynamic> body = {};
       body['seller_code'] = sellerCode ?? "";
+      // body['preparation_time'] = totalDeliverytime.toString();
+      //body['user_area_check'] = customerDetail.customerArea ?? "";
+
       final response =
           await http.post(url, headers: ApiData.header, body: body);
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
+        var cartData = CartModel.fromJson(data);
         var voucherL = data['data'][0]['vouchers'] as List<dynamic>;
         deliveryCharges =
-            double.parse(data['data'][0]['delivery_charges'].toString());
+            double.parse(cartData.data![0].deliveryCharges.toString());
         deliveryChargesCap =
-            double.parse(data['data'][0]['delivery_charges_cap'].toString());
+            double.parse(cartData.data![0].deliveryChargesCap.toString());
         deliveryChargesReal =
-            double.parse(data['data'][0]['delivery_charges_real'].toString());
-        deliveryChargesExpress = double.parse(
-            data['data'][0]['delivery_charges_express'].toString());
-        taxFeePercantage = data['data'][0]['tax_fee'] ?? 0;
-        codCharges = double.parse(data['data'][0]['cash_charges'].toString());
+            double.parse(cartData.data![0].deliveryChargesReal.toString());
+        deliveryChargesExpress =
+            double.parse(cartData.data![0].deliveryChargesExpress.toString());
+        deliveryChargesVip =
+            double.parse(cartData.data![0].deliveryChargesVip.toString());
+        taxFeePercantage = cartData.data?[0].taxFee ?? 0;
+        codCharges = double.parse(cartData.data![0].cashCharges.toString());
         var vList = voucherL.map((e) => VoucherModel.fromJson(e)).toList();
-        sellerCity = data['data'][0]['seller_city'];
+        sellerCity = cartData.data?[0].sellerCity;
         prefs.setString("sellercity", sellerCity ?? "");
         vouchersList = vList;
-        showExpress = data['data'][0]['check_flags'][0]['express_flag'];
-        showPickup = data['data'][0]['check_flags'][0]['pickup_allowed'];
+        showExpress = cartData.data?[0].checkFlags?[0].expressFlag;
+        showPickup = cartData.data?[0].checkFlags?[0].pickupAllowed;
+        showVip = cartData.data?[0].checkFlags?[0].vipFlag;
+        showCOD = cartData.data?[0].checkFlags?[0].cashOnDelivery;
+        vipStart = cartData.data?[0].checkFlags?[0].vipStart;
+        vipEnd = cartData.data?[0].checkFlags?[0].vipEnd;
+        hoursList = cartData.data?[0].vipSlots ?? [];
+
+        response.body.debugPrint();
       } else {
         generalException();
       }
@@ -344,7 +403,7 @@ class CartProvider extends ChangeNotifier {
           if (e.subModifiers == item.subModifiers) {
             equalLists = true;
             notifyListeners();
-            print('equal list print: ' + equalLists.toString());
+
             notifyListeners();
             // break;
             return equalLists;
@@ -352,11 +411,8 @@ class CartProvider extends ChangeNotifier {
         }
       }
 
-      print('equal list print: ' + equalLists.toString());
       return equalLists;
     });
-
-    print(isexistsModsWithsameCode);
   }
 
   increaseProductQuantity(CartItem item) {
@@ -447,8 +503,8 @@ class CartProvider extends ChangeNotifier {
   void showToast(String title, String msg) {
     Get.snackbar(
       title,
-      '$msg',
-      duration: Duration(seconds: 2),
+      msg,
+      duration: const Duration(seconds: 2),
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Colors.grey[900],
       colorText: Colors.white,
@@ -491,11 +547,14 @@ class CartProvider extends ChangeNotifier {
       "order_remarks":
           "no_remarks", // order comments if any otherwise send no_remarks
       "user_tips": "0", // if any otherwise send 0
-      "order_schedule": deliveryDate ?? "",
+      "order_schedule": deliveryMethod == "vip"
+          ? DateFormat('yyyy-MM-dd').format(selectedVipDay!).toString()
+          : deliveryDate ?? "",
 // Order Item array to be posted as follows
 // Field name: "", order_items and items in this array are as follows(id, name, price, quantity, item_remarks, modifiers_list(modifier_code,name_modifier,price_modifier))
       "order_items": jsonEncode(cartItems),
       "delivery_type": deliveryMethod,
+      "pickup_slot": selectedVipHour ?? "",
       "tax_value": vatTax.toString()
     };
     notifyListeners();
@@ -505,11 +564,10 @@ class CartProvider extends ChangeNotifier {
     try {
       changeLoadingStatus(true);
       var url = Uri.parse(ApiData.orderSubmitCash);
-      print(finalSubmitData.toString());
+
       var response =
           await http.post(url, headers: ApiData.header, body: finalSubmitData);
       var body = jsonDecode(response.body);
-      print("Body$body");
 
       String id = body['data']['order_number'].toString();
 
@@ -532,6 +590,7 @@ class CartItem {
   final String code;
   final double price;
   final String imageString;
+  int? pTime;
   List<SubModifier> subModifiers = [];
   int quantity;
 
@@ -541,6 +600,7 @@ class CartItem {
       required this.code,
       required this.imageString,
       required this.quantity,
+      required this.pTime,
       required this.subModifiers});
 
   Map toJson() => {

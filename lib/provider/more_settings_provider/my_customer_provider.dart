@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/constants/areas_lists.dart';
@@ -24,6 +25,7 @@ class MyCustomerProvider extends ChangeNotifier {
   FirebaseAnalyticsController firebaseAnalyticsController =
       Get.put(FirebaseAnalyticsController());
   AppTranslations tr = Get.put(AppTranslations());
+
   Map<String, List<String>> cityAreas = {
     'Dubai': AreasList.dubaiAreas,
     'Sharjah': AreasList.sharjahAreas,
@@ -747,6 +749,7 @@ class MyCustomerProvider extends ChangeNotifier {
         return false;
       }
     } catch (e) {
+      print(e);
       showToast("Failed", 'Try again later, Unable to proceed');
       isSubmitOrder = false;
       notifyListeners();
@@ -786,14 +789,19 @@ class MyCustomerProvider extends ChangeNotifier {
       "order_remarks":
           "no_remarks", // order comments if any otherwise send no_remarks
       "user_tips": "0", // if any otherwise send 0
-      "order_schedule": cartProvider.deliveryDate ?? "",
+      "order_schedule": cartProvider.deliveryMethod == "vip"
+          ? DateFormat('yyyy-MM-dd')
+              .format(cartProvider.selectedVipDay!)
+              .toString()
+          : cartProvider.deliveryDate ?? "",
 // Order Item array to be posted as follows
 // Field name: "", order_items and items in this array are as follows(id, name, price, quantity, item_remarks, modifiers_list(modifier_code,name_modifier,price_modifier))
       "order_items": jsonEncode(cartProvider.cartItems),
+      "pickup_slot": cartProvider.selectedVipHour ?? "",
       "delivery_type": cartProvider.deliveryMethod,
       "tax_value": cartProvider.vatTax.toString()
     };
-    print(finalSubmitData);
+
     return await orderSubmitByLink(context);
   }
 

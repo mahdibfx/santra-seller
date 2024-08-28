@@ -9,6 +9,7 @@ import 'package:santra_seller/provider/home_provider.dart';
 import 'package:santra_seller/provider/auth_providers/login_provider.dart';
 import 'package:santra_seller/ui/screens/cart/cart_screen.dart';
 import 'package:santra_seller/ui/screens/more_setting/more_screen.dart';
+import 'package:santra_seller/utils/ext.dart';
 // lib imports
 import '../../../utils/app_translation/app_translation.dart';
 import '../../../utils/uidata.dart';
@@ -22,6 +23,7 @@ import 'cart_icon_with_badge.dart';
 import 'notification_icon_with_badge.dart';
 
 var tr = Get.put(AppTranslations());
+
 class CommonScaffold extends StatelessWidget {
   final resizeToAvoid;
   final appTitle;
@@ -120,20 +122,19 @@ class CommonScaffold extends StatelessWidget {
                   null
           ? const SizedBox()
           : BottomAppBar(
-              // elevation: 0,
-
+              surfaceTintColor: Colors.white,
+              elevation: 0,
+              color: Colors.white,
               shape: const CircularNotchedRectangle(),
-              // color: UIDataColors.blue,//shape of notch
+              // color: UIDataColors.blue, //shape of notch
               notchMargin: 5, //
-              // shape:
-              // AutomaticNotchedShape(RoundedRectangleBorder(
-              //     borderRadius:
-              //     BorderRadius.only(
-              //       topLeft: Radius.circular(30.0),
-              //       topRight: Radius.circular(30.0),
-              //       // bottomLeft: Radius.circular(20.0),
-              //       // bottomRight: Radius.circular(20.0),
-              //     ),
+              // shape: AutomaticNotchedShape(RoundedRectangleBorder(
+              //   borderRadius: BorderRadius.only(
+              //     topLeft: Radius.circular(30.0),
+              //     topRight: Radius.circular(30.0),
+              //     // bottomLeft: Radius.circular(20.0),
+              //     // bottomRight: Radius.circular(20.0),
+              //   ),
               // )),
               clipBehavior: Clip.antiAlias,
               child: SizedBox(
@@ -141,49 +142,44 @@ class CommonScaffold extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    
-                      Consumer<SplashProvider>(
-                          builder: (context, splashPro, child) {
-                        return ReusableIconButton(
-                          icon: UIDATAIcons.homeIcon,
-                          iconClr: UIDataColors.primaryColor,
-                          btntxt: Text(
-                            tr.translateData("home_menu_button"),
-                            style:
-                                // Get.currentRoute == Routes.homeRoutes
-                                //     ? UIDataTextStyles.title.copyWith(
-                                //         fontSize: 14,
-                                //         fontWeight: FontWeight.w800,
-                                //         color: UIDataColors.primaryColor)
-                                //     :
-                                UIDataTextStyles.subTitle.copyWith(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black,
-                            ),
+                    Consumer<SplashProvider>(
+                        builder: (context, splashPro, child) {
+                      return ReusableIconButton(
+                        icon: UIDATAIcons.homeIcon,
+                        iconClr: UIDataColors.primaryColor,
+                        btntxt: Text(
+                          tr.translateData("home_menu_button"),
+                          style:
+                              // Get.currentRoute == Routes.homeRoutes
+                              //     ? UIDataTextStyles.title.copyWith(
+                              //         fontSize: 14,
+                              //         fontWeight: FontWeight.w800,
+                              //         color: UIDataColors.primaryColor)
+                              //     :
+                              UIDataTextStyles.subTitle.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
                           ),
-                          onPressed: isHome
-                              ? null
-                              : () {
-                                  splashPro.onHomeScreen();
-                                  // if (Get.currentRoute != Routes.homeRoutes) {
-                                  Get.offAll(() => const HomeScreen());
-                                  // }
-                                },
-                        );
-                      
+                        ),
+                        onPressed: isHome
+                            ? null
+                            : () {
+                                splashPro.onHomeScreen();
+                                // if (Get.currentRoute != Routes.homeRoutes) {
+                                Get.offAll(() => const HomeScreen());
+                                // }
+                              },
+                      );
                     }),
                     Center(
-                      child:Text(
-                          showFAB
-                              ? tr.translateData('home_addorder_button')
-                              : '',
-                          style: UIDataTextStyles.h2,
-                          textAlign: TextAlign.center,
-                       ),
+                      child: Text(
+                        showFAB ? tr.translateData('home_addorder_button') : '',
+                        style: UIDataTextStyles.h2,
+                        textAlign: TextAlign.center,
+                      ),
                     ).marginOnly(top: 20),
-                    GetBuilder<AppTranslations>(
-      builder: (tr) {
+                    GetBuilder<AppTranslations>(builder: (tr) {
                       return Consumer<SplashProvider>(
                           builder: (context, splashPro, child) {
                         return ReusableIconButton(
@@ -231,10 +227,11 @@ class CommonScaffold extends StatelessWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: resizeToAvoid,
-      key: scaffoldKey ?? null,
+      key: scaffoldKey,
       backgroundColor: backgroundcolor,
       appBar: showAppBar
           ? AppBar(
+              surfaceTintColor: appbarcolor,
               iconTheme: IconThemeData(
                 color: backarrow ?? const Color(0xffF9F9F9),
               ),
@@ -248,7 +245,13 @@ class CommonScaffold extends StatelessWidget {
                         Get.back();
                       },
                       child: GestureDetector(
-                        onTap: isBackHomeScreen ? () {Get.to(HomeScreen()); } : (){Get.back();},
+                        onTap: isBackHomeScreen
+                            ? () {
+                                Get.to(const HomeScreen());
+                              }
+                            : () {
+                                Get.back();
+                              },
                         child: Padding(
                           padding: const EdgeInsets.only(left: 8.0),
                           child: Consumer<SplashProvider>(
@@ -319,7 +322,7 @@ class CommonScaffold extends StatelessWidget {
                             return CartIconWithBadge(
                               onTap: () {
                                 splashPro.homeAndMoreScreenOff();
-                                Get.to(() => CartScreen());
+                                Get.to(() => const CartScreen());
                                 //Get.toNamed(Routes.cartroute);
                               },
                               showBadge: true,
@@ -373,9 +376,7 @@ class CommonScaffold extends StatelessWidget {
           : showFAB
               ? Visibility(
                   visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
-                  child:
-                      GetBuilder<AppTranslations>(
-      builder: (tr) {
+                  child: GetBuilder<AppTranslations>(builder: (tr) {
                     return Consumer<HomeProvider>(
                         builder: (context, homeProvider, child) {
                       return CustomFloat(
@@ -394,11 +395,13 @@ class CommonScaffold extends StatelessWidget {
                                     tr.translateData('alert'),
                                     tr.translateData('status_approved'),
                                     tr.translateData('okay'), () {
-                                  print(homeProvider.sellerStatusNew);
+                                  homeProvider.sellerStatusNew.debugPrint();
                                   Get.back();
                                 });
                               }
-                            : isAddManual ? null : qrCallback,
+                            : isAddManual
+                                ? null
+                                : qrCallback,
                       );
                     });
                   }),

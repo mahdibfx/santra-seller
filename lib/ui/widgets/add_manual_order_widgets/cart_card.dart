@@ -49,8 +49,7 @@ class CartCardOrder extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: CachedNetworkImage(
-                        imageUrl:
-                            "https://api.santra.ae/${allProducts?[index!].imageString}",
+                        imageUrl: "${allProducts?[index!].imageString}",
                         fit: BoxFit.cover,
                         memCacheHeight: 300,
                         memCacheWidth: 400,

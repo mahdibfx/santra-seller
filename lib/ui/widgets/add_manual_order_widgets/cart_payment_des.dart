@@ -16,7 +16,7 @@ class CartPayemntDescriptionCard extends StatelessWidget {
   final String? discount;
   final String? tax;
 
-  CartPayemntDescriptionCard(
+  const CartPayemntDescriptionCard(
       {Key? key,
       required this.subtotal,
       required this.total,
@@ -167,16 +167,39 @@ class CartPayemntDescriptionCard extends StatelessWidget {
                   // ).paddingOnly(top: 20),
                   PrimaryButtonWithIcon(
                     onPressed: () {
+                      // if (Provider.of<CartProvider>(context, listen: false)
+                      //         .grandTotal <
+                      //     300) {
+                      //   CommonSnackbar.getSnackbar(
+                      //       "Increase order value",
+                      //       "Please add atleast AED 300 to place an order",
+                      //       UIDataColors.redColor);
+                      // } else
                       if (Provider.of<CartProvider>(context, listen: false)
-                              .deliveryDate ==
-                          null) {
+                                  .deliveryDate ==
+                              null &&
+                          Provider.of<CartProvider>(context, listen: false)
+                                  .deliveryMethod !=
+                              "vip") {
                         CommonSnackbar.getSnackbar(
                             tr.translateData("no_date"),
                             tr.translateData("delivery_date"),
                             UIDataColors.redColor);
+                      } else if (Provider.of<CartProvider>(context,
+                                      listen: false)
+                                  .deliveryMethod ==
+                              "vip" &&
+                          (Provider.of<CartProvider>(context, listen: false)
+                                      .selectedVipDay ==
+                                  null ||
+                              Provider.of<CartProvider>(context, listen: false)
+                                      .selectedVipHour ==
+                                  null)) {
+                        CommonSnackbar.getSnackbar(
+                            tr.translateData("no_date"),
+                            tr.translateData("vip_date_and_time"),
+                            UIDataColors.redColor);
                       } else {
-                        // Provider.of<CartProvider>(context, listen: false)
-                        //       .
                         showModalBottomSheet(
                             context: context,
                             shape: const RoundedRectangleBorder(

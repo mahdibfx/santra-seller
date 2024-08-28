@@ -23,6 +23,7 @@ class RatingOverview extends StatelessWidget {
         RatingBar(
           initialRating: double.parse(avgStars ?? "0.0"),
           direction: Axis.horizontal,
+          ignoreGestures: true,
           itemCount: 5,
           unratedColor: Colors.grey,
           glowColor: Colors.amber,
@@ -37,13 +38,11 @@ class RatingOverview extends StatelessWidget {
                 child:
                     SvgPicture.asset(UIDATAIcons.starIcon, color: Colors.amber),
               )),
-          onRatingUpdate: (rating) {
-            print(rating);
-          },
+          onRatingUpdate: (rating) {},
         ),
         // Spacer(),
         Text(
-          "${totalReviews} reviews",
+          "$totalReviews reviews",
           style: UIDataTextStyles.h2,
         ),
       ],

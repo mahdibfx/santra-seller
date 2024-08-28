@@ -71,23 +71,40 @@ class SplashProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  setOldLang() async {
+  checkLang() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var checkLang = prefs.get("selectedlanguage");
-    if (checkLang != null) {
-      language = prefs.get("selectedlanguage") as String;
-      notifyListeners();
+    var checkLange = prefs.get("selectedlanguage");
+    if (checkLange != null) {
+      String lang = prefs.get("selectedlanguage") as String;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        tr.setNewLanguage(lang);
+      });
     } else {
-      language = 'en_us';
-      notifyListeners();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        tr.setNewLanguage('en_us');
+      });
     }
+  }
+
+  setOldLang() async {
+    await checkLang();
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // var checkLang = prefs.get("selectedlanguage");
+    // if (checkLang != null) {
+    //   language = prefs.get("selectedlanguage") as String;
+    //   notifyListeners();
+    // } else {
+    //   language = 'en_us';
+    //   notifyListeners();
+    // }
     // await appFlyerController.appflyerLogs();
     await checkInstallFirsTime();
     notifyListeners();
   }
 
   checkInstallFirsTime() async {
-    await Future.delayed(const Duration(seconds: 3), () => initPlugin());
+    await initPlugin();
+    //  Future.delayed(const Duration(seconds: 3), () => );
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? firstTime = prefs.getBool('first_time');
