@@ -3,7 +3,7 @@ import Flutter
 import FirebaseCore
 import Firebase
 
-@UIApplicationMain
+@main
 @objc class AppDelegate: FlutterAppDelegate, MessagingDelegate {
  
   override func application(
