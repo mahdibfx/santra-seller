@@ -1,8 +1,9 @@
 //Flutter Packages
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/provider/language_provider/language_provider.dart';
+import 'package:santra_seller/provider/barcode/barcode_provider.dart';
 import 'package:santra_seller/provider/more_settings_provider/contact_us_provider.dart';
 import 'package:santra_seller/provider/more_settings_provider/privacy_provider.dart';
 import 'package:santra_seller/provider/more_settings_provider/customer_reviews_provider.dart';
@@ -35,67 +36,72 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _ = Get.put(AppTranslations());
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<SplashProvider>(create: (_) => SplashProvider()),
-        ChangeNotifierProvider<HomeProvider>(create: (_) => HomeProvider(_)),
-        ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider(_)),
-        ChangeNotifierProvider<AddManualOrderProvider>(
-            create: (_) => AddManualOrderProvider()),
-        ChangeNotifierProvider<MyCustomerProvider>(
-            create: (_) => MyCustomerProvider()),
-        ChangeNotifierProvider<CartProvider>(create: (_) => CartProvider()),
-        ChangeNotifierProvider<SignUpProvider>(
-            create: (_) => SignUpProvider(_)),
-        ChangeNotifierProvider<ProductSettingsProvider>(
-            create: (_) => ProductSettingsProvider()),
-        ChangeNotifierProvider<NotificationProvider>(
-            create: (_) => NotificationProvider(_)),
-        ChangeNotifierProvider<AccountInfoProvider>(
-            create: (_) => AccountInfoProvider(_)),
-        ChangeNotifierProvider<ChangeEmailProvider>(
-            create: (_) => ChangeEmailProvider(_)),
-        ChangeNotifierProvider<ForgotPasswordProvider>(
-            create: (_) => ForgotPasswordProvider(_)),
-        ChangeNotifierProvider<ResetPasswordProvider>(
-            create: (_) => ResetPasswordProvider(_)),
-        ChangeNotifierProvider<ChangePasswordProvider>(
-            create: (_) => ChangePasswordProvider(_)),
-        ChangeNotifierProvider<DeleteAccountProvider>(
-            create: (_) => DeleteAccountProvider(_)),
-        ChangeNotifierProvider<LogoutProvider>(create: (_) => LogoutProvider()),
-        ChangeNotifierProvider<LangaugeSettingsProvider>(
-            create: (_) => LangaugeSettingsProvider()),
-        ChangeNotifierProvider<AboutUsProvider>(
-            create: (_) => AboutUsProvider()),
-        ChangeNotifierProvider<CustomerReviewsProvider>(
-            create: (_) => CustomerReviewsProvider()),
-        ChangeNotifierProvider<PrivacyProvider>(
-            create: (_) => PrivacyProvider()),
-        ChangeNotifierProvider<ContactUsProvider>(
-            create: (_) => ContactUsProvider(_)),
-        // ChangeNotifierProvider<LanguageProvider>(
-        //     create: (_) => LanguageProvider()),
-      ],
-      child: GetMaterialApp(
-        title: UIData.appName,
+    return ScreenUtilInit(
+      designSize: const Size(390, 844),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<BarcodeProvider>(create: (_) => BarcodeProvider()),
 
-        theme: ThemeData(
-          primaryColor: UIDataColors.primaryColor,
-          fontFamily: UIDataFonts.quickFont,
-          primarySwatch: Colors.blue,
+          ChangeNotifierProvider<SplashProvider>(create: (_) => SplashProvider()),
+          ChangeNotifierProvider<HomeProvider>(create: (_) => HomeProvider(_)),
+          ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider(_)),
+          ChangeNotifierProvider<AddManualOrderProvider>(
+              create: (_) => AddManualOrderProvider()),
+          ChangeNotifierProvider<MyCustomerProvider>(
+              create: (_) => MyCustomerProvider()),
+          ChangeNotifierProvider<CartProvider>(create: (_) => CartProvider()),
+          ChangeNotifierProvider<SignUpProvider>(
+              create: (_) => SignUpProvider(_)),
+          ChangeNotifierProvider<ProductSettingsProvider>(
+              create: (_) => ProductSettingsProvider()),
+          ChangeNotifierProvider<NotificationProvider>(
+              create: (_) => NotificationProvider(_)),
+          ChangeNotifierProvider<AccountInfoProvider>(
+              create: (_) => AccountInfoProvider(_)),
+          ChangeNotifierProvider<ChangeEmailProvider>(
+              create: (_) => ChangeEmailProvider(_)),
+          ChangeNotifierProvider<ForgotPasswordProvider>(
+              create: (_) => ForgotPasswordProvider(_)),
+          ChangeNotifierProvider<ResetPasswordProvider>(
+              create: (_) => ResetPasswordProvider(_)),
+          ChangeNotifierProvider<ChangePasswordProvider>(
+              create: (_) => ChangePasswordProvider(_)),
+          ChangeNotifierProvider<DeleteAccountProvider>(
+              create: (_) => DeleteAccountProvider(_)),
+          ChangeNotifierProvider<LogoutProvider>(create: (_) => LogoutProvider()),
+          ChangeNotifierProvider<LangaugeSettingsProvider>(
+              create: (_) => LangaugeSettingsProvider()),
+          ChangeNotifierProvider<AboutUsProvider>(
+              create: (_) => AboutUsProvider()),
+          ChangeNotifierProvider<CustomerReviewsProvider>(
+              create: (_) => CustomerReviewsProvider()),
+          ChangeNotifierProvider<PrivacyProvider>(
+              create: (_) => PrivacyProvider()),
+          ChangeNotifierProvider<ContactUsProvider>(
+              create: (_) => ContactUsProvider(_)),
+          // ChangeNotifierProvider<LanguageProvider>(
+          //     create: (_) => LanguageProvider()),
+        ],
+        child: GetMaterialApp(
+          title: UIData.appName,
+      
+          theme: ThemeData(
+            primaryColor: UIDataColors.primaryColor,
+            fontFamily: UIDataFonts.quickFont,
+            primarySwatch: Colors.blue,
+          ),
+          debugShowCheckedModeBanner: false,
+          defaultTransition: Get.defaultTransition,
+          showPerformanceOverlay: false,
+          home: const SplashScreen(),
+          enableLog: true,
+          fallbackLocale: const Locale('en', 'US'),
+          locale: _.selectedLanguage == 'en_us'
+              ? const Locale('en', 'us')
+              : const Locale('ar', 'AE'),
+          // initialRoute: AppPages.INITIAL,
+          // getPages: AppPages.routes,
         ),
-        debugShowCheckedModeBanner: false,
-        defaultTransition: Get.defaultTransition,
-        showPerformanceOverlay: false,
-        home: const SplashScreen(),
-        enableLog: true,
-        fallbackLocale: const Locale('en', 'US'),
-        locale: _.selectedLanguage == 'en_us'
-            ? const Locale('en', 'us')
-            : const Locale('ar', 'AE'),
-        // initialRoute: AppPages.INITIAL,
-        // getPages: AppPages.routes,
       ),
     );
   }

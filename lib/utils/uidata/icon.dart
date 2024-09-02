@@ -4,8 +4,16 @@ class UIDATAIcons {
   //<--------------------- Icons Pic Define here -------------------->
   static const String iconsDir = "assets/icons";
   static const emailIcon = "$iconsDir/email_icon.svg";
+  static const linkIcon = "$iconsDir/link.svg";
+  static const delete = "$iconsDir/delete.svg";
+
+
+  static const barcodeScanIcon = "$iconsDir/barcodeScan.svg";
+
   static const userIcon = "$iconsDir/user.svg";
   static const paymentMethod = "$iconsDir/payment_method.svg";
+  static const camera = "$iconsDir/camera.svg";
+
   static const orderTime = "$iconsDir/order_time.svg";
   static const deliveryIcon = "$iconsDir/delivery_icon.svg";
   static const cardOpen = "$iconsDir/card_open.svg";

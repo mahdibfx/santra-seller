@@ -66,6 +66,7 @@ class BorderButton extends StatelessWidget {
             onTap: onPressed,
             child: Center(
               child: Row(
+                
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(

@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:santra_seller/ui/screens/settings/barcode_scanner_screen.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/rounded_button.dart';
 import 'package:santra_seller/ui/widgets/cards/my_customer_card.dart';
@@ -548,7 +549,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                             btntxt: 'Scan Barcode',
                             buttontxtColor: UIDataColors.whiteColor,
                             onPressed: (){
-                              // Get.to(()=>)
+                              Get.to(()=>BarcodeScannerScreen());
                             },
                             gradient: const LinearGradient(
                               colors: <Color>[

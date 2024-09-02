@@ -21,6 +21,8 @@ class UIDataImage {
   static String sellerLogoIconSVG = "$imageDir/seller_logo.svg";
   //static String bg = "$imageDir/camera_icon.png";
   //static String dummyImage = "$imageDir/dummy_image.jpg";
+  static String barcode = "$imageDir/barcode.png";
+
   static String backgroundImage = "$imageDir/bgsvgnew.png";
   static String waitingOrderImage = "$imageDir/waiting_order.svg";
   static String santraLogoEnglish = "$imageDir/santra_log_eng.png";
