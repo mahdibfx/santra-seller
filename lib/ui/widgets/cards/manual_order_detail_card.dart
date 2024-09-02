@@ -4,6 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
+import 'package:santra_seller/ui/widgets/buttons/rounded_button.dart';
 import 'package:santra_seller/ui/widgets/cards/my_customer_card.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import 'package:santra_seller/utils/uidata.dart';
@@ -495,34 +497,69 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                           ),
                         ),
                       ),
-                    widget.orderStatus.toLowerCase() == 'accepted'
-                        ? Consumer<CartProvider>(
-                            builder: (context, cartProvider, child) {
-                            return RaisedGradientButton(
-                              gradient: const LinearGradient(
-                                colors: <Color>[
-                                  UIDataColors.primaryColor,
-                                  UIDataColors.primaryColor,
-                                ],
-                              ),
-                              btntxt: tr.translateData("ready_order"),
-                              iconImage: SvgPicture.asset(
-                                UIDATAIcons.sendIcon,
-                                height: 25,
-                                width: 25,
-                                fit: BoxFit.fitWidth,
-                              ),
-                              buttontxtColor: UIDataColors.whiteColor,
-                              onPressed: () {
-                                confirmationPopup(
-                                    tr.translateData("sure_message"), context,
-                                    () {
-                                  _.readyOrderMethod(widget.orderNumber);
-                                });
-                              },
-                            ).marginAll(10);
-                          })
-                        : const SizedBox(),
+
+//TODO:AFTER TESTING DONT FORGET TO UNCCOMMENT THIS
+                    // widget.orderStatus.toLowerCase() == 'accepted'
+                    //     ? Consumer<CartProvider>(
+                    //         builder: (context, cartProvider, child) {
+                    //         return RaisedGradientButton(
+                    //           gradient: const LinearGradient(
+                    //             colors: <Color>[
+                    //               UIDataColors.primaryColor,
+                    //               UIDataColors.primaryColor,
+                    //             ],
+                    //           ),
+                    //           btntxt: tr.translateData("ready_order"),
+                    //           iconImage: SvgPicture.asset(
+                    //             UIDATAIcons.sendIcon,
+                    //             height: 25,
+                    //             width: 25,
+                    //             fit: BoxFit.fitWidth,
+                    //           ),
+                    //           buttontxtColor: UIDataColors.whiteColor,
+                    //           onPressed: () {
+                    //             confirmationPopup(
+                    //                 tr.translateData("sure_message"), context,
+                    //                 () {
+                    //               _.readyOrderMethod(widget.orderNumber);
+                    //             });
+                    //           },
+                    //         ).marginAll(10);
+                    //       })
+                    //     : const SizedBox(),
+
+                    /// this for in preparation status order
+                    Container(
+                      margin: EdgeInsets.all( 16),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: BorderButton(
+                              onPressed: () {},
+                              btntxt: tr.translateData("button_cancel"),
+                              buttontxtColor: UIDataColors.redColor,
+                              borderColor: UIDataColors.redColor,
+                              backEndColor: UIDataColors.whiteColor,
+                            ),
+                          ),
+                          SizedBox(width: 16,),
+                          Expanded(
+                              child: RaisedGradientButton(
+                            btntxt: 'Scan Barcode',
+                            buttontxtColor: UIDataColors.whiteColor,
+                            onPressed: (){
+                              // Get.to(()=>)
+                            },
+                            gradient: const LinearGradient(
+                              colors: <Color>[
+                                UIDataColors.primaryColor,
+                                UIDataColors.primaryColor,
+                              ],
+                            ),
+                          ))
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
