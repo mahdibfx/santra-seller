@@ -1,9 +1,14 @@
+import 'dart:developer';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:provider/provider.dart';
+import 'package:santra_seller/provider/barcode/barcode_provider.dart';
 
 class BarcodeScannerCamera extends StatefulWidget {
-  const BarcodeScannerCamera({super.key});
+  const BarcodeScannerCamera({Key? key}) : super(key: key);
 
   @override
   State<BarcodeScannerCamera> createState() => _BarcodeScannerCameraState();
@@ -15,7 +20,10 @@ class _BarcodeScannerCameraState extends State<BarcodeScannerCamera> {
   @override
   void initState() {
     super.initState();
-    _mobileScannerController = MobileScannerController(returnImage: true);
+    _mobileScannerController = MobileScannerController(returnImage: true,);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<BarcodeProvider>().chekCameraPermissions();
+    });
   }
 
   @override
@@ -26,28 +34,62 @@ class _BarcodeScannerCameraState extends State<BarcodeScannerCamera> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 358.w,
-      height: 233.h,
-      decoration: const BoxDecoration(),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: MobileScanner(
-          controller: _mobileScannerController,
-          errorBuilder: (context, error, child) {
-            debugPrint('Camera error: ${error.errorDetails?.message}');
-            return const Center(
-              child: Text('An error occurred. Please try again.'),
-            );
-          },
-          onDetect: (barcode) {
-            // Handle barcode detection
-          },
-          fit: BoxFit.cover,
-        ),
-      ),
+    return Consumer<BarcodeProvider>(
+      builder: (context, barcodeProvider, child) {
+        if (barcodeProvider.isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (!barcodeProvider.isCameraPermissionsGranted) {
+          return Center(
+            child: ElevatedButton(
+              onPressed: () => barcodeProvider.demandPermissions(),
+              child: const Text('Request Camera Permission'),
+            ),
+          );
+        }
+
+        return Container(
+          width: 358.w,
+          height: 233.h,
+          decoration: const BoxDecoration(),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Stack(
+              children: [
+                if (barcodeProvider.isScanning)
+                  MobileScanner(
+                    controller: _mobileScannerController,
+                    errorBuilder: (context, error, child) {
+                      log(error.toString());
+                      return const Center(
+                        child: Text('An error occurred. Please try again.'),
+                      );
+                    },
+                    onDetect: (capture) {
+                      final List<Barcode> barcodes = capture.barcodes;
+                      final Uint8List? image = capture.image;
+                      if (barcodes.isNotEmpty && image != null) {
+                        barcodeProvider.addBarcodeWithImage(
+                          barcodes.first.rawValue ?? '',
+                          image,
+                        );
+                      }
+                    },
+                    fit: BoxFit.cover,
+                  )
+                else if (barcodeProvider.lastImage != null)
+                  Image.memory(
+                    barcodeProvider.lastImage!,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+       
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
-
-
 }

@@ -7,8 +7,8 @@ import '../../../provider/splash_provider.dart';
 import '../../../utils/app_translation/app_translation.dart';
 import '../../../utils/uidata/textStyles.dart';
 import '../../widgets/buttons/material_buttons/raised_gradient_button.dart';
-import '../../widgets/cards/manual_order_detail_card.dart';
-import '../../widgets/cards/order_detail_card.dart';
+import '../../widgets/cards/orders/manual_order_detail_card.dart';
+import '../../widgets/cards/orders/order_detail_card.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
 
 import 'package:flutter/material.dart';

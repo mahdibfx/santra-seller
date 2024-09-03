@@ -4,19 +4,16 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/ui/screens/settings/barcode_scanner_screen.dart';
-import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
-import 'package:santra_seller/ui/widgets/buttons/rounded_button.dart';
-import 'package:santra_seller/ui/widgets/cards/my_customer_card.dart';
+import 'package:santra_seller/ui/widgets/barcode/barcode_action_buttons.dart';
+import 'package:santra_seller/ui/widgets/cards/orders/order_calculations_widget.dart';
+import 'package:santra_seller/ui/widgets/cards/orders/order_detail_card.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import 'package:santra_seller/utils/uidata.dart';
 
-import '../../../models/home_model.dart';
-import '../../../provider/cart_provider.dart';
-import '../../../provider/home_provider.dart';
-import '../../../utils/uidata/textStyles.dart';
-import '../buttons/material_buttons/raised_gradient_button.dart';
-import '../dialogs/full_screen_image.dart';
+import '../../../../models/home_model.dart';
+import '../../../../provider/home_provider.dart';
+import '../../../../utils/uidata/textStyles.dart';
+import '../../dialogs/full_screen_image.dart';
 
 class ManualOrderCard extends StatefulWidget {
   final String orderStatus;
@@ -530,37 +527,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                     //     : const SizedBox(),
 
                     /// this for in preparation status order
-                    Container(
-                      margin: EdgeInsets.all( 16),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: BorderButton(
-                              onPressed: () {},
-                              btntxt: tr.translateData("button_cancel"),
-                              buttontxtColor: UIDataColors.redColor,
-                              borderColor: UIDataColors.redColor,
-                              backEndColor: UIDataColors.whiteColor,
-                            ),
-                          ),
-                          SizedBox(width: 16,),
-                          Expanded(
-                              child: RaisedGradientButton(
-                            btntxt: 'Scan Barcode',
-                            buttontxtColor: UIDataColors.whiteColor,
-                            onPressed: (){
-                              Get.to(()=>BarcodeScannerScreen());
-                            },
-                            gradient: const LinearGradient(
-                              colors: <Color>[
-                                UIDataColors.primaryColor,
-                                UIDataColors.primaryColor,
-                              ],
-                            ),
-                          ))
-                        ],
-                      ),
-                    ),
+                    ActionButtonsBarcode(),
                   ],
                 ),
               ),
@@ -596,115 +563,4 @@ class _ManualOrderCardState extends State<ManualOrderCard>
   }
 }
 
-class OrderCalculations extends StatelessWidget {
-  final AppTranslations tr;
-  final String? title;
-  final String? amount;
-  const OrderCalculations({
-    super.key,
-    required this.tr,
-    this.amount,
-    this.title,
-  });
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Text(tr.translateData(title ?? ""),
-            style: UIDataTextStyles.textMediumColoredBlue.copyWith(
-              color: UIDataColors.blackColor,
-            )),
-        SpacingWidth.widthlistspacing,
-        Text('$amount AED',
-            style: UIDataTextStyles.textMediumColoredBlue.copyWith(
-              color: UIDataColors.primaryColor,
-            )),
-      ],
-    ).paddingOnly(
-      right: Get.locale?.languageCode == "ar" ? 0 : 10,
-      bottom: 8,
-      left: Get.locale?.languageCode == "ar" ? 10 : 0,
-    );
-  }
-}
-
-class OrderItemWidget extends StatelessWidget {
-  final String imageString;
-  final String productName;
-  final String productQuantity;
-  final String productPrice;
-
-  const OrderItemWidget({
-    super.key,
-    required this.imageString,
-    required this.productQuantity,
-    required this.productName,
-    required this.productPrice,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 50,
-          child: Row(
-            children: [
-              SizedBox(
-                child: Row(
-                  children: [
-                    SizedBox(
-                        // padding: const EdgeInsets.all(5),
-                        height: 50,
-                        width: 50,
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: CachedNetworkImage(
-                              imageUrl: imageString,
-                              fit: BoxFit.cover,
-                              memCacheHeight: 300,
-                              memCacheWidth: 400,
-                              placeholder: (context, url) => const Padding(
-                                padding: EdgeInsets.all(12.0),
-                                child: CircularProgressIndicator(),
-                              ),
-                            ))),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          productName,
-                          style: UIDataTextStyles.h2.copyWith(fontSize: 12),
-                        ),
-                        Text('x$productQuantity'),
-                      ],
-                    ).marginOnly(top: 5),
-                  ],
-                ),
-              ),
-              const Spacer(),
-              Row(
-                children: [
-                  Text(
-                    '$productPrice AED',
-                    style: UIDataTextStyles.textMediumColoredBlue.copyWith(
-                      color: UIDataColors.primaryColor,
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-        const Divider(),
-      ],
-    ).paddingSymmetric(horizontal: 10);
-  }
-}

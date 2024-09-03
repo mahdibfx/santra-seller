@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/barcode/barcode_provider.dart';
 import 'package:santra_seller/ui/widgets/barcode/barcode_scanner_camera.dart';
@@ -39,7 +38,7 @@ showActions: false,
       bodyData: Consumer<BarcodeProvider>(
         builder: (context, value, child) {
           if(value.isLoading) {
-            return Center(child: CupertinoActivityIndicator(),);
+            return const Center(child: CupertinoActivityIndicator(),);
           } else {
 return Column(children: [
             HeadingWithIcon(
@@ -47,17 +46,29 @@ return Column(children: [
                                   
                                   btntxt:"Scan Barcode"),
                               SpacingHeight.heightlistspacing20,
-                           if(!value.isCameraPermissionsGranted)   CameraPermissionWidget(),
-                           if(value.isCameraPermissionsGranted) BarcodeScannerCamera(),
+                           if(!value.isCameraPermissionsGranted)   const CameraPermissionWidget(),
+                           if(value.isCameraPermissionsGranted) const BarcodeScannerCamera(),
                             16.verticalSpace,
                               Container(
                                 width: 180.w,
                                 child: Text("Align barcode with frame to scan",style: UIDataTextStyles.title,textAlign: TextAlign.center,)),
                          20.verticalSpace,
-                           if(value.isCameraPermissionsGranted) BarcodesListWidget(),
-                                
-                                Expanded(child: SizedBox()),
-                                BorderButton(btntxt: "Link to order",iconImage: UIDATAIcons.linkIcon,),
+                           if(value.isCameraPermissionsGranted) const BarcodesListWidget(),
+                                GestureDetector(
+                                  onTap: () {
+                                    value.resumeScanning();
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Add more",style: UIDataTextStyles.textMedium.copyWith(color: UIDataColors.primaryColor,),textAlign: TextAlign.center,),
+                                      8.horizontalSpace,
+                                      Icon(Icons.add,color: UIDataColors.primaryColor,)
+                                    ],
+                                  ),
+                                ),
+                                const Expanded(child: SizedBox()),
+                                const BorderButton(btntxt: "Link to order",iconImage: UIDATAIcons.linkIcon,),
                                 24.verticalSpace,
         ],).paddingSymmetric(horizontal: 16);
  

@@ -6,16 +6,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:santra_seller/ui/widgets/cards/manual_order_detail_card.dart';
+import 'package:santra_seller/ui/widgets/cards/orders/manual_order_detail_card.dart';
+import 'package:santra_seller/ui/widgets/cards/orders/order_calculations_widget.dart';
 import 'package:santra_seller/ui/widgets/dialogs/full_screen_image.dart';
 import 'package:santra_seller/ui/widgets/snackbar/common_snackbar.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import 'package:santra_seller/utils/uidata.dart';
-import '../../../models/home_model.dart';
-import '../../../provider/home_provider.dart';
-import '../../../utils/uidata/textStyles.dart';
-import '../buttons/border_button.dart';
-import '../dropdown/common_dropdown.dart';
+import '../../../../models/home_model.dart';
+import '../../../../provider/home_provider.dart';
+import '../../../../utils/uidata/textStyles.dart';
+import '../../buttons/border_button.dart';
+import '../../dropdown/common_dropdown.dart';
 
 class CustomCard extends StatefulWidget {
   final String title;
