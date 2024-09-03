@@ -1,12 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/widgets/barcode/barcode_action_buttons.dart';
+import 'package:santra_seller/ui/widgets/barcode/order_barcode_widget.dart';
 import 'package:santra_seller/ui/widgets/cards/orders/order_calculations_widget.dart';
 import 'package:santra_seller/ui/widgets/cards/orders/order_detail_card.dart';
+import 'package:santra_seller/ui/widgets/cards/orders/order_linked_barcodes.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import 'package:santra_seller/utils/uidata.dart';
 
@@ -14,7 +19,7 @@ import '../../../../models/home_model.dart';
 import '../../../../provider/home_provider.dart';
 import '../../../../utils/uidata/textStyles.dart';
 import '../../dialogs/full_screen_image.dart';
-
+import 'top_order_more_details.dart';
 class ManualOrderCard extends StatefulWidget {
   final String orderStatus;
   final String orderTime;
@@ -151,112 +156,8 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                         ],
                       ).marginOnly(left: 10, right: 10, top: 10, bottom: 10),
                     ),
-                    Container(
-                      color: Colors.grey.shade200,
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    UIDATAIcons.orderTime,
-                                    color: UIDataColors.primaryColor,
-                                  ),
-                                  SpacingWidth.widthlistspacing,
-                                  Text(dateFormat(widget.orderTime)),
-                                ],
-                              ),
-                              const Spacer(),
-                              Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    UIDATAIcons.deliveryIcon,
-                                    color: UIDataColors.primaryColor,
-                                  ),
-                                  SpacingWidth.widthlistspacing,
-                                  widget.deliveryTime.toString().isEmpty
-                                      ? const Text('---')
-                                      : Text(widget.deliveryTime),
-                                ],
-                              ),
-                            ],
-                          ).marginOnly(left: 10, right: 10, top: 10, bottom: 5),
-                          Row(
-                            children: [
-                              Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    height: 16,
-                                    UIDATAIcons.userIcon,
-                                    color: UIDataColors.primaryColor,
-                                  ),
-                                  SpacingWidth.widthlistspacing,
-                                  Text(widget.customerName),
-                                ],
-                              ),
-                              const Spacer(),
-                              Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    UIDATAIcons.paymentMethod,
-                                    color: UIDataColors.primaryColor,
-                                  ),
-                                  SpacingWidth.widthlistspacing,
-                                  Text(widget.paymentMethod),
-                                ],
-                              ),
-                            ],
-                          ).marginOnly(left: 10, right: 10, top: 5, bottom: 5),
-                          !widget.orderType.contains("Delivery")
-                              ? Row(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          height: 16,
-                                          UIDATAIcons.callIcon,
-                                          color: UIDataColors.primaryColor,
-                                        ),
-                                        SpacingWidth.widthlistspacing,
-                                        Text(widget.customerPhone),
-                                      ],
-                                    ),
-                                    const Spacer(),
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          height: 16,
-                                          UIDATAIcons.orderBascketBorder,
-                                          color: UIDataColors.primaryColor,
-                                        ),
-                                        SpacingWidth.widthlistspacing,
-                                        Text(widget.orderType.toLowerCase() ==
-                                                "express"
-                                            ? tr.translateData("express")
-                                            : widget.orderType.toLowerCase() ==
-                                                    "pickup"
-                                                ? tr.translateData("pickup")
-                                                : widget.orderType
-                                                            .toLowerCase() ==
-                                                        "delivery"
-                                                    ? tr.translateData(
-                                                        "delivery")
-                                                    : widget.orderType
-                                                                .toLowerCase() ==
-                                                            "vip"
-                                                        ? tr.translateData(
-                                                            "vip")
-                                                        : ""),
-                                      ],
-                                    ),
-                                  ],
-                                ).marginOnly(
-                                  left: 10, right: 10, top: 5, bottom: 10)
-                              : Container().marginOnly(bottom: 5),
-                        ],
-                      ),
-                    ),
+                    topOrderMoreDetails(tr,widget),
+               
                     // !_isOpen
                     //     ? const SizedBox()
                     //     :
@@ -283,6 +184,8 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                   ],
                 ),
               ),
+
+           if(_isOpen)   const OrderLinkedBarCodes(),
               Container(
                 // height: widget.orderItemList.isEmpty
                 //     ? (_heightFactorAnimation.value *
@@ -538,12 +441,9 @@ class _ManualOrderCardState extends State<ManualOrderCard>
     });
   }
 
-  String dateFormat(String date) {
-    var inputFormat = DateTime.parse(date);
-    var outputFormat = DateFormat('hh:mm a yyyy/MM/dd');
-    var outputDate = outputFormat.format(inputFormat);
-    return outputDate;
-  }
+  
+
+
 
   double _calculateContainerHeight() {
     return (widget.orderItemList.length == 2
@@ -562,5 +462,4 @@ class _ManualOrderCardState extends State<ManualOrderCard>
     super.dispose();
   }
 }
-
 

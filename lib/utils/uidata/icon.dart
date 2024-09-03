@@ -9,6 +9,8 @@ class UIDATAIcons {
 
 
   static const barcodeScanIcon = "$iconsDir/barcodeScan.svg";
+  static const copy = "$iconsDir/copy.svg";
+
 
   static const userIcon = "$iconsDir/user.svg";
   static const paymentMethod = "$iconsDir/payment_method.svg";

@@ -27,6 +27,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   flutter_svg: ^2.0.6
   flutter_switch: ^0.3.2
+  fluttertoast: ^8.2.8
   get: ^4.6.6
   get_storage: ^2.1.1
   http: null

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/barcode/barcode_provider.dart';
-import 'package:santra_seller/ui/widgets/barcode/barcode_widget.dart';
+import 'package:santra_seller/ui/widgets/barcode/added_barcode_widget.dart';
 
 class BarcodesListWidget extends StatelessWidget {
   const BarcodesListWidget({super.key});
@@ -11,7 +11,7 @@ class BarcodesListWidget extends StatelessWidget {
     return Consumer<BarcodeProvider>(builder: (context, provider, child) {
       if (provider.barcodes.isNotEmpty) {
         return ListView.builder(
-          itemBuilder: (context, index) => BarcodeWidget(barcode: provider.barcodes[index],),
+          itemBuilder: (context, index) => AddedBarcodeWidget(barcode: provider.barcodes[index],),
           itemCount: provider.barcodes.length,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),

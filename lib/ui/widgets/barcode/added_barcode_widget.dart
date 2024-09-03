@@ -6,8 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/barcode/barcode_provider.dart';
 import 'package:santra_seller/utils/uidata.dart';
 
-class BarcodeWidget extends StatelessWidget {
-  const BarcodeWidget({super.key, required this.barcode});
+class AddedBarcodeWidget extends StatelessWidget {
+  const AddedBarcodeWidget({super.key, required this.barcode});
   final String barcode;
   @override
   Widget build(BuildContext context) {
