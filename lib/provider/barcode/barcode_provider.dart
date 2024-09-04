@@ -21,7 +21,7 @@ class BarcodeProvider extends ChangeNotifier {
   String? get lastBarcode => _lastBarcode;
 
   void loadCurrentBarCodes() {
-    final List<String> barcodesList = ["3957382578753", "399548757845"];
+    final List<String> barcodesList = ["3957382578753", "399548757845","3957382578753", "399548757845","3957382578753", "399548757845","3957382578753", "399548757845"];
     _barcodes.addAll(barcodesList);
     notifyListeners();
   }

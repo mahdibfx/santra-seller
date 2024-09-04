@@ -89,6 +89,7 @@ class MyApp extends StatelessWidget {
             primaryColor: UIDataColors.primaryColor,
             fontFamily: UIDataFonts.quickFont,
             primarySwatch: Colors.blue,
+          
           ),
           debugShowCheckedModeBanner: false,
           defaultTransition: Get.defaultTransition,

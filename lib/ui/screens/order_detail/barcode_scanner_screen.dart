@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,11 +8,13 @@ import 'package:provider/provider.dart';
 import 'package:santra_seller/provider/barcode/barcode_provider.dart';
 import 'package:santra_seller/ui/widgets/barcode/barcode_scanner_camera.dart';
 import 'package:santra_seller/ui/widgets/barcode/barcodes_list_widget.dart';
+import 'package:santra_seller/ui/widgets/barcode/linked_succesfuly_bottomsheet.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/barcode/camera_permission_widget.dart';
 import 'package:santra_seller/ui/widgets/scaffold/common_scaffold.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
+import 'package:santra_seller/utils/ext.dart';
 import 'package:santra_seller/utils/uidata.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
 var tr = Get.put(AppTranslations());
@@ -28,6 +32,8 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
     // TODO: implement initState
     super.initState();
     Provider.of<BarcodeProvider>(context,listen: false).chekCameraPermissions();
+    Provider.of<BarcodeProvider>(context,listen: false).loadCurrentBarCodes();
+
   }
   @override
   Widget build(BuildContext context) {
@@ -40,21 +46,25 @@ showActions: false,
           if(value.isLoading) {
             return const Center(child: CupertinoActivityIndicator(),);
           } else {
-return Column(children: [
+      return Column(children: [
             HeadingWithIcon(
                                   icon: UIDATAIcons.barcodeScanIcon,
                                   
                                   btntxt:"Scan Barcode"),
                               SpacingHeight.heightlistspacing20,
+      
+                              ///this logic is used to either show the permissions enabling window or camera scanner
                            if(!value.isCameraPermissionsGranted)   const CameraPermissionWidget(),
                            if(value.isCameraPermissionsGranted) const BarcodeScannerCamera(),
+      
+      
                             16.verticalSpace,
-                              Container(
+                              SizedBox(
                                 width: 180.w,
                                 child: Text("Align barcode with frame to scan",style: UIDataTextStyles.title,textAlign: TextAlign.center,)),
                          20.verticalSpace,
                            if(value.isCameraPermissionsGranted) const BarcodesListWidget(),
-                                GestureDetector(
+                             if( value.barcodes.isNotEmpty ) GestureDetector(
                                   onTap: () {
                                     value.resumeScanning();
                                   },
@@ -63,18 +73,20 @@ return Column(children: [
                                     children: [
                                       Text("Add more",style: UIDataTextStyles.textMedium.copyWith(color: UIDataColors.primaryColor,),textAlign: TextAlign.center,),
                                       8.horizontalSpace,
-                                      Icon(Icons.add,color: UIDataColors.primaryColor,)
+                                      const Icon(Icons.add,color: UIDataColors.primaryColor,)
                                     ],
                                   ),
                                 ),
                                 const Expanded(child: SizedBox()),
-                                const BorderButton(btntxt: "Link to order",iconImage: UIDATAIcons.linkIcon,),
+                                 BorderButton(btntxt: "Link to order",iconImage: UIDATAIcons.linkIcon,onPressed:() {
+                                  showBottomSheet(elevation: 20, context: context,constraints: BoxConstraints(maxHeight:257.h ),  builder: (_)=>const LinkedSuccesfulyBottomsheet());
+                                 },),
                                 24.verticalSpace,
         ],).paddingSymmetric(horizontal: 16);
- 
+       
           }
         },
-   ),
+         ),
       );
   }
 }

@@ -28,6 +28,8 @@ class _BarcodeScannerCameraState extends State<BarcodeScannerCamera> {
 
   @override
   void dispose() {
+    _mobileScannerController.stop();
+
     _mobileScannerController.dispose();
     super.dispose();
   }

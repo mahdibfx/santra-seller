@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:santra_seller/ui/screens/settings/barcode_scanner_screen.dart';
+import 'package:santra_seller/ui/screens/order_detail/barcode_scanner_screen.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
 import 'package:santra_seller/ui/widgets/buttons/material_buttons/raised_gradient_button.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
