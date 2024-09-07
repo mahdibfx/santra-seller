@@ -452,11 +452,14 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                 return ActionButtonsBarcode(
                                   orderNumber: widget.orderNumber,
                                   isModifying: true,
+                                  showCancelButton: true,
                                 );
                               } else {
                                 return ActionButtonsBarcode(
                                   orderNumber: widget.orderNumber,
                                   isModifying: false,
+                                  showCancelButton: true,
+
                                 );
                               }
                             }

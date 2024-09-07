@@ -710,11 +710,14 @@ class _CustomCardState extends State<CustomCard>
                                 return ActionButtonsBarcode(
                                   orderNumber: widget.orderNumber,
                                   isModifying: true,
+                                  showCancelButton: false,
                                 );
                               } else {
                                 return ActionButtonsBarcode(
                                   orderNumber: widget.orderNumber,
                                   isModifying: false,
+                                  showCancelButton: false,
+
                                 );
                               }
                             }

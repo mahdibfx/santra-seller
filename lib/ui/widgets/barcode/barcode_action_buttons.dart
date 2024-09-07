@@ -16,10 +16,11 @@ import 'package:santra_seller/utils/uidata.dart';
 
 class ActionButtonsBarcode extends StatelessWidget {
   const ActionButtonsBarcode({
-    super.key, required this.orderNumber, required this.isModifying,
+    super.key, required this.orderNumber, required this.isModifying, required this.showCancelButton,
   });
   final String orderNumber ; 
   final bool isModifying;
+  final bool showCancelButton ; 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AppTranslations>(
@@ -27,7 +28,7 @@ class ActionButtonsBarcode extends StatelessWidget {
         margin: EdgeInsets.all( 16),
         child: Row(
           children: [
-            Expanded(
+       if(showCancelButton)     Expanded(
               child: BorderButton(
                 onPressed: () {
                   Provider.of<HomeProvider>(context,listen: false).cancelOrdermethod(orderNumber);
@@ -38,7 +39,7 @@ class ActionButtonsBarcode extends StatelessWidget {
                 backEndColor: UIDataColors.whiteColor,
               ),
             ),
-            SizedBox(width: 16,),
+                 if(showCancelButton)  SizedBox(width: 16,),
             Expanded(
                 child: RaisedGradientButton(
               btntxt:isModifying ? "Change Barcode": 'Scan Barcode',
