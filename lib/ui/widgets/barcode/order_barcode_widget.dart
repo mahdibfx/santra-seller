@@ -7,8 +7,9 @@ import 'package:santra_seller/utils/uidata.dart';
 
 class OrderBarCodeWidget extends StatelessWidget {
   const OrderBarCodeWidget({
-    super.key,
+    super.key, required this.barcode,
   });
+    final String barcode ; 
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +20,10 @@ class OrderBarCodeWidget extends StatelessWidget {
       
       ),
       child: ListTile(
-        title: Text("5494877857846"),
+        title: Text(barcode),
         trailing: InkWell(
           onTap: () {
-     Clipboard.setData(ClipboardData(text: "5494877857846") );
+     Clipboard.setData(ClipboardData(text: barcode) );
      Fluttertoast.showToast(msg: "Text Copied !");
           },
           child: SvgPicture.asset(UIDATAIcons.copy)),

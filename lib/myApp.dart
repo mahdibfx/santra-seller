@@ -24,6 +24,7 @@ import 'package:santra_seller/provider/setting_provider/change_email_provider.da
 import 'package:santra_seller/provider/setting_provider/delete_account_provider.dart';
 import 'package:santra_seller/provider/setting_provider/reset_password_provider.dart';
 import 'package:santra_seller/provider/auth_providers/sign_up_provider.dart';
+import 'package:santra_seller/services/barcode_service.dart';
 import 'package:santra_seller/ui/screens/splash/splash_screen.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
 //Lib Imports
@@ -40,7 +41,6 @@ class MyApp extends StatelessWidget {
       designSize: const Size(390, 844),
       child: MultiProvider(
         providers: [
-          ChangeNotifierProvider<BarcodeProvider>(create: (_) => BarcodeProvider()),
 
           ChangeNotifierProvider<SplashProvider>(create: (_) => SplashProvider()),
           ChangeNotifierProvider<HomeProvider>(create: (_) => HomeProvider(_)),

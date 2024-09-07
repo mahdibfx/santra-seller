@@ -2,6 +2,10 @@ import 'config/env.dart';
 
 class ApiData {
   static const mainurl = Secret.api_key_url;
+  
+  static const linkordersBarCode = "${mainurl}link_bar_code";
+  static const viewBarcodes = "${mainurl}view_bar_codes";
+
   static const logoutApi = "${mainurl}logout_seller";
   static const deleteAccountApi = "${mainurl}delete_seller";
   static const updatePasswordApi = "${mainurl}update_account_password";

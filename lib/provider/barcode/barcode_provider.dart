@@ -1,12 +1,29 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:santra_seller/services/barcode_service.dart';
+import 'package:santra_seller/ui/widgets/barcode/linked_succesfuly_bottomsheet.dart';
+import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BarcodeProvider extends ChangeNotifier {
+  final BarcodeService barcodeService;
   final List<String> _barcodes = [];
+  final List<String> _alreadyBarcodes = [];
+
+  BarcodeProvider({required this.barcodeService});
   List<String> get barcodes => _barcodes;
+
+  List<String> get alreadyBarcodes => _alreadyBarcodes;
 
   bool _isLoading = true;
   bool get isLoading => _isLoading;
+     bool _linkingOrders = false;
+  bool get linkingOrders => _linkingOrders;
 
   bool _isCameraPermissionsGranted = false;
   bool get isCameraPermissionsGranted => _isCameraPermissionsGranted;
@@ -20,9 +37,31 @@ class BarcodeProvider extends ChangeNotifier {
   String? _lastBarcode;
   String? get lastBarcode => _lastBarcode;
 
-  void loadCurrentBarCodes() {
-    final List<String> barcodesList = ["3957382578753", "399548757845","3957382578753", "399548757845","3957382578753", "399548757845","3957382578753", "399548757845"];
-    _barcodes.addAll(barcodesList);
+  Future<void> loadCurrentBarCodes(String orderNumber) async {
+    _isLoading = true;
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      String? sellerCode = prefs.getString("sellercode");
+
+      final apiResponse =
+          await barcodeService.viewOrderBarcodes(sellerCode!, orderNumber);
+
+      if (apiResponse.status == true) {
+        _alreadyBarcodes.clear();
+        _barcodes.clear();
+        final List<String> barCodesFromApi =
+            List<String>.from(apiResponse.data.map((e) => e['bar_code']));
+        _alreadyBarcodes.addAll(barCodesFromApi);
+        _barcodes.addAll(barCodesFromApi);
+
+        notifyListeners();
+      }
+    } catch (e) {
+      log(e.toString());
+      generalException();
+    }
+    _isLoading = false;
     notifyListeners();
   }
 
@@ -55,7 +94,7 @@ class BarcodeProvider extends ChangeNotifier {
 
   void deleteBarcode(String barcode) {
     _barcodes.remove(barcode);
-    if(_barcodes.isEmpty){
+    if (_barcodes.isEmpty) {
       resumeScanning();
     }
     notifyListeners();
@@ -68,8 +107,42 @@ class BarcodeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // This is used to link the barcodes to order
-  void linkBarcodesToOrder() {
-    // Implement the logic to link barcodes to an order
+//
+
+  loadExistingBarCodesToFrontendForModification() {
+    _barcodes.clear();
+    _barcodes.addAll(_alreadyBarcodes);
   }
+
+  // This is used to link the barcodes to order
+  Future<void> linkBarcodesToOrder(String orderNumber) async {
+    // Implement the logic to link barcodes to an order
+  _linkingOrders = true ;
+  notifyListeners();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    String? sellerCode = prefs.getString("sellercode")!;
+    try {
+      final apiResponse =
+          await barcodeService.linkBarcodes(_barcodes, sellerCode, orderNumber);
+
+      if (apiResponse.status == true) {
+        _alreadyBarcodes.clear();
+        _alreadyBarcodes.addAll(_barcodes);
+        notifyListeners();
+        Get.bottomSheet(
+            Container(
+                constraints: BoxConstraints(maxHeight: 257.h),
+                child:  LinkedSuccesfulyBottomsheet(orderNumber: orderNumber,)),
+            elevation: 20.0);
+      } else {
+        log(apiResponse.errorMessage!);
+        generalException();
+      }
+    } catch (e) {
+      generalException();
+    }
+_linkingOrders = false ;notifyListeners();
+  }
+
 }

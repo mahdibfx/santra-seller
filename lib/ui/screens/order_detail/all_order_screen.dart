@@ -1,6 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:santra_seller/provider/barcode/barcode_provider.dart';
+import 'package:santra_seller/services/barcode_service.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import '../../../provider/home_provider.dart';
@@ -109,7 +111,7 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
                                               'assigned_3pl' ||
                                           santraList.orderStatus ==
                                               'payment_pending'
-                                      ? CustomCard(
+                                      ? ChangeNotifierProvider<BarcodeProvider>(create: (context) => BarcodeProvider(barcodeService: BarcodeService()), builder:(__,child)=> CustomCard(
                                           customerPhone:
                                               santraList.customerPhone,
                                           orderType: santraList.orderType,
@@ -146,10 +148,11 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
                                           cashCharge: santraList.cashCharges,
                                           deliveryCharge:
                                               santraList.deliveryCharges,
-                                          discount: santraList.orderDiscount,
-                                        )
-                                      : ManualOrderCard(
+                                          discount: santraList.orderDiscount, haveBarCodes: santraList.haveBarCodes,
+                                      ))
+                                      :ChangeNotifierProvider<BarcodeProvider>(create: (context) => BarcodeProvider(barcodeService: BarcodeService()), builder:(__,child)=>   ManualOrderCard(
                                           area: santraList.areaCustomer,
+                                          haveBarCodes: santraList.haveBarCodes,
                                           customerPhone:
                                               santraList.customerPhone,
                                           orderType: santraList.orderType,
@@ -184,7 +187,7 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
                                           deliveryCharge:
                                               santraList.deliveryCharges,
                                           discount: santraList.orderDiscount,
-                                        );
+                                       ));
                                 }),
                             SpacingHeight.heightlistspacing50
                           ],

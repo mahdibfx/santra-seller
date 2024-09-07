@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -6,8 +7,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:santra_seller/provider/barcode/barcode_provider.dart';
+import 'package:santra_seller/ui/widgets/barcode/barcode_action_buttons.dart';
 import 'package:santra_seller/ui/widgets/cards/orders/manual_order_detail_card.dart';
 import 'package:santra_seller/ui/widgets/cards/orders/order_calculations_widget.dart';
+import 'package:santra_seller/ui/widgets/cards/orders/order_linked_barcodes.dart';
 import 'package:santra_seller/ui/widgets/dialogs/full_screen_image.dart';
 import 'package:santra_seller/ui/widgets/snackbar/common_snackbar.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
@@ -29,6 +33,7 @@ class CustomCard extends StatefulWidget {
   final String totalPrice;
   final String? cashCharge;
   final String? discount;
+  final bool haveBarCodes;
   final String? deliveryCharge;
   final String orderStatus;
   final String customerPhone;
@@ -50,6 +55,7 @@ class CustomCard extends StatefulWidget {
     required this.paymentMethod,
     required this.orderNumber,
     required this.orderItemList,
+    required this.haveBarCodes,
     required this.totalPrice,
     required this.orderStatus,
     required this.paymentLink,
@@ -89,6 +95,10 @@ class _CustomCardState extends State<CustomCard>
     setState(() {
       _isOpen = !_isOpen;
       if (_isOpen) {
+          if (widget.haveBarCodes) {
+          Provider.of<BarcodeProvider>(context, listen: false)
+              .loadCurrentBarCodes(widget.orderNumber);
+        }
         _controller.forward();
       } else {
         _controller.reverse();
@@ -286,6 +296,8 @@ class _CustomCardState extends State<CustomCard>
                   ],
                 ),
               ),
+              if (_isOpen) const OrderLinkedBarCodes(),
+
               if (_isOpen)
                 Container(
                   // height: widget.orderItemList.isEmpty
@@ -686,6 +698,28 @@ class _CustomCardState extends State<CustomCard>
                                         left: 15, right: 15, bottom: 10),
                                   ],
                                 ),
+                                  if (widget.orderStatus.toLowerCase() != 'delivered' &&
+                        widget.orderStatus.toLowerCase() != "canceled" && widget.orderStatus.toLowerCase() != "new_order")
+                      if (_isOpen)
+                        Consumer<BarcodeProvider>(
+                          builder: (context, provider, child) {
+                            if (provider.isLoading && widget.haveBarCodes) {
+                              return const CupertinoActivityIndicator();
+                            } else {
+                              if (widget.haveBarCodes || provider.alreadyBarcodes.isNotEmpty) {
+                                return ActionButtonsBarcode(
+                                  orderNumber: widget.orderNumber,
+                                  isModifying: true,
+                                );
+                              } else {
+                                return ActionButtonsBarcode(
+                                  orderNumber: widget.orderNumber,
+                                  isModifying: false,
+                                );
+                              }
+                            }
+                          },
+                        )
                     ],
                   ),
                 ),

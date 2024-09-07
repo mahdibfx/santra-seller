@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -191,7 +192,7 @@ class HomeProvider extends ChangeNotifier {
         var body = <String, String>{};
         body['seller_code'] = sellerCode!;
         var res = await http.post(
-            Uri.parse("${ApiData.mainurl}seller_home_new"),
+            Uri.parse("${ApiData.mainurl}new_seller_home"),
             headers: ApiData.header,
             body: body);
 
@@ -247,6 +248,8 @@ class HomeProvider extends ChangeNotifier {
       body['seller_code'] = prefs.getString("sellercode");
       body['order_number'] = orderNumber.toString();
       var response = await http.post(url, headers: ApiData.header, body: body);
+      log(response.body.toString());
+
       if (response.statusCode == 200) {
         notifyListeners();
         // Get.snackbar("Accepted", "Order has been accepted");
@@ -259,6 +262,7 @@ class HomeProvider extends ChangeNotifier {
         notifyListeners();
       }
     } catch (e) {
+      log(e.toString());
       notifyListeners();
       CommonSnackbar.getSnackbar(tr.translateData("oops_message"),
           tr.translateData("went_wrong"), UIDataColors.redColor);

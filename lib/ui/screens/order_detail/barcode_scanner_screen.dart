@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +21,8 @@ import 'package:santra_seller/utils/uidata/textStyles.dart';
 var tr = Get.put(AppTranslations());
 
 class BarcodeScannerScreen extends StatefulWidget {
-  const BarcodeScannerScreen({super.key});
-
+  const BarcodeScannerScreen({super.key, required this.orderNumber});
+final String orderNumber ;
   @override
   State<BarcodeScannerScreen> createState() => _BarcodeScannerScreenState();
 }
@@ -32,12 +33,16 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
     // TODO: implement initState
     super.initState();
     Provider.of<BarcodeProvider>(context,listen: false).chekCameraPermissions();
-    Provider.of<BarcodeProvider>(context,listen: false).loadCurrentBarCodes();
 
   }
   @override
   Widget build(BuildContext context) {
-    return  CommonScaffold(showAppBar: true,      backgroundcolor: UIDataColors.whiteColor,
+    return  CommonScaffold(
+//       showFAB: true,
+//       qrCallback: (){
+// Provider.of<BarcodeProvider>(context,listen: false).addBarcodeWithImage("33544566", Uint8List(35));
+//       },
+      showAppBar: true,      backgroundcolor: UIDataColors.whiteColor,
       appbarcolor: UIDataColors.whiteColor,
 showActions: false,
       backGroundImage: UIDataImage.backgroundImage,
@@ -78,9 +83,10 @@ showActions: false,
                                   ),
                                 ),
                                 const Expanded(child: SizedBox()),
-                                 BorderButton(btntxt: "Link to order",iconImage: UIDATAIcons.linkIcon,onPressed:() {
-                                  showBottomSheet(elevation: 20, context: context,constraints: BoxConstraints(maxHeight:257.h ),  builder: (_)=>const LinkedSuccesfulyBottomsheet());
-                                 },),
+                             value.linkingOrders ? CupertinoActivityIndicator():    BorderButton(btntxt: value.barcodes.isEmpty && value.alreadyBarcodes.isNotEmpty ? "Save": "Link to order",iconImage: UIDATAIcons.linkIcon,onPressed:!compareArrays(value.barcodes,value.alreadyBarcodes)? () {
+                                  value.linkBarcodesToOrder(widget.orderNumber);
+
+                                 }:null,),
                                 24.verticalSpace,
         ],).paddingSymmetric(horizontal: 16);
        
@@ -89,4 +95,12 @@ showActions: false,
          ),
       );
   }
+  bool compareArrays(List array1, List array2) {
+
+  if (array1.length == array2.length) {
+    return array1.every( (value) => array2.contains(value) );
+  } else {
+    return false;
+  }
+}
 }

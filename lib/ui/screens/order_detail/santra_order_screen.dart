@@ -1,5 +1,7 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:santra_seller/provider/barcode/barcode_provider.dart';
+import 'package:santra_seller/services/barcode_service.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import '../../../provider/home_provider.dart';
@@ -118,7 +120,7 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                                                   'assigned_3pl' ||
                                               santraList.orderStatus ==
                                                   'payment_pending'
-                                          ? CustomCard(
+                                          ? ChangeNotifierProvider<BarcodeProvider>(create: (context) => BarcodeProvider(barcodeService: BarcodeService()), builder:(__,child)=> CustomCard(
                                               customerPhone:
                                                   santraList.customerPhone,
                                               orderType: santraList.orderType,
@@ -162,17 +164,20 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                                               requestImage:
                                                   santraList.requestImage,
                                               attachedPdf: santraList.pdfLink,
+                                              haveBarCodes: santraList.haveBarCodes,
                                               cashCharge:
                                                   santraList.cashCharges,
                                               deliveryCharge:
                                                   santraList.deliveryCharges,
                                               discount:
                                                   santraList.orderDiscount,
-                                            )
-                                          : ManualOrderCard(
+                                            ))
+                                          :ChangeNotifierProvider<BarcodeProvider>(create: (context) => BarcodeProvider(barcodeService: BarcodeService()), builder:(__,child)=>  ManualOrderCard(
                                               area: santraList.areaCustomer,
                                               customerPhone:
                                                   santraList.customerPhone,
+                                                  haveBarCodes: santraList.haveBarCodes,
+
                                               orderType: santraList.orderType,
                                               orderStatus: santraList
                                                   .orderStatus
@@ -216,7 +221,7 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                                                   santraList.deliveryCharges,
                                               discount:
                                                   santraList.orderDiscount,
-                                            );
+                                            ));
                                     }),
                             SpacingHeight.heightlistspacing50
                           ],

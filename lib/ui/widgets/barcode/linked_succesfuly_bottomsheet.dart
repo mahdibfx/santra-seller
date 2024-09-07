@@ -7,8 +7,8 @@ import 'package:santra_seller/utils/uidata.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
 
 class LinkedSuccesfulyBottomsheet extends StatelessWidget {
-  const LinkedSuccesfulyBottomsheet({super.key});
-
+  const LinkedSuccesfulyBottomsheet({super.key, required this.orderNumber});
+final String orderNumber;
   @override
   Widget build(BuildContext context) {
     return CustomBottomSheet(bottomsheetBody:
@@ -17,10 +17,12 @@ class LinkedSuccesfulyBottomsheet extends StatelessWidget {
       16.verticalSpace,
       Text("Congratulations!",style: UIDataTextStyles.h2,),
       16.verticalSpace,
-     Text( "The barcode has been successfuly added to order Number 1324",textAlign: TextAlign.center,style: UIDataTextStyles.dialogMsg,),
+     Text( "The barcode has been successfuly added to order Number $orderNumber",textAlign: TextAlign.center,style: UIDataTextStyles.dialogMsg,),
      16.verticalSpace,
      BorderButton(btntxt: "Back",onPressed: (){
       Navigator.of(context).pop();
+      Navigator.of(context).pop();
+
      },)
     ],),);
   }

@@ -35,60 +35,63 @@ class BorderButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.08),
-            spreadRadius: 1,
-            blurRadius: 10,
-            offset: const Offset(0, 0), // changes position of shadow
+    return  Opacity(
+      opacity: onPressed == null ? 0.7:1,
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.08),
+              spreadRadius: 1,
+              blurRadius: 10,
+              offset: const Offset(0, 0), // changes position of shadow
+            ),
+          ],
+          color: backEndColor ?? Colors.white,
+          border: Border.all(
+            color: borderColor ??
+                Colors.transparent, //                   <--- border color
+            width: 1.0,
           ),
-        ],
-        color: backEndColor ?? Colors.white,
-        border: Border.all(
-          color: borderColor ??
-              Colors.transparent, //                   <--- border color
-          width: 1.0,
+          borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(15.0),
+            bottomRight: Radius.circular(15.0),
+            topLeft: Radius.circular(15.0),
+            bottomLeft: Radius.circular(15.0),
+          ),
         ),
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(15.0),
-          bottomRight: Radius.circular(15.0),
-          topLeft: Radius.circular(15.0),
-          bottomLeft: Radius.circular(15.0),
-        ),
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-            onTap: onPressed,
-            child: Center(
-              child: Row(
-                
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    btntxt ?? "",
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      fontFamily: tr.getFont(),
-                      fontWeight:
-                          isBold == true ? FontWeight.bold : FontWeight.w400,
-                      color: buttontxtColor ?? Colors.white,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+              onTap: onPressed,
+              child: Center(
+                child: Row(
+                  
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      btntxt ?? "",
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        fontFamily: tr.getFont(),
+                        fontWeight:
+                            isBold == true ? FontWeight.bold : FontWeight.w400,
+                        color: buttontxtColor ?? Colors.white,
+                      ),
                     ),
-                  ),
-                  if (iconImage != null) SpacingWidth.widthlistspacing,
-                  iconImage != null
-                      ? SvgPicture.asset(
-                          iconImage!,
-                          color: iconColor ?? Colors.white,
-                        )
-                      : Container()
-                ],
-              ),
-            )),
+                    if (iconImage != null) SpacingWidth.widthlistspacing,
+                    iconImage != null
+                        ? SvgPicture.asset(
+                            iconImage!,
+                            color: iconColor ?? Colors.white,
+                          )
+                        : Container()
+                  ],
+                ),
+              )),
+        ),
       ),
     );
   }

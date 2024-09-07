@@ -1,14 +1,17 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:santra_seller/provider/barcode/barcode_provider.dart';
+import 'package:santra_seller/provider/cart_provider.dart';
 import 'package:santra_seller/ui/widgets/barcode/barcode_action_buttons.dart';
-import 'package:santra_seller/ui/widgets/barcode/order_barcode_widget.dart';
+import 'package:santra_seller/ui/widgets/buttons/material_buttons/raised_gradient_button.dart';
+import 'package:santra_seller/ui/widgets/cards/my_customer_card.dart';
 import 'package:santra_seller/ui/widgets/cards/orders/order_calculations_widget.dart';
 import 'package:santra_seller/ui/widgets/cards/orders/order_detail_card.dart';
 import 'package:santra_seller/ui/widgets/cards/orders/order_linked_barcodes.dart';
@@ -20,6 +23,7 @@ import '../../../../provider/home_provider.dart';
 import '../../../../utils/uidata/textStyles.dart';
 import '../../dialogs/full_screen_image.dart';
 import 'top_order_more_details.dart';
+
 class ManualOrderCard extends StatefulWidget {
   final String orderStatus;
   final String orderTime;
@@ -28,6 +32,7 @@ class ManualOrderCard extends StatefulWidget {
   final String paymentMethod;
   final String colorCode;
   final String orderType;
+  final bool haveBarCodes;
   final String orderNumber;
   final String totalPrice;
   final String? cashCharge;
@@ -46,6 +51,7 @@ class ManualOrderCard extends StatefulWidget {
     required this.orderType,
     required this.orderStatus,
     required this.orderTime,
+    required this.haveBarCodes,
     required this.deliveryTime,
     this.cashCharge,
     this.deliveryCharge,
@@ -91,6 +97,11 @@ class _ManualOrderCardState extends State<ManualOrderCard>
     setState(() {
       _isOpen = !_isOpen;
       if (_isOpen) {
+        if (widget.haveBarCodes) {
+          Provider.of<BarcodeProvider>(context, listen: false)
+              .loadCurrentBarCodes(widget.orderNumber);
+        }
+
         _controller.forward();
       } else {
         _controller.reverse();
@@ -100,6 +111,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
 
   @override
   Widget build(BuildContext context) {
+    log(widget.orderStatus);
     return GetBuilder<AppTranslations>(builder: (tr) {
       return Consumer<HomeProvider>(builder: (context, _, child) {
         return Container(
@@ -156,8 +168,8 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                         ],
                       ).marginOnly(left: 10, right: 10, top: 10, bottom: 10),
                     ),
-                    topOrderMoreDetails(tr,widget),
-               
+                    topOrderMoreDetails(tr, widget),
+
                     // !_isOpen
                     //     ? const SizedBox()
                     //     :
@@ -184,8 +196,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                   ],
                 ),
               ),
-
-           if(_isOpen)   const OrderLinkedBarCodes(),
+              if (_isOpen) const OrderLinkedBarCodes(),
               Container(
                 // height: widget.orderItemList.isEmpty
                 //     ? (_heightFactorAnimation.value *
@@ -399,38 +410,58 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                         ),
                       ),
 
-//TODO:AFTER TESTING DONT FORGET TO UNCCOMMENT THIS
-                    // widget.orderStatus.toLowerCase() == 'accepted'
-                    //     ? Consumer<CartProvider>(
-                    //         builder: (context, cartProvider, child) {
-                    //         return RaisedGradientButton(
-                    //           gradient: const LinearGradient(
-                    //             colors: <Color>[
-                    //               UIDataColors.primaryColor,
-                    //               UIDataColors.primaryColor,
-                    //             ],
-                    //           ),
-                    //           btntxt: tr.translateData("ready_order"),
-                    //           iconImage: SvgPicture.asset(
-                    //             UIDATAIcons.sendIcon,
-                    //             height: 25,
-                    //             width: 25,
-                    //             fit: BoxFit.fitWidth,
-                    //           ),
-                    //           buttontxtColor: UIDataColors.whiteColor,
-                    //           onPressed: () {
-                    //             confirmationPopup(
-                    //                 tr.translateData("sure_message"), context,
-                    //                 () {
-                    //               _.readyOrderMethod(widget.orderNumber);
-                    //             });
-                    //           },
-                    //         ).marginAll(10);
-                    //       })
-                    //     : const SizedBox(),
+                    widget.orderStatus.toLowerCase() == 'accepted'
+                        ? Consumer<CartProvider>(
+                            builder: (context, cartProvider, child) {
+                            return RaisedGradientButton(
+                              gradient: const LinearGradient(
+                                colors: <Color>[
+                                  UIDataColors.primaryColor,
+                                  UIDataColors.primaryColor,
+                                ],
+                              ),
+                              btntxt: tr.translateData("ready_order"),
+                              iconImage: SvgPicture.asset(
+                                UIDATAIcons.sendIcon,
+                                height: 25,
+                                width: 25,
+                                fit: BoxFit.fitWidth,
+                              ),
+                              buttontxtColor: UIDataColors.whiteColor,
+                              onPressed: () {
+                                confirmationPopup(
+                                    tr.translateData("sure_message"), context,
+                                    () {
+                                  _.readyOrderMethod(widget.orderNumber);
+                                });
+                              },
+                            ).marginAll(10);
+                          })
+                        : const SizedBox(),
 
-                    /// this for in preparation status order
-                    ActionButtonsBarcode(),
+                    /// scan bar code
+                    if (widget.orderStatus.toLowerCase() != 'delivered' &&
+                        widget.orderStatus.toLowerCase() != "canceled" && widget.orderStatus.toLowerCase() != "new_order")
+                      if (_isOpen)
+                        Consumer<BarcodeProvider>(
+                          builder: (context, provider, child) {
+                            if (provider.isLoading && widget.haveBarCodes) {
+                              return const CupertinoActivityIndicator();
+                            } else {
+                              if (widget.haveBarCodes || provider.alreadyBarcodes.isNotEmpty) {
+                                return ActionButtonsBarcode(
+                                  orderNumber: widget.orderNumber,
+                                  isModifying: true,
+                                );
+                              } else {
+                                return ActionButtonsBarcode(
+                                  orderNumber: widget.orderNumber,
+                                  isModifying: false,
+                                );
+                              }
+                            }
+                          },
+                        )
                   ],
                 ),
               ),
@@ -440,10 +471,6 @@ class _ManualOrderCardState extends State<ManualOrderCard>
       });
     });
   }
-
-  
-
-
 
   double _calculateContainerHeight() {
     return (widget.orderItemList.length == 2
@@ -459,7 +486,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
   @override
   void dispose() {
     _controller.dispose();
+
     super.dispose();
   }
 }
-

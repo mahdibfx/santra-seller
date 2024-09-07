@@ -107,6 +107,7 @@ class Order {
   Order(
       {required this.orderNumber,
       required this.customerPhone,
+      required this.haveBarCodes,
       required this.orderStatus,
       required this.customerName,
       required this.areaCustomer,
@@ -135,6 +136,7 @@ class Order {
   String? orderDiscount;
   DateTime orderDateStamp;
   String paymentMethod;
+  bool haveBarCodes ;
   String customerPhone;
   String advanceTime;
   String orderRemarks;
@@ -153,6 +155,7 @@ class Order {
         totalOrderAmount: json["total_order_amount"],
         cashCharges: json["cash_charges"],
         deliveryCharges: json["delivery_charges"],
+        haveBarCodes: json['bar_code'] == 'yes'? true : false ,
         orderDiscount: json["order_discount"],
         orderDateStamp: DateTime.parse(json["order_date_stamp"]),
         paymentMethod: json["payment_method"],
@@ -177,6 +180,7 @@ class Order {
         "payment_method": paymentMethod,
         "order_type": orderType,
         'customer_phone': customerPhone,
+        'barcode':haveBarCodes,
         "advance_time": advanceTime,
         "order_remarks": orderRemarks,
         "order_items": List<dynamic>.from(orderItems.map((x) => x.toJson())),
