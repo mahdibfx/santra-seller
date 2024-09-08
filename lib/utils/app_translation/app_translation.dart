@@ -69,9 +69,9 @@ class AppTranslations extends GetxController {
 
   String translateData(String tralate) {
     if (selectedLanguage == 'en_us') {
-      return engLang[tralate];
+      return engLang[tralate] ?? tralate;
     }
-    return arabLang[tralate];
+    return arabLang[tralate] ?? tralate;
   }
 
   String getFont() {

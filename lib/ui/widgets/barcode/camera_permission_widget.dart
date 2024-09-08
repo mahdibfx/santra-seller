@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/myApp.dart';
 import 'package:santra_seller/provider/barcode/barcode_provider.dart';
 import 'package:santra_seller/ui/widgets/buttons/border_button.dart';
+import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import 'package:santra_seller/utils/uidata.dart';
 import 'package:santra_seller/utils/uidata/textStyles.dart';
-
+final tr = Get.put(AppTranslations());
 class CameraPermissionWidget extends StatelessWidget {
   const CameraPermissionWidget({super.key});
 
@@ -32,16 +34,16 @@ class CameraPermissionWidget extends StatelessWidget {
             _cameraIcon(),
            10.verticalSpace,
 
-            Text("Camera Access",style: UIDataTextStyles.title.copyWith(color: UIDataColors.whiteColor,fontWeight: FontWeight.w500)),
-            Container(
+            Text(tr.translateData("camera_access"),style: UIDataTextStyles.title.copyWith(color: UIDataColors.whiteColor,fontWeight: FontWeight.w500)),
+            SizedBox(
               width: 220.w,
-              child: Text('We need to enable camera so you can scan barcodes',style: UIDataTextStyles.textMedium.copyWith(color: UIDataColors.whiteColor,fontWeight: FontWeight.w400,),textAlign: TextAlign.center,))
+              child: Text(tr.translateData("we_need_to_enable_camera"),style: UIDataTextStyles.textMedium.copyWith(color: UIDataColors.whiteColor,fontWeight: FontWeight.w400,),textAlign: TextAlign.center,))
          ,
            10.verticalSpace,
          
-         Container(
+         SizedBox(
           width: 230.w,
-          child: BorderButton(btntxt: "Enable Camera",onPressed: () {
+          child: BorderButton(btntxt: tr.translateData("enable_camera"),onPressed: () {
             Provider.of<BarcodeProvider>(context,listen: false).demandPermissions();
           },)),
           ],

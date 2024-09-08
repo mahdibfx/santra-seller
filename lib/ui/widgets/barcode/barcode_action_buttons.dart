@@ -25,7 +25,7 @@ class ActionButtonsBarcode extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<AppTranslations>(
       builder:(tr)=> Container(
-        margin: EdgeInsets.all( 16),
+        margin: const EdgeInsets.all( 16),
         child: Row(
           children: [
        if(showCancelButton)     Expanded(
@@ -39,10 +39,10 @@ class ActionButtonsBarcode extends StatelessWidget {
                 backEndColor: UIDataColors.whiteColor,
               ),
             ),
-                 if(showCancelButton)  SizedBox(width: 16,),
+                 if(showCancelButton)  const SizedBox(width: 16,),
             Expanded(
                 child: RaisedGradientButton(
-              btntxt:isModifying ? "Change Barcode": 'Scan Barcode',
+              btntxt:tr.translateData( isModifying ? "change_barcode": 'scan_barcode'),
               buttontxtColor: UIDataColors.whiteColor,
               onPressed: (){
                Provider.of<BarcodeProvider>(context,listen: false).loadExistingBarCodesToFrontendForModification();
