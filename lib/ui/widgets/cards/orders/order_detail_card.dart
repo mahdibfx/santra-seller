@@ -706,7 +706,7 @@ class _CustomCardState extends State<CustomCard>
                             if (provider.isLoading && widget.haveBarCodes) {
                               return const CupertinoActivityIndicator();
                             } else {
-                              if (widget.haveBarCodes || provider.alreadyBarcodes.isNotEmpty) {
+                              if ( provider.alreadyBarcodes.isNotEmpty) {
                                 return ActionButtonsBarcode(
                                   orderNumber: widget.orderNumber,
                                   isModifying: true,

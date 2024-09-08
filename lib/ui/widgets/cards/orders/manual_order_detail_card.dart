@@ -448,7 +448,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                             if (provider.isLoading && widget.haveBarCodes) {
                               return const CupertinoActivityIndicator();
                             } else {
-                              if (widget.haveBarCodes || provider.alreadyBarcodes.isNotEmpty) {
+                              if ( provider.alreadyBarcodes.isNotEmpty) {
                                 return ActionButtonsBarcode(
                                   orderNumber: widget.orderNumber,
                                   isModifying: true,
