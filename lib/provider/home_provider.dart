@@ -258,7 +258,7 @@ class HomeProvider extends ChangeNotifier {
         Get.offAll(() => const HomeScreen());
         // Get.offAllNamed(Routes.homeRoutes);
       } else {
-        generalException();
+        exceptionDialog("OOPS !",jsonDecode( response.body)['data']['message']);
         notifyListeners();
       }
     } catch (e) {

@@ -38,10 +38,10 @@ class _BarcodeScannerScreenState extends State<BarcodeScannerScreen> {
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(
-//       showFAB: true,
-//       qrCallback: (){
-// Provider.of<BarcodeProvider>(context,listen: false).addBarcodeWithImage("33544566", Uint8List(35));
-//       },
+      showFAB: true,
+      qrCallback: (){
+Provider.of<BarcodeProvider>(context,listen: false).addBarcodeWithImage("33544566", Uint8List(35));
+      },
       showAppBar: true, backgroundcolor: UIDataColors.whiteColor,
       appbarcolor: UIDataColors.whiteColor,
       showActions: false,

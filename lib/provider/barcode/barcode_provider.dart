@@ -136,8 +136,7 @@ class BarcodeProvider extends ChangeNotifier {
                 child:  LinkedSuccesfulyBottomsheet(orderNumber: orderNumber,)),
             elevation: 20.0);
       } else {
-        log(apiResponse.errorMessage!);
-        generalException();
+        exceptionDialog("OOPs !", apiResponse.errorMessage!);
       }
     } catch (e) {
       generalException();

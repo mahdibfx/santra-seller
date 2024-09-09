@@ -24,22 +24,18 @@ Future<ApiResponseModel> linkBarcodes(List<String> barcodes, String sellerCode, 
     // Send the request
     final response = await http.Response.fromStream(await request.send());
 
-    log("Response status code: ${response.statusCode}");
-    log("Response body: ${response.body}");
 
-    if (response.statusCode == 200) {
-      if (response.body.isNotEmpty) {
         final responseData = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+    
         if (responseData['status'] == true) {
           return ApiResponseModel(status: true);
         } else {
-          return ApiResponseModel(status: false, errorMessage: responseData['message'] ?? 'Unknown error occurred');
+          return ApiResponseModel(status: false, errorMessage: responseData['data']['message'] ?? 'Unknown error occurred');
         }
-      } else {
-        return ApiResponseModel(status: false, errorMessage: 'Empty response received');
-      }
+     
     } else {
-      return ApiResponseModel(status: false, errorMessage: 'HTTP ${response.statusCode}: ${response.reasonPhrase}');
+      return ApiResponseModel(status: false, errorMessage: responseData['data']['message'] ?? 'Unknown error occurred');
     }
   } catch (e, stackTrace) {
     log("Error in linkBarcodes: $e");
