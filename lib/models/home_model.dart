@@ -36,9 +36,9 @@ class HomeData {
     required this.titleMessage,
     required this.ordersMonthly,
     required this.profitMonthly,
-    required this.santraOrders,
-    required this.manualOrders,
-    required this.pendingOrders,
+     this.santraOrders,
+     this.manualOrders,
+     this.pendingOrders,
     this.multiBranch,
   });
 
@@ -47,9 +47,9 @@ class HomeData {
   String titleMessage;
   num ordersMonthly;
   num profitMonthly;
-  List<SantraOrder> santraOrders;
-  List<ManualOrder> manualOrders;
-  List<PendingOrder> pendingOrders;
+  List<SantraOrder>? santraOrders;
+  List<ManualOrder>? manualOrders;
+  List<PendingOrder>? pendingOrders;
   List<MultiBranchData>? multiBranch;
 
   factory HomeData.fromJson(Map<String, dynamic> json) => HomeData(
@@ -73,33 +73,30 @@ class HomeData {
         "show_contract": showContract,
         "title_message": titleMessage,
         "santra_orders":
-            List<dynamic>.from(santraOrders.map((x) => x.toJson())),
+            List<dynamic>.from(santraOrders!.map((x) => x.toJson())),
         "manual_orders":
-            List<dynamic>.from(manualOrders.map((x) => x.toJson())),
+            List<dynamic>.from(manualOrders!.map((x) => x.toJson())),
         "pending_orders":
-            List<dynamic>.from(pendingOrders.map((x) => x.toJson())),
+            List<dynamic>.from(pendingOrders!.map((x) => x.toJson())),
       };
 }
 
 class ManualOrder {
   ManualOrder({
     required this.orderCount,
-    required this.manualOrders,
+ 
   });
 
   num orderCount;
-  List<Order> manualOrders;
 
   factory ManualOrder.fromJson(Map<String, dynamic> json) => ManualOrder(
         orderCount: json["order_count"],
-        manualOrders: List<Order>.from(
-            json["manual_orders"].map((x) => Order.fromJson(x))),
+       
       );
 
   Map<String, dynamic> toJson() => {
         "order_count": orderCount,
-        "manual_orders":
-            List<dynamic>.from(manualOrders.map((x) => x.toJson())),
+    
       };
 }
 
@@ -217,44 +214,37 @@ class OrderItem {
 class PendingOrder {
   PendingOrder({
     required this.orderCount,
-    required this.pendingOrders,
+
   });
 
   num orderCount;
-  List<Order> pendingOrders;
 
   factory PendingOrder.fromJson(Map<String, dynamic> json) => PendingOrder(
         orderCount: json["order_count"],
-        pendingOrders: List<Order>.from(
-            json["pending_orders"].map((x) => Order.fromJson(x))),
+       
       );
 
   Map<String, dynamic> toJson() => {
         "order_count": orderCount,
-        "pending_orders":
-            List<dynamic>.from(pendingOrders.map((x) => x.toJson())),
+
       };
 }
 
 class SantraOrder {
   SantraOrder({
     required this.orderCount,
-    required this.santraOrders,
   });
 
   num orderCount;
-  List<Order> santraOrders;
 
   factory SantraOrder.fromJson(Map<String, dynamic> json) => SantraOrder(
         orderCount: json["order_count"],
-        santraOrders: List<Order>.from(
-            json["santra_orders"].map((x) => Order.fromJson(x))),
+    
       );
 
   Map<String, dynamic> toJson() => {
         "order_count": orderCount,
-        "santra_orders":
-            List<dynamic>.from(santraOrders.map((x) => x.toJson())),
+    
       };
 }
 

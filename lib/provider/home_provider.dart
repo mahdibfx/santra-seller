@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -191,10 +192,10 @@ class HomeProvider extends ChangeNotifier {
         var body = <String, String>{};
         body['seller_code'] = sellerCode!;
         var res = await http.post(
-            Uri.parse("${ApiData.mainurl}seller_home_new"),
+            Uri.parse("${ApiData.mainurl}home_main"),
             headers: ApiData.header,
             body: body);
-
+log(res.body.toString());
         if (res.statusCode == 200) {
           var data = jsonDecode(res.body);
           var newdata = HomeModel.fromJson(data);
@@ -204,20 +205,20 @@ class HomeProvider extends ChangeNotifier {
           res.body.debugPrint();
           debugPrint(res.body);
           homeData = newdata.data[0];
-          allOrders.addAll(homeData!.santraOrders[0].santraOrders);
-          allOrders.addAll(homeData!.manualOrders[0].manualOrders);
+          // allOrders.addAll(homeData!.santraOrders[0].santraOrders);
+          // allOrders.addAll(homeData!.manualOrders[0].manualOrders);
           // allOrders.addAll(homeData!.pendingOrders[0].pendingOrders);
           newOrderSantraCount = data['data'][0]['santra_orders'][0]
                   ['order_count_notification']
               .toString();
-          santraOrders = homeData!.santraOrders[0].santraOrders;
-          filteredSantraOrders = santraOrders;
-          pendingOrders = homeData!.pendingOrders[0].pendingOrders;
-          filteredPendingOrders = pendingOrders;
-          manualOrders = homeData!.manualOrders[0].manualOrders;
-          filteredManualOrders = manualOrders;
+          // santraOrders = homeData!.santraOrders[0].santraOrders;
+          // filteredSantraOrders = santraOrders;
+          // pendingOrders = homeData!.pendingOrders[0].pendingOrders;
+          // filteredPendingOrders = pendingOrders;
+          // manualOrders = homeData!.manualOrders[0].manualOrders;
+          // filteredManualOrders = manualOrders;
           multiBranches = homeData?.multiBranch ?? [];
-          filteredAllOrders = allOrders;
+          // filteredAllOrders = allOrders;
           isLoading = false;
           notifyListeners();
         } else {
@@ -229,6 +230,7 @@ class HomeProvider extends ChangeNotifier {
       } catch (e) {
         isLoading = false;
         notifyListeners();
+        log(e.toString());
 
         CommonSnackbar.getSnackbar(tr.translateData("serve_error"),
             tr.translateData("serve_error_internet"), UIDataColors.redColor);
