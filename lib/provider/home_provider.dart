@@ -24,8 +24,10 @@ class HomeProvider extends ChangeNotifier {
   var isFilterOrderLoading = false;
   bool isLoading = true;
   bool isAcceptOrderLoading = false;
+  bool typedOrdersLoading = true ; 
   bool isRejectOrderLoading = false;
   bool isOrderReadyLoading = false;
+  final scrollController = ScrollController();
   bool isCancelOrderLoading = false;
   List<Order> santraOrders = [];
   List<MultiBranchData> multiBranches = [];
@@ -36,11 +38,14 @@ class HomeProvider extends ChangeNotifier {
   List<Order> filteredPendingOrders = [];
   List<Order> manualOrders = [];
   List<Order> filteredManualOrders = [];
+  int lazyIndex =  30 ; 
   List<Order> allOrders = [];
   List<Order> filteredAllOrders = [];
+  List<Order> typedOrders = [ ];
+  List<Order> tempTypedOrders = [ ];
+
   String? selectedBranch;
   String? branchSellerCode;
-
   String selectedOrderOption = '';
 
   String? sellerCode;
@@ -76,6 +81,66 @@ class HomeProvider extends ChangeNotifier {
   var selectedYear = 'Year';
   var selectedMonth = 'Month';
 
+
+  void lazyLoadGetOrders(String? orderType,String? searchValue,ScrollController selectedScrollController){
+    // Check if the user is near the bottom (200 pixels before maxScrollExtent)
+  typedOrders = [];
+    selectedScrollController.addListener(() {
+          if (selectedScrollController.position.pixels >=
+            selectedScrollController.position.maxScrollExtent - 200 &&
+        !typedOrdersLoading) {
+          typedOrdersLoading = true ;
+          notifyListeners();
+          getOrders(lazyIndex, orderType, searchValue);
+          lazyIndex++;
+    }
+    },);
+
+  }
+clearOrders(){
+  typedOrders.clear();
+  notifyListeners();
+}
+getOrders(int index,String? orderType,String? searchValue) async {
+/// index starts from 0 to 30  then ++ 30 ;
+
+
+    tempTypedOrders.clear();
+     typedOrdersLoading = true ;
+          notifyListeners();
+      notifyListeners();
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      var url = Uri.parse(searchValue != null ? ApiData.searchOrders: ApiData.ordersList);
+      Map<String, dynamic> body = {};
+      body['seller_code'] = prefs.getString("sellercode");
+
+      if(searchValue == null){
+      body['order_index'] = index.toString();
+      body['order_type'] = orderType;
+        
+      }
+      else{
+      body['order_number'] = searchValue;
+
+      }
+
+      var response = await http.post(url, headers: ApiData.header, body: body);
+        log(response.body);
+
+      if (response.statusCode == 200) {
+        var data = List.from( jsonDecode(response.body)['data'][0]['orders_data']);
+        if(searchValue!= null){
+          typedOrders.clear();
+        }
+        typedOrders.addAll(data.map((e)=>Order.fromJson(e)));
+
+        typedOrdersLoading = false ;
+        notifyListeners();
+      } else {
+        generalException();
+      }
+    
+}
   updateCancelOrderLoading(bool value) {
     isCancelOrderLoading = value;
     notifyListeners();
@@ -188,7 +253,7 @@ class HomeProvider extends ChangeNotifier {
     if (sellerCode != null) {
       isLoading = true;
       notifyListeners();
-      try {
+     
         var body = <String, String>{};
         body['seller_code'] = sellerCode!;
         var res = await http.post(
@@ -227,14 +292,7 @@ log(res.body.toString());
               tr.translateData("something_wrong_message"),
               UIDataColors.redColor);
         }
-      } catch (e) {
-        isLoading = false;
-        notifyListeners();
-        log(e.toString());
-
-        CommonSnackbar.getSnackbar(tr.translateData("serve_error"),
-            tr.translateData("serve_error_internet"), UIDataColors.redColor);
-      }
+      
     }
   }
 

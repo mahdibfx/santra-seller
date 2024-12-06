@@ -90,7 +90,7 @@ class ManualOrder {
   num orderCount;
 
   factory ManualOrder.fromJson(Map<String, dynamic> json) => ManualOrder(
-        orderCount: json["order_count"],
+         orderCount:  int.tryParse(json["order_count"].toString()) ?? 0,
        
       );
 
@@ -220,7 +220,7 @@ class PendingOrder {
   num orderCount;
 
   factory PendingOrder.fromJson(Map<String, dynamic> json) => PendingOrder(
-        orderCount: json["order_count"],
+        orderCount:  int.tryParse(json["order_count"].toString()) ?? 0,
        
       );
 
@@ -238,7 +238,7 @@ class SantraOrder {
   num orderCount;
 
   factory SantraOrder.fromJson(Map<String, dynamic> json) => SantraOrder(
-        orderCount: json["order_count"],
+        orderCount:  int.tryParse(json["order_count"].toString()) ?? 0,
     
       );
 

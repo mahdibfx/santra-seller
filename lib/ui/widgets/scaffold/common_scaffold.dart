@@ -1,4 +1,6 @@
 // flutter imports
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 // package imports
@@ -247,6 +249,7 @@ class CommonScaffold extends StatelessWidget {
                       child: GestureDetector(
                         onTap: isBackHomeScreen
                             ? () {
+                             
                                 Get.to(const HomeScreen());
                               }
                             : () {

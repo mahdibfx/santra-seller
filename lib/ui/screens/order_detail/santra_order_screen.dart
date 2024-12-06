@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:santra_seller/models/home_model.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import '../../../provider/home_provider.dart';
 import '../../../provider/splash_provider.dart';
 import '../../../utils/app_translation/app_translation.dart';
@@ -27,7 +30,45 @@ class SantraOrderScreen extends StatefulWidget {
 
 class _SantraOrderScreenState extends State<SantraOrderScreen> {
   final localization = AppTranslations();
+  
   Widget bodyData() {
+        final order = Order.fromJson( {
+                    "order_number": "25762",
+                    "order_status": "accepted",
+                    "customer_name": "ali blogger",
+                    "total_order_amount": "31",
+                    "order_date_stamp": "2024-12-06 11:02:20",
+                    "payment_method": "cash",
+                    "advance_time": "2024-12-06",
+                    "order_remarks": "",
+                    "request_image": "",
+                    "order_type": "Delivery",
+                    "customer_phone": "971565954081",
+                    "payment_link": "no_link",
+                    "color_code": "0098B1",
+                    "order_items": [
+                        {
+                            "product_name": "Tiramisu",
+                            "product_name_ar": "Tiramisu",
+                            "product_total": "1",
+                            "product_image": "https://imagedelivery.net/uduDJsWvsRGySrUMV4LHcA/pimage_5367365472/public",
+                            "product_quantity": "1"
+                        },
+                        {
+                            "product_name": "Flavor : Pistachio",
+                            "product_name_ar": "Flavor : Pistachio",
+                            "product_total": "0",
+                            "product_image": "https://api.santra.qa/by_default.jpg",
+                            "product_quantity": "1"
+                        }
+                    ],
+                    "area_customer": " villa 62 Al Ain - Al Ain",
+                    "request_pdf": "",
+                    "cash_charges": "0",
+                    "delivery_charges": "30",
+                    "order_discount": "0",
+                    "bar_code": "no"
+                });
     return GetBuilder<AppTranslations>(builder: (tr) {
       return Consumer<HomeProvider>(
         builder: (context, _, child) {
@@ -40,6 +81,7 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                   children: [
                     SafeArea(
                       child: SingleChildScrollView(
+                        controller: scrollController,
                         child: Column(
                           children: [
                             HeadingWithIcon(
@@ -47,7 +89,7 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                                 btntxt:
                                     tr.translateData("santra_orders_title")),
                             SpacingHeight.heightlistspacing10,
-                            Row(
+                   Row(
                               children: [
                                 Expanded(
                                   child: SizedBox(
@@ -56,12 +98,17 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                                       prefixIcon: UIDATAIcons.searchIcon,
                                       isTextHidden: false,
                                       hintText:
-                                          tr.translateData('orders_search'),
+                                          tr.translateData('order_number'),
                                       fillcolor: UIDataColors.whiteColor,
                                       keyboardType: TextInputType.text,
                                       controller: _.filterController,
                                       onChanged: (value) {
-                                        _.filterSantraOrders();
+                                       if(value.isEmpty){
+                                        _.clearOrders();
+
+                                         Provider.of<HomeProvider>(context, listen: false)
+            .getOrders(0, "santra_orders", null);
+                                       }
                                       },
                                     ),
                                   ),
@@ -69,7 +116,16 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                                 SpacingWidth.widthlistspacing,
                                 GestureDetector(
                                   onTap: () {
-                                    newShhet(context);
+                                        _.clearOrders();
+
+                                   if(_.filterController.text.isEmpty){
+                                                            Provider.of<HomeProvider>(context, listen: false)
+            .getOrders(0, "santra_orders", null);
+                                   }else{
+                                        _.getOrders(0, "",_.filterController.text );
+
+                                   }
+                                  
                                   },
                                   child: Container(
                                     width: 45,
@@ -81,7 +137,7 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                                     ),
                                     child: Center(
                                       child: SvgPicture.asset(
-                                        UIDATAIcons.filterIcon,
+                                        UIDATAIcons.searchIcon,
                                         color: Colors.white,
                                       ),
                                     ),
@@ -90,7 +146,7 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                               ],
                             ),
                             SpacingHeight.heightlistspacing20,
-                            _.filteredSantraOrders.isEmpty
+                            _.typedOrders.isEmpty && !_.typedOrdersLoading
                                 ? Center(
                                     child: Column(
                                       children: [
@@ -104,14 +160,16 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                                       ],
                                     ),
                                   )
-                                : ListView.builder(
+                                : _.typedOrdersLoading ? 
+                                Center(child: CupertinoActivityIndicator(),):
+                                 ListView.builder(
                                     physics:
                                         const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
-                                    itemCount: _.filteredSantraOrders.length,
+                                    itemCount: _.typedOrders.length,
                                     itemBuilder: (context, index) {
                                       var santraList =
-                                          _.filteredSantraOrders[index];
+                                          _.typedOrders[index];
                                       return santraList.orderStatus ==
                                                   'new_order' ||
                                               santraList.orderStatus ==
@@ -218,7 +276,55 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                                                   santraList.orderDiscount,
                                             );
                                     }),
-                            SpacingHeight.heightlistspacing50
+                            SpacingHeight.heightlistspacing50,
+
+                             if (_.typedOrdersLoading) 
+                              Skeletonizer(
+                                ignoreContainers: false,
+                                enabled: true,
+                                  child: ListView.builder(
+                                itemCount: 1,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) => CustomCard(
+                                          customerPhone:
+                                              order.customerPhone,
+                                          orderType: order.orderType,
+                                          title: 'Card',
+                                          orderStatus:
+                                              order.orderStatus.toString(),
+                                          totalPrice: order
+                                              .totalOrderAmount
+                                              .toString(),
+                                          orderRemarks: order.orderRemarks
+                                              .toString(),
+                                          orderTime: order.orderDateStamp
+                                              .toString(),
+                                          area: order.areaCustomer,
+                                          deliveryTime:
+                                              order.advanceTime.toString(),
+                                          customerName: order.customerName
+                                              .toString(),
+                                          paymentMethod:
+                                              Get.locale!.languageCode == 'en'
+                                                  ? _.getEnglishPaymentMethod(
+                                                      order.paymentMethod
+                                                          .toString())
+                                                  : _.getArabicPaymentMethod(
+                                                      order.paymentMethod
+                                                          .toString()),
+                                          orderNumber:
+                                              order.orderNumber.toString(),
+                                          paymentLink:
+                                              order.paymentLink.toString(),
+                                          orderItemList: order.orderItems,
+                                          requestImage: order.requestImage,
+                                          attachedPdf: order.pdfLink,
+                                          cashCharge: order.cashCharges,
+                                          deliveryCharge:
+                                              order.deliveryCharges,
+                                          discount: order.orderDiscount,
+                                        )
+                              )),
                           ],
                         ).paddingSymmetric(horizontal: 15),
                       ),
@@ -407,7 +513,19 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
           });
         });
   }
+  final scrollController = ScrollController();
 
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    Provider.of<HomeProvider>(context,listen: false).getOrders( 0,"santra_orders", null);
+      
+    Provider.of<HomeProvider>(context,listen: false).lazyLoadGetOrders( "santra_orders", null,scrollController);
+      
+    },);
+  }
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(

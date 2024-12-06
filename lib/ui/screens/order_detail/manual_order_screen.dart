@@ -2,10 +2,12 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
+import 'package:santra_seller/models/home_model.dart';
 import 'package:santra_seller/ui/screens/add_manual_order/add_manual_order.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/ui/widgets/buttons/icon_setting_button.dart';
 import 'package:santra_seller/ui/widgets/cards/manual_order_detail_card.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import '../../../provider/home_provider.dart';
 import '../../../provider/splash_provider.dart';
 import '../../../utils/app_translation/app_translation.dart';
@@ -29,7 +31,46 @@ class ManualOrderScreen extends StatefulWidget {
 
 class _ManualOrderScreenState extends State<ManualOrderScreen> {
   final localization = AppTranslations();
+  final scrollController = ScrollController();
+
   Widget bodyData() {
+        final order = Order.fromJson( {
+                    "order_number": "25762",
+                    "order_status": "accepted",
+                    "customer_name": "ali blogger",
+                    "total_order_amount": "31",
+                    "order_date_stamp": "2024-12-06 11:02:20",
+                    "payment_method": "cash",
+                    "advance_time": "2024-12-06",
+                    "order_remarks": "",
+                    "request_image": "",
+                    "order_type": "Delivery",
+                    "customer_phone": "971565954081",
+                    "payment_link": "no_link",
+                    "color_code": "0098B1",
+                    "order_items": [
+                        {
+                            "product_name": "Tiramisu",
+                            "product_name_ar": "Tiramisu",
+                            "product_total": "1",
+                            "product_image": "https://imagedelivery.net/uduDJsWvsRGySrUMV4LHcA/pimage_5367365472/public",
+                            "product_quantity": "1"
+                        },
+                        {
+                            "product_name": "Flavor : Pistachio",
+                            "product_name_ar": "Flavor : Pistachio",
+                            "product_total": "0",
+                            "product_image": "https://api.santra.qa/by_default.jpg",
+                            "product_quantity": "1"
+                        }
+                    ],
+                    "area_customer": " villa 62 Al Ain - Al Ain",
+                    "request_pdf": "",
+                    "cash_charges": "0",
+                    "delivery_charges": "30",
+                    "order_discount": "0",
+                    "bar_code": "no"
+                });
     return WillPopScope(
       onWillPop: () {
         Get.offAll(const HomeScreen());
@@ -51,6 +92,7 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                     progressIndicator: const CircularProgressIndicator(),
                     child: SafeArea(
                       child: SingleChildScrollView(
+                        controller: scrollController,
                         child: Stack(
                           alignment: AlignmentDirectional.center,
                           children: [
@@ -61,57 +103,72 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                                     btntxt: tr
                                         .translateData("manual_orders_title")),
                                 SpacingHeight.heightlistspacing10,
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: SizedBox(
-                                        // width: 100,
-                                        child: CommonTextField(
-                                          prefixIcon: UIDATAIcons.searchIcon,
-                                          isTextHidden: false,
-                                          hintText:
-                                              tr.translateData('order_number'),
-                                          fillcolor: UIDataColors.whiteColor,
-                                          keyboardType: TextInputType.text,
-                                          controller: _.filterController,
-                                          onChanged: (value) {
-                                            _.filtermanualOrders();
-                                          },
-                                        ),
+                             Row(
+                              children: [
+                                Expanded(
+                                  child: SizedBox(
+                                    // width: 100,
+                                    child: CommonTextField(
+                                      prefixIcon: UIDATAIcons.searchIcon,
+                                      isTextHidden: false,
+                                      hintText:
+                                          tr.translateData('order_number'),
+                                      fillcolor: UIDataColors.whiteColor,
+                                      keyboardType: TextInputType.text,
+                                      controller: _.filterController,
+                                      onChanged: (value) {
+                                       if(value.isEmpty){
+                                        _.clearOrders();
+                                         Provider.of<HomeProvider>(context, listen: false)
+            .getOrders(0, "manual_orders", null);
+                                       }
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                SpacingWidth.widthlistspacing,
+                                GestureDetector(
+                                  onTap: () {
+                                   if(_.filterController.text.isEmpty){
+                                        _.clearOrders();
+
+                                                            Provider.of<HomeProvider>(context, listen: false)
+            .getOrders(0, "manual_orders", null);
+                                   }else{
+                                        _.clearOrders();
+
+                                        _.getOrders(0, "",_.filterController.text );
+
+                                   }
+                                  
+                                  },
+                                  child: Container(
+                                    width: 45,
+                                    height: 45,
+                                    decoration: const BoxDecoration(
+                                      color: UIDataColors.primaryColor,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                    ),
+                                    child: Center(
+                                      child: SvgPicture.asset(
+                                        UIDATAIcons.searchIcon,
+                                        color: Colors.white,
                                       ),
                                     ),
-                                    SpacingWidth.widthlistspacing,
-                                    GestureDetector(
-                                      onTap: () {
-                                        newShhet(context);
-                                      },
-                                      child: Container(
-                                        width: 45,
-                                        height: 45,
-                                        decoration: const BoxDecoration(
-                                          color: UIDataColors.primaryColor,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10)),
-                                        ),
-                                        child: Center(
-                                          child: SvgPicture.asset(
-                                            UIDATAIcons.filterIcon,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
+                                  ),
+                                )
+                              ],
+                            ),
                                 SpacingHeight.heightlistspacing20,
                                 ListView.builder(
                                     physics:
                                         const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
-                                    itemCount: _.filteredManualOrders.length,
+                                    itemCount: _.typedOrders.length,
                                     itemBuilder: (context, index) {
                                       var santraList =
-                                          _.filteredManualOrders[index];
+                                          _.typedOrders[index];
                                       return santraList.orderStatus ==
                                                   'new_order' ||
                                               santraList.orderStatus ==
@@ -218,7 +275,54 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
                                                   santraList.orderDiscount,
                                             );
                                     }),
-                                SpacingHeight.heightlistspacing50
+                                SpacingHeight.heightlistspacing50,
+                                 if (_.typedOrdersLoading) 
+                              Skeletonizer(
+                                ignoreContainers: false,
+                                enabled: true,
+                                  child: ListView.builder(
+                                itemCount: 1,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) => CustomCard(
+                                          customerPhone:
+                                              order.customerPhone,
+                                          orderType: order.orderType,
+                                          title: 'Card',
+                                          orderStatus:
+                                              order.orderStatus.toString(),
+                                          totalPrice: order
+                                              .totalOrderAmount
+                                              .toString(),
+                                          orderRemarks: order.orderRemarks
+                                              .toString(),
+                                          orderTime: order.orderDateStamp
+                                              .toString(),
+                                          area: order.areaCustomer,
+                                          deliveryTime:
+                                              order.advanceTime.toString(),
+                                          customerName: order.customerName
+                                              .toString(),
+                                          paymentMethod:
+                                              Get.locale!.languageCode == 'en'
+                                                  ? _.getEnglishPaymentMethod(
+                                                      order.paymentMethod
+                                                          .toString())
+                                                  : _.getArabicPaymentMethod(
+                                                      order.paymentMethod
+                                                          .toString()),
+                                          orderNumber:
+                                              order.orderNumber.toString(),
+                                          paymentLink:
+                                              order.paymentLink.toString(),
+                                          orderItemList: order.orderItems,
+                                          requestImage: order.requestImage,
+                                          attachedPdf: order.pdfLink,
+                                          cashCharge: order.cashCharges,
+                                          deliveryCharge:
+                                              order.deliveryCharges,
+                                          discount: order.orderDiscount,
+                                        )
+                              )),
                               ],
                             ).paddingSymmetric(horizontal: 15),
                             // _.isAcceptOrderLoading ||
@@ -407,7 +511,17 @@ class _ManualOrderScreenState extends State<ManualOrderScreen> {
           });
         });
   }
-
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    Provider.of<HomeProvider>(context,listen: false).getOrders( 0,"manual_orders", null);
+      
+    Provider.of<HomeProvider>(context,listen: false).lazyLoadGetOrders( "manual_orders", null,scrollController);
+      
+    },);
+  }
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(

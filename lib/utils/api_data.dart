@@ -1,6 +1,8 @@
 import 'config/env.dart';
 
 class ApiData {
+  static const ordersList = "${mainurl}home_main_orders";
+  static const searchOrders = "${mainurl}search_orders";
   static const mainurl = Secret.api_key_url;
   static const logoutApi = "${mainurl}logout_seller";
   static const deleteAccountApi = "${mainurl}delete_seller";
