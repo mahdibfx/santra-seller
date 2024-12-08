@@ -38,7 +38,7 @@ class HomeData {
     required this.profitMonthly,
      this.santraOrders,
      this.manualOrders,
-     this.pendingOrders,
+     this.pendingOrders,this.allOrders,
     this.multiBranch,
   });
 
@@ -49,6 +49,8 @@ class HomeData {
   num profitMonthly;
   List<SantraOrder>? santraOrders;
   List<ManualOrder>? manualOrders;
+  List<AllOrders>? allOrders;
+
   List<PendingOrder>? pendingOrders;
   List<MultiBranchData>? multiBranch;
 
@@ -58,6 +60,8 @@ class HomeData {
         titleMessage: json["title_message"],
         ordersMonthly: json["orders_monthly"],
         profitMonthly: json["profit_monthly"],
+        allOrders:List<AllOrders>.from(
+            json["all_orders"].map((x) => AllOrders.fromJson(x))) ,
         santraOrders: List<SantraOrder>.from(
             json["santra_orders"].map((x) => SantraOrder.fromJson(x))),
         manualOrders: List<ManualOrder>.from(
@@ -229,7 +233,24 @@ class PendingOrder {
 
       };
 }
+class AllOrders {
+  AllOrders({
+    required this.orderCount,
 
+  });
+
+  num orderCount;
+
+  factory AllOrders.fromJson(Map<String, dynamic> json) => AllOrders(
+        orderCount:  int.tryParse(json["order_count"].toString()) ?? 0,
+       
+      );
+
+  Map<String, dynamic> toJson() => {
+        "order_count": orderCount,
+
+      };
+}
 class SantraOrder {
   SantraOrder({
     required this.orderCount,

@@ -39,7 +39,7 @@ class _PendingOrderScreenState extends State<PendingOrderScreen> {
             .getOrders(0, "pending_orders", null);
 
         Provider.of<HomeProvider>(context, listen: false)
-            .lazyLoadGetOrders("", null,scrollController);
+            .lazyLoadGetOrders("pending_orders", null,scrollController);
       },
     );
   }

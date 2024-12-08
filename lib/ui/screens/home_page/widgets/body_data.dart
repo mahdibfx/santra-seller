@@ -229,7 +229,7 @@ Column _HomeBody(AppTranslations tr, HomeProvider _, BuildContext context) {
                                 Get.to(() => const AllOrderScreen());
                               },
                               heading: tr.translateData('home_all_orders'),
-                              count: _.filteredAllOrders.length.toString(),
+                              count: _.homeData!.allOrders![0].orderCount.toString(),
                               imageAsset: UIDataImage.allOrderSVG,
                             ),
                           ],

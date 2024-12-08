@@ -160,9 +160,7 @@ class _SantraOrderScreenState extends State<SantraOrderScreen> {
                                       ],
                                     ),
                                   )
-                                : _.typedOrdersLoading ? 
-                                Center(child: CupertinoActivityIndicator(),):
-                                 ListView.builder(
+                                : ListView.builder(
                                     physics:
                                         const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,

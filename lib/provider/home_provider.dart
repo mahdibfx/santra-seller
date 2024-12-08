@@ -26,6 +26,7 @@ class HomeProvider extends ChangeNotifier {
   bool isAcceptOrderLoading = false;
   bool typedOrdersLoading = true ; 
   bool isRejectOrderLoading = false;
+  bool isThereNextOrders = true ; 
   bool isOrderReadyLoading = false;
   final scrollController = ScrollController();
   bool isCancelOrderLoading = false;
@@ -84,36 +85,38 @@ class HomeProvider extends ChangeNotifier {
 
   void lazyLoadGetOrders(String? orderType,String? searchValue,ScrollController selectedScrollController){
     // Check if the user is near the bottom (200 pixels before maxScrollExtent)
+    lazyIndex = 30 ; 
   typedOrders = [];
     selectedScrollController.addListener(() {
           if (selectedScrollController.position.pixels >=
             selectedScrollController.position.maxScrollExtent - 200 &&
-        !typedOrdersLoading) {
+        !typedOrdersLoading && isThereNextOrders) {
           typedOrdersLoading = true ;
           notifyListeners();
           getOrders(lazyIndex, orderType, searchValue);
-          lazyIndex++;
+          lazyIndex = lazyIndex + 30;
     }
     },);
 
   }
 clearOrders(){
+  isThereNextOrders = true; 
   typedOrders.clear();
   notifyListeners();
 }
-getOrders(int index,String? orderType,String? searchValue) async {
+getOrders(num index,String? orderType,String? searchValue) async {
 /// index starts from 0 to 30  then ++ 30 ;
 
 
     tempTypedOrders.clear();
      typedOrdersLoading = true ;
+     isThereNextOrders = true ; 
           notifyListeners();
-      notifyListeners();
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       var url = Uri.parse(searchValue != null ? ApiData.searchOrders: ApiData.ordersList);
       Map<String, dynamic> body = {};
       body['seller_code'] = prefs.getString("sellercode");
-
+  log(prefs.getString("sellercode").toString());
       if(searchValue == null){
       body['order_index'] = index.toString();
       body['order_type'] = orderType;
@@ -123,16 +126,22 @@ getOrders(int index,String? orderType,String? searchValue) async {
       body['order_number'] = searchValue;
 
       }
+      log(body.toString());
 
       var response = await http.post(url, headers: ApiData.header, body: body);
-        log(response.body);
 
       if (response.statusCode == 200) {
         var data = List.from( jsonDecode(response.body)['data'][0]['orders_data']);
+        var ordersMap = data.map((e)=>Order.fromJson(e));
         if(searchValue!= null){
           typedOrders.clear();
         }
+        if(ordersMap.isEmpty){
+isThereNextOrders = false ; 
+        }else{
         typedOrders.addAll(data.map((e)=>Order.fromJson(e)));
+
+        }
 
         typedOrdersLoading = false ;
         notifyListeners();
