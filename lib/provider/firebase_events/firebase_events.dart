@@ -7,20 +7,20 @@ class FirebaseAnalyticsController extends GetxController {
   FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   AppFlyerController appsFlyer = Get.put(AppFlyerController());
   Future firebaseAppInstallEvent() async {
-    Map<String, dynamic> body = {};
+    Map<String, Object> body = {};
 
     await appsFlyer.appsFlyerAppInstall();
     await _sendAnalyticsEvent('pr_seller_install', body);
   }
 
   Future firebaseFirstAppOpenEvent() async {
-    Map<String, dynamic> body = {};
+    Map<String, Object> body = {};
     await appsFlyer.appsFlyerFirstOpen();
     await _sendAnalyticsEvent('pr_seller_first_open', body);
   }
 
   Future firebaseAddToCartEvent(String name, double price, String qty) async {
-    Map<String, dynamic> body = {
+    Map<String, Object> body = {
       "seller_product_name": name,
       "product_price": price,
       "product_qty": qty,
@@ -33,7 +33,7 @@ class FirebaseAnalyticsController extends GetxController {
     String id,
     double total,
   ) async {
-    Map<String, dynamic> body = {
+    Map<String, Object> body = {
       "currency": "AED",
       "transaction_id": id,
       "value": total,
@@ -155,7 +155,7 @@ class FirebaseAnalyticsController extends GetxController {
 //   }
 
   Future<void> _sendAnalyticsEvent(
-      String eventName, Map<String, dynamic> body) async {
+      String eventName, Map<String, Object> body) async {
     // Only strings and numbers (longs & doubles for android, ints and doubles for iOS) are supported for GA custom event parameters:
     // https://firebase.google.com/docs/reference/ios/firebaseanalytics/api/reference/Classes/FIRAnalytics#+logeventwithname:parameters:
     // https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics#public-void-logevent-string-name,-bundle-params

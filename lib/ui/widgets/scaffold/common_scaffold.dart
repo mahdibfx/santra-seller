@@ -398,8 +398,7 @@ class CommonScaffold extends StatelessWidget {
                                     tr.translateData('alert'),
                                     tr.translateData('status_approved'),
                                     tr.translateData('okay'), () {
-                                  homeProvider.sellerStatusNew.debugPrint();
-                                  Get.back();
+                                  Navigator.pop(context);
                                 });
                               }
                             : isAddManual

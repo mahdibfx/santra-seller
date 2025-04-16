@@ -1,4 +1,7 @@
 //Flutter Packages
+import 'dart:developer';
+
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,9 +24,17 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 void _removeBadge() {
   FlutterAppBadger.removeBadge();
 }
+Future<void> requestTrackingPermission() async {
+  final status = await AppTrackingTransparency.trackingAuthorizationStatus;
 
+  if (status == TrackingStatus.notDetermined) {
+    await AppTrackingTransparency.requestTrackingAuthorization();
+  }
+}
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // await requestTrackingPermission();
+
   await Firebase.initializeApp();
   _removeBadge();
   await FirebaseMessaging.instance.requestPermission();

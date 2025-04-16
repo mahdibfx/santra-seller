@@ -329,6 +329,7 @@ class _CustomCardState extends State<CustomCard>
                         child: ListView.builder(
                             shrinkWrap: true,
                             itemCount: widget.orderItemList.length,
+physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               return OrderItemWidget(
                                 imageString:

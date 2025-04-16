@@ -4,7 +4,7 @@ publish_to: 'none'
 version: 4.5.1+1
 
 environment:
-  sdk: '>=2.18.2 <3.0.0'
+  sdk: '>=3.4.0 <3.8.0'
 dependencies:
   app_tracking_transparency: ^2.0.4
   appsflyer_sdk: ^6.10.3
@@ -13,11 +13,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   date_picker_timeline: ^1.2.3
   dropdown_search: ^5.0.6
-  envify: null
-  firebase_analytics: ^10.4.1
-  firebase_auth: ^4.6.1
-  firebase_core: ^2.13.0
-  firebase_messaging: ^14.6.1
+  envify: any
+  firebase_analytics: ^11.4.4
+  firebase_auth: ^5.5.1
+  firebase_core: ^3.12.1  # Updated to be compatible with firebase_messaging
+  firebase_messaging: ^15.2.4
   flutter:
     sdk: flutter
   flutter_app_badger: ^1.5.0
@@ -28,19 +28,19 @@ dependencies:
   flutter_switch: ^0.3.2
   get: ^4.6.6
   get_storage: ^2.1.1
-  http: null
-  image_picker: ^0.8.7+5
+  http: ^1.3.0  # Updated from null
+  image_picker: ^1.1.2  # Updated
   intl: ^0.19.0
   mask_text_input_formatter: ^2.4.0
-  modal_progress_hud_nsn: ^0.4.0
+  modal_progress_hud_nsn: ^0.5.1  # Updated
   package_info_plus: ^4.0.0
   percent_indicator: ^4.2.3
-  permission_handler: ^10.2.0
+  permission_handler: ^11.3.0  # Updated
   provider: ^6.0.5
   share_plus: ^10.0.2
-  shared_preferences: ^2.1.1
-  skeletonizer: ^1.4.2
-  table_calendar: ^3.1.1
+  shared_preferences: ^2.0.20  # Updated
+  skeletonizer: ^1.4.3  # Updated
+  table_calendar: ^3.0.9  # Updated
   toast: ^0.3.0
   url_launcher: ^6.1.11
   win32: ^5.5.4
@@ -49,7 +49,7 @@ dependencies:
 #  package_info_plus: ^4.0.1
 dev_dependencies:
   change_app_package_name: ^1.1.0
-  flutter_lints: ^2.0.0
+  flutter_lints: ^4.0.0  # Updated
   flutter_test:
     sdk: flutter
 

@@ -37,7 +37,7 @@ class CommonTextField extends StatelessWidget {
   CommonTextField(
       {this.controller,
       this.textStyle,
-      this.maxlines: 1,
+      this.maxlines = 1,
       this.validator,
       this.initVal,
       this.bordercolor,

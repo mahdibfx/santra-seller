@@ -98,6 +98,7 @@ class _ManualOrderCardState extends State<ManualOrderCard>
     return GetBuilder<AppTranslations>(builder: (tr) {
       return Consumer<HomeProvider>(builder: (context, _, child) {
         return Container(
+          
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15.0),
             boxShadow: [
@@ -327,10 +328,30 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                     if (_isOpen) SpacingHeight.heightlistspacing15,
                     if (_isOpen)
                       SizedBox(
-                        height: _calculateContainerHeight(),
+                        // height: _calculateContainerHeight(),
+//                              child: ListView.builder(
+//                             shrinkWrap: true,
+//                             itemCount: 5,
+// physics: const NeverScrollableScrollPhysics(),
+//                             itemBuilder: (context, index) {
+//                               return OrderItemWidget(
+//                                 imageString:
+//                                     widget.orderItemList[0].productImage,
+//                                 productQuantity:
+//                                     widget.orderItemList[0].productQuantity,
+//                                 productName: Get.locale!.languageCode == 'en'
+//                                     ? widget.orderItemList[0].productName
+//                                     : widget
+//                                         .orderItemList[0].productNameArabic,
+//                                 productPrice:
+//                                     widget.orderItemList[0].productTotal,
+//                               );
+//                             }),
                         child: ListView.builder(
                             shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
                             itemCount: widget.orderItemList.length,
+
                             itemBuilder: (context, index) {
                               return OrderItemWidget(
                                 imageString:
@@ -638,16 +659,20 @@ class OrderItemWidget extends StatelessWidget {
                     const SizedBox(
                       width: 10,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          productName,
-                          style: UIDataTextStyles.h2.copyWith(fontSize: 12),
-                        ),
-                        Text('x$productQuantity'),
-                      ],
-                    ).marginOnly(top: 5),
+                    SizedBox(
+                      width: context.width *0.6,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            productName,
+                            overflow: TextOverflow.ellipsis,
+                            style: UIDataTextStyles.h2.copyWith(fontSize: 12),
+                          ),
+                          Text('x$productQuantity'),
+                        ],
+                      ).marginOnly(top: 5),
+                    ),
                   ],
                 ),
               ),
