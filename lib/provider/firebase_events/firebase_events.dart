@@ -1,21 +1,19 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:get/get.dart';
 
-import '../apps_flyr/appflyer_controller.dart';
-
 class FirebaseAnalyticsController extends GetxController {
   FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-  AppFlyerController appsFlyer = Get.put(AppFlyerController());
+  // AppFlyerController appsFlyer = Get.put(AppFlyerController());
   Future firebaseAppInstallEvent() async {
     Map<String, Object> body = {};
 
-    await appsFlyer.appsFlyerAppInstall();
+    // await appsFlyer.appsFlyerAppInstall();
     await _sendAnalyticsEvent('pr_seller_install', body);
   }
 
   Future firebaseFirstAppOpenEvent() async {
     Map<String, Object> body = {};
-    await appsFlyer.appsFlyerFirstOpen();
+    // await appsFlyer.appsFlyerFirstOpen();
     await _sendAnalyticsEvent('pr_seller_first_open', body);
   }
 
@@ -25,7 +23,7 @@ class FirebaseAnalyticsController extends GetxController {
       "product_price": price,
       "product_qty": qty,
     };
-    await appsFlyer.appsFlyerAddToCartEvent(price, qty);
+    // await appsFlyer.appsFlyerAddToCartEvent(price, qty);
     await _sendAnalyticsEvent('pr_seller_add_cart', body);
   }
 
@@ -38,7 +36,7 @@ class FirebaseAnalyticsController extends GetxController {
       "transaction_id": id,
       "value": total,
     };
-    await appsFlyer.appsFlyerPurchaseEvent(id, total);
+    // await appsFlyer.appsFlyerPurchaseEvent(id, total);
     await _sendAnalyticsEvent('purchase', body);
   }
 //   openAppFirstEvent() {
