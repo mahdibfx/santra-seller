@@ -869,6 +869,7 @@ class OrderItemWidget extends StatelessWidget {
                                                       },
                                                       child:
                                                            Text(tr.translateData("done"))),
+                                                           16.vSpace()
                                                 ],
                                               )
                                             ],
