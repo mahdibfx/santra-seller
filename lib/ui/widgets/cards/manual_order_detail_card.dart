@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,12 +8,14 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:santra_seller/ui/widgets/cards/my_customer_card.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
+import 'package:santra_seller/utils/ext.dart';
 import 'package:santra_seller/utils/uidata.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../models/home_model.dart';
 import '../../../provider/cart_provider.dart';
 import '../../../provider/home_provider.dart';
-import '../../../utils/uidata/textStyles.dart';
+import '../../../utils/uidata/textStyles.dart' hide tr;
 import '../buttons/material_buttons/raised_gradient_button.dart';
 import '../dialogs/full_screen_image.dart';
 
@@ -98,7 +102,6 @@ class _ManualOrderCardState extends State<ManualOrderCard>
     return GetBuilder<AppTranslations>(builder: (tr) {
       return Consumer<HomeProvider>(builder: (context, _, child) {
         return Container(
-          
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15.0),
             boxShadow: [
@@ -349,11 +352,12 @@ class _ManualOrderCardState extends State<ManualOrderCard>
 //                             }),
                         child: ListView.builder(
                             shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             itemCount: widget.orderItemList.length,
-
                             itemBuilder: (context, index) {
                               return OrderItemWidget(
+                                itemRemarks:
+                                    widget.orderItemList[index].itemRemarks,
                                 imageString:
                                     widget.orderItemList[index].productImage,
                                 productQuantity:
@@ -364,6 +368,8 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                         .orderItemList[index].productNameArabic,
                                 productPrice:
                                     widget.orderItemList[index].productTotal,
+                                images: widget.orderItemList[index].itemImages,
+                                pdf: widget.orderItemList[index].itemPdf,
                               );
                             }),
                       ),
@@ -419,13 +425,15 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                                           ),
                                         ),
                                         Expanded(
-                                          child: SingleChildScrollView(
-                                            scrollDirection: Axis.horizontal,
-                                            child: Text(
-                                              widget.orderRemarks,
-                                              maxLines: 2,
-                                            ).marginOnly(
-                                                left: 10, top: 4, bottom: 4),
+                                          child: Wrap(
+                                            children: [
+                                              Text(widget.orderRemarks,
+                                                      maxLines: 3)
+                                                  .marginOnly(
+                                                      left: 10,
+                                                      top: 4,
+                                                      bottom: 4),
+                                            ],
                                           ),
                                         ),
                                       ],
@@ -619,13 +627,18 @@ class OrderItemWidget extends StatelessWidget {
   final String productName;
   final String productQuantity;
   final String productPrice;
-
+  final String itemRemarks;
+  final List<String> images;
+  final String pdf;
   const OrderItemWidget({
     super.key,
     required this.imageString,
     required this.productQuantity,
     required this.productName,
     required this.productPrice,
+    required this.itemRemarks,
+    required this.images,
+    required this.pdf,
   });
 
   @override
@@ -660,7 +673,7 @@ class OrderItemWidget extends StatelessWidget {
                       width: 10,
                     ),
                     SizedBox(
-                      width: context.width *0.6,
+                      width: context.width * 0.6,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -669,7 +682,213 @@ class OrderItemWidget extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: UIDataTextStyles.h2.copyWith(fontSize: 12),
                           ),
-                          Text('x$productQuantity'),
+                          if (images
+                                  .where((e) => e.isNotEmpty)
+                                  .toList()
+                                  .isNotEmpty ||
+                              pdf.isNotEmpty ||
+                              itemRemarks != "no_remarks")
+                            InkWell(
+                              onTap: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.white,
+                                    builder: (c) => Container(
+                                          width: double.infinity,
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              16.vSpace(),
+                                              if (itemRemarks != "no_remarks")
+                                                 Text(
+                                                 tr.translateData("special_request"),
+                                                  style: const TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              if (itemRemarks != "no_remarks")
+                                                16.vSpace(),
+                                              if (itemRemarks != "no_remarks")
+                                                Container(
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.grey
+                                                          .withOpacity(.06),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8)),
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .all(14),
+                                                  child: Text(itemRemarks),
+                                                ),
+                                              16.vSpace(),
+                                              if (images
+                                                      .where(
+                                                          (e) => e.isNotEmpty)
+                                                      .toList()
+                                                      .isNotEmpty ||
+                                                  pdf.isNotEmpty)
+                                                 Text(
+                                            tr.translateData("attachements"),
+                                                  style: const TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              if (images
+                                                      .where(
+                                                          (e) => e.isNotEmpty)
+                                                      .toList()
+                                                      .isNotEmpty ||
+                                                  pdf.isNotEmpty)
+                                                16.vSpace(),
+                                              if (images
+                                                      .where(
+                                                          (e) => e.isNotEmpty)
+                                                      .toList()
+                                                      .isNotEmpty ||
+                                                  pdf.isNotEmpty)
+                                                SizedBox(
+                                                  height: 60,
+                                                  child: ListView(
+                                                    scrollDirection:
+                                                        Axis.horizontal,
+                                                    children: [
+                                                      ...List.generate(
+                                                          images.where((e)=>e.isNotEmpty).length,
+                                                          (index) =>
+                                                              GestureDetector(
+                                                                onTap: () {
+                                                                  showDialog(
+                                                                      barrierColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      context:
+                                                                          context,
+                                                                      builder: (c) =>
+                                                                          Stack(
+                                                                            children: [
+                                                                              Positioned.fill(
+                                                                                  child: BackdropFilter(
+                                                                                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                                                                                child: Container(
+                                                                                  color: Colors.transparent.withOpacity(0.5),
+                                                                                ),
+                                                                              )),
+                                                                              Positioned(
+                                                                                  left: 20,
+                                                                                  right: 20,
+                                                                                  top: MediaQuery.of(context).size.height *.2,
+                                                                                                                                                                  
+                                                                                  bottom: MediaQuery.of(context).size.height *.2,
+
+                                                                                  child: Stack(
+                                                                                    children: [
+                                                                                      Container(
+                                                                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(14), image: DecorationImage(fit: BoxFit.cover, image: CachedNetworkImageProvider(images[index]))),
+                                                                                      ),
+                                                                                       PositionedDirectional(end: 8,top: 8, child: GestureDetector(onTap: () {
+                                                                                        Get.back();
+                                                                                      }, child: const CircleAvatar(radius: 14, backgroundColor: Colors.white,child: Icon(Icons.close,size: 16,),)))
+                                                                                    ],
+                                                                                  ))
+                                                                            ],
+                                                                          ));
+                                                                },
+                                                                child: Hero(
+                                                                  tag: images[
+                                                                      index],
+                                                                  child:
+                                                                      Container(
+                                                                    margin: const EdgeInsetsDirectional
+                                                                        .only(
+                                                                        end: 4),
+                                                                    width: 60,
+                                                                    height: 60,
+                                                                    decoration: BoxDecoration(
+                                                                         borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8),
+                                                                        image: DecorationImage(
+                                                                            image:
+                                                                                CachedNetworkImageProvider(images[index]),
+                                                                            fit: BoxFit.cover)),
+                                                                  ),
+                                                                ),
+                                                              )),
+                                             if(pdf.isNotEmpty)         GestureDetector(
+                                                        onTap: () async {
+   
+    await launchUrl(
+      pdf.toUri(),
+      mode: LaunchMode.externalApplication,
+    );
+                                                        },
+                                                        child: Container(
+                                                          width: 60,
+                                                          decoration: BoxDecoration(
+                                                              color: Colors.red,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8)),
+                                                          child: const Icon(
+                                                            Icons
+                                                                .picture_as_pdf_outlined,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              16.vSpace(),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.stretch,
+                                                children: [
+                                                  FilledButton(
+                                                      style: FilledButton.styleFrom(
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8)),
+                                                          backgroundColor:
+                                                              Colors.teal),
+                                                      onPressed: () {
+                                                        Get.back();
+                                                      },
+                                                      child:
+                                                           Text(tr.translateData("done"))),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ));
+                              },
+                              child: Row(
+                                children: [
+                                  Text('x$productQuantity'),
+                                  4.hSpace(),
+                                   Text(
+                                    tr.translateData("see_special_request"),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                        color: UIDataColors.primaryColor),
+                                  )
+                                ],
+                              ),
+                            ),
                         ],
                       ).marginOnly(top: 5),
                     ),

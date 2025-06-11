@@ -1,14 +1,13 @@
-import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+
+import '../../../provider/splash_provider.dart';
 import '../../../utils/app_translation/app_translation.dart';
 import '../../../utils/uidata.dart';
 import '../../widgets/scaffold/common_scaffold.dart';
-import '../../../provider/splash_provider.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
-import 'package:get/get.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

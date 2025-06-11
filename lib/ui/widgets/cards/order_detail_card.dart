@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -11,6 +10,7 @@ import 'package:santra_seller/ui/widgets/dialogs/full_screen_image.dart';
 import 'package:santra_seller/ui/widgets/snackbar/common_snackbar.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
 import 'package:santra_seller/utils/uidata.dart';
+
 import '../../../models/home_model.dart';
 import '../../../provider/home_provider.dart';
 import '../../../utils/uidata/textStyles.dart';
@@ -341,7 +341,8 @@ physics: const NeverScrollableScrollPhysics(),
                                     : widget
                                         .orderItemList[index].productNameArabic,
                                 productPrice:
-                                    widget.orderItemList[index].productTotal,
+                                    widget.orderItemList[index].productTotal, itemRemarks:widget.orderItemList[index].itemRemarks,   images: widget.orderItemList[index].itemImages,
+                                pdf: widget.orderItemList[index].itemPdf,
                               );
                             }),
                       ),
@@ -392,14 +393,15 @@ physics: const NeverScrollableScrollPhysics(),
                                             color: UIDataColors.primaryColor,
                                           ),
                                         ),
-                                        Expanded(
-                                          child: SingleChildScrollView(
-                                            scrollDirection: Axis.horizontal,
-                                            child: Text(
-                                              widget.orderRemarks,
-                                              maxLines: 2,
-                                            ).marginOnly(
-                                                left: 10, top: 4, bottom: 4),
+                                     Expanded(
+                                          child: Wrap(
+                                            children: [
+                                              Text(
+                                                widget.orderRemarks,
+                                                maxLines: 3
+                                              ).marginOnly(
+                                                  left: 10, top: 4, bottom: 4),
+                                            ],
                                           ),
                                         ),
                                       ],
@@ -777,80 +779,80 @@ physics: const NeverScrollableScrollPhysics(),
   }
 }
 
-class OrderItemWidget extends StatelessWidget {
-  final String imageString;
-  final String productName;
-  final String productQuantity;
-  final String productPrice;
+// class OrderItemWidget extends StatelessWidget {
+//   final String imageString;
+//   final String productName;
+//   final String productQuantity;
+//   final String productPrice;
 
-  const OrderItemWidget({
-    super.key,
-    required this.imageString,
-    required this.productQuantity,
-    required this.productName,
-    required this.productPrice,
-  });
+//   const OrderItemWidget({
+//     super.key,
+//     required this.imageString,
+//     required this.productQuantity,
+//     required this.productName,
+//     required this.productPrice,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 50,
-          child: Row(
-            children: [
-              SizedBox(
-                child: Row(
-                  children: [
-                    SizedBox(
-                        // padding: const EdgeInsets.all(5),
-                        height: 50,
-                        width: 50,
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: CachedNetworkImage(
-                              imageUrl: imageString,
-                              fit: BoxFit.fill,
-                              // memCacheHeight: 500,
-                              // memCacheWidth: 400,
-                              placeholder: (context, url) => const Padding(
-                                padding: EdgeInsets.all(12.0),
-                                child: CircularProgressIndicator(),
-                              ),
-                            ))),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          productName,
-                          style: UIDataTextStyles.h2.copyWith(fontSize: 12),
-                        ),
-                        Text('x$productQuantity'),
-                      ],
-                    ).marginOnly(top: 5),
-                  ],
-                ),
-              ),
-              const Spacer(),
-              Row(
-                children: [
-                  Text(
-                    '$productPrice AED',
-                    style: UIDataTextStyles.textMediumColoredBlue.copyWith(
-                      color: UIDataColors.primaryColor,
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-        const Divider(),
-      ],
-    ).paddingSymmetric(horizontal: 10);
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       mainAxisAlignment: MainAxisAlignment.start,
+//       children: [
+//         SizedBox(
+//           height: 50,
+//           child: Row(
+//             children: [
+//               SizedBox(
+//                 child: Row(
+//                   children: [
+//                     SizedBox(
+//                         // padding: const EdgeInsets.all(5),
+//                         height: 50,
+//                         width: 50,
+//                         child: ClipRRect(
+//                             borderRadius: BorderRadius.circular(8),
+//                             child: CachedNetworkImage(
+//                               imageUrl: imageString,
+//                               fit: BoxFit.fill,
+//                               // memCacheHeight: 500,
+//                               // memCacheWidth: 400,
+//                               placeholder: (context, url) => const Padding(
+//                                 padding: EdgeInsets.all(12.0),
+//                                 child: CircularProgressIndicator(),
+//                               ),
+//                             ))),
+//                     const SizedBox(
+//                       width: 10,
+//                     ),
+//                     Column(
+//                       crossAxisAlignment: CrossAxisAlignment.start,
+//                       children: [
+//                         Text(
+//                           productName,
+//                           style: UIDataTextStyles.h2.copyWith(fontSize: 12),
+//                         ),
+//                         Text('x$productQuantity'),
+//                       ],
+//                     ).marginOnly(top: 5),
+//                   ],
+//                 ),
+//               ),
+//               const Spacer(),
+//               Row(
+//                 children: [
+//                   Text(
+//                     '$productPrice AED',
+//                     style: UIDataTextStyles.textMediumColoredBlue.copyWith(
+//                       color: UIDataColors.primaryColor,
+//                     ),
+//                   ),
+//                 ],
+//               )
+//             ],
+//           ),
+//         ),
+//         const Divider(),
+//       ],
+//     ).paddingSymmetric(horizontal: 10);
+//   }
+// }

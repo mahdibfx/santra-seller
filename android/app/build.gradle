@@ -53,7 +53,7 @@ android {
         applicationId "com.hihome.seller"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion flutter.targetSdkVersion
         versionCode 30
         versionName "4.5.1"
@@ -80,9 +80,16 @@ flutter {
 }
 
 dependencies {
+
+
+
+
+
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation platform('com.google.firebase:firebase-bom:31.0.2')
-    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'androidx.work:work-runtime-ktx:2.7.0'
     implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
     implementation 'com.android.installreferrer:installreferrer:2.2'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation("androidx.core:core:1.9.0")
 }

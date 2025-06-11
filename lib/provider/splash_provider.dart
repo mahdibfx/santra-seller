@@ -1,15 +1,15 @@
 import 'dart:io';
+
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:santra_seller/provider/apps_flyr/appflyer_controller.dart';
+import 'package:http/http.dart' as http;
 import 'package:santra_seller/provider/firebase_events/firebase_events.dart';
 import 'package:santra_seller/ui/screens/auth_screen/login_screen.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
+
 import '../ui/widgets/dialogs/custom_dialogs.dart';
 import '../ui/widgets/snackbar/common_snackbar.dart';
 import '../utils/app_translation/app_translation.dart';
@@ -19,7 +19,7 @@ class SplashProvider extends ChangeNotifier {
   var tr = Get.put(AppTranslations());
   FirebaseAnalyticsController firebaseAnalytics =
       Get.put(FirebaseAnalyticsController());
-  AppFlyerController afController = Get.put(AppFlyerController());
+  // AppFlyerController afController = Get.put(AppFlyerController());
 
   bool isLoading = false;
 
@@ -109,7 +109,7 @@ class SplashProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? firstTime = prefs.getBool('first_time');
 
-    afController.appflyerLogs();
+    // afController.appflyerLogs();
     if (firstTime == null) {
       // first time
       await firebaseAnalytics.firebaseAppInstallEvent();
@@ -124,8 +124,10 @@ class SplashProvider extends ChangeNotifier {
   }
 
   void checkUpdateAndMakeDescision() async {
+    print("In decision screen");
     isInternetAvailable();
     await tr.fetchTranslationsv();
+    print(tr.updateAvailable);
     if (tr.updateAvailable == true) {
       customOntapDialog(
           tr.translateData("new_update"),

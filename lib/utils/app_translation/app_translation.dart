@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../api_data.dart';
 
 class AppTranslations extends GetxController {
-  static Map<String, Map<String, String>> _translations = {};
+  static final Map<String, Map<String, String>> _translations = {};
   String selectedLanguage = 'en_us';
   dynamic engLang;
   dynamic arabLang;
@@ -46,7 +48,7 @@ class AppTranslations extends GetxController {
     // var url = Uri.parse(ApiData.languageSelection);
     var url = Uri.parse(ApiData.splashNew);
     Map<String, dynamic> body = {};
-    body['version'] = "4.3.8";
+    body['version'] = "4.6.0";
     body['platform'] = Platform.isIOS ? "Mobile_App_iOS" : "Mobile_App_Android";
     var response = await http.post(url, headers: ApiData.header, body: body);
     if (response.statusCode == 200) {
@@ -69,9 +71,9 @@ class AppTranslations extends GetxController {
 
   String translateData(String tralate) {
     if (selectedLanguage == 'en_us') {
-      return engLang[tralate];
+      return engLang[tralate] ?? tralate.replaceAll('_', " ");
     }
-    return arabLang[tralate];
+    return arabLang[tralate] ?? tralate.replaceAll("_", " ");
   }
 
   String getFont() {

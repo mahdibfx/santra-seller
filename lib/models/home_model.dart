@@ -3,6 +3,7 @@
 //     final homeModel = homeModelFromJson(jsonString);
 
 import 'dart:convert';
+import 'dart:developer';
 
 HomeModel homeModelFromJson(String str) => HomeModel.fromJson(json.decode(str));
 
@@ -191,6 +192,9 @@ class OrderItem {
     required this.productTotal,
     required this.productImage,
     required this.productQuantity,
+    required this.itemImages,
+    required this.itemRemarks,
+    required this.itemPdf
   });
 
   String productName;
@@ -198,20 +202,31 @@ class OrderItem {
   String productTotal;
   String productImage;
   String productQuantity;
+  String itemRemarks;
+  String itemPdf; 
+  List<String> itemImages;
 
-  factory OrderItem.fromJson(Map<String, dynamic> json) => OrderItem(
+  factory OrderItem.fromJson(Map<String, dynamic> json) {
+    
+    log(json.toString());
+    return OrderItem(
         productName: json["product_name"],
         productNameArabic: json["product_name_ar"],
         productTotal: json["product_total"],
+
         productImage: json["product_image"] ?? '',
-        productQuantity: json["product_quantity"],
-      );
+        productQuantity: json["product_quantity"], itemImages: [json['item_image_1'] ??'',json['item_image_2'] ?? ''], itemRemarks: json['item_remarks'] ?? 'no_remarks', itemPdf: json['item_pdf'] ?? '',
+      );}
 
   Map<String, dynamic> toJson() => {
         "product_name": productName,
         "product_total": productTotal,
         "product_image": productImage,
         "product_quantity": productQuantity,
+        'item_image_1':itemImages.first,
+        'item_image_2':itemImages[1],
+        'item_remarks':itemRemarks,
+        'item_pdf':itemPdf
       };
 }
 
