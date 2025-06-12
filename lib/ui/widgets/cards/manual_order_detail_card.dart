@@ -650,250 +650,252 @@ class OrderItemWidget extends StatelessWidget {
           height: 50,
           child: Row(
             children: [
-              SizedBox(
-                child: Row(
-                  children: [
-                    SizedBox(
-                        // padding: const EdgeInsets.all(5),
-                        height: 50,
-                        width: 50,
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: CachedNetworkImage(
-                              imageUrl: imageString,
-                              fit: BoxFit.cover,
-                              memCacheHeight: 300,
-                              memCacheWidth: 400,
-                              placeholder: (context, url) => const Padding(
-                                padding: EdgeInsets.all(12.0),
-                                child: CircularProgressIndicator(),
-                              ),
-                            ))),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    SizedBox(
-                      width: context.width * 0.6,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            productName,
-                            overflow: TextOverflow.ellipsis,
-                            style: UIDataTextStyles.h2.copyWith(fontSize: 12),
-                          ),
-                          if (images
-                                  .where((e) => e.isNotEmpty)
-                                  .toList()
-                                  .isNotEmpty ||
-                              pdf.isNotEmpty ||
-                              itemRemarks != "no_remarks")
-                            InkWell(
-                              onTap: () {
-                                showModalBottomSheet(
-                                    context: context,
-                                    isScrollControlled: true,
-                                    backgroundColor: Colors.white,
-                                    builder: (c) => Container(
-                                          width: double.infinity,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 16),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              16.vSpace(),
-                                              if (itemRemarks != "no_remarks")
-                                                 Text(
-                                                 tr.translateData("special_request"),
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                ),
-                                              if (itemRemarks != "no_remarks")
-                                                16.vSpace(),
-                                              if (itemRemarks != "no_remarks")
-                                                Container(
-                                                  width: double.infinity,
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.grey
-                                                          .withOpacity(.06),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8)),
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .all(14),
-                                                  child: Text(itemRemarks),
-                                                ),
-                                              16.vSpace(),
-                                              if (images
-                                                      .where(
-                                                          (e) => e.isNotEmpty)
-                                                      .toList()
-                                                      .isNotEmpty ||
-                                                  pdf.isNotEmpty)
-                                                 Text(
-                                            tr.translateData("attachements"),
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                ),
-                                              if (images
-                                                      .where(
-                                                          (e) => e.isNotEmpty)
-                                                      .toList()
-                                                      .isNotEmpty ||
-                                                  pdf.isNotEmpty)
-                                                16.vSpace(),
-                                              if (images
-                                                      .where(
-                                                          (e) => e.isNotEmpty)
-                                                      .toList()
-                                                      .isNotEmpty ||
-                                                  pdf.isNotEmpty)
-                                                SizedBox(
-                                                  height: 60,
-                                                  child: ListView(
-                                                    scrollDirection:
-                                                        Axis.horizontal,
-                                                    children: [
-                                                      ...List.generate(
-                                                          images.where((e)=>e.isNotEmpty).length,
-                                                          (index) =>
-                                                              GestureDetector(
-                                                                onTap: () {
-                                                                  showDialog(
-                                                                      barrierColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      context:
-                                                                          context,
-                                                                      builder: (c) =>
-                                                                          Stack(
-                                                                            children: [
-                                                                              Positioned.fill(
-                                                                                  child: BackdropFilter(
-                                                                                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                                                                                child: Container(
-                                                                                  color: Colors.transparent.withOpacity(0.5),
-                                                                                ),
-                                                                              )),
-                                                                              Positioned(
-                                                                                  left: 20,
-                                                                                  right: 20,
-                                                                                  top: MediaQuery.of(context).size.height *.2,
-                                                                                                                                                                  
-                                                                                  bottom: MediaQuery.of(context).size.height *.2,
-
-                                                                                  child: Stack(
-                                                                                    children: [
-                                                                                      Container(
-                                                                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(14), image: DecorationImage(fit: BoxFit.cover, image: CachedNetworkImageProvider(images[index]))),
-                                                                                      ),
-                                                                                       PositionedDirectional(end: 8,top: 8, child: GestureDetector(onTap: () {
-                                                                                        Get.back();
-                                                                                      }, child: const CircleAvatar(radius: 14, backgroundColor: Colors.white,child: Icon(Icons.close,size: 16,),)))
-                                                                                    ],
-                                                                                  ))
-                                                                            ],
-                                                                          ));
-                                                                },
-                                                                child: Hero(
-                                                                  tag: images[
-                                                                      index],
-                                                                  child:
-                                                                      Container(
-                                                                    margin: const EdgeInsetsDirectional
-                                                                        .only(
-                                                                        end: 4),
-                                                                    width: 60,
-                                                                    height: 60,
-                                                                    decoration: BoxDecoration(
-                                                                         borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8),
-                                                                        image: DecorationImage(
-                                                                            image:
-                                                                                CachedNetworkImageProvider(images[index]),
-                                                                            fit: BoxFit.cover)),
-                                                                  ),
-                                                                ),
-                                                              )),
-                                             if(pdf.isNotEmpty)         GestureDetector(
-                                                        onTap: () async {
-   
-    await launchUrl(
-      pdf.toUri(),
-      mode: LaunchMode.externalApplication,
-    );
-                                                        },
-                                                        child: Container(
-                                                          width: 60,
-                                                          decoration: BoxDecoration(
-                                                              color: Colors.red,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8)),
-                                                          child: const Icon(
-                                                            Icons
-                                                                .picture_as_pdf_outlined,
-                                                            color: Colors.white,
-                                                          ),
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              16.vSpace(),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.stretch,
-                                                children: [
-                                                  FilledButton(
-                                                      style: FilledButton.styleFrom(
-                                                          shape: RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8)),
-                                                          backgroundColor:
-                                                              Colors.teal),
-                                                      onPressed: () {
-                                                        Get.back();
-                                                      },
-                                                      child:
-                                                           Text(tr.translateData("done"))),
-                                                           16.vSpace()
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        ));
-                              },
-                              child: Row(
-                                children: [
-                                  Text('x$productQuantity'),
-                                  4.hSpace(),
-                                   Text(
-                                    tr.translateData("see_special_request"),
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12,
-                                        color: UIDataColors.primaryColor),
-                                  )
-                                ],
-                              ),
+              Expanded(
+                child: SizedBox(
+                  child: Row(
+                    children: [
+                      SizedBox(
+                          // padding: const EdgeInsets.all(5),
+                          height: 50,
+                          width: 50,
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: CachedNetworkImage(
+                                imageUrl: imageString,
+                                fit: BoxFit.cover,
+                                memCacheHeight: 300,
+                                memCacheWidth: 400,
+                                placeholder: (context, url) => const Padding(
+                                  padding: EdgeInsets.all(12.0),
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ))),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      SizedBox(
+                        width: context.width * 0.6,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              productName ,
+                              overflow: TextOverflow.ellipsis,
+                              style: UIDataTextStyles.h2.copyWith(fontSize: 12),
                             ),
-                        ],
-                      ).marginOnly(top: 5),
-                    ),
-                  ],
+                            if (images
+                                    .where((e) => e.isNotEmpty)
+                                    .toList()
+                                    .isNotEmpty ||
+                                pdf.isNotEmpty ||
+                                itemRemarks != "no_remarks")
+                              InkWell(
+                                onTap: () {
+                                  showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.white,
+                                      builder: (c) => Container(
+                                            width: double.infinity,
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 16),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                16.vSpace(),
+                                                if (itemRemarks != "no_remarks")
+                                                   Text(
+                                                   tr.translateData("special_request"),
+                                                    style: const TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  ),
+                                                if (itemRemarks != "no_remarks")
+                                                  16.vSpace(),
+                                                if (itemRemarks != "no_remarks")
+                                                  Container(
+                                                    width: double.infinity,
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.grey
+                                                            .withOpacity(.06),
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                8)),
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .all(14),
+                                                    child: Text(itemRemarks),
+                                                  ),
+                                                16.vSpace(),
+                                                if (images
+                                                        .where(
+                                                            (e) => e.isNotEmpty)
+                                                        .toList()
+                                                        .isNotEmpty ||
+                                                    pdf.isNotEmpty)
+                                                   Text(
+                                              tr.translateData("attachements"),
+                                                    style: const TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  ),
+                                                if (images
+                                                        .where(
+                                                            (e) => e.isNotEmpty)
+                                                        .toList()
+                                                        .isNotEmpty ||
+                                                    pdf.isNotEmpty)
+                                                  16.vSpace(),
+                                                if (images
+                                                        .where(
+                                                            (e) => e.isNotEmpty)
+                                                        .toList()
+                                                        .isNotEmpty ||
+                                                    pdf.isNotEmpty)
+                                                  SizedBox(
+                                                    height: 60,
+                                                    child: ListView(
+                                                      scrollDirection:
+                                                          Axis.horizontal,
+                                                      children: [
+                                                        ...List.generate(
+                                                            images.where((e)=>e.isNotEmpty).length,
+                                                            (index) =>
+                                                                GestureDetector(
+                                                                  onTap: () {
+                                                                    showDialog(
+                                                                        barrierColor:
+                                                                            Colors
+                                                                                .transparent,
+                                                                        context:
+                                                                            context,
+                                                                        builder: (c) =>
+                                                                            Stack(
+                                                                              children: [
+                                                                                Positioned.fill(
+                                                                                    child: BackdropFilter(
+                                                                                  filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                                                                                  child: Container(
+                                                                                    color: Colors.transparent.withOpacity(0.5),
+                                                                                  ),
+                                                                                )),
+                                                                                Positioned(
+                                                                                    left: 20,
+                                                                                    right: 20,
+                                                                                    top: MediaQuery.of(context).size.height *.2,
+                                                                                                                                                                    
+                                                                                    bottom: MediaQuery.of(context).size.height *.2,
+                
+                                                                                    child: Stack(
+                                                                                      children: [
+                                                                                        Container(
+                                                                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(14), image: DecorationImage(fit: BoxFit.cover, image: CachedNetworkImageProvider(images[index]))),
+                                                                                        ),
+                                                                                         PositionedDirectional(end: 8,top: 8, child: GestureDetector(onTap: () {
+                                                                                          Get.back();
+                                                                                        }, child: const CircleAvatar(radius: 14, backgroundColor: Colors.white,child: Icon(Icons.close,size: 16,),)))
+                                                                                      ],
+                                                                                    ))
+                                                                              ],
+                                                                            ));
+                                                                  },
+                                                                  child: Hero(
+                                                                    tag: images[
+                                                                        index],
+                                                                    child:
+                                                                        Container(
+                                                                      margin: const EdgeInsetsDirectional
+                                                                          .only(
+                                                                          end: 4),
+                                                                      width: 60,
+                                                                      height: 60,
+                                                                      decoration: BoxDecoration(
+                                                                           borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8),
+                                                                          image: DecorationImage(
+                                                                              image:
+                                                                                  CachedNetworkImageProvider(images[index]),
+                                                                              fit: BoxFit.cover)),
+                                                                    ),
+                                                                  ),
+                                                                )),
+                                               if(pdf.isNotEmpty)         GestureDetector(
+                                                          onTap: () async {
+                   
+                    await launchUrl(
+                      pdf.toUri(),
+                      mode: LaunchMode.externalApplication,
+                    );
+                                                          },
+                                                          child: Container(
+                                                            width: 60,
+                                                            decoration: BoxDecoration(
+                                                                color: Colors.red,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8)),
+                                                            child: const Icon(
+                                                              Icons
+                                                                  .picture_as_pdf_outlined,
+                                                              color: Colors.white,
+                                                            ),
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                16.vSpace(),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.stretch,
+                                                  children: [
+                                                    FilledButton(
+                                                        style: FilledButton.styleFrom(
+                                                            shape: RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8)),
+                                                            backgroundColor:
+                                                                Colors.teal),
+                                                        onPressed: () {
+                                                          Get.back();
+                                                        },
+                                                        child:
+                                                             Text(tr.translateData("done"))),
+                                                             16.vSpace()
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ));
+                                },
+                                child: Row(
+                                  children: [
+                                    Text('x$productQuantity'),
+                                    4.hSpace(),
+                                     Text(
+                                      tr.translateData("see_special_request"),
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                          color: UIDataColors.primaryColor),
+                                    )
+                                  ],
+                                ),
+                              ),
+                          ],
+                        ).marginOnly(top: 5),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const Spacer(),
