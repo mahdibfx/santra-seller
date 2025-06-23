@@ -683,6 +683,13 @@ class OrderItemWidget extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: UIDataTextStyles.h2.copyWith(fontSize: 12),
                             ),
+                           if (!(images
+                                    .where((e) => e.isNotEmpty)
+                                    .toList()
+                                    .isNotEmpty ||
+                                pdf.isNotEmpty ||
+                                itemRemarks != "no_remarks"))     Text('x$productQuantity'),
+                            
                             if (images
                                     .where((e) => e.isNotEmpty)
                                     .toList()
