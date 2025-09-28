@@ -1,11 +1,9 @@
 //Flutter Packages
-import 'dart:developer';
 
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:santra_seller/myApp.dart';
 import 'package:santra_seller/ui/widgets/snackbar/common_snackbar.dart';
 import 'package:get_storage/get_storage.dart';
@@ -21,9 +19,10 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
       );
 }
 
-void _removeBadge() {
-  FlutterAppBadger.removeBadge();
-}
+// void _removeBadge() {
+//   FlutterAppBadger.removeBadge();
+// }
+
 Future<void> requestTrackingPermission() async {
   final status = await AppTrackingTransparency.trackingAuthorizationStatus;
 
@@ -31,12 +30,13 @@ Future<void> requestTrackingPermission() async {
     await AppTrackingTransparency.requestTrackingAuthorization();
   }
 }
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // await requestTrackingPermission();
 
   await Firebase.initializeApp();
-  _removeBadge();
+  // _removeBadge();
   await FirebaseMessaging.instance.requestPermission();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await flutterLocalNotificationsPlugin
@@ -71,9 +71,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
 
-  runApp(
-    const MyApp(),
-  );
+  runApp(const MyApp());
 }
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
