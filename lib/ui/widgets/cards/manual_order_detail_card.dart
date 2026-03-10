@@ -215,18 +215,18 @@ class _ManualOrderCardState extends State<ManualOrderCard>
                           !widget.orderType.contains("Delivery")
                               ? Row(
                                   children: [
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          height: 16,
-                                          UIDATAIcons.callIcon,
-                                          color: UIDataColors.primaryColor,
-                                        ),
-                                        SpacingWidth.widthlistspacing,
-                                        Text(widget.customerPhone),
-                                      ],
-                                    ),
-                                    const Spacer(),
+                                    // Row(
+                                    //   children: [
+                                    //     SvgPicture.asset(
+                                    //       height: 16,
+                                    //       UIDATAIcons.callIcon,
+                                    //       color: UIDataColors.primaryColor,
+                                    //     ),
+                                    //     SpacingWidth.widthlistspacing,
+                                    //     Text(widget.customerPhone),
+                                    //   ],
+                                    // ),
+                                    // const Spacer(),
                                     Row(
                                       children: [
                                         SvgPicture.asset(
@@ -679,17 +679,17 @@ class OrderItemWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              productName ,
+                              productName,
                               overflow: TextOverflow.ellipsis,
                               style: UIDataTextStyles.h2.copyWith(fontSize: 12),
                             ),
-                           if (!(images
+                            if (!(images
                                     .where((e) => e.isNotEmpty)
                                     .toList()
                                     .isNotEmpty ||
                                 pdf.isNotEmpty ||
-                                itemRemarks != "no_remarks"))     Text('x$productQuantity'),
-                            
+                                itemRemarks != "no_remarks"))
+                              Text('x$productQuantity'),
                             if (images
                                     .where((e) => e.isNotEmpty)
                                     .toList()
@@ -713,8 +713,9 @@ class OrderItemWidget extends StatelessWidget {
                                               children: [
                                                 16.vSpace(),
                                                 if (itemRemarks != "no_remarks")
-                                                   Text(
-                                                   tr.translateData("special_request"),
+                                                  Text(
+                                                    tr.translateData(
+                                                        "special_request"),
                                                     style: const TextStyle(
                                                         fontSize: 18,
                                                         fontWeight:
@@ -729,8 +730,8 @@ class OrderItemWidget extends StatelessWidget {
                                                         color: Colors.grey
                                                             .withOpacity(.06),
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                8)),
+                                                            BorderRadius
+                                                                .circular(8)),
                                                     padding:
                                                         const EdgeInsetsDirectional
                                                             .all(14),
@@ -743,8 +744,9 @@ class OrderItemWidget extends StatelessWidget {
                                                         .toList()
                                                         .isNotEmpty ||
                                                     pdf.isNotEmpty)
-                                                   Text(
-                                              tr.translateData("attachements"),
+                                                  Text(
+                                                    tr.translateData(
+                                                        "attachements"),
                                                     style: const TextStyle(
                                                         fontSize: 18,
                                                         fontWeight:
@@ -770,7 +772,10 @@ class OrderItemWidget extends StatelessWidget {
                                                           Axis.horizontal,
                                                       children: [
                                                         ...List.generate(
-                                                            images.where((e)=>e.isNotEmpty).length,
+                                                            images
+                                                                .where((e) => e
+                                                                    .isNotEmpty)
+                                                                .length,
                                                             (index) =>
                                                                 GestureDetector(
                                                                   onTap: () {
@@ -793,18 +798,28 @@ class OrderItemWidget extends StatelessWidget {
                                                                                 Positioned(
                                                                                     left: 20,
                                                                                     right: 20,
-                                                                                    top: MediaQuery.of(context).size.height *.2,
-                                                                                                                                                                    
-                                                                                    bottom: MediaQuery.of(context).size.height *.2,
-                
+                                                                                    top: MediaQuery.of(context).size.height * .2,
+                                                                                    bottom: MediaQuery.of(context).size.height * .2,
                                                                                     child: Stack(
                                                                                       children: [
                                                                                         Container(
                                                                                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(14), image: DecorationImage(fit: BoxFit.cover, image: CachedNetworkImageProvider(images[index]))),
                                                                                         ),
-                                                                                         PositionedDirectional(end: 8,top: 8, child: GestureDetector(onTap: () {
-                                                                                          Get.back();
-                                                                                        }, child: const CircleAvatar(radius: 14, backgroundColor: Colors.white,child: Icon(Icons.close,size: 16,),)))
+                                                                                        PositionedDirectional(
+                                                                                            end: 8,
+                                                                                            top: 8,
+                                                                                            child: GestureDetector(
+                                                                                                onTap: () {
+                                                                                                  Get.back();
+                                                                                                },
+                                                                                                child: const CircleAvatar(
+                                                                                                  radius: 14,
+                                                                                                  backgroundColor: Colors.white,
+                                                                                                  child: Icon(
+                                                                                                    Icons.close,
+                                                                                                    size: 16,
+                                                                                                  ),
+                                                                                                )))
                                                                                       ],
                                                                                     ))
                                                                               ],
@@ -817,51 +832,54 @@ class OrderItemWidget extends StatelessWidget {
                                                                         Container(
                                                                       margin: const EdgeInsetsDirectional
                                                                           .only(
-                                                                          end: 4),
+                                                                          end:
+                                                                              4),
                                                                       width: 60,
-                                                                      height: 60,
+                                                                      height:
+                                                                          60,
                                                                       decoration: BoxDecoration(
-                                                                           borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8),
+                                                                          borderRadius: BorderRadius.circular(
+                                                                              8),
                                                                           image: DecorationImage(
-                                                                              image:
-                                                                                  CachedNetworkImageProvider(images[index]),
+                                                                              image: CachedNetworkImageProvider(images[index]),
                                                                               fit: BoxFit.cover)),
                                                                     ),
                                                                   ),
                                                                 )),
-                                               if(pdf.isNotEmpty)         GestureDetector(
-                                                          onTap: () async {
-                   
-                    await launchUrl(
-                      pdf.toUri(),
-                      mode: LaunchMode.externalApplication,
-                    );
-                                                          },
-                                                          child: Container(
-                                                            width: 60,
-                                                            decoration: BoxDecoration(
-                                                                color: Colors.red,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8)),
-                                                            child: const Icon(
-                                                              Icons
-                                                                  .picture_as_pdf_outlined,
-                                                              color: Colors.white,
+                                                        if (pdf.isNotEmpty)
+                                                          GestureDetector(
+                                                            onTap: () async {
+                                                              await launchUrl(
+                                                                pdf.toUri(),
+                                                                mode: LaunchMode
+                                                                    .externalApplication,
+                                                              );
+                                                            },
+                                                            child: Container(
+                                                              width: 60,
+                                                              decoration: BoxDecoration(
+                                                                  color: Colors
+                                                                      .red,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8)),
+                                                              child: const Icon(
+                                                                Icons
+                                                                    .picture_as_pdf_outlined,
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
                                                             ),
-                                                          ),
-                                                        )
+                                                          )
                                                       ],
                                                     ),
                                                   ),
                                                 16.vSpace(),
                                                 Column(
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment.stretch,
+                                                      CrossAxisAlignment
+                                                          .stretch,
                                                   children: [
                                                     FilledButton(
                                                         style: FilledButton.styleFrom(
@@ -875,9 +893,10 @@ class OrderItemWidget extends StatelessWidget {
                                                         onPressed: () {
                                                           Get.back();
                                                         },
-                                                        child:
-                                                             Text(tr.translateData("done"))),
-                                                             16.vSpace()
+                                                        child: Text(
+                                                            tr.translateData(
+                                                                "done"))),
+                                                    16.vSpace()
                                                   ],
                                                 )
                                               ],
@@ -888,7 +907,7 @@ class OrderItemWidget extends StatelessWidget {
                                   children: [
                                     Text('x$productQuantity'),
                                     4.hSpace(),
-                                     Text(
+                                    Text(
                                       tr.translateData("see_special_request"),
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w600,

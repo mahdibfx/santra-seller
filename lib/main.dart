@@ -15,7 +15,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(
-      //options: DefaultFirebaseOptions.currentPlatform,
+      // options: DefaultFirebaseOptions.currentPlatform,
       );
 }
 

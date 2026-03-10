@@ -12,8 +12,7 @@ class PDCardAddManualOrder extends StatelessWidget {
   int? index;
   var onTap;
   PDCardAddManualOrder(
-      {Key? key, required this.onTap, this.manualOrderController, this.index})
-      : super(key: key);
+      {super.key, required this.onTap, this.manualOrderController, this.index});
 
   @override
   Widget build(BuildContext context) {
