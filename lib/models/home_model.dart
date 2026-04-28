@@ -37,15 +37,18 @@ class HomeData {
     required this.titleMessage,
     required this.ordersMonthly,
     required this.profitMonthly,
-     this.santraOrders,
-     this.manualOrders,
-     this.pendingOrders,this.allOrders,
+    required this.login,
+    this.santraOrders,
+    this.manualOrders,
+    this.pendingOrders,
+    this.allOrders,
     this.multiBranch,
   });
 
   String totalNotifications;
   String showContract;
   String titleMessage;
+  String login;
   num ordersMonthly;
   num profitMonthly;
   List<SantraOrder>? santraOrders;
@@ -55,24 +58,27 @@ class HomeData {
   List<PendingOrder>? pendingOrders;
   List<MultiBranchData>? multiBranch;
 
-  factory HomeData.fromJson(Map<String, dynamic> json) => HomeData(
-        totalNotifications: json["total_notifications"],
-        showContract: json["show_contract"],
-        titleMessage: json["title_message"],
-        ordersMonthly: json["orders_monthly"],
-        profitMonthly: json["profit_monthly"],
-        allOrders:List<AllOrders>.from(
-            json["all_orders"].map((x) => AllOrders.fromJson(x))) ,
-        santraOrders: List<SantraOrder>.from(
-            json["santra_orders"].map((x) => SantraOrder.fromJson(x))),
-        manualOrders: List<ManualOrder>.from(
-            json["manual_orders"].map((x) => ManualOrder.fromJson(x))),
-        pendingOrders: List<PendingOrder>.from(
-            json["pending_orders"].map((x) => PendingOrder.fromJson(x))),
-        multiBranch: List<MultiBranchData>.from(
-            json["multi_branches"].map((x) => MultiBranchData.fromJson(x))),
-      );
-
+  factory HomeData.fromJson(Map<String, dynamic> json) {
+    log("Json Data: $json");
+    return HomeData(
+      totalNotifications: json["total_notifications"],
+      showContract: json["show_contract"],
+      login: json['login'],
+      titleMessage: json["title_message"],
+      ordersMonthly: json["orders_monthly"],
+      profitMonthly: json["profit_monthly"],
+      allOrders: List<AllOrders>.from(
+          json["all_orders"].map((x) => AllOrders.fromJson(x))),
+      santraOrders: List<SantraOrder>.from(
+          json["santra_orders"].map((x) => SantraOrder.fromJson(x))),
+      manualOrders: List<ManualOrder>.from(
+          json["manual_orders"].map((x) => ManualOrder.fromJson(x))),
+      pendingOrders: List<PendingOrder>.from(
+          json["pending_orders"].map((x) => PendingOrder.fromJson(x))),
+      multiBranch: List<MultiBranchData>.from(
+          json["multi_branches"].map((x) => MultiBranchData.fromJson(x))),
+    );
+  }
   Map<String, dynamic> toJson() => {
         "total_notifications": totalNotifications,
         "show_contract": showContract,
@@ -89,19 +95,16 @@ class HomeData {
 class ManualOrder {
   ManualOrder({
     required this.orderCount,
- 
   });
 
   num orderCount;
 
   factory ManualOrder.fromJson(Map<String, dynamic> json) => ManualOrder(
-         orderCount:  int.tryParse(json["order_count"].toString()) ?? 0,
-       
+        orderCount: int.tryParse(json["order_count"].toString()) ?? 0,
       );
 
   Map<String, dynamic> toJson() => {
         "order_count": orderCount,
-    
       };
 }
 
@@ -186,16 +189,15 @@ class Order {
 }
 
 class OrderItem {
-  OrderItem({
-    required this.productName,
-    required this.productNameArabic,
-    required this.productTotal,
-    required this.productImage,
-    required this.productQuantity,
-    required this.itemImages,
-    required this.itemRemarks,
-    required this.itemPdf
-  });
+  OrderItem(
+      {required this.productName,
+      required this.productNameArabic,
+      required this.productTotal,
+      required this.productImage,
+      required this.productQuantity,
+      required this.itemImages,
+      required this.itemRemarks,
+      required this.itemPdf});
 
   String productName;
   String productNameArabic;
@@ -203,69 +205,67 @@ class OrderItem {
   String productImage;
   String productQuantity;
   String itemRemarks;
-  String itemPdf; 
+  String itemPdf;
   List<String> itemImages;
 
   factory OrderItem.fromJson(Map<String, dynamic> json) {
-    
     log(json.toString());
     return OrderItem(
-        productName: json["product_name"],
-        productNameArabic: json["product_name_ar"],
-        productTotal: json["product_total"],
-
-        productImage: json["product_image"] ?? '',
-        productQuantity: json["product_quantity"], itemImages: [json['item_image_1'] ??'',json['item_image_2'] ?? ''], itemRemarks: json['item_remarks'] ?? 'no_remarks', itemPdf: json['item_pdf'] ?? '',
-      );}
+      productName: json["product_name"],
+      productNameArabic: json["product_name_ar"],
+      productTotal: json["product_total"],
+      productImage: json["product_image"] ?? '',
+      productQuantity: json["product_quantity"],
+      itemImages: [json['item_image_1'] ?? '', json['item_image_2'] ?? ''],
+      itemRemarks: json['item_remarks'] ?? 'no_remarks',
+      itemPdf: json['item_pdf'] ?? '',
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "product_name": productName,
         "product_total": productTotal,
         "product_image": productImage,
         "product_quantity": productQuantity,
-        'item_image_1':itemImages.first,
-        'item_image_2':itemImages[1],
-        'item_remarks':itemRemarks,
-        'item_pdf':itemPdf
+        'item_image_1': itemImages.first,
+        'item_image_2': itemImages[1],
+        'item_remarks': itemRemarks,
+        'item_pdf': itemPdf
       };
 }
 
 class PendingOrder {
   PendingOrder({
     required this.orderCount,
-
   });
 
   num orderCount;
 
   factory PendingOrder.fromJson(Map<String, dynamic> json) => PendingOrder(
-        orderCount:  int.tryParse(json["order_count"].toString()) ?? 0,
-       
+        orderCount: int.tryParse(json["order_count"].toString()) ?? 0,
       );
 
   Map<String, dynamic> toJson() => {
         "order_count": orderCount,
-
       };
 }
+
 class AllOrders {
   AllOrders({
     required this.orderCount,
-
   });
 
   num orderCount;
 
   factory AllOrders.fromJson(Map<String, dynamic> json) => AllOrders(
-        orderCount:  int.tryParse(json["order_count"].toString()) ?? 0,
-       
+        orderCount: int.tryParse(json["order_count"].toString()) ?? 0,
       );
 
   Map<String, dynamic> toJson() => {
         "order_count": orderCount,
-
       };
 }
+
 class SantraOrder {
   SantraOrder({
     required this.orderCount,
@@ -274,13 +274,11 @@ class SantraOrder {
   num orderCount;
 
   factory SantraOrder.fromJson(Map<String, dynamic> json) => SantraOrder(
-        orderCount:  int.tryParse(json["order_count"].toString()) ?? 0,
-    
+        orderCount: int.tryParse(json["order_count"].toString()) ?? 0,
       );
 
   Map<String, dynamic> toJson() => {
         "order_count": orderCount,
-    
       };
 }
 

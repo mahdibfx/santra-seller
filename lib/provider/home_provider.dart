@@ -1,9 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:santra_seller/models/home_model.dart';
+import 'package:santra_seller/provider/setting_provider/logout_controller.dart';
+import 'package:santra_seller/ui/screens/auth_screen/login_screen.dart';
 import 'package:santra_seller/ui/screens/home_page/home_screen.dart';
 import 'package:santra_seller/ui/widgets/dialogs/custom_dialogs.dart';
 import 'package:santra_seller/utils/app_translation/app_translation.dart';
@@ -24,9 +28,9 @@ class HomeProvider extends ChangeNotifier {
   var isFilterOrderLoading = false;
   bool isLoading = true;
   bool isAcceptOrderLoading = false;
-  bool typedOrdersLoading = true ; 
+  bool typedOrdersLoading = true;
   bool isRejectOrderLoading = false;
-  bool isThereNextOrders = true ; 
+  bool isThereNextOrders = true;
   bool isOrderReadyLoading = false;
   final scrollController = ScrollController();
   bool isCancelOrderLoading = false;
@@ -39,11 +43,11 @@ class HomeProvider extends ChangeNotifier {
   List<Order> filteredPendingOrders = [];
   List<Order> manualOrders = [];
   List<Order> filteredManualOrders = [];
-  int lazyIndex =  30 ; 
+  int lazyIndex = 30;
   List<Order> allOrders = [];
   List<Order> filteredAllOrders = [];
-  List<Order> typedOrders = [ ];
-  List<Order> tempTypedOrders = [ ];
+  List<Order> typedOrders = [];
+  List<Order> tempTypedOrders = [];
 
   String? selectedBranch;
   String? branchSellerCode;
@@ -82,74 +86,74 @@ class HomeProvider extends ChangeNotifier {
   var selectedYear = 'Year';
   var selectedMonth = 'Month';
 
-
-  void lazyLoadGetOrders(String? orderType,String? searchValue,ScrollController selectedScrollController){
+  void lazyLoadGetOrders(String? orderType, String? searchValue,
+      ScrollController selectedScrollController) {
     // Check if the user is near the bottom (200 pixels before maxScrollExtent)
-    lazyIndex = 30 ; 
-  typedOrders = [];
-    selectedScrollController.addListener(() {
-          if (selectedScrollController.position.pixels >=
-            selectedScrollController.position.maxScrollExtent - 200 &&
-        !typedOrdersLoading && isThereNextOrders) {
-          typedOrdersLoading = true ;
+    lazyIndex = 30;
+    typedOrders = [];
+    selectedScrollController.addListener(
+      () {
+        if (selectedScrollController.position.pixels >=
+                selectedScrollController.position.maxScrollExtent - 200 &&
+            !typedOrdersLoading &&
+            isThereNextOrders) {
+          typedOrdersLoading = true;
           notifyListeners();
           getOrders(lazyIndex, orderType, searchValue);
           lazyIndex = lazyIndex + 30;
-    }
-    },);
-
+        }
+      },
+    );
   }
-clearOrders(){
-  isThereNextOrders = true; 
-  typedOrders.clear();
-  notifyListeners();
-}
-getOrders(num index,String? orderType,String? searchValue) async {
-/// index starts from 0 to 30  then ++ 30 ;
 
+  clearOrders() {
+    isThereNextOrders = true;
+    typedOrders.clear();
+    notifyListeners();
+  }
+
+  getOrders(num index, String? orderType, String? searchValue) async {
+    /// index starts from 0 to 30  then ++ 30 ;
 
     tempTypedOrders.clear();
-     typedOrdersLoading = true ;
-     isThereNextOrders = true ; 
-          notifyListeners();
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      var url = Uri.parse(searchValue != null ? ApiData.searchOrders: ApiData.ordersList);
-      Map<String, dynamic> body = {};
-      body['seller_code'] = prefs.getString("sellercode");
-  log(prefs.getString("sellercode").toString());
-      if(searchValue == null){
+    typedOrdersLoading = true;
+    isThereNextOrders = true;
+    notifyListeners();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var url = Uri.parse(
+        searchValue != null ? ApiData.searchOrders : ApiData.ordersList);
+    Map<String, dynamic> body = {};
+    body['seller_code'] = prefs.getString("sellercode");
+    log(prefs.getString("sellercode").toString());
+    if (searchValue == null) {
       body['order_index'] = index.toString();
       body['order_type'] = orderType;
-        
-      }
-      else{
+    } else {
       body['order_number'] = searchValue;
+    }
+    log(body.toString());
 
+    var response = await http.post(url, headers: ApiData.header, body: body);
+
+    if (response.statusCode == 200) {
+      var data = List.from(jsonDecode(response.body)['data'][0]['orders_data']);
+      var ordersMap = data.map((e) => Order.fromJson(e));
+      if (searchValue != null) {
+        typedOrders.clear();
       }
-      log(body.toString());
-
-      var response = await http.post(url, headers: ApiData.header, body: body);
-
-      if (response.statusCode == 200) {
-        var data = List.from( jsonDecode(response.body)['data'][0]['orders_data']);
-        var ordersMap = data.map((e)=>Order.fromJson(e));
-        if(searchValue!= null){
-          typedOrders.clear();
-        }
-        if(ordersMap.isEmpty){
-isThereNextOrders = false ; 
-        }else{
-        typedOrders.addAll(data.map((e)=>Order.fromJson(e)));
-
-        }
-
-        typedOrdersLoading = false ;
-        notifyListeners();
+      if (ordersMap.isEmpty) {
+        isThereNextOrders = false;
       } else {
-        generalException();
+        typedOrders.addAll(data.map((e) => Order.fromJson(e)));
       }
-    
-}
+
+      typedOrdersLoading = false;
+      notifyListeners();
+    } else {
+      generalException();
+    }
+  }
+
   updateCancelOrderLoading(bool value) {
     isCancelOrderLoading = value;
     notifyListeners();
@@ -254,6 +258,36 @@ isThereNextOrders = false ;
     }
   }
 
+  Future logout() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? sellerCode = prefs.getString('sellercode');
+      String? fcmToken = prefs.getString('fcmtoken');
+      var url = Uri.parse(ApiData.logoutApi);
+      var request = http.MultipartRequest('POST', url);
+      var body = <String, String>{};
+      body['seller_code'] = sellerCode ?? "";
+      body['gcms_code'] = fcmToken ?? "";
+      request.fields.addAll(body);
+      request.headers.addAll(ApiData.header);
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+      if (response.statusCode == 200) {
+        await prefs.clear();
+
+        Get.offAll(() => const LoginScreen());
+      } else {
+        generalException();
+        if (kDebugMode) {
+          print("seller not logOut yet..");
+        }
+      }
+    } catch (e) {
+      generalException();
+    }
+    notifyListeners();
+  }
+
   homeDataCall() async {
     var tr = Get.put(AppTranslations());
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -262,46 +296,46 @@ isThereNextOrders = false ;
     if (sellerCode != null) {
       isLoading = true;
       notifyListeners();
-     
-        var body = <String, String>{};
-        body['seller_code'] = sellerCode!;
-        var res = await http.post(
-            Uri.parse("${ApiData.mainurl}home_main"),
-            headers: ApiData.header,
-            body: body);
-log(res.body.toString());
-        if (res.statusCode == 200) {
-          var data = jsonDecode(res.body);
-          var newdata = HomeModel.fromJson(data);
-          AppConstants.homeModel = newdata;
-          sellerStatusNew = data['data'][0]['seller_status'];
-          prefs.setString("sellerStatus", sellerStatusNew.toString());
-          res.body.debugPrint();
-          debugPrint(res.body);
-          homeData = newdata.data[0];
-          // allOrders.addAll(homeData!.santraOrders[0].santraOrders);
-          // allOrders.addAll(homeData!.manualOrders[0].manualOrders);
-          // allOrders.addAll(homeData!.pendingOrders[0].pendingOrders);
-          newOrderSantraCount = data['data'][0]['santra_orders'][0]
-                  ['order_count_notification']
-              .toString();
-          // santraOrders = homeData!.santraOrders[0].santraOrders;
-          // filteredSantraOrders = santraOrders;
-          // pendingOrders = homeData!.pendingOrders[0].pendingOrders;
-          // filteredPendingOrders = pendingOrders;
-          // manualOrders = homeData!.manualOrders[0].manualOrders;
-          // filteredManualOrders = manualOrders;
-          multiBranches = homeData?.multiBranch ?? [];
-          // filteredAllOrders = allOrders;
-          isLoading = false;
-          notifyListeners();
-        } else {
-          CommonSnackbar.getSnackbar(
-              tr.translateData("error_message"),
-              tr.translateData("something_wrong_message"),
-              UIDataColors.redColor);
+
+      var body = <String, String>{};
+      body['seller_code'] = sellerCode!;
+      var res = await http.post(Uri.parse("${ApiData.mainurl}home_main"),
+          headers: ApiData.header, body: body);
+      log(res.body.toString());
+      if (res.statusCode == 200) {
+        var data = jsonDecode(res.body);
+        log("data: $data");
+        var newdata = HomeModel.fromJson(data);
+        AppConstants.homeModel = newdata;
+        if (newdata.data.first.login != "expired") {
+          await logout();
+          return;
         }
-      
+        sellerStatusNew = data['data'][0]['seller_status'];
+        prefs.setString("sellerStatus", sellerStatusNew.toString());
+        res.body.debugPrint();
+        debugPrint(res.body);
+        homeData = newdata.data[0];
+        // allOrders.addAll(homeData!.santraOrders[0].santraOrders);
+        // allOrders.addAll(homeData!.manualOrders[0].manualOrders);
+        // allOrders.addAll(homeData!.pendingOrders[0].pendingOrders);
+        newOrderSantraCount = data['data'][0]['santra_orders'][0]
+                ['order_count_notification']
+            .toString();
+        // santraOrders = homeData!.santraOrders[0].santraOrders;
+        // filteredSantraOrders = santraOrders;
+        // pendingOrders = homeData!.pendingOrders[0].pendingOrders;
+        // filteredPendingOrders = pendingOrders;
+        // manualOrders = homeData!.manualOrders[0].manualOrders;
+        // filteredManualOrders = manualOrders;
+        multiBranches = homeData?.multiBranch ?? [];
+        // filteredAllOrders = allOrders;
+        isLoading = false;
+        notifyListeners();
+      } else {
+        CommonSnackbar.getSnackbar(tr.translateData("error_message"),
+            tr.translateData("something_wrong_message"), UIDataColors.redColor);
+      }
     }
   }
 

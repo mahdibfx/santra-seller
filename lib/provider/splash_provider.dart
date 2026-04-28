@@ -127,7 +127,6 @@ class SplashProvider extends ChangeNotifier {
     print("In decision screen");
     isInternetAvailable();
     await tr.fetchTranslationsv();
-    print(tr.updateAvailable);
     if (tr.updateAvailable == true) {
       customOntapDialog(
           tr.translateData("new_update"),
