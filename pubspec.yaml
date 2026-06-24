@@ -1,72 +1,45 @@
 name: santra_seller
-description: A new Flutter project.
+description: Santra Sellers — seller app (clean Stacked MVVM rebuild).
 publish_to: 'none'
-version: 4.6.2+2
+version: 5.0.0+1
 
 environment:
   sdk: '>=3.5.0 <4.0.0'
+
 dependencies:
-  app_tracking_transparency: ^2.0.4
-  cached_network_image: ^3.3.0
-  calendar_date_picker2: ^0.5.2
-  cupertino_icons: ^1.0.2
-  date_picker_timeline: ^1.2.3
-  dropdown_search: ^5.0.6
-  envify: any
-  firebase_core: ^3.12.1        # instead of 3.12.1
-  firebase_messaging: ^15.2.4   # instead of 15.2.4
-  firebase_analytics: any  # instead of `any`
   flutter:
     sdk: flutter
-  # flutter_app_badger: ^1.5.0
-  flutter_local_notifications: ^17.2.1
-  flutter_markdown: ^0.6.17
-  flutter_pdfview: ^1.4.0+1
-  flutter_rating_bar: ^4.0.1
-  flutter_svg: ^2.0.6
-  flutter_switch: ^0.3.2
-  get: ^4.6.6
-  get_storage: ^2.1.1
-  http: ^1.3.0
-  image_picker: ^1.1.2
-  intl: ^0.20.2
-  mask_text_input_formatter: ^2.4.0
-  modal_progress_hud_nsn: ^0.5.1
-  package_info_plus: ^4.0.0
-  percent_indicator: ^4.2.3
-  permission_handler: ^11.3.0
-  provider: ^6.0.5
-  share_plus: ^10.0.2
-  shared_preferences: ^2.0.20
-  skeletonizer: ^2.1.3
-  table_calendar: ^3.0.9
-  toast: ^0.3.0
-  url_launcher: ^6.1.11
-  win32: ^5.5.4
+  cupertino_icons: ^1.0.8
 
-# dependency_overrides:
-#  package_info_plus: ^4.0.1
+  # Architecture
+  stacked: ^3.5.0
+  stacked_services: ^1.6.0
+  stacked_hooks: ^0.2.4
+  flutter_hooks: ^0.20.5
+
+  # Networking + functional error handling
+  dio: ^5.7.0
+  fpdart: ^1.1.0
+
+  # Theming / fonts / i18n
+  google_fonts: ^6.2.1
+  easy_localization: ^3.0.7
+  intl: ^0.20.2
+
+  # Media
+  cached_network_image: ^3.4.1
+  flutter_svg: ^2.0.10+1
+
 dev_dependencies:
-  change_app_package_name: ^1.1.0
-  flutter_lints: ^4.0.0 # Updated
   flutter_test:
     sdk: flutter
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.13
+  stacked_generator: ^2.0.4
 
 flutter:
   uses-material-design: true
   assets:
+    - assets/translations/
     - assets/images/
     - assets/icons/
-  fonts:
-    - family: Markpro
-      fonts:
-        - asset: assets/fonts/markpro.ttf
-        - asset: assets/fonts/markprobold.ttf
-        - asset: assets/fonts/MarkPro-Medium.ttf
-          weight: 700
-    - family: Activ
-      fonts:
-        - asset: assets/fonts/AktivGrotesk-Bold.ttf
-        - asset: assets/fonts/AktivGrotesk-Medium.ttf
-        - asset: assets/fonts/AktivGrotesk-Regular.ttf
-          weight: 700

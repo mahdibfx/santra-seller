@@ -1,84 +1,47 @@
-//Flutter Packages
-
-import 'package:app_tracking_transparency/app_tracking_transparency.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:santra_seller/myApp.dart';
-import 'package:santra_seller/ui/widgets/snackbar/common_snackbar.dart';
-import 'package:get_storage/get_storage.dart';
-//Lib Imports
-import './utils/uidata.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:stacked_services/stacked_services.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp(
-      // options: DefaultFirebaseOptions.currentPlatform,
-      );
+import 'app/app.locator.dart';
+import 'app/app.router.dart';
+import 'ui/common/app_colors.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+  await setupLocator();
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [Locale('en'), Locale('ar')],
+      path: 'assets/translations',
+      fallbackLocale: const Locale('en'),
+      startLocale: const Locale('en'),
+      child: const SantraSellerApp(),
+    ),
+  );
 }
 
-// void _removeBadge() {
-//   FlutterAppBadger.removeBadge();
-// }
+class SantraSellerApp extends StatelessWidget {
+  const SantraSellerApp({super.key});
 
-Future<void> requestTrackingPermission() async {
-  final status = await AppTrackingTransparency.trackingAuthorizationStatus;
-
-  if (status == TrackingStatus.notDetermined) {
-    await AppTrackingTransparency.requestTrackingAuthorization();
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Santra Sellers',
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
+      theme: ThemeData(
+        useMaterial3: true,
+        scaffoldBackgroundColor: AppColors.cream,
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.brand, primary: AppColors.brand),
+        splashFactory: NoSplash.splashFactory,
+        highlightColor: Colors.transparent,
+      ),
+      navigatorKey: StackedService.navigatorKey,
+      onGenerateRoute: StackedRouter().onGenerateRoute,
+      initialRoute: Routes.welcomeView,
+    );
   }
 }
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  // await requestTrackingPermission();
-
-  await Firebase.initializeApp();
-  // _removeBadge();
-  await FirebaseMessaging.instance.requestPermission();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
-
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    if (kDebugMode) {
-      print('Got a message whilst in the foreground!');
-    }
-    CommonSnackbar.getSnackbar(message.notification!.title.toString(),
-        message.notification!.body.toString(), UIDataColors.redColor);
-    if (message.notification != null) {}
-  });
-
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: UIDataColors.whiteColor, // status bar color
-    systemNavigationBarColor: UIDataColors.whiteColor,
-  ));
-
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
-
-  WidgetsFlutterBinding.ensureInitialized();
-  await GetStorage.init();
-
-  runApp(const MyApp());
-}
-
-const AndroidNotificationChannel channel = AndroidNotificationChannel(
-  'high_importance_channel', // id
-  'High Importance Notifications', // title
-  // 'This channel is used for important notifications.', // description
-  importance: Importance.high,
-);
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
