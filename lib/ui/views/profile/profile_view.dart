@@ -13,27 +13,39 @@ class ProfileView extends StackedView<ProfileViewModel> {
   const ProfileView({super.key});
 
   @override
-  Widget builder(BuildContext context, ProfileViewModel viewModel, Widget? child) {
+  Widget builder(
+      BuildContext context, ProfileViewModel viewModel, Widget? child) {
     final lang = context.locale.languageCode;
     final profile = viewModel.profile;
 
     return FadeSlideIn(
       child: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(22, MediaQuery.of(context).padding.top + 16, 22, 130),
+        padding: EdgeInsets.fromLTRB(
+            22, MediaQuery.of(context).padding.top + 16, 22, 130),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppText.displayLarge('profile'.tr(), fontSize: 32),
             const SizedBox(height: 18),
-            _Hero(name: profile?.displayName(lang) ?? '', openNow: profile?.openNow ?? true),
+            _Hero(
+                name: viewModel.displayName(lang),
+                openNow: profile?.openNow ?? true),
             _Group(label: 'history_section'.tr(), rows: [
-              _Row(icon: 'history', label: 'order_history'.tr(), onTap: viewModel.onOpenHistory),
-            ]),
-            _Group(label: 'acct_section'.tr(), rows: [
-              _Row(icon: 'store', label: 'store_details'.tr(), onTap: () {}),
+              _Row(
+                  icon: 'history',
+                  label: 'order_history'.tr(),
+                  onTap: viewModel.onOpenHistory),
+              _Row(
+                  icon: 'sparkle',
+                  label: 'promo_title'.tr(),
+                  onTap: viewModel.onOpenPromotions),
             ]),
             _Group(label: 'prefs_section'.tr(), rows: [
-              _Row(icon: 'globe', label: 'language_row'.tr(), value: lang == 'ar' ? 'العربية' : 'English', onTap: viewModel.onToggleLang),
+              _Row(
+                  icon: 'globe',
+                  label: 'language_row'.tr(),
+                  value: lang == 'ar' ? 'العربية' : 'English',
+                  onTap: viewModel.onToggleLang),
             ]),
             _Group(label: 'support_section'.tr(), rows: [
               _Row(icon: 'help', label: 'help_center'.tr(), onTap: () {}),
@@ -41,7 +53,11 @@ class ProfileView extends StackedView<ProfileViewModel> {
             ]),
             const SizedBox(height: 22),
             _GroupContainer(
-              child: _Row(icon: 'logout', label: 'log_out'.tr(), danger: true, onTap: viewModel.onLogout),
+              child: _Row(
+                  icon: 'logout',
+                  label: 'log_out'.tr(),
+                  danger: true,
+                  onTap: viewModel.onLogout),
             ),
           ],
         ),
@@ -68,7 +84,10 @@ class _Hero extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(22),
-        boxShadow: const [BoxShadow(color: Color(0x3D143232), blurRadius: 34, offset: Offset(0, 16))],
+        boxShadow: const [
+          BoxShadow(
+              color: Color(0x3D143232), blurRadius: 34, offset: Offset(0, 16))
+        ],
       ),
       child: Row(
         children: [
@@ -78,18 +97,30 @@ class _Hero extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AppText.display(name, fontSize: 22, fontWeight: FontWeight.w600),
+                AppText.display(name,
+                    fontSize: 22, fontWeight: FontWeight.w600),
                 const SizedBox(height: 8),
                 if (openNow)
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(color: const Color(0xFFDBF3E4), borderRadius: BorderRadius.circular(999)),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                        color: const Color(0xFFDBF3E4),
+                        borderRadius: BorderRadius.circular(999)),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Container(width: 7, height: 7, decoration: const BoxDecoration(color: AppColors.online, shape: BoxShape.circle)),
+                        Container(
+                            width: 7,
+                            height: 7,
+                            decoration: const BoxDecoration(
+                                color: AppColors.online,
+                                shape: BoxShape.circle)),
                         const SizedBox(width: 6),
-                        AppText('open_now'.tr(), fontSize: 13, fontWeight: FontWeight.w700, color: const Color(0xFF1B7A43)),
+                        AppText('open_now'.tr(),
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                            color: const Color(0xFF1B7A43)),
                       ],
                     ),
                   ),
@@ -122,7 +153,10 @@ class _Group extends StatelessWidget {
             child: Column(
               children: [
                 for (int i = 0; i < rows.length; i++) ...[
-                  if (i > 0) const Padding(padding: EdgeInsets.symmetric(horizontal: 16), child: Divider(height: 1, color: AppColors.line)),
+                  if (i > 0)
+                    const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: Divider(height: 1, color: AppColors.line)),
                   rows[i],
                 ],
               ],
@@ -145,7 +179,10 @@ class _GroupContainer extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: const [BoxShadow(color: Color(0x30143232), blurRadius: 30, offset: Offset(0, 14))],
+        boxShadow: const [
+          BoxShadow(
+              color: Color(0x30143232), blurRadius: 30, offset: Offset(0, 14))
+        ],
       ),
       child: child,
     );
@@ -153,7 +190,12 @@ class _GroupContainer extends StatelessWidget {
 }
 
 class _Row extends StatelessWidget {
-  const _Row({required this.icon, required this.label, this.value, this.danger = false, required this.onTap});
+  const _Row(
+      {required this.icon,
+      required this.label,
+      this.value,
+      this.danger = false,
+      required this.onTap});
   final String icon;
   final String label;
   final String? value;
@@ -177,14 +219,24 @@ class _Row extends StatelessWidget {
                 color: danger ? AppColors.dangerBg : AppColors.brandSofter,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Center(child: AppIcon(icon, size: 20, color: danger ? AppColors.danger : AppColors.brand)),
+              child: Center(
+                  child: AppIcon(icon,
+                      size: 20,
+                      color: danger ? AppColors.danger : AppColors.brand)),
             ),
             const SizedBox(width: 13),
-            Expanded(child: AppText(label, fontSize: 15.5, fontWeight: FontWeight.w600, color: color)),
-            if (value != null) AppText(value!, fontSize: 14.5, fontWeight: FontWeight.w600, color: AppColors.faint),
+            Expanded(
+                child: AppText(label,
+                    fontSize: 15.5, fontWeight: FontWeight.w600, color: color)),
+            if (value != null)
+              AppText(value!,
+                  fontSize: 14.5,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.faint),
             if (!danger) ...[
               const SizedBox(width: 8),
-              const AppIcon('chevronRight', size: 18, color: AppColors.faint, flipForRtl: true),
+              const AppIcon('chevronRight',
+                  size: 18, color: AppColors.faint, flipForRtl: true),
             ],
           ],
         ),

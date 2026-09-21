@@ -1,33 +1,41 @@
 /// Single registry of every backend URL. Services never inline path strings.
 ///
-/// `base` is a placeholder — point it at the real API host once available.
+/// Real Santra **partner** API. Base already includes the `/api/v1/partner`
+/// prefix, so paths below are relative to it.
 class ApiEndpoints {
   ApiEndpoints._();
 
-  static const String base = 'https://api.santra.ae';
+  static const String base = 'https://api-staging.santra.ae/api/v1/partner';
 
-  // ── Auth ──────────────────────────────────────────────────────────
-  static const String requestOtp = '/api/seller/auth/request-otp';
-  static const String verifyOtp = '/api/seller/auth/verify-otp';
-  static const String forgotPassword = '/api/seller/auth/forgot-password';
-  static const String resetPassword = '/api/seller/auth/reset-password';
+  // ── Auth (phone + OTP) ────────────────────────────────────────────
+  static const String requestOtp = '/auth/otp/request';
+  static const String verifyOtp = '/auth/otp/verify';
+  static const String refresh = '/auth/refresh';
+  static const String logout = '/auth/logout';
+  // ponytail: partner API is OTP-only — no password reset. These 404 today;
+  // remove the Forgot screen (view/viewmodel/route) in a follow-up.
+  static const String forgotPassword = '/auth/forgot-password';
+  static const String resetPassword = '/auth/reset-password';
 
   // ── Orders ────────────────────────────────────────────────────────
-  static const String orders = '/api/seller/orders';
-  static String order(Object id) => '/api/seller/orders/$id';
-  static String acceptOrder(Object id) => '/api/seller/orders/$id/accept';
-  static String rejectOrder(Object id) => '/api/seller/orders/$id/reject';
-  static String advanceOrder(Object id) => '/api/seller/orders/$id/advance';
+  static const String orders = '/orders';
+  static String order(Object id) => '/orders/$id';
+  static String orderStatus(Object id) => '/orders/$id/status';
 
   // ── Notifications ────────────────────────────────────────────────
-  static const String notifications = '/api/seller/notifications';
-  static String markNotificationRead(Object id) => '/api/seller/notifications/$id/read';
-  static const String markAllNotificationsRead = '/api/seller/notifications/read-all';
+  static const String notifications = '/notifications';
+  static const String unreadCount = '/notifications/unread-count';
+  static String markNotificationRead(Object id) => '/notifications/$id/read';
+  static const String markAllNotificationsRead = '/notifications/read-all';
 
   // ── Profile ───────────────────────────────────────────────────────
-  static const String profile = '/api/seller/profile';
-  static const String logout = '/api/seller/auth/logout';
+  static const String profile = '/me';
 
-  // ── Assistant (AI chat) ──────────────────────────────────────────
-  static const String assistant = '/api/seller/assistant/complete';
+  // ── Promotion (campaign) requests ─────────────────────────────────
+  static const String promotionRequests = '/promotion-requests';
+  static String promotionRequest(Object id) => '/promotion-requests/$id';
+  static String respondPromotionRequest(Object id) => '/promotion-requests/$id/respond';
+
+  // ── Assistant (AI chat) — not part of the partner API; left as-is ─
+  static const String assistant = '/assistant/complete';
 }

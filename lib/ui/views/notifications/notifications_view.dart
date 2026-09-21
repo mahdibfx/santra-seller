@@ -77,7 +77,7 @@ class NotificationsView extends StackedView<NotificationsViewModel> {
           padding: const EdgeInsets.fromLTRB(4, 8, 4, 6),
           child: AppText.label(label),
         ),
-        for (final n in rows) _NotifRow(notification: n, onTap: () => vm.markRead(n.id)),
+        for (final n in rows) _NotifRow(notification: n, onTap: () => vm.onTap(n)),
         const SizedBox(height: 8),
       ],
     );

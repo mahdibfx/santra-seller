@@ -18,6 +18,10 @@ import 'package:santra_seller/ui/views/order_detail/order_detail_view.dart'
     as _i6;
 import 'package:santra_seller/ui/views/order_history/order_history_view.dart'
     as _i8;
+import 'package:santra_seller/ui/views/promotion_request_detail/promotion_request_detail_view.dart'
+    as _i13;
+import 'package:santra_seller/ui/views/promotion_requests/promotion_requests_view.dart'
+    as _i12;
 import 'package:santra_seller/ui/views/welcome/welcome_view.dart' as _i2;
 import 'package:stacked/stacked.dart' as _i1;
 import 'package:stacked_services/stacked_services.dart' as _i11;
@@ -37,6 +41,10 @@ class Routes {
 
   static const orderHistoryView = '/order-history-view';
 
+  static const promotionRequestsView = '/promotion-requests-view';
+
+  static const promotionRequestDetailView = '/promotion-request-detail-view';
+
   static const all = <String>{
     welcomeView,
     loginView,
@@ -45,6 +53,8 @@ class Routes {
     orderDetailView,
     notificationsView,
     orderHistoryView,
+    promotionRequestsView,
+    promotionRequestDetailView,
   };
 }
 
@@ -77,6 +87,14 @@ class StackedRouter extends _i1.RouterBase {
     _i1.RouteDef(
       Routes.orderHistoryView,
       page: _i8.OrderHistoryView,
+    ),
+    _i1.RouteDef(
+      Routes.promotionRequestsView,
+      page: _i12.PromotionRequestsView,
+    ),
+    _i1.RouteDef(
+      Routes.promotionRequestDetailView,
+      page: _i13.PromotionRequestDetailView,
     ),
   ];
 
@@ -140,6 +158,23 @@ class StackedRouter extends _i1.RouterBase {
       );
       return _i9.MaterialPageRoute<dynamic>(
         builder: (context) => _i8.OrderHistoryView(key: args.key),
+        settings: data,
+      );
+    },
+    _i12.PromotionRequestsView: (data) {
+      final args = data.getArgs<PromotionRequestsViewArguments>(
+        orElse: () => const PromotionRequestsViewArguments(),
+      );
+      return _i9.MaterialPageRoute<dynamic>(
+        builder: (context) => _i12.PromotionRequestsView(key: args.key),
+        settings: data,
+      );
+    },
+    _i13.PromotionRequestDetailView: (data) {
+      final args = data.getArgs<PromotionRequestDetailViewArguments>(nullOk: false);
+      return _i9.MaterialPageRoute<dynamic>(
+        builder: (context) =>
+            _i13.PromotionRequestDetailView(key: args.key, requestId: args.requestId),
         settings: data,
       );
     },
@@ -311,6 +346,55 @@ class OrderHistoryViewArguments {
   }
 }
 
+class PromotionRequestsViewArguments {
+  const PromotionRequestsViewArguments({this.key});
+
+  final _i10.Key? key;
+
+  @override
+  String toString() {
+    return '{"key": "$key"}';
+  }
+
+  @override
+  bool operator ==(covariant PromotionRequestsViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode;
+  }
+}
+
+class PromotionRequestDetailViewArguments {
+  const PromotionRequestDetailViewArguments({
+    this.key,
+    required this.requestId,
+  });
+
+  final _i10.Key? key;
+
+  final int requestId;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "requestId": "$requestId"}';
+  }
+
+  @override
+  bool operator ==(covariant PromotionRequestDetailViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key && other.requestId == requestId;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ requestId.hashCode;
+  }
+}
+
 extension NavigatorStateExtension on _i11.NavigationService {
   Future<dynamic> navigateToWelcomeView({
     _i10.Key? key,
@@ -419,6 +503,39 @@ extension NavigatorStateExtension on _i11.NavigationService {
   }) async {
     return navigateTo<dynamic>(Routes.orderHistoryView,
         arguments: OrderHistoryViewArguments(key: key),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToPromotionRequestsView({
+    _i10.Key? key,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo<dynamic>(Routes.promotionRequestsView,
+        arguments: PromotionRequestsViewArguments(key: key),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToPromotionRequestDetailView({
+    _i10.Key? key,
+    required int requestId,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo<dynamic>(Routes.promotionRequestDetailView,
+        arguments: PromotionRequestDetailViewArguments(key: key, requestId: requestId),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

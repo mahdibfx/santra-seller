@@ -12,6 +12,8 @@ class NotificationsService {
   Future<Either<Failure, List<AppNotification>>> fetchNotifications() =>
       _api.fetchNotifications().toEither();
 
+  Future<Either<Failure, int>> unreadCount() => _api.unreadCount().toEither();
+
   Future<Either<Failure, Unit>> markRead(int id) => _api.markRead(id).toEither();
 
   Future<Either<Failure, Unit>> markAllRead() => _api.markAllRead().toEither();

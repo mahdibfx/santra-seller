@@ -16,9 +16,9 @@ class OrdersView extends StackedView<OrdersViewModel> {
   const OrdersView({super.key});
 
   @override
-  Widget builder(BuildContext context, OrdersViewModel viewModel, Widget? child) {
+  Widget builder(
+      BuildContext context, OrdersViewModel viewModel, Widget? child) {
     final topInset = MediaQuery.of(context).padding.top;
-    final arabic = context.locale.languageCode == 'ar';
 
     return FadeSlideIn(
       child: Column(
@@ -32,12 +32,12 @@ class OrdersView extends StackedView<OrdersViewModel> {
                 AppText.displayLarge('orders'.tr(), fontSize: 28),
                 Row(
                   children: [
-                    IconSquareButton(
-                      iconName: 'globe',
-                      label: arabic ? 'EN' : 'ع',
-                      onTap: viewModel.onToggleLang,
-                    ),
-                    const SizedBox(width: 10),
+                    // IconSquareButton(
+                    //   iconName: 'globe',
+                    //   label: arabic ? 'EN' : 'ع',
+                    //   onTap: viewModel.onToggleLang,
+                    // ),
+                    // const SizedBox(width: 10),
                     IconSquareButton(
                       iconName: 'bell',
                       onTap: viewModel.onOpenNotifications,
@@ -49,18 +49,35 @@ class OrdersView extends StackedView<OrdersViewModel> {
             ),
           ),
           if (viewModel.isBusy)
-            const Expanded(child: Center(child: CircularProgressIndicator(color: AppColors.brand)))
-          else if (viewModel.activeCount == 0)
-            Expanded(child: _WebPortalEmpty(onOpenPortal: viewModel.onOpenPortal))
+            const Expanded(
+                child: Center(
+                    child: CircularProgressIndicator(color: AppColors.brand)))
+          else if (viewModel.isEmptyStore)
+            Expanded(
+                child: _WebPortalEmpty(onOpenPortal: viewModel.onOpenPortal))
           else ...[
             const SizedBox(height: 14),
             FilterRail(
               selected: viewModel.filter,
-              counts: viewModel.counts,
               totalCount: viewModel.totalCount,
               onSelect: viewModel.setFilter,
             ),
-            Expanded(child: _OrderList(viewModel: viewModel)),
+            const SizedBox(height: 8),
+            // Cards scroll under the chips. Fading the pixels (rather than
+            // painting cream over them) is what keeps the card's soft shadow
+            // from ending in a straight line.
+            Expanded(
+              child: ShaderMask(
+                blendMode: BlendMode.dstIn,
+                shaderCallback: (rect) => LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: const [Colors.transparent, Colors.black],
+                  stops: [0, 44 / rect.height],
+                ).createShader(rect),
+                child: _OrderList(viewModel: viewModel),
+              ),
+            ),
           ],
         ],
       ),
@@ -88,26 +105,42 @@ class _OrderList extends StatelessWidget {
         subtitle: 'no_orders_sub'.tr(),
       );
     }
-    return ListView.separated(
-      padding: const EdgeInsets.fromLTRB(22, 16, 22, 120),
-      itemCount: list.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 14),
-      itemBuilder: (_, i) {
-        final o = list[i];
-        return OrderCard(
-          order: o,
-          onOpen: () => viewModel.onOpen(o),
-          onOpenNote: () => viewModel.onOpen(o),
-          onAccept: () => viewModel.onAccept(o),
-          onDelete: () => viewModel.onDelete(o),
-        );
+    return NotificationListener<ScrollNotification>(
+      onNotification: (n) {
+        if (n.metrics.pixels >= n.metrics.maxScrollExtent - 300)
+          viewModel.loadMore();
+        return false;
       },
+      child: ListView.separated(
+        padding: const EdgeInsets.fromLTRB(22, 40, 22, 120),
+        itemCount: list.length + (viewModel.hasMore ? 1 : 0),
+        separatorBuilder: (_, __) => const SizedBox(height: 14),
+        itemBuilder: (_, i) {
+          if (i >= list.length) {
+            return const Padding(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: Center(
+                  child: CircularProgressIndicator(color: AppColors.brand)),
+            );
+          }
+          final o = list[i];
+          return OrderCard(
+            order: o,
+            onOpen: () => viewModel.onOpen(o),
+            onOpenNote: () => viewModel.onOpen(o),
+            onAccept: () => viewModel.onAccept(o),
+            onDelete: () => viewModel.onDelete(o),
+            onExpandItems: () => viewModel.hydrateItems(o),
+          );
+        },
+      ),
     );
   }
 }
 
 class _EmptyState extends StatelessWidget {
-  const _EmptyState({required this.icon, required this.title, required this.subtitle});
+  const _EmptyState(
+      {required this.icon, required this.title, required this.subtitle});
   final String icon;
   final String title;
   final String subtitle;
@@ -123,13 +156,19 @@ class _EmptyState extends StatelessWidget {
             Container(
               width: 72,
               height: 72,
-              decoration: BoxDecoration(color: AppColors.brandSofter, borderRadius: BorderRadius.circular(22)),
-              child: Center(child: AppIcon(icon, size: 32, color: AppColors.brand)),
+              decoration: BoxDecoration(
+                  color: AppColors.brandSofter,
+                  borderRadius: BorderRadius.circular(22)),
+              child: Center(
+                  child: AppIcon(icon, size: 32, color: AppColors.brand)),
             ),
             const SizedBox(height: 14),
             AppText.display(title, fontSize: 20),
             const SizedBox(height: 6),
-            AppText.body(subtitle, color: AppColors.muted, fontSize: 14.5, textAlign: TextAlign.center),
+            AppText.body(subtitle,
+                color: AppColors.muted,
+                fontSize: 14.5,
+                textAlign: TextAlign.center),
           ],
         ),
       ),
@@ -154,9 +193,13 @@ class _WebPortalEmpty extends StatelessWidget {
               child: Stack(
                 children: [
                   Container(
-                    decoration: BoxDecoration(color: AppColors.brandSoft, borderRadius: BorderRadius.circular(34)),
+                    decoration: BoxDecoration(
+                        color: AppColors.brandSoft,
+                        borderRadius: BorderRadius.circular(34)),
                   ),
-                  const Center(child: AppIcon('monitor', size: 52, color: AppColors.brand)),
+                  const Center(
+                      child:
+                          AppIcon('monitor', size: 52, color: AppColors.brand)),
                   PositionedDirectional(
                     end: -6,
                     bottom: -2,
@@ -166,25 +209,40 @@ class _WebPortalEmpty extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: AppColors.brand,
                         borderRadius: BorderRadius.circular(14),
-                        boxShadow: const [BoxShadow(color: AppColors.brandShadow, blurRadius: 22, offset: Offset(0, 10))],
+                        boxShadow: const [
+                          BoxShadow(
+                              color: AppColors.brandShadow,
+                              blurRadius: 22,
+                              offset: Offset(0, 10))
+                        ],
                       ),
-                      child: const Center(child: AppIcon('plus', size: 22, color: Colors.white)),
+                      child: const Center(
+                          child:
+                              AppIcon('plus', size: 22, color: Colors.white)),
                     ),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 26),
-            AppText.display('portal_title'.tr(), fontSize: 26, textAlign: TextAlign.center),
+            AppText.display('portal_title'.tr(),
+                fontSize: 26, textAlign: TextAlign.center),
             const SizedBox(height: 12),
             ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 290),
-              child: AppText.body('portal_sub'.tr(), fontSize: 15.5, color: AppColors.muted, height: 1.6, textAlign: TextAlign.center),
+              child: AppText.body('portal_sub'.tr(),
+                  fontSize: 15.5,
+                  color: AppColors.muted,
+                  height: 1.6,
+                  textAlign: TextAlign.center),
             ),
             const SizedBox(height: 28),
             ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 300),
-              child: PrimaryButton(label: 'portal_cta'.tr(), leadingIcon: 'external', onPressed: onOpenPortal),
+              child: PrimaryButton(
+                  label: 'portal_cta'.tr(),
+                  leadingIcon: 'external',
+                  onPressed: onOpenPortal),
             ),
             const SizedBox(height: 14),
             Container(
@@ -201,7 +259,10 @@ class _WebPortalEmpty extends StatelessWidget {
                   const SizedBox(width: 7),
                   Directionality(
                     textDirection: TextDirection.ltr,
-                    child: AppText('portal_url'.tr(), fontSize: 13.5, fontWeight: FontWeight.w600, color: AppColors.muted),
+                    child: AppText('portal_url'.tr(),
+                        fontSize: 13.5,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.muted),
                   ),
                 ],
               ),
@@ -209,7 +270,11 @@ class _WebPortalEmpty extends StatelessWidget {
             const SizedBox(height: 24),
             ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 260),
-              child: AppText.body('portal_or'.tr(), fontSize: 13.5, color: AppColors.faint, height: 1.5, textAlign: TextAlign.center),
+              child: AppText.body('portal_or'.tr(),
+                  fontSize: 13.5,
+                  color: AppColors.faint,
+                  height: 1.5,
+                  textAlign: TextAlign.center),
             ),
           ],
         ),

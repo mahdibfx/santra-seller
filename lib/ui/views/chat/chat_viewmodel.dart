@@ -30,8 +30,8 @@ class ChatViewModel extends BaseViewModel {
   Future<void> init() async {
     _messages.add(ChatMessage(role: ChatRole.assistant, text: 'asst_greeting'.tr()));
     rebuildUi();
-    final result = await _ordersService.fetchOrders();
-    result.fold((_) {}, (orders) => _orders = orders);
+    final result = await _ordersService.fetchOrders(limit: 100);
+    result.fold((_) {}, (page) => _orders = page.items);
   }
 
   String get _orderContext => _orders.map((o) {

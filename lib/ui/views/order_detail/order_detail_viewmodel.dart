@@ -19,10 +19,11 @@ class OrderDetailViewModel extends BaseViewModel {
   Order? _order;
   Order? get order => _order;
 
-  /// Next-step action for accepted / on_way orders (label key + icon).
+  /// Next-step action the partner is allowed to take (label key + icon).
+  /// confirmed → preparing → ready; nothing after (ops takes over).
   ({String labelKey, String icon})? get advanceAction => switch (_order?.status) {
-        OrderStatus.accepted => (labelKey: 'mark_on_way', icon: 'truck'),
-        OrderStatus.onWay => (labelKey: 'mark_delivered', icon: 'checkCircle'),
+        OrderStatus.confirmed => (labelKey: 'mark_preparing', icon: 'clock'),
+        OrderStatus.preparing => (labelKey: 'mark_ready', icon: 'checkCircle'),
         _ => null,
       };
 
@@ -41,18 +42,18 @@ class OrderDetailViewModel extends BaseViewModel {
     result.fold(
       (f) => _toastService.showUpperToast(f.message, type: ToastType.danger),
       (_) {
-        _order = _order?.copyWith(status: OrderStatus.accepted);
+        _order = _order?.copyWith(status: OrderStatus.confirmed);
         rebuildUi();
       },
     );
   }
 
   Future<void> advance() async {
-    final result = await _ordersService.advanceOrder(orderId);
+    final result = await _ordersService.advanceOrder(orderId, from: _order?.status ?? OrderStatus.confirmed);
     result.fold(
       (f) => _toastService.showUpperToast(f.message, type: ToastType.danger),
       (_) {
-        final next = _order?.status == OrderStatus.accepted ? OrderStatus.onWay : OrderStatus.delivered;
+        final next = _order?.status == OrderStatus.confirmed ? OrderStatus.preparing : OrderStatus.ready;
         _order = _order?.copyWith(status: next);
         rebuildUi();
       },
@@ -65,7 +66,7 @@ class OrderDetailViewModel extends BaseViewModel {
     result.fold(
       (f) => _toastService.showUpperToast(f.message, type: ToastType.danger),
       (_) {
-        _order = _order?.copyWith(status: OrderStatus.rejected);
+        _order = _order?.copyWith(status: OrderStatus.cancelled);
         rebuildUi();
       },
     );

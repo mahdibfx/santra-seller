@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-/// Santra Sellers palette — teal brand on cream.
-/// Values come straight from the design's CSS custom properties + `data.jsx`.
+/// Santra Sellers palette — purple brand on cream.
+/// Brand family derived from primary #7E2A83.
 class AppColors {
   AppColors._();
 
   // ── Brand / surfaces ──────────────────────────────────────────────
-  static const Color brand = Color(0xFF136163);
-  static const Color brandBright = Color(0xFF18848E);
-  static const Color brandSoft = Color(0xFFD7EFF0);
-  static const Color brandSofter = Color(0xFFEBF7F7);
-  static const Color brandShadow = Color(0x8C136163); // rgba(brand, .55)
+  static const Color brand = Color(0xFF7E2A83);
+  static const Color brandBright = Color(0xFFA23BA8);
+  static const Color brandSoft = Color(0xFFE8D9E9);
+  static const Color brandSofter = Color(0xFFF5EEF5);
+  static const Color brandShadow = Color(0x8C7E2A83); // rgba(brand, .55)
 
   static const Color ink = Color(0xFF15211F);
   static const Color muted = Color(0xFF5E706E);
@@ -30,6 +30,8 @@ class AppColors {
   static const Color danger = Color(0xFFC4302B); // destructive button / trash
   static const Color warnFg = Color(0xFFC2410C);
   static const Color warnBg = Color(0xFFFBE6DA);
+  static const Color infoFg = Color(0xFF2563EB);
+  static const Color infoBg = Color(0x1A2563EB); // rgba(info, .10)
   static const Color online = Color(0xFF1FAE5B);
   static const Color unreadDot = Color(0xFFE0533B);
 }

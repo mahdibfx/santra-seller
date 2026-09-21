@@ -55,4 +55,7 @@ class WelcomeView extends StackedView<WelcomeViewModel> {
 
   @override
   WelcomeViewModel viewModelBuilder(BuildContext context) => WelcomeViewModel();
+
+  @override
+  void onViewModelReady(WelcomeViewModel viewModel) => viewModel.init();
 }

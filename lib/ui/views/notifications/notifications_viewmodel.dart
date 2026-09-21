@@ -2,6 +2,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../app/app.locator.dart';
+import '../../../app/app.router.dart';
 import '../../../models/app_notification.dart';
 import '../../../services/notifications_service.dart';
 import '../../../services/toast_service.dart';
@@ -27,6 +28,14 @@ class NotificationsViewModel extends BaseViewModel {
       (items) => _items = items,
     );
     setBusy(false);
+  }
+
+  /// Row tap: mark read, then deep-link promo notifications to the requests.
+  Future<void> onTap(AppNotification n) async {
+    await markRead(n.id);
+    if (n.type == 'promo') {
+      _navigationService.navigateToPromotionRequestsView();
+    }
   }
 
   Future<void> markRead(int id) async {

@@ -4,7 +4,7 @@ import '../common/app_colors.dart';
 import '../common/app_text_styles.dart';
 import 'app_icon.dart';
 
-enum ButtonVariant { solid, soft, ghost, danger }
+enum ButtonVariant { solid, soft, ghost, danger, dangerOutline }
 
 /// Primary CTA. Variants mirror the design (solid / soft / ghost / danger),
 /// with a subtle scale-down on press, an optional leading icon, and an optional
@@ -55,6 +55,13 @@ class _PrimaryButtonState extends State<PrimaryButton> {
         return (bg: Colors.transparent, fg: AppColors.ink, shadow: const [], border: Border.all(color: AppColors.lineStrong, width: 1.5));
       case ButtonVariant.danger:
         return (bg: AppColors.dangerBg, fg: AppColors.dangerFg, shadow: const [], border: null);
+      case ButtonVariant.dangerOutline:
+        return (
+          bg: AppColors.surface,
+          fg: AppColors.danger,
+          shadow: const [BoxShadow(color: Color(0x14143232), blurRadius: 18, offset: Offset(0, 6))],
+          border: Border.all(color: AppColors.danger, width: 1.5),
+        );
     }
   }
 

@@ -42,21 +42,24 @@ Failure _mapDioException(DioException e) {
     case DioExceptionType.badResponse:
       final code = e.response?.statusCode ?? 0;
       final body = e.response?.data;
-      final message = (body is Map && body['message'] is String)
-          ? body['message'] as String
-          : null;
+      // Partner API error shape: { "error": { "code": "...", "message": "..." } }
+      final error = (body is Map && body['error'] is Map) ? body['error'] as Map : null;
+      final message = error?['message'] is String ? error!['message'] as String : null;
       switch (code) {
+        case 400:
+        case 422:
+          // VALIDATION_ERROR — single message names the bad field.
+          return ValidationFailure(message ?? 'Validation failed', const {});
         case 401:
           return GeneralFailure(message ?? 'Your session has expired.');
         case 403:
           return GeneralFailure(message ?? 'You are not allowed to do that.');
         case 404:
           return GeneralFailure(message ?? 'Not found.');
-        case 422:
-          final errors = (body is Map && body['errors'] is Map)
-              ? Map<String, dynamic>.from(body['errors'] as Map)
-              : <String, dynamic>{};
-          return ValidationFailure(message ?? 'Validation failed', errors);
+        case 409:
+          return GeneralFailure(message ?? 'That change is not allowed.');
+        case 429:
+          return GeneralFailure(message ?? 'Too many requests — please wait a moment.');
         default:
           return GeneralFailure(message ?? 'Server error ($code).');
       }

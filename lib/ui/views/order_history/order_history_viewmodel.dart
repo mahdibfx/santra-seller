@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -14,13 +16,24 @@ class OrderHistoryViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _toastService = locator<ToastService>();
 
-  List<Order> _all = [];
-
   final searchController = TextEditingController();
+  Timer? _debounce;
+
+  List<Order> _orders = [];
+  List<Order> get orders => _orders;
+
   String _query = '';
   OrderStatus? _status;
   DateTime? _from;
   DateTime? _to;
+
+  int _page = 1;
+  int _totalPages = 1;
+  int _total = 0;
+  bool _loadingMore = false;
+  bool get loadingMore => _loadingMore;
+  bool get hasMore => _page < _totalPages;
+  int get resultsCount => _total;
 
   String get query => _query;
   OrderStatus? get status => _status;
@@ -31,62 +44,78 @@ class OrderHistoryViewModel extends BaseViewModel {
 
   Future<void> init() async {
     setBusy(true);
-    final result = await _ordersService.fetchOrders();
-    result.fold(
-      (failure) => _toastService.showUpperToast(failure.message, type: ToastType.danger),
-      (orders) => _all = orders,
-    );
+    await _load(reset: true);
     setBusy(false);
   }
 
   String _iso(DateTime d) =>
       '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
-  List<Order> get filtered {
-    final needle = _query.trim().toLowerCase().replaceAll('#', '');
-    final fromIso = _from == null ? null : _iso(_from!);
-    final toIso = _to == null ? null : _iso(_to!);
-    final list = _all.where((o) {
-      if (_status != null && o.status != _status) return false;
-      if (fromIso != null && (o.date.isEmpty || o.date.compareTo(fromIso) < 0)) return false;
-      if (toIso != null && (o.date.isEmpty || o.date.compareTo(toIso) > 0)) return false;
-      if (needle.isNotEmpty) {
-        final hay = '${o.id} ${o.customer}'.toLowerCase();
-        if (!hay.contains(needle)) return false;
-      }
-      return true;
-    }).toList()
-      ..sort((a, b) {
-        final byDate = b.date.compareTo(a.date);
-        return byDate != 0 ? byDate : b.id.compareTo(a.id);
-      });
-    return list;
+  Future<void> _load({bool reset = false}) async {
+    final page = reset ? 1 : _page + 1;
+    final result = await _ordersService.fetchOrders(
+      page: page,
+      status: _status,
+      search: _query.trim().replaceAll('#', ''),
+      dateFrom: _from == null ? null : _iso(_from!),
+      dateTo: _to == null ? null : _iso(_to!),
+    );
+    result.fold(
+      (failure) => _toastService.showUpperToast(failure.message, type: ToastType.danger),
+      (p) {
+        _orders = reset ? p.items : [..._orders, ...p.items];
+        _page = p.page;
+        _totalPages = p.totalPages;
+        _total = p.total;
+      },
+    );
+  }
+
+  /// Re-run the query from page 1 whenever a filter changes.
+  Future<void> _refresh() async {
+    setBusy(true);
+    await _load(reset: true);
+    setBusy(false);
+  }
+
+  Future<void> loadMore() async {
+    if (_loadingMore || isBusy || !hasMore) return;
+    _loadingMore = true;
+    rebuildUi();
+    await _load();
+    _loadingMore = false;
+    rebuildUi();
   }
 
   void onQueryChanged(String v) {
     _query = v;
-    rebuildUi();
+    _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 400), _refresh);
+    rebuildUi(); // reflect the clear-button / text immediately
   }
 
   void clearQuery() {
     _query = '';
     searchController.clear();
-    rebuildUi();
+    _refresh();
   }
 
   void setStatus(OrderStatus? s) {
     _status = s;
-    rebuildUi();
+    _refresh();
   }
 
   void setFrom(DateTime? d) {
     _from = d;
-    rebuildUi();
+    // Keep from ≤ to: an out-of-order `to` is dropped.
+    if (d != null && _to != null && d.isAfter(_to!)) _to = null;
+    _refresh();
   }
 
   void setTo(DateTime? d) {
     _to = d;
-    rebuildUi();
+    if (d != null && _from != null && _from!.isAfter(d)) _from = null;
+    _refresh();
   }
 
   void clearFilters() {
@@ -95,14 +124,20 @@ class OrderHistoryViewModel extends BaseViewModel {
     _status = null;
     _from = null;
     _to = null;
+    _refresh();
+  }
+
+  Future<void> onOpen(Order order) async {
+    await _navigationService.navigateToOrderDetailView(orderId: order.id);
+    await _load(reset: true);
     rebuildUi();
   }
 
-  void onOpen(Order order) => _navigationService.navigateToOrderDetailView(orderId: order.id);
   void onBack() => _navigationService.back();
 
   @override
   void dispose() {
+    _debounce?.cancel();
     searchController.dispose();
     super.dispose();
   }

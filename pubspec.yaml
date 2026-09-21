@@ -26,6 +26,12 @@ dependencies:
   easy_localization: ^3.0.7
   intl: ^0.20.2
 
+  # Persistence
+  shared_preferences: ^2.3.4
+
+  # External links
+  url_launcher: ^6.3.2
+
   # Media
   cached_network_image: ^3.4.1
   flutter_svg: ^2.0.10+1

@@ -19,7 +19,8 @@ class OtpInput extends StatefulWidget {
 class _OtpInputState extends State<OtpInput> {
   late final List<TextEditingController> _controllers =
       List.generate(widget.length, (_) => TextEditingController());
-  late final List<FocusNode> _nodes = List.generate(widget.length, (_) => FocusNode());
+  late final List<FocusNode> _nodes =
+      List.generate(widget.length, (_) => FocusNode());
 
   @override
   void dispose() {
@@ -59,8 +60,8 @@ class _OtpInputState extends State<OtpInput> {
   Widget _box(BuildContext context, int i) {
     final filled = _controllers[i].text.isNotEmpty;
     return SizedBox(
-      width: 60,
-      height: 68,
+      width: 40,
+      height: 48,
       child: KeyboardListener(
         focusNode: FocusNode(skipTraversal: true),
         onKeyEvent: (e) {
@@ -83,7 +84,8 @@ class _OtpInputState extends State<OtpInput> {
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           onChanged: (v) => _onChanged(i, v),
           cursorColor: AppColors.brand,
-          style: AppTextStyles.display(context, fontSize: 30, fontWeight: FontWeight.w600),
+          style: AppTextStyles.display(context,
+              fontSize: 24, fontWeight: FontWeight.w600),
           decoration: InputDecoration(
             counterText: '',
             isCollapsed: true,
@@ -92,7 +94,9 @@ class _OtpInputState extends State<OtpInput> {
             fillColor: AppColors.surface,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
-              borderSide: BorderSide(color: filled ? AppColors.brand : AppColors.lineStrong, width: filled ? 2 : 1.5),
+              borderSide: BorderSide(
+                  color: filled ? AppColors.brand : AppColors.lineStrong,
+                  width: filled ? 2 : 1.5),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),

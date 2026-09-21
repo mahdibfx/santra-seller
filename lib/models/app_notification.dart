@@ -17,6 +17,10 @@ class AppNotification {
   final String time;
   final String timeAr;
 
+  /// Deep-link hints: `type` (e.g. `promo`) + the referenced record id.
+  final String type;
+  final int? referenceId;
+
   const AppNotification({
     required this.id,
     required this.group,
@@ -29,6 +33,8 @@ class AppNotification {
     required this.bodyAr,
     required this.time,
     required this.timeAr,
+    this.type = '',
+    this.referenceId,
   });
 
   String localizedTitle(String lang) => lang == 'ar' ? titleAr : title;
@@ -47,6 +53,8 @@ class AppNotification {
         bodyAr: bodyAr,
         time: time,
         timeAr: timeAr,
+        type: type,
+        referenceId: referenceId,
       );
 
   factory AppNotification.fromJson(Map<String, dynamic> json) => AppNotification(
@@ -65,5 +73,7 @@ class AppNotification {
         bodyAr: json['bodyAr'] as String? ?? '',
         time: json['time'] as String? ?? '',
         timeAr: json['timeAr'] as String? ?? '',
+        type: json['type'] as String? ?? '',
+        referenceId: json['reference_id'] == null ? null : int.tryParse(json['reference_id'].toString()),
       );
 }

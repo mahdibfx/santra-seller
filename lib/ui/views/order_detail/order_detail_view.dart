@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../models/order.dart';
+import '../../../models/order_item.dart';
 import '../../common/app_animations.dart';
 import '../../common/app_colors.dart';
 import '../../common/format.dart';
@@ -13,7 +14,6 @@ import '../../widgets/meta_chips.dart';
 import '../../widgets/primary_button.dart';
 import '../../widgets/reject_sheet.dart';
 import '../../widgets/status_pill.dart';
-import '../../widgets/swipe_accept.dart';
 import '../../widgets/thumb_image.dart';
 import '../../widgets/timer_badge.dart';
 import '../../widgets/top_bar.dart';
@@ -25,22 +25,28 @@ class OrderDetailView extends StackedView<OrderDetailViewModel> {
   final int orderId;
 
   @override
-  Widget builder(BuildContext context, OrderDetailViewModel viewModel, Widget? child) {
+  Widget builder(
+      BuildContext context, OrderDetailViewModel viewModel, Widget? child) {
     final order = viewModel.order;
     return Scaffold(
       backgroundColor: AppColors.cream,
       body: viewModel.isBusy || order == null
-          ? const Center(child: CircularProgressIndicator(color: AppColors.brand))
+          ? const Center(
+              child: CircularProgressIndicator(color: AppColors.brand))
           : FadeSlideIn(
               child: Stack(
                 children: [
                   Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.fromLTRB(22, MediaQuery.of(context).padding.top + 8, 22, 0),
-                        child: TopBar(onBack: viewModel.onBack, right: StatusPill(status: order.status)),
+                        padding: EdgeInsets.fromLTRB(
+                            22, MediaQuery.of(context).padding.top + 8, 22, 0),
+                        child: TopBar(
+                            onBack: viewModel.onBack,
+                            right: StatusPill(status: order.status)),
                       ),
-                      Expanded(child: _Body(order: order, viewModel: viewModel)),
+                      Expanded(
+                          child: _Body(order: order, viewModel: viewModel)),
                     ],
                   ),
                   _ActionBar(order: order, viewModel: viewModel),
@@ -54,7 +60,8 @@ class OrderDetailView extends StackedView<OrderDetailViewModel> {
   void onViewModelReady(OrderDetailViewModel viewModel) => viewModel.init();
 
   @override
-  OrderDetailViewModel viewModelBuilder(BuildContext context) => OrderDetailViewModel(orderId: orderId);
+  OrderDetailViewModel viewModelBuilder(BuildContext context) =>
+      OrderDetailViewModel(orderId: orderId);
 }
 
 class _Body extends StatelessWidget {
@@ -70,13 +77,18 @@ class _Body extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          AppText.displayLarge('${'order'.tr()} #${order.id}', fontSize: 32),
+          AppText.displayLarge(
+              '${'order'.tr()} #${order.orderNumber.isNotEmpty ? order.orderNumber : order.id}',
+              fontSize: 32),
           const SizedBox(height: 7),
           Row(
             children: [
               const AppIcon('calendar', size: 15, color: AppColors.muted),
               const SizedBox(width: 6),
-              AppText(order.deliver, fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.muted),
+              AppText(order.deliver,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.muted),
             ],
           ),
           if (order.hasTimer) ...[
@@ -89,8 +101,12 @@ class _Body extends StatelessWidget {
           _CustomerCard(name: order.customer),
           _SectionLabel('order_items'.tr()),
           _ItemsCard(order: order),
-          _SectionLabel('note_title'.tr()),
-          _NoteBlock(order: order, lang: lang),
+          // Order-level note only — per-item requests render with their item.
+          if (order.localizedNote(lang).isNotEmpty ||
+              order.images.isNotEmpty) ...[
+            _SectionLabel('note_title'.tr()),
+            _NoteBlock(order: order, lang: lang),
+          ],
         ],
       ),
     );
@@ -105,14 +121,18 @@ class _CustomerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(18)),
+      decoration: BoxDecoration(
+          color: AppColors.surface, borderRadius: BorderRadius.circular(18)),
       child: Row(
         children: [
           Container(
             width: 42,
             height: 42,
-            decoration: BoxDecoration(color: AppColors.brandSoft, borderRadius: BorderRadius.circular(13)),
-            child: const Center(child: AppIcon('user', size: 22, color: AppColors.brand)),
+            decoration: BoxDecoration(
+                color: AppColors.brandSoft,
+                borderRadius: BorderRadius.circular(13)),
+            child: const Center(
+                child: AppIcon('user', size: 22, color: AppColors.brand)),
           ),
           const SizedBox(width: 12),
           Column(
@@ -138,7 +158,8 @@ class _ItemsCard extends StatelessWidget {
     final lang = context.locale.languageCode;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(18)),
+      decoration: BoxDecoration(
+          color: AppColors.surface, borderRadius: BorderRadius.circular(18)),
       child: Column(
         children: [
           for (int i = 0; i < order.items.length; i++)
@@ -151,33 +172,97 @@ class _ItemsCard extends StatelessWidget {
                       : BorderSide.none,
                 ),
               ),
-              child: Row(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ThumbImage(path: order.items[i].image, size: 50, radius: 13),
-                  const SizedBox(width: 13),
-                  Expanded(child: AppText(order.items[i].displayName(lang), fontSize: 15.5, fontWeight: FontWeight.w500)),
-                  Container(
-                    constraints: const BoxConstraints(minWidth: 32),
-                    height: 28,
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(color: AppColors.brandSoft, borderRadius: BorderRadius.circular(9)),
-                    child: AppText('${order.items[i].qty}×', fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.brand),
+                  Row(
+                    children: [
+                      ThumbImage(
+                          path: order.items[i].image, size: 50, radius: 13),
+                      const SizedBox(width: 13),
+                      Expanded(
+                          child: AppText(order.items[i].displayName(lang),
+                              fontSize: 15.5, fontWeight: FontWeight.w500)),
+                      Container(
+                        constraints: const BoxConstraints(minWidth: 32),
+                        height: 28,
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: AppColors.brandSoft,
+                            borderRadius: BorderRadius.circular(9)),
+                        child: AppText('${order.items[i].qty}×',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.brand),
+                      ),
+                    ],
                   ),
+                  if (order.items[i].hasRequest)
+                    _ItemRequest(item: order.items[i]),
                 ],
               ),
             ),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 14),
-            decoration: const BoxDecoration(border: Border(top: BorderSide(color: AppColors.line, width: 1.5))),
+            decoration: const BoxDecoration(
+                border:
+                    Border(top: BorderSide(color: AppColors.line, width: 1.5))),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                AppText('total'.tr(), fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.muted),
+                AppText('total'.tr(),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.muted),
                 AppText.display(money(order.total, context), fontSize: 24),
               ],
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+/// The customer's request for one line — their words plus any reference
+/// photos they attached to it.
+class _ItemRequest extends StatelessWidget {
+  const _ItemRequest({required this.item});
+  final OrderItem item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 11, left: 63),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (item.note.isNotEmpty)
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: AppColors.brandSofter,
+                borderRadius: BorderRadius.circular(13),
+              ),
+              child: AppText.body(item.note, fontSize: 14.5, height: 1.5),
+            ),
+          if (item.images.isNotEmpty) ...[
+            const SizedBox(height: 10),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                for (int i = 0; i < item.images.length; i++)
+                  GestureDetector(
+                    onTap: () => showImageViewer(context, item.images, i),
+                    child:
+                        ThumbImage(path: item.images[i], size: 72, radius: 14),
+                  ),
+              ],
+            ),
+          ],
         ],
       ),
     );
@@ -192,26 +277,28 @@ class _NoteBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final note = order.localizedNote(lang);
-    if (note.isEmpty && order.images.isEmpty) {
-      return AppText.body('no_note'.tr(), fontSize: 15, color: AppColors.faint);
-    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (note.isNotEmpty)
           Container(
             padding: const EdgeInsets.all(15),
-            decoration: BoxDecoration(color: AppColors.brandSofter, borderRadius: BorderRadius.circular(16)),
+            decoration: BoxDecoration(
+                color: AppColors.brandSofter,
+                borderRadius: BorderRadius.circular(16)),
             child: IntrinsicHeight(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Container(
                     width: 3,
-                    decoration: BoxDecoration(color: AppColors.brandBright, borderRadius: BorderRadius.circular(3)),
+                    decoration: BoxDecoration(
+                        color: AppColors.brandBright,
+                        borderRadius: BorderRadius.circular(3)),
                   ),
                   const SizedBox(width: 11),
-                  Expanded(child: AppText.body(note, fontSize: 15.5, height: 1.55)),
+                  Expanded(
+                      child: AppText.body(note, fontSize: 15.5, height: 1.55)),
                 ],
               ),
             ),
@@ -222,7 +309,12 @@ class _NoteBlock extends StatelessWidget {
             children: [
               AppText.label('photos'.tr()),
               const SizedBox(width: 6),
-              Flexible(child: AppText('· ${'tap_hint'.tr()}', fontSize: 12.5, color: AppColors.faint, maxLines: 1, overflow: TextOverflow.ellipsis)),
+              Flexible(
+                  child: AppText('· ${'tap_hint'.tr()}',
+                      fontSize: 12.5,
+                      color: AppColors.faint,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis)),
             ],
           ),
           const SizedBox(height: 10),
@@ -233,7 +325,8 @@ class _NoteBlock extends StatelessWidget {
               for (int i = 0; i < order.images.length; i++)
                 GestureDetector(
                   onTap: () => showImageViewer(context, order.images, i),
-                  child: ThumbImage(path: order.images[i], size: 96, radius: 16),
+                  child:
+                      ThumbImage(path: order.images[i], size: 96, radius: 16),
                 ),
             ],
           ),
@@ -281,12 +374,27 @@ class _ActionBar extends StatelessWidget {
           ),
         ),
         child: order.isPending
-            ? SwipeAccept(
-                onAccept: viewModel.accept,
-                onDelete: () async {
-                  final confirmed = await showRejectSheet(context);
-                  if (confirmed) await viewModel.reject();
-                },
+            ? Row(
+                children: [
+                  Expanded(
+                    child: PrimaryButton(
+                      label: 'accept'.tr(),
+                      leadingIcon: 'check',
+                      onPressed: viewModel.accept,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: PrimaryButton(
+                      label: 'cancel'.tr(),
+                      variant: ButtonVariant.dangerOutline,
+                      onPressed: () async {
+                        final confirmed = await showRejectSheet(context);
+                        if (confirmed) await viewModel.reject();
+                      },
+                    ),
+                  ),
+                ],
               )
             : PrimaryButton(
                 label: advance!.labelKey.tr(),

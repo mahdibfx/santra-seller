@@ -29,7 +29,7 @@ class ForgotView extends StackedView<ForgotViewModel> {
           ),
           if (viewModel.step == ForgotStep.code)
             OtpSheet(
-              phone: viewModel.phone,
+              phone: '+971 ${viewModel.phone}', // ponytail: forgot flow is UAE-only
               busy: viewModel.isBusy,
               onVerify: viewModel.onVerifyOtp,
               onClose: viewModel.closeOtp,

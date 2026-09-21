@@ -6,6 +6,7 @@ import '../services/api/api_chat_service.dart';
 import '../services/api/api_notifications_service.dart';
 import '../services/api/api_orders_service.dart';
 import '../services/api/api_profile_service.dart';
+import '../services/api/api_promotions_service.dart';
 import '../services/auth_service.dart';
 import '../services/chat_service.dart';
 import '../services/dio_service.dart';
@@ -13,7 +14,9 @@ import '../services/language_service.dart';
 import '../services/notifications_service.dart';
 import '../services/orders_service.dart';
 import '../services/profile_service.dart';
+import '../services/promotions_service.dart';
 import '../services/toast_service.dart';
+import '../services/token_service.dart';
 import '../ui/views/forgot/forgot_view.dart';
 import '../ui/views/login/login_view.dart';
 import '../ui/views/main/main_view.dart';
@@ -37,6 +40,7 @@ import '../ui/views/welcome/welcome_view.dart';
   dependencies: [
     LazySingleton(classType: NavigationService),
     LazySingleton(classType: DioService),
+    LazySingleton(classType: TokenService),
     LazySingleton(classType: ToastService),
     LazySingleton(classType: LanguageService),
 
@@ -46,6 +50,7 @@ import '../ui/views/welcome/welcome_view.dart';
     LazySingleton(classType: ApiNotificationsService),
     LazySingleton(classType: ApiProfileService),
     LazySingleton(classType: ApiChatService),
+    LazySingleton(classType: ApiPromotionsService),
 
     // Business layer
     LazySingleton(classType: AuthService),
@@ -53,6 +58,9 @@ import '../ui/views/welcome/welcome_view.dart';
     LazySingleton(classType: NotificationsService),
     LazySingleton(classType: ProfileService),
     LazySingleton(classType: ChatService),
+    LazySingleton(classType: PromotionsService),
   ],
+  // New views (PromotionRequestsView / PromotionRequestDetailView) are wired
+  // by hand in app.router.dart, matching the existing entries.
 )
 class App {}

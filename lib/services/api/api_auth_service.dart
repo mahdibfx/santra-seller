@@ -1,62 +1,64 @@
+import 'dart:developer';
+
 import 'package:fpdart/fpdart.dart';
 
+import '../../app/app.locator.dart';
 import '../../models/api_response.dart';
+import '../../models/auth_tokens.dart';
+import '../dio_service.dart';
 import 'api_endpoints.dart';
 
-/// Auth HTTP layer.
-///
-/// STUB: every method returns a mocked [ApiResponse] so the app runs without a
-/// backend. The commented block in each method is the exact `Dio` call the
-/// backend dev should restore — it documents verb, path, request body, and the
-/// expected response envelope.
 class ApiAuthService {
-  // Restore once the backend exists:
-  // final _dio = locator<DioService>().dio;
+  final _dio = locator<DioService>().dio;
 
-  /// POST [ApiEndpoints.requestOtp]
-  /// Request:  `{ "phone": "+9715XXXXXXXX" }`
-  /// Response: `{ "success": true, "message": "OTP sent", "data": null }`
-  Future<ApiResponse<Unit>> requestOtp({required String phone}) async {
-    // final res = await _dio.post(ApiEndpoints.requestOtp, data: {'phone': phone});
-    // return ApiResponse<Unit>.fromJson(res.data as Map<String, dynamic>, res.statusCode!, (_) => unit);
-    await Future<void>.delayed(const Duration(milliseconds: 500));
-    return ApiResponse<Unit>.mock(unit, message: 'OTP sent');
+  // ponytail: +971 default kept for callers that never leave the UAE; the
+  // login screen passes the picked code.
+  Future<ApiResponse<Unit>> requestOtp(
+      {required String phone, String countryCode = '+971'}) async {
+    final response = await _dio.post(ApiEndpoints.requestOtp,
+        data: {'countryCode': countryCode, 'phone': phone});
+    log('requestOtp: $countryCode $phone ${response.data}');
+    return ApiResponse.mock(
+        unit); // 2xx only reaches here; no `data` envelope on auth
   }
 
-  /// POST [ApiEndpoints.verifyOtp]
-  /// Request:  `{ "phone": "+9715XXXXXXXX", "code": "1234" }`
-  /// Response: `{ "success": true, "data": { "token": "<jwt>" } }`
-  ///   On bad code → HTTP 422 `{ "errors": { "code": ["Invalid code"] } }`.
-  Future<ApiResponse<String>> verifyOtp({required String phone, required String code}) async {
-    // final res = await _dio.post(ApiEndpoints.verifyOtp, data: {'phone': phone, 'code': code});
-    // return ApiResponse<String>.fromJson(res.data as Map<String, dynamic>, res.statusCode!, (d) => d['token'] as String);
-    await Future<void>.delayed(const Duration(milliseconds: 500));
-    return ApiResponse<String>.mock('mock-jwt-token');
+  Future<ApiResponse<AuthTokens>> verifyOtp({
+    required String phone,
+    required String code,
+    String countryCode = '+971',
+  }) async {
+    final res = await _dio.post(ApiEndpoints.verifyOtp,
+        data: {'countryCode': countryCode, 'phone': phone, 'code': code});
+    return ApiResponse.mock(
+        AuthTokens.fromJson(res.data as Map<String, dynamic>));
   }
 
-  /// POST [ApiEndpoints.forgotPassword]
-  /// Request:  `{ "phone": "+9715XXXXXXXX" }`
-  /// Response: `{ "success": true, "message": "Reset code sent" }`
+  Future<ApiResponse<AuthTokens>> refresh(String refreshToken) async {
+    final res = await _dio
+        .post(ApiEndpoints.refresh, data: {'refreshToken': refreshToken});
+    return ApiResponse.mock(
+        AuthTokens.fromJson(res.data as Map<String, dynamic>));
+  }
+
+  Future<ApiResponse<Unit>> logout(String refreshToken) async {
+    await _dio.post(ApiEndpoints.logout, data: {'refreshToken': refreshToken});
+    return ApiResponse.mock(unit);
+  }
+
+  // ponytail: unsupported by the partner API (OTP-only). Kept so the Forgot
+  // screen compiles; will 404 at runtime until that screen is removed.
   Future<ApiResponse<Unit>> forgotPassword({required String phone}) async {
-    // final res = await _dio.post(ApiEndpoints.forgotPassword, data: {'phone': phone});
-    // return ApiResponse<Unit>.fromJson(res.data as Map<String, dynamic>, res.statusCode!, (_) => unit);
-    await Future<void>.delayed(const Duration(milliseconds: 500));
-    return ApiResponse<Unit>.mock(unit, message: 'Reset code sent');
+    await _dio.post(ApiEndpoints.forgotPassword, data: {'phone': phone});
+    return ApiResponse.mock(unit);
   }
 
-  /// POST [ApiEndpoints.resetPassword]
-  /// Request:  `{ "phone": "+9715XXXXXXXX", "code": "1234", "password": "<new>" }`
-  /// Response: `{ "success": true }`
-  ///   Validation → HTTP 422 `{ "errors": { "password": ["Too short"] } }`.
   Future<ApiResponse<Unit>> resetPassword({
     required String phone,
     required String code,
     required String password,
   }) async {
-    // final res = await _dio.post(ApiEndpoints.resetPassword,
-    //     data: {'phone': phone, 'code': code, 'password': password});
-    // return ApiResponse<Unit>.fromJson(res.data as Map<String, dynamic>, res.statusCode!, (_) => unit);
-    await Future<void>.delayed(const Duration(milliseconds: 500));
-    return ApiResponse<Unit>.mock(unit);
+    await _dio.post(ApiEndpoints.resetPassword,
+        data: {'phone': phone, 'code': code, 'password': password});
+    return ApiResponse.mock(unit);
   }
 }

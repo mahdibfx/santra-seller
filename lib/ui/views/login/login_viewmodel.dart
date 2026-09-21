@@ -7,14 +7,29 @@ import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
 import '../../../models/failure.dart';
 import '../../../services/auth_service.dart';
+import '../../../services/token_service.dart';
 import '../../../services/toast_service.dart';
+import '../../widgets/country_sheet.dart';
 
 class LoginViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _authService = locator<AuthService>();
+  final _tokenService = locator<TokenService>();
   final _toastService = locator<ToastService>();
 
   final phoneController = TextEditingController();
+
+  String _dialCode = '+971';
+  String get dialCode => _dialCode;
+  String get prefixLabel => '${flagFor(_dialCode)}  $_dialCode';
+  String get fullPhone => '$_dialCode $phone';
+
+  Future<void> onPickCountry(BuildContext context) async {
+    final picked = await showCountrySheet(context, _dialCode);
+    if (picked == null || picked == _dialCode) return;
+    _dialCode = picked;
+    rebuildUi();
+  }
 
   String? _phoneError;
   String? get phoneError => _phoneError;
@@ -40,10 +55,11 @@ class LoginViewModel extends BaseViewModel {
       return;
     }
     setBusy(true);
-    final result = await _authService.requestOtp(phone: phone);
+    final result = await _authService.requestOtp(phone: phone, countryCode: _dialCode);
     setBusy(false);
     result.fold(
-      (failure) => _toastService.showUpperToast(failure.message, type: ToastType.danger),
+      (failure) =>
+          _toastService.showUpperToast(failure.message, type: ToastType.danger),
       (_) {
         _otpVisible = true;
         rebuildUi();
@@ -54,14 +70,18 @@ class LoginViewModel extends BaseViewModel {
   Future<void> onVerifyOtp(String code) async {
     if (isBusy) return;
     setBusy(true);
-    final result = await _authService.verifyOtp(phone: phone, code: code);
+    final result = await _authService.verifyOtp(phone: phone, code: code, countryCode: _dialCode);
     setBusy(false);
     result.fold(
       (failure) {
-        final msg = failure is ValidationFailure ? (failure.firstError ?? failure.message) : failure.message;
+        final msg = failure is ValidationFailure
+            ? (failure.firstError ?? failure.message)
+            : failure.message;
         _toastService.showUpperToast(msg, type: ToastType.danger);
       },
-      (_) {
+      (tokens) async {
+        await _tokenService.saveTokens(tokens.accessToken, tokens.refreshToken);
+        await _tokenService.savePartnerName(tokens.nameEn, tokens.nameAr);
         _otpVisible = false;
         _navigationService.clearStackAndShow(Routes.mainView);
       },

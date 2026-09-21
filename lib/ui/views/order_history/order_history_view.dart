@@ -19,7 +19,8 @@ class OrderHistoryView extends StackedView<OrderHistoryViewModel> {
   const OrderHistoryView({super.key});
 
   @override
-  Widget builder(BuildContext context, OrderHistoryViewModel viewModel, Widget? child) {
+  Widget builder(
+      BuildContext context, OrderHistoryViewModel viewModel, Widget? child) {
     return Scaffold(
       backgroundColor: AppColors.cream,
       body: FadeSlideIn(
@@ -31,7 +32,12 @@ class OrderHistoryView extends StackedView<OrderHistoryViewModel> {
               padding: const EdgeInsets.fromLTRB(18, 4, 18, 0),
               child: Row(
                 children: [
-                  IconSquareButton(iconName: 'chevronLeft', onTap: viewModel.onBack, flipForRtl: true, radius: 13, size: 42),
+                  IconSquareButton(
+                      iconName: 'chevronLeft',
+                      onTap: viewModel.onBack,
+                      flipForRtl: true,
+                      radius: 13,
+                      size: 42),
                   const SizedBox(width: 10),
                   AppText.displayLarge('order_history'.tr(), fontSize: 25),
                 ],
@@ -47,9 +53,21 @@ class OrderHistoryView extends StackedView<OrderHistoryViewModel> {
               padding: const EdgeInsets.fromLTRB(18, 14, 18, 0),
               child: Row(
                 children: [
-                  Expanded(child: _DateField(label: 'date_from'.tr(), value: viewModel.from, onPick: viewModel.setFrom, context: context)),
+                  Expanded(
+                      child: _DateField(
+                          label: 'date_from'.tr(),
+                          value: viewModel.from,
+                          onPick: viewModel.setFrom,
+                          context: context,
+                          lastDate: viewModel.to)),
                   const SizedBox(width: 12),
-                  Expanded(child: _DateField(label: 'date_to'.tr(), value: viewModel.to, onPick: viewModel.setTo, context: context)),
+                  Expanded(
+                      child: _DateField(
+                          label: 'date_to'.tr(),
+                          value: viewModel.to,
+                          onPick: viewModel.setTo,
+                          context: context,
+                          firstDate: viewModel.from)),
                 ],
               ),
             ),
@@ -58,7 +76,10 @@ class OrderHistoryView extends StackedView<OrderHistoryViewModel> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  AppText('${viewModel.filtered.length} ${'results'.tr()}', fontSize: 13.5, fontWeight: FontWeight.w600, color: AppColors.muted),
+                  AppText('${viewModel.resultsCount} ${'results'.tr()}',
+                      fontSize: 13.5,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.muted),
                   if (viewModel.hasFilters)
                     GestureDetector(
                       onTap: viewModel.clearFilters,
@@ -67,7 +88,10 @@ class OrderHistoryView extends StackedView<OrderHistoryViewModel> {
                         children: [
                           const AppIcon('x', size: 15, color: AppColors.brand),
                           const SizedBox(width: 5),
-                          AppText('clear_filters'.tr(), fontSize: 13.5, fontWeight: FontWeight.w700, color: AppColors.brand),
+                          AppText('clear_filters'.tr(),
+                              fontSize: 13.5,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.brand),
                         ],
                       ),
                     ),
@@ -76,14 +100,37 @@ class OrderHistoryView extends StackedView<OrderHistoryViewModel> {
             ),
             Expanded(
               child: viewModel.isBusy
-                  ? const Center(child: CircularProgressIndicator(color: AppColors.brand))
-                  : viewModel.filtered.isEmpty
+                  ? const Center(
+                      child: CircularProgressIndicator(color: AppColors.brand))
+                  : viewModel.orders.isEmpty
                       ? _empty()
-                      : ListView.separated(
-                          padding: const EdgeInsets.fromLTRB(18, 4, 18, 40),
-                          itemCount: viewModel.filtered.length,
-                          separatorBuilder: (_, __) => const SizedBox(height: 11),
-                          itemBuilder: (_, i) => _HistoryRow(order: viewModel.filtered[i], onTap: () => viewModel.onOpen(viewModel.filtered[i])),
+                      : NotificationListener<ScrollNotification>(
+                          onNotification: (n) {
+                            if (n.metrics.pixels >=
+                                n.metrics.maxScrollExtent - 300)
+                              viewModel.loadMore();
+                            return false;
+                          },
+                          child: ListView.separated(
+                            padding: const EdgeInsets.fromLTRB(18, 4, 18, 40),
+                            itemCount: viewModel.orders.length +
+                                (viewModel.hasMore ? 1 : 0),
+                            separatorBuilder: (_, __) =>
+                                const SizedBox(height: 11),
+                            itemBuilder: (_, i) {
+                              if (i >= viewModel.orders.length) {
+                                return const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 20),
+                                  child: Center(
+                                      child: CircularProgressIndicator(
+                                          color: AppColors.brand)),
+                                );
+                              }
+                              final o = viewModel.orders[i];
+                              return _HistoryRow(
+                                  order: o, onTap: () => viewModel.onOpen(o));
+                            },
+                          ),
                         ),
             ),
           ],
@@ -102,13 +149,19 @@ class OrderHistoryView extends StackedView<OrderHistoryViewModel> {
             Container(
               width: 66,
               height: 66,
-              decoration: BoxDecoration(color: AppColors.brandSofter, borderRadius: BorderRadius.circular(20)),
-              child: const Center(child: AppIcon('search', size: 28, color: AppColors.brand)),
+              decoration: BoxDecoration(
+                  color: AppColors.brandSofter,
+                  borderRadius: BorderRadius.circular(20)),
+              child: const Center(
+                  child: AppIcon('search', size: 28, color: AppColors.brand)),
             ),
             const SizedBox(height: 12),
             AppText.display('no_history'.tr(), fontSize: 19),
             const SizedBox(height: 6),
-            AppText.body('no_history_sub'.tr(), color: AppColors.muted, fontSize: 14, textAlign: TextAlign.center),
+            AppText.body('no_history_sub'.tr(),
+                color: AppColors.muted,
+                fontSize: 14,
+                textAlign: TextAlign.center),
           ],
         ),
       ),
@@ -119,7 +172,8 @@ class OrderHistoryView extends StackedView<OrderHistoryViewModel> {
   void onViewModelReady(OrderHistoryViewModel viewModel) => viewModel.init();
 
   @override
-  OrderHistoryViewModel viewModelBuilder(BuildContext context) => OrderHistoryViewModel();
+  OrderHistoryViewModel viewModelBuilder(BuildContext context) =>
+      OrderHistoryViewModel();
 }
 
 class _SearchField extends StatelessWidget {
@@ -145,17 +199,23 @@ class _SearchField extends StatelessWidget {
               onChanged: viewModel.onQueryChanged,
               controller: viewModel.searchController,
               cursorColor: AppColors.brand,
-              style: AppTextStyles.body(context, fontSize: 15, fontWeight: FontWeight.w500),
+              style: AppTextStyles.body(context,
+                  fontSize: 15, fontWeight: FontWeight.w500),
               decoration: InputDecoration(
                 isCollapsed: true,
                 border: InputBorder.none,
                 hintText: 'search_orders'.tr(),
-                hintStyle: AppTextStyles.body(context, fontSize: 15, fontWeight: FontWeight.w500, color: AppColors.faint),
+                hintStyle: AppTextStyles.body(context,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.faint),
               ),
             ),
           ),
           if (viewModel.query.isNotEmpty)
-            GestureDetector(onTap: viewModel.clearQuery, child: const AppIcon('x', size: 17, color: AppColors.faint)),
+            GestureDetector(
+                onTap: viewModel.clearQuery,
+                child: const AppIcon('x', size: 17, color: AppColors.faint)),
         ],
       ),
     );
@@ -168,16 +228,22 @@ class _StatusChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget chip(String label, bool active, VoidCallback onTap) => GestureDetector(
+    Widget chip(String label, bool active, VoidCallback onTap) =>
+        GestureDetector(
           onTap: onTap,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
             decoration: BoxDecoration(
               color: active ? AppColors.brand : AppColors.surface,
               borderRadius: BorderRadius.circular(999),
-              border: active ? null : Border.all(color: AppColors.line, width: 1.5),
+              border:
+                  active ? null : Border.all(color: AppColors.line, width: 1.5),
             ),
-            child: Text(label, style: AppTextStyles.body(context, fontSize: 14, fontWeight: FontWeight.w600, color: active ? Colors.white : AppColors.ink)),
+            child: Text(label,
+                style: AppTextStyles.body(context,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: active ? Colors.white : AppColors.ink)),
           ),
         );
 
@@ -187,11 +253,13 @@ class _StatusChips extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 18),
         children: [
-          chip('all'.tr(), viewModel.status == null, () => viewModel.setStatus(null)),
+          chip('all'.tr(), viewModel.status == null,
+              () => viewModel.setStatus(null)),
           for (final s in kStatusOrder)
             Padding(
               padding: const EdgeInsetsDirectional.only(start: 8),
-              child: chip(s.labelKey.tr(), viewModel.status == s, () => viewModel.setStatus(s)),
+              child: chip(s.labelKey.tr(), viewModel.status == s,
+                  () => viewModel.setStatus(s)),
             ),
         ],
       ),
@@ -200,11 +268,20 @@ class _StatusChips extends StatelessWidget {
 }
 
 class _DateField extends StatelessWidget {
-  const _DateField({required this.label, required this.value, required this.onPick, required this.context});
+  const _DateField({
+    required this.label,
+    required this.value,
+    required this.onPick,
+    required this.context,
+    this.firstDate,
+    this.lastDate,
+  });
   final String label;
   final DateTime? value;
   final ValueChanged<DateTime?> onPick;
   final BuildContext context;
+  final DateTime? firstDate;
+  final DateTime? lastDate;
 
   @override
   Widget build(BuildContext context) {
@@ -217,11 +294,16 @@ class _DateField extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () async {
+            final first = firstDate ?? DateTime(2024);
+            final last = lastDate ?? DateTime(2027);
+            final initial = (value ?? DateTime(2026, 6, 23));
             final picked = await showDatePicker(
               context: context,
-              initialDate: value ?? DateTime(2026, 6, 23),
-              firstDate: DateTime(2024),
-              lastDate: DateTime(2027),
+              initialDate: initial.isBefore(first)
+                  ? first
+                  : (initial.isAfter(last) ? last : initial),
+              firstDate: first,
+              lastDate: last,
             );
             if (picked != null) onPick(picked);
           },
@@ -239,7 +321,9 @@ class _DateField extends StatelessWidget {
                 const SizedBox(width: 8),
                 Expanded(
                   child: AppText(
-                    value == null ? label : formatIsoDate(_iso(value!), context),
+                    value == null
+                        ? label
+                        : formatIsoDate(_iso(value!), context),
                     fontSize: 14.5,
                     fontWeight: FontWeight.w600,
                     color: value == null ? AppColors.faint : AppColors.ink,
@@ -273,26 +357,32 @@ class _HistoryRow extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.surface,
           borderRadius: BorderRadius.circular(18),
-          boxShadow: const [BoxShadow(color: Color(0x30143232), blurRadius: 26, offset: Offset(0, 12))],
+          boxShadow: const [
+            BoxShadow(
+                color: Color(0x30143232), blurRadius: 26, offset: Offset(0, 12))
+          ],
         ),
         child: Row(
           children: [
-            ThumbImage(path: order.items.isNotEmpty ? order.items.first.image : '', size: 48, radius: 13),
+            ThumbImage(
+                path: order.items.isNotEmpty ? order.items.first.image : '',
+                size: 48,
+                radius: 13),
             const SizedBox(width: 13),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      AppText('#${order.id}', fontSize: 15, fontWeight: FontWeight.w700),
-                      const SizedBox(width: 8),
-                      StatusPill(status: order.status, small: true),
-                    ],
+                  AppText(
+                    '#${order.orderNumber.isNotEmpty ? order.orderNumber : order.id}',
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 4),
                   AppText(
-                    '${order.customer} · ${formatIsoDate(order.date, context)}',
+                    formatIsoDate(order.date, context),
                     fontSize: 13.5,
                     fontWeight: FontWeight.w500,
                     color: AppColors.muted,
@@ -302,8 +392,17 @@ class _HistoryRow extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: 8),
-            AppText.display(money(order.total, context), fontSize: 17),
+            const SizedBox(width: 10),
+            // Price over status: a long order number used to push the pill off
+            // the row.
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                AppText.display(money(order.total, context), fontSize: 17),
+                const SizedBox(height: 5),
+                StatusPill(status: order.status, small: true),
+              ],
+            ),
           ],
         ),
       ),

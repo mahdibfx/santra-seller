@@ -1,9 +1,11 @@
 import 'package:flutter/widgets.dart';
 
 /// Localized currency: `AED 245` (en) / `245 د.إ` (ar).
-String money(int amount, BuildContext context) {
+/// Shows 2 decimals only when the amount isn't whole (e.g. `AED 72.98`).
+String money(num amount, BuildContext context) {
   final ar = Localizations.localeOf(context).languageCode == 'ar';
-  return ar ? '$amount د.إ' : 'AED $amount';
+  final n = amount % 1 == 0 ? amount.toInt().toString() : amount.toStringAsFixed(2);
+  return ar ? '$n د.إ' : 'AED $n';
 }
 
 const List<String> kMonthsEn = [
