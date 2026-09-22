@@ -177,5 +177,6 @@
   "promo_answered": "تم تسجيل ردّك.",
   "promo_saved": "تم حفظ الرد",
   "promo_name_required": "أدخل اسمك الكامل للتوقيع",
-  "soon": "قريباً"
+  "soon": "قريباً",
+  "shipped_at": "تم الشحن في"
 }

@@ -177,5 +177,6 @@
   "promo_answered": "Your response is recorded.",
   "promo_saved": "Response saved",
   "promo_name_required": "Enter your full name to sign",
-  "soon": "Soon"
+  "soon": "Soon",
+  "shipped_at": "Shipped at"
 }

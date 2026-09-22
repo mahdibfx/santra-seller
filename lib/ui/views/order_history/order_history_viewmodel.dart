@@ -23,7 +23,6 @@ class OrderHistoryViewModel extends BaseViewModel {
   List<Order> get orders => _orders;
 
   String _query = '';
-  OrderStatus? _status;
   DateTime? _from;
   DateTime? _to;
 
@@ -36,11 +35,10 @@ class OrderHistoryViewModel extends BaseViewModel {
   int get resultsCount => _total;
 
   String get query => _query;
-  OrderStatus? get status => _status;
   DateTime? get from => _from;
   DateTime? get to => _to;
 
-  bool get hasFilters => _query.isNotEmpty || _status != null || _from != null || _to != null;
+  bool get hasFilters => _query.isNotEmpty || _from != null || _to != null;
 
   Future<void> init() async {
     setBusy(true);
@@ -55,13 +53,15 @@ class OrderHistoryViewModel extends BaseViewModel {
     final page = reset ? 1 : _page + 1;
     final result = await _ordersService.fetchOrders(
       page: page,
-      status: _status,
+      // History is the delivered archive — the live board covers the rest.
+      status: OrderStatus.delivered,
       search: _query.trim().replaceAll('#', ''),
       dateFrom: _from == null ? null : _iso(_from!),
       dateTo: _to == null ? null : _iso(_to!),
     );
     result.fold(
-      (failure) => _toastService.showUpperToast(failure.message, type: ToastType.danger),
+      (failure) =>
+          _toastService.showUpperToast(failure.message, type: ToastType.danger),
       (p) {
         _orders = reset ? p.items : [..._orders, ...p.items];
         _page = p.page;
@@ -100,11 +100,6 @@ class OrderHistoryViewModel extends BaseViewModel {
     _refresh();
   }
 
-  void setStatus(OrderStatus? s) {
-    _status = s;
-    _refresh();
-  }
-
   void setFrom(DateTime? d) {
     _from = d;
     // Keep from ≤ to: an out-of-order `to` is dropped.
@@ -121,7 +116,6 @@ class OrderHistoryViewModel extends BaseViewModel {
   void clearFilters() {
     _query = '';
     searchController.clear();
-    _status = null;
     _from = null;
     _to = null;
     _refresh();

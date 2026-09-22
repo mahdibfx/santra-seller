@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../models/order.dart';
-import '../../../models/order_status.dart';
 import '../../common/app_animations.dart';
 import '../../common/app_colors.dart';
 import '../../common/app_text_styles.dart';
@@ -47,8 +46,6 @@ class OrderHistoryView extends StackedView<OrderHistoryViewModel> {
               padding: const EdgeInsets.fromLTRB(18, 16, 18, 0),
               child: _SearchField(viewModel: viewModel),
             ),
-            const SizedBox(height: 12),
-            _StatusChips(viewModel: viewModel),
             Padding(
               padding: const EdgeInsets.fromLTRB(18, 14, 18, 0),
               child: Row(
@@ -222,51 +219,6 @@ class _SearchField extends StatelessWidget {
   }
 }
 
-class _StatusChips extends StatelessWidget {
-  const _StatusChips({required this.viewModel});
-  final OrderHistoryViewModel viewModel;
-
-  @override
-  Widget build(BuildContext context) {
-    Widget chip(String label, bool active, VoidCallback onTap) =>
-        GestureDetector(
-          onTap: onTap,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-            decoration: BoxDecoration(
-              color: active ? AppColors.brand : AppColors.surface,
-              borderRadius: BorderRadius.circular(999),
-              border:
-                  active ? null : Border.all(color: AppColors.line, width: 1.5),
-            ),
-            child: Text(label,
-                style: AppTextStyles.body(context,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: active ? Colors.white : AppColors.ink)),
-          ),
-        );
-
-    return SizedBox(
-      height: 36,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 18),
-        children: [
-          chip('all'.tr(), viewModel.status == null,
-              () => viewModel.setStatus(null)),
-          for (final s in kStatusOrder)
-            Padding(
-              padding: const EdgeInsetsDirectional.only(start: 8),
-              child: chip(s.labelKey.tr(), viewModel.status == s,
-                  () => viewModel.setStatus(s)),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
 class _DateField extends StatelessWidget {
   const _DateField({
     required this.label,
@@ -382,7 +334,7 @@ class _HistoryRow extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   AppText(
-                    formatIsoDate(order.date, context),
+                    '${'shipped_at'.tr()} ${formatIsoDate(order.date, context)}',
                     fontSize: 13.5,
                     fontWeight: FontWeight.w500,
                     color: AppColors.muted,
