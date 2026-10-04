@@ -7,6 +7,7 @@ import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
 import '../../../models/failure.dart';
 import '../../../services/auth_service.dart';
+import '../../../services/push_service.dart';
 import '../../../services/token_service.dart';
 import '../../../services/toast_service.dart';
 import '../../widgets/country_sheet.dart';
@@ -15,6 +16,7 @@ class LoginViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _authService = locator<AuthService>();
   final _tokenService = locator<TokenService>();
+  final _pushService = locator<PushService>();
   final _toastService = locator<ToastService>();
 
   final phoneController = TextEditingController();
@@ -55,7 +57,8 @@ class LoginViewModel extends BaseViewModel {
       return;
     }
     setBusy(true);
-    final result = await _authService.requestOtp(phone: phone, countryCode: _dialCode);
+    final result =
+        await _authService.requestOtp(phone: phone, countryCode: _dialCode);
     setBusy(false);
     result.fold(
       (failure) =>
@@ -70,7 +73,8 @@ class LoginViewModel extends BaseViewModel {
   Future<void> onVerifyOtp(String code) async {
     if (isBusy) return;
     setBusy(true);
-    final result = await _authService.verifyOtp(phone: phone, code: code, countryCode: _dialCode);
+    final result = await _authService.verifyOtp(
+        phone: phone, code: code, countryCode: _dialCode);
     setBusy(false);
     result.fold(
       (failure) {
@@ -82,6 +86,7 @@ class LoginViewModel extends BaseViewModel {
       (tokens) async {
         await _tokenService.saveTokens(tokens.accessToken, tokens.refreshToken);
         await _tokenService.savePartnerName(tokens.nameEn, tokens.nameAr);
+        await _pushService.start();
         _otpVisible = false;
         _navigationService.clearStackAndShow(Routes.mainView);
       },

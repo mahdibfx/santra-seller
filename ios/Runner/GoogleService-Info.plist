@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>735066844046-melsohf5fn2lpcfc926m4m15p28l7710.apps.googleusercontent.com</string>
+	<string>666907515537-ri15lcj6d8ikknb8rhe8lnjtdgg5qlp6.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.735066844046-melsohf5fn2lpcfc926m4m15p28l7710</string>
+	<string>com.googleusercontent.apps.666907515537-ri15lcj6d8ikknb8rhe8lnjtdgg5qlp6</string>
 	<key>API_KEY</key>
-	<string>AIzaSyByctFa45QP72eH8y2iKQphKzttIsPRr9w</string>
+	<string>AIzaSyCZJ92oA_kxvh9cpY83FYmGJop1vvUeoCQ</string>
 	<key>GCM_SENDER_ID</key>
-	<string>735066844046</string>
+	<string>666907515537</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.hihome.seller</string>
 	<key>PROJECT_ID</key>
-	<string>seller-home</string>
+	<string>santra-seller-dec2a</string>
 	<key>STORAGE_BUCKET</key>
-	<string>seller-home.appspot.com</string>
+	<string>santra-seller-dec2a.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:735066844046:ios:44c16f78acc2548214d2df</string>
+	<string>1:666907515537:ios:53736669179fef1bc9bd30</string>
 </dict>
 </plist>

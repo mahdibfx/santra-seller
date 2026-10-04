@@ -24,6 +24,7 @@ import '../services/notifications_service.dart';
 import '../services/orders_service.dart';
 import '../services/profile_service.dart';
 import '../services/promotions_service.dart';
+import '../services/push_service.dart';
 import '../services/toast_service.dart';
 import '../services/token_service.dart';
 
@@ -41,6 +42,7 @@ Future<void> setupLocator(
   locator.registerLazySingleton(() => TokenService());
   locator.registerLazySingleton(() => ToastService());
   locator.registerLazySingleton(() => LanguageService());
+  locator.registerLazySingleton(() => PushService());
   locator.registerLazySingleton(() => ApiAuthService());
   locator.registerLazySingleton(() => ApiOrdersService());
   locator.registerLazySingleton(() => ApiNotificationsService());

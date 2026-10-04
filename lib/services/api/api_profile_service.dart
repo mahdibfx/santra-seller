@@ -3,6 +3,7 @@ import 'package:fpdart/fpdart.dart';
 import '../../app/app.locator.dart';
 import '../../models/api_response.dart';
 import '../../models/seller_profile.dart';
+import '../../models/trading.dart';
 import '../dio_service.dart';
 import '../token_service.dart';
 import 'api_endpoints.dart';
@@ -13,7 +14,21 @@ class ApiProfileService {
   Future<ApiResponse<SellerProfile>> fetchProfile() async {
     final res = await _dio.get(ApiEndpoints.profile); // GET /me
     return ApiResponse<SellerProfile>.fromJson(
-        res.data as Map<String, dynamic>, res.statusCode!, (d) => SellerProfile.fromJson(d as Map<String, dynamic>));
+        res.data as Map<String, dynamic>,
+        res.statusCode!,
+        (d) => SellerProfile.fromJson(d as Map<String, dynamic>));
+  }
+
+  /// PATCH /me/trading — `busy` (with minutes, or the string `day`),
+  /// `extend` (minutes) or `open`. Answers with the new trading object.
+  Future<ApiResponse<Trading>> updateTrading(
+      {required String action, Object? minutes}) async {
+    final res = await _dio.patch(ApiEndpoints.trading, data: {
+      'action': action,
+      if (minutes != null) 'minutes': minutes,
+    });
+    return ApiResponse<Trading>.fromJson(res.data as Map<String, dynamic>,
+        res.statusCode!, (d) => Trading.fromJson(d as Map<String, dynamic>));
   }
 
   Future<ApiResponse<Unit>> logout() async {

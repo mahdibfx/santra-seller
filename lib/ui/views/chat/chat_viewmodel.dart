@@ -25,10 +25,12 @@ class ChatViewModel extends BaseViewModel {
   bool get sending => _sending;
 
   bool get showSuggestions => _messages.length <= 1 && !_sending;
-  List<String> get suggestions => ['asst_s1'.tr(), 'asst_s2'.tr(), 'asst_s3'.tr()];
+  List<String> get suggestions =>
+      ['asst_s1'.tr(), 'asst_s2'.tr(), 'asst_s3'.tr()];
 
   Future<void> init() async {
-    _messages.add(ChatMessage(role: ChatRole.assistant, text: 'asst_greeting'.tr()));
+    _messages
+        .add(ChatMessage(role: ChatRole.assistant, text: 'asst_greeting'.tr()));
     rebuildUi();
     final result = await _ordersService.fetchOrders(limit: 100);
     result.fold((_) {}, (page) => _orders = page.items);
@@ -43,10 +45,9 @@ class ChatViewModel extends BaseViewModel {
           o.tags.isEmpty ? 'standard' : o.tags.map((t) => t.wire).join('/'),
           'AED${o.total}',
         ];
-        if (o.due != null) {
-          parts.add(o.due! >= 0 ? 'due in ${o.due}m' : 'overdue by ${-o.due!}m');
-        }
-        parts.add('items: ${o.items.map((it) => '${it.name} x${it.qty}').join(', ')}');
+        if (o.receivedAt != null) parts.add('waiting ${o.placed}m');
+        parts.add(
+            'items: ${o.items.map((it) => '${it.name} x${it.qty}').join(', ')}');
         return parts.join(' · ');
       }).join('\n');
 
@@ -66,7 +67,8 @@ class ChatViewModel extends BaseViewModel {
     );
     _sending = false;
     result.fold(
-      (_) => _messages.add(ChatMessage(role: ChatRole.assistant, text: 'asst_error'.tr())),
+      (_) => _messages
+          .add(ChatMessage(role: ChatRole.assistant, text: 'asst_error'.tr())),
       (reply) => _messages.add(ChatMessage(
         role: ChatRole.assistant,
         text: reply.trim().isEmpty ? 'asst_error'.tr() : reply.trim(),

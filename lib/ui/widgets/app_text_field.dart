@@ -92,11 +92,15 @@ class _AppTextFieldState extends State<AppTextField> {
             border: Border.all(color: borderColor, width: borderWidth),
           ),
           child: Directionality(
-            textDirection: widget.forceLtr ? TextDirection.ltr : Directionality.of(context),
+            textDirection: widget.forceLtr
+                ? TextDirection.ltr
+                : Directionality.of(context),
             child: Row(
               children: [
                 if (widget.iconName != null) ...[
-                  AppIcon(widget.iconName!, size: 20, color: _focused ? AppColors.brand : AppColors.faint),
+                  AppIcon(widget.iconName!,
+                      size: 20,
+                      color: _focused ? AppColors.brand : AppColors.faint),
                   const SizedBox(width: 10),
                 ],
                 if (widget.prefix != null) ...[
@@ -105,9 +109,11 @@ class _AppTextFieldState extends State<AppTextField> {
                     behavior: HitTestBehavior.opaque,
                     child: Row(
                       children: [
-                        AppText(widget.prefix!, fontSize: 17, fontWeight: FontWeight.w500),
+                        AppText(widget.prefix!,
+                            fontSize: 17, fontWeight: FontWeight.w500),
                         if (widget.onPrefixTap != null)
-                          const Icon(Icons.keyboard_arrow_down_rounded, size: 20, color: AppColors.faint),
+                          const Icon(Icons.keyboard_arrow_down_rounded,
+                              size: 20, color: AppColors.faint),
                       ],
                     ),
                   ),
@@ -124,15 +130,20 @@ class _AppTextFieldState extends State<AppTextField> {
                     maxLength: widget.maxLength,
                     onChanged: widget.onChanged,
                     textDirection: widget.forceLtr ? TextDirection.ltr : null,
-                    textAlign: widget.forceLtr ? TextAlign.left : TextAlign.start,
+                    textAlign:
+                        widget.forceLtr ? TextAlign.left : TextAlign.start,
                     cursorColor: AppColors.brand,
-                    style: AppTextStyles.body(context, fontSize: 17, fontWeight: FontWeight.w500),
+                    style: AppTextStyles.body(context,
+                        fontSize: 17, fontWeight: FontWeight.w500),
                     decoration: InputDecoration(
                       isCollapsed: true,
                       border: InputBorder.none,
                       counterText: '',
                       hintText: widget.hintText,
-                      hintStyle: AppTextStyles.body(context, fontSize: 17, fontWeight: FontWeight.w500, color: AppColors.faint),
+                      hintStyle: AppTextStyles.body(context,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.faint),
                     ),
                   ),
                 ),
@@ -143,7 +154,8 @@ class _AppTextFieldState extends State<AppTextField> {
         ),
         if (hasError) ...[
           const SizedBox(height: 6),
-          AppText.caption(widget.errorText!, color: const Color(0xFFC03B41), fontSize: 13),
+          AppText.caption(widget.errorText!,
+              color: const Color(0xFFC03B41), fontSize: 13),
         ],
       ],
     );

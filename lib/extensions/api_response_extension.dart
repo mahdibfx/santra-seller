@@ -22,7 +22,8 @@ extension ApiResponseX<T> on Future<ApiResponse<T>> {
           res.errors,
         ));
       }
-      return left(GeneralFailure(res.message.isEmpty ? 'Something went wrong' : res.message));
+      return left(GeneralFailure(
+          res.message.isEmpty ? 'Something went wrong' : res.message));
     } on DioException catch (e) {
       return left(_mapDioException(e));
     } catch (e) {
@@ -40,28 +41,43 @@ Failure _mapDioException(DioException e) {
     case DioExceptionType.connectionError:
       return const NoInternetFailure();
     case DioExceptionType.badResponse:
-      final code = e.response?.statusCode ?? 0;
+      final httpCode = e.response?.statusCode ?? 0;
       final body = e.response?.data;
       // Partner API error shape: { "error": { "code": "...", "message": "..." } }
-      final error = (body is Map && body['error'] is Map) ? body['error'] as Map : null;
-      final message = error?['message'] is String ? error!['message'] as String : null;
-      switch (code) {
+      final error =
+          (body is Map && body['error'] is Map) ? body['error'] as Map : null;
+      final message =
+          error?['message'] is String ? error!['message'] as String : null;
+      final code = error?['code'] is String ? error!['code'] as String : null;
+      final details = error?['details'] is Map
+          ? (error!['details'] as Map).cast<String, dynamic>()
+          : null;
+      switch (httpCode) {
         case 400:
         case 422:
           // VALIDATION_ERROR — single message names the bad field.
-          return ValidationFailure(message ?? 'Validation failed', const {});
+          return ValidationFailure(message ?? 'Validation failed', const {},
+              code: code, details: details);
         case 401:
-          return GeneralFailure(message ?? 'Your session has expired.');
+          return GeneralFailure(message ?? 'Your session has expired.',
+              code: code, details: details);
         case 403:
-          return GeneralFailure(message ?? 'You are not allowed to do that.');
+          return GeneralFailure(message ?? 'You are not allowed to do that.',
+              code: code, details: details);
         case 404:
-          return GeneralFailure(message ?? 'Not found.');
+          return GeneralFailure(message ?? 'Not found.',
+              code: code, details: details);
         case 409:
-          return GeneralFailure(message ?? 'That change is not allowed.');
+          return GeneralFailure(message ?? 'That change is not allowed.',
+              code: code, details: details);
         case 429:
-          return GeneralFailure(message ?? 'Too many requests — please wait a moment.');
+          return GeneralFailure(
+              message ?? 'Too many requests — please wait a moment.',
+              code: code,
+              details: details);
         default:
-          return GeneralFailure(message ?? 'Server error ($code).');
+          return GeneralFailure(message ?? 'Server error ($httpCode).',
+              code: code, details: details);
       }
     default:
       return GeneralFailure(e.message ?? 'Something went wrong.');

@@ -17,7 +17,8 @@ class ForgotView extends StackedView<ForgotViewModel> {
   const ForgotView({super.key});
 
   @override
-  Widget builder(BuildContext context, ForgotViewModel viewModel, Widget? child) {
+  Widget builder(
+      BuildContext context, ForgotViewModel viewModel, Widget? child) {
     return Scaffold(
       backgroundColor: AppColors.cream,
       body: Stack(
@@ -29,7 +30,8 @@ class ForgotView extends StackedView<ForgotViewModel> {
           ),
           if (viewModel.step == ForgotStep.code)
             OtpSheet(
-              phone: '+971 ${viewModel.phone}', // ponytail: forgot flow is UAE-only
+              phone:
+                  '+971 ${viewModel.phone}', // ponytail: forgot flow is UAE-only
               busy: viewModel.isBusy,
               onVerify: viewModel.onVerifyOtp,
               onClose: viewModel.closeOtp,
@@ -76,7 +78,8 @@ class _FormStep extends StatelessWidget {
             PrimaryButton(
               label: newPass ? 'save_pass'.tr() : 'send_code'.tr(),
               disabled: !newPass && !viewModel.phoneValid,
-              onPressed: newPass ? viewModel.onSavePassword : viewModel.onSendCode,
+              onPressed:
+                  newPass ? viewModel.onSavePassword : viewModel.onSendCode,
             ),
           ],
         ),
@@ -106,7 +109,8 @@ class _FormStep extends StatelessWidget {
           errorText: viewModel.passwordError,
           trailing: GestureDetector(
             onTap: viewModel.toggleShowPassword,
-            child: AppIcon(viewModel.showPassword ? 'eyeOff' : 'eye', size: 20, color: AppColors.faint),
+            child: AppIcon(viewModel.showPassword ? 'eyeOff' : 'eye',
+                size: 20, color: AppColors.faint),
           ),
         ),
         const SizedBox(height: 18),
@@ -140,14 +144,21 @@ class _DoneStep extends StatelessWidget {
                     child: Container(
                       width: 92,
                       height: 92,
-                      decoration: const BoxDecoration(color: AppColors.brandSoft, shape: BoxShape.circle),
-                      child: const Center(child: AppIcon('checkCircle', size: 48, color: AppColors.brand)),
+                      decoration: const BoxDecoration(
+                          color: AppColors.brandSoft, shape: BoxShape.circle),
+                      child: const Center(
+                          child: AppIcon('checkCircle',
+                              size: 48, color: AppColors.brand)),
                     ),
                   ),
                   const SizedBox(height: 26),
-                  AppText.displayLarge('done_title'.tr(), fontSize: 36, textAlign: TextAlign.center),
+                  AppText.displayLarge('done_title'.tr(),
+                      fontSize: 36, textAlign: TextAlign.center),
                   const SizedBox(height: 12),
-                  AppText.body('done_sub'.tr(), fontSize: 16.5, color: AppColors.muted, textAlign: TextAlign.center),
+                  AppText.body('done_sub'.tr(),
+                      fontSize: 16.5,
+                      color: AppColors.muted,
+                      textAlign: TextAlign.center),
                 ],
               ),
             ),

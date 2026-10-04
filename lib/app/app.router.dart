@@ -6,9 +6,9 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i9;
+import 'package:flutter/material.dart' as _i11;
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart' as _i10;
+import 'package:flutter/widgets.dart' as _i12;
 import 'package:santra_seller/ui/views/forgot/forgot_view.dart' as _i4;
 import 'package:santra_seller/ui/views/login/login_view.dart' as _i3;
 import 'package:santra_seller/ui/views/main/main_view.dart' as _i5;
@@ -19,12 +19,12 @@ import 'package:santra_seller/ui/views/order_detail/order_detail_view.dart'
 import 'package:santra_seller/ui/views/order_history/order_history_view.dart'
     as _i8;
 import 'package:santra_seller/ui/views/promotion_request_detail/promotion_request_detail_view.dart'
-    as _i13;
+    as _i10;
 import 'package:santra_seller/ui/views/promotion_requests/promotion_requests_view.dart'
-    as _i12;
+    as _i9;
 import 'package:santra_seller/ui/views/welcome/welcome_view.dart' as _i2;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i11;
+import 'package:stacked_services/stacked_services.dart' as _i13;
 
 class Routes {
   static const welcomeView = '/';
@@ -90,11 +90,11 @@ class StackedRouter extends _i1.RouterBase {
     ),
     _i1.RouteDef(
       Routes.promotionRequestsView,
-      page: _i12.PromotionRequestsView,
+      page: _i9.PromotionRequestsView,
     ),
     _i1.RouteDef(
       Routes.promotionRequestDetailView,
-      page: _i13.PromotionRequestDetailView,
+      page: _i10.PromotionRequestDetailView,
     ),
   ];
 
@@ -103,7 +103,7 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<WelcomeViewArguments>(
         orElse: () => const WelcomeViewArguments(),
       );
-      return _i9.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) => _i2.WelcomeView(key: args.key),
         settings: data,
       );
@@ -112,7 +112,7 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<LoginViewArguments>(
         orElse: () => const LoginViewArguments(),
       );
-      return _i9.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) => _i3.LoginView(key: args.key),
         settings: data,
       );
@@ -121,7 +121,7 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<ForgotViewArguments>(
         orElse: () => const ForgotViewArguments(),
       );
-      return _i9.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) => _i4.ForgotView(key: args.key),
         settings: data,
       );
@@ -130,14 +130,14 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<MainViewArguments>(
         orElse: () => const MainViewArguments(),
       );
-      return _i9.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) => _i5.MainView(key: args.key),
         settings: data,
       );
     },
     _i6.OrderDetailView: (data) {
       final args = data.getArgs<OrderDetailViewArguments>(nullOk: false);
-      return _i9.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i6.OrderDetailView(key: args.key, orderId: args.orderId),
         settings: data,
@@ -147,7 +147,7 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<NotificationsViewArguments>(
         orElse: () => const NotificationsViewArguments(),
       );
-      return _i9.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) => _i7.NotificationsView(key: args.key),
         settings: data,
       );
@@ -156,25 +156,26 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<OrderHistoryViewArguments>(
         orElse: () => const OrderHistoryViewArguments(),
       );
-      return _i9.MaterialPageRoute<dynamic>(
+      return _i11.MaterialPageRoute<dynamic>(
         builder: (context) => _i8.OrderHistoryView(key: args.key),
         settings: data,
       );
     },
-    _i12.PromotionRequestsView: (data) {
+    _i9.PromotionRequestsView: (data) {
       final args = data.getArgs<PromotionRequestsViewArguments>(
         orElse: () => const PromotionRequestsViewArguments(),
       );
-      return _i9.MaterialPageRoute<dynamic>(
-        builder: (context) => _i12.PromotionRequestsView(key: args.key),
+      return _i11.MaterialPageRoute<dynamic>(
+        builder: (context) => _i9.PromotionRequestsView(key: args.key),
         settings: data,
       );
     },
-    _i13.PromotionRequestDetailView: (data) {
-      final args = data.getArgs<PromotionRequestDetailViewArguments>(nullOk: false);
-      return _i9.MaterialPageRoute<dynamic>(
-        builder: (context) =>
-            _i13.PromotionRequestDetailView(key: args.key, requestId: args.requestId),
+    _i10.PromotionRequestDetailView: (data) {
+      final args =
+          data.getArgs<PromotionRequestDetailViewArguments>(nullOk: false);
+      return _i11.MaterialPageRoute<dynamic>(
+        builder: (context) => _i10.PromotionRequestDetailView(
+            key: args.key, requestId: args.requestId),
         settings: data,
       );
     },
@@ -190,7 +191,7 @@ class StackedRouter extends _i1.RouterBase {
 class WelcomeViewArguments {
   const WelcomeViewArguments({this.key});
 
-  final _i10.Key? key;
+  final _i12.Key? key;
 
   @override
   String toString() {
@@ -212,7 +213,7 @@ class WelcomeViewArguments {
 class LoginViewArguments {
   const LoginViewArguments({this.key});
 
-  final _i10.Key? key;
+  final _i12.Key? key;
 
   @override
   String toString() {
@@ -234,7 +235,7 @@ class LoginViewArguments {
 class ForgotViewArguments {
   const ForgotViewArguments({this.key});
 
-  final _i10.Key? key;
+  final _i12.Key? key;
 
   @override
   String toString() {
@@ -256,7 +257,7 @@ class ForgotViewArguments {
 class MainViewArguments {
   const MainViewArguments({this.key});
 
-  final _i10.Key? key;
+  final _i12.Key? key;
 
   @override
   String toString() {
@@ -281,7 +282,7 @@ class OrderDetailViewArguments {
     required this.orderId,
   });
 
-  final _i10.Key? key;
+  final _i12.Key? key;
 
   final int orderId;
 
@@ -305,7 +306,7 @@ class OrderDetailViewArguments {
 class NotificationsViewArguments {
   const NotificationsViewArguments({this.key});
 
-  final _i10.Key? key;
+  final _i12.Key? key;
 
   @override
   String toString() {
@@ -327,7 +328,7 @@ class NotificationsViewArguments {
 class OrderHistoryViewArguments {
   const OrderHistoryViewArguments({this.key});
 
-  final _i10.Key? key;
+  final _i12.Key? key;
 
   @override
   String toString() {
@@ -349,7 +350,7 @@ class OrderHistoryViewArguments {
 class PromotionRequestsViewArguments {
   const PromotionRequestsViewArguments({this.key});
 
-  final _i10.Key? key;
+  final _i12.Key? key;
 
   @override
   String toString() {
@@ -374,7 +375,7 @@ class PromotionRequestDetailViewArguments {
     required this.requestId,
   });
 
-  final _i10.Key? key;
+  final _i12.Key? key;
 
   final int requestId;
 
@@ -395,9 +396,9 @@ class PromotionRequestDetailViewArguments {
   }
 }
 
-extension NavigatorStateExtension on _i11.NavigationService {
+extension NavigatorStateExtension on _i13.NavigationService {
   Future<dynamic> navigateToWelcomeView({
-    _i10.Key? key,
+    _i12.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -413,7 +414,7 @@ extension NavigatorStateExtension on _i11.NavigationService {
   }
 
   Future<dynamic> navigateToLoginView({
-    _i10.Key? key,
+    _i12.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -429,7 +430,7 @@ extension NavigatorStateExtension on _i11.NavigationService {
   }
 
   Future<dynamic> navigateToForgotView({
-    _i10.Key? key,
+    _i12.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -445,7 +446,7 @@ extension NavigatorStateExtension on _i11.NavigationService {
   }
 
   Future<dynamic> navigateToMainView({
-    _i10.Key? key,
+    _i12.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -461,7 +462,7 @@ extension NavigatorStateExtension on _i11.NavigationService {
   }
 
   Future<dynamic> navigateToOrderDetailView({
-    _i10.Key? key,
+    _i12.Key? key,
     required int orderId,
     int? routerId,
     bool preventDuplicates = true,
@@ -478,7 +479,7 @@ extension NavigatorStateExtension on _i11.NavigationService {
   }
 
   Future<dynamic> navigateToNotificationsView({
-    _i10.Key? key,
+    _i12.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -494,7 +495,7 @@ extension NavigatorStateExtension on _i11.NavigationService {
   }
 
   Future<dynamic> navigateToOrderHistoryView({
-    _i10.Key? key,
+    _i12.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -510,7 +511,7 @@ extension NavigatorStateExtension on _i11.NavigationService {
   }
 
   Future<dynamic> navigateToPromotionRequestsView({
-    _i10.Key? key,
+    _i12.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -526,7 +527,7 @@ extension NavigatorStateExtension on _i11.NavigationService {
   }
 
   Future<dynamic> navigateToPromotionRequestDetailView({
-    _i10.Key? key,
+    _i12.Key? key,
     required int requestId,
     int? routerId,
     bool preventDuplicates = true,
@@ -535,7 +536,8 @@ extension NavigatorStateExtension on _i11.NavigationService {
         transition,
   }) async {
     return navigateTo<dynamic>(Routes.promotionRequestDetailView,
-        arguments: PromotionRequestDetailViewArguments(key: key, requestId: requestId),
+        arguments:
+            PromotionRequestDetailViewArguments(key: key, requestId: requestId),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -543,7 +545,7 @@ extension NavigatorStateExtension on _i11.NavigationService {
   }
 
   Future<dynamic> replaceWithWelcomeView({
-    _i10.Key? key,
+    _i12.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -559,7 +561,7 @@ extension NavigatorStateExtension on _i11.NavigationService {
   }
 
   Future<dynamic> replaceWithLoginView({
-    _i10.Key? key,
+    _i12.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -575,7 +577,7 @@ extension NavigatorStateExtension on _i11.NavigationService {
   }
 
   Future<dynamic> replaceWithForgotView({
-    _i10.Key? key,
+    _i12.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -591,7 +593,7 @@ extension NavigatorStateExtension on _i11.NavigationService {
   }
 
   Future<dynamic> replaceWithMainView({
-    _i10.Key? key,
+    _i12.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -607,7 +609,7 @@ extension NavigatorStateExtension on _i11.NavigationService {
   }
 
   Future<dynamic> replaceWithOrderDetailView({
-    _i10.Key? key,
+    _i12.Key? key,
     required int orderId,
     int? routerId,
     bool preventDuplicates = true,
@@ -624,7 +626,7 @@ extension NavigatorStateExtension on _i11.NavigationService {
   }
 
   Future<dynamic> replaceWithNotificationsView({
-    _i10.Key? key,
+    _i12.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -640,7 +642,7 @@ extension NavigatorStateExtension on _i11.NavigationService {
   }
 
   Future<dynamic> replaceWithOrderHistoryView({
-    _i10.Key? key,
+    _i12.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -649,6 +651,40 @@ extension NavigatorStateExtension on _i11.NavigationService {
   }) async {
     return replaceWith<dynamic>(Routes.orderHistoryView,
         arguments: OrderHistoryViewArguments(key: key),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithPromotionRequestsView({
+    _i12.Key? key,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return replaceWith<dynamic>(Routes.promotionRequestsView,
+        arguments: PromotionRequestsViewArguments(key: key),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithPromotionRequestDetailView({
+    _i12.Key? key,
+    required int requestId,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return replaceWith<dynamic>(Routes.promotionRequestDetailView,
+        arguments:
+            PromotionRequestDetailViewArguments(key: key, requestId: requestId),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -5,12 +7,17 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
+import '../../../models/failure.dart';
 import '../../../models/order.dart';
 import '../../../models/order_status.dart';
 import '../../../services/language_service.dart';
 import '../../../services/notifications_service.dart';
+import '../../../models/trading.dart';
 import '../../../services/orders_service.dart';
+import '../../../services/profile_service.dart';
 import '../../../services/toast_service.dart';
+import '../../widgets/cancel_order_sheet.dart';
+import '../../widgets/pause_sheet.dart';
 
 class OrdersViewModel extends BaseViewModel {
   final _ordersService = locator<OrdersService>();
@@ -18,6 +25,7 @@ class OrdersViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _languageService = locator<LanguageService>();
   final _toastService = locator<ToastService>();
+  final _profileService = locator<ProfileService>();
 
   List<Order> _orders = [];
   List<Order> get orders => _orders;
@@ -35,9 +43,13 @@ class OrdersViewModel extends BaseViewModel {
   bool _hasUnread = false;
   bool get hasUnread => _hasUnread;
 
+  Trading _trading = const Trading();
+  Trading get trading => _trading;
+
   Future<void> init() async {
     setBusy(true);
     await _load(reset: true);
+    unawaited(_loadTrading());
     final notifResult = await _notificationsService.fetchNotifications();
     notifResult.fold(
         (_) {}, (notifs) => _hasUnread = notifs.any((n) => n.unread));
@@ -114,8 +126,35 @@ class OrdersViewModel extends BaseViewModel {
     final full = _details[o.id];
     return full == null
         ? o
-        : o.copyWith(
-            items: full.items, note: full.note, images: full.images);
+        : o.copyWith(items: full.items, note: full.note, images: full.images);
+  }
+
+  Future<void> _loadTrading() async {
+    final result = await _profileService.fetchProfile();
+    result.fold((_) {}, (profile) {
+      _trading = profile.trading;
+      rebuildUi();
+    });
+  }
+
+  /// Applies what the pause sheet returned; the API answers with the new state.
+  Future<void> applyTrading(TradingAction action) async {
+    final result = await _profileService.updateTrading(
+        action: action.action, minutes: action.minutes);
+    result.fold(
+      (f) => _toastService.showUpperToast(
+          switch (f.code) {
+            'NOT_BUSY' => 'err_not_busy'.tr(),
+            'SHOP_CLOSED' => 'err_shop_closed'.tr(),
+            'BUSY_MAX_REACHED' => 'err_busy_max'.tr(),
+            _ => f.message,
+          },
+          type: ToastType.danger),
+      (trading) {
+        _trading = trading;
+        rebuildUi();
+      },
+    );
   }
 
   Future<void> _reload() async {
@@ -142,11 +181,20 @@ class OrdersViewModel extends BaseViewModel {
     );
   }
 
-  Future<void> onDelete(Order order) async {
-    final result = await _ordersService.deleteOrder(order.id);
-    result.fold(
-      (failure) =>
-          _toastService.showUpperToast(failure.message, type: ToastType.danger),
+  Future<Failure?> onCancel(Order order, CancelChoice choice) async {
+    final result = await _ordersService.cancelOrder(order.id,
+        reasonCode: choice.reasonCode,
+        note: choice.note,
+        courierStage: choice.courierStage);
+    return result.fold(
+      (failure) {
+        // A stage change means the sheet is about to be redrawn — stay quiet.
+        if (failure.code != 'COURIER_STAGE_CHANGED') {
+          _toastService.showUpperToast(cancelErrorCopy(failure),
+              type: ToastType.danger);
+        }
+        return failure;
+      },
       (_) {
         // Show it as cancelled rather than dropping the row, then resync — the
         // active filter decides whether it still belongs in the list.
@@ -157,6 +205,7 @@ class OrdersViewModel extends BaseViewModel {
             .toList();
         rebuildUi();
         _reload();
+        return null;
       },
     );
   }

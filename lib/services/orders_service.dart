@@ -3,6 +3,7 @@ import 'package:fpdart/fpdart.dart' hide Order;
 import '../app/app.locator.dart';
 import '../extensions/api_response_extension.dart';
 import '../models/failure.dart';
+import '../models/cancel_reason.dart';
 import '../models/order.dart';
 import '../models/order_status.dart';
 import '../models/paginated.dart';
@@ -11,11 +12,6 @@ import 'api/api_orders_service.dart';
 class OrdersService {
   final _api = locator<ApiOrdersService>();
 
-  // ponytail: the app's OrderStatus enum (pending/accepted/onWay/…) doesn't
-  // match the partner API's (pending/confirmed/preparing/ready/…). Filtering
-  // by the app wire returns nothing, and incoming statuses fall back to
-  // `pending`. Reconcile OrderStatus with the partner statuses (+ colors,
-  // labels, filter rail) so the board reflects real state.
   Future<Either<Failure, Paginated<Order>>> fetchOrders({
     int page = 1,
     int limit = 20,
@@ -35,26 +31,52 @@ class OrdersService {
           )
           .toEither();
 
-  Future<Either<Failure, Order>> fetchOrder(int id) => _api.fetchOrder(id).toEither();
+  Future<Either<Failure, Order>> fetchOrder(int id) =>
+      _api.fetchOrder(id).toEither();
 
   // The partner API models every action as a status change.
   Future<Either<Failure, Unit>> acceptOrder(int id) =>
       _api.changeStatus(id, status: 'confirmed').toEither();
 
-  // ponytail: API requires a note when cancelling. The reject sheet only
-  // returns a yes/no, so we default one. Collect a real reason in the sheet
-  // and thread it through if partners need it.
-  Future<Either<Failure, Unit>> rejectOrder(int id, {String? reason}) =>
-      _api.changeStatus(id, status: 'cancelled', note: reason ?? 'Cancelled by partner').toEither();
+  /// [quantities] maps `order_item_id` to the units that are missing.
+  Future<Either<Failure, Unit>> reportUnavailable(
+    int id, {
+    required Map<int, int> quantities,
+    String? note,
+  }) =>
+      _api.reportUnavailable(id, quantities: quantities, note: note).toEither();
 
-  /// order_card's "Cancel" — no DELETE endpoint exists; cancel the order.
-  Future<Either<Failure, Unit>> deleteOrder(int id) =>
-      _api.changeStatus(id, status: 'cancelled', note: 'Cancelled by partner').toEither();
+  Future<Either<Failure, Unit>> submitRefundBankDetails(
+    int id, {
+    required String accountName,
+    required String iban,
+  }) =>
+      _api
+          .submitRefundBankDetails(id, accountName: accountName, iban: iban)
+          .toEither();
 
-  /// Forward step. Partner-legal path is confirmed → preparing → ready
-  /// (out_for_delivery/delivered are ops-side → 409 if the app sends them).
-  Future<Either<Failure, Unit>> advanceOrder(int id, {required OrderStatus from}) {
-    final next = from == OrderStatus.confirmed ? 'preparing' : 'ready';
-    return _api.changeStatus(id, status: next).toEither();
-  }
+  Future<Either<Failure, List<CancelReason>>> fetchCancelReasons(
+          {String? kind}) =>
+      _api.fetchCancelReasons(kind: kind).toEither();
+
+  /// Cancels an order with a reason code from [fetchCancelReasons] plus the
+  /// partner's optional words. There is no DELETE endpoint — cancelling is it.
+  Future<Either<Failure, Unit>> cancelOrder(
+    int id, {
+    required String reasonCode,
+    String? note,
+    String? courierStage,
+  }) =>
+      _api
+          .changeStatus(id,
+              status: 'cancelled',
+              cancelReason: reasonCode,
+              note: note,
+              courierStage: courierStage)
+          .toEither();
+
+  /// Moves an order to [to]. Which targets are legal comes from the order's
+  /// `allowed_transitions`; the API still rejects anything illegal with 409.
+  Future<Either<Failure, Unit>> moveOrder(int id, {required OrderStatus to}) =>
+      _api.changeStatus(id, status: to.wire).toEither();
 }

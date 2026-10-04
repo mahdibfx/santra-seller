@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -19,7 +20,11 @@ class MainView extends StackedView<MainViewModel> {
       body: Stack(
         children: [
           Positioned.fill(
+            // Keyed on the locale: the three pages live in a const IndexedStack
+            // and would otherwise keep their English `.tr()` strings after a
+            // language switch — only the RTL direction would flip.
             child: IndexedStack(
+              key: ValueKey(context.locale.languageCode),
               index: viewModel.index,
               children: const [
                 ProfileView(),
@@ -32,7 +37,8 @@ class MainView extends StackedView<MainViewModel> {
             left: 0,
             right: 0,
             bottom: 0,
-            child: BottomNav(active: viewModel.activeKey, onNavigate: viewModel.onNavigate),
+            child: BottomNav(
+                active: viewModel.activeKey, onNavigate: viewModel.onNavigate),
           ),
         ],
       ),

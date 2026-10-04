@@ -28,8 +28,9 @@ const countries = [
   ('🇩🇪', '+49', 'Germany'),
 ];
 
-String flagFor(String dialCode) =>
-    countries.firstWhere((c) => c.$2 == dialCode, orElse: () => countries.first).$1;
+String flagFor(String dialCode) => countries
+    .firstWhere((c) => c.$2 == dialCode, orElse: () => countries.first)
+    .$1;
 
 /// Bottom sheet listing supported dial codes. Returns the picked code, or null.
 Future<String?> showCountrySheet(BuildContext context, String selected) =>
@@ -60,7 +61,9 @@ class _CountrySheet extends StatelessWidget {
           Container(
             width: 40,
             height: 5,
-            decoration: BoxDecoration(color: AppColors.lineStrong, borderRadius: BorderRadius.circular(999)),
+            decoration: BoxDecoration(
+                color: AppColors.lineStrong,
+                borderRadius: BorderRadius.circular(999)),
           ),
           const SizedBox(height: 18),
           Expanded(
@@ -74,7 +77,8 @@ class _CountrySheet extends StatelessWidget {
                   onTap: () => Navigator.of(context).pop(dial),
                   borderRadius: BorderRadius.circular(14),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
                     child: Row(
                       children: [
                         Text(flag, style: const TextStyle(fontSize: 24)),

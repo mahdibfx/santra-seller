@@ -1,6 +1,7 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../models/order.dart';
 import '../../../models/order_item.dart';
@@ -9,10 +10,12 @@ import '../../common/app_colors.dart';
 import '../../common/format.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/app_text.dart';
+import '../../widgets/app_text_field.dart';
 import '../../widgets/image_viewer.dart';
 import '../../widgets/meta_chips.dart';
 import '../../widgets/primary_button.dart';
-import '../../widgets/reject_sheet.dart';
+import '../../widgets/cancel_order_sheet.dart';
+import '../../widgets/unavailable_sheet.dart';
 import '../../widgets/status_pill.dart';
 import '../../widgets/thumb_image.dart';
 import '../../widgets/timer_badge.dart';
@@ -98,9 +101,19 @@ class _Body extends StatelessWidget {
           const SizedBox(height: 14),
           MetaChips(order: order),
           const SizedBox(height: 20),
-          _CustomerCard(name: order.customer),
+          _CustomerCard(order: order, lang: lang),
+          if (viewModel.needsRefundDetails)
+            _RefundBankCard(viewModel: viewModel),
           _SectionLabel('order_items'.tr()),
           _ItemsCard(order: order),
+          if (order.shortages.isNotEmpty)
+            _ShortageLine(order: order, lang: lang),
+          if (order.canReportUnavailable)
+            _ReportUnavailableLink(order: order, viewModel: viewModel),
+          if (order.addons.isNotEmpty) ...[
+            _SectionLabel('addons_title'.tr()),
+            _AddonsCard(order: order, lang: lang),
+          ],
           // Order-level note only — per-item requests render with their item.
           if (order.localizedNote(lang).isNotEmpty ||
               order.images.isNotEmpty) ...[
@@ -113,9 +126,94 @@ class _Body extends StatelessWidget {
   }
 }
 
+/// Santra is refunding this (shop-entered) order and needs the customer's
+/// account. Write-only — the IBAN is never shown back.
+/// Where the order goes. Santra only tells a shop the emirate — never the
+/// address — so a missing one is spelled out rather than left blank.
+String destinationOf(Order o, String lang) {
+  final emirate = o.deliveryEmirate?.displayName(lang) ?? '';
+  if (emirate.isNotEmpty) return emirate;
+  return o.isPickup ? 'emirate_pickup'.tr() : 'emirate_unknown'.tr();
+}
+
+class _RefundBankCard extends StatelessWidget {
+  const _RefundBankCard({required this.viewModel});
+  final OrderDetailViewModel viewModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(top: 18),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: AppColors.brandSoft, width: 1.5),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 34,
+                height: 34,
+                decoration: BoxDecoration(
+                    color: AppColors.brandSofter,
+                    borderRadius: BorderRadius.circular(11)),
+                child: const Center(
+                    child: AppIcon('wallet', size: 18, color: AppColors.brand)),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: AppText('refund_bank_title'.tr(),
+                    fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          AppText.body(
+            'refund_bank_hint'
+                .tr(args: [money(viewModel.refundAmount, context)]),
+            fontSize: 14.5,
+            color: AppColors.muted,
+            height: 1.45,
+          ),
+          const SizedBox(height: 16),
+          AppTextField(
+            controller: viewModel.accountNameController,
+            label: 'refund_account_name'.tr(),
+            iconName: 'user',
+            onChanged: viewModel.onRefundFieldChanged,
+          ),
+          const SizedBox(height: 12),
+          AppTextField(
+            controller: viewModel.ibanController,
+            label: 'refund_iban'.tr(),
+            iconName: 'wallet',
+            hintText: 'AE07 0331 2345 6789 0123 456',
+            forceLtr: true,
+            errorText: viewModel.refundError,
+            onChanged: viewModel.onRefundFieldChanged,
+          ),
+          const SizedBox(height: 14),
+          PrimaryButton(
+            label: 'refund_send'.tr(),
+            disabled: !viewModel.canSendRefund,
+            onPressed: viewModel.canSendRefund
+                ? viewModel.sendRefundBankDetails
+                : null,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _CustomerCard extends StatelessWidget {
-  const _CustomerCard({required this.name});
-  final String name;
+  const _CustomerCard({required this.order, required this.lang});
+  final Order order;
+  final String lang;
 
   @override
   Widget build(BuildContext context) {
@@ -123,26 +221,290 @@ class _CustomerCard extends StatelessWidget {
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
           color: AppColors.surface, borderRadius: BorderRadius.circular(18)),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 42,
-            height: 42,
-            decoration: BoxDecoration(
-                color: AppColors.brandSoft,
-                borderRadius: BorderRadius.circular(13)),
-            child: const Center(
-                child: AppIcon('user', size: 22, color: AppColors.brand)),
-          ),
-          const SizedBox(width: 12),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
             children: [
-              AppText.label('customer'.tr()),
-              const SizedBox(height: 2),
-              AppText(name, fontSize: 16.5, fontWeight: FontWeight.w600),
+              Container(
+                width: 42,
+                height: 42,
+                decoration: BoxDecoration(
+                    color: AppColors.brandSoft,
+                    borderRadius: BorderRadius.circular(13)),
+                child: const Center(
+                    child: AppIcon('user', size: 22, color: AppColors.brand)),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppText.label('customer'.tr()),
+                    const SizedBox(height: 2),
+                    AppText(order.customer,
+                        fontSize: 16.5,
+                        fontWeight: FontWeight.w600,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis),
+                    // Only on the shop's own orders: on an app order Santra
+                    // keeps the destination to itself.
+                    if (order.isManual) ...[
+                      const SizedBox(height: 3),
+                      Row(
+                        children: [
+                          const AppIcon('location',
+                              size: 14, color: AppColors.faint),
+                          const SizedBox(width: 5),
+                          Expanded(
+                            child: AppText(destinationOf(order, lang),
+                                fontSize: 13.5,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.muted,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ],
+                ),
+              ),
             ],
           ),
+          // Only a manual order carries these: they are the details the shop
+          // typed itself. App orders are masked to a first name + emirate.
+          if (order.customerPhone.isNotEmpty) ...[
+            const _CardDivider(),
+            _DetailRow(
+              icon: 'phone',
+              label: 'phone'.tr(),
+              value: order.customerPhone,
+              ltrValue: true,
+              onTap: () => launchUrl(Uri(
+                  scheme: 'tel',
+                  path: order.customerPhone.replaceAll(' ', ''))),
+            ),
+          ],
+          if (order.fullAddress.isNotEmpty) ...[
+            const _CardDivider(),
+            _DetailRow(
+                icon: 'location',
+                label: 'address_label'.tr(),
+                value: order.fullAddress),
+          ],
+          if (order.deliveryInstructions.isNotEmpty) ...[
+            const _CardDivider(),
+            _DetailRow(
+                icon: 'note',
+                label: 'instructions_label'.tr(),
+                value: order.deliveryInstructions),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _CardDivider extends StatelessWidget {
+  const _CardDivider();
+
+  @override
+  Widget build(BuildContext context) => const Padding(
+        padding: EdgeInsets.symmetric(vertical: 12),
+        child: Divider(height: 1, color: AppColors.line),
+      );
+}
+
+class _DetailRow extends StatelessWidget {
+  const _DetailRow({
+    required this.icon,
+    required this.label,
+    required this.value,
+    this.ltrValue = false,
+    this.onTap,
+  });
+
+  final String icon;
+  final String label;
+  final String value;
+  final bool ltrValue;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final text = AppText(value,
+        fontSize: 15,
+        fontWeight: FontWeight.w600,
+        color: onTap == null ? AppColors.ink : AppColors.brand);
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 2),
+            child: AppIcon(icon, size: 17, color: AppColors.faint),
+          ),
+          const SizedBox(width: 11),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppText.label(label),
+                const SizedBox(height: 3),
+                ltrValue
+                    ? Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: Align(
+                            alignment: AlignmentDirectional.centerStart,
+                            child: text),
+                      )
+                    : text,
+              ],
+            ),
+          ),
+          if (onTap != null)
+            const AppIcon('chevronRight',
+                size: 16, color: AppColors.faint, flipForRtl: true),
+        ],
+      ),
+    );
+  }
+}
+
+/// Deliberately a quiet text link, not a button among the actions: it is a
+/// rare, awkward thing to do, and the server decides when it is offered.
+class _ReportUnavailableLink extends StatelessWidget {
+  const _ReportUnavailableLink({required this.order, required this.viewModel});
+  final Order order;
+  final OrderDetailViewModel viewModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 14),
+      child: GestureDetector(
+        onTap: () async {
+          final report = await showUnavailableSheet(context, order);
+          if (report != null) await viewModel.reportUnavailable(report);
+        },
+        behavior: HitTestBehavior.opaque,
+        child: Row(
+          children: [
+            const AppIcon('hourglass', size: 15, color: AppColors.muted),
+            const SizedBox(width: 7),
+            Flexible(
+              child: AppText('report_unavailable_link'.tr(),
+                  fontSize: 13.5,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.muted),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// What the shop already reported, and that Santra passed it on.
+class _ShortageLine extends StatelessWidget {
+  const _ShortageLine({required this.order, required this.lang});
+  final Order order;
+  final String lang;
+
+  @override
+  Widget build(BuildContext context) {
+    final units = order.shortages
+        .map((s) => '${s.quantity}× ${s.displayName(lang)}')
+        .join(', ');
+    return Container(
+      margin: const EdgeInsets.only(top: 14),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      decoration: BoxDecoration(
+        color: AppColors.dangerBg,
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Row(
+        children: [
+          const AppIcon('x', size: 16, color: AppColors.dangerFg),
+          const SizedBox(width: 9),
+          Expanded(
+            child: AppText('shortage_line'.tr(args: [units]),
+                fontSize: 13.5,
+                fontWeight: FontWeight.w600,
+                color: AppColors.dangerFg),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Extras the customer paid for. Their prices are inside the order total
+/// already, so this card shows them without adding anything up.
+class _AddonsCard extends StatelessWidget {
+  const _AddonsCard({required this.order, required this.lang});
+  final Order order;
+  final String lang;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+      decoration: BoxDecoration(
+          color: AppColors.surface, borderRadius: BorderRadius.circular(18)),
+      child: Column(
+        children: [
+          for (int i = 0; i < order.addons.length; i++)
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: i < order.addons.length - 1
+                      ? const BorderSide(color: AppColors.line)
+                      : BorderSide.none,
+                ),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                        color: AppColors.brandSofter,
+                        borderRadius: BorderRadius.circular(11)),
+                    child: const Center(
+                        child:
+                            AppIcon('gift', size: 18, color: AppColors.brand)),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: AppText(order.addons[i].displayName(lang),
+                        fontSize: 15, fontWeight: FontWeight.w500),
+                  ),
+                  AppText(money(order.addons[i].totalPrice, context),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.muted),
+                  const SizedBox(width: 10),
+                  Container(
+                    constraints: const BoxConstraints(minWidth: 32),
+                    height: 28,
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: AppColors.brandSoft,
+                        borderRadius: BorderRadius.circular(9)),
+                    child: AppText('${order.addons[i].quantity}×',
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.brand),
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );
@@ -181,8 +543,26 @@ class _ItemsCard extends StatelessWidget {
                           path: order.items[i].image, size: 50, radius: 13),
                       const SizedBox(width: 13),
                       Expanded(
-                          child: AppText(order.items[i].displayName(lang),
-                              fontSize: 15.5, fontWeight: FontWeight.w500)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AppText(order.items[i].displayName(lang),
+                                fontSize: 15.5, fontWeight: FontWeight.w500),
+                            if (order.items[i].unavailableQuantity > 0) ...[
+                              const SizedBox(height: 3),
+                              AppText(
+                                'not_available_count'.tr(args: [
+                                  '${order.items[i].unavailableQuantity}×'
+                                ]),
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.dangerFg,
+                                decoration: TextDecoration.lineThrough,
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
                       Container(
                         constraints: const BoxConstraints(minWidth: 32),
                         height: 28,
@@ -208,14 +588,37 @@ class _ItemsCard extends StatelessWidget {
             decoration: const BoxDecoration(
                 border:
                     Border(top: BorderSide(color: AppColors.line, width: 1.5))),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
               children: [
-                AppText('total'.tr(),
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.muted),
-                AppText.display(money(order.total, context), fontSize: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AppText('total'.tr(),
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.muted),
+                    AppText.display(money(order.total, context), fontSize: 24),
+                  ],
+                ),
+                // What the courier actually collects once units came off a
+                // cash order. The server works it out; never recompute it.
+                if (order.amountDue != null &&
+                    order.amountDue != order.total) ...[
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      AppText('amount_due_label'.tr(),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.muted),
+                      AppText(money(order.amountDue!, context),
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.brand),
+                    ],
+                  ),
+                ],
               ],
             ),
           ),
@@ -357,7 +760,9 @@ class _ActionBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final advance = viewModel.advanceAction;
-    if (!order.isPending && advance == null) return const SizedBox.shrink();
+    final accept = viewModel.canAccept;
+    final cancel = viewModel.canCancel;
+    if (!accept && !cancel && advance == null) return const SizedBox.shrink();
 
     return Positioned(
       left: 0,
@@ -373,34 +778,37 @@ class _ActionBar extends StatelessWidget {
             stops: [0, 0.72, 1],
           ),
         ),
-        child: order.isPending
-            ? Row(
-                children: [
-                  Expanded(
-                    child: PrimaryButton(
-                      label: 'accept'.tr(),
-                      leadingIcon: 'check',
-                      onPressed: viewModel.accept,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: PrimaryButton(
-                      label: 'cancel'.tr(),
-                      variant: ButtonVariant.dangerOutline,
-                      onPressed: () async {
-                        final confirmed = await showRejectSheet(context);
-                        if (confirmed) await viewModel.reject();
-                      },
-                    ),
-                  ),
-                ],
+        child: Row(
+          children: [
+            if (accept)
+              Expanded(
+                child: PrimaryButton(
+                  label: 'accept'.tr(),
+                  leadingIcon: 'check',
+                  onPressed: viewModel.accept,
+                ),
               )
-            : PrimaryButton(
-                label: advance!.labelKey.tr(),
-                leadingIcon: advance.icon,
-                onPressed: viewModel.advance,
+            else if (advance != null)
+              Expanded(
+                child: PrimaryButton(
+                  label: advance.labelKey.tr(),
+                  leadingIcon: advance.icon,
+                  onPressed: viewModel.advance,
+                ),
               ),
+            if (cancel) ...[
+              if (accept || advance != null) const SizedBox(width: 10),
+              Expanded(
+                child: PrimaryButton(
+                  label: 'cancel'.tr(),
+                  variant: ButtonVariant.dangerOutline,
+                  onPressed: () =>
+                      runCancelFlow(context, order, viewModel.cancel),
+                ),
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }

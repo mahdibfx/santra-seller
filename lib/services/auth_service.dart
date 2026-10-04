@@ -10,7 +10,8 @@ import 'api/api_auth_service.dart';
 class AuthService {
   final _api = locator<ApiAuthService>();
 
-  Future<Either<Failure, Unit>> requestOtp({required String phone, String countryCode = '+971'}) =>
+  Future<Either<Failure, Unit>> requestOtp(
+          {required String phone, String countryCode = '+971'}) =>
       _api.requestOtp(phone: phone, countryCode: countryCode).toEither();
 
   Future<Either<Failure, AuthTokens>> verifyOtp({
@@ -18,7 +19,9 @@ class AuthService {
     required String code,
     String countryCode = '+971',
   }) =>
-      _api.verifyOtp(phone: phone, code: code, countryCode: countryCode).toEither();
+      _api
+          .verifyOtp(phone: phone, code: code, countryCode: countryCode)
+          .toEither();
 
   Future<Either<Failure, AuthTokens>> refresh(String refreshToken) =>
       _api.refresh(refreshToken).toEither();
@@ -34,5 +37,7 @@ class AuthService {
     required String code,
     required String password,
   }) =>
-      _api.resetPassword(phone: phone, code: code, password: password).toEither();
+      _api
+          .resetPassword(phone: phone, code: code, password: password)
+          .toEither();
 }

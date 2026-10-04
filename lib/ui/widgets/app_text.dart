@@ -19,6 +19,7 @@ class AppText extends StatelessWidget {
     this.textAlign,
     this.maxLines,
     this.overflow,
+    this.decoration,
   });
 
   final String data;
@@ -32,33 +33,110 @@ class AppText extends StatelessWidget {
   final int? maxLines;
   final TextOverflow? overflow;
 
+  /// Strike-through for things that are no longer part of the order.
+  final TextDecoration? decoration;
+
   // ── Named factories ───────────────────────────────────────────────
-  factory AppText.displayLarge(String data, {Color color = AppColors.ink, double fontSize = 32, TextAlign? textAlign, double? height}) =>
-      AppText(data, display: true, fontSize: fontSize, fontWeight: FontWeight.w600, color: color, letterSpacing: -0.5, textAlign: textAlign, height: height);
+  factory AppText.displayLarge(String data,
+          {Color color = AppColors.ink,
+          double fontSize = 32,
+          TextAlign? textAlign,
+          double? height}) =>
+      AppText(data,
+          display: true,
+          fontSize: fontSize,
+          fontWeight: FontWeight.w600,
+          color: color,
+          letterSpacing: -0.5,
+          textAlign: textAlign,
+          height: height);
 
-  factory AppText.display(String data, {Color color = AppColors.ink, double fontSize = 24, FontWeight fontWeight = FontWeight.w600, TextAlign? textAlign}) =>
-      AppText(data, display: true, fontSize: fontSize, fontWeight: fontWeight, color: color, textAlign: textAlign);
+  factory AppText.display(String data,
+          {Color color = AppColors.ink,
+          double fontSize = 24,
+          FontWeight fontWeight = FontWeight.w600,
+          TextAlign? textAlign}) =>
+      AppText(data,
+          display: true,
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          color: color,
+          textAlign: textAlign);
 
-  factory AppText.title(String data, {Color color = AppColors.ink, double fontSize = 17, FontWeight fontWeight = FontWeight.w600, int? maxLines, TextOverflow? overflow}) =>
-      AppText(data, fontSize: fontSize, fontWeight: fontWeight, color: color, maxLines: maxLines, overflow: overflow);
+  factory AppText.title(String data,
+          {Color color = AppColors.ink,
+          double fontSize = 17,
+          FontWeight fontWeight = FontWeight.w600,
+          int? maxLines,
+          TextOverflow? overflow}) =>
+      AppText(data,
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          color: color,
+          maxLines: maxLines,
+          overflow: overflow);
 
-  factory AppText.body(String data, {Color color = AppColors.ink, double fontSize = 15, FontWeight fontWeight = FontWeight.w500, double height = 1.5, TextAlign? textAlign, int? maxLines, TextOverflow? overflow}) =>
-      AppText(data, fontSize: fontSize, fontWeight: fontWeight, color: color, height: height, textAlign: textAlign, maxLines: maxLines, overflow: overflow);
+  factory AppText.body(String data,
+          {Color color = AppColors.ink,
+          double fontSize = 15,
+          FontWeight fontWeight = FontWeight.w500,
+          double height = 1.5,
+          TextAlign? textAlign,
+          int? maxLines,
+          TextOverflow? overflow}) =>
+      AppText(data,
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          color: color,
+          height: height,
+          textAlign: textAlign,
+          maxLines: maxLines,
+          overflow: overflow);
 
-  factory AppText.caption(String data, {Color color = AppColors.muted, double fontSize = 13, FontWeight fontWeight = FontWeight.w600, TextAlign? textAlign, int? maxLines, TextOverflow? overflow}) =>
-      AppText(data, fontSize: fontSize, fontWeight: fontWeight, color: color, textAlign: textAlign, maxLines: maxLines, overflow: overflow);
+  factory AppText.caption(String data,
+          {Color color = AppColors.muted,
+          double fontSize = 13,
+          FontWeight fontWeight = FontWeight.w600,
+          TextAlign? textAlign,
+          int? maxLines,
+          TextOverflow? overflow}) =>
+      AppText(data,
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          color: color,
+          textAlign: textAlign,
+          maxLines: maxLines,
+          overflow: overflow);
 
-  factory AppText.label(String data, {Color color = AppColors.faint, double fontSize = 12.5, double letterSpacing = 0.6}) =>
-      AppText(data, fontSize: fontSize, fontWeight: FontWeight.w700, color: color, letterSpacing: letterSpacing);
+  factory AppText.label(String data,
+          {Color color = AppColors.faint,
+          double fontSize = 12.5,
+          double letterSpacing = 0.6}) =>
+      AppText(data,
+          fontSize: fontSize,
+          fontWeight: FontWeight.w700,
+          color: color,
+          letterSpacing: letterSpacing);
 
   @override
   Widget build(BuildContext context) {
     final style = display
-        ? AppTextStyles.display(context, fontSize: fontSize, fontWeight: fontWeight, color: color, height: height, letterSpacing: letterSpacing)
-        : AppTextStyles.body(context, fontSize: fontSize, fontWeight: fontWeight, color: color, height: height, letterSpacing: letterSpacing);
+        ? AppTextStyles.display(context,
+            fontSize: fontSize,
+            fontWeight: fontWeight,
+            color: color,
+            height: height,
+            letterSpacing: letterSpacing)
+        : AppTextStyles.body(context,
+            fontSize: fontSize,
+            fontWeight: fontWeight,
+            color: color,
+            height: height,
+            letterSpacing: letterSpacing);
     return Text(
       data,
-      style: style,
+      style:
+          decoration == null ? style : style.copyWith(decoration: decoration),
       textAlign: textAlign,
       maxLines: maxLines,
       overflow: overflow,

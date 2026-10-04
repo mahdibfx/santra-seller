@@ -8,6 +8,8 @@ import '../../widgets/app_icon.dart';
 import '../../widgets/app_text.dart';
 import '../../widgets/filter_rail.dart';
 import '../../widgets/icon_square_button.dart';
+import '../../widgets/cancel_order_sheet.dart';
+import '../../widgets/pause_sheet.dart';
 import '../../widgets/order_card.dart';
 import '../../widgets/primary_button.dart';
 import 'orders_viewmodel.dart';
@@ -30,6 +32,9 @@ class OrdersView extends StackedView<OrdersViewModel> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AppText.displayLarge('orders'.tr(), fontSize: 28),
+                const Spacer(),
+                _PauseButton(viewModel: viewModel),
+                const SizedBox(width: 10),
                 Row(
                   children: [
                     // IconSquareButton(
@@ -48,6 +53,7 @@ class OrdersView extends StackedView<OrdersViewModel> {
               ],
             ),
           ),
+          if (!viewModel.trading.isOpen) _TradingBanner(viewModel: viewModel),
           if (viewModel.isBusy)
             const Expanded(
                 child: Center(
@@ -91,6 +97,95 @@ class OrdersView extends StackedView<OrdersViewModel> {
   OrdersViewModel viewModelBuilder(BuildContext context) => OrdersViewModel();
 }
 
+/// Quick action: pause the shop, or resume it.
+class _PauseButton extends StatelessWidget {
+  const _PauseButton({required this.viewModel});
+  final OrdersViewModel viewModel;
+
+  @override
+  Widget build(BuildContext context) {
+    final paused = !viewModel.trading.isOpen;
+    return GestureDetector(
+      onTap: () async {
+        final action = await showPauseSheet(context, viewModel.trading);
+        if (action != null) await viewModel.applyTrading(action);
+      },
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        height: 42,
+        padding: const EdgeInsets.symmetric(horizontal: 14),
+        decoration: BoxDecoration(
+          color: paused ? AppColors.warnBg : AppColors.surface,
+          borderRadius: BorderRadius.circular(13),
+          border: Border.all(
+              color: paused ? AppColors.warnFg : AppColors.line, width: 1.5),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AppIcon('clock',
+                size: 17, color: paused ? AppColors.warnFg : AppColors.muted),
+            const SizedBox(width: 7),
+            AppText('pause'.tr(),
+                fontSize: 14.5,
+                fontWeight: FontWeight.w700,
+                color: paused ? AppColors.warnFg : AppColors.ink),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// A shop must not forget it paused itself, so the state stays on the board.
+class _TradingBanner extends StatelessWidget {
+  const _TradingBanner({required this.viewModel});
+  final OrdersViewModel viewModel;
+
+  @override
+  Widget build(BuildContext context) {
+    final trading = viewModel.trading;
+    final until = trading.busyUntil;
+    final text = trading.isClosed
+        ? 'closed_now'.tr()
+        : until == null
+            ? 'pause'.tr()
+            : 'busy_until'.tr(args: [formatClock(until, context)]);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(22, 14, 22, 0),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        decoration: BoxDecoration(
+          color: AppColors.warnBg,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          children: [
+            const AppIcon('hourglass', size: 18, color: AppColors.warnFg),
+            const SizedBox(width: 10),
+            Expanded(
+              child: AppText(text,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.warnFg),
+            ),
+            const SizedBox(width: 8),
+            GestureDetector(
+              onTap: () =>
+                  viewModel.applyTrading((action: 'open', minutes: null)),
+              child: AppText(
+                  trading.isClosed ? 'reopen'.tr() : 'resume_now'.tr(),
+                  fontSize: 13.5,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.brand),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _OrderList extends StatelessWidget {
   const _OrderList({required this.viewModel});
   final OrdersViewModel viewModel;
@@ -129,7 +224,8 @@ class _OrderList extends StatelessWidget {
             onOpen: () => viewModel.onOpen(o),
             onOpenNote: () => viewModel.onOpen(o),
             onAccept: () => viewModel.onAccept(o),
-            onDelete: () => viewModel.onDelete(o),
+            onDelete: () => runCancelFlow(
+                context, o, (choice) => viewModel.onCancel(o, choice)),
             onExpandItems: () => viewModel.hydrateItems(o),
           );
         },

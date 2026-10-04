@@ -109,10 +109,8 @@ class _OtpSheetState extends State<OtpSheet> {
                   const SizedBox(height: 4),
                   Directionality(
                     textDirection: TextDirection.ltr,
-                    child: AppText(
-                        widget.phone,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
+                    child: AppText(widget.phone,
+                        fontSize: 16, fontWeight: FontWeight.w700),
                   ),
                   const SizedBox(height: 22),
                   OtpInput(

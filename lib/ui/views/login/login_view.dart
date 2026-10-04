@@ -16,7 +16,8 @@ class LoginView extends StackedView<LoginViewModel> {
   const LoginView({super.key});
 
   @override
-  Widget builder(BuildContext context, LoginViewModel viewModel, Widget? child) {
+  Widget builder(
+      BuildContext context, LoginViewModel viewModel, Widget? child) {
     final arabic = context.locale.languageCode == 'ar';
     return Scaffold(
       backgroundColor: AppColors.cream,
@@ -31,9 +32,11 @@ class LoginView extends StackedView<LoginViewModel> {
                   children: [
                     TopBar(onBack: viewModel.onBack),
                     const SizedBox(height: 22),
-                    AppText.displayLarge('seller_login'.tr(), fontSize: arabic ? 36 : 40),
+                    AppText.displayLarge('seller_login'.tr(),
+                        fontSize: arabic ? 36 : 40),
                     const SizedBox(height: 12),
-                    AppText.body('login_sub'.tr(), fontSize: 16.5, color: AppColors.muted),
+                    AppText.body('login_sub'.tr(),
+                        fontSize: 16.5, color: AppColors.muted),
                     const SizedBox(height: 30),
                     AppTextField(
                       controller: viewModel.phoneController,
@@ -43,14 +46,18 @@ class LoginView extends StackedView<LoginViewModel> {
                       onPrefixTap: () => viewModel.onPickCountry(context),
                       hintText: '50 123 4567',
                       keyboardType: TextInputType.phone,
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d ]'))],
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'[\d ]'))
+                      ],
                       errorText: viewModel.phoneError,
                       onChanged: viewModel.onPhoneChanged,
                       autofocus: true,
                       forceLtr: true,
                     ),
                     const Spacer(),
-                    PrimaryButton(label: 'send_code'.tr(), onPressed: viewModel.onSendCode),
+                    PrimaryButton(
+                        label: 'send_code'.tr(),
+                        onPressed: viewModel.onSendCode),
                     const SizedBox(height: 18),
                     Align(
                       alignment: Alignment.center,
@@ -60,10 +67,13 @@ class LoginView extends StackedView<LoginViewModel> {
                             TextSpan(text: '${'no_account'.tr()} '),
                             TextSpan(
                               text: 'apply'.tr(),
-                              style: const TextStyle(color: AppColors.brand, fontWeight: FontWeight.w700),
+                              style: const TextStyle(
+                                  color: AppColors.brand,
+                                  fontWeight: FontWeight.w700),
                             ),
                           ],
-                          style: const TextStyle(color: AppColors.muted, fontSize: 14.5),
+                          style: const TextStyle(
+                              color: AppColors.muted, fontSize: 14.5),
                         ),
                       ),
                     ),

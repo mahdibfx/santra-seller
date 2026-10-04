@@ -6,12 +6,14 @@ import '../../../app/app.router.dart';
 import '../../../models/seller_profile.dart';
 import '../../../services/language_service.dart';
 import '../../../services/profile_service.dart';
+import '../../../services/push_service.dart';
 import '../../../services/token_service.dart';
 import '../../../services/toast_service.dart';
 
 class ProfileViewModel extends BaseViewModel {
   final _profileService = locator<ProfileService>();
   final _tokenService = locator<TokenService>();
+  final _pushService = locator<PushService>();
   final _languageService = locator<LanguageService>();
   final _navigationService = locator<NavigationService>();
   final _toastService = locator<ToastService>();
@@ -22,14 +24,17 @@ class ProfileViewModel extends BaseViewModel {
   /// Business name: /me when it carries one, else the name saved at login.
   String displayName(String lang) {
     final fromApi = _profile?.displayName(lang) ?? '';
-    return fromApi.isNotEmpty ? fromApi : _tokenService.partnerDisplayName(lang);
+    return fromApi.isNotEmpty
+        ? fromApi
+        : _tokenService.partnerDisplayName(lang);
   }
 
   Future<void> init() async {
     setBusy(true);
     final result = await _profileService.fetchProfile();
     result.fold(
-      (failure) => _toastService.showUpperToast(failure.message, type: ToastType.danger),
+      (failure) =>
+          _toastService.showUpperToast(failure.message, type: ToastType.danger),
       (profile) => _profile = profile,
     );
     setBusy(false);
@@ -42,13 +47,16 @@ class ProfileViewModel extends BaseViewModel {
 
   void onOpenHistory() => _navigationService.navigateToOrderHistoryView();
 
-  void onOpenPromotions() => _navigationService.navigateToPromotionRequestsView();
+  void onOpenPromotions() =>
+      _navigationService.navigateToPromotionRequestsView();
 
   Future<void> onLogout() async {
     final result = await _profileService.logout();
     result.fold(
-      (failure) => _toastService.showUpperToast(failure.message, type: ToastType.danger),
+      (failure) =>
+          _toastService.showUpperToast(failure.message, type: ToastType.danger),
       (_) async {
+        await _pushService.stop();
         await _tokenService.clearToken();
         _navigationService.clearStackAndShow(Routes.welcomeView);
       },

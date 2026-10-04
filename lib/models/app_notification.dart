@@ -57,23 +57,59 @@ class AppNotification {
         referenceId: referenceId,
       );
 
-  factory AppNotification.fromJson(Map<String, dynamic> json) => AppNotification(
-        id: int.tryParse(json['id'].toString()) ?? 0,
-        group: (json['group'] as String?) == 'earlier' ? NotifGroup.earlier : NotifGroup.today,
-        tone: switch (json['tone'] as String?) {
-          'green' => NotifTone.green,
-          'amber' => NotifTone.amber,
-          _ => NotifTone.brand,
-        },
-        icon: json['icon'] as String? ?? 'bell',
-        unread: (json['unread'] as bool?) ?? false,
-        title: json['title'] as String? ?? '',
-        titleAr: json['titleAr'] as String? ?? '',
-        body: json['body'] as String? ?? '',
-        bodyAr: json['bodyAr'] as String? ?? '',
-        time: json['time'] as String? ?? '',
-        timeAr: json['timeAr'] as String? ?? '',
-        type: json['type'] as String? ?? '',
-        referenceId: json['reference_id'] == null ? null : int.tryParse(json['reference_id'].toString()),
-      );
+  factory AppNotification.fromJson(Map<String, dynamic> json) {
+    final created = DateTime.tryParse(json['created_at']?.toString() ?? '');
+    final (icon, tone) = _look(json['type'] as String? ?? '');
+    final (time, timeAr) = _ago(created);
+    return AppNotification(
+      id: int.tryParse(json['id'].toString()) ?? 0,
+      group: _groupOf(created),
+      tone: tone,
+      icon: icon,
+      // `is_read` comes back as 0/1, not a bool.
+      unread: json['is_read'].toString() != '1' &&
+          json['is_read'].toString() != 'true',
+      title: (json['title_en'] ?? json['title']) as String? ?? '',
+      titleAr: (json['title_ar'] ?? json['titleAr']) as String? ?? '',
+      body: (json['body_en'] ?? json['body']) as String? ?? '',
+      bodyAr: (json['body_ar'] ?? json['bodyAr']) as String? ?? '',
+      time: time,
+      timeAr: timeAr,
+      type: json['type'] as String? ?? '',
+      referenceId: json['reference_id'] == null
+          ? null
+          : int.tryParse(json['reference_id'].toString()),
+    );
+  }
+
+  static NotifGroup _groupOf(DateTime? created) {
+    if (created == null) return NotifGroup.earlier;
+    final now = DateTime.now();
+    final t = created.toLocal();
+    return t.year == now.year && t.month == now.month && t.day == now.day
+        ? NotifGroup.today
+        : NotifGroup.earlier;
+  }
+
+  /// Icon + tone per notification `type`; the API sends no styling of its own.
+  static (String, NotifTone) _look(String type) => switch (type) {
+        'order_update' => ('bag', NotifTone.brand),
+        'promotion_request' || 'promotion' => ('sparkle', NotifTone.amber),
+        'invoice' || 'payout' || 'settlement' => ('wallet', NotifTone.green),
+        'product' || 'product_review' => ('store', NotifTone.brand),
+        _ => ('bell', NotifTone.brand),
+      };
+
+  /// Relative age, both languages. ponytail: two short switches beat pulling in
+  /// a date-formatting package for four cases.
+  static (String, String) _ago(DateTime? created) {
+    if (created == null) return ('', '');
+    final mins = DateTime.now().difference(created.toLocal()).inMinutes;
+    if (mins < 1) return ('now', 'الآن');
+    if (mins < 60) return ('${mins}m ago', 'منذ $mins د');
+    final hours = mins ~/ 60;
+    if (hours < 24) return ('${hours}h ago', 'منذ $hours س');
+    final days = hours ~/ 24;
+    return ('${days}d ago', 'منذ $days ي');
+  }
 }

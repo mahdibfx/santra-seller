@@ -2,6 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/order.dart';
+import '../../models/order_addon.dart';
+import '../../models/order_status.dart';
 import '../common/app_colors.dart';
 import '../common/format.dart';
 import 'app_icon.dart';
@@ -34,6 +36,7 @@ class OrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final o = order;
+    final lang = context.locale.languageCode;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -96,6 +99,7 @@ class OrderCard extends StatelessWidget {
             ),
           ),
           FoldableItems(items: o.items, onExpand: onExpandItems),
+          if (o.addons.isNotEmpty) _AddonLines(addons: o.addons, lang: lang),
           if (o.hasRequest) ...[
             const SizedBox(height: 13),
             GestureDetector(
@@ -138,34 +142,78 @@ class OrderCard extends StatelessWidget {
               AppText.display(money(o.total, context), fontSize: 22),
             ],
           ),
-          if (o.isPending) ...[
+          // Which buttons exist is the server's call (`allowed_transitions`).
+          if (o.can(OrderStatus.confirmed) || o.can(OrderStatus.cancelled)) ...[
             const SizedBox(height: 14),
             Row(
               children: [
-                Expanded(
-                  child: PrimaryButton(
-                    label: 'accept'.tr(),
-                    leadingIcon: 'check',
-                    height: 50,
-                    borderRadius: 15,
-                    fontSize: 16,
-                    onPressed: onAccept,
+                if (o.can(OrderStatus.confirmed))
+                  Expanded(
+                    child: PrimaryButton(
+                      label: 'accept'.tr(),
+                      leadingIcon: 'check',
+                      height: 50,
+                      borderRadius: 15,
+                      fontSize: 16,
+                      onPressed: onAccept,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: PrimaryButton(
-                    label: 'cancel'.tr(),
-                    variant: ButtonVariant.dangerOutline,
-                    height: 50,
-                    borderRadius: 15,
-                    fontSize: 16,
-                    onPressed: onDelete,
+                if (o.can(OrderStatus.confirmed) &&
+                    o.can(OrderStatus.cancelled))
+                  const SizedBox(width: 10),
+                if (o.can(OrderStatus.cancelled))
+                  Expanded(
+                    child: PrimaryButton(
+                      label: 'cancel'.tr(),
+                      variant: ButtonVariant.dangerOutline,
+                      height: 50,
+                      borderRadius: 15,
+                      fontSize: 16,
+                      onPressed: onDelete,
+                    ),
                   ),
-                ),
               ],
             ),
           ],
+        ],
+      ),
+    );
+  }
+}
+
+/// Extras the customer paid for that the shop has to put in the box.
+class _AddonLines extends StatelessWidget {
+  const _AddonLines({required this.addons, required this.lang});
+
+  final List<OrderAddon> addons;
+  final String lang;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AppText.label('addons_title'.tr()),
+          const SizedBox(height: 7),
+          for (final a in addons)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Row(
+                children: [
+                  const AppIcon('gift', size: 15, color: AppColors.brand),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: AppText('${a.quantity} × ${a.displayName(lang)}',
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis),
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );

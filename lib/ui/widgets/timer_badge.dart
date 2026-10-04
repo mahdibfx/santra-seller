@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 
 import '../../models/order.dart';
@@ -7,24 +8,25 @@ import '../common/app_colors.dart';
 import 'app_icon.dart';
 import 'app_text.dart';
 
-/// Live fulfilment countdown. The deadline is pinned once per order id for the
-/// session so the countdown is stable across rebuilds. Color escalates as the
-/// SLA window runs down: <20% or overdue → red, <50% → orange, else brand.
+/// How long the shop has kept an order waiting, counted from `received_at`.
+///
+/// It counts up, not down: the partner API sends no per-order deadline, so
+/// there is nothing to count towards. The thresholds below are ours, not
+/// Santra's — change these two constants when a real SLA arrives.
+const Duration kWaitWarn = Duration(minutes: 5);
+const Duration kWaitLate = Duration(minutes: 10);
+
 class TimerBadge extends StatefulWidget {
-  const TimerBadge({super.key, required this.order, this.small = false, this.showBar = false});
+  const TimerBadge({
+    super.key,
+    required this.order,
+    this.small = false,
+    this.showBar = false,
+  });
 
   final Order order;
   final bool small;
   final bool showBar;
-
-  static final Map<int, DateTime> _deadlines = {};
-
-  static DateTime _deadlineFor(Order o) {
-    return _deadlines.putIfAbsent(
-      o.id,
-      () => DateTime.now().add(Duration(minutes: o.due ?? 0)),
-    );
-  }
 
   @override
   State<TimerBadge> createState() => _TimerBadgeState();
@@ -48,45 +50,60 @@ class _TimerBadgeState extends State<TimerBadge> {
   }
 
   String _fmt(Duration d) {
-    final neg = d.isNegative;
-    final s = d.abs();
-    final h = s.inHours;
-    final m = s.inMinutes % 60;
-    final sec = s.inSeconds % 60;
+    final h = d.inHours;
+    final m = d.inMinutes % 60;
+    final s = d.inSeconds % 60;
     String two(int n) => n.toString().padLeft(2, '0');
-    final body = h > 0 ? '$h:${two(m)}:${two(sec)}' : '$m:${two(sec)}';
-    return (neg ? '−' : '') + body;
+    return h > 0 ? '$h:${two(m)}:${two(s)}' : '$m:${two(s)}';
   }
 
   @override
   Widget build(BuildContext context) {
-    final order = widget.order;
-    final deadline = TimerBadge._deadlineFor(order);
-    final remaining = deadline.difference(DateTime.now());
-    final slaMs = (order.sla ?? 1) * 60000;
-    final frac = remaining.inMilliseconds / slaMs;
-    final overdue = remaining.isNegative;
+    final received = widget.order.receivedAt;
+    if (received == null) return const SizedBox.shrink();
 
-    final (Color fg, Color bg) = (overdue || frac < 0.2)
+    final waited = DateTime.now().difference(received.toLocal());
+    final late = waited >= kWaitLate;
+
+    final (Color fg, Color bg) = late
         ? (AppColors.danger, AppColors.dangerBg)
-        : frac < 0.5
+        : waited >= kWaitWarn
             ? (AppColors.warnFg, AppColors.warnBg)
             : (AppColors.brand, AppColors.brandSoft);
 
-    final chip = Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        AppIcon(overdue ? 'hourglass' : 'clock', size: widget.small ? 14 : 16, color: fg),
-        const SizedBox(width: 6),
-        Directionality(
-          textDirection: TextDirection.ltr,
-          child: AppText(_fmt(remaining), fontSize: widget.small ? 13 : 14.5, fontWeight: FontWeight.w700, color: fg),
-        ),
-      ],
+    final chip = Container(
+      padding: EdgeInsets.symmetric(
+          horizontal: widget.small ? 8 : 10, vertical: widget.small ? 4 : 5),
+      decoration:
+          BoxDecoration(color: bg, borderRadius: BorderRadius.circular(999)),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AppIcon(late ? 'hourglass' : 'clock',
+              size: widget.small ? 14 : 16, color: fg),
+          const SizedBox(width: 6),
+          AppText('${'waiting'.tr()} ',
+              fontSize: widget.small ? 12.5 : 13.5,
+              fontWeight: FontWeight.w600,
+              color: fg),
+          Directionality(
+            textDirection: TextDirection.ltr,
+            child: AppText(_fmt(waited),
+                fontSize: widget.small ? 13 : 14.5,
+                fontWeight: FontWeight.w700,
+                color: fg),
+          ),
+        ],
+      ),
     );
 
-    if (!widget.showBar) return Align(alignment: AlignmentDirectional.centerEnd, child: chip);
+    if (!widget.showBar) {
+      return Align(alignment: AlignmentDirectional.centerEnd, child: chip);
+    }
 
+    // The bar fills as the wait approaches "late", then stays full.
+    final frac =
+        (waited.inMilliseconds / kWaitLate.inMilliseconds).clamp(0.0, 1.0);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -95,7 +112,7 @@ class _TimerBadgeState extends State<TimerBadge> {
         ClipRRect(
           borderRadius: BorderRadius.circular(999),
           child: LinearProgressIndicator(
-            value: frac.clamp(0.0, 1.0),
+            value: frac,
             minHeight: 4,
             backgroundColor: AppColors.line,
             valueColor: AlwaysStoppedAnimation(fg),
