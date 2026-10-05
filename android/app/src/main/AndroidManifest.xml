@@ -30,7 +30,7 @@ xmlns:tools="http://schemas.android.com/tools"
  </intent>
 </queries>
    <application
-        android:label="Santra Partners"
+        android:label="Santra partners"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <meta-data android:name="com.google.android.geo.API_KEY"

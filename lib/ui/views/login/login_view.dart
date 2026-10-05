@@ -43,7 +43,7 @@ class LoginView extends StackedView<LoginViewModel> {
                       label: 'phone'.tr(),
                       iconName: 'phone',
                       prefix: viewModel.prefixLabel,
-                      onPrefixTap: () => viewModel.onPickCountry(context),
+                      // UAE only — nothing to pick, so nothing to tap.
                       hintText: '50 123 4567',
                       keyboardType: TextInputType.phone,
                       inputFormatters: [

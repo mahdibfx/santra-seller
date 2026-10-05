@@ -21,17 +21,16 @@ class LoginViewModel extends BaseViewModel {
 
   final phoneController = TextEditingController();
 
-  String _dialCode = '+971';
+  /// UAE only. Santra's shops are UAE businesses, so offering twenty dial
+  /// codes only invited a sign-in that could never match an account — the
+  /// picker is gone and this is fixed.
+  ///
+  /// `showCountrySheet` is left in place for the day a second market opens:
+  /// restore `onPrefixTap` in login_view.dart and it works again.
+  static const _dialCode = '+971';
   String get dialCode => _dialCode;
   String get prefixLabel => '${flagFor(_dialCode)}  $_dialCode';
   String get fullPhone => '$_dialCode $phone';
-
-  Future<void> onPickCountry(BuildContext context) async {
-    final picked = await showCountrySheet(context, _dialCode);
-    if (picked == null || picked == _dialCode) return;
-    _dialCode = picked;
-    rebuildUi();
-  }
 
   String? _phoneError;
   String? get phoneError => _phoneError;

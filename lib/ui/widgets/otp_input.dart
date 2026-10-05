@@ -36,6 +36,11 @@ class _OtpInputState extends State<OtpInput> {
   void _onChanged(int i, String v) {
     if (v.isNotEmpty && i < widget.length - 1) {
       _nodes[i + 1].requestFocus();
+    } else if (v.isEmpty && i > 0) {
+      // Deleting a digit used to leave the caret in the box it just emptied,
+      // so clearing the code took two presses per digit — one to wipe the
+      // box, one to step back. Step back as soon as it empties.
+      _nodes[i - 1].requestFocus();
     }
     widget.onChanged(_controllers.map((c) => c.text).join());
   }

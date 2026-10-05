@@ -233,6 +233,6 @@
   "err_shortage_too_late": "Once the order is ready, tell Santra.",
   "err_cancel_instead": "Nothing available? Cancel the order instead.",
   "update_required_title": "Update required",
-  "update_required_body": "This version of Santra Partners is no longer supported. Update the app to keep receiving orders.",
+  "update_required_body": "This version of Santra partners is no longer supported. Update the app to keep receiving orders.",
   "update_now": "Update now"
 }
