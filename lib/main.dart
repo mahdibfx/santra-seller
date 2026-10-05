@@ -10,6 +10,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'app/app.locator.dart';
 import 'app/app.router.dart';
 import 'services/push_service.dart';
+import 'services/session_migration.dart';
 import 'services/token_service.dart';
 import 'services/version_check.dart';
 import 'ui/common/app_colors.dart';
@@ -39,6 +40,9 @@ Future<void> main() async {
       ?.createNotificationChannel(kPushChannel);
 
   await VersionCheck.load();
+  // One-time sign-out for shops updating from the legacy backend — before
+  // TokenService reads anything.
+  await SessionMigration.run();
   await setupLocator();
 
   // A partner already signed in gets push straight away; a fresh login starts
@@ -63,7 +67,7 @@ class SantraSellerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Santra Sellers',
+      title: 'Santra Partners',
       debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
