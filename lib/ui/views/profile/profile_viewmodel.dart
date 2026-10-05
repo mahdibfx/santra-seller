@@ -51,12 +51,14 @@ class ProfileViewModel extends BaseViewModel {
       _navigationService.navigateToPromotionRequestsView();
 
   Future<void> onLogout() async {
+    // Unregister first, while the access token still works. If logout then
+    // fails the partner stays in with no push until the next launch re-registers.
+    await _pushService.stop();
     final result = await _profileService.logout();
     result.fold(
       (failure) =>
           _toastService.showUpperToast(failure.message, type: ToastType.danger),
       (_) async {
-        await _pushService.stop();
         await _tokenService.clearToken();
         _navigationService.clearStackAndShow(Routes.welcomeView);
       },

@@ -58,8 +58,15 @@ class PushService {
   }
 
   /// Stops this device receiving pushes for the account being signed out.
+  /// Must run BEFORE `/auth/logout`: the DELETE needs the still-valid token.
   Future<void> stop() async {
     _started = false;
+    try {
+      final token = _token ?? await FirebaseMessaging.instance.getToken();
+      if (token != null) await _api.unregisterDevice(token: token);
+    } catch (e) {
+      log('push: unregister failed: $e');
+    }
     try {
       await FirebaseMessaging.instance.deleteToken();
     } catch (e) {

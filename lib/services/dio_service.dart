@@ -6,6 +6,7 @@ import '../app/app.router.dart';
 import '../models/auth_tokens.dart';
 import 'api/api_endpoints.dart';
 import 'token_service.dart';
+import 'version_check.dart';
 
 class DioService {
   final Dio dio;
@@ -24,6 +25,10 @@ class DioService {
           ),
         ) {
     dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (opts, handler) {
+        opts.headers['x-app-version'] = VersionCheck.current;
+        handler.next(opts);
+      },
       onError: (error, handler) async {
         final opts = error.requestOptions;
         final is401 = error.response?.statusCode == 401;

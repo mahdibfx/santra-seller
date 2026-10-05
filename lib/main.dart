@@ -11,6 +11,7 @@ import 'app/app.locator.dart';
 import 'app/app.router.dart';
 import 'services/push_service.dart';
 import 'services/token_service.dart';
+import 'services/version_check.dart';
 import 'ui/common/app_colors.dart';
 
 /// Runs in its own isolate — it may only wake Firebase up, nothing else.
@@ -37,6 +38,7 @@ Future<void> main() async {
           AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(kPushChannel);
 
+  await VersionCheck.load();
   await setupLocator();
 
   // A partner already signed in gets push straight away; a fresh login starts

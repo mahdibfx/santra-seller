@@ -5,7 +5,12 @@
 class ApiEndpoints {
   ApiEndpoints._();
 
-  static const String base = 'https://api-staging.santra.ae/api/v1/partner';
+  /// Staging by default. Store builds pass
+  /// `--dart-define=SANTRA_API_HOST=https://app-api.santra.ae` (backend,
+  /// 4 Oct 2026). `api.santra.ae` is the OLD system — never point here at it.
+  static const String host = String.fromEnvironment('SANTRA_API_HOST',
+      defaultValue: 'https://api-staging.santra.ae');
+  static const String base = '$host/api/v1/partner';
 
   // ── Auth (phone + OTP) ────────────────────────────────────────────
   static const String requestOtp = '/auth/otp/request';
@@ -37,6 +42,10 @@ class ApiEndpoints {
 
   // ── Profile ───────────────────────────────────────────────────────
   static const String profile = '/me';
+
+  // ── Content ───────────────────────────────────────────────────────
+  /// `?platform=android|ios` → `{minVersion, latestVersion, storeUrl}`.
+  static const String appVersion = '/content/app-version';
   static const String trading = '/me/trading';
 
   // ── Promotion (campaign) requests ─────────────────────────────────

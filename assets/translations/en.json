@@ -231,5 +231,8 @@
   "not_available_count": "{} not available",
   "amount_due_label": "To collect on delivery",
   "err_shortage_too_late": "Once the order is ready, tell Santra.",
-  "err_cancel_instead": "Nothing available? Cancel the order instead."
+  "err_cancel_instead": "Nothing available? Cancel the order instead.",
+  "update_required_title": "Update required",
+  "update_required_body": "This version of Santra Sellers is no longer supported. Update the app to keep receiving orders.",
+  "update_now": "Update now"
 }

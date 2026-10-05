@@ -39,6 +39,12 @@ class ApiNotificationsService {
     return ApiResponse.mock(unit);
   }
 
+  /// Stops pushes to this device for the account — call while still signed in.
+  Future<ApiResponse<Unit>> unregisterDevice({required String token}) async {
+    await _dio.delete(ApiEndpoints.devices, data: {'token': token});
+    return ApiResponse.mock(unit);
+  }
+
   Future<ApiResponse<Unit>> markAllRead() async {
     await _dio.post(ApiEndpoints.markAllNotificationsRead);
     return ApiResponse.mock(unit);
