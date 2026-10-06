@@ -71,6 +71,14 @@ class OrderHistoryViewModel extends BaseViewModel {
     );
   }
 
+  /// Pull-to-refresh. Unlike [_refresh] this does NOT set busy: that swaps
+  /// the list for a full-screen spinner, which would take the pull indicator
+  /// down with it.
+  Future<void> onRefresh() async {
+    await _load(reset: true);
+    rebuildUi();
+  }
+
   /// Re-run the query from page 1 whenever a filter changes.
   Future<void> _refresh() async {
     setBusy(true);

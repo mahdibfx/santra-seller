@@ -5,7 +5,6 @@ import '../../models/order.dart';
 import '../../models/order_addon.dart';
 import '../../models/order_status.dart';
 import '../common/app_colors.dart';
-import '../common/format.dart';
 import 'app_icon.dart';
 import 'app_text.dart';
 import 'foldable_items.dart';
@@ -129,19 +128,10 @@ class OrderCard extends StatelessWidget {
               ),
             ),
           ],
-          const SizedBox(height: 14),
-          const Divider(height: 1, color: AppColors.line),
-          const SizedBox(height: 14),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              AppText('total'.tr(),
-                  fontSize: 13.5,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.muted),
-              AppText.display(money(o.total, context), fontSize: 22),
-            ],
-          ),
+          // No total on the card: `total` is what the CUSTOMER pays — items
+          // plus delivery, cash and service fees, none of which reach the
+          // shop — so a shop read it as what they earn. The order page keeps
+          // the full breakdown.
           // Which buttons exist is the server's call (`allowed_transitions`).
           if (o.can(OrderStatus.confirmed) || o.can(OrderStatus.cancelled)) ...[
             const SizedBox(height: 14),

@@ -30,6 +30,18 @@ class NotificationsViewModel extends BaseViewModel {
     setBusy(false);
   }
 
+  /// Pull-to-refresh. No busy flag: it would replace the list with a spinner
+  /// and take the pull indicator with it.
+  Future<void> onRefresh() async {
+    final result = await _notificationsService.fetchNotifications();
+    result.fold(
+      (failure) =>
+          _toastService.showUpperToast(failure.message, type: ToastType.danger),
+      (items) => _items = items,
+    );
+    rebuildUi();
+  }
+
   /// Row tap: mark read, then deep-link promo notifications to the requests.
   Future<void> onTap(AppNotification n) async {
     await markRead(n.id);

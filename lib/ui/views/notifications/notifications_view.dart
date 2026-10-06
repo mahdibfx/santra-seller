@@ -53,13 +53,18 @@ class NotificationsView extends StackedView<NotificationsViewModel> {
               child: viewModel.isBusy
                   ? const Center(child: CircularProgressIndicator(color: AppColors.brand))
                   : viewModel.items.isEmpty
-                      ? _empty()
-                      : ListView(
+                      ? _pullable(viewModel, _empty())
+                      : RefreshIndicator(
+                          color: AppColors.brand,
+                          onRefresh: viewModel.onRefresh,
+                          child: ListView(
+                          physics: const AlwaysScrollableScrollPhysics(),
                           padding: const EdgeInsets.fromLTRB(14, 14, 14, 40),
                           children: [
                             _group(context, 'notif_today'.tr(), viewModel.groupItems(NotifGroup.today), viewModel),
                             _group(context, 'notif_earlier'.tr(), viewModel.groupItems(NotifGroup.earlier), viewModel),
                           ],
+                        ),
                         ),
             ),
           ],
@@ -67,6 +72,22 @@ class NotificationsView extends StackedView<NotificationsViewModel> {
       ),
     );
   }
+
+  /// An empty list is exactly when someone pulls to refresh, so it scrolls.
+  Widget _pullable(NotificationsViewModel viewModel, Widget child) =>
+      RefreshIndicator(
+        color: AppColors.brand,
+        onRefresh: viewModel.onRefresh,
+        child: LayoutBuilder(
+          builder: (context, constraints) => SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: child,
+            ),
+          ),
+        ),
+      );
 
   Widget _group(BuildContext context, String label, List<AppNotification> rows, NotificationsViewModel vm) {
     if (rows.isEmpty) return const SizedBox.shrink();

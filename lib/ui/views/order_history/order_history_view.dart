@@ -100,8 +100,11 @@ class OrderHistoryView extends StackedView<OrderHistoryViewModel> {
                   ? const Center(
                       child: CircularProgressIndicator(color: AppColors.brand))
                   : viewModel.orders.isEmpty
-                      ? _empty()
-                      : NotificationListener<ScrollNotification>(
+                      ? _pullable(viewModel, _empty())
+                      : RefreshIndicator(
+                          color: AppColors.brand,
+                          onRefresh: viewModel.onRefresh,
+                          child: NotificationListener<ScrollNotification>(
                           onNotification: (n) {
                             if (n.metrics.pixels >=
                                 n.metrics.maxScrollExtent - 300)
@@ -109,6 +112,9 @@ class OrderHistoryView extends StackedView<OrderHistoryViewModel> {
                             return false;
                           },
                           child: ListView.separated(
+                            // A page that fits the screen must still be
+                            // pullable.
+                            physics: const AlwaysScrollableScrollPhysics(),
                             padding: const EdgeInsets.fromLTRB(18, 4, 18, 40),
                             itemCount: viewModel.orders.length +
                                 (viewModel.hasMore ? 1 : 0),
@@ -129,12 +135,30 @@ class OrderHistoryView extends StackedView<OrderHistoryViewModel> {
                             },
                           ),
                         ),
+                        ),
             ),
           ],
         ),
       ),
     );
   }
+
+  /// Wraps a non-scrolling child so it can still be pulled — an empty list is
+  /// exactly when someone reaches for refresh.
+  Widget _pullable(OrderHistoryViewModel viewModel, Widget child) =>
+      RefreshIndicator(
+        color: AppColors.brand,
+        onRefresh: viewModel.onRefresh,
+        child: LayoutBuilder(
+          builder: (context, constraints) => SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: child,
+            ),
+          ),
+        ),
+      );
 
   Widget _empty() {
     return Center(
