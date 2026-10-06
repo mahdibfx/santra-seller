@@ -5,11 +5,17 @@
 class ApiEndpoints {
   ApiEndpoints._();
 
-  /// Staging by default. Store builds pass
-  /// `--dart-define=SANTRA_API_HOST=https://app-api.santra.ae` (backend,
-  /// 4 Oct 2026). `api.santra.ae` is the OLD system — never point here at it.
+  /// PRODUCTION by default. Flipped 6 Oct 2026 so a plain `flutter run` and
+  /// any build without flags go to the live API — the app is shipping, and a
+  /// build that quietly talked to staging was the worse accident to leave
+  /// available.
+  ///
+  /// For staging, pass it explicitly:
+  /// `--dart-define=SANTRA_API_HOST=https://api-staging.santra.ae`
+  ///
+  /// `api.santra.ae` is the OLD system — never point here at it.
   static const String host = String.fromEnvironment('SANTRA_API_HOST',
-      defaultValue: 'https://api-staging.santra.ae');
+      defaultValue: 'https://app-api.santra.ae');
   static const String base = '$host/api/v1/partner';
 
   // ── Auth (phone + OTP) ────────────────────────────────────────────

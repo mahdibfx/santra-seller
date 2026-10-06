@@ -50,18 +50,17 @@ class ProfileViewModel extends BaseViewModel {
   void onOpenPromotions() =>
       _navigationService.navigateToPromotionRequestsView();
 
+  /// Signing out is a local act. The server call is courtesy — it revokes the
+  /// refresh token — but it can fail for reasons that have nothing to do with
+  /// the shop's intent: an expired access token (the interceptor does not
+  /// refresh `/auth/` calls), no network, or nothing left to revoke. Gating
+  /// the sign-out on it left shops stuck signed in, staring at a red toast.
   Future<void> onLogout() async {
-    // Unregister first, while the access token still works. If logout then
-    // fails the partner stays in with no push until the next launch re-registers.
+    // Unregister first, while the access token still works, or this device
+    // keeps receiving another account's orders.
     await _pushService.stop();
-    final result = await _profileService.logout();
-    result.fold(
-      (failure) =>
-          _toastService.showUpperToast(failure.message, type: ToastType.danger),
-      (_) async {
-        await _tokenService.clearToken();
-        _navigationService.clearStackAndShow(Routes.welcomeView);
-      },
-    );
+    await _profileService.logout();
+    await _tokenService.clearToken();
+    _navigationService.clearStackAndShow(Routes.welcomeView);
   }
 }

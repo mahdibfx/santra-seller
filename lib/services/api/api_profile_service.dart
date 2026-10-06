@@ -31,8 +31,16 @@ class ApiProfileService {
         res.statusCode!, (d) => Trading.fromJson(d as Map<String, dynamic>));
   }
 
+  /// Revokes the refresh token server-side. Best effort by design — the
+  /// caller signs out locally whatever this returns.
+  ///
+  /// Skips the call when there is no token to revoke: the endpoint requires
+  /// 20+ characters and answers `VALIDATION_ERROR` to an empty string, which
+  /// used to surface as "logout failed" on a session that had nothing left to
+  /// revoke anyway.
   Future<ApiResponse<Unit>> logout() async {
     final refresh = locator<TokenService>().refreshToken ?? '';
+    if (refresh.length < 20) return ApiResponse.mock(unit);
     await _dio.post(ApiEndpoints.logout, data: {'refreshToken': refresh});
     return ApiResponse.mock(unit);
   }
