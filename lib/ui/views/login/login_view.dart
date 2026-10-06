@@ -70,6 +70,7 @@ class LoginView extends StackedView<LoginViewModel> {
                               style: const TextStyle(
                                   color: AppColors.brand,
                                   fontWeight: FontWeight.w700),
+                              recognizer: viewModel.applyRecognizer,
                             ),
                           ],
                           style: const TextStyle(

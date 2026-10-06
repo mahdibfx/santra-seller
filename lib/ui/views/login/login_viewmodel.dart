@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
@@ -20,6 +22,21 @@ class LoginViewModel extends BaseViewModel {
   final _toastService = locator<ToastService>();
 
   final phoneController = TextEditingController();
+
+  /// "Apply to join" is a link, not a screen: there is no in-app onboarding
+  /// and no route to one, so it opens the public site where the seller
+  /// application lives.
+  static final applyUri = Uri.parse('https://santra.ae');
+
+  /// Owned here, not built in `builder`: a TextSpan recognizer has to be
+  /// disposed, and the view is rebuilt on every keystroke.
+  late final applyRecognizer = TapGestureRecognizer()..onTap = onApplyTap;
+
+  Future<void> onApplyTap() async {
+    if (!await launchUrl(applyUri, mode: LaunchMode.externalApplication)) {
+      _toastService.showUpperToast('asst_error'.tr(), type: ToastType.danger);
+    }
+  }
 
   /// UAE only. Santra's shops are UAE businesses, so offering twenty dial
   /// codes only invited a sign-in that could never match an account — the
@@ -103,6 +120,7 @@ class LoginViewModel extends BaseViewModel {
   @override
   void dispose() {
     phoneController.dispose();
+    applyRecognizer.dispose();
     super.dispose();
   }
 }
