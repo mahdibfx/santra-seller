@@ -157,6 +157,15 @@ class OrdersViewModel extends BaseViewModel {
     );
   }
 
+  /// Pull-to-refresh. The board is the screen a shop leaves open all day, so
+  /// it has to be able to catch up without restarting the app — and the pause
+  /// banner has to come with it, or a shop that resumed from the web portal
+  /// still looks busy here.
+  Future<void> onRefresh() async {
+    await Future.wait([_load(reset: true), _loadTrading()]);
+    rebuildUi();
+  }
+
   Future<void> _reload() async {
     await _load(reset: true);
     rebuildUi();

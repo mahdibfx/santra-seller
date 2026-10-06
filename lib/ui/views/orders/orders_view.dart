@@ -194,19 +194,37 @@ class _OrderList extends StatelessWidget {
   Widget build(BuildContext context) {
     final list = viewModel.visibleOrders;
     if (list.isEmpty) {
-      return _EmptyState(
-        icon: 'bag',
-        title: 'no_orders'.tr(),
-        subtitle: 'no_orders_sub'.tr(),
+      // Still scrollable: "no orders" is exactly when a shop pulls to check.
+      return RefreshIndicator(
+        color: AppColors.brand,
+        onRefresh: viewModel.onRefresh,
+        child: LayoutBuilder(
+          builder: (context, constraints) => SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: _EmptyState(
+                icon: 'bag',
+                title: 'no_orders'.tr(),
+                subtitle: 'no_orders_sub'.tr(),
+              ),
+            ),
+          ),
+        ),
       );
     }
-    return NotificationListener<ScrollNotification>(
+    return RefreshIndicator(
+      color: AppColors.brand,
+      onRefresh: viewModel.onRefresh,
+      child: NotificationListener<ScrollNotification>(
       onNotification: (n) {
         if (n.metrics.pixels >= n.metrics.maxScrollExtent - 300)
           viewModel.loadMore();
         return false;
       },
       child: ListView.separated(
+        // Without this a board that fits the screen cannot be pulled.
+        physics: const AlwaysScrollableScrollPhysics(),
         padding: const EdgeInsets.fromLTRB(22, 40, 22, 120),
         itemCount: list.length + (viewModel.hasMore ? 1 : 0),
         separatorBuilder: (_, __) => const SizedBox(height: 14),
@@ -229,6 +247,7 @@ class _OrderList extends StatelessWidget {
             onExpandItems: () => viewModel.hydrateItems(o),
           );
         },
+      ),
       ),
     );
   }
