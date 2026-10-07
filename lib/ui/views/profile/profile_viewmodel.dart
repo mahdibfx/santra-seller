@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -38,6 +40,36 @@ class ProfileViewModel extends BaseViewModel {
       (profile) => _profile = profile,
     );
     setBusy(false);
+  }
+
+  /// Santra's support line. Hardcoded on Mahdi's instruction (7 Oct 2026):
+  /// `GET /content/about` serves a DIFFERENT number (+971 52 218 9917), so
+  /// whichever Santra settles on, change it in one of the two places.
+  static final _helpNumber = Uri(scheme: 'tel', path: '+97145605825');
+
+  Future<void> onOpenHelp() async {
+    if (!await launchUrl(_helpNumber)) {
+      _toastService.showUpperToast('+971 4 560 5825', type: ToastType.info);
+    }
+  }
+
+  /// Opens whichever policy Santra has published. Both urls are null on
+  /// production today, so this says so rather than being a dead tap.
+  Future<void> onOpenLegal() async {
+    final result = await _profileService.legalLinks();
+    await result.fold(
+      (failure) async =>
+          _toastService.showUpperToast(failure.message, type: ToastType.danger),
+      (links) async {
+        final url = links['privacy'] ?? links['terms'] ?? links['contract'];
+        if (url == null) {
+          _toastService.showUpperToast('legal_not_published'.tr(),
+              type: ToastType.info);
+          return;
+        }
+        await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+      },
+    );
   }
 
   Future<void> onToggleLang() async {

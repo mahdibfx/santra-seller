@@ -57,6 +57,10 @@ class ApiEndpoints {
   // ── Content ───────────────────────────────────────────────────────
   /// `?platform=android|ios` → `{minVersion, latestVersion, storeUrl}`.
   static const String appVersion = '/content/app-version';
+
+  /// `{privacy_policy_url, terms_conditions_url, seller_contract_url}` — any
+  /// of them null until Santra publishes that document.
+  static const String legal = '/content/legal';
   static const String trading = '/me/trading';
 
   // ── Promotion (campaign) requests ─────────────────────────────────

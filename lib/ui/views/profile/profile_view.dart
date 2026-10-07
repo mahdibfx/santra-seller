@@ -48,8 +48,14 @@ class ProfileView extends StackedView<ProfileViewModel> {
                   onTap: viewModel.onToggleLang),
             ]),
             _Group(label: 'support_section'.tr(), rows: [
-              _Row(icon: 'help', label: 'help_center'.tr(), onTap: () {}),
-              _Row(icon: 'shield', label: 'privacy_terms'.tr(), onTap: () {}),
+              _Row(
+                  icon: 'help',
+                  label: 'help_center'.tr(),
+                  onTap: viewModel.onOpenHelp),
+              _Row(
+                  icon: 'shield',
+                  label: 'privacy_terms'.tr(),
+                  onTap: viewModel.onOpenLegal),
             ]),
             const SizedBox(height: 22),
             _GroupContainer(

@@ -31,6 +31,29 @@ class ApiProfileService {
         res.statusCode!, (d) => Trading.fromJson(d as Map<String, dynamic>));
   }
 
+  /// `GET /content/legal` — the published policy links, EN + AR. Every field
+  /// may be null; the caller decides what to do with nothing to open.
+  Future<ApiResponse<Map<String, String?>>> fetchLegal() async {
+    final res = await _dio.get(ApiEndpoints.legal);
+    return ApiResponse<Map<String, String?>>.fromJson(
+      res.data as Map<String, dynamic>,
+      res.statusCode!,
+      (d) {
+        final m = (d as Map?) ?? const {};
+        String? str(String k) {
+          final v = m[k]?.toString().trim();
+          return (v == null || v.isEmpty) ? null : v;
+        }
+
+        return {
+          'privacy': str('privacy_policy_url'),
+          'terms': str('terms_conditions_url'),
+          'contract': str('seller_contract_url'),
+        };
+      },
+    );
+  }
+
   /// Revokes the refresh token server-side. Best effort by design — the
   /// caller signs out locally whatever this returns.
   ///

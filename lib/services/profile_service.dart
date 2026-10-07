@@ -13,6 +13,9 @@ class ProfileService {
   Future<Either<Failure, SellerProfile>> fetchProfile() =>
       _api.fetchProfile().toEither();
 
+  Future<Either<Failure, Map<String, String?>>> legalLinks() =>
+      _api.fetchLegal().toEither();
+
   Future<Either<Failure, Trading>> updateTrading(
           {required String action, Object? minutes}) =>
       _api.updateTrading(action: action, minutes: minutes).toEither();
