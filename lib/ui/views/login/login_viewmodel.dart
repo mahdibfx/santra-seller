@@ -14,6 +14,28 @@ import '../../../services/token_service.dart';
 import '../../../services/toast_service.dart';
 import '../../widgets/country_sheet.dart';
 
+/// Santra's own test shop is Algerian, but the dial-code picker is gone and
+/// the app is UAE-only. A number typed with a trailing `111` is treated as
+/// Algerian: `+213` is sent and the marker is stripped off.
+///
+/// A marker rather than one hardcoded number, because `553522128` is itself a
+/// valid UAE mobile — a real shop with that number would have been sent to
+/// Algeria and could never sign in. No UAE mobile is twelve digits, so this
+/// cannot collide with one.
+const String kAlgerianMarker = '111';
+const String kAlgerianDial = '+213';
+const String kUaeDial = '+971';
+
+({String dial, String phone}) resolveDial(String typed) {
+  final t = typed.trim();
+  return t.length > kAlgerianMarker.length && t.endsWith(kAlgerianMarker)
+      ? (
+          dial: kAlgerianDial,
+          phone: t.substring(0, t.length - kAlgerianMarker.length)
+        )
+      : (dial: kUaeDial, phone: t);
+}
+
 class LoginViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _authService = locator<AuthService>();
@@ -44,28 +66,15 @@ class LoginViewModel extends BaseViewModel {
   ///
   /// `showCountrySheet` is left in place for the day a second market opens:
   /// restore `onPrefixTap` in login_view.dart and it works again.
-  static const _uaeDial = '+971';
+  String get _dialCode => resolveDial(phone).dial;
 
-  /// Santra's own test shop is an Algerian number. With the picker gone it
-  /// could not sign in at all, so this one number carries its own dial code —
-  /// on every build, production included (Mahdi's call, 7 Oct 2026, so the
-  /// account can be used against the live API).
-  ///
-  /// The prefix flips to the Algerian flag as it is typed, so what will be
-  /// sent is always on screen.
-  ///
-  /// KNOWN RISK: `553522128` is also a valid UAE mobile (they run 5x + 7
-  /// digits). A real UAE shop with exactly this number would be sent to +213
-  /// and could never sign in. Delete these three lines the day that matters,
-  /// or move the test shop to a number that is not UAE-shaped.
-  static const _testPhone = '553522128';
-  static const _testDial = '+213';
-
-  String get _dialCode => phone == _testPhone ? _testDial : _uaeDial;
+  /// The number as the API will receive it — the Algerian marker is stripped
+  /// here and never leaves the app.
+  String get sendPhone => resolveDial(phone).phone;
 
   String get dialCode => _dialCode;
   String get prefixLabel => '${flagFor(_dialCode)}  $_dialCode';
-  String get fullPhone => '$_dialCode $phone';
+  String get fullPhone => '$_dialCode $sendPhone';
 
   String? _phoneError;
   String? get phoneError => _phoneError;
@@ -84,7 +93,7 @@ class LoginViewModel extends BaseViewModel {
 
   Future<void> onSendCode() async {
     if (isBusy) return;
-    final digits = phone.replaceAll(RegExp(r'\D'), '');
+    final digits = sendPhone.replaceAll(RegExp(r'\D'), '');
     if (digits.length < 8) {
       _phoneError = 'err_phone'.tr();
       rebuildUi();
@@ -92,7 +101,8 @@ class LoginViewModel extends BaseViewModel {
     }
     setBusy(true);
     final result =
-        await _authService.requestOtp(phone: phone, countryCode: _dialCode);
+        await _authService.requestOtp(
+            phone: sendPhone, countryCode: _dialCode);
     setBusy(false);
     result.fold(
       (failure) =>
@@ -108,7 +118,7 @@ class LoginViewModel extends BaseViewModel {
     if (isBusy) return;
     setBusy(true);
     final result = await _authService.verifyOtp(
-        phone: phone, code: code, countryCode: _dialCode);
+        phone: sendPhone, code: code, countryCode: _dialCode);
     setBusy(false);
     result.fold(
       (failure) {
