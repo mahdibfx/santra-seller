@@ -24,11 +24,10 @@ class VersionCheck {
   /// Fails open: a slow or broken check never locks shops out of the app.
   static Future<String?> forcedUpdateUrl() async {
     try {
-      final res = await locator<DioService>()
-          .dio
-          .get(ApiEndpoints.appVersion, queryParameters: {
-        'platform': Platform.isIOS ? 'ios' : 'android'
-      }).timeout(const Duration(seconds: 5));
+      final res = await locator<DioService>().dio.get(ApiEndpoints.appVersion,
+          queryParameters: {
+            'platform': Platform.isIOS ? 'ios' : 'android'
+          }).timeout(const Duration(seconds: 5));
       final data = (res.data as Map)['data'] as Map? ?? const {};
       final min = data['minVersion'] as String?;
       if (min == null || !isBelow(current, min)) return null;
