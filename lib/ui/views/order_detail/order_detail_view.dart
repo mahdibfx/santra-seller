@@ -251,21 +251,16 @@ class _CustomerCard extends StatelessWidget {
                     // keeps the destination to itself.
                     if (order.isManual) ...[
                       const SizedBox(height: 3),
-                      Row(
-                        children: [
-                          const AppIcon('location',
-                              size: 14, color: AppColors.faint),
-                          const SizedBox(width: 5),
-                          Expanded(
-                            child: AppText(destinationOf(order, lang),
-                                fontSize: 13.5,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.muted,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis),
-                          ),
-                        ],
-                      ),
+                      // No leading icon: it pushed the city an icon's width in
+                      // from the name directly above it, which read as centred
+                      // rather than aligned. The address row below carries the
+                      // location icon already.
+                      AppText(destinationOf(order, lang),
+                          fontSize: 13.5,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.muted,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis),
                     ],
                   ],
                 ),
@@ -354,12 +349,19 @@ class _DetailRow extends StatelessWidget {
               children: [
                 AppText.label(label),
                 const SizedBox(height: 3),
+                // A phone number always READS left-to-right (+213 553…), but
+                // it still belongs on the side the rest of the card sits on.
+                // `AlignmentDirectional.centerStart` was resolved INSIDE the
+                // forced-LTR scope, so "start" meant left even in Arabic and
+                // the number sat alone against the far edge.
                 ltrValue
-                    ? Directionality(
-                        textDirection: TextDirection.ltr,
-                        child: Align(
-                            alignment: AlignmentDirectional.centerStart,
-                            child: text),
+                    ? Align(
+                        alignment: Directionality.of(context) ==
+                                TextDirection.rtl
+                            ? Alignment.centerRight
+                            : Alignment.centerLeft,
+                        child: Directionality(
+                            textDirection: TextDirection.ltr, child: text),
                       )
                     : text,
               ],
