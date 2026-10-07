@@ -1,0 +1,75 @@
+workflows:
+  android-production:
+    name: Santra partners — Android production
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+
+    environment:
+      flutter: 3.38.1
+      java: 17
+      android_signing:
+        # Upload the keystore in Codemagic → Teams/App settings → Code signing
+        # identities, and name the reference exactly this. The repo also holds
+        # a keystore, but a build should not depend on a secret that happens
+        # to be committed.
+        - santra_partner_keystore
+      vars:
+        PACKAGE_NAME: com.hihome.seller
+        # Play rejects a build number it has seen. The repo was last at 35, so
+        # Codemagic's own counter is offset past it.
+        BUILD_NUMBER_OFFSET: 100
+
+    scripts:
+      - name: Point Gradle at the Codemagic keystore
+        script: |
+          # The app reads android/key.properties. The committed one carries a
+          # path from Mahdi's Mac, so it is rewritten with what Codemagic
+          # actually mounted.
+          cat > android/key.properties <<EOF
+          storePassword=$CM_KEYSTORE_PASSWORD
+          keyPassword=$CM_KEY_PASSWORD
+          keyAlias=$CM_KEY_ALIAS
+          storeFile=$CM_KEYSTORE_PATH
+          EOF
+
+      - name: Dependencies
+        script: flutter pub get
+
+      - name: Analyze and test
+        script: |
+          flutter analyze --no-pub
+          flutter test --no-pub
+
+      - name: Build the app bundle
+        script: |
+          flutter build appbundle --release \
+            --build-number=$(($PROJECT_BUILD_NUMBER + $BUILD_NUMBER_OFFSET)) \
+            --dart-define=SANTRA_API_HOST=https://app-api.santra.ae
+
+      - name: Prove it points at production
+        script: |
+          # A build that quietly talked to staging is the accident worth
+          # failing for, so this checks the string that was actually compiled.
+          set -e
+          if grep -rq "api-staging.santra.ae" build/app/outputs/bundle/release/; then
+            echo "STAGING URL FOUND IN A PRODUCTION BUILD"; exit 1
+          fi
+          echo "production host confirmed"
+
+    artifacts:
+      - build/**/outputs/**/*.aab
+      - build/**/outputs/**/mapping.txt
+      - flutter_drive.log
+
+    publishing:
+      email:
+        recipients:
+          - mahdi.boullouf@santra.ae
+        notify:
+          success: true
+          failure: true
+      # Uncomment once the Google Play service account is added in Codemagic.
+      # google_play:
+      #   credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+      #   track: internal
+      #   submit_as_draft: true
