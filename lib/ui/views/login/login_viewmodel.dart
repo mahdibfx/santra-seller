@@ -12,6 +12,7 @@ import '../../../services/auth_service.dart';
 import '../../../services/push_service.dart';
 import '../../../services/token_service.dart';
 import '../../../services/toast_service.dart';
+import '../../../services/api/api_endpoints.dart';
 import '../../widgets/country_sheet.dart';
 
 class LoginViewModel extends BaseViewModel {
@@ -44,7 +45,24 @@ class LoginViewModel extends BaseViewModel {
   ///
   /// `showCountrySheet` is left in place for the day a second market opens:
   /// restore `onPrefixTap` in login_view.dart and it works again.
-  static const _dialCode = '+971';
+  static const _uaeDial = '+971';
+
+  /// The staging test shop is an Algerian number. With the picker gone there
+  /// is no way to sign in as it, so on NON-PRODUCTION builds this one number
+  /// carries its own dial code — and the prefix visibly flips to 🇩🇿 as it is
+  /// typed, so nobody is left guessing what will be sent.
+  ///
+  /// Never in production: `553522128` is also a valid UAE mobile, and sending
+  /// a real shop's number to Algeria is worse than the inconvenience this
+  /// saves.
+  static const _stagingTestPhone = '553522128';
+  static const _stagingTestDial = '+213';
+
+  String get _dialCode =>
+      (!ApiEndpoints.isProduction && phone == _stagingTestPhone)
+          ? _stagingTestDial
+          : _uaeDial;
+
   String get dialCode => _dialCode;
   String get prefixLabel => '${flagFor(_dialCode)}  $_dialCode';
   String get fullPhone => '$_dialCode $phone';
@@ -58,10 +76,10 @@ class LoginViewModel extends BaseViewModel {
   String get phone => phoneController.text.trim();
 
   void onPhoneChanged(String _) {
-    if (_phoneError != null) {
-      _phoneError = null;
-      rebuildUi();
-    }
+    _phoneError = null;
+    // The prefix is derived from the number now, so every keystroke has to
+    // repaint it.
+    rebuildUi();
   }
 
   Future<void> onSendCode() async {

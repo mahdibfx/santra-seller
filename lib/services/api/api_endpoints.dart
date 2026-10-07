@@ -18,6 +18,11 @@ class ApiEndpoints {
       defaultValue: 'https://app-api.santra.ae');
   static const String base = '$host/api/v1/partner';
 
+  /// True when this build talks to the live API. Used to keep test-only
+  /// affordances out of production rather than guessing from kDebugMode,
+  /// which is wrong for a staging TestFlight build.
+  static const bool isProduction = host == 'https://app-api.santra.ae';
+
   // ── Auth (phone + OTP) ────────────────────────────────────────────
   static const String requestOtp = '/auth/otp/request';
   static const String verifyOtp = '/auth/otp/verify';
