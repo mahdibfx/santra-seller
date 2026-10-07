@@ -12,7 +12,6 @@ import '../../../services/auth_service.dart';
 import '../../../services/push_service.dart';
 import '../../../services/token_service.dart';
 import '../../../services/toast_service.dart';
-import '../../../services/api/api_endpoints.dart';
 import '../../widgets/country_sheet.dart';
 
 class LoginViewModel extends BaseViewModel {
@@ -47,21 +46,22 @@ class LoginViewModel extends BaseViewModel {
   /// restore `onPrefixTap` in login_view.dart and it works again.
   static const _uaeDial = '+971';
 
-  /// The staging test shop is an Algerian number. With the picker gone there
-  /// is no way to sign in as it, so on NON-PRODUCTION builds this one number
-  /// carries its own dial code — and the prefix visibly flips to 🇩🇿 as it is
-  /// typed, so nobody is left guessing what will be sent.
+  /// Santra's own test shop is an Algerian number. With the picker gone it
+  /// could not sign in at all, so this one number carries its own dial code —
+  /// on every build, production included (Mahdi's call, 7 Oct 2026, so the
+  /// account can be used against the live API).
   ///
-  /// Never in production: `553522128` is also a valid UAE mobile, and sending
-  /// a real shop's number to Algeria is worse than the inconvenience this
-  /// saves.
-  static const _stagingTestPhone = '553522128';
-  static const _stagingTestDial = '+213';
+  /// The prefix flips to the Algerian flag as it is typed, so what will be
+  /// sent is always on screen.
+  ///
+  /// KNOWN RISK: `553522128` is also a valid UAE mobile (they run 5x + 7
+  /// digits). A real UAE shop with exactly this number would be sent to +213
+  /// and could never sign in. Delete these three lines the day that matters,
+  /// or move the test shop to a number that is not UAE-shaped.
+  static const _testPhone = '553522128';
+  static const _testDial = '+213';
 
-  String get _dialCode =>
-      (!ApiEndpoints.isProduction && phone == _stagingTestPhone)
-          ? _stagingTestDial
-          : _uaeDial;
+  String get _dialCode => phone == _testPhone ? _testDial : _uaeDial;
 
   String get dialCode => _dialCode;
   String get prefixLabel => '${flagFor(_dialCode)}  $_dialCode';
