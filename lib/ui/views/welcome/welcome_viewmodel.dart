@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -27,13 +28,24 @@ class WelcomeViewModel extends BaseViewModel {
     // belongs BEFORE any network call. This used to await the version check
     // first — up to five seconds of "Welcome, sign in" for a shop that was
     // already signed in.
-    await _tokenService.init();
-    if (_tokenService.isLoggedIn) {
-      _navigationService.clearStackAndShow(Routes.mainView);
-    } else {
-      _deciding = false;
-      rebuildUi();
+    var signedIn = false;
+    try {
+      await _tokenService.init();
+      signedIn = _tokenService.isLoggedIn;
+    } catch (e) {
+      // Storage unreadable. Treat it as signed out rather than letting the
+      // screen hang on its background with nothing to tap — being asked to
+      // sign in again is recoverable, a dead first screen is not.
+      log('welcome: token init failed: $e');
     }
+
+    if (signedIn) {
+      _navigationService.clearStackAndShow(Routes.mainView);
+    }
+    // Always drawn, even on the way out: if the navigation above does not
+    // take for any reason, the shop still gets a screen it can use.
+    _deciding = false;
+    rebuildUi();
 
     // The gate still runs, just not in the way: it replaces whatever is on
     // screen if this build is too old.
