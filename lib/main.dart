@@ -32,7 +32,12 @@ Future<void> _initMessaging() async {
   FirebaseMessaging.onBackgroundMessage(_onBackgroundMessage);
   await localNotifications.initialize(
     settings: const InitializationSettings(
-      android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+      // NOT @mipmap/ic_launcher: on Android 8+ that resolves to the adaptive
+      // icon XML, which is not a bitmap, and the plugin refuses it with
+      // `invalid_icon`. That exception used to escape before runApp and left
+      // the app on its launch image for ever. `ic_notification` is the white
+      // silhouette Android expects — it tints the shape itself.
+      android: AndroidInitializationSettings('ic_notification'),
       iOS: DarwinInitializationSettings(),
     ),
     onDidReceiveNotificationResponse: onLocalNotificationTap,

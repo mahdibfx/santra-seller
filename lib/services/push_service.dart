@@ -122,6 +122,10 @@ class PushService {
           kPushChannel.name,
           importance: Importance.high,
           priority: Priority.high,
+          // Same white silhouette as the launch-time default. Without it a
+          // foreground notification falls back to the app icon, which Android
+          // renders as a white square.
+          icon: 'ic_notification',
         ),
         iOS: const DarwinNotificationDetails(),
       ),
