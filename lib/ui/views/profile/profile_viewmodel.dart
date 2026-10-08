@@ -31,6 +31,19 @@ class ProfileViewModel extends BaseViewModel {
         : _tokenService.partnerDisplayName(lang);
   }
 
+  /// Pull-to-refresh. No busy flag: it would blank the screen and take the
+  /// pull indicator with it. This is how a shop sees its own Open/Busy pill
+  /// catch up after pausing from the orders board or the web portal.
+  Future<void> onRefresh() async {
+    final result = await _profileService.fetchProfile();
+    result.fold(
+      (failure) =>
+          _toastService.showUpperToast(failure.display, type: ToastType.danger),
+      (p) => _profile = p,
+    );
+    rebuildUi();
+  }
+
   Future<void> init() async {
     setBusy(true);
     final result = await _profileService.fetchProfile();

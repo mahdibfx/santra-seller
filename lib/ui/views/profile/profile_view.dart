@@ -21,7 +21,12 @@ class ProfileView extends StackedView<ProfileViewModel> {
     final profile = viewModel.profile;
 
     return FadeSlideIn(
-      child: SingleChildScrollView(
+      child: RefreshIndicator(
+        color: AppColors.brand,
+        onRefresh: viewModel.onRefresh,
+        child: SingleChildScrollView(
+        // The screen usually fits, and without this it cannot be pulled.
+        physics: const AlwaysScrollableScrollPhysics(),
         padding: EdgeInsets.fromLTRB(
             22, MediaQuery.of(context).padding.top + 16, 22, 130),
         child: Column(
@@ -69,6 +74,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
             ),
           ],
         ),
+      ),
       ),
     );
   }
