@@ -36,7 +36,7 @@ class ProfileViewModel extends BaseViewModel {
     final result = await _profileService.fetchProfile();
     result.fold(
       (failure) =>
-          _toastService.showUpperToast(failure.message, type: ToastType.danger),
+          _toastService.showUpperToast(failure.display, type: ToastType.danger),
       (profile) => _profile = profile,
     );
     setBusy(false);
@@ -59,7 +59,7 @@ class ProfileViewModel extends BaseViewModel {
     final result = await _profileService.legalLinks();
     await result.fold(
       (failure) async =>
-          _toastService.showUpperToast(failure.message, type: ToastType.danger),
+          _toastService.showUpperToast(failure.display, type: ToastType.danger),
       (links) async {
         final url = links['privacy'] ?? links['terms'] ?? links['contract'];
         if (url == null) {

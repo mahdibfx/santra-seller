@@ -46,7 +46,7 @@ class ForgotViewModel extends BaseViewModel {
     final result = await _authService.forgotPassword(phone: phone);
     setBusy(false);
     result.fold(
-      (failure) => _toastService.showUpperToast(failure.message, type: ToastType.danger),
+      (failure) => _toastService.showUpperToast(failure.display, type: ToastType.danger),
       (_) {
         _step = ForgotStep.code;
         rebuildUi();
@@ -60,7 +60,7 @@ class ForgotViewModel extends BaseViewModel {
     final result = await _authService.verifyOtp(phone: phone, code: code);
     setBusy(false);
     result.fold(
-      (failure) => _toastService.showUpperToast(failure.message, type: ToastType.danger),
+      (failure) => _toastService.showUpperToast(failure.display, type: ToastType.danger),
       (_) {
         _step = ForgotStep.newPassword;
         rebuildUi();
@@ -87,7 +87,7 @@ class ForgotViewModel extends BaseViewModel {
         if (failure is ValidationFailure) {
           _passwordError = failure.firstError;
         }
-        _toastService.showUpperToast(failure.message, type: ToastType.danger);
+        _toastService.showUpperToast(failure.display, type: ToastType.danger);
         rebuildUi();
       },
       (_) {

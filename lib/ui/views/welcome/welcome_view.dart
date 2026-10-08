@@ -14,6 +14,11 @@ class WelcomeView extends StackedView<WelcomeViewModel> {
 
   @override
   Widget builder(BuildContext context, WelcomeViewModel viewModel, Widget? child) {
+    // Nothing but the background until we know whether this shop is signed
+    // in — otherwise the sign-in screen flashes up and is replaced.
+    if (viewModel.deciding) {
+      return const Scaffold(backgroundColor: AppColors.cream);
+    }
     final arabic = context.locale.languageCode == 'ar';
     return Scaffold(
       backgroundColor: AppColors.cream,

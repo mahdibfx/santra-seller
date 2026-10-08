@@ -106,7 +106,7 @@ class LoginViewModel extends BaseViewModel {
     setBusy(false);
     result.fold(
       (failure) =>
-          _toastService.showUpperToast(failure.message, type: ToastType.danger),
+          _toastService.showUpperToast(failure.display, type: ToastType.danger),
       (_) {
         _otpVisible = true;
         rebuildUi();
@@ -123,8 +123,8 @@ class LoginViewModel extends BaseViewModel {
     result.fold(
       (failure) {
         final msg = failure is ValidationFailure
-            ? (failure.firstError ?? failure.message)
-            : failure.message;
+            ? (failure.firstError ?? failure.display)
+            : failure.display;
         _toastService.showUpperToast(msg, type: ToastType.danger);
       },
       (tokens) async {

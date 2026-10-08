@@ -103,7 +103,7 @@ class OrderDetailViewModel extends BaseViewModel {
     final result = await _ordersService.fetchOrder(orderId);
     result.fold(
       (failure) {
-        _toastService.showUpperToast(failure.message, type: ToastType.danger);
+        _toastService.showUpperToast(failure.display, type: ToastType.danger);
         // 404 means it isn't ours any more — an unpaid card checkout the
         // customer hasn't finished paying for. Don't sit on a dead screen.
         if (failure.code == 'NOT_FOUND') _navigationService.back();
@@ -135,7 +135,10 @@ class OrderDetailViewModel extends BaseViewModel {
           },
           type: ToastType.danger),
       (_) {
-        _toastService.showUpperToast('report_sent'.tr(),
+        _toastService.showUpperToast(
+            (_order?.isManual ?? false)
+                ? 'report_sent_manual'.tr()
+                : 'report_sent'.tr(),
             type: ToastType.success);
         init();
       },

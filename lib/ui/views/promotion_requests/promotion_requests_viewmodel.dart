@@ -21,7 +21,7 @@ class PromotionRequestsViewModel extends BaseViewModel {
     setBusy(true);
     final result = await _promotionsService.fetchRequests();
     result.fold(
-      (failure) => _toastService.showUpperToast(failure.message, type: ToastType.danger),
+      (failure) => _toastService.showUpperToast(failure.display, type: ToastType.danger),
       (list) => _requests = list,
     );
     setBusy(false);

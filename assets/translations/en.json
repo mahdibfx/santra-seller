@@ -235,5 +235,10 @@
   "update_required_title": "Update required",
   "update_required_body": "This version of Santra partners is no longer supported. Update the app to keep receiving orders.",
   "update_now": "Update now",
-  "legal_not_published": "Not published yet."
+  "legal_not_published": "Not published yet.",
+  "err_shop_read_only": "Your shop is switched off, so this cannot be done. Call your Santra contact.",
+  "err_account_suspended": "This shop's access is suspended. Please call your Santra contact.",
+  "err_application_pending": "Your application is with Santra's team. We will call you.",
+  "shortage_line_manual": "Not available: {} — call your customer; Santra tells them only if they use the Santra app",
+  "report_sent_manual": "Sent — Santra tells your customer only if they use the Santra app. Call them to be sure"
 }

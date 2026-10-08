@@ -24,7 +24,7 @@ class NotificationsViewModel extends BaseViewModel {
     setBusy(true);
     final result = await _notificationsService.fetchNotifications();
     result.fold(
-      (failure) => _toastService.showUpperToast(failure.message, type: ToastType.danger),
+      (failure) => _toastService.showUpperToast(failure.display, type: ToastType.danger),
       (items) => _items = items,
     );
     setBusy(false);
@@ -36,7 +36,7 @@ class NotificationsViewModel extends BaseViewModel {
     final result = await _notificationsService.fetchNotifications();
     result.fold(
       (failure) =>
-          _toastService.showUpperToast(failure.message, type: ToastType.danger),
+          _toastService.showUpperToast(failure.display, type: ToastType.danger),
       (items) => _items = items,
     );
     rebuildUi();

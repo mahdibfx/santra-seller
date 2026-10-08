@@ -31,7 +31,7 @@ class PromotionRequestDetailViewModel extends BaseViewModel {
   Future<void> _fetch() async {
     final result = await _promotionsService.fetchRequest(requestId);
     result.fold(
-      (failure) => _toastService.showUpperToast(failure.message, type: ToastType.danger),
+      (failure) => _toastService.showUpperToast(failure.display, type: ToastType.danger),
       (r) => _request = r,
     );
   }
@@ -55,7 +55,7 @@ class PromotionRequestDetailViewModel extends BaseViewModel {
     );
     await result.fold(
       (failure) async => _toastService.showUpperToast(
-          failure is ValidationFailure ? (failure.firstError ?? failure.message) : failure.message,
+          failure is ValidationFailure ? (failure.firstError ?? failure.display) : failure.display,
           type: ToastType.danger),
       (_) async {
         await _fetch();

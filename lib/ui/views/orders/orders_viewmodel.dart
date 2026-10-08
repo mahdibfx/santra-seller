@@ -62,7 +62,7 @@ class OrdersViewModel extends BaseViewModel {
         await _ordersService.fetchOrders(page: page, status: _filter);
     result.fold(
       (failure) =>
-          _toastService.showUpperToast(failure.message, type: ToastType.danger),
+          _toastService.showUpperToast(failure.display, type: ToastType.danger),
       (p) {
         final fresh = p.items.map(_withDetail).toList();
         _orders = reset ? fresh : [..._orders, ...fresh];
@@ -175,7 +175,7 @@ class OrdersViewModel extends BaseViewModel {
     final result = await _ordersService.acceptOrder(order.id);
     result.fold(
       (failure) =>
-          _toastService.showUpperToast(failure.message, type: ToastType.danger),
+          _toastService.showUpperToast(failure.display, type: ToastType.danger),
       (_) {
         _orders = _orders
             .map((o) => o.id == order.id

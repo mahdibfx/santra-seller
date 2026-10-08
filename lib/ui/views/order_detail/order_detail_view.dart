@@ -433,7 +433,12 @@ class _ShortageLine extends StatelessWidget {
           const AppIcon('x', size: 16, color: AppColors.dangerFg),
           const SizedBox(width: 9),
           Expanded(
-            child: AppText('shortage_line'.tr(args: [units]),
+            // On the shop's OWN order Santra only reaches the customer if
+            // they use the Santra app, and does not say which — so never
+            // promise that the customer has been told.
+            child: AppText(
+                (order.isManual ? 'shortage_line_manual' : 'shortage_line')
+                    .tr(args: [units]),
                 fontSize: 13.5,
                 fontWeight: FontWeight.w600,
                 color: AppColors.dangerFg),

@@ -61,7 +61,7 @@ class OrderHistoryViewModel extends BaseViewModel {
     );
     result.fold(
       (failure) =>
-          _toastService.showUpperToast(failure.message, type: ToastType.danger),
+          _toastService.showUpperToast(failure.display, type: ToastType.danger),
       (p) {
         _orders = reset ? p.items : [..._orders, ...p.items];
         _page = p.page;
