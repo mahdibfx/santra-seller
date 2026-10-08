@@ -24,10 +24,10 @@ Future<void> _onBackgroundMessage(RemoteMessage message) async {
   await Firebase.initializeApp();
 }
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
-
+/// Firebase + notifications. Everything in here is for push, and push is not
+/// worth a shop's whole app: if a plugin channel never answers, the Android
+/// launch image stays on screen for ever and the app looks dead.
+Future<void> _initMessaging() async {
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_onBackgroundMessage);
   await localNotifications.initialize(
@@ -41,14 +41,32 @@ Future<void> main() async {
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(kPushChannel);
+}
+
+/// Runs a startup step that must never hold the app on its splash screen.
+/// A failure here costs a feature; a hang costs the whole app.
+Future<void> _guard(String what, Future<void> Function() step,
+    {int seconds = 8}) async {
+  try {
+    await step().timeout(Duration(seconds: seconds));
+  } catch (e) {
+    debugPrint('startup: $what failed or timed out — continuing. $e');
+  }
+}
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
+  await _guard('messaging', _initMessaging);
 
   // Which backend this build talks to, so "am I on staging or production?"
   // is never a guess. Debug only — it says nothing a shop should see.
   if (kDebugMode) debugPrint('API base: ${ApiEndpoints.base}');
-  await VersionCheck.load();
+  await _guard('version', VersionCheck.load, seconds: 5);
   // One-time sign-out for shops updating from the legacy backend — before
   // TokenService reads anything.
-  await SessionMigration.run();
+  await _guard('session migration', SessionMigration.run, seconds: 5);
   await setupLocator();
 
   // A partner already signed in gets push straight away; a fresh login starts
@@ -56,6 +74,7 @@ Future<void> main() async {
   if (locator<TokenService>().isLoggedIn) {
     unawaited(locator<PushService>().start());
   }
+  debugPrint('startup: reached runApp');
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('ar')],
