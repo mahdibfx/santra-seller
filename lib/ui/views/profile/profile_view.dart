@@ -2,10 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../models/trading.dart';
 import '../../common/app_animations.dart';
 import '../../common/app_colors.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/app_text.dart';
+import '../../widgets/pause_sheet.dart' show formatClock;
 import '../../widgets/thumb_image.dart';
 import 'profile_viewmodel.dart';
 
@@ -29,7 +31,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
             const SizedBox(height: 18),
             _Hero(
                 name: viewModel.displayName(lang),
-                openNow: profile?.openNow ?? true),
+                trading: profile?.trading ?? const Trading()),
             _Group(label: 'history_section'.tr(), rows: [
               _Row(
                   icon: 'history',
@@ -79,9 +81,9 @@ class ProfileView extends StackedView<ProfileViewModel> {
 }
 
 class _Hero extends StatelessWidget {
-  const _Hero({required this.name, required this.openNow});
+  const _Hero({required this.name, required this.trading});
   final String name;
-  final bool openNow;
+  final Trading trading;
 
   @override
   Widget build(BuildContext context) {
@@ -106,30 +108,7 @@ class _Hero extends StatelessWidget {
                 AppText.display(name,
                     fontSize: 22, fontWeight: FontWeight.w600),
                 const SizedBox(height: 8),
-                if (openNow)
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(
-                        color: const Color(0xFFDBF3E4),
-                        borderRadius: BorderRadius.circular(999)),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                            width: 7,
-                            height: 7,
-                            decoration: const BoxDecoration(
-                                color: AppColors.online,
-                                shape: BoxShape.circle)),
-                        const SizedBox(width: 6),
-                        AppText('open_now'.tr(),
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                            color: const Color(0xFF1B7A43)),
-                      ],
-                    ),
-                  ),
+                _TradingPill(trading: trading),
               ],
             ),
           ),
@@ -246,6 +225,67 @@ class _Row extends StatelessWidget {
             ],
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// Open / Busy / Closed, straight from `/me`'s `trading.status`.
+///
+/// The orders board already shows this; the profile claimed "Open now"
+/// unconditionally, so the two screens contradicted each other.
+class _TradingPill extends StatelessWidget {
+  const _TradingPill({required this.trading});
+
+  final Trading trading;
+
+  @override
+  Widget build(BuildContext context) {
+    final until = trading.busyUntil;
+    final (bg, dot, fg, label) = switch (trading.status) {
+      'busy' => (
+          const Color(0xFFFDF1D8),
+          AppColors.warnFg,
+          AppColors.warnFg,
+          until == null
+              ? 'pause'.tr()
+              : 'busy_until'.tr(args: [formatClock(until, context)]),
+        ),
+      'closed' => (
+          const Color(0xFFF1EFE8),
+          AppColors.muted,
+          AppColors.muted,
+          'closed_now'.tr(),
+        ),
+      _ => (
+          const Color(0xFFDBF3E4),
+          AppColors.online,
+          const Color(0xFF1B7A43),
+          'open_now'.tr(),
+        ),
+    };
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration:
+          BoxDecoration(color: bg, borderRadius: BorderRadius.circular(999)),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+              width: 7,
+              height: 7,
+              decoration: BoxDecoration(color: dot, shape: BoxShape.circle)),
+          const SizedBox(width: 6),
+          Flexible(
+            child: AppText(label,
+                fontSize: 13,
+                fontWeight: FontWeight.w700,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                color: fg),
+          ),
+        ],
       ),
     );
   }

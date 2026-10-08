@@ -387,4 +387,22 @@ void main() {
       expect(o.amountDue, isNull);
     });
   });
+
+  group('profile open state comes from /me trading', () {
+    SellerProfile me(String status) => SellerProfile.fromJson({
+          'name_en': 'Mahdi Test Shop',
+          'trading': {'status': status, 'busy_until': null},
+        });
+
+    test('a paused or closed shop no longer claims to be open', () {
+      // Hardcoded true before this, which contradicted the orders board.
+      expect(me('open').openNow, isTrue);
+      expect(me('busy').openNow, isFalse);
+      expect(me('closed').openNow, isFalse);
+    });
+
+    test('a payload without trading falls back to open', () {
+      expect(SellerProfile.fromJson({'name_en': 'X'}).openNow, isTrue);
+    });
+  });
 }
