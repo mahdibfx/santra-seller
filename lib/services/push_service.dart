@@ -77,10 +77,25 @@ class PushService {
 
   Future<void> _registerToken() async {
     try {
+      if (Platform.isIOS) {
+        // iOS cannot mint an FCM token until APNs has handed one over, and
+        // that lands a moment after permission is granted. Asking too early
+        // returns null, this launch registers nothing, and the shop silently
+        // gets no pushes until some later launch happens to be luckier.
+        for (var i = 0; i < 8; i++) {
+          if (await FirebaseMessaging.instance.getAPNSToken() != null) break;
+          await Future<void>.delayed(const Duration(milliseconds: 500));
+        }
+      }
       final token = await FirebaseMessaging.instance.getToken();
-      if (token != null) await _sendToken(token);
+      if (token != null) {
+        await _sendToken(token);
+      } else {
+        log('push: no FCM token — APNs not configured, or the simulator');
+      }
     } catch (e) {
-      // No APNs token yet (simulator, or permission refused) — not fatal.
+      // No APNs token (simulator, permission refused, missing APNs key) —
+      // never fatal, the in-app notification list still works.
       log('push: getToken failed: $e');
     }
   }

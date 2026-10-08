@@ -38,8 +38,11 @@ android {
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
         minSdkVersion 23
         targetSdkVersion 36
-        versionCode 36
-        versionName "5.0.0"
+        // From pubspec (`version: 5.0.0+N`), overridable with `--build-number`.
+        // Hardcoding it meant every Android build carried the same code and
+        // Play refused the second upload — and `--build-number` did nothing.
+        versionCode flutter.versionCode
+        versionName flutter.versionName
     }
     signingConfigs {
         release {

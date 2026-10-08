@@ -37,16 +37,6 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This app needs access to location when open and in the background.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs access to location when in the background.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to location in the background.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>To upload photos for seller products to uplaod logo and license picture</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>App would like to access IDFA for tracking purpose</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
