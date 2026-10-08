@@ -39,6 +39,8 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Santra uses this to measure which parts of the app shops actually use, so we can improve the order screens. Nothing is used to advertise to you.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>processing</string>

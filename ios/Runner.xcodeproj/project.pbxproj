@@ -11,7 +11,6 @@
 		2909C127291AC5260083262B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2909C126291AC5260083262B /* GoogleService-Info.plist */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
-		8886667B2A4ADBA000543865 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8886667A2A4ADB9F00543865 /* AdSupport.framework */; };
 		8886667D2A4ADBB100543865 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8886667C2A4ADBB100543865 /* AppTrackingTransparency.framework */; };
 		8AD5E7138B249BAC481C7693 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D093B5C393AB3D9AFE0B849 /* Pods_Runner.framework */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
@@ -44,7 +43,6 @@
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
-		8886667A2A4ADB9F00543865 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		8886667C2A4ADBB100543865 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Flutter/Debug.xcconfig; sourceTree = "<group>"; };
 		9740EEB31CF90195004384FC /* Generated.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Generated.xcconfig; path = Flutter/Generated.xcconfig; sourceTree = "<group>"; };
@@ -63,7 +61,6 @@
 			files = (
 				8886667D2A4ADBB100543865 /* AppTrackingTransparency.framework in Frameworks */,
 				8AD5E7138B249BAC481C7693 /* Pods_Runner.framework in Frameworks */,
-				8886667B2A4ADBA000543865 /* AdSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,7 +71,6 @@
 			isa = PBXGroup;
 			children = (
 				8886667C2A4ADBB100543865 /* AppTrackingTransparency.framework */,
-				8886667A2A4ADB9F00543865 /* AdSupport.framework */,
 				0D093B5C393AB3D9AFE0B849 /* Pods_Runner.framework */,
 			);
 			name = Frameworks;

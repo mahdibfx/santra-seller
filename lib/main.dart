@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,6 +13,8 @@ import 'app/app.router.dart';
 import 'services/push_service.dart';
 import 'package:flutter/foundation.dart';
 
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+
 import 'services/api/api_endpoints.dart';
 import 'services/session_migration.dart';
 import 'services/token_service.dart';
@@ -22,6 +25,26 @@ import 'ui/common/app_colors.dart';
 @pragma('vm:entry-point')
 Future<void> _onBackgroundMessage(RemoteMessage message) async {
   await Firebase.initializeApp();
+}
+
+/// Asks for tracking permission once, on iOS.
+///
+/// Apple refuses the prompt unless the app is active, so it waits for the
+/// first frame rather than firing from `main()`. Asked only when the status
+/// is still undecided: asking again after a decision does nothing, and iOS
+/// never shows the dialog twice.
+Future<void> _askTrackingPermission() async {
+  if (!Platform.isIOS) return;
+  try {
+    await Future<void>.delayed(const Duration(seconds: 1));
+    final status = await AppTrackingTransparency.trackingAuthorizationStatus;
+    if (status == TrackingStatus.notDetermined) {
+      await AppTrackingTransparency.requestTrackingAuthorization();
+    }
+  } catch (e) {
+    // A refused or unavailable prompt is not a reason to disturb a shop.
+    debugPrint('tracking permission: $e');
+  }
 }
 
 /// Firebase + notifications. Everything in here is for push, and push is not
@@ -80,6 +103,7 @@ Future<void> main() async {
     unawaited(locator<PushService>().start());
   }
   debugPrint('startup: reached runApp');
+  unawaited(_askTrackingPermission());
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('ar')],
