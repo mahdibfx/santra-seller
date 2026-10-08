@@ -93,6 +93,12 @@ class LoginViewModel extends BaseViewModel {
 
   Future<void> onSendCode() async {
     if (isBusy) return;
+    // Drop the keyboard off the phone field. The OTP sheet is drawn in the
+    // same tree rather than pushed as a route, so the field kept focus
+    // underneath it: a code typed without first tapping an OTP box went into
+    // the PHONE number — 585811082 quietly became 58581108211111, and the
+    // code was then verified against a number nobody owns.
+    FocusManager.instance.primaryFocus?.unfocus();
     final digits = sendPhone.replaceAll(RegExp(r'\D'), '');
     if (digits.length < 8) {
       _phoneError = 'err_phone'.tr();

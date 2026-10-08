@@ -53,6 +53,10 @@ class LoginView extends StackedView<LoginViewModel> {
                       onChanged: viewModel.onPhoneChanged,
                       autofocus: true,
                       forceLtr: true,
+                      // Once the code has been sent, the number it went to is
+                      // fixed: editing it here would verify against a number
+                      // nobody was texted.
+                      readOnly: viewModel.otpVisible,
                     ),
                     const Spacer(),
                     PrimaryButton(

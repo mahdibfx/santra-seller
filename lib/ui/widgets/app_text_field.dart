@@ -27,7 +27,12 @@ class AppTextField extends StatefulWidget {
     this.maxLength,
     this.autofocus = false,
     this.forceLtr = false,
+    this.readOnly = false,
   });
+
+  /// Locks the field without greying it out — used while the OTP sheet is up,
+  /// so the number the code was sent to cannot change underneath it.
+  final bool readOnly;
 
   final TextEditingController? controller;
   final String? label;
@@ -121,6 +126,7 @@ class _AppTextFieldState extends State<AppTextField> {
                 ],
                 Expanded(
                   child: TextField(
+                    readOnly: widget.readOnly,
                     controller: widget.controller,
                     focusNode: _node,
                     autofocus: widget.autofocus,
