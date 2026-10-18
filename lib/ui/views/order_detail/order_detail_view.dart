@@ -84,15 +84,22 @@ class _Body extends StatelessWidget {
               '${'order'.tr()} #${order.orderNumber.isNotEmpty ? order.orderNumber : order.id}',
               fontSize: 32),
           const SizedBox(height: 7),
-          Row(
-            children: [
-              const AppIcon('calendar', size: 15, color: AppColors.muted),
-              const SizedBox(width: 6),
-              AppText(order.deliver,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.muted),
-            ],
+          // Three separate facts that all used to be one line showing only
+          // `deliver` — which is the slot LABEL ("standard", "express"), not a
+          // date. Shops were asking when the order is due and when it came in,
+          // and neither was on the screen.
+          _DateLine(
+            icon: 'calendar',
+            label: 'delivery_on'.tr(),
+            value: order.deliveryDate.isEmpty
+                ? ''
+                : formatIsoDate(order.deliveryDate, context),
+            trailing: order.deliver,
+          ),
+          _DateLine(
+            icon: 'clock',
+            label: 'placed_on'.tr(),
+            value: _placedLabel(order, context),
           ),
           if (order.hasTimer) ...[
             const SizedBox(height: 16),
@@ -819,4 +826,61 @@ class _ActionBar extends StatelessWidget {
       ),
     );
   }
+}
+
+/// One "label: value" line under the order number. Renders nothing when the
+/// server sent no value, so a missing field is a missing row rather than a
+/// label with a blank beside it.
+class _DateLine extends StatelessWidget {
+  const _DateLine({
+    required this.icon,
+    required this.label,
+    required this.value,
+    this.trailing = '',
+  });
+
+  final String icon;
+  final String label;
+  final String value;
+
+  /// Shown in brackets after the date, e.g. the slot label. Dropped when the
+  /// date itself is missing — a lone "(standard)" says nothing.
+  final String trailing;
+
+  @override
+  Widget build(BuildContext context) {
+    if (value.isEmpty) return const SizedBox.shrink();
+    final suffix = trailing.isEmpty ? '' : '  ·  $trailing';
+    return Padding(
+      padding: const EdgeInsets.only(top: 7),
+      child: Row(
+        children: [
+          AppIcon(icon, size: 15, color: AppColors.muted),
+          const SizedBox(width: 6),
+          Flexible(
+            child: AppText('$label: $value$suffix',
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                color: AppColors.muted),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// "23 Jun 2026 · 14:05" from `created_at`, in the device's own timezone.
+///
+/// The server sends UTC; rendering that verbatim put UAE shops 4 hours behind
+/// their own orders (the same bug the customer app had on order times).
+String _placedLabel(Order order, BuildContext context) {
+  final at = order.createdAt?.toLocal();
+  if (at == null) return '';
+  final iso =
+      '${at.year}-${at.month.toString().padLeft(2, '0')}-${at.day.toString().padLeft(2, '0')}';
+  final time =
+      '${at.hour.toString().padLeft(2, '0')}:${at.minute.toString().padLeft(2, '0')}';
+  return '${formatIsoDate(iso, context)}  \u00b7  $time';
 }

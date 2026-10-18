@@ -240,5 +240,7 @@
   "err_account_suspended": "This shop's access is suspended. Please call your Santra contact.",
   "err_application_pending": "Your application is with Santra's team. We will call you.",
   "shortage_line_manual": "Not available: {} — call your customer; Santra tells them only if they use the Santra app",
-  "report_sent_manual": "Sent — Santra tells your customer only if they use the Santra app. Call them to be sure"
+  "report_sent_manual": "Sent — Santra tells your customer only if they use the Santra app. Call them to be sure",
+  "placed_on": "Placed",
+  "delivery_on": "Delivery"
 }

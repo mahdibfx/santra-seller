@@ -25,6 +25,21 @@ class Order {
       : DateTime.now().difference(receivedAt!.toLocal()).inMinutes;
   final String deliver; // human delivery window, e.g. "Today · 6:00 PM"
   final String date; // ISO yyyy-MM-dd
+
+  /// When the CUSTOMER placed it (`created_at`, UTC).
+  ///
+  /// Not [receivedAt]: that is when the SHOP got it, which for a card order is
+  /// when the payment landed. The timer counts from received, the "Placed"
+  /// line shows created — they differ by however long the customer took to
+  /// pay (backend, 13 Oct 2026).
+  final DateTime? createdAt;
+
+  /// `delivery_date` ONLY — empty when the server did not send one.
+  ///
+  /// [date] falls back to `created_at`, which is fine for sorting but must
+  /// never reach a label that says "delivery": a shop reading the day the
+  /// order was PLACED as the day it is DUE will bake on the wrong morning.
+  final String deliveryDate;
   final PaymentMethod payment;
   final List<OrderType> tags;
 
@@ -107,6 +122,8 @@ class Order {
     required this.status,
     required this.total,
     required this.deliver,
+    this.deliveryDate = '',
+    this.createdAt,
     required this.date,
     required this.payment,
     required this.tags,
@@ -183,6 +200,8 @@ class Order {
         total: total,
         receivedAt: receivedAt,
         deliver: deliver,
+        deliveryDate: deliveryDate,
+        createdAt: createdAt,
         date: date,
         payment: payment,
         tags: tags,
@@ -220,6 +239,8 @@ class Order {
                 as String? ??
             '',
         date: _isoDay(json['delivery_date'] ?? json['created_at']),
+        deliveryDate: _isoDay(json['delivery_date']),
+        createdAt: DateTime.tryParse(json['created_at']?.toString() ?? ''),
         payment: PaymentMethod.fromWire(
             json['payment_status'] == 'paid' ? 'paid' : 'cod'),
         tags: _tags(json),

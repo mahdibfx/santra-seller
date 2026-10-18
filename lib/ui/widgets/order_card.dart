@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../models/order.dart';
 import '../../models/order_addon.dart';
 import '../../models/order_status.dart';
+import '../common/format.dart';
 import '../common/app_colors.dart';
 import 'app_icon.dart';
 import 'app_text.dart';
@@ -68,6 +69,29 @@ class OrderCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 MetaChips(order: o),
+                // What the shop plans the day around. Hidden rather than
+                // guessed when the server sends no `delivery_date` — the
+                // timer above already says how long it has been waiting.
+                if (o.deliveryDate.isNotEmpty) ...[
+                  const SizedBox(height: 11),
+                  Row(
+                    children: [
+                      const AppIcon('calendar',
+                          size: 15, color: AppColors.muted),
+                      const SizedBox(width: 6),
+                      Flexible(
+                        child: AppText(
+                            '${'delivery_on'.tr()}: '
+                            '${formatIsoDate(o.deliveryDate, context)}',
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            color: AppColors.muted),
+                      ),
+                    ],
+                  ),
+                ],
                 if (o.hasTimer) ...[
                   const SizedBox(height: 13),
                   TimerBadge(order: o, showBar: true),
