@@ -27,3 +27,24 @@ String formatIsoDate(String iso, BuildContext context) {
   final mon = (ar ? kMonthsAr : kMonthsEn)[(m - 1).clamp(0, 11)];
   return '$d $mon $y';
 }
+
+/// "23 Jun 2026 · 14:05" from the timestamp the server sent, as sent.
+///
+/// No timezone conversion. The backend is the source of truth for what time
+/// an order was placed, and shifting it in the app only creates a second
+/// opinion — one that reads differently depending on which country the phone
+/// is in.
+///
+/// Pass [withTime] false for the board cards, where the day is enough and the
+/// line has to stay short.
+String formatPlacedAt(DateTime? at, BuildContext context,
+    {bool withTime = true}) {
+  if (at == null) return '';
+  final iso = '${at.year}-${at.month.toString().padLeft(2, '0')}'
+      '-${at.day.toString().padLeft(2, '0')}';
+  final day = formatIsoDate(iso, context);
+  if (!withTime) return day;
+  final time = '${at.hour.toString().padLeft(2, '0')}'
+      ':${at.minute.toString().padLeft(2, '0')}';
+  return '$day  \u00b7  $time';
+}

@@ -69,27 +69,26 @@ class OrderCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 MetaChips(order: o),
-                // What the shop plans the day around. Hidden rather than
-                // guessed when the server sends no `delivery_date` — the
-                // timer above already says how long it has been waiting.
+                // The two facts a shop plans around, one per line. Side by
+                // side they ran out of width in Arabic, where both labels are
+                // longer than their English counterparts.
                 if (o.deliveryDate.isNotEmpty) ...[
                   const SizedBox(height: 11),
-                  Row(
-                    children: [
-                      const AppIcon('calendar',
-                          size: 15, color: AppColors.muted),
-                      const SizedBox(width: 6),
-                      Flexible(
-                        child: AppText(
-                            '${'delivery_on'.tr()}: '
-                            '${formatIsoDate(o.deliveryDate, context)}',
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            color: AppColors.muted),
-                      ),
-                    ],
+                  _CardDate(
+                    icon: 'calendar',
+                    label: 'delivery_on'.tr(),
+                    value: formatIsoDate(o.deliveryDate, context),
+                  ),
+                ],
+                // Date only: the waiting timer above already carries the
+                // minutes, and the card has no room for a clock too.
+                if (o.createdAt != null) ...[
+                  const SizedBox(height: 6),
+                  _CardDate(
+                    icon: 'clock',
+                    label: 'placed_on'.tr(),
+                    value:
+                        formatPlacedAt(o.createdAt, context, withTime: false),
                   ),
                 ],
                 if (o.hasTimer) ...[
@@ -230,6 +229,34 @@ class _AddonLines extends StatelessWidget {
             ),
         ],
       ),
+    );
+  }
+}
+
+
+/// One "label: value" date on a board card.
+class _CardDate extends StatelessWidget {
+  const _CardDate(
+      {required this.icon, required this.label, required this.value});
+
+  final String icon;
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        AppIcon(icon, size: 14, color: AppColors.muted),
+        const SizedBox(width: 5),
+        AppText('$label: $value',
+            fontSize: 13,
+            fontWeight: FontWeight.w600,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            color: AppColors.muted),
+      ],
     );
   }
 }

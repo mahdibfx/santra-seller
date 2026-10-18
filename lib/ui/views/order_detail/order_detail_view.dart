@@ -99,7 +99,7 @@ class _Body extends StatelessWidget {
           _DateLine(
             icon: 'clock',
             label: 'placed_on'.tr(),
-            value: _placedLabel(order, context),
+            value: formatPlacedAt(order.createdAt, context),
           ),
           if (order.hasTimer) ...[
             const SizedBox(height: 16),
@@ -330,6 +330,7 @@ class _DetailRow extends StatelessWidget {
   final String icon;
   final String label;
   final String value;
+
   final bool ltrValue;
   final VoidCallback? onTap;
 
@@ -562,6 +563,15 @@ class _ItemsCard extends StatelessWidget {
                           children: [
                             AppText(order.items[i].displayName(lang),
                                 fontSize: 15.5, fontWeight: FontWeight.w500),
+                            // What the customer actually chose. Without this
+                            // the shop reads "Cake ×1" and has to phone them
+                            // to find out which cake.
+                            for (final g
+                                in order.items[i].groupedModifiers(lang)) ...[
+                              const SizedBox(height: 4),
+                              _ModifierLine(
+                                  group: g.key, options: g.value, lang: lang),
+                            ],
                             if (order.items[i].unavailableQuantity > 0) ...[
                               const SizedBox(height: 3),
                               AppText(
@@ -843,14 +853,18 @@ class _DateLine extends StatelessWidget {
   final String label;
   final String value;
 
-  /// Shown in brackets after the date, e.g. the slot label. Dropped when the
-  /// date itself is missing — a lone "(standard)" says nothing.
+  /// `scheduled_slot_label` — the delivery WINDOW, shown after the date.
+  ///
+  /// The backend currently puts other things in this field: an interim that
+  /// writes the dates into it, and a cancellation note on cancelled orders
+  /// ("Cancelled 12 Oct 16:02"). Both are temporary and get reverted, so the
+  /// row keeps rendering it rather than being rebuilt twice.
   final String trailing;
 
   @override
   Widget build(BuildContext context) {
     if (value.isEmpty) return const SizedBox.shrink();
-    final suffix = trailing.isEmpty ? '' : '  ·  $trailing';
+    final suffix = trailing.isEmpty ? '' : '  \u00b7  $trailing';
     return Padding(
       padding: const EdgeInsets.only(top: 7),
       child: Row(
@@ -871,16 +885,53 @@ class _DateLine extends StatelessWidget {
   }
 }
 
-/// "23 Jun 2026 · 14:05" from `created_at`, in the device's own timezone.
+
+
+/// One chosen option under its item: "Size: 10 inch ×2".
 ///
-/// The server sends UTC; rendering that verbatim put UAE shops 4 hours behind
-/// their own orders (the same bug the customer app had on order times).
-String _placedLabel(Order order, BuildContext context) {
-  final at = order.createdAt?.toLocal();
-  if (at == null) return '';
-  final iso =
-      '${at.year}-${at.month.toString().padLeft(2, '0')}-${at.day.toString().padLeft(2, '0')}';
-  final time =
-      '${at.hour.toString().padLeft(2, '0')}:${at.minute.toString().padLeft(2, '0')}';
-  return '${formatIsoDate(iso, context)}  \u00b7  $time';
+/// The group is named as well as the option — "Chocolate" alone does not say
+/// whether it is the sponge, the filling or the drip.
+class _ModifierLine extends StatelessWidget {
+  const _ModifierLine(
+      {required this.group, required this.options, required this.lang});
+
+  final String group;
+  final List<OrderModifier> options;
+  final String lang;
+
+  @override
+  Widget build(BuildContext context) {
+    // Arabic uses its own comma; a Latin one reads as a typo mid-sentence.
+    final separator = lang == 'ar' ? '\u060c ' : ', ';
+    final name = [
+      for (final o in options)
+        o.displayName(lang) + (o.quantity > 1 ? ' \u00d7${o.quantity}' : '')
+    ].join(separator);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsetsDirectional.only(top: 5, end: 7),
+          child: SizedBox(
+            width: 4,
+            height: 4,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: AppColors.muted,
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+        ),
+        Expanded(
+          child: AppText(
+            group.isEmpty ? name : '$group: $name',
+            fontSize: 13.5,
+            fontWeight: FontWeight.w500,
+            color: AppColors.muted,
+          ),
+        ),
+      ],
+    );
+  }
 }
