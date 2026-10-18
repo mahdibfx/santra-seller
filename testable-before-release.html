@@ -61,6 +61,29 @@
      its <details>, and remove the `open` attribute so it folds into history. -->
 
 <details open>
+  <summary><span class="title">What the customer chose on each item</span><span class="when">18 Oct</span><span class="tag t-done">verified</span></summary>
+  <div class="body">
+    <p class="where">lib/models/order_item.dart · lib/ui/views/order_detail/order_detail_view.dart · lib/ui/widgets/foldable_items.dart · test/order_dates_test.dart</p>
+    <p><b>What changed.</b> The shop could not see the modifiers. An order for a cake with a size, a sponge and add-ons reached them as "Cake &times;1", so they either made the wrong thing or phoned the customer. <b>This was live.</b></p>
+    <p>The API has been sending them all along — checked against production on 18 Oct 2026: every item carries <code>modifiers[]</code> with both languages, the group name, <code>price_addition</code> and <code>quantity</code>. The app never read the field.</p>
+    <p>Now on the order page as one line per group, and inline in the board card's expanded item list. The GROUP is named as well as the option — "Chocolate" alone does not tell a baker whether that is the sponge, the filling or the drip.</p>
+    <div class="lbl">How to test</div>
+    <ol>
+      <li>Open an order placed with options (orders 151457&ndash;151460 on production have one each).</li>
+      <li>Under the item name: a bulleted line per group, e.g. <code>Size: 10 inch</code>.</li>
+      <li>On the board, tap "show items" — the options appear under each item there too.</li>
+      <li>An order whose items have NO options: nothing extra renders, no stray bullet or blank line.</li>
+      <li>Switch to Arabic and check both screens: bullets on the right, Arabic comma (&#x060C;) between options, no overflow.</li>
+      <li>An item with several options from ONE group should read as a single line ("Add-ons: nuts، sprinkles"), not the group name repeated.</li>
+      <li>An item with options from SEVERAL groups should keep one line each, in the order the customer was asked.</li>
+    </ol>
+    <div class="pass">Pass: the shop can tell exactly what to make without opening anything else or calling the customer.</div>
+    <div class="need">Known limit: on the board card the options are merged into one line without group names, because the card is tight. The order page carries the full breakdown. Say if the board should show groups too.</div>
+    <div class="need">Still unused from the same payload: <code>modifiers_price</code>, <code>unit_price</code>, <code>total_price</code>, <code>prep_time_minutes</code>. All sent per item, none displayed — <code>prep_time_minutes</code> looks useful for planning a queue.</div>
+  </div>
+</details>
+
+<details open>
   <summary><span class="title">A missing delivery date can no longer show the placed date</span><span class="when">14 Oct</span><span class="tag t-done">verified</span></summary>
   <div class="body">
     <p class="where">lib/models/order.dart · test/order_dates_test.dart</p>
@@ -79,14 +102,14 @@
   <summary><span class="title">Delivery date and placed date on the order page</span><span class="when">13–14 Oct</span><span class="tag t-device">needs device</span></summary>
   <div class="body">
     <p class="where">lib/models/order.dart · lib/ui/views/order_detail/order_detail_view.dart · assets/translations/{en,ar}.json</p>
-    <p><b>What changed.</b> Shops could not see when an order is due or when it came in. The order page showed one line next to a calendar icon holding <code>scheduled_slot_label</code> — the delivery TYPE ("standard"), not a date. It now shows two labelled rows: <b>Delivery</b> (from <code>delivery_date</code>) and <b>Placed</b> (from <code>created_at</code>, converted to the phone's own timezone).</p>
-    <div class="lbl">Why created_at and not received_at</div>
+    <p><b>What changed.</b> Shops could not see when an order is due or when it came in. The order page showed one line next to a calendar icon holding <code>scheduled_slot_label</code> — the delivery TYPE ("standard"), not a date. It now shows two labelled rows: <b>Delivery</b> (from <code>delivery_date</code>) and <b>Placed</b> (from <code>created_at</code>, exactly as the server sends it).</p>
+        <div class="lbl">Why created_at and not received_at</div>
     <p><code>received_at</code> is when the SHOP got the order — for a card order, when the payment landed. The waiting timer counts from that. "Placed" means when the customer ordered, which is <code>created_at</code>. They differ by however long the customer took to pay.</p>
     <div class="lbl">How to test</div>
     <ol>
       <li>Open any order from the board.</li>
       <li>Under the order number, read the two rows.</li>
-      <li>Check the Placed time against the real clock — it must be UAE time, not 4 hours behind.</li>
+      <li>Check the Placed time matches what the backend holds for that order. The app does no timezone conversion.</li>
       <li>Open a PARCEL (<code>order_kind: "delivery_service"</code>) and check both rows there too.</li>
       <li>Switch the app to Arabic and reopen.</li>
     </ol>
@@ -99,11 +122,13 @@
   <summary><span class="title">Delivery date on the board cards</span><span class="when">13 Oct</span><span class="tag t-device">needs device</span></summary>
   <div class="body">
     <p class="where">lib/ui/widgets/order_card.dart</p>
-    <p><b>What changed.</b> The board cards carried no date at all, so a shop planning the day had to open every order. Each card now shows the delivery date under the chips.</p>
+    <p><b>What changed.</b> The board cards carried no date at all, so a shop planning the day had to open every order. Each card now shows BOTH the delivery date and the placed date under the chips.</p>
+    <p>One per line, not side by side: in Arabic both labels are longer than their English counterparts and ran out of width. The placed date is day-only here — the waiting timer above already carries the minutes, and the card has no room for a clock as well. Both screens share one formatter, so the order page and the card can never drift apart on timezone or format.</p>
     <div class="lbl">How to test</div>
     <ol>
       <li>Open the orders board with several orders on it.</li>
-      <li>Each card should show a calendar line with the delivery date.</li>
+      <li>Each card should show a calendar line with the delivery date AND a clock line with the placed date.</li>
+      <li>Check the placed date matches the backend's date for that order.</li>
       <li>Check a card for an order with no delivery date — the line should be ABSENT, not blank or wrong.</li>
       <li>Check a long shop/customer name does not push the date off the card.</li>
       <li>Switch to Arabic.</li>
