@@ -109,6 +109,26 @@ class _FoldableItemsState extends State<FoldableItems> {
                                     fontWeight: FontWeight.w500,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis),
+                                // The shop expands this list to see what to
+                                // make, so the chosen options belong here as
+                                // much as on the order page.
+                                if (it.modifiers.isNotEmpty) ...[
+                                  const SizedBox(height: 3),
+                                  AppText(
+                                    [
+                                      for (final m in it.modifiers)
+                                        m.displayName(lang) +
+                                            (m.quantity > 1
+                                                ? ' \u00d7${m.quantity}'
+                                                : '')
+                                    ].join('  \u00b7  '),
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    color: AppColors.muted,
+                                  ),
+                                ],
                                 if (it.hasRequest) ...[
                                   const SizedBox(height: 6),
                                   Row(
