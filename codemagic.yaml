@@ -15,9 +15,18 @@ workflows:
         - santra_partner_keystore
       vars:
         PACKAGE_NAME: com.hihome.seller
-        # Play rejects a build number it has seen. The repo was last at 35, so
-        # Codemagic's own counter is offset past it.
-        BUILD_NUMBER_OFFSET: 100
+        # Play rejects a build number it has seen, and the offset is what
+        # keeps Codemagic's own counter clear of what is already uploaded.
+        #
+        # Raised 100 -> 200 on 19 Oct 2026: the counter was at 3, so the build
+        # came out as 103, which Play had already taken. Re-running would only
+        # have produced 103 again. 200 puts the next build in the 200s with
+        # room to spare.
+        #
+        # If this collides again, raise it by another 100 rather than nudging
+        # it — the counter moves on its own and a tight margin just repeats
+        # this.
+        BUILD_NUMBER_OFFSET: 200
 
     scripts:
       - name: Point Gradle at the Codemagic keystore
