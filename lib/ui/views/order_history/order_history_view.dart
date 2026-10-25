@@ -105,36 +105,37 @@ class OrderHistoryView extends StackedView<OrderHistoryViewModel> {
                           color: AppColors.brand,
                           onRefresh: viewModel.onRefresh,
                           child: NotificationListener<ScrollNotification>(
-                          onNotification: (n) {
-                            if (n.metrics.pixels >=
-                                n.metrics.maxScrollExtent - 300)
-                              viewModel.loadMore();
-                            return false;
-                          },
-                          child: ListView.separated(
-                            // A page that fits the screen must still be
-                            // pullable.
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            padding: const EdgeInsets.fromLTRB(18, 4, 18, 40),
-                            itemCount: viewModel.orders.length +
-                                (viewModel.hasMore ? 1 : 0),
-                            separatorBuilder: (_, __) =>
-                                const SizedBox(height: 11),
-                            itemBuilder: (_, i) {
-                              if (i >= viewModel.orders.length) {
-                                return const Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 20),
-                                  child: Center(
-                                      child: CircularProgressIndicator(
-                                          color: AppColors.brand)),
-                                );
+                            onNotification: (n) {
+                              if (n.metrics.pixels >=
+                                  n.metrics.maxScrollExtent - 300) {
+                                viewModel.loadMore();
                               }
-                              final o = viewModel.orders[i];
-                              return _HistoryRow(
-                                  order: o, onTap: () => viewModel.onOpen(o));
+                              return false;
                             },
+                            child: ListView.separated(
+                              // A page that fits the screen must still be
+                              // pullable.
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              padding: const EdgeInsets.fromLTRB(18, 4, 18, 40),
+                              itemCount: viewModel.orders.length +
+                                  (viewModel.hasMore ? 1 : 0),
+                              separatorBuilder: (_, __) =>
+                                  const SizedBox(height: 11),
+                              itemBuilder: (_, i) {
+                                if (i >= viewModel.orders.length) {
+                                  return const Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 20),
+                                    child: Center(
+                                        child: CircularProgressIndicator(
+                                            color: AppColors.brand)),
+                                  );
+                                }
+                                final o = viewModel.orders[i];
+                                return _HistoryRow(
+                                    order: o, onTap: () => viewModel.onOpen(o));
+                              },
+                            ),
                           ),
-                        ),
                         ),
             ),
           ],

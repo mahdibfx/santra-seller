@@ -235,8 +235,9 @@ class _OrderList extends StatelessWidget {
       onRefresh: viewModel.onRefresh,
       child: NotificationListener<ScrollNotification>(
         onNotification: (n) {
-          if (n.metrics.pixels >= n.metrics.maxScrollExtent - 300)
+          if (n.metrics.pixels >= n.metrics.maxScrollExtent - 300) {
             viewModel.loadMore();
+          }
           return false;
         },
         child: ListView.separated(
