@@ -1,7 +1,7 @@
 name: santra_seller
 description: Santra Sellers — seller app (clean Stacked MVVM rebuild).
 publish_to: 'none'
-version: 5.1.0+38
+version: 5.2.0+39
 
 environment:
   sdk: '>=3.5.0 <4.0.0'
@@ -47,10 +47,26 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   build_runner: ^2.4.13
   stacked_generator: ^2.0.4
+  flutter_native_splash: ^2.4.7
 
 flutter:
   uses-material-design: true
   assets:
     - assets/translations/
     - assets/images/
+    - assets/splash/
     - assets/icons/
+
+# Native splash: brand purple with the white mark, until Flutter draws its
+# first frame. Regenerate after changing anything here:
+#   dart run flutter_native_splash:create
+# The Flutter splash (lib/ui/views/welcome/splash_mark.dart) draws the same
+# mark at the same size on the same colour, so the hand-off is invisible and
+# the animation starts from exactly where the native splash left off.
+flutter_native_splash:
+  web: false
+  color: "#7E2A83"
+  image: assets/splash/splash.png
+  android_12:
+    color: "#7E2A83"
+    image: assets/splash/android12.png

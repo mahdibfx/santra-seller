@@ -61,6 +61,164 @@
      its <details>, and remove the `open` attribute so it folds into history. -->
 
 <details open>
+  <summary><span class="title">The shop's logo shows on the profile</span><span class="when">25 Oct</span><span class="tag t-sim">simulator ok</span></summary>
+  <div class="body">
+    <p class="where">profile_view.dart (_Hero)</p>
+    <p>The profile card always drew the generic store icon: it passed an empty image path, even though the app already read the shop's <code>logo_url</code> from <code>/me</code>. It now shows the logo; the store icon stays as the placeholder while it loads or when a shop has none.</p>
+    <div class="lbl">How to test</div>
+    <ol>
+      <li>Profile tab with a shop that has a logo (Ahmed Staging Shop) → its logo in the card.</li>
+      <li>A shop with no logo → the purple store icon, as before.</li>
+    </ol>
+  </div>
+</details>
+
+<details open>
+  <summary><span class="title">A shop with no orders can pull to refresh</span><span class="when">25 Oct</span><span class="tag t-device">needs a shop with 0 orders</span></summary>
+  <div class="body">
+    <p class="where">orders_view.dart</p>
+    <p>With zero orders the board shows the "web portal" empty state, which was not inside a pull-to-refresh, so a new shop waiting for its first order had no way to check short of leaving the screen. It now refreshes like the list (and also re-reads the open/paused state).</p>
+    <div class="lbl">How to test</div>
+    <ol>
+      <li>Log in with a shop that has no orders → pull down on the empty screen → spinner, then the screen reloads.</li>
+      <li>Place an order for that shop (customer app) → pull down → the order appears.</li>
+      <li>A filter with no orders (e.g. "Ready" when none are ready) → pull down still works (it already did).</li>
+    </ol>
+  </div>
+</details>
+
+<details open>
+  <summary><span class="title">Verify stays busy after a correct code until the home screen opens</span><span class="when">25 Oct</span><span class="tag t-sim">simulator ok</span></summary>
+  <div class="body">
+    <p class="where">login_viewmodel.dart (onVerifyOtp)</p>
+    <p>After a correct code the button came back to life while the app was still saving the login and navigating, so it could be tapped again. Busy now stays on through success; only a wrong code (or a network error) gives the button back.</p>
+    <div class="lbl">How to test</div>
+    <ol>
+      <li>Enter the right code → Verify: the spinner stays until the home screen appears; tapping again does nothing.</li>
+      <li>Enter a wrong code → Verify: the error shows and the button works again.</li>
+    </ol>
+  </div>
+</details>
+
+<details open>
+  <summary><span class="title">Time and battery were invisible on login and most pages</span><span class="when">25 Oct</span><span class="tag t-device">needs device</span></summary>
+  <div class="body">
+    <p class="where">main.dart (MaterialApp builder) · image_viewer.dart</p>
+    <p>The purple splash switched the status bar to white icons and nothing switched it back, so on every cream page the time, Wi-Fi and battery were white on white. Dark icons are now the app-wide default; the splash and the photo viewer (dark backgrounds) keep white ones.</p>
+    <div class="lbl">How to test (iPhone, light and dark system mode)</div>
+    <ol>
+      <li>Launch: splash shows white icons on purple.</li>
+      <li>Welcome, login, code sheet, orders, order page, profile: time and battery are dark and readable.</li>
+      <li>Open an item photo: white icons over the dark viewer; close it: dark again.</li>
+    </ol>
+  </div>
+</details>
+
+<details open>
+  <summary><span class="title">Item attachments: PDFs now reach the shop, and photos show uncropped</span><span class="when">25 Oct</span><span class="tag t-sim">simulator ok</span></summary>
+  <div class="body">
+    <p class="where">order_item.dart (files) · order_detail_view.dart · image_viewer.dart · test/api_parsing_test.dart</p>
+    <ul>
+      <li><b>PDFs were dropped:</b> a customer's PDF on an item (a design brief) never showed. It is now a "PDF" tile next to the photos; tapping it opens the PDF in an in-app sheet with Done.</li>
+      <li><b>Photos were cropped in the viewer:</b> it showed every photo as a square, cutting the sides off wide ones. It now shows the whole photo, pinch to zoom.</li>
+    </ul>
+    <p>Tested on staging order <b>#S260002</b>: 3× Tester Chocolate Cake, options Lime + Orange, a long special request, 2 photos + 1 PDF (the API allows at most 3 attachments per item).</p>
+    <div class="lbl">How to test</div>
+    <ol>
+      <li>Open #S260002: options in bold, the amber request wraps fully, two photo thumbnails and a purple PDF tile.</li>
+      <li>Tap a photo → full photo, nothing cropped; swipe to the second; pinch to zoom; ✕ closes.</li>
+      <li>Tap PDF → it opens in a sheet; Done returns to the order.</li>
+      <li>An item with ONLY a PDF (no note, no photo) still shows the request block.</li>
+    </ol>
+  </div>
+</details>
+
+<details open>
+  <summary><span class="title">Order page header and item rows tidied</span><span class="when">25 Oct</span><span class="tag t-sim">simulator ok</span></summary>
+  <div class="body">
+    <p class="where">order_detail_view.dart · timer_badge.dart</p>
+    <ul>
+      <li>The delivery date showed twice ("Delivery: 21 Sep 2026 · Deliver 21 Sept"); the repeated part is hidden. A real slot label or a cancellation note still shows after the date.</li>
+      <li>The waiting timer read "819:38:30" on old orders; past a day it reads "34d 3h" (order page and board cards).</li>
+      <li>Payment chips and the waiting timer share one row (chips start, timer end) instead of two loose rows.</li>
+      <li>An item with no options is centred on its photo instead of hugging the top.</li>
+      <li>"An item is not available? Tell Santra": message icon instead of the hourglass, and "Tell Santra" in purple so it reads as the link (EN + AR).</li>
+    </ul>
+    <div class="lbl">How to test</div>
+    <ol>
+      <li>Open an order: one delivery date; COD on the left and Waiting on the right of the same row.</li>
+      <li>An order older than a day: Waiting shows days and hours.</li>
+      <li>An item without options: name level with the photo; an item with options: still top-aligned with the options below.</li>
+    </ol>
+  </div>
+</details>
+
+<details open>
+  <summary><span class="title">Send code, Verify and Log out can no longer be tapped twice</span><span class="when">25 Oct</span><span class="tag t-sim">simulator ok</span></summary>
+  <div class="body">
+    <p class="where">primary_button.dart (new <code>loading</code>) · login_view.dart · otp_sheet.dart · profile_view.dart · profile_viewmodel.dart</p>
+    <p>Send code ignored repeat taps but never looked disabled. Log out had no guard at all: each tap unregistered push again, called <code>/auth/logout</code> again and navigated again. Buttons now show a spinner and ignore taps while the request runs.</p>
+    <div class="lbl">How to test</div>
+    <ol>
+      <li>Login → enter the number → tap Send code several times fast: a spinner replaces the label, one code is sent.</li>
+      <li>Enter the code → tap Verify several times fast: spinner, one login.</li>
+      <li>Profile → tap Log out several times fast: a spinner appears on the row, you land on the welcome screen once.</li>
+    </ol>
+  </div>
+</details>
+
+<details open>
+  <summary><span class="title">Tap an order item → read-only product page</span><span class="when">21–22 Oct</span><span class="tag t-device">needs device</span></summary>
+  <div class="body">
+    <p class="where">lib/ui/views/product_preview/product_preview_view.dart (new) · order_detail_view.dart · order_item.dart · api_endpoints.dart</p>
+    <p>Tapping a line in an order's items opens the product: photos (swipe, tap to zoom), name, price, description, ingredients, allergens, size, and every option group. Nothing can be selected. The options THIS customer picked are highlighted with a tick.</p>
+    <p>It loads <code>GET /partner/products/:id</code> using the line's <code>product_id</code> (both confirmed against production 22 Oct). Chosen options are ticked by <code>modifier_id</code>, so renaming an option doesn't break it. If the line has no <code>product_id</code>, or the product can't be loaded, the page still shows the line's photo and name.</p>
+    <div class="lbl">How to test</div>
+    <ol>
+      <li>Open any order → tap an item: product page opens with photos, price, description.</li>
+      <li>Order with a cake (size + sponge chosen): the option groups show, and the 2 chosen options are ticked.</li>
+      <li>Tap a photo → full-screen viewer. Back → the order.</li>
+      <li>Tap a customer reference photo under an item: still opens the photo viewer, NOT the product page.</li>
+      <li>Each item row ends with a small PURPLE arrow (‹ in Arabic): it reads as tappable. Long option text wraps under the name; nothing is cut off.</li>
+      <li>Kitchen-ticket layout: each row starts with a big quantity (3×), then a small photo, the name, and one line per option group with the CHOSEN value in bold ("Colors: <b>Red</b>"). Several picks from one group share a line ("Add-ons: <b>Nuts, Sprinkles ×2</b>").</li>
+      <li>Top of the card: "N items · N units", plus an amber "N with special requests" pill when any item has a note. Notes are amber, not purple.</li>
+      <li>An item with a note: the note and its photos/PDF start at the item PHOTO's edge (past the quantity column), so a long request needs fewer lines but still sits inside its item's row. Same in Arabic, mirrored.</li>
+      <li>Arabic: name, description and options show in Arabic.</li>
+      <li>Production test shop (+971 58 581 1082): order 152285, Chocolate Fudge Cake → the Colors group shows Brown +10 and Red +20, with <b>Red ticked</b>.</li>
+    </ol>
+  </div>
+</details>
+
+<details open>
+  <summary><span class="title">Swipe to confirm, actions on the card, and pickup orders no longer stuck at Ready</span><span class="when">20 Oct</span><span class="tag t-device">needs device</span></summary>
+  <div class="body">
+    <p class="where">lib/ui/widgets/swipe_to_confirm.dart · lib/ui/widgets/order_card.dart · lib/ui/views/order_detail/order_detail_view.dart · order_detail_viewmodel.dart · lib/ui/views/orders/orders_viewmodel.dart · orders_view.dart · lib/models/order.dart · assets/translations/en.json, ar.json</p>
+
+    <p><b>1. The lone forward action is swiped, not tapped.</b> When the only button left is the next step &mdash; <i>Start preparing</i>, <i>Mark as ready</i>, <i>Customer collected it</i> &mdash; it is now a slider dragged end to end, like answering a call. A tap does nothing. "Mark as ready" sends a driver, and the board is scrolled fast with busy hands. Accept/Cancel side by side keep plain buttons: there the shop is choosing, and cancelling already asks for a reason.</p>
+
+    <p><b>2. The forward action is on the order card too.</b> The card used to stop offering anything after Accept, so moving an order along meant opening it. It now carries the same swipe as the order page.</p>
+
+    <p><b>3. A line saying what the action sets in motion</b>, above the swipe on the order page: <i>"Calls a Santra driver to collect it. Only mark this when it is packed and at the counter."</i> &mdash; and the pickup version, <i>"Tells the customer it is ready to collect."</i></p>
+
+    <div class="stop"><b>Bug fixed: ready PICKUP orders had no button at all.</b> Staging data (partner 3363) shows the server sends <code>allowed_transitions: ["delivered"]</code> for a pickup order at Ready &mdash; the customer collects at the counter, so only the shop can say it left. <code>nextStep</code> only ever returned preparing or ready, so the app showed nothing and the order sat at Ready forever. It now offers <i>Customer collected it</i>. A ready <b>delivery</b> order correctly still offers nothing: out-for-delivery and delivered are ops-side and the API answers 409.</div>
+
+    <p><b>Also fixed in the new control before it shipped:</b> a never-swiped slider &mdash; most cards on the board &mdash; built its animation controller inside <code>dispose()</code>. Caught by the widget test.</p>
+
+    <div class="lbl">How to test (staging: <code>--dart-define=SANTRA_API_HOST=https://api-staging.santra.ae</code>)</div>
+    <ol>
+      <li>Log in as the staging test shop. Open a <b>confirmed</b> order (119, 120, 121, 133). The page shows a slider <i>Start preparing</i>, not a button.</li>
+      <li><b>Tap</b> the slider. Nothing happens. Drag it a third of the way and let go: it springs back, nothing happens.</li>
+      <li>Drag it all the way. The order moves to Preparing, with a haptic tick.</li>
+      <li>On the board, find a confirmed or preparing order. The card itself carries the slider. Swipe it there without opening the order.</li>
+      <li>On a preparing order, the line above the slider reads <i>"Calls a Santra driver…"</i>. Swipe to Ready. The slider disappears: there is nothing more for the shop to do on a delivery order.</li>
+      <li><b>Order 136</b> (pickup, at Ready): a slider <i>Customer collected it</i> now appears. Before this change, nothing did. Swipe it &mdash; the order goes to Delivered.</li>
+      <li>Switch to Arabic. The slider runs right to left; dragging left-to-right does nothing.</li>
+      <li>A pending order still shows Accept and Cancel as two plain buttons.</li>
+    </ol>
+  </div>
+</details>
+
+<details open>
   <summary><span class="title">What the customer chose on each item</span><span class="when">18 Oct</span><span class="tag t-done">verified</span></summary>
   <div class="body">
     <p class="where">lib/models/order_item.dart · lib/ui/views/order_detail/order_detail_view.dart · lib/ui/widgets/foldable_items.dart · test/order_dates_test.dart</p>
