@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'splash_mark.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -17,7 +18,7 @@ class WelcomeView extends StackedView<WelcomeViewModel> {
     // Nothing but the background until we know whether this shop is signed
     // in — otherwise the sign-in screen flashes up and is replaced.
     if (viewModel.deciding) {
-      return const Scaffold(backgroundColor: AppColors.cream);
+      return const SplashMark();
     }
     final arabic = context.locale.languageCode == 'ar';
     return Scaffold(

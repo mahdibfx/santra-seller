@@ -23,7 +23,15 @@ class WelcomeViewModel extends BaseViewModel {
   bool _deciding = true;
   bool get deciding => _deciding;
 
+  /// How long the animated splash stays up at minimum. Reading the token is
+  /// instant, so without a floor a signed-in shop leaves on the first frame
+  /// and the animation is never seen — just a purple flash.
+  // ponytail: a fixed floor costs a signed-in launch up to this much. Cut it,
+  // or drop it to zero, if shops ever say opening the app feels slow.
+  static const _minSplash = Duration(milliseconds: 900);
+
   Future<void> init() async {
+    final splashUntil = DateTime.now().add(_minSplash);
     // Reading the token is local and instant, so it decides where the shop
     // belongs BEFORE any network call. This used to await the version check
     // first — up to five seconds of "Welcome, sign in" for a shop that was
@@ -38,6 +46,9 @@ class WelcomeViewModel extends BaseViewModel {
       // sign in again is recoverable, a dead first screen is not.
       log('welcome: token init failed: $e');
     }
+
+    final left = splashUntil.difference(DateTime.now());
+    if (left > Duration.zero) await Future.delayed(left);
 
     if (signedIn) {
       _navigationService.clearStackAndShow(Routes.mainView);
