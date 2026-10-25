@@ -11,6 +11,7 @@ import 'app_text.dart';
 import 'foldable_items.dart';
 import 'meta_chips.dart';
 import 'primary_button.dart';
+import 'swipe_to_confirm.dart';
 import 'status_pill.dart';
 import 'timer_badge.dart';
 
@@ -21,6 +22,7 @@ class OrderCard extends StatelessWidget {
     required this.order,
     required this.onOpen,
     required this.onAccept,
+    this.onAdvance,
     required this.onOpenNote,
     required this.onDelete,
     this.onExpandItems,
@@ -29,6 +31,10 @@ class OrderCard extends StatelessWidget {
   final Order order;
   final VoidCallback onOpen;
   final VoidCallback onAccept;
+
+  /// The forward step (start preparing / mark ready / collected), taken
+  /// without opening the order.
+  final VoidCallback? onAdvance;
   final VoidCallback onOpenNote;
   final VoidCallback onDelete;
   final VoidCallback? onExpandItems;
@@ -187,6 +193,19 @@ class OrderCard extends StatelessWidget {
                   ),
               ],
             ),
+          ] else if (o.nextStep != null && onAdvance != null) ...[
+            // The same forward step the order page offers, on the card: a
+            // shop working through a busy morning had to open every order to
+            // move it along. Swiped rather than tapped — this is the one that
+            // sends a driver, and the board is scrolled fast.
+            const SizedBox(height: 14),
+            SwipeToConfirm(
+              label: _advanceLabelKey(o).tr(),
+              height: 50,
+              borderRadius: 15,
+              fontSize: 16,
+              onConfirmed: onAdvance!,
+            ),
           ],
         ],
       ),
@@ -260,3 +279,12 @@ class _CardDate extends StatelessWidget {
     );
   }
 }
+
+/// Mirrors `OrderDetailViewModel.advanceAction` so the card and the order
+/// page never disagree about what the next step is called.
+String _advanceLabelKey(Order o) => switch (o.nextStep) {
+      OrderStatus.preparing => 'mark_preparing',
+      OrderStatus.ready => 'mark_ready',
+      OrderStatus.delivered => 'mark_picked_up',
+      _ => '',
+    };

@@ -166,11 +166,22 @@ class Order {
       };
 
   /// The single forward step to offer, if any (cancel is handled separately).
+  ///
+  /// `delivered` is in here because the server puts it in
+  /// `allowed_transitions` for a PICKUP order that is ready: the customer
+  /// collects it at the counter, so the shop is the only one who can say it
+  /// left. Without this a ready pickup order showed no button at all and sat
+  /// there forever, even though the API was accepting the move.
+  ///
+  /// It stays off the hardcoded ladder in [can] on purpose — for a delivery
+  /// order `delivered` is ops-side and the API answers 409.
   OrderStatus? get nextStep => can(OrderStatus.preparing)
       ? OrderStatus.preparing
       : can(OrderStatus.ready)
           ? OrderStatus.ready
-          : null;
+          : can(OrderStatus.delivered)
+              ? OrderStatus.delivered
+              : null;
 
   /// A live "waiting" clock is worth showing while the shop still owes this
   /// order an action — the server decides that via `allowed_transitions`.

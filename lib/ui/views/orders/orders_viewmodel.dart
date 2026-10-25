@@ -190,6 +190,28 @@ class OrdersViewModel extends BaseViewModel {
     );
   }
 
+  /// The forward step, taken from the board. A shop working a busy morning
+  /// had to open every order to move it along; the card carries the same
+  /// action now. Swiped, not tapped — see [SwipeToConfirm].
+  Future<void> onAdvance(Order order) async {
+    final to = order.nextStep;
+    if (to == null) return;
+    final result = await _ordersService.moveOrder(order.id, to: to);
+    result.fold(
+      (failure) =>
+          _toastService.showUpperToast(failure.display, type: ToastType.danger),
+      (_) {
+        _orders = _orders
+            .map((o) => o.id == order.id ? o.copyWith(status: to) : o)
+            .toList();
+        _toastService.showUpperToast('order_updated'.tr(),
+            type: ToastType.success);
+        rebuildUi();
+        _reload();
+      },
+    );
+  }
+
   Future<Failure?> onCancel(Order order, CancelChoice choice) async {
     final result = await _ordersService.cancelOrder(order.id,
         reasonCode: choice.reasonCode,

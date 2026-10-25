@@ -30,8 +30,40 @@ class OrderDetailViewModel extends BaseViewModel {
       switch (_order?.nextStep) {
         OrderStatus.preparing => (labelKey: 'mark_preparing', icon: 'clock'),
         OrderStatus.ready => (labelKey: 'mark_ready', icon: 'checkCircle'),
+        // Pickup only: the customer collected it at the counter.
+        OrderStatus.delivered => (labelKey: 'mark_picked_up', icon: 'store'),
         _ => null,
       };
+
+  /// What is happening to the order now, shown in the button's place once
+  /// the shop has nothing left to do. Without it the bar just vanished after
+  /// "Mark ready" and shops phoned in to ask whether a driver was coming.
+  ///
+  /// Built from `status` + `courier_stage` only — no promises the data does
+  /// not back. Null where the status pill already says it all (cancelled) or
+  /// the shop still has a move to make.
+  ({String key, String icon})? get stateLine {
+    final o = _order;
+    if (o == null || o.nextStep != null || o.can(OrderStatus.confirmed)) {
+      return null;
+    }
+    final pickup = o.deliveryType == 'pickup';
+    return switch (o.status) {
+      OrderStatus.ready when pickup =>
+        (key: 'state_ready_pickup', icon: 'store'),
+      OrderStatus.ready => switch (o.courierStage) {
+          'after_assignment' => (key: 'state_driver_coming', icon: 'truck'),
+          'after_collection' => (key: 'state_on_the_way', icon: 'truck'),
+          _ => (key: 'state_waiting_driver', icon: 'hourglass'),
+        },
+      OrderStatus.outForDelivery => (key: 'state_on_the_way', icon: 'truck'),
+      OrderStatus.delivered => pickup
+          ? (key: 'state_collected', icon: 'checkCircle')
+          : (key: 'state_delivered', icon: 'checkCircle'),
+      OrderStatus.failed => (key: 'state_failed', icon: 'x'),
+      _ => null,
+    };
+  }
 
   bool get canAccept => _order?.can(OrderStatus.confirmed) ?? false;
   bool get canCancel => _order?.can(OrderStatus.cancelled) ?? false;

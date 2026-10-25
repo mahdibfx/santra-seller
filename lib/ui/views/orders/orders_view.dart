@@ -59,8 +59,25 @@ class OrdersView extends StackedView<OrdersViewModel> {
                 child: Center(
                     child: CircularProgressIndicator(color: AppColors.brand)))
           else if (viewModel.isEmptyStore)
+            // Pull-to-refresh here too: a shop with no orders yet is exactly
+            // the one waiting for its first, and this screen had no way to
+            // check for it short of leaving and coming back.
             Expanded(
-                child: _WebPortalEmpty(onOpenPortal: viewModel.onOpenPortal))
+              child: RefreshIndicator(
+                color: AppColors.brand,
+                onRefresh: viewModel.onRefresh,
+                child: LayoutBuilder(
+                  builder: (context, box) => SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(minHeight: box.maxHeight),
+                      child:
+                          _WebPortalEmpty(onOpenPortal: viewModel.onOpenPortal),
+                    ),
+                  ),
+                ),
+              ),
+            )
           else ...[
             const SizedBox(height: 14),
             FilterRail(
@@ -217,37 +234,38 @@ class _OrderList extends StatelessWidget {
       color: AppColors.brand,
       onRefresh: viewModel.onRefresh,
       child: NotificationListener<ScrollNotification>(
-      onNotification: (n) {
-        if (n.metrics.pixels >= n.metrics.maxScrollExtent - 300)
-          viewModel.loadMore();
-        return false;
-      },
-      child: ListView.separated(
-        // Without this a board that fits the screen cannot be pulled.
-        physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.fromLTRB(22, 40, 22, 120),
-        itemCount: list.length + (viewModel.hasMore ? 1 : 0),
-        separatorBuilder: (_, __) => const SizedBox(height: 14),
-        itemBuilder: (_, i) {
-          if (i >= list.length) {
-            return const Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: Center(
-                  child: CircularProgressIndicator(color: AppColors.brand)),
-            );
-          }
-          final o = list[i];
-          return OrderCard(
-            order: o,
-            onOpen: () => viewModel.onOpen(o),
-            onOpenNote: () => viewModel.onOpen(o),
-            onAccept: () => viewModel.onAccept(o),
-            onDelete: () => runCancelFlow(
-                context, o, (choice) => viewModel.onCancel(o, choice)),
-            onExpandItems: () => viewModel.hydrateItems(o),
-          );
+        onNotification: (n) {
+          if (n.metrics.pixels >= n.metrics.maxScrollExtent - 300)
+            viewModel.loadMore();
+          return false;
         },
-      ),
+        child: ListView.separated(
+          // Without this a board that fits the screen cannot be pulled.
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: const EdgeInsets.fromLTRB(22, 40, 22, 120),
+          itemCount: list.length + (viewModel.hasMore ? 1 : 0),
+          separatorBuilder: (_, __) => const SizedBox(height: 14),
+          itemBuilder: (_, i) {
+            if (i >= list.length) {
+              return const Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: Center(
+                    child: CircularProgressIndicator(color: AppColors.brand)),
+              );
+            }
+            final o = list[i];
+            return OrderCard(
+              order: o,
+              onOpen: () => viewModel.onOpen(o),
+              onOpenNote: () => viewModel.onOpen(o),
+              onAccept: () => viewModel.onAccept(o),
+              onAdvance: () => viewModel.onAdvance(o),
+              onDelete: () => runCancelFlow(
+                  context, o, (choice) => viewModel.onCancel(o, choice)),
+              onExpandItems: () => viewModel.hydrateItems(o),
+            );
+          },
+        ),
       ),
     );
   }
