@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -133,6 +134,14 @@ class SantraSellerApp extends StatelessWidget {
             seedColor: AppColors.brand, primary: AppColors.brand),
         splashFactory: NoSplash.splashFactory,
         highlightColor: Colors.transparent,
+      ),
+      // Dark status-bar icons on every light screen. The purple splash sets
+      // them light and nothing set them back, so the time and battery went
+      // white-on-cream on the login and most other pages. Screens on a dark
+      // background (splash, photo viewer) override this with their own region.
+      builder: (context, child) => AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.dark,
+        child: child!,
       ),
       navigatorKey: StackedService.navigatorKey,
       onGenerateRoute: StackedRouter().onGenerateRoute,

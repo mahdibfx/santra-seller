@@ -7,6 +7,7 @@ import '../../../models/order.dart';
 import '../../../models/order_item.dart';
 import '../../common/app_animations.dart';
 import '../../common/app_colors.dart';
+import '../../common/app_text_styles.dart';
 import '../../common/format.dart';
 import '../../widgets/app_icon.dart';
 import '../../widgets/app_text.dart';
@@ -14,12 +15,14 @@ import '../../widgets/app_text_field.dart';
 import '../../widgets/image_viewer.dart';
 import '../../widgets/meta_chips.dart';
 import '../../widgets/primary_button.dart';
+import '../../widgets/swipe_to_confirm.dart';
 import '../../widgets/cancel_order_sheet.dart';
 import '../../widgets/unavailable_sheet.dart';
 import '../../widgets/status_pill.dart';
 import '../../widgets/thumb_image.dart';
 import '../../widgets/timer_badge.dart';
 import '../../widgets/top_bar.dart';
+import '../product_preview/product_preview_view.dart';
 import 'order_detail_viewmodel.dart';
 
 class OrderDetailView extends StackedView<OrderDetailViewModel> {
@@ -101,12 +104,19 @@ class _Body extends StatelessWidget {
             label: 'placed_on'.tr(),
             value: formatPlacedAt(order.createdAt, context),
           ),
-          if (order.hasTimer) ...[
-            const SizedBox(height: 16),
-            TimerBadge(order: order),
-          ],
-          const SizedBox(height: 14),
-          MetaChips(order: order),
+          const SizedBox(height: 16),
+          // One row: what kind of order on the start side, how long it has
+          // waited on the end. Two rows left the timer floating on its own.
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(child: MetaChips(order: order)),
+              if (order.hasTimer) ...[
+                const SizedBox(width: 8),
+                TimerBadge(order: order, inline: true),
+              ],
+            ],
+          ),
           const SizedBox(height: 20),
           _CustomerCard(order: order, lang: lang),
           if (viewModel.needsRefundDetails)
@@ -364,10 +374,10 @@ class _DetailRow extends StatelessWidget {
                 // the number sat alone against the far edge.
                 ltrValue
                     ? Align(
-                        alignment: Directionality.of(context) ==
-                                TextDirection.rtl
-                            ? Alignment.centerRight
-                            : Alignment.centerLeft,
+                        alignment:
+                            Directionality.of(context) == TextDirection.rtl
+                                ? Alignment.centerRight
+                                : Alignment.centerLeft,
                         child: Directionality(
                             textDirection: TextDirection.ltr, child: text),
                       )
@@ -403,13 +413,24 @@ class _ReportUnavailableLink extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         child: Row(
           children: [
-            const AppIcon('hourglass', size: 15, color: AppColors.muted),
+            const AppIcon('message', size: 15, color: AppColors.brand),
             const SizedBox(width: 7),
+            // The question in grey, the action in brand purple: it reads as
+            // the link it is.
             Flexible(
-              child: AppText('report_unavailable_link'.tr(),
-                  fontSize: 13.5,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.muted),
+              child: Text.rich(
+                TextSpan(children: [
+                  TextSpan(text: '${'report_unavailable_question'.tr()} '),
+                  TextSpan(
+                    text: 'report_unavailable_action'.tr(),
+                    style: const TextStyle(color: AppColors.brand),
+                  ),
+                ]),
+                style: AppTextStyles.body(context,
+                    fontSize: 13.5,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.muted),
+              ),
             ),
           ],
         ),
@@ -539,68 +560,81 @@ class _ItemsCard extends StatelessWidget {
           color: AppColors.surface, borderRadius: BorderRadius.circular(18)),
       child: Column(
         children: [
+          _ItemsSummary(order: order),
           for (int i = 0; i < order.items.length; i++)
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 13),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: i < order.items.length - 1
-                      ? const BorderSide(color: AppColors.line)
-                      : BorderSide.none,
-                ),
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              decoration: const BoxDecoration(
+                  border: Border(top: BorderSide(color: AppColors.line))),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      ThumbImage(
-                          path: order.items[i].image, size: 50, radius: 13),
-                      const SizedBox(width: 13),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AppText(order.items[i].displayName(lang),
-                                fontSize: 15.5, fontWeight: FontWeight.w500),
-                            // What the customer actually chose. Without this
-                            // the shop reads "Cake ×1" and has to phone them
-                            // to find out which cake.
-                            for (final g
-                                in order.items[i].groupedModifiers(lang)) ...[
-                              const SizedBox(height: 4),
-                              _ModifierLine(
-                                  group: g.key, options: g.value, lang: lang),
-                            ],
-                            if (order.items[i].unavailableQuantity > 0) ...[
-                              const SizedBox(height: 3),
-                              AppText(
-                                'not_available_count'.tr(args: [
-                                  '${order.items[i].unavailableQuantity}×'
-                                ]),
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.dangerFg,
-                                decoration: TextDecoration.lineThrough,
-                              ),
-                            ],
-                          ],
+                  // Kitchen-ticket order: HOW MANY first, then what, then how.
+                  // The whole row opens the product, read-only; the request
+                  // block below stays outside so its photos keep their own tap.
+                  GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () =>
+                        ProductPreviewView.open(context, order.items[i]),
+                    child: Row(
+                      // A name with options under it reads top-down; a lone
+                      // name sat at the top of the photo with a gap below.
+                      crossAxisAlignment: order.items[i].modifiers.isEmpty &&
+                              order.items[i].unavailableQuantity == 0
+                          ? CrossAxisAlignment.center
+                          : CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: _qtyWidth,
+                          child: AppText('${order.items[i].qty}×',
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800,
+                              color: AppColors.brand),
                         ),
-                      ),
-                      Container(
-                        constraints: const BoxConstraints(minWidth: 32),
-                        height: 28,
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: AppColors.brandSoft,
-                            borderRadius: BorderRadius.circular(9)),
-                        child: AppText('${order.items[i].qty}×',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.brand),
-                      ),
-                    ],
+                        ThumbImage(
+                            path: order.items[i].image, size: 40, radius: 10),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppText(order.items[i].displayName(lang),
+                                  fontSize: 15.5, fontWeight: FontWeight.w600),
+                              // What the customer actually chose. Without this
+                              // the shop reads "Cake ×1" and has to phone them
+                              // to find out which cake.
+                              for (final g
+                                  in order.items[i].groupedModifiers(lang)) ...[
+                                const SizedBox(height: 3),
+                                _ModifierLine(
+                                    group: g.key, options: g.value, lang: lang),
+                              ],
+                              if (order.items[i].unavailableQuantity > 0) ...[
+                                const SizedBox(height: 3),
+                                AppText(
+                                  'not_available_count'.tr(args: [
+                                    '${order.items[i].unavailableQuantity}×'
+                                  ]),
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.dangerFg,
+                                  decoration: TextDecoration.lineThrough,
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
+                        // Same cue as every other row that opens something, in brand purple
+                        // so it reads as tappable.
+                        const Padding(
+                          padding: EdgeInsets.only(top: 2),
+                          child: AppIcon('chevronRight',
+                              size: 16,
+                              color: AppColors.brand,
+                              flipForRtl: true),
+                        ),
+                      ],
+                    ),
                   ),
                   if (order.items[i].hasRequest)
                     _ItemRequest(item: order.items[i]),
@@ -652,6 +686,50 @@ class _ItemsCard extends StatelessWidget {
   }
 }
 
+/// Width of the quantity column, so names and notes line up down the card.
+const double _qtyWidth = 40;
+
+/// "3 items · 7 units", plus how many lines carry a special request — read
+/// before scrolling, so a long order does not hide one.
+class _ItemsSummary extends StatelessWidget {
+  const _ItemsSummary({required this.order});
+  final Order order;
+
+  @override
+  Widget build(BuildContext context) {
+    final lines = order.items.length;
+    final units = order.items.fold<int>(0, (n, it) => n + it.qty);
+    final requests = order.items.where((it) => it.hasRequest).length;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Row(
+        children: [
+          Expanded(
+            child: AppText(
+              '$lines ${lines == 1 ? 'item'.tr() : 'items'.tr()} · '
+              '$units ${units == 1 ? 'unit'.tr() : 'units'.tr()}',
+              fontSize: 13.5,
+              fontWeight: FontWeight.w600,
+              color: AppColors.muted,
+            ),
+          ),
+          if (requests > 0)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
+              decoration: BoxDecoration(
+                  color: AppColors.warnBg,
+                  borderRadius: BorderRadius.circular(8)),
+              child: AppText('with_requests_count'.tr(args: ['$requests']),
+                  fontSize: 12.5,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.warnFg),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
 /// The customer's request for one line — their words plus any reference
 /// photos they attached to it.
 class _ItemRequest extends StatelessWidget {
@@ -660,32 +738,73 @@ class _ItemRequest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // From the item photo's edge (past the quantity), on the START side so
+    // Arabic lines up too: wide enough for a long request, still inside the
+    // item's row. Amber, not brand purple: the line a kitchen must not miss.
     return Padding(
-      padding: const EdgeInsets.only(top: 11, left: 63),
+      padding: const EdgeInsetsDirectional.only(top: 8, start: _qtyWidth),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (item.note.isNotEmpty)
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
               decoration: BoxDecoration(
-                color: AppColors.brandSofter,
-                borderRadius: BorderRadius.circular(13),
+                color: AppColors.warnBg,
+                borderRadius: BorderRadius.circular(10),
               ),
-              child: AppText.body(item.note, fontSize: 14.5, height: 1.5),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsetsDirectional.only(top: 2, end: 6),
+                    child: AppIcon('note', size: 14, color: AppColors.warnFg),
+                  ),
+                  Expanded(
+                    child: AppText.body(item.note, fontSize: 13.5, height: 1.4),
+                  ),
+                ],
+              ),
             ),
-          if (item.images.isNotEmpty) ...[
-            const SizedBox(height: 10),
+          if (item.images.isNotEmpty || item.files.isNotEmpty) ...[
+            const SizedBox(height: 8),
             Wrap(
-              spacing: 8,
-              runSpacing: 8,
+              spacing: 6,
+              runSpacing: 6,
               children: [
                 for (int i = 0; i < item.images.length; i++)
                   GestureDetector(
                     onTap: () => showImageViewer(context, item.images, i),
                     child:
-                        ThumbImage(path: item.images[i], size: 72, radius: 14),
+                        ThumbImage(path: item.images[i], size: 52, radius: 10),
+                  ),
+                // A PDF has no thumbnail. It opens in an in-app browser sheet
+                // (Done returns to the order) rather than leaving for Safari.
+                for (final url in item.files)
+                  GestureDetector(
+                    onTap: () => launchUrl(Uri.parse(url),
+                        mode: LaunchMode.inAppBrowserView),
+                    child: Container(
+                      width: 52,
+                      height: 52,
+                      decoration: BoxDecoration(
+                        color: AppColors.brandSofter,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: AppColors.brandSoft),
+                      ),
+                      child: const Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          AppIcon('note', size: 18, color: AppColors.brand),
+                          SizedBox(height: 2),
+                          AppText('PDF',
+                              fontSize: 11,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.brand),
+                        ],
+                      ),
+                    ),
                   ),
               ],
             ),
@@ -786,7 +905,10 @@ class _ActionBar extends StatelessWidget {
     final advance = viewModel.advanceAction;
     final accept = viewModel.canAccept;
     final cancel = viewModel.canCancel;
-    if (!accept && !cancel && advance == null) return const SizedBox.shrink();
+    final state = viewModel.stateLine;
+    if (!accept && !cancel && advance == null && state == null) {
+      return const SizedBox.shrink();
+    }
 
     return Positioned(
       left: 0,
@@ -802,35 +924,52 @@ class _ActionBar extends StatelessWidget {
             stops: [0, 0.72, 1],
           ),
         ),
-        child: Row(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            if (accept)
-              Expanded(
-                child: PrimaryButton(
-                  label: 'accept'.tr(),
-                  leadingIcon: 'check',
-                  onPressed: viewModel.accept,
-                ),
+            // A forward step standing alone is swiped, not tapped: it is one
+            // careless touch away and it cannot be undone — "mark ready"
+            // sends a driver for a box nobody packed. Accept/cancel keep
+            // plain buttons; there the shop is choosing, not confirming.
+            if (!accept && !cancel && advance == null && state != null)
+              _StateLine(textKey: state.key, icon: state.icon)
+            else if (!accept && advance != null && !cancel)
+              SwipeToConfirm(
+                label: advance.labelKey.tr(),
+                onConfirmed: viewModel.advance,
               )
-            else if (advance != null)
-              Expanded(
-                child: PrimaryButton(
-                  label: advance.labelKey.tr(),
-                  leadingIcon: advance.icon,
-                  onPressed: viewModel.advance,
-                ),
+            else
+              Row(
+                children: [
+                  if (accept)
+                    Expanded(
+                      child: PrimaryButton(
+                        label: 'accept'.tr(),
+                        leadingIcon: 'check',
+                        onPressed: viewModel.accept,
+                      ),
+                    )
+                  else if (advance != null)
+                    Expanded(
+                      child: PrimaryButton(
+                        label: advance.labelKey.tr(),
+                        leadingIcon: advance.icon,
+                        onPressed: viewModel.advance,
+                      ),
+                    ),
+                  if (cancel) ...[
+                    if (accept || advance != null) const SizedBox(width: 10),
+                    Expanded(
+                      child: PrimaryButton(
+                        label: 'cancel'.tr(),
+                        variant: ButtonVariant.dangerOutline,
+                        onPressed: () =>
+                            runCancelFlow(context, order, viewModel.cancel),
+                      ),
+                    ),
+                  ],
+                ],
               ),
-            if (cancel) ...[
-              if (accept || advance != null) const SizedBox(width: 10),
-              Expanded(
-                child: PrimaryButton(
-                  label: 'cancel'.tr(),
-                  variant: ButtonVariant.dangerOutline,
-                  onPressed: () =>
-                      runCancelFlow(context, order, viewModel.cancel),
-                ),
-              ),
-            ],
           ],
         ),
       ),
@@ -864,7 +1003,10 @@ class _DateLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (value.isEmpty) return const SizedBox.shrink();
-    final suffix = trailing.isEmpty ? '' : '  \u00b7  $trailing';
+    // The backend's interim "Deliver 21 Sept" repeats the date just shown.
+    // ponytail: drop this check when the field is back to slot labels only.
+    final repeatsDate = trailing.toLowerCase().startsWith('deliver');
+    final suffix = trailing.isEmpty || repeatsDate ? '' : '  \u00b7  $trailing';
     return Padding(
       padding: const EdgeInsets.only(top: 7),
       child: Row(
@@ -884,8 +1026,6 @@ class _DateLine extends StatelessWidget {
     );
   }
 }
-
-
 
 /// One chosen option under its item: "Size: 10 inch ×2".
 ///
@@ -923,15 +1063,65 @@ class _ModifierLine extends StatelessWidget {
             ),
           ),
         ),
+        // The group is the label, the choice is the answer: a shop scanning
+        // the card reads "10 inch, Chocolate, Nuts" without the labels.
         Expanded(
-          child: AppText(
-            group.isEmpty ? name : '$group: $name',
-            fontSize: 13.5,
-            fontWeight: FontWeight.w500,
-            color: AppColors.muted,
+          child: Text.rich(
+            TextSpan(
+              children: [
+                if (group.isNotEmpty) TextSpan(text: '$group: '),
+                TextSpan(
+                  text: name,
+                  style: const TextStyle(
+                      color: AppColors.ink, fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+            style: AppTextStyles.body(context,
+                fontSize: 13.5,
+                fontWeight: FontWeight.w400,
+                color: AppColors.muted),
           ),
         ),
       ],
+    );
+  }
+}
+
+/// Where the order is now, in the spot the action button occupies — so the
+/// bottom of the page always answers "what happens next", whether or not the
+/// shop is the one who has to do it.
+class _StateLine extends StatelessWidget {
+  const _StateLine({required this.textKey, required this.icon});
+  final String textKey;
+  final String icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 56,
+      padding: const EdgeInsets.symmetric(horizontal: 18),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: AppColors.lineStrong, width: 1.5),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          AppIcon(icon, size: 20, color: AppColors.muted),
+          const SizedBox(width: 10),
+          Flexible(
+            child: AppText(
+              textKey.tr(),
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+              color: AppColors.ink,
+              maxLines: 2,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

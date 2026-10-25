@@ -22,11 +22,15 @@ class TimerBadge extends StatefulWidget {
     required this.order,
     this.small = false,
     this.showBar = false,
+    this.inline = false,
   });
 
   final Order order;
   final bool small;
   final bool showBar;
+
+  /// Just the chip, for a parent that places it (a row beside other chips).
+  final bool inline;
 
   @override
   State<TimerBadge> createState() => _TimerBadgeState();
@@ -50,6 +54,8 @@ class _TimerBadgeState extends State<TimerBadge> {
   }
 
   String _fmt(Duration d) {
+    // An order left open for days read "819:38:30"; past a day, days + hours.
+    if (d.inDays > 0) return '${d.inDays}d ${d.inHours % 24}h';
     final h = d.inHours;
     final m = d.inMinutes % 60;
     final s = d.inSeconds % 60;
@@ -97,6 +103,7 @@ class _TimerBadgeState extends State<TimerBadge> {
       ),
     );
 
+    if (widget.inline) return chip;
     if (!widget.showBar) {
       return Align(alignment: AlignmentDirectional.centerEnd, child: chip);
     }

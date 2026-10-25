@@ -132,7 +132,8 @@ class _OtpSheetState extends State<OtpSheet> {
                   const SizedBox(height: 20),
                   PrimaryButton(
                     label: 'verify'.tr(),
-                    disabled: !done || widget.busy,
+                    disabled: !done,
+                    loading: widget.busy,
                     onPressed: done && !widget.busy
                         ? () => widget.onVerify(_code)
                         : null,

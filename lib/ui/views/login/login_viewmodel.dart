@@ -125,9 +125,13 @@ class LoginViewModel extends BaseViewModel {
     setBusy(true);
     final result = await _authService.verifyOtp(
         phone: sendPhone, code: code, countryCode: _dialCode);
-    setBusy(false);
+    // Busy stays ON through success: saving the tokens, starting push and
+    // navigating all come after the reply, and clearing it here woke the
+    // Verify button up for that stretch — a second tap verified again.
+    // Only a failure gives the button back.
     result.fold(
       (failure) {
+        setBusy(false);
         final msg = failure is ValidationFailure
             ? (failure.firstError ?? failure.display)
             : failure.display;

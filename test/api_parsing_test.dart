@@ -1,3 +1,4 @@
+import 'package:santra_seller/models/order_item.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:santra_seller/models/auth_tokens.dart';
 import 'package:santra_seller/models/cancel_reason.dart';
@@ -404,5 +405,28 @@ void main() {
     test('a payload without trading falls back to open', () {
       expect(SellerProfile.fromJson({'name_en': 'X'}).openNow, isTrue);
     });
+  });
+
+  test('a line keeps its PDFs apart from its photos', () {
+    final item = OrderItem.fromJson({
+      'product_name_en': 'Cake',
+      'quantity': 3,
+      'media': [
+        {'media_type': 'image', 'url': 'https://x/1.jpg'},
+        {'media_type': 'pdf', 'url': 'https://x/brief.pdf'},
+      ],
+    });
+    expect(item.images, ['https://x/1.jpg']);
+    expect(item.files, ['https://x/brief.pdf']); // was silently dropped
+    expect(item.hasRequest, isTrue);
+    expect(
+        OrderItem.fromJson({
+          'product_name_en': 'Juice',
+          'quantity': 1,
+          'media': [
+            {'media_type': 'pdf', 'url': 'https://x/only.pdf'}
+          ],
+        }).hasRequest,
+        isTrue); // a PDF alone still shows the request block
   });
 }

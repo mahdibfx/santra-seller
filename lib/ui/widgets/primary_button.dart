@@ -18,6 +18,7 @@ class PrimaryButton extends StatefulWidget {
     this.arrow = false,
     this.leadingIcon,
     this.disabled = false,
+    this.loading = false,
     this.height = 56,
     this.borderRadius = 18,
     this.fontSize = 17,
@@ -29,6 +30,10 @@ class PrimaryButton extends StatefulWidget {
   final bool arrow;
   final String? leadingIcon;
   final bool disabled;
+
+  /// Request in flight: shows a spinner and ignores taps, so a second tap
+  /// cannot send the same request again.
+  final bool loading;
   final double height;
   final double borderRadius;
   final double fontSize;
@@ -46,20 +51,43 @@ class _PrimaryButtonState extends State<PrimaryButton> {
         return (
           bg: AppColors.brand,
           fg: Colors.white,
-          shadow: const [BoxShadow(color: AppColors.brandShadow, blurRadius: 22, offset: Offset(0, 8))],
+          shadow: const [
+            BoxShadow(
+                color: AppColors.brandShadow,
+                blurRadius: 22,
+                offset: Offset(0, 8))
+          ],
           border: null,
         );
       case ButtonVariant.soft:
-        return (bg: AppColors.brandSoft, fg: AppColors.brand, shadow: const [], border: null);
+        return (
+          bg: AppColors.brandSoft,
+          fg: AppColors.brand,
+          shadow: const [],
+          border: null
+        );
       case ButtonVariant.ghost:
-        return (bg: Colors.transparent, fg: AppColors.ink, shadow: const [], border: Border.all(color: AppColors.lineStrong, width: 1.5));
+        return (
+          bg: Colors.transparent,
+          fg: AppColors.ink,
+          shadow: const [],
+          border: Border.all(color: AppColors.lineStrong, width: 1.5)
+        );
       case ButtonVariant.danger:
-        return (bg: AppColors.dangerBg, fg: AppColors.dangerFg, shadow: const [], border: null);
+        return (
+          bg: AppColors.dangerBg,
+          fg: AppColors.dangerFg,
+          shadow: const [],
+          border: null
+        );
       case ButtonVariant.dangerOutline:
         return (
           bg: AppColors.surface,
           fg: AppColors.danger,
-          shadow: const [BoxShadow(color: Color(0x14143232), blurRadius: 18, offset: Offset(0, 6))],
+          shadow: const [
+            BoxShadow(
+                color: Color(0x14143232), blurRadius: 18, offset: Offset(0, 6))
+          ],
           border: Border.all(color: AppColors.danger, width: 1.5),
         );
     }
@@ -68,7 +96,8 @@ class _PrimaryButtonState extends State<PrimaryButton> {
   @override
   Widget build(BuildContext context) {
     final s = _style;
-    final enabled = !widget.disabled && widget.onPressed != null;
+    final enabled =
+        !widget.disabled && !widget.loading && widget.onPressed != null;
 
     return Opacity(
       opacity: widget.disabled ? 0.45 : 1,
@@ -95,22 +124,31 @@ class _PrimaryButtonState extends State<PrimaryButton> {
                   AppIcon(widget.leadingIcon!, size: 20, color: s.fg),
                   const SizedBox(width: 10),
                 ],
-                Flexible(
-                  child: Text(
-                    widget.label,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.body(
-                      context,
-                      fontSize: widget.fontSize,
-                      fontWeight: FontWeight.w700,
-                      color: s.fg,
-                      letterSpacing: 0.1,
+                if (widget.loading)
+                  SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                        strokeWidth: 2.2, color: s.fg),
+                  )
+                else
+                  Flexible(
+                    child: Text(
+                      widget.label,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.body(
+                        context,
+                        fontSize: widget.fontSize,
+                        fontWeight: FontWeight.w700,
+                        color: s.fg,
+                        letterSpacing: 0.1,
+                      ),
                     ),
                   ),
-                ),
-                if (widget.arrow) ...[
+                if (widget.arrow && !widget.loading) ...[
                   const SizedBox(width: 10),
-                  AppIcon('arrowRight', size: 20, color: s.fg, flipForRtl: true),
+                  AppIcon('arrowRight',
+                      size: 20, color: s.fg, flipForRtl: true),
                 ],
               ],
             ),

@@ -47,7 +47,10 @@ class LoginView extends StackedView<LoginViewModel> {
                       hintText: '50 123 4567',
                       keyboardType: TextInputType.phone,
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'[\d ]'))
+                        FilteringTextInputFormatter.allow(RegExp(r'[\d ]')),
+                        // The API takes 5–14 digits; without a cap a slow or
+                        // pasted entry ran on ("585811082585811082").
+                        LengthLimitingTextInputFormatter(14),
                       ],
                       errorText: viewModel.phoneError,
                       onChanged: viewModel.onPhoneChanged,
@@ -61,6 +64,7 @@ class LoginView extends StackedView<LoginViewModel> {
                     const Spacer(),
                     PrimaryButton(
                         label: 'send_code'.tr(),
+                        loading: viewModel.isBusy,
                         onPressed: viewModel.onSendCode),
                     const SizedBox(height: 18),
                     Align(

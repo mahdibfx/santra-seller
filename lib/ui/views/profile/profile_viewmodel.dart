@@ -101,6 +101,9 @@ class ProfileViewModel extends BaseViewModel {
   /// refresh `/auth/` calls), no network, or nothing left to revoke. Gating
   /// the sign-out on it left shops stuck signed in, staring at a red toast.
   Future<void> onLogout() async {
+    // A second tap would unregister, call /auth/logout and navigate again.
+    if (isBusy) return;
+    setBusy(true);
     // Unregister first, while the access token still works, or this device
     // keeps receiving another account's orders.
     await _pushService.stop();

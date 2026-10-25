@@ -38,6 +38,7 @@ class ApiEndpoints {
   static const String cancelReasons = '/orders/cancel-reasons';
   static String order(Object id) => '/orders/$id';
   static String orderStatus(Object id) => '/orders/$id/status';
+  static String product(Object id) => '/products/$id';
   static String unavailableItems(Object id) => '/orders/$id/items/unavailable';
   static String refundBankDetails(Object id) =>
       '/orders/$id/refund-bank-details';

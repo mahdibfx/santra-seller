@@ -25,56 +25,58 @@ class ProfileView extends StackedView<ProfileViewModel> {
         color: AppColors.brand,
         onRefresh: viewModel.onRefresh,
         child: SingleChildScrollView(
-        // The screen usually fits, and without this it cannot be pulled.
-        physics: const AlwaysScrollableScrollPhysics(),
-        padding: EdgeInsets.fromLTRB(
-            22, MediaQuery.of(context).padding.top + 16, 22, 130),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AppText.displayLarge('profile'.tr(), fontSize: 32),
-            const SizedBox(height: 18),
-            _Hero(
-                name: viewModel.displayName(lang),
-                trading: profile?.trading ?? const Trading()),
-            _Group(label: 'history_section'.tr(), rows: [
-              _Row(
-                  icon: 'history',
-                  label: 'order_history'.tr(),
-                  onTap: viewModel.onOpenHistory),
-              _Row(
-                  icon: 'sparkle',
-                  label: 'promo_title'.tr(),
-                  onTap: viewModel.onOpenPromotions),
-            ]),
-            _Group(label: 'prefs_section'.tr(), rows: [
-              _Row(
-                  icon: 'globe',
-                  label: 'language_row'.tr(),
-                  value: lang == 'ar' ? 'العربية' : 'English',
-                  onTap: viewModel.onToggleLang),
-            ]),
-            _Group(label: 'support_section'.tr(), rows: [
-              _Row(
-                  icon: 'help',
-                  label: 'help_center'.tr(),
-                  onTap: viewModel.onOpenHelp),
-              _Row(
-                  icon: 'shield',
-                  label: 'privacy_terms'.tr(),
-                  onTap: viewModel.onOpenLegal),
-            ]),
-            const SizedBox(height: 22),
-            _GroupContainer(
-              child: _Row(
-                  icon: 'logout',
-                  label: 'log_out'.tr(),
-                  danger: true,
-                  onTap: viewModel.onLogout),
-            ),
-          ],
+          // The screen usually fits, and without this it cannot be pulled.
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.fromLTRB(
+              22, MediaQuery.of(context).padding.top + 16, 22, 130),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AppText.displayLarge('profile'.tr(), fontSize: 32),
+              const SizedBox(height: 18),
+              _Hero(
+                  logoUrl: viewModel.profile?.avatar ?? '',
+                  name: viewModel.displayName(lang),
+                  trading: profile?.trading ?? const Trading()),
+              _Group(label: 'history_section'.tr(), rows: [
+                _Row(
+                    icon: 'history',
+                    label: 'order_history'.tr(),
+                    onTap: viewModel.onOpenHistory),
+                _Row(
+                    icon: 'sparkle',
+                    label: 'promo_title'.tr(),
+                    onTap: viewModel.onOpenPromotions),
+              ]),
+              _Group(label: 'prefs_section'.tr(), rows: [
+                _Row(
+                    icon: 'globe',
+                    label: 'language_row'.tr(),
+                    value: lang == 'ar' ? 'العربية' : 'English',
+                    onTap: viewModel.onToggleLang),
+              ]),
+              _Group(label: 'support_section'.tr(), rows: [
+                _Row(
+                    icon: 'help',
+                    label: 'help_center'.tr(),
+                    onTap: viewModel.onOpenHelp),
+                _Row(
+                    icon: 'shield',
+                    label: 'privacy_terms'.tr(),
+                    onTap: viewModel.onOpenLegal),
+              ]),
+              const SizedBox(height: 22),
+              _GroupContainer(
+                child: _Row(
+                    icon: 'logout',
+                    label: 'log_out'.tr(),
+                    danger: true,
+                    busy: viewModel.isBusy,
+                    onTap: viewModel.onLogout),
+              ),
+            ],
+          ),
         ),
-      ),
       ),
     );
   }
@@ -87,9 +89,12 @@ class ProfileView extends StackedView<ProfileViewModel> {
 }
 
 class _Hero extends StatelessWidget {
-  const _Hero({required this.name, required this.trading});
+  const _Hero({required this.name, required this.trading, this.logoUrl = ''});
   final String name;
   final Trading trading;
+
+  /// `/me` `logo_url`; the store icon until it loads or when there is none.
+  final String logoUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +110,7 @@ class _Hero extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const ThumbImage(path: '', size: 64, radius: 20, iconName: 'store'),
+          ThumbImage(path: logoUrl, size: 64, radius: 20, iconName: 'store'),
           const SizedBox(width: 14),
           Expanded(
             child: Column(
@@ -186,11 +191,15 @@ class _Row extends StatelessWidget {
       required this.label,
       this.value,
       this.danger = false,
+      this.busy = false,
       required this.onTap});
   final String icon;
   final String label;
   final String? value;
   final bool danger;
+
+  /// Shows a spinner in place of the chevron/value and ignores taps.
+  final bool busy;
   final VoidCallback onTap;
 
   @override
@@ -198,7 +207,7 @@ class _Row extends StatelessWidget {
     final color = danger ? AppColors.danger : AppColors.ink;
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: onTap,
+      onTap: busy ? null : onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
         child: Row(
@@ -219,6 +228,12 @@ class _Row extends StatelessWidget {
             Expanded(
                 child: AppText(label,
                     fontSize: 15.5, fontWeight: FontWeight.w600, color: color)),
+            if (busy)
+              SizedBox(
+                width: 18,
+                height: 18,
+                child: CircularProgressIndicator(strokeWidth: 2, color: color),
+              ),
             if (value != null)
               AppText(value!,
                   fontSize: 14.5,

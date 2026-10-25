@@ -14,6 +14,9 @@ class OrderModifier {
 
   final int quantity;
 
+  /// The product option this was, so the product page can tick it by id.
+  final int? modifierId;
+
   const OrderModifier({
     this.groupEn = '',
     this.groupAr = '',
@@ -21,6 +24,7 @@ class OrderModifier {
     this.nameAr = '',
     this.priceAddition = 0,
     this.quantity = 1,
+    this.modifierId,
   });
 
   String displayGroup(String lang) =>
@@ -37,6 +41,7 @@ class OrderModifier {
         priceAddition:
             num.tryParse(json['price_addition']?.toString() ?? '') ?? 0,
         quantity: int.tryParse(json['quantity']?.toString() ?? '') ?? 1,
+        modifierId: int.tryParse(json['modifier_id']?.toString() ?? ''),
       );
 
   Map<String, dynamic> toJson() => {
@@ -54,6 +59,10 @@ class OrderItem {
   /// `order_item_id` — what a shortage report names.
   final int id;
 
+  /// The catalogue product behind this line, for the read-only product page.
+  /// Null when the server leaves it out — the page then shows the line alone.
+  final int? productId;
+
   final String name;
   final String nameAr;
   final int qty;
@@ -64,6 +73,10 @@ class OrderItem {
 
   /// Reference photos the customer attached to this line.
   final List<String> images;
+
+  /// PDFs the customer attached to this line — a design brief, a printed
+  /// message. These used to be dropped, so the shop never saw them.
+  final List<String> files;
 
   /// Units of this line the shop has already reported as unavailable.
   final int unavailableQuantity;
@@ -76,17 +89,20 @@ class OrderItem {
 
   const OrderItem({
     this.id = 0,
+    this.productId,
     required this.name,
     required this.nameAr,
     required this.qty,
     required this.image,
     this.note = '',
     this.images = const [],
+    this.files = const [],
     this.unavailableQuantity = 0,
     this.modifiers = const [],
   });
 
-  bool get hasRequest => note.isNotEmpty || images.isNotEmpty;
+  bool get hasRequest =>
+      note.isNotEmpty || images.isNotEmpty || files.isNotEmpty;
 
   /// The chosen options collapsed by the group they came from, in the order
   /// the server sent them.
@@ -112,6 +128,8 @@ class OrderItem {
 
   factory OrderItem.fromJson(Map<String, dynamic> json) => OrderItem(
         id: int.tryParse(json['id']?.toString() ?? '') ?? 0,
+        productId: int.tryParse(
+            (json['product_id'] ?? json['productId'])?.toString() ?? ''),
         unavailableQuantity:
             int.tryParse(json['unavailable_quantity']?.toString() ?? '') ?? 0,
         name: (json['product_name_en'] ?? json['name']) as String? ?? '',
@@ -134,6 +152,12 @@ class OrderItem {
               .map((m) => m['url']?.toString() ?? ''),
           if (json['media'] == null) json['media_url']?.toString() ?? '',
         ].where((u) => u.isNotEmpty).toList(),
+        files: [
+          for (final m in (json['media'] as List? ?? [])
+              .whereType<Map<String, dynamic>>()
+              .where((m) => m['media_type'] == 'pdf'))
+            m['url']?.toString() ?? '',
+        ].where((u) => u.isNotEmpty).toList(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -144,7 +168,8 @@ class OrderItem {
         'note': note,
         'modifiers': [for (final m in modifiers) m.toJson()],
         'media': [
-          for (final u in images) {'media_type': 'image', 'url': u}
+          for (final u in images) {'media_type': 'image', 'url': u},
+          for (final u in files) {'media_type': 'pdf', 'url': u},
         ],
       };
 }
